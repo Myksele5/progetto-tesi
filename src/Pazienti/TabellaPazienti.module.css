@@ -1,0 +1,54 @@
+table{
+    border: 1px solid darkgray;
+    border-spacing: 0;
+    width: 1400px;
+    margin-top: 5vh;
+}
+
+th, td{
+    border: 1px solid darkgray;
+    text-align: center;
+}
+
+tbody tr{background-color: lightcyan;}
+tbody tr:nth-child(2n){background-color: lightgrey;}
+
+.table_wrapper{
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.intestazione_tabella{
+    background-color: rgb(59, 59, 241);
+    color: whitesmoke;
+    /* min-width: 200px; */
+    font-size: 1.5vw;
+}
+
+.intestazione_tabella.città, .intestazione_tabella.data{
+    display: none;
+}
+
+.dati_tabella{
+    background-color: transparent;
+    color: rgb(59, 59, 241);
+    font-size: 1.1vw;
+}
+
+.dati_tabella.città, .dati_tabella.data{
+    display: none;
+}
+
+@media screen and (min-width: 1200px) {
+    .dati_tabella.città, .dati_tabella.data, .intestazione_tabella.città, .intestazione_tabella.data{
+        display: table-cell;
+    }
+}
+
+@media screen and (max-width: 751px) {
+    .intestazione_tabella{
+        color: lime;
+    }
+}

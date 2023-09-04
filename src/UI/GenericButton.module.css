@@ -1,0 +1,48 @@
+.wrap_button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.generic_button{
+    /* min-width: 200px;
+    min-height: 50px; */
+    margin: 2px;
+    width: fit-content;
+    height: 50px;
+    background-color: rgb(59, 59, 241);
+    border: 2px solid transparent;
+    border-radius: 20px;
+    color: whitesmoke;
+    cursor: pointer;
+}
+
+.content_button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 30px;
+}
+
+@media screen and (max-width: 760px) {
+    .generic_button{
+        height: fit-content;
+    }
+
+    .content_button{
+        font-size: 25px;
+    }
+}
+
+.generic_button:hover{
+    background-color: rgb(33, 33, 131);
+    border: 2px solid rgb(59, 59, 241);
+    transition: 0.3s;
+}
+
+.imgg{
+    width: 30px;
+    height: 30px;
+    margin-right: 1vw;
+}

@@ -1,0 +1,11 @@
+.page_title{
+    margin: 0;
+    text-align: center;
+    font-size: 60px;
+}
+
+.schermata_giochi{
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+}

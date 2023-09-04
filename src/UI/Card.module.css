@@ -1,0 +1,38 @@
+.generic_wrapper{
+    width: 700px;
+    height: fit-content;
+    margin: 5px;
+    padding: 5px;
+    background-color: white;
+    border: 3px solid rgb(59, 59, 241);
+    border-radius: 10px;
+    /* opacity: 0; */
+    /* box-shadow: 15px 15px lightblue; */
+}
+
+.animazione{
+    opacity: 0;
+    animation: 1s 1 normal slidein forwards;
+}
+
+.altroStile{
+    /* position: relative; */
+    box-shadow: 10px 10px 15px rgb(59, 59, 241);
+}
+
+.altroStile:hover{
+    background-color: lightblue;
+    cursor: pointer;
+    animation: 0.3s 1 normal slidein forwards;
+}
+
+@keyframes slidein {
+    0%{
+        transform: translateY(0);
+    }
+    100%{
+        transform: translateY(5%);
+        opacity: 100%;
+    }
+    
+}
