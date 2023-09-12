@@ -23,7 +23,7 @@
     }
 }
 
-.wrap_add_paziente{
+.wrapper_generico{
     display: flex;
     justify-content: center;
     align-items: center;

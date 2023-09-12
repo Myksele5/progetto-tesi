@@ -89,7 +89,7 @@ function Attività(){
 
                 <GenericButton
                 onClick={formVisibile}
-                children = {'Aggiungi Attività'}
+                buttonText = {'Aggiungi Attività'}
                 immagine = {addImage}>
                 </GenericButton>
 

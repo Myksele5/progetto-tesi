@@ -45,11 +45,14 @@ function App() {
         <MainMenu
         showSchermata = {changeSchermata}>
         </MainMenu>
-        {schermataMostrata}
 
-        <div className='wrap_login'>
-          <Login></Login>
+        <div className='wrap_schermata'>
+          {schermataMostrata}
         </div>
+
+        {/* <div className='wrap_login'>
+          <Login></Login>
+        </div> */}
 
         {/* <img src={logo} className="App-logo" alt="logo" />
         <p>

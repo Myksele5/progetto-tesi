@@ -103,19 +103,19 @@ function AddPaziente(props){
         <form className={styles.center_form} onSubmit={formSubmitHandler}>
             <h1>Inserisci i dati del nuovo paziente</h1>
 
-            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome: <br/></label>
+            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}><b>Nome:</b> <br/></label>
             <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNome} onChange={nomeChangeHandler}></input><br/>
 
-            <label className={`${styles.label_style} ${!validCognome ? styles.invalid : ""}`}>Cognome: <br/></label>
+            <label className={`${styles.label_style} ${!validCognome ? styles.invalid : ""}`}><b>Cognome:</b> <br/></label>
             <input className={`${styles.input_style} ${!validCognome ? styles.invalid : ""}`} type="text" value={enteredCognome} onChange={cognomeChangeHandler}></input><br/>
 
-            <label className={`${styles.label_style} ${!validCittà ? styles.invalid : ""}`}>Città di nascita: <br/></label>
+            <label className={`${styles.label_style} ${!validCittà ? styles.invalid : ""}`}><b>Città di nascita:</b> <br/></label>
             <input className={`${styles.input_style} ${!validCittà ? styles.invalid : ""}`} type="text" value={enteredCittà} onChange={cittàChangeHandler}></input><br/>
 
-            <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}>Data di nascita: <br/></label>
+            <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}><b>Data di nascita:</b> <br/></label>
             <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" min="01-01-1800" max="31-31-2400" value={enteredData} onChange={dataNascitaChangeHandler}></input><br/>
 
-            <GenericButton type="submit">Salva nuovo paziente</GenericButton>
+            <GenericButton type="submit" buttonText = 'Salva nuovo paziente'></GenericButton>
         </form>
     );
 }

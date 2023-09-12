@@ -1,8 +1,8 @@
 table{
     border: 1px solid darkgray;
     border-spacing: 0;
-    width: 1400px;
-    margin-top: 5vh;
+    width: 55%;
+    margin: 5vh;
 }
 
 th, td{
@@ -11,13 +11,21 @@ th, td{
 }
 
 tbody tr{background-color: lightcyan;}
+tbody tr:hover .dati_tabella{
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
 tbody tr:nth-child(2n){background-color: lightgrey;}
+tbody tr:nth-child(2n):hover .dati_tabella{
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
 
 .table_wrapper{
     overflow: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .intestazione_tabella{
@@ -44,6 +52,7 @@ tbody tr:nth-child(2n){background-color: lightgrey;}
 @media screen and (min-width: 1200px) {
     .dati_tabella.città, .dati_tabella.data, .intestazione_tabella.città, .intestazione_tabella.data{
         display: table-cell;
+        max-width: 4vw;
     }
 }
 

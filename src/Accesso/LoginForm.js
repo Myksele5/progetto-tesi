@@ -34,8 +34,8 @@ function LoginForm(props){
                 <input type="password" className={styles.input_box} placeholder="Inserisci la tua password" value={password} onChange={passwordChangeHandler}></input>
             </div>
             
-            <GenericButton>
-                Accedi
+            <GenericButton
+            buttonText = 'Accedi'>
             </GenericButton>
             
             <h5 onClick={goToRegistrationForm}>Clicca qui per registrarti!</h5>

@@ -39,8 +39,8 @@ function RegistrationForm(props){
                 <input className={styles.input_box} placeholder="Inserisci la tua password"></input>
             </div>
             
-            <GenericButton>
-                Registrati
+            <GenericButton
+            buttonText = 'Registrati'>
             </GenericButton>
 
             <h5 onClick={goToLoginForm}>Hai già un account? Accedi!</h5>

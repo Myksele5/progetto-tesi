@@ -1,15 +1,15 @@
 .center_form{
     text-align: center;
-    transition: all 0.3 ease-out;
+    /* transition: all 0.3 ease-out; */
 }
 
-.center_form.entering{
+/* .center_form.entering{
     transform: translateY(0);
 }
 
 .center_form.exiting{
     transform: translateY(0);
-}
+} */
 
 .label_style{
     color: 2px solid rgb(59, 59, 241);

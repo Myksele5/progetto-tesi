@@ -1,0 +1,9 @@
+.lista{
+    text-align: center;
+}
+
+.label_style{
+    font-size: 1.8vw;
+    border: 2px solid lightskyblue;
+    border-radius: 20px;
+}
