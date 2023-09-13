@@ -3,13 +3,9 @@
     /* transition: all 0.3 ease-out; */
 }
 
-/* .center_form.entering{
-    transform: translateY(0);
+.title_form{
+    margin: 7px;
 }
-
-.center_form.exiting{
-    transform: translateY(0);
-} */
 
 .label_style{
     color: 2px solid rgb(59, 59, 241);
@@ -20,7 +16,7 @@
 }
 
 .input_style{
-    margin: 5px;
+    margin: 10px;
     width: auto;
     height: 20px;
     border: 1px solid rgb(59, 59, 241);

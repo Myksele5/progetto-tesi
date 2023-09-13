@@ -2,8 +2,18 @@
     text-align: center;
 }
 
+.horizontal_line{
+    border: 1px solid rgb(233, 33, 131);
+}
+
 .label_style{
+    display: inline-block;
+    width: 15vw;
     font-size: 1.8vw;
-    border: 2px solid lightskyblue;
+    /* text-decoration: underline dotted rgb(233, 33, 131); */
+    background-color: lightcyan;
+    border: 2px solid rgb(233, 33, 131);
     border-radius: 20px;
+    color: rgb(59, 59, 241);
+    box-shadow: 3px 3px 5px rgb(233, 33, 131);
 }

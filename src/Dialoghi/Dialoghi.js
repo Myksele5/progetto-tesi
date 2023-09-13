@@ -26,11 +26,13 @@ function Dialoghi(){
 
             <div className={styles.wrap_cards}>
                 <Card
+                stileHover = {true}
                 altroStile = {true}
                 children = {dialoghi_normali}>
                 </Card>
 
                 <Card
+                stileHover = {true}
                 altroStile = {true}
                 children = {dialoghi_con_mini}>
                 </Card>

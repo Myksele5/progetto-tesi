@@ -2,6 +2,7 @@
     width: 700px;
     height: fit-content;
     margin: 5px;
+    margin-bottom: 80px;
     padding: 5px;
     background-color: white;
     border: 3px solid rgb(59, 59, 241);
@@ -20,7 +21,7 @@
     box-shadow: 10px 10px 15px rgb(59, 59, 241);
 }
 
-.altroStile:hover{
+.stileHover:hover{
     background-color: lightblue;
     cursor: pointer;
     animation: 0.3s 1 normal slidein forwards;

@@ -101,7 +101,7 @@ function AddPaziente(props){
 
     return(
         <form className={styles.center_form} onSubmit={formSubmitHandler}>
-            <h1>Inserisci i dati del nuovo paziente</h1>
+            <h1 className={styles.title_form}>Inserisci i dati del nuovo paziente</h1>
 
             <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}><b>Nome:</b> <br/></label>
             <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNome} onChange={nomeChangeHandler}></input><br/>
@@ -115,7 +115,7 @@ function AddPaziente(props){
             <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}><b>Data di nascita:</b> <br/></label>
             <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" min="01-01-1800" max="31-31-2400" value={enteredData} onChange={dataNascitaChangeHandler}></input><br/>
 
-            <GenericButton type="submit" buttonText = 'Salva nuovo paziente'></GenericButton>
+            <GenericButton type="submit" buttonText='Salva nuovo paziente'></GenericButton>
         </form>
     );
 }

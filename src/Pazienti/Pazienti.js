@@ -255,6 +255,7 @@ function Pazienti(){
     let formNewPaziente;
     let tabella;
 
+    //FUNZIONE PER VISUALIZZARE/NASCONDERE FORM AGGIUNTA PAZIENTE
     function formVisibile(){
         if(formNewPaziente == null){
             setShowFormNewPaziente(true);
@@ -266,21 +267,7 @@ function Pazienti(){
         }
     }
 
-    if(!showFormNewPaziente){
-        formNewPaziente = null;
-    }
-    else{
-        formNewPaziente = 
-            <Card
-            animazione={true}
-            children={
-                <AddPaziente
-                onCreateNewPaziente = {newPazienteHandler}>
-                </AddPaziente>
-            }>
-            </Card>
-    }
-
+    //AGGIORNA ARRAY CON IL NUOVO PAZIENTE ---> VIENE ESEGUITA IN AddPaziente.js TRAMITE PROPS
     function newPazienteHandler(datiPaziente){
         console.log(datiPaziente);
         setElencoPazienti(
@@ -291,36 +278,7 @@ function Pazienti(){
         setShowFormNewPaziente(false);
     }
 
-    function cliccaRiga(idd, nomee, cognomee, cittàà, dataa, attivitàà){
-        console.log(idd, nomee, cognomee, cittàà, dataa, attivitàà);
-        console.log(typeof(elencoPazienti[2].datanascita));
-        setShowSchedaPaziente(
-            <Card
-            animazione={true}
-            children={
-                <SchedaPaziente
-                id = {idd}
-                nome = {nomee}
-                cognome = {cognomee}
-                città = {cittàà}
-                datanascita = {dataa}
-                attività = {attivitàà}
-                goBackButton = {chiudiSchedaPaziente}>
-
-                </SchedaPaziente>
-            }>
-
-            </Card>
-        );
-        setShowTabella(false);
-    }
-
-    function chiudiSchedaPaziente(){
-        console.log('CHIUDI SCHEDAAA');
-        setShowSchedaPaziente();
-        setShowTabella(true);
-    }
-
+    //FUNZIONE CHE RESTITUISCE LA SINGOLA RIGA DELLA TABELLA POPOLATA CON I DATI DEL PAZIENTE PRESI DALL'ARRAY
     function fromArrayToTablePazienti(arrayDummyPazienti){
         return(
             <tr key={arrayDummyPazienti.id} onClick={() => {
@@ -336,6 +294,57 @@ function Pazienti(){
         );
     }
 
+    //FUNZIONE PER VISUALIZZARE LA SCHEDA DI UN SINGOLO PAZIENTE CON I SUOI DATI
+    function cliccaRiga(idd, nomee, cognomee, cittàà, dataa, attivitàà){
+        console.log(idd, nomee, cognomee, cittàà, dataa, attivitàà);
+        console.log(typeof(elencoPazienti[2].datanascita));
+        setShowSchedaPaziente(
+            <Card
+            altroStile={true}
+            animazione={true}
+            children={
+                <SchedaPaziente
+                id = {idd}
+                nome = {nomee.toUpperCase()}
+                cognome = {cognomee.toUpperCase()}
+                città = {cittàà.toUpperCase()}
+                datanascita = {dataa}
+                attività = {attivitàà}
+                goBackButton = {chiudiSchedaPaziente}>
+
+                </SchedaPaziente>
+            }>
+
+            </Card>
+        );
+        setShowTabella(false);
+    }
+
+    //CHIUDE LA SCHEDA DEL PAZIENTE APERTA
+    function chiudiSchedaPaziente(){
+        console.log('CHIUDI SCHEDAAA');
+        setShowSchedaPaziente();
+        setShowTabella(true);
+    }
+
+    //BLOCCO IF-ELSE PER MOSTRARE/NASCONDERE IL FORM DI AGGIUNTA PAZIENTE
+    if(!showFormNewPaziente){
+        formNewPaziente = null;
+    }
+    else{
+        formNewPaziente = 
+            <Card
+            altroStile={true}
+            animazione={true}
+            children={
+                <AddPaziente
+                onCreateNewPaziente = {newPazienteHandler}>
+                </AddPaziente>
+            }>
+            </Card>
+    }
+
+    //BLOCCO IF-ELSE PER MOSTRARE/NASCONDERE LA TABELLA QUANDO SI STA VISUALIZZANDO LA SCHEDA DI UN SINGOLO PAZIENTE
     if(!showTabella){
         tabella = null;
     }

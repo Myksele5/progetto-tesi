@@ -3,7 +3,8 @@ import styles from "./Card.module.css";
 function Card(props){
     const cardAnimata = props.animazione ? `${styles.animazione}` : '';
     const stileAggiuntivo = props.altroStile ? `${styles.altroStile}` : '';
-    const classiStile = `${styles.generic_wrapper} ${cardAnimata} ${stileAggiuntivo}`;
+    const stileHover = props.stileHover ? `${styles.stileHover}` : '';
+    const classiStile = `${styles.generic_wrapper} ${cardAnimata} ${stileAggiuntivo} ${stileHover}`;
 
     return(
         <div className={classiStile}>

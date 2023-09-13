@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 5px;
 }
 
 .generic_button{
@@ -15,6 +16,16 @@
     border-radius: 20px;
     color: whitesmoke;
     cursor: pointer;
+}
+
+.generic_button:hover{
+    background-color: rgb(33, 33, 131);
+    border: 2px solid rgb(59, 59, 241);
+    transition: 0.3s;
+}
+
+.generic_button:active .content_button{
+    color: rgb(233, 33, 131);
 }
 
 .content_button{
@@ -33,12 +44,6 @@
     .content_button{
         font-size: 25px;
     }
-}
-
-.generic_button:hover{
-    background-color: rgb(33, 33, 131);
-    border: 2px solid rgb(59, 59, 241);
-    transition: 0.3s;
 }
 
 .imgg{
