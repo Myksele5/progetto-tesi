@@ -1,63 +1,90 @@
 table{
-    border: 1px solid darkgray;
+    /* border: 1px solid darkgray; */
     border-spacing: 0;
     width: 55%;
     margin: 5vh;
 }
 
 th, td{
-    border: 1px solid darkgray;
+    /* border: 1px solid darkgray; */
+    border-radius: 2px;
     text-align: center;
 }
 
 tbody tr{background-color: lightcyan;}
 tbody tr:hover .dati_tabella{
-    cursor: pointer;
     background-color: black;
     color: white;
 }
 
 tbody tr:nth-child(2n){background-color: lightgrey;}
 tbody tr:nth-child(2n):hover .dati_tabella{
-    cursor: pointer;
     background-color: black;
     color: white;
 }
 
 .table_wrapper{
+    width: 85%;
     overflow: auto;
+    box-shadow: 1px 2px 8px 5px rgb(233, 33, 131);
 }
 
 .intestazione_tabella{
     background-color: rgb(59, 59, 241);
     color: whitesmoke;
-    /* min-width: 200px; */
+    border: 1px solid rgb(233, 33, 131);
+    padding: 4px;
+    padding-left: 5px;
+    padding-right: 5px;
     font-size: 1.5vw;
 }
 
-.intestazione_tabella.città, .intestazione_tabella.data{
-    display: none;
+.intestazione_tabella.nome, .intestazione_tabella.cognome, .intestazione_tabella.città, .dati_tabella.nome, .dati_tabella.cognome, .dati_tabella.città{
+    min-width: 15vw;
+    max-width: 20vw;
+}
+
+.intestazione_tabella.data, .intestazione_tabella.attività, .dati_tabella.data, .dati_tabella.attività{
+    min-width: 10vw;
+    max-width: 12vw;
+}
+
+.intestazione_tabella.opzioni, .dati_tabella.opzioni{
+    min-width: 10vw;
 }
 
 .dati_tabella{
     background-color: transparent;
     color: rgb(59, 59, 241);
-    font-size: 1.1vw;
+    border: 1px solid rgb(233, 33, 131);
+    font-size: 1.3vw;
+    height: 6vh;
 }
 
-.dati_tabella.città, .dati_tabella.data{
-    display: none;
-}
+@media screen and (max-width: 1600px){
+    .table_wrapper{
+        width: 80%;
+    }
 
-@media screen and (min-width: 1200px) {
-    .dati_tabella.città, .dati_tabella.data, .intestazione_tabella.città, .intestazione_tabella.data{
-        display: table-cell;
-        max-width: 4vw;
+    .intestazione_tabella{
+        color: orange;
     }
 }
 
-@media screen and (max-width: 751px) {
+@media screen and (max-width: 1300px) {
+    .table_wrapper{
+        width: 65%;
+    }
+
     .intestazione_tabella{
         color: lime;
+    }
+
+    .intestazione_tabella.città, .intestazione_tabella.data, .dati_tabella.città, .dati_tabella.data{
+        display: none;
+    }
+    .intestazione_tabella.nome, .intestazione_tabella.cognome, .intestazione_tabella.città, .dati_tabella.nome, .dati_tabella.cognome, .dati_tabella.città{
+        min-width: 10vw;
+        max-width: 11vw;
     }
 }

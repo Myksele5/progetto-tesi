@@ -11,8 +11,8 @@ function GenericButton(props){
     }
 
     return(
-        <div onClick={props.onClick} className={styles.wrap_button}>
-            <button className={styles.generic_button}>
+        <div className={styles.wrap_button}>
+            <button onClick={props.onClick} className={styles.generic_button}>
                 <div className={styles.content_button}>
                     {img}{props.buttonText}
                 </div>

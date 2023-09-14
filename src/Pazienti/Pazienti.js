@@ -8,6 +8,9 @@ import SchedaPaziente from './SchedaPaziente';
 import { useState } from 'react';
 import styles from './Pazienti.module.css';
 import someStyles from './TabellaPazienti.module.css';
+import DeleteButton from "../UI/DeleteButton";
+import EditButton from "../UI/EditButton";
+import DetailsButton from "../UI/DetailsButton";
 
 function Pazienti(){
     const arrayDummyPazienti = [
@@ -18,7 +21,7 @@ function Pazienti(){
             datanascita: '05-07-1995',
             attività: 0,
             opzioni: '',
-            id: 'n_1'
+            id: Math.random().toString()
         },
         {
             nome: 'Vito',
@@ -27,7 +30,7 @@ function Pazienti(){
             datanascita: '31-01-1989',
             attività: 5,
             opzioni: '',
-            id: 'n_2'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -36,7 +39,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Marta',
@@ -45,7 +48,7 @@ function Pazienti(){
             datanascita: '25-12-1992',
             attività: 2,
             opzioni: '',
-            id: 'n_4'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -54,7 +57,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -63,7 +66,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -72,7 +75,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -81,7 +84,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -90,7 +93,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -99,7 +102,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -108,7 +111,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -117,7 +120,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -126,7 +129,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -135,7 +138,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -144,7 +147,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -153,7 +156,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -162,7 +165,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -171,7 +174,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -180,7 +183,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -189,7 +192,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -198,7 +201,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -207,7 +210,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -216,7 +219,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -225,7 +228,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -234,7 +237,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         },
         {
             nome: 'Domenico',
@@ -243,7 +246,7 @@ function Pazienti(){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
-            id: 'n_3'
+            id: Math.random().toString()
         }
     ]
 
@@ -278,18 +281,42 @@ function Pazienti(){
         setShowFormNewPaziente(false);
     }
 
+    function eliminaPaziente(pazienteID){
+        // const indexPaziente = arrayDummyPazienti.indexOf(pazienteID);
+        console.log('ELIMINA QUESTA RIGA');
+        setElencoPazienti(
+            elencoPrecedente => {
+                return elencoPrecedente.filter(elencoPrecedente => elencoPrecedente.id !== pazienteID);
+            }
+        );
+    }
+
     //FUNZIONE CHE RESTITUISCE LA SINGOLA RIGA DELLA TABELLA POPOLATA CON I DATI DEL PAZIENTE PRESI DALL'ARRAY
     function fromArrayToTablePazienti(arrayDummyPazienti){
         return(
-            <tr key={arrayDummyPazienti.id} onClick={() => {
-                cliccaRiga(arrayDummyPazienti.id, arrayDummyPazienti.nome, arrayDummyPazienti.cognome, arrayDummyPazienti.città, arrayDummyPazienti.datanascita, arrayDummyPazienti.attività);
-            }}>
-                <td className={someStyles.dati_tabella}>{arrayDummyPazienti.nome}</td>
-                <td className={someStyles.dati_tabella}>{arrayDummyPazienti.cognome}</td>
+            <tr key={arrayDummyPazienti.id}>
+                <td className={`${someStyles['dati_tabella']} ${someStyles['nome']}`}>{arrayDummyPazienti.nome}</td>
+                <td className={`${someStyles['dati_tabella']} ${someStyles['cognome']}`}>{arrayDummyPazienti.cognome}</td>
                 <td className={`${someStyles['dati_tabella']} ${someStyles['città']}`}>{arrayDummyPazienti.città}</td>
                 <td className={`${someStyles['dati_tabella']} ${someStyles['data']}`}>{arrayDummyPazienti.datanascita}</td>
                 <td className={someStyles.dati_tabella}>{arrayDummyPazienti.attività}</td>
-                <td className={someStyles.dati_tabella}>{arrayDummyPazienti.opzioni}</td>
+                <td className={`${someStyles['dati_tabella']} ${someStyles['opzioni']}`}>
+                    <DetailsButton
+                    onClick={() => {
+                        cliccaRiga(arrayDummyPazienti.id, arrayDummyPazienti.nome, arrayDummyPazienti.cognome, arrayDummyPazienti.città, arrayDummyPazienti.datanascita, arrayDummyPazienti.attività);
+                    }}>
+                    </DetailsButton>
+
+                    <EditButton>
+
+                    </EditButton>
+                    
+                    <DeleteButton
+                    onClick={() => {
+                        eliminaPaziente(arrayDummyPazienti.id);
+                    }}>
+                    </DeleteButton>
+                </td>
             </tr>
         );
     }

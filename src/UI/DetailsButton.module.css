@@ -1,0 +1,30 @@
+.details_button{
+    width: fit-content;
+    height: fit-content;
+    background-color: goldenrod;
+    color: white;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 5px;
+    border: 2px solid black;
+    border-radius: 15px;
+}
+
+.details_button:hover{
+    background-color: rgb(235, 160, 0);
+    border: 2px solid rgb(233, 33, 131);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.details_button:hover .details_image{
+    width: 22px;
+    height: 22px;
+}
+
+.details_image{
+    width: 20px;
+    height: 20px;
+}
