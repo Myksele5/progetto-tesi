@@ -47,7 +47,7 @@ function AddPaziente(props){
         if(enteredNome.trim().length < 1 || enteredCognome.trim().length < 1 || enteredCittà.trim().length < 1 || isNaN(dateee)){
             if(enteredNome.trim().length < 1){
                 setValidNome(false);
-                console.log(validNome);
+                // console.log(validNome);
             }
             else{
                 setValidNome(true);
@@ -99,23 +99,37 @@ function AddPaziente(props){
         // setValidData(true);
     }
 
+    function hideForm(event){
+        event.preventDefault();
+        props.hideFormNewPaziente();
+    }
+
     return(
         <form className={styles.center_form} onSubmit={formSubmitHandler}>
             <h1 className={styles.title_form}>Inserisci i dati del nuovo paziente</h1>
 
-            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}><b>Nome:</b> <br/></label>
-            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNome} onChange={nomeChangeHandler}></input><br/>
+            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome:</label>
+            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNome} onChange={nomeChangeHandler}></input>
 
-            <label className={`${styles.label_style} ${!validCognome ? styles.invalid : ""}`}><b>Cognome:</b> <br/></label>
-            <input className={`${styles.input_style} ${!validCognome ? styles.invalid : ""}`} type="text" value={enteredCognome} onChange={cognomeChangeHandler}></input><br/>
+            <label className={`${styles.label_style} ${!validCognome ? styles.invalid : ""}`}>Cognome:</label>
+            <input className={`${styles.input_style} ${!validCognome ? styles.invalid : ""}`} type="text" value={enteredCognome} onChange={cognomeChangeHandler}></input>
 
-            <label className={`${styles.label_style} ${!validCittà ? styles.invalid : ""}`}><b>Città di nascita:</b> <br/></label>
-            <input className={`${styles.input_style} ${!validCittà ? styles.invalid : ""}`} type="text" value={enteredCittà} onChange={cittàChangeHandler}></input><br/>
+            <label className={`${styles.label_style} ${!validCittà ? styles.invalid : ""}`}>Città di nascita:</label>
+            <input className={`${styles.input_style} ${!validCittà ? styles.invalid : ""}`} type="text" value={enteredCittà} onChange={cittàChangeHandler}></input>
 
-            <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}><b>Data di nascita:</b> <br/></label>
-            <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" min="01-01-1800" max="31-31-2400" value={enteredData} onChange={dataNascitaChangeHandler}></input><br/>
+            <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}>Data di nascita:</label>
+            <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" min="01-01-1800" max="31-31-2400" value={enteredData} onChange={dataNascitaChangeHandler}></input>
 
-            <GenericButton type="submit" buttonText='Salva nuovo paziente'></GenericButton>
+            <GenericButton 
+            type="submit" 
+            buttonText='Salva nuovo paziente'>
+            </GenericButton>
+
+            <GenericButton
+            onClick={hideForm}
+            small_button={true}
+            buttonText='Go Back'>
+            </GenericButton>
         </form>
     );
 }

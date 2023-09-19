@@ -1,7 +1,7 @@
 import GenericButton from "../UI/GenericButton";
 import SearchBox from '../UI/SearchBox';
 import Card from '../UI/Card';
-import imageee from '../add_person.png';
+import imageee from '../Images/add_person.png';
 import TabellaPazienti from './TabellaPazienti';
 import AddPaziente from './AddPaziente';
 import SchedaPaziente from './SchedaPaziente';
@@ -12,7 +12,7 @@ import DeleteButton from "../UI/DeleteButton";
 import EditButton from "../UI/EditButton";
 import DetailsButton from "../UI/DetailsButton";
 
-function Pazienti(){
+function Pazienti(props){
     const arrayDummyPazienti = [
         {
             nome: 'Michele',
@@ -26,7 +26,7 @@ function Pazienti(){
         {
             nome: 'Vito',
             cognome: 'Sardone',
-            città: 'Bari',
+            città: 'Varsavia',
             datanascita: '31-01-1989',
             attività: 5,
             opzioni: '',
@@ -60,11 +60,38 @@ function Pazienti(){
             id: Math.random().toString()
         },
         {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
+            nome: 'Giuseppe',
+            cognome: 'Sardone',
+            città: 'Puerto de la Cruz',
+            datanascita: '31-12-1966',
+            attività: 2,
+            opzioni: '',
+            id: Math.random().toString()
+        },
+        {
+            nome: 'Maria Antonietta',
+            cognome: 'Locuratolo',
             città: 'Bari',
+            datanascita: '14-10-1983',
+            attività: 2,
+            opzioni: '',
+            id: Math.random().toString()
+        },
+        {
+            nome: 'Carlo',
+            cognome: 'Casaburi',
+            città: 'Genova',
             datanascita: '02-08-1995',
             attività: 2,
+            opzioni: '',
+            id: Math.random().toString()
+        },
+        {
+            nome: 'Giulia',
+            cognome: 'Antonacci',
+            città: 'Bari',
+            datanascita: '01-01-1995',
+            attività: 10,
             opzioni: '',
             id: Math.random().toString()
         },
@@ -114,8 +141,8 @@ function Pazienti(){
             id: Math.random().toString()
         },
         {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
+            nome: 'Ermenegildo',
+            cognome: 'Giangiovanni',
             città: 'Bari',
             datanascita: '02-08-1995',
             attività: 2,
@@ -145,12 +172,12 @@ function Pazienti(){
             cognome: 'Casaburi',
             città: 'Bari',
             datanascita: '02-08-1995',
-            attività: 2,
+            attività: 4,
             opzioni: '',
             id: Math.random().toString()
         },
         {
-            nome: 'Domenico',
+            nome: 'Marco',
             cognome: 'Casaburi',
             città: 'Bari',
             datanascita: '02-08-1995',
@@ -160,36 +187,9 @@ function Pazienti(){
         },
         {
             nome: 'Domenico',
-            cognome: 'Casaburi',
+            cognome: 'Casadibari',
             città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
+            datanascita: '02-08-1985',
             attività: 2,
             opzioni: '',
             id: Math.random().toString()
@@ -258,16 +258,17 @@ function Pazienti(){
     let formNewPaziente;
     let tabella;
 
-    //FUNZIONE PER VISUALIZZARE/NASCONDERE FORM AGGIUNTA PAZIENTE
+    //FUNZIONE PER VISUALIZZARE FORM AGGIUNTA PAZIENTE
     function formVisibile(){
-        if(formNewPaziente == null){
-            setShowFormNewPaziente(true);
-            return;
-        }
-        else{
-            setShowFormNewPaziente(false);
-            return;
-        }
+        setShowFormNewPaziente(true);
+        setShowTabella(false);
+        setShowSchedaPaziente();
+    }
+
+    //FUNZIONE PER NASCONDERE FORM AGGIUNTA PAZIENTE
+    function formNonVisibile(){
+        setShowFormNewPaziente(false);
+        setShowTabella(true);
     }
 
     //AGGIORNA ARRAY CON IL NUOVO PAZIENTE ---> VIENE ESEGUITA IN AddPaziente.js TRAMITE PROPS
@@ -279,6 +280,7 @@ function Pazienti(){
             }
         );
         setShowFormNewPaziente(false);
+        setShowTabella(true);
     }
 
     function eliminaPaziente(pazienteID){
@@ -345,6 +347,7 @@ function Pazienti(){
             </Card>
         );
         setShowTabella(false);
+        setShowFormNewPaziente(false);
     }
 
     //CHIUDE LA SCHEDA DEL PAZIENTE APERTA
@@ -365,6 +368,7 @@ function Pazienti(){
             animazione={true}
             children={
                 <AddPaziente
+                hideFormNewPaziente = {formNonVisibile}
                 onCreateNewPaziente = {newPazienteHandler}>
                 </AddPaziente>
             }>
@@ -388,13 +392,13 @@ function Pazienti(){
             <h1 className={styles.page_title}>Lista Pazienti</h1>
 
             <div className={styles.wrap_boxes}>
+                <SearchBox></SearchBox>
+
                 <GenericButton
                 onClick={formVisibile}
                 buttonText={"Aggiungi Paziente"}
                 immagine={imageee}>
                 </GenericButton>
-
-                <SearchBox></SearchBox>
             </div>
 
             <div className={styles.wrapper_generico}>

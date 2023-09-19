@@ -1,6 +1,8 @@
 import styles from "./GenericButton.module.css";
 
 function GenericButton(props){
+    const bottoneStilePiccolo = props.small_button ? `${styles.small_button}` : '';
+    const classiStile = `${styles.generic_button} ${bottoneStilePiccolo}`;
     var img;
 
     if(props.immagine != null){
@@ -11,13 +13,13 @@ function GenericButton(props){
     }
 
     return(
-        <div className={styles.wrap_button}>
-            <button onClick={props.onClick} className={styles.generic_button}>
-                <div className={styles.content_button}>
+
+            <button onClick={props.onClick} className={classiStile}>
+                {/* <div className={styles.content_button}> */}
                     {img}{props.buttonText}
-                </div>
+                {/* </div> */}
             </button>
-        </div>
+
     );
 }
 

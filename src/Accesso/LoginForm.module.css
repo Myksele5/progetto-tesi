@@ -3,64 +3,76 @@
 }
 
 .center_elements{
-    /* display: flex;
-    justify-content: center; */
-    text-align: center;
-    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-h5{
-    margin: 5px;
-    cursor: pointer;
+.title{
+    font-size: 6.5vh;
+    margin: 10px;
 }
 
-.dropdown_box{
-    width: 200px;
-    height: 30px;
-    border: 2px solid rgb(59, 59, 241);
-    border-radius: 20px;
-    font-size: large;
-    text-align: center;
-    color: black;
+.label_box{
+    margin: 3px;
+    font-size: 3.5vh;
+}
+
+.label_box.invalid{
+    color: red;
 }
 
 .input_box{
-    width: 300px;
-    height: 30px;
+    width: 24vw;
+    height: 4vh;
+    margin: 5px;
     border: 2px solid rgb(59, 59, 241);
     border-radius: 20px;
-    font-size: large;
-    text-align: center;
+    font-size: 2.6vh;
     color: black;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.input_box.invalid{
+    border: 2px solid red;
 }
 
 .input_box:focus{
-    border: 2px solid lime;
+    border: 2px solid rgb(233, 33, 131);
+    transition: 0.3s;
+    box-shadow: 1px 1px 5px 1px black;
     outline: none;
 }
 
-.psw_dimenticata{
-    font-size: medium;
-    color: red;
-    text-decoration: underline;
-}
-
-.button_accedi{
-    min-width: 200px;
-    min-height: 50px;
-    width: fit-content;
-    height: fit-content;
-    background-color: rgb(59, 59, 241);
-    border: none;
-    border-radius: 20px;
-    color: whitesmoke;
-    font-size: larger;
-    margin-top: 20px;
+.log_reg{
+    margin: 7px;
+    font-size: 1.8vh;
     cursor: pointer;
 }
 
-.button_accedi:hover{
-    background-color: rgb(33, 33, 131);
-    border: 2px solid rgb(59, 59, 241);
-    transition: 0.3s;
+.log_reg:hover{
+    color: darkblue;
+    transition: 0.2s;
+}
+
+.log_reg:active{
+    text-decoration: underline;
+}
+
+.psw_dimenticata{
+    margin: 5px;
+    font-size: 1.8vh;
+    color: red;
+    cursor: pointer;
+}
+
+.psw_dimenticata:hover{
+    color: darkred;
+    transition: 0.2s;
+}
+
+.psw_dimenticata:active{
+    text-decoration: underline;
 }

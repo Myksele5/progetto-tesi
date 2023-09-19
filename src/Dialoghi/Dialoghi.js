@@ -1,7 +1,7 @@
 import styles from "./Dialoghi.module.css";
 import Card from "../UI/Card";
-import chat from "../chat_blue.png";
-import robot from "../chatbot_blue.png";
+import chat from "../Images/chat_blue.png";
+import robot from "../Images/chatbot_blue.png";
 
 function Dialoghi(){
     let dialoghi_normali;

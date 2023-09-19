@@ -4,7 +4,7 @@ import GenericButton from "../UI/GenericButton";
 import SearchBox from "../UI/SearchBox";
 import AddAttività from "./AddAttività";
 import TabellaAttività from "./TabellaAttività";
-import addImage from "../plus.png";
+import addImage from "../Images/plus.png";
 import styles from "./Attività.module.css";
 import someStyles from "./TabellaAttività.module.css";
 

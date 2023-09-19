@@ -3,64 +3,69 @@
 }
 
 .center_elements{
-    /* display: flex;
-    justify-content: center; */
-    text-align: center;
-    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-h5{
+.title{
+    font-size: 6.5vh;
     margin: 5px;
-    cursor: pointer;
+}
+
+.label_box{
+    margin: 3px;
+    font-size: 3.5vh;
 }
 
 .dropdown_box{
-    width: 200px;
-    height: 30px;
+    width: 24vw;
+    height: 3.9vh;
     border: 2px solid rgb(59, 59, 241);
     border-radius: 20px;
-    font-size: large;
+    font-size: 2.6vh;
     text-align: center;
     color: black;
 }
 
-.input_box{
-    width: 300px;
-    height: 30px;
-    border: 2px solid rgb(59, 59, 241);
-    border-radius: 20px;
-    font-size: large;
-    text-align: center;
-    color: black;
-}
-
-.input_box:focus{
-    border: 2px solid lime;
+.dropdown_box:focus{
+    border: 2px solid rgb(233, 33, 131);
+    transition: 0.3s;
+    box-shadow: 1px 1px 5px 1px black;
     outline: none;
 }
 
-.psw_dimenticata{
-    font-size: medium;
-    color: red;
-    text-decoration: underline;
+.input_box{
+    width: 24vw;
+    height: 3.9vh;
+    margin: 5px;
+    border: 2px solid rgb(59, 59, 241);
+    border-radius: 20px;
+    font-size: 2.6vh;
+    text-align: center;
+    color: black;
+    transition: 0.3s;
 }
 
-.button_accedi{
-    min-width: 200px;
-    min-height: 50px;
-    width: fit-content;
-    height: fit-content;
-    background-color: rgb(59, 59, 241);
-    border: none;
-    border-radius: 20px;
-    color: whitesmoke;
-    font-size: larger;
-    margin-top: 20px;
+.input_box:focus{
+    border: 2px solid rgb(233, 33, 131);
+    transition: 0.3s;
+    box-shadow: 1px 1px 5px 1px black;
+    outline: none;
+}
+
+.log_reg{
+    margin: 7px;
+    font-size: 1.8vh;
     cursor: pointer;
 }
 
-.button_accedi:hover{
-    background-color: rgb(33, 33, 131);
-    border: 2px solid rgb(59, 59, 241);
-    transition: 0.3s;
+.log_reg:hover{
+    color: darkblue;
+    transition: 0.2s;
+}
+
+.log_reg:active{
+    text-decoration: underline;
 }

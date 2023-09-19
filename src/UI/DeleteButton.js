@@ -1,5 +1,5 @@
 import styles from './DeleteButton.module.css';
-import trashCan from '../trash-can.png';
+import trashCan from '../Images/trash-can.png';
 
 function DeleteButton(props){
     return(

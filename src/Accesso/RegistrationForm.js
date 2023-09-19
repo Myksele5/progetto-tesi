@@ -1,51 +1,45 @@
 import GenericButton from "../UI/GenericButton";
 import styles from "./RegistrationForm.module.css";
+import Card from "../UI/Card";
 
 function RegistrationForm(props){
     const goToLoginForm = () => {
-        console.log("VAI AL FORM PER LOGGARE");
-        const booleano = true;
-        props.onShowMe(booleano);
+        // console.log("VAI AL FORM PER LOGGARE");
+        props.goToLoginForm();
+        // props.onShowMe('FORM-LOG_in');
     }
     return(
-        <form className={styles.center_elements}>
-            <h1>Registrazione</h1>
+        <Card
+        children = {
+            <form className={styles.center_elements}>
+                <h1 className={styles.title}>Registrazione</h1>
 
-            <div>
-                <label>Titolo<br/></label>
+                <label className={styles.label_box}>Titolo</label>
                 <select className={styles.dropdown_box}>
                     <option>Dottore</option>
                     <option>Dottoressa</option>
                 </select>
-            </div>
 
-            <div>
-                <label>Nome<br/></label>
+                <label className={styles.label_box}>Nome</label>
                 <input className={styles.input_box}></input>
-            </div>
 
-            <div>
-                <label>Cognome<br/></label>
+                <label className={styles.label_box}>Cognome</label>
                 <input className={styles.input_box}></input>
-            </div>
 
-            <div>
-                <label>Email<br/></label>
+                <label className={styles.label_box}>Email</label>
                 <input className={styles.input_box} placeholder="Inserisci la tua email"></input>
-            </div>
-            
-            <div>
-                <label>Password<br/></label>
-                <input className={styles.input_box} placeholder="Inserisci la tua password"></input>
-            </div>
-            
-            <GenericButton
-            buttonText = 'Registrati'>
-            </GenericButton>
 
-            <h5 onClick={goToLoginForm}>Hai già un account? Accedi!</h5>
-            <h5 className={styles.psw_dimenticata}>Password dimenticata?</h5>
-        </form>
+                <label className={styles.label_box}>Password</label>
+                <input className={styles.input_box} placeholder="Inserisci la tua password"></input>
+                
+                <GenericButton
+                buttonText = 'Registrati'>
+                </GenericButton>
+
+                <h5 className={styles.log_reg} onClick={goToLoginForm}>Hai già un account? Accedi!</h5>
+            </form>
+        }>
+        </Card>
     );
 }
 
