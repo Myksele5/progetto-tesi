@@ -1,0 +1,20 @@
+.item_gioco{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 850px;
+    color: rgb(59, 59, 241);
+    border: 2px solid rgb(59, 59, 241);
+    border-radius: 10px;
+    margin: 25px;
+    margin-left: 5px;
+    padding: 5px;
+    box-shadow: 0 1px 5px 1px rgb(33, 33, 131);
+    transition: 0.2s;
+}
+
+.item_gioco:hover{
+    background-color: lightblue;
+    box-shadow: 0 1px 15px 1px rgb(33, 33, 131);
+    transition: 0.2s;
+}

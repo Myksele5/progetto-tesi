@@ -15,14 +15,14 @@ function Dialoghi(){
     
     dialoghi_con_mini = 
     <>
-    <h2>Fai una domanda a Mini</h2>
+    <h2>Inizia dialogo con Mini</h2>
     <img className={styles.immagine} src={robot}></img>
     </>
 
     return(
         <div className={styles.schermata_dialoghi}>
             <h1 className={styles.page_title}>Dialoghi</h1>
-            <h3 className={styles.page_subtitle}>Seleziona una operazione con mini</h3>
+            <h3 className={styles.page_subtitle}>Seleziona tipo di dialogo</h3>
 
             <div className={styles.wrap_cards}>
                 <Card

@@ -85,7 +85,7 @@ function Attività(){
 
             <h1 className={styles.page_title}>Lista Attività</h1>
 
-            <div className={styles.wrap_boxes}>
+            {/* <div className={styles.wrap_boxes}>
 
                 <GenericButton
                 onClick={formVisibile}
@@ -94,11 +94,11 @@ function Attività(){
                 </GenericButton>
 
                 <SearchBox></SearchBox>
-            </div>
+            </div> */}
 
-            <div className={styles.wrap_add_attività}>
+            {/* <div className={styles.wrap_add_attività}>
                 {formNewAttività}
-            </div>
+            </div> */}
 
             <TabellaAttività
             elenco = {elencoAttività.map(fromArrayToTableAttività)}>

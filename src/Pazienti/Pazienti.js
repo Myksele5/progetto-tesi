@@ -328,23 +328,15 @@ function Pazienti(props){
         console.log(idd, nomee, cognomee, cittàà, dataa, attivitàà);
         console.log(typeof(elencoPazienti[2].datanascita));
         setShowSchedaPaziente(
-            <Card
-            altroStile={true}
-            animazione={true}
-            children={
-                <SchedaPaziente
-                id = {idd}
-                nome = {nomee.toUpperCase()}
-                cognome = {cognomee.toUpperCase()}
-                città = {cittàà.toUpperCase()}
-                datanascita = {dataa}
-                attività = {attivitàà}
-                goBackButton = {chiudiSchedaPaziente}>
-
-                </SchedaPaziente>
-            }>
-
-            </Card>
+            <SchedaPaziente
+            id = {idd}
+            nome = {nomee.toUpperCase()}
+            cognome = {cognomee.toUpperCase()}
+            città = {cittàà.toUpperCase()}
+            datanascita = {dataa}
+            attività = {attivitàà}
+            goBackButton = {chiudiSchedaPaziente}>
+            </SchedaPaziente>
         );
         setShowTabella(false);
         setShowFormNewPaziente(false);

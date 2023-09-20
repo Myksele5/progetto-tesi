@@ -26,7 +26,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 .table_wrapper{
     width: 85%;
     overflow: auto;
-    box-shadow: 1px 2px 8px 5px rgb(233, 33, 131);
+    box-shadow: 1px 2px 8px 5px rgb(33, 33, 131);
 }
 
 .intestazione_tabella{
