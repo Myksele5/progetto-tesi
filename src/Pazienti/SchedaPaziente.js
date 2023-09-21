@@ -88,14 +88,17 @@ function SchedaPaziente(props){
                 <div className={styles.wrap_buttons}>
                     <GenericButton
                     onClick={showDatiPersonali}
+                    generic_button={true}
                     buttonText='Dati Personali'>
                     </GenericButton>
                     <GenericButton
                     onClick={showAttività}
+                    generic_button={true}
                     buttonText='Attività'>
                     </GenericButton>
                     <GenericButton
                     onClick={showStatistiche}
+                    generic_button={true}
                     buttonText='Statistiche'>
                     </GenericButton>
                 </div>
@@ -107,6 +110,7 @@ function SchedaPaziente(props){
                 {sezioneScheda}
 
                 <GenericButton
+                generic_button={true}
                 small_button={true}
                 onClick={props.goBackButton}
                 buttonText='Go Back'>

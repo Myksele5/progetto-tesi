@@ -24,7 +24,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 }
 
 .table_wrapper{
-    width: 85%;
+    width: 90%;
     overflow: auto;
     box-shadow: 1px 2px 8px 5px rgb(33, 33, 131);
 }
@@ -36,13 +36,13 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     padding: 4px;
     padding-left: 5px;
     padding-right: 5px;
-    font-size: 1.5vw;
+    font-size: 1.3vw;
     height: 9.5vh;
 }
 
 .intestazione_tabella.nome, .intestazione_tabella.cognome, .intestazione_tabella.città, .dati_tabella.nome, .dati_tabella.cognome, .dati_tabella.città{
-    min-width: 15vw;
-    max-width: 20vw;
+    min-width: 14vw;
+    max-width: 19.5vw;
 }
 
 .intestazione_tabella.data, .intestazione_tabella.attività, .dati_tabella.data, .dati_tabella.attività{
@@ -51,21 +51,21 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 }
 
 .intestazione_tabella.opzioni, .dati_tabella.opzioni{
-    min-width: 10vw;
+    width: 200px;
 }
 
 .dati_tabella{
     background-color: transparent;
     color: rgb(59, 59, 241);
     border: 1px solid rgb(233, 33, 131);
-    font-size: 1.4vw;
-    height: 9vh;
+    font-size: 1.3vw;
+    height: 8vh;
     /* min-height: 20vh; */
 }
 
 @media screen and (max-width: 1600px){
     .table_wrapper{
-        width: 80%;
+        width: 90%;
     }
 
     .intestazione_tabella{

@@ -33,6 +33,7 @@ function RegistrationForm(props){
                 <input className={styles.input_box} placeholder="Inserisci la tua password"></input>
                 
                 <GenericButton
+                generic_button={true}
                 buttonText = 'Registrati'>
                 </GenericButton>
 

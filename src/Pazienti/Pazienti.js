@@ -250,16 +250,19 @@ function Pazienti(props){
         }
     ]
 
+    const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
     const [showTabella, setShowTabella] = useState(true);
     const [showFormNewPaziente, setShowFormNewPaziente] = useState(false);
     const [elencoPazienti, setElencoPazienti] = useState(arrayDummyPazienti);
     const [showSchedaPaziente, setShowSchedaPaziente] = useState();
 
+    let show_boxes;
     let formNewPaziente;
     let tabella;
 
     //FUNZIONE PER VISUALIZZARE FORM AGGIUNTA PAZIENTE
     function formVisibile(){
+        setShowSearchBoxAndButton(false);
         setShowFormNewPaziente(true);
         setShowTabella(false);
         setShowSchedaPaziente();
@@ -268,6 +271,7 @@ function Pazienti(props){
     //FUNZIONE PER NASCONDERE FORM AGGIUNTA PAZIENTE
     function formNonVisibile(){
         setShowFormNewPaziente(false);
+        setShowSearchBoxAndButton(true);
         setShowTabella(true);
     }
 
@@ -349,6 +353,23 @@ function Pazienti(props){
         setShowTabella(true);
     }
 
+    if(!showSearchBoxAndButton){
+        show_boxes = null;
+    }
+    else{
+        show_boxes =
+            <div className={styles.wrap_boxes}>
+                <SearchBox></SearchBox>
+
+                <GenericButton
+                onClick={formVisibile}
+                buttonText={"Aggiungi Paziente"}
+                generic_button={true}
+                immagine={imageee}>
+                </GenericButton>
+            </div>
+    }
+
     //BLOCCO IF-ELSE PER MOSTRARE/NASCONDERE IL FORM DI AGGIUNTA PAZIENTE
     if(!showFormNewPaziente){
         formNewPaziente = null;
@@ -383,25 +404,13 @@ function Pazienti(props){
 
             <h1 className={styles.page_title}>Lista Pazienti</h1>
 
-            <div className={styles.wrap_boxes}>
-                <SearchBox></SearchBox>
-
-                <GenericButton
-                onClick={formVisibile}
-                buttonText={"Aggiungi Paziente"}
-                immagine={imageee}>
-                </GenericButton>
-            </div>
+            {show_boxes}
 
             <div className={styles.wrapper_generico}>
                 {formNewPaziente}
-            </div>
 
-            <div className={styles.wrapper_generico}>
                 {showSchedaPaziente}
-            </div>
 
-            <div className={styles.wrapper_generico}>
                 {tabella}
             </div>
         </div>

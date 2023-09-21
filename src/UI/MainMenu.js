@@ -35,7 +35,8 @@ function MainMenu(props){
                 <GenericButton
                 onClick={logOutClicked}
                 buttonText={'Log Out'}
-                small_button={true}>
+                small_button={true}
+                generic_button={true}>
                 </GenericButton>
             </div>
             

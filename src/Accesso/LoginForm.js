@@ -56,6 +56,7 @@ function LoginForm(props){
                 
                 <GenericButton
                 type = "submit"
+                generic_button={true}
                 buttonText = 'Accedi'>
                 </GenericButton>
                 

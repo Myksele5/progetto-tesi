@@ -1,88 +1,58 @@
 import styles from "./Giochi.module.css";
-import SearchBox from "../UI/SearchBox";
 import GenericButton from "../UI/GenericButton";
-import GameCard from "../UI/GameCard";
+import SearchBox from "../UI/SearchBox";
+import { useState } from "react";
+import ListaGiochi from "./ListaGiochi";
+import GameObject from "./GameObject";
+
 
 function Giochi(){
-    function formNewGame(){
-        console.log('MOSTRA FORM PER AGGIUNGERE NUOVO GIOCO');
+    const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
+    const [showListaGiochi, setShowListaGiochi] = useState(true);
+    const [gameStarted, setGameStarted] = useState(null);
+
+    let lista_giochi;
+    let show_boxes;
+
+    function startGame(){
+        setShowSearchBoxAndButton(false);
+        setShowListaGiochi(false);
+        setGameStarted(<GameObject></GameObject>);
+    }
+
+    if(showSearchBoxAndButton){
+        show_boxes = 
+        <div className={styles.wrap_boxes}>
+            <SearchBox></SearchBox>
+
+            <GenericButton
+            generic_button={true}
+            buttonText={"Aggiungi Gioco"}>
+            </GenericButton>
+        </div>
+    }
+    else{
+        show_boxes = null;
+    }
+
+    if(showListaGiochi){
+        lista_giochi = 
+        <ListaGiochi
+        nascondiListaGiochi={startGame}>
+        </ListaGiochi>
+    }
+    else{
+        lista_giochi = null;
     }
 
     return(
         <div className={styles.schermata_giochi}>
             <h1 className={styles.page_title}>Giochi</h1>
+            {show_boxes}
 
-            <div className={styles.wrap_boxes}>
-                <SearchBox></SearchBox>
-
-                <GenericButton
-                onClick={formNewGame}
-                buttonText={"Aggiungi Gioco"}>
-                </GenericButton>
-            </div>
-
-            <div className={styles.wrapper_general}>
-                <ul className={styles.lista_giochi}>
-                    <GameCard
-                    children={
-                        <>
-                            <h1 className={styles.game_title}>INDOVINA IL VOLTO DEL PERSONAGGIO</h1>
-                            <div className={styles.buttons_wrap}>
-                                <button className={styles.button_style}>Avvia Gioco</button>
-                                <button className={styles.button_style}>Assegna Gioco</button>
-                            </div>
-                        </>
-                    }>
-                    </GameCard>
-
-                    <GameCard
-                    children={
-                        <>
-                            <h1 className={styles.game_title}>INDOVINA IL FRUTTO</h1>
-                            <div className={styles.buttons_wrap}>
-                                <button className={styles.button_style}>Avvia Gioco</button>
-                                <button className={styles.button_style}>Assegna Gioco</button>
-                            </div>
-                        </>
-                    }>
-                    </GameCard>
-
-                    <GameCard
-                    children={
-                        <>
-                            <h1 className={styles.game_title}>DOMANDE PERSONALI</h1>
-                            <div className={styles.buttons_wrap}>
-                                <button className={styles.button_style}>Avvia Gioco</button>
-                                <button className={styles.button_style}>Assegna Gioco</button>
-                            </div>
-                        </>
-                    }>
-                    </GameCard>
-
-                    <GameCard
-                    children={
-                        <>
-                            <h1 className={styles.game_title}>RIFLESSI</h1>
-                            <div className={styles.buttons_wrap}>
-                                <button className={styles.button_style}>Avvia Gioco</button>
-                                <button className={styles.button_style}>Assegna Gioco</button>
-                            </div>
-                        </>
-                    }>
-                    </GameCard>
-
-                    <GameCard
-                    children={
-                        <>
-                            <h1 className={styles.game_title}>ALTRO TIPO DI GIOCO</h1>
-                            <div className={styles.buttons_wrap}>
-                                <button className={styles.button_style}>Avvia Gioco</button>
-                                <button className={styles.button_style}>Assegna Gioco</button>
-                            </div>
-                        </>
-                    }>
-                    </GameCard>
-                </ul>
+            <div className={styles.wrapper_generico}>
+                {gameStarted}
+                {lista_giochi}
             </div>
         </div>
     );

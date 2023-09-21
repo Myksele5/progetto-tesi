@@ -1,8 +1,10 @@
 import styles from "./GenericButton.module.css";
 
 function GenericButton(props){
+    const bottoneStileGioco = props.game_button ? `${styles.game_button}` : '';
     const bottoneStilePiccolo = props.small_button ? `${styles.small_button}` : '';
-    const classiStile = `${styles.generic_button} ${bottoneStilePiccolo}`;
+    const bottoneStileNormale = props.generic_button ? `${styles.generic_button}` : ``;
+    const classiStile = `${bottoneStileNormale} ${bottoneStilePiccolo} ${bottoneStileGioco}`;
     var img;
 
     if(props.immagine != null){

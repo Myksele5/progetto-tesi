@@ -1,4 +1,4 @@
-table{
+/* table{
     border: 1px solid darkgray;
     border-spacing: 0;
     width: 1400px;
@@ -11,7 +11,7 @@ th, td{
 }
 
 tbody tr{background-color: lightcyan;}
-tbody tr:nth-child(2n){background-color: lightgrey;}
+tbody tr:nth-child(2n){background-color: lightgrey;} */
 
 .table_wrapper{
     overflow: auto;

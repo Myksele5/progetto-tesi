@@ -1,0 +1,110 @@
+import styles from "./ListaGiochi.module.css";
+import GenericButton from "../UI/GenericButton";
+import GameCard from "../UI/GameCard";
+
+function ListaGiochi(props){
+    
+    function avviaGioco(){
+        props.nascondiListaGiochi();
+    }
+
+    return(
+        <>
+
+            <ul className={styles.lista_giochi}>
+                <GameCard
+                children={
+                    <>
+                        <h1 className={styles.game_title}>INDOVINA IL VOLTO DEL PERSONAGGIO</h1>
+                        <div className={styles.buttons_wrap}>
+                            <GenericButton
+                            onClick={avviaGioco}
+                            game_button={true}
+                            buttonText='Avvia Gioco'>
+                            </GenericButton>
+                            <GenericButton
+                            game_button={true}
+                            buttonText='Assegna Gioco'>
+                            </GenericButton>
+                        </div>
+                    </>
+                }>
+                </GameCard>
+
+                <GameCard
+                children={
+                    <>
+                        <h1 className={styles.game_title}>INDOVINA IL FRUTTO</h1>
+                        <div className={styles.buttons_wrap}>
+                            <GenericButton
+                            game_button={true}
+                            buttonText='Avvia Gioco'>
+                            </GenericButton>
+                            <GenericButton
+                            game_button={true}
+                            buttonText='Assegna Gioco'>
+                            </GenericButton>
+                        </div>
+                    </>
+                }>
+                </GameCard>
+
+                <GameCard
+                children={
+                    <>
+                        <h1 className={styles.game_title}>DOMANDE PERSONALI</h1>
+                        <div className={styles.buttons_wrap}>
+                            <GenericButton
+                            game_button={true}
+                            buttonText='Avvia Gioco'>
+                            </GenericButton>
+                            <GenericButton
+                            game_button={true}
+                            buttonText='Assegna Gioco'>
+                            </GenericButton>
+                        </div>
+                    </>
+                }>
+                </GameCard>
+
+                <GameCard
+                children={
+                    <>
+                        <h1 className={styles.game_title}>RIFLESSI</h1>
+                        <div className={styles.buttons_wrap}>
+                            <GenericButton
+                            game_button={true}
+                            buttonText='Avvia Gioco'>
+                            </GenericButton>
+                            <GenericButton
+                            game_button={true}
+                            buttonText='Assegna Gioco'>
+                            </GenericButton>
+                        </div>
+                    </>
+                }>
+                </GameCard>
+
+                <GameCard
+                children={
+                    <>
+                        <h1 className={styles.game_title}>ALTRO TIPO DI GIOCO</h1>
+                        <div className={styles.buttons_wrap}>
+                            <GenericButton
+                            game_button={true}
+                            buttonText='Avvia Gioco'>
+                            </GenericButton>
+                            <GenericButton
+                            game_button={true}
+                            buttonText='Assegna Gioco'>
+                            </GenericButton>
+                        </div>
+                    </>
+                }>
+                </GameCard>
+            </ul>
+        </>
+    );
+}
+
+export default ListaGiochi;

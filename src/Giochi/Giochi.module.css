@@ -18,40 +18,8 @@
     background-color: pink;
 }
 
-.wrapper_general{
+.wrapper_generico{
     display: flex;
     justify-content: center;
-}
-
-.lista_giochi{
-    width: 1000px;
-    border: 2px solid green;
-}
-
-.game_title{
-    font-size: 1.5vw;
-    margin-left: 5px;
-}
-
-.buttons_wrap{
-    display: flex;
-    flex-direction: column;
-}
-
-.button_style{
-    width: 160px;
-    height: 50px;
-    margin: 1px;
-    font-size: 1vw;
-    /* font-weight: bold; */
-    border: 1px solid rgb(233, 33, 131);
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.button_style:hover{
-    background-color: rgb(33, 33, 131);
-    color: white;
-    transition: 0.3s;
+    align-items: center;
 }

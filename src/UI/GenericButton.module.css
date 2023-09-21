@@ -11,7 +11,7 @@
     justify-content: space-evenly;
     margin: 7px;
     width: 280px;
-    height: 60px;
+    height: 55px;
     font-size: 24px;
     font-weight: bold;
     background-color: rgb(59, 59, 241);
@@ -50,6 +50,26 @@
 .small_button:active{
     color: rgb(233, 33, 131);
     transition: 0.2s;
+}
+
+.game_button{
+    width: 160px;
+    height: 50px;
+    margin: 1px;
+    font-size: 1.1vw;
+    /* font-weight: bold; */
+    background-color: lightcyan;
+    color: rgb(59, 59, 241);
+    border: 1px solid rgb(233, 33, 131);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.game_button:hover{
+    background-color: rgb(33, 33, 131);
+    color: white;
+    transition: 0.3s;
 }
 
 .imgg{

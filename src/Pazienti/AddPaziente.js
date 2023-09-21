@@ -122,11 +122,13 @@ function AddPaziente(props){
 
             <GenericButton 
             type="submit" 
+            generic_button={true}
             buttonText='Salva nuovo paziente'>
             </GenericButton>
 
             <GenericButton
             onClick={hideForm}
+            generic_button={true}
             small_button={true}
             buttonText='Go Back'>
             </GenericButton>
