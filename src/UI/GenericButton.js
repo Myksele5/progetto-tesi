@@ -15,13 +15,11 @@ function GenericButton(props){
     }
 
     return(
-
-            <button onClick={props.onClick} className={classiStile}>
-                {/* <div className={styles.content_button}> */}
-                    {img}{props.buttonText}
-                {/* </div> */}
-            </button>
-
+        <button onClick={props.onClick} className={classiStile}>
+            {/* <div className={styles.content_button}> */}
+                {img}{props.buttonText}
+            {/* </div> */}
+        </button>
     );
 }
 

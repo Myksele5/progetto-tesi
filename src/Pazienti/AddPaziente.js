@@ -128,7 +128,6 @@ function AddPaziente(props){
 
             <GenericButton
             onClick={hideForm}
-            generic_button={true}
             small_button={true}
             buttonText='Go Back'>
             </GenericButton>
