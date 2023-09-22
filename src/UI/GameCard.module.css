@@ -14,7 +14,7 @@
 }
 
 .item_gioco:hover{
-    background-color: lightblue;
+    background-color: lightcyan;
     box-shadow: 0 1px 15px 1px rgb(33, 33, 131);
     transition: 0.2s;
 }

@@ -31,7 +31,7 @@
 
 .generic_button:active{
     color: rgb(233, 33, 131);
-    transition: 0.2s;
+    transition: 0.1s;
 }
 
 .small_button{
@@ -39,7 +39,7 @@
     align-items: center;
     justify-content: space-evenly;
     margin: 7px;
-    width: 150px;
+    width: 130px;
     height: 50px;
     font-size: 20px;
     font-weight: bold;
@@ -59,25 +59,61 @@
 
 .small_button:active{
     color: rgb(233, 33, 131);
+    transition: 0.1s;
+}
+
+.alternative_button{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 7px;
+    width: 170px;
+    height: 40px;
+    font-size: 20px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    color: whitesmoke;
+    cursor: pointer;
+    background-color: rgb(50, 50, 192);
+}
+
+.alternative_button:hover{
+    background-color: rgb(33, 33, 131);
+    border: 2px solid rgb(233, 33, 131);
+    color: white;
+    transition: 0.3s;
+}
+
+.alternative_button:active{
+    color: rgb(233, 33, 131);
     transition: 0.2s;
 }
 
 .game_button{
-    width: 160px;
-    height: 50px;
-    margin: 1px;
+    width: 250px;
+    height: 70px;
+    background-color: rgb(236, 236, 236);
+    color: rgb(33, 33, 131);
     font-size: 1.1vw;
-    /* font-weight: bold; */
-    background-color: lightcyan;
-    color: rgb(59, 59, 241);
-    border: 1px solid rgb(233, 33, 131);
+    font-weight: bold;
+    border: 2px solid rgb(33, 33, 131);
     border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
 }
 
 .game_button:hover{
-    background-color: rgb(33, 33, 131);
+    cursor: pointer;
+    box-shadow: 0 0 5px 1px black;
+    transition: 0.1s;
+}
+
+.correct_answer{
+    background-color: forestgreen;
+    color: white;
+    transition: 0.2s;
+}
+
+.wrong_answer{
+    background-color: red;
     color: white;
     transition: 0.3s;
 }

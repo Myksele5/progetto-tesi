@@ -19,11 +19,11 @@ function ListaGiochi(props){
                         <div className={styles.buttons_wrap}>
                             <GenericButton
                             onClick={avviaGioco}
-                            game_button={true}
+                            alternative_button={true}
                             buttonText='Avvia Gioco'>
                             </GenericButton>
                             <GenericButton
-                            game_button={true}
+                            alternative_button={true}
                             buttonText='Assegna Gioco'>
                             </GenericButton>
                         </div>
@@ -37,11 +37,11 @@ function ListaGiochi(props){
                         <h1 className={styles.game_title}>INDOVINA IL FRUTTO</h1>
                         <div className={styles.buttons_wrap}>
                             <GenericButton
-                            game_button={true}
+                            alternative_button={true}
                             buttonText='Avvia Gioco'>
                             </GenericButton>
                             <GenericButton
-                            game_button={true}
+                            alternative_button={true}
                             buttonText='Assegna Gioco'>
                             </GenericButton>
                         </div>
@@ -55,11 +55,11 @@ function ListaGiochi(props){
                         <h1 className={styles.game_title}>DOMANDE PERSONALI</h1>
                         <div className={styles.buttons_wrap}>
                             <GenericButton
-                            game_button={true}
+                            alternative_button={true}
                             buttonText='Avvia Gioco'>
                             </GenericButton>
                             <GenericButton
-                            game_button={true}
+                            alternative_button={true}
                             buttonText='Assegna Gioco'>
                             </GenericButton>
                         </div>
@@ -73,11 +73,11 @@ function ListaGiochi(props){
                         <h1 className={styles.game_title}>RIFLESSI</h1>
                         <div className={styles.buttons_wrap}>
                             <GenericButton
-                            game_button={true}
+                            alternative_button={true}
                             buttonText='Avvia Gioco'>
                             </GenericButton>
                             <GenericButton
-                            game_button={true}
+                            alternative_button={true}
                             buttonText='Assegna Gioco'>
                             </GenericButton>
                         </div>
@@ -91,11 +91,11 @@ function ListaGiochi(props){
                         <h1 className={styles.game_title}>ALTRO TIPO DI GIOCO</h1>
                         <div className={styles.buttons_wrap}>
                             <GenericButton
-                            game_button={true}
+                            alternative_button={true}
                             buttonText='Avvia Gioco'>
                             </GenericButton>
                             <GenericButton
-                            game_button={true}
+                            alternative_button={true}
                             buttonText='Assegna Gioco'>
                             </GenericButton>
                         </div>
