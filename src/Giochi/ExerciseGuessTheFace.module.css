@@ -1,8 +1,26 @@
+.explanation{
+    font-size: 30px;
+    margin: 5px;
+}
+
+.horizontal_line{
+    width: 100%;
+    border: 1px solid rgb(233, 33, 131);
+    margin: 5px;
+}
+
 .resize_image{
     width: 400px;
     height: 300px;
-    margin-bottom: 20px;
+    /* margin-bottom: 30px; */
     border: 5px solid rgb(233, 33, 131);
+}
+
+.risposte_corrette{
+    border: 2px solid rgb(233, 33, 131);
+    font-size: 20px;
+    margin: 20px;
+    padding: 5px;
 }
 
 .wrapper_bottoni_risposte{

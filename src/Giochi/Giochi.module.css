@@ -1,7 +1,7 @@
 .page_title{
     margin: 0;
     text-align: center;
-    font-size: 60px;
+    font-size: 55px;
 }
 
 .schermata_giochi{
@@ -20,6 +20,16 @@
 
 .wrapper_generico{
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+}
+
+.wrapper_gioco{
+    /* width: 100%; */
+    width: 40vw;
+    /* border: 3px solid red; */
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }

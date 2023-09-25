@@ -4,8 +4,8 @@ import GameCard from "../UI/GameCard";
 
 function ListaGiochi(props){
     
-    function avviaGioco(){
-        props.nascondiListaGiochi();
+    function avviaGiocoGuessTheFace(){
+        props.nascondiListaGiochi('GUESS_THE_FACE');
     }
 
     return(
@@ -18,7 +18,7 @@ function ListaGiochi(props){
                         <h1 className={styles.game_title}>INDOVINA IL VOLTO DEL PERSONAGGIO</h1>
                         <div className={styles.buttons_wrap}>
                             <GenericButton
-                            onClick={avviaGioco}
+                            onClick={avviaGiocoGuessTheFace}
                             alternative_button={true}
                             buttonText='Avvia Gioco'>
                             </GenericButton>

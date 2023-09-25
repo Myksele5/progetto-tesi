@@ -3,21 +3,56 @@ import GenericButton from "../UI/GenericButton";
 import SearchBox from "../UI/SearchBox";
 import { useState } from "react";
 import ListaGiochi from "./ListaGiochi";
-import GameObject from "./GameObject";
-
+import ExerciseGuessTheFace from "./ExerciseGuessTheFace";
+import Card from '../UI/Card';
 
 function Giochi(){
     const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
     const [showListaGiochi, setShowListaGiochi] = useState(true);
-    const [gameStarted, setGameStarted] = useState(null);
+    const [gameObject, setGameObject] = useState(null);
+    const [gameResults, setGameResults] = useState(null);
 
     let lista_giochi;
     let show_boxes;
 
-    function startGame(){
+    function startGame(stringa){
         setShowSearchBoxAndButton(false);
         setShowListaGiochi(false);
-        setGameStarted(<GameObject></GameObject>);
+        if(stringa === 'GUESS_THE_FACE'){
+            setGameObject(
+                <div className={styles.wrapper_gioco}>
+                    <ExerciseGuessTheFace
+                    giocoTerminato={endGame}>
+                    </ExerciseGuessTheFace>
+                </div>
+            );
+        }
+    }
+
+    function endGame(risposteUtente){
+        setGameObject(null);
+        setGameResults(
+            <Card
+            altroStile={true}
+            children={
+                <div className={styles.wrapper_generico}>
+                    <h1>RISULTATI UTENTE</h1>
+                    <p>Risposte corrette: {risposteUtente}</p>
+                    <GenericButton
+                    onClick={chiudiSchedaRisultati}
+                    small_button={true}
+                    buttonText='Chiudi Scheda'>
+                    </GenericButton>
+                </div>
+                }>
+            </Card>
+        );
+    }
+
+    function chiudiSchedaRisultati(){
+        setGameResults(null);
+        setShowSearchBoxAndButton(true);
+        setShowListaGiochi(true);
     }
 
     if(showSearchBoxAndButton){
@@ -51,7 +86,8 @@ function Giochi(){
             {show_boxes}
 
             <div className={styles.wrapper_generico}>
-                {gameStarted}
+                {gameResults}
+                {gameObject}
                 {lista_giochi}
             </div>
         </div>

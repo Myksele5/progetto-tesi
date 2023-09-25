@@ -9,10 +9,10 @@ import Leonardo from '../Images-Giochi/LEONARDO_DA_VINCI.jpg';
 import Napoleone from '../Images-Giochi/NAPOLEONE_BONAPARTE.jpg';
 
 let counter_question_number = 0;
-let counter_correct_answers = 0;
 
-function ExerciseGuessTheFace(props){
+function QuizGuessTheFace(){
     
+    const [questionNumber, setQuestionNumber] = useState(counter_question_number);
     const [coloraRispostaCorretta, setColoraRispostaCorretta] = useState(false);
     const [coloraRispostaSbagliata_N1, setColoraRispostaSbagliata_N1] = useState(false);
     const [coloraRispostaSbagliata_N2, setColoraRispostaSbagliata_N2] = useState(false);
@@ -74,7 +74,7 @@ function ExerciseGuessTheFace(props){
         }}
         correct_answer={coloraRispostaCorretta}
         game_button={true}
-        buttonText={questions[counter_question_number].question.correct_answer}>
+        buttonText={questions[questionNumber].question.correct_answer}>
         </GenericButton>,
 
         <GenericButton
@@ -83,7 +83,7 @@ function ExerciseGuessTheFace(props){
         }}
         wrong_answer={coloraRispostaSbagliata_N1}
         game_button={true}
-        buttonText={questions[counter_question_number].question.wrong_answer_n1}>
+        buttonText={questions[questionNumber].question.wrong_answer_n1}>
         </GenericButton>,
 
         <GenericButton
@@ -92,7 +92,7 @@ function ExerciseGuessTheFace(props){
         }}
         wrong_answer={coloraRispostaSbagliata_N2}
         game_button={true}
-        buttonText={questions[counter_question_number].question.wrong_answer_n2}>
+        buttonText={questions[questionNumber].question.wrong_answer_n2}>
         </GenericButton>,
 
         <GenericButton
@@ -101,18 +101,19 @@ function ExerciseGuessTheFace(props){
         }}
         wrong_answer={coloraRispostaSbagliata_N3}
         game_button={true}
-        buttonText={questions[counter_question_number].question.wrong_answer_n3}>
+        buttonText={questions[questionNumber].question.wrong_answer_n3}>
         </GenericButton>
 
     ];
 
     function checkTheAnswer(answer){
-
+        console.log(counter_question_number + ' Contatore iniziale');
+        // console.log(questions.length + '-----> GRANDEZZA ARRAY');
+        
         // IMPOSTA IL COLORE DEI BOTTONI IN BASE ALLA RISPOSTA
         if(answer === 'CORRECT'){
             console.log('Risposta CORRETTA!');
             setColoraRispostaCorretta(true);
-            counter_correct_answers++;
         }
         if(answer === 'WRONG_N1'){
             console.log('Risposta SBAGLIATA!');
@@ -130,33 +131,30 @@ function ExerciseGuessTheFace(props){
             setColoraRispostaCorretta(true);
         }
 
-        // AGGIORNA CONTATORE DELLA DOMANDA ======= GIOCO IN CORSO
+        // AGGIORNA CONTATORE DELLA DOMANDA ======= SE LE DOMANDE SONO FINITE RICOMINCIA DA CAPO
         if(counter_question_number < questions.length - 1){
-            
+            console.log(counter_question_number);
+            counter_question_number++;
+
             setTimeout(() => {
-                counter_question_number++;
                 setColoraRispostaCorretta(false);
                 setColoraRispostaSbagliata_N1(false);
                 setColoraRispostaSbagliata_N2(false);
                 setColoraRispostaSbagliata_N3(false);
+                setQuestionNumber(counter_question_number);
             }, 1500);            
         }
-
-        // GIOCO TERMINATO ======= RESETTA LE COMPONENTI
         else{
             setTimeout(() => {
                 setColoraRispostaCorretta(false);
                 setColoraRispostaSbagliata_N1(false);
                 setColoraRispostaSbagliata_N2(false);
                 setColoraRispostaSbagliata_N3(false);
-                props.giocoTerminato(counter_correct_answers.toString());
                 counter_question_number = 0; //--------> GIOCO FINITO RESETTA IL CONTATORE
-                counter_correct_answers = 0; //--------> E RESETTO IL NUMERO DI RISPOSTE DELL'UTENTE
+                setQuestionNumber(counter_question_number);
             }, 1500);  
-
-            
-            console.log('GIOCO TERMINATO, NASCONDI IL GIOCO E MOSTRA I RISULTATI')
         }
+        console.log(counter_question_number + ' Contatore dopo UPDATE');
     }
 
     function randomizeAnswers(){
@@ -175,17 +173,14 @@ function ExerciseGuessTheFace(props){
 
     return(
         <>
-            <hr className={styles.horizontal_line}></hr>
-            <h1 className={styles.explanation}>Seleziona la risposta che ritieni corretta</h1>
-            <hr className={styles.horizontal_line}></hr>
+            <h1>Seleziona la risposta che ritieni corretta</h1>
             <h2>Chi è questo personaggio?</h2>
-            <img className={styles.resize_image} src={questions[counter_question_number].face_image} alt='Face'></img>
-            <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>
+            <img className={styles.resize_image} src={questions[questionNumber].face_image} alt='Face'></img>
             <div className={styles.wrapper_bottoni_risposte}>
-                {risposte}
+                {randomizeAnswers()}
             </div>
         </>
     );
 }
 
-export default ExerciseGuessTheFace;
+export default QuizGuessTheFace;
