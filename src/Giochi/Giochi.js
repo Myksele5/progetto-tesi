@@ -5,6 +5,7 @@ import { useState } from "react";
 import ListaGiochi from "./ListaGiochi";
 import ExerciseGuessTheFace from "./ExerciseGuessTheFace";
 import Card from '../UI/Card';
+import ExerciseGuessTheFruit from "./ExerciseGuessTheFruit";
 
 function Giochi(){
     const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
@@ -18,15 +19,29 @@ function Giochi(){
     function startGame(stringa){
         setShowSearchBoxAndButton(false);
         setShowListaGiochi(false);
-        if(stringa === 'GUESS_THE_FACE'){
-            setGameObject(
-                <div className={styles.wrapper_gioco}>
-                    <ExerciseGuessTheFace
-                    giocoTerminato={endGame}>
-                    </ExerciseGuessTheFace>
-                </div>
-            );
+        switch(stringa){
+            case 'GUESS_THE_FACE':
+                setGameObject(
+                    <div className={styles.wrapper_gioco}>
+                        <ExerciseGuessTheFace
+                        giocoTerminato={endGame}>
+                        </ExerciseGuessTheFace>
+                    </div>
+                );
+                break;
+            case 'GUESS_THE_FRUIT':
+                setGameObject(
+                    <div className={styles.wrapper_gioco}>
+                        <ExerciseGuessTheFruit
+                        giocoTerminato={endGame}>
+                        </ExerciseGuessTheFruit>
+                    </div>
+                );
+                break;
+            default:
+                setGameObject(null);
         }
+        
     }
 
     function endGame(risposteUtente){
@@ -42,6 +57,10 @@ function Giochi(){
                     onClick={chiudiSchedaRisultati}
                     small_button={true}
                     buttonText='Chiudi Scheda'>
+                    </GenericButton>
+                    <GenericButton
+                    generic_button={true}
+                    buttonText='Assegna risultati a...'>
                     </GenericButton>
                 </div>
                 }>

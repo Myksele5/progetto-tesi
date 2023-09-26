@@ -9,27 +9,17 @@ import Giochi from './Giochi/Giochi';
 import Dialoghi from './Dialoghi/Dialoghi';
 
 function App() {
-  const [showAccessForm, setShowAccessForm] = 
-  useState(
-    <Login
-    onUserLogin = {userLoggedin}>
-    </Login>
-  );
-  const [schermataMostrata, setSchermataMostrata] = useState(null);
-  const [showMenu, setShowMenu] = useState(null);
+  const [showAccessForm, setShowAccessForm] = useState(true);
+  const [schermataMostrata, setSchermataMostrata] = useState('');
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     const key_logged_in = localStorage.getItem('logged_IN');
 
     if(key_logged_in === '1'){
-      setShowAccessForm(null);
-      setSchermataMostrata(<Pazienti/>);
-      setShowMenu(
-        <MainMenu
-        makeUserLogout = {userLoggedout}
-        showSchermata = {changeSchermata}>
-        </MainMenu>
-      );
+      setShowAccessForm(false);
+      setSchermataMostrata('SCHERMATA_Pazienti');
+      setShowMenu(true);
     }
   }, [setShowAccessForm, setSchermataMostrata, setShowMenu]);
 
@@ -38,19 +28,19 @@ function App() {
 
     switch(schermata){
       case 0:
-        setSchermataMostrata(<Pazienti/>);
+        setSchermataMostrata('SCHERMATA_Pazienti');
         break;
   
       case 1:
-        setSchermataMostrata(<Attività/>);
+        setSchermataMostrata('SCHERMATA_Attività');
         break;
   
       case 2:
-        setSchermataMostrata(<Giochi/>);
+        setSchermataMostrata('SCHERMATA_Giochi');
         break;
   
       case 3:
-        setSchermataMostrata(<Dialoghi/>);
+        setSchermataMostrata('SCHERMATA_Dialoghi');
         break;
   
       default:
@@ -61,37 +51,40 @@ function App() {
   function userLoggedin(){
     localStorage.setItem('logged_IN', '1');
     console.log('SALVATI DATI DI LOGIN');
-    setShowAccessForm(null);
-    setSchermataMostrata(<Pazienti/>);
-    setShowMenu(
-      <MainMenu
-      makeUserLogout = {userLoggedout}
-      showSchermata = {changeSchermata}>
-      </MainMenu>
-    );
+    setShowAccessForm(false);
+    setSchermataMostrata('SCHERMATA_Pazienti');
+    setShowMenu(true);
   }
 
   function userLoggedout(){
     localStorage.removeItem('logged_IN', '1');
     console.log('EFFETTUO LOGOUT');
-    setShowAccessForm(
-      <Login
-      onUserLogin = {userLoggedin}>
-      </Login>
-    );
-    setSchermataMostrata(null);
-    setShowMenu(null);
+    setShowAccessForm(true);
+    setSchermataMostrata('');
+    setShowMenu(false);
   }
 
   return (
     <>
     
-      {showMenu}
+      {showMenu && 
+        <MainMenu
+        makeUserLogout = {userLoggedout}
+        showSchermata = {changeSchermata}>
+        </MainMenu>
+      }
         
       <div className="App">
-        {showAccessForm}
+        {showAccessForm && 
+          <Login
+          onUserLogin = {userLoggedin}>
+          </Login>
+        }
         
-        {schermataMostrata}
+        {schermataMostrata === 'SCHERMATA_Pazienti' && <Pazienti/>}
+        {schermataMostrata === 'SCHERMATA_Attività' && <Attività/>}
+        {schermataMostrata === 'SCHERMATA_Giochi' && <Giochi/>}
+        {schermataMostrata === 'SCHERMATA_Dialoghi' && <Dialoghi/>}
       </div>
 
     </>
@@ -113,3 +106,12 @@ export default App;
         >
           Learn React
         </a> */}
+
+        // <Login
+        // onUserLogin = {userLoggedin}>
+        // </Login>
+
+        // <MainMenu
+        // makeUserLogout = {userLoggedout}
+        // showSchermata = {changeSchermata}>
+        // </MainMenu>

@@ -5,77 +5,23 @@ import { useState } from 'react';
 
 function SchedaPaziente(props){
     const [titoloScheda, setTitoloScheda] = useState('Dati Personali');
-    const [sezioneScheda, setSezioneScheda] = useState(
-        <>
-            <label className={styles.label_style}>Nome completo</label>
-            <h3>{props.nome} {props.cognome}</h3>
-            {/* <hr className={styles.horizontal_line}/> */}
-
-            <label className={styles.label_style}>Città di nascita</label>
-            <h3>{props.città}</h3>
-            {/* <hr className={styles.horizontal_line}/> */}
-
-            <label className={styles.label_style}>Data di nascita</label>
-            <h3>{props.datanascita}</h3>
-            {/* <hr className={styles.horizontal_line}/> */}
-
-            <label className={styles.label_style}>Attività associate</label>
-            <h3>{props.attività}</h3>
-            {/* <hr className={styles.horizontal_line}/> */}
-
-            <label className={styles.label_style}>Note opzionali</label>
-            <h3>Da decidere</h3>
-            {/* <hr className={styles.horizontal_line}/> */}
-        </>
-    );
+    const [sezioneScheda, setSezioneScheda] = useState('DATI_PERSONALI');
 
     function showDatiPersonali(){
         console.log('Mostra DATI PERSONALI');
         setTitoloScheda('Dati Personali');
-        setSezioneScheda(
-            <>
-                <label className={styles.label_style}>Nome completo</label>
-                <h3 className={styles.infos_style}>{props.nome} {props.cognome}</h3>
-                {/* <hr className={styles.horizontal_line}/> */}
-
-                <label className={styles.label_style}>Città di nascita</label>
-                <h3 className={styles.infos_style}>{props.città}</h3>
-                {/* <hr className={styles.horizontal_line}/> */}
-
-                <label className={styles.label_style}>Data di nascita</label>
-                <h3 className={styles.infos_style}>{props.datanascita}</h3>
-                {/* <hr className={styles.horizontal_line}/> */}
-
-                <label className={styles.label_style}>Attività associate</label>
-                <h3 className={styles.infos_style}>{props.attività}</h3>
-                {/* <hr className={styles.horizontal_line}/> */}
-
-                <label className={styles.label_style}>Note opzionali</label>
-                <h3 className={styles.infos_style}>Da decidere</h3>
-                {/* <hr className={styles.horizontal_line}/> */}
-            </>
-        );
+        setSezioneScheda('DATI_PERSONALI');
     }
 
     function showAttività(){
         setTitoloScheda('Attività');
-        setSezioneScheda(
-            <>
-                <h1>Nessuna attività trovata.</h1>
-                <h1>Non ci sono attività!</h1>
-                <h1>Aggiungi gioco/terapia</h1>
-            </>
-        );
+        setSezioneScheda('ATTIVITÀ');
         console.log('Mostra ESERCIZI');
     }
 
     function showStatistiche(){
         setTitoloScheda('Statistiche');
-        setSezioneScheda(
-            <>
-                <h1>Non ci sono statistiche!</h1>
-            </>
-        );
+        setSezioneScheda('STATISTICHE');
         console.log('MOSTRA STATISTICHE');
     }
 
@@ -107,7 +53,41 @@ function SchedaPaziente(props){
                 <h1 className={styles.scheda_title}>{titoloScheda}</h1>
                 <hr className={styles.horizontal_line}></hr>
 
-                {sezioneScheda}
+                {sezioneScheda === 'DATI_PERSONALI' &&
+                    <>
+                    <label className={styles.label_style}>Nome completo</label>
+                    <h3>{props.nome} {props.cognome}</h3>
+                    {/* <hr className={styles.horizontal_line}/> */}
+        
+                    <label className={styles.label_style}>Città di nascita</label>
+                    <h3>{props.città}</h3>
+                    {/* <hr className={styles.horizontal_line}/> */}
+        
+                    <label className={styles.label_style}>Data di nascita</label>
+                    <h3>{props.datanascita}</h3>
+                    {/* <hr className={styles.horizontal_line}/> */}
+        
+                    <label className={styles.label_style}>Attività associate</label>
+                    <h3>{props.attività}</h3>
+                    {/* <hr className={styles.horizontal_line}/> */}
+        
+                    <label className={styles.label_style}>Note opzionali</label>
+                    <h3>Da decidere</h3>
+                    {/* <hr className={styles.horizontal_line}/> */}
+                    </>
+                }
+                {sezioneScheda === 'ATTIVITÀ' &&
+                    <>
+                    <h1>Nessuna attività trovata.</h1>
+                    <h1>Non ci sono attività!</h1>
+                    <h1>Aggiungi gioco/terapia</h1>
+                    </>
+                }
+                {sezioneScheda === 'STATISTICHE' &&
+                    <>
+                    <h1>Non ci sono statistiche!</h1>
+                    </>
+                }
 
                 <GenericButton
                 generic_button={true}

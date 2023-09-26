@@ -12,6 +12,8 @@ import DeleteButton from "../UI/DeleteButton";
 import EditButton from "../UI/EditButton";
 import DetailsButton from "../UI/DetailsButton";
 
+let scheda_paziente;
+
 function Pazienti(props){
     const arrayDummyPazienti = [
         {
@@ -254,10 +256,8 @@ function Pazienti(props){
     const [showTabella, setShowTabella] = useState(true);
     const [showFormNewPaziente, setShowFormNewPaziente] = useState(false);
     const [elencoPazienti, setElencoPazienti] = useState(arrayDummyPazienti);
-    const [showSchedaPaziente, setShowSchedaPaziente] = useState();
+    const [showSchedaPaziente, setShowSchedaPaziente] = useState(false);
 
-    let show_boxes;
-    let formNewPaziente;
     let tabella;
 
     //FUNZIONE PER VISUALIZZARE FORM AGGIUNTA PAZIENTE
@@ -265,7 +265,7 @@ function Pazienti(props){
         setShowSearchBoxAndButton(false);
         setShowFormNewPaziente(true);
         setShowTabella(false);
-        setShowSchedaPaziente();
+        setShowSchedaPaziente(false);
     }
 
     //FUNZIONE PER NASCONDERE FORM AGGIUNTA PAZIENTE
@@ -284,6 +284,7 @@ function Pazienti(props){
             }
         );
         setShowFormNewPaziente(false);
+        setShowSearchBoxAndButton(true);
         setShowTabella(true);
     }
 
@@ -331,7 +332,7 @@ function Pazienti(props){
     function cliccaRiga(idd, nomee, cognomee, cittàà, dataa, attivitàà){
         console.log(idd, nomee, cognomee, cittàà, dataa, attivitàà);
         console.log(typeof(elencoPazienti[2].datanascita));
-        setShowSchedaPaziente(
+        scheda_paziente = 
             <SchedaPaziente
             id = {idd}
             nome = {nomee.toUpperCase()}
@@ -341,7 +342,7 @@ function Pazienti(props){
             attività = {attivitàà}
             goBackButton = {chiudiSchedaPaziente}>
             </SchedaPaziente>
-        );
+        setShowSchedaPaziente(true);
         setShowTabella(false);
         setShowFormNewPaziente(false);
     }
@@ -349,43 +350,8 @@ function Pazienti(props){
     //CHIUDE LA SCHEDA DEL PAZIENTE APERTA
     function chiudiSchedaPaziente(){
         console.log('CHIUDI SCHEDAAA');
-        setShowSchedaPaziente();
+        setShowSchedaPaziente(false);
         setShowTabella(true);
-    }
-
-    if(!showSearchBoxAndButton){
-        show_boxes = null;
-    }
-    else{
-        show_boxes =
-            <div className={styles.wrap_boxes}>
-                <SearchBox></SearchBox>
-
-                <GenericButton
-                onClick={formVisibile}
-                buttonText={"Aggiungi Paziente"}
-                generic_button={true}
-                immagine={imageee}>
-                </GenericButton>
-            </div>
-    }
-
-    //BLOCCO IF-ELSE PER MOSTRARE/NASCONDERE IL FORM DI AGGIUNTA PAZIENTE
-    if(!showFormNewPaziente){
-        formNewPaziente = null;
-    }
-    else{
-        formNewPaziente = 
-            <Card
-            altroStile={true}
-            animazione={true}
-            children={
-                <AddPaziente
-                hideFormNewPaziente = {formNonVisibile}
-                onCreateNewPaziente = {newPazienteHandler}>
-                </AddPaziente>
-            }>
-            </Card>
     }
 
     //BLOCCO IF-ELSE PER MOSTRARE/NASCONDERE LA TABELLA QUANDO SI STA VISUALIZZANDO LA SCHEDA DI UN SINGOLO PAZIENTE
@@ -404,12 +370,34 @@ function Pazienti(props){
 
             <h1 className={styles.page_title}>Lista Pazienti</h1>
 
-            {show_boxes}
+            {showSearchBoxAndButton && 
+                <div className={styles.wrap_boxes}>
+                <SearchBox></SearchBox>
+
+                <GenericButton
+                onClick={formVisibile}
+                buttonText={"Aggiungi Paziente"}
+                generic_button={true}
+                immagine={imageee}>
+                </GenericButton>
+                </div>
+            }
 
             <div className={styles.wrapper_generico}>
-                {formNewPaziente}
+                {showFormNewPaziente && 
+                    <Card
+                    altroStile={true}
+                    animazione={true}
+                    children={
+                        <AddPaziente
+                        hideFormNewPaziente = {formNonVisibile}
+                        onCreateNewPaziente = {newPazienteHandler}>
+                        </AddPaziente>
+                    }>
+                    </Card>
+                }
 
-                {showSchedaPaziente}
+                {showSchedaPaziente && scheda_paziente}
 
                 {tabella}
             </div>

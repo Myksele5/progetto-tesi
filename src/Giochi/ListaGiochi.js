@@ -7,6 +7,9 @@ function ListaGiochi(props){
     function avviaGiocoGuessTheFace(){
         props.nascondiListaGiochi('GUESS_THE_FACE');
     }
+    function avviaGiocoGuessTheFruit(){
+        props.nascondiListaGiochi('GUESS_THE_FRUIT');
+    }
 
     return(
         <>
@@ -37,6 +40,7 @@ function ListaGiochi(props){
                         <h1 className={styles.game_title}>INDOVINA IL FRUTTO</h1>
                         <div className={styles.buttons_wrap}>
                             <GenericButton
+                            onClick={avviaGiocoGuessTheFruit}
                             alternative_button={true}
                             buttonText='Avvia Gioco'>
                             </GenericButton>
