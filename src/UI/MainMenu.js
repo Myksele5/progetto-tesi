@@ -5,8 +5,9 @@ import activity from "../Images/puzzle_piece.png";
 import game from "../Images/chess.png";
 import dialogue from "../Images/chat.png";
 import GenericButton from "./GenericButton";
+import ReactDOM from 'react-dom';
 
-function MainMenu(props){
+function MainMenuToPort(props){
     function goToPazienti(){
         props.showSchermata(0);
     }
@@ -70,6 +71,13 @@ function MainMenu(props){
             </button>
 
         </div>
+    );
+}
+
+function MainMenu(props){
+
+    return(
+        ReactDOM.createPortal(<MainMenuToPort showSchermata={props.showSchermata} makeUserLogout={props.makeUserLogout}></MainMenuToPort>, document.getElementById('main_menu'))
     );
 }
 

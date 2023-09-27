@@ -11,254 +11,256 @@ import someStyles from './TabellaPazienti.module.css';
 import DeleteButton from "../UI/DeleteButton";
 import EditButton from "../UI/EditButton";
 import DetailsButton from "../UI/DetailsButton";
+import Modal from "../UI/Modal";
 
 let scheda_paziente;
+let modal_eliminazione;
+
+const arrayDummyPazienti = [
+    {
+        nome: 'Michele',
+        cognome: 'Sardone',
+        città: 'Bari',
+        datanascita: '05-07-1995',
+        attività: 0,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Vito',
+        cognome: 'Sardone',
+        città: 'Varsavia',
+        datanascita: '31-01-1989',
+        attività: 5,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Marta',
+        cognome: 'Wojcik',
+        città: 'Varsavia',
+        datanascita: '25-12-1992',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Giuseppe',
+        cognome: 'Sardone',
+        città: 'Puerto de la Cruz',
+        datanascita: '31-12-1966',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Maria Antonietta',
+        cognome: 'Locuratolo',
+        città: 'Bari',
+        datanascita: '14-10-1983',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Carlo',
+        cognome: 'Casaburi',
+        città: 'Genova',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Giulia',
+        cognome: 'Antonacci',
+        città: 'Bari',
+        datanascita: '01-01-1995',
+        attività: 10,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Ermenegildo',
+        cognome: 'Giangiovanni',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 4,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Marco',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casadibari',
+        città: 'Bari',
+        datanascita: '02-08-1985',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    },
+    {
+        nome: 'Domenico',
+        cognome: 'Casaburi',
+        città: 'Bari',
+        datanascita: '02-08-1995',
+        attività: 2,
+        opzioni: '',
+        id: Math.random().toString()
+    }
+]
 
 function Pazienti(props){
-    const arrayDummyPazienti = [
-        {
-            nome: 'Michele',
-            cognome: 'Sardone',
-            città: 'Bari',
-            datanascita: '05-07-1995',
-            attività: 0,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Vito',
-            cognome: 'Sardone',
-            città: 'Varsavia',
-            datanascita: '31-01-1989',
-            attività: 5,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Marta',
-            cognome: 'Wojcik',
-            città: 'Varsavia',
-            datanascita: '25-12-1992',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Giuseppe',
-            cognome: 'Sardone',
-            città: 'Puerto de la Cruz',
-            datanascita: '31-12-1966',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Maria Antonietta',
-            cognome: 'Locuratolo',
-            città: 'Bari',
-            datanascita: '14-10-1983',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Carlo',
-            cognome: 'Casaburi',
-            città: 'Genova',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Giulia',
-            cognome: 'Antonacci',
-            città: 'Bari',
-            datanascita: '01-01-1995',
-            attività: 10,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Ermenegildo',
-            cognome: 'Giangiovanni',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 4,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Marco',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casadibari',
-            città: 'Bari',
-            datanascita: '02-08-1985',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '02-08-1995',
-            attività: 2,
-            opzioni: '',
-            id: Math.random().toString()
-        }
-    ]
-
+    
     const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
     const [showTabella, setShowTabella] = useState(true);
     const [showFormNewPaziente, setShowFormNewPaziente] = useState(false);
     const [elencoPazienti, setElencoPazienti] = useState(arrayDummyPazienti);
     const [showSchedaPaziente, setShowSchedaPaziente] = useState(false);
-
-    let tabella;
+    const [showModal, setShowModal] = useState(false);
 
     //FUNZIONE PER VISUALIZZARE FORM AGGIUNTA PAZIENTE
     function formVisibile(){
@@ -288,15 +290,35 @@ function Pazienti(props){
         setShowTabella(true);
     }
 
-    function eliminaPaziente(pazienteID){
+    function confermaEliminazionePaziente(pazienteID){
         // const indexPaziente = arrayDummyPazienti.indexOf(pazienteID);
         console.log('ELIMINA QUESTA RIGA');
-        setElencoPazienti(
-            elencoPrecedente => {
-                return elencoPrecedente.filter(elencoPrecedente => elencoPrecedente.id !== pazienteID);
-            }
-        );
+        // setShowTabella(false);
+        
+        modal_eliminazione = 
+            <Modal
+            CONFERMA={() =>{
+                setElencoPazienti(
+                    elencoPrecedente => {
+                        return elencoPrecedente.filter(elencoPrecedente => elencoPrecedente.id !== pazienteID);
+                    }
+                );
+                setShowModal(false);
+                // setShowTabella(true);
+            }}
+            ANNULLA={() => {
+                setShowModal(false);
+                // setShowTabella(true);
+            }}>
+            </Modal>;
+        setShowModal(true);
     }
+
+    // function eliminaPaziente(pazienteID){
+        
+    //     setShowModal(false);
+    //     setShowTabella(true);
+    // }
 
     //FUNZIONE CHE RESTITUISCE LA SINGOLA RIGA DELLA TABELLA POPOLATA CON I DATI DEL PAZIENTE PRESI DALL'ARRAY
     function fromArrayToTablePazienti(arrayDummyPazienti){
@@ -319,8 +341,10 @@ function Pazienti(props){
                     </EditButton>
                     
                     <DeleteButton
-                    onClick={() => {
-                        eliminaPaziente(arrayDummyPazienti.id);
+                    onClick={(event) => {
+                        let x = event.clientX;
+                        let y = event.clientY;
+                        confermaEliminazionePaziente(arrayDummyPazienti.id, x, y);
                     }}>
                     </DeleteButton>
                 </td>
@@ -355,15 +379,15 @@ function Pazienti(props){
     }
 
     //BLOCCO IF-ELSE PER MOSTRARE/NASCONDERE LA TABELLA QUANDO SI STA VISUALIZZANDO LA SCHEDA DI UN SINGOLO PAZIENTE
-    if(!showTabella){
-        tabella = null;
-    }
-    else{
-        tabella = 
-            <TabellaPazienti
-            elenco = {elencoPazienti.map(fromArrayToTablePazienti)}>
-            </TabellaPazienti>
-    }
+    // if(!showTabella){
+    //     tabella = null;
+    // }
+    // else{
+    //     tabella = 
+    //         <TabellaPazienti
+    //         elenco = {elencoPazienti.map(fromArrayToTablePazienti)}>
+    //         </TabellaPazienti>
+    // }
 
     return(
         <div className={styles.schermata_pazienti}>
@@ -383,7 +407,14 @@ function Pazienti(props){
                 </div>
             }
 
+            {/* <Modal></Modal> */}
+
             <div className={styles.wrapper_generico}>
+
+                
+
+                {showModal && modal_eliminazione}
+
                 {showFormNewPaziente && 
                     <Card
                     altroStile={true}
@@ -399,7 +430,11 @@ function Pazienti(props){
 
                 {showSchedaPaziente && scheda_paziente}
 
-                {tabella}
+                {showTabella && 
+                    <TabellaPazienti
+                    elenco = {elencoPazienti.map(fromArrayToTablePazienti)}>
+                    </TabellaPazienti>
+                }
             </div>
         </div>
     );
