@@ -1,5 +1,5 @@
 import styles from "./SearchBox.module.css";
-import lente from "../magn_glass.png";
+import lente from "../Images/magn_glass.png";
 
 function SearchBox(){
     return(

@@ -1,12 +1,12 @@
 // import logo from './logo.svg';
 import './App.css';
-import Login from './Accesso/Login';
-import Pazienti from './Pazienti/Pazienti';
-import MainMenu from './UI/MainMenu';
+import Login from './components/Accesso/Login';
+import Pazienti from './components/Pazienti/Pazienti';
+import MainMenu from './components/UI/MainMenu';
 import { useEffect, useState } from 'react';
-import Attività from './Attività/Attività';
-import Giochi from './Giochi/Giochi';
-import Dialoghi from './Dialoghi/Dialoghi';
+import Attività from './components/Attività/Attività';
+import Giochi from './components/Giochi/Giochi';
+import Dialoghi from './components/Dialoghi/Dialoghi';
 
 function App() {
   const [showAccessForm, setShowAccessForm] = useState(true);

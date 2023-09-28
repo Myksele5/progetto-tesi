@@ -1,5 +1,5 @@
 import styles from './EditButton.module.css';
-import editPencil from '../edit.png';
+import editPencil from '../Images/edit.png';
 
 function EditButton(props){
     return(

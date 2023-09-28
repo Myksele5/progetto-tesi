@@ -1,5 +1,5 @@
 import styles from './DetailsButton.module.css';
-import detailsForm from '../details.png';
+import detailsForm from '../Images/details.png';
 
 function EditButton(props){
     return(

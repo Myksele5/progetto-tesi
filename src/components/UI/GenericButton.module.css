@@ -89,35 +89,6 @@
     transition: 0.2s;
 }
 
-.game_button{
-    width: 250px;
-    height: 70px;
-    background-color: rgb(236, 236, 236);
-    color: rgb(33, 33, 131);
-    font-size: 1.1vw;
-    font-weight: bold;
-    border: 2px solid rgb(33, 33, 131);
-    border-radius: 5px;
-}
-
-.game_button:hover{
-    cursor: pointer;
-    box-shadow: 0 0 5px 1px black;
-    transition: 0.1s;
-}
-
-.correct_answer{
-    background-color: forestgreen;
-    color: white;
-    transition: 0.2s;
-}
-
-.wrong_answer{
-    background-color: red;
-    color: white;
-    transition: 0.3s;
-}
-
 .imgg{
     width: 30px;
     height: 30px;
