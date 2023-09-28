@@ -13,6 +13,7 @@ let counter_correct_answers = 0;
 
 function ExerciseGuessTheFace(props){
     
+    const [disableButton, setDisableButton] = useState(false);
     const [coloraRispostaCorretta, setColoraRispostaCorretta] = useState(false);
     const [coloraRispostaSbagliata_N1, setColoraRispostaSbagliata_N1] = useState(false);
     const [coloraRispostaSbagliata_N2, setColoraRispostaSbagliata_N2] = useState(false);
@@ -72,6 +73,7 @@ function ExerciseGuessTheFace(props){
         onClick={() => {
             checkTheAnswer('CORRECT');
         }}
+        is_disabled={disableButton}
         correct_answer={coloraRispostaCorretta}
         game_button={true}
         buttonText={questions[counter_question_number].question.correct_answer}>
@@ -81,6 +83,7 @@ function ExerciseGuessTheFace(props){
         onClick={() => {
             checkTheAnswer('WRONG_N1');
         }}
+        is_disabled={disableButton}
         wrong_answer={coloraRispostaSbagliata_N1}
         game_button={true}
         buttonText={questions[counter_question_number].question.wrong_answer_n1}>
@@ -90,6 +93,7 @@ function ExerciseGuessTheFace(props){
         onClick={() => {
             checkTheAnswer('WRONG_N2');
         }}
+        is_disabled={disableButton}
         wrong_answer={coloraRispostaSbagliata_N2}
         game_button={true}
         buttonText={questions[counter_question_number].question.wrong_answer_n2}>
@@ -99,6 +103,7 @@ function ExerciseGuessTheFace(props){
         onClick={() => {
             checkTheAnswer('WRONG_N3');
         }}
+        is_disabled={disableButton}
         wrong_answer={coloraRispostaSbagliata_N3}
         game_button={true}
         buttonText={questions[counter_question_number].question.wrong_answer_n3}>
@@ -107,6 +112,7 @@ function ExerciseGuessTheFace(props){
     ];
 
     function checkTheAnswer(answer){
+        setDisableButton(true);
 
         // IMPOSTA IL COLORE DEI BOTTONI IN BASE ALLA RISPOSTA
         switch(answer){
@@ -143,7 +149,8 @@ function ExerciseGuessTheFace(props){
                 setColoraRispostaSbagliata_N1(false);
                 setColoraRispostaSbagliata_N2(false);
                 setColoraRispostaSbagliata_N3(false);
-            }, 900);            
+                setDisableButton(false);
+            }, 1500);            
         }
 
         // GIOCO TERMINATO ======= RESETTA LE COMPONENTI
@@ -153,13 +160,15 @@ function ExerciseGuessTheFace(props){
                 setColoraRispostaSbagliata_N1(false);
                 setColoraRispostaSbagliata_N2(false);
                 setColoraRispostaSbagliata_N3(false);
+                setDisableButton(false);
                 props.giocoTerminato(counter_correct_answers.toString());
                 counter_question_number = 0; //--------> GIOCO FINITO RESETTA IL CONTATORE
                 counter_correct_answers = 0; //--------> E RESETTO IL NUMERO DI RISPOSTE DELL'UTENTE
-            }, 900);  
+            }, 1500);  
             
             console.log('GIOCO TERMINATO, NASCONDI IL GIOCO E MOSTRA I RISULTATI')
         }
+
     }
 
     function randomizeAnswers(){

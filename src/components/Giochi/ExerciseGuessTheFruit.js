@@ -1,5 +1,5 @@
 import styles from './ExerciseGuessTheFace.module.css';
-import GenericButton from '../UI/GenericButton';
+import GameButton from '../UI/GameButton';
 import { useState } from 'react';
 
 import Albicocca from '../Images-Giochi/ALBICOCCA.jpg';
@@ -15,6 +15,7 @@ let counter_correct_answers = 0;
 
 function ExerciseGuessTheFruit(props){
 
+    const [disableButton, setDisableButton] = useState(false);
     const [coloraRispostaCorretta, setColoraRispostaCorretta] = useState(false);
     const [coloraRispostaSbagliata_N1, setColoraRispostaSbagliata_N1] = useState(false);
     const [coloraRispostaSbagliata_N2, setColoraRispostaSbagliata_N2] = useState(false);
@@ -88,66 +89,75 @@ function ExerciseGuessTheFruit(props){
 
     let risposte = [
         
-        <GenericButton
+        <GameButton
         onClick={() => {
             checkTheAnswer('CORRECT');
         }}
+        is_disabled={disableButton}
         correct_answer={coloraRispostaCorretta}
         game_button={true}
         buttonText={questions[counter_question_number].question.correct_answer}>
-        </GenericButton>,
+        </GameButton>,
 
-        <GenericButton
+        <GameButton
         onClick={() => {
             checkTheAnswer('WRONG_N1');
         }}
+        is_disabled={disableButton}
         wrong_answer={coloraRispostaSbagliata_N1}
         game_button={true}
         buttonText={questions[counter_question_number].question.wrong_answer_n1}>
-        </GenericButton>,
+        </GameButton>,
 
-        <GenericButton
+        <GameButton
         onClick={() => {
             checkTheAnswer('WRONG_N2');
         }}
+        is_disabled={disableButton}
         wrong_answer={coloraRispostaSbagliata_N2}
         game_button={true}
         buttonText={questions[counter_question_number].question.wrong_answer_n2}>
-        </GenericButton>,
+        </GameButton>,
 
-        <GenericButton
+        <GameButton
         onClick={() => {
             checkTheAnswer('WRONG_N3');
         }}
+        is_disabled={disableButton}
         wrong_answer={coloraRispostaSbagliata_N3}
         game_button={true}
         buttonText={questions[counter_question_number].question.wrong_answer_n3}>
-        </GenericButton>
+        </GameButton>
 
     ];
 
     function checkTheAnswer(answer){
+        setDisableButton(true);
 
         // IMPOSTA IL COLORE DEI BOTTONI IN BASE ALLA RISPOSTA
-        if(answer === 'CORRECT'){
-            console.log('Risposta CORRETTA!');
-            setColoraRispostaCorretta(true);
-            counter_correct_answers++;
-        }
-        if(answer === 'WRONG_N1'){
-            console.log('Risposta SBAGLIATA!');
-            setColoraRispostaSbagliata_N1(true);
-            setColoraRispostaCorretta(true);
-        }
-        if(answer === 'WRONG_N2'){
-            console.log('Risposta SBAGLIATA!');
-            setColoraRispostaSbagliata_N2(true);
-            setColoraRispostaCorretta(true);
-        }
-        if(answer === 'WRONG_N3'){
-            console.log('Risposta SBAGLIATA!');
-            setColoraRispostaSbagliata_N3(true);
-            setColoraRispostaCorretta(true);
+        switch(answer){
+            case 'CORRECT':
+                console.log('Risposta CORRETTA!');
+                setColoraRispostaCorretta(true);
+                counter_correct_answers++;
+                break;
+            case 'WRONG_N1':
+                console.log('Risposta SBAGLIATA!');
+                setColoraRispostaSbagliata_N1(true);
+                setColoraRispostaCorretta(true);
+                break;
+            case 'WRONG_N2':
+                console.log('Risposta SBAGLIATA!');
+                setColoraRispostaSbagliata_N2(true);
+                setColoraRispostaCorretta(true);
+                break;
+            case 'WRONG_N3':
+                console.log('Risposta SBAGLIATA!');
+                setColoraRispostaSbagliata_N3(true);
+                setColoraRispostaCorretta(true);
+                break;
+            default:
+                break;
         }
 
         // AGGIORNA CONTATORE DELLA DOMANDA ======= GIOCO IN CORSO
@@ -159,6 +169,7 @@ function ExerciseGuessTheFruit(props){
                 setColoraRispostaSbagliata_N1(false);
                 setColoraRispostaSbagliata_N2(false);
                 setColoraRispostaSbagliata_N3(false);
+                setDisableButton(false);
             }, 1500);            
         }
 
@@ -169,6 +180,7 @@ function ExerciseGuessTheFruit(props){
                 setColoraRispostaSbagliata_N1(false);
                 setColoraRispostaSbagliata_N2(false);
                 setColoraRispostaSbagliata_N3(false);
+                setDisableButton(false);
                 props.giocoTerminato(counter_correct_answers.toString());
                 counter_question_number = 0; //--------> GIOCO FINITO RESETTA IL CONTATORE
                 counter_correct_answers = 0; //--------> E RESETTO IL NUMERO DI RISPOSTE DELL'UTENTE
