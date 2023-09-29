@@ -7,6 +7,7 @@ import Dante from '../Images-Giochi/DANTE_ALIGHIERI.jpg';
 import Marilyn from '../Images-Giochi/MARILYN_MONROE.jpg';
 import Leonardo from '../Images-Giochi/LEONARDO_DA_VINCI.jpg';
 import Napoleone from '../Images-Giochi/NAPOLEONE_BONAPARTE.jpg';
+import GameContext from '../../context/game-context';
 
 let counter_question_number = 0;
 let counter_correct_answers = 0;
@@ -161,7 +162,7 @@ function ExerciseGuessTheFace(props){
                 setColoraRispostaSbagliata_N2(false);
                 setColoraRispostaSbagliata_N3(false);
                 setDisableButton(false);
-                props.giocoTerminato(counter_correct_answers.toString());
+                props.giocoTerminato(counter_correct_answers.toString(), questions.length.toString());
                 counter_question_number = 0; //--------> GIOCO FINITO RESETTA IL CONTATORE
                 counter_correct_answers = 0; //--------> E RESETTO IL NUMERO DI RISPOSTE DELL'UTENTE
             }, 1500);  
@@ -186,7 +187,7 @@ function ExerciseGuessTheFace(props){
     }
 
     return(
-        <>
+        <GameContext.Provider>
             <hr className={styles.horizontal_line}></hr>
             <h1 className={styles.explanation}>Seleziona la risposta che ritieni corretta</h1>
             <hr className={styles.horizontal_line}></hr>
@@ -196,7 +197,7 @@ function ExerciseGuessTheFace(props){
             <div className={styles.wrapper_bottoni_risposte}>
                 {risposte}
             </div>
-        </>
+        </GameContext.Provider>
     );
 }
 

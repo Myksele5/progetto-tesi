@@ -3,25 +3,26 @@ import './App.css';
 import Login from './components/Accesso/Login';
 import Pazienti from './components/Pazienti/Pazienti';
 import MainMenu from './components/UI/MainMenu';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Attività from './components/Attività/Attività';
 import Giochi from './components/Giochi/Giochi';
 import Dialoghi from './components/Dialoghi/Dialoghi';
+import AuthContext from './context/auth-context';
 
 function App() {
-  const [showAccessForm, setShowAccessForm] = useState(true);
-  const [schermataMostrata, setSchermataMostrata] = useState('');
-  const [showMenu, setShowMenu] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [schermataMostrata, setSchermataMostrata] = useState('SCHERMATA_Pazienti');
 
-  useEffect(() => {
-    const key_logged_in = localStorage.getItem('logged_IN');
+  const auth_ctx = useContext(AuthContext);
 
-    if(key_logged_in === '1'){
-      setShowAccessForm(false);
-      setSchermataMostrata('SCHERMATA_Pazienti');
-      setShowMenu(true);
-    }
-  }, [setShowAccessForm, setSchermataMostrata, setShowMenu]);
+  // useEffect(() => {
+  //   const key_logged_in = localStorage.getItem('logged_IN');
+
+  //   if(key_logged_in === '1'){
+  //     setIsLoggedIn(true);
+  //     setSchermataMostrata('SCHERMATA_Pazienti');
+  //   }
+  // }, [setIsLoggedIn, setSchermataMostrata]);
 
   function changeSchermata(schermata){
     console.log('CAMBIO SCHERMATA');
@@ -48,43 +49,42 @@ function App() {
     }
   }
 
-  function userLoggedin(){
-    localStorage.setItem('logged_IN', '1');
-    console.log('SALVATI DATI DI LOGIN');
-    setShowAccessForm(false);
-    setSchermataMostrata('SCHERMATA_Pazienti');
-    setShowMenu(true);
-  }
+  // function userLoggedin(){
+  //   localStorage.setItem('logged_IN', '1');
+  //   console.log('SALVATI DATI DI LOGIN');
+  //   setIsLoggedIn(true);
+  //   setSchermataMostrata('SCHERMATA_Pazienti');
+  // }
 
-  function userLoggedout(){
-    localStorage.removeItem('logged_IN', '1');
-    console.log('EFFETTUO LOGOUT');
-    setShowAccessForm(true);
-    setSchermataMostrata('');
-    setShowMenu(false);
-  }
+  // function userLoggedout(){
+  //   localStorage.removeItem('logged_IN', '1');
+  //   console.log('EFFETTUO LOGOUT');
+  //   setIsLoggedIn(false);
+  //   setSchermataMostrata('');
+  // }
 
   return (
     <>
 
-      {showMenu && 
+      {auth_ctx.isLogged && 
         <MainMenu
-        makeUserLogout = {userLoggedout}
+        // makeUserLogout = {userLoggedout}
         showSchermata = {changeSchermata}>
         </MainMenu>
       }
         
       <div className="App">
-        {showAccessForm && 
+        {!auth_ctx.isLogged && 
           <Login
-          onUserLogin = {userLoggedin}>
+          // onUserLogin = {userLoggedin}
+          >
           </Login>
         }
         
-        {schermataMostrata === 'SCHERMATA_Pazienti' && <Pazienti/>}
-        {schermataMostrata === 'SCHERMATA_Attività' && <Attività/>}
-        {schermataMostrata === 'SCHERMATA_Giochi' && <Giochi/>}
-        {schermataMostrata === 'SCHERMATA_Dialoghi' && <Dialoghi/>}
+        {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Pazienti' && <Pazienti/>}
+        {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Attività' && <Attività/>}
+        {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Giochi' && <Giochi/>}
+        {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Dialoghi' && <Dialoghi/>}
       </div>
 
     </>

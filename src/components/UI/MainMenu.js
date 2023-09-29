@@ -6,8 +6,12 @@ import game from "../Images/chess.png";
 import dialogue from "../Images/chat.png";
 import GenericButton from "./GenericButton";
 import ReactDOM from 'react-dom';
+import { useContext } from "react";
+import AuthContext from "../../context/auth-context";
 
 function MainMenuToPort(props){
+    const auth_ctx = useContext(AuthContext);
+
     function goToPazienti(){
         props.showSchermata(0);
     }
@@ -24,17 +28,13 @@ function MainMenuToPort(props){
         props.showSchermata(3);
     }
 
-    function logOutClicked(){
-        props.makeUserLogout();
-    }
-
     return(
         <div className={styles.wrap_menu}>
 
             <img className={styles.menu_image} src={brain} alt="blue_brain"></img>
             <div className={styles.menu_option}>
                 <GenericButton
-                onClick={logOutClicked}
+                onClick={auth_ctx.onLogout}
                 buttonText={'Log Out'}
                 small_button={true}
                 >

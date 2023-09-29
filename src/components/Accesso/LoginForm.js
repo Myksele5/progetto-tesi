@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { auth } from "../../config/firebase-config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
+import { useContext, useState } from "react";
 import styles from "./LoginForm.module.css";
 import GenericButton from "../UI/GenericButton";
 import Card from "../UI/Card";
+import AuthContext from "../../context/auth-context";
 
 function LoginForm(props){
     const [validEmail, setValidEmail] = useState(true);
@@ -9,6 +13,8 @@ function LoginForm(props){
 
     const [validPassword, setValidPassword] = useState(true);
     const [password, setPassword] = useState('');
+
+    const auth_ctx = useContext(AuthContext)
 
     const goToRegistrationForm = () => {
         // console.log("DEVO ANDARE ALLA REGISTRAZIONE");
@@ -26,11 +32,18 @@ function LoginForm(props){
         setValidPassword(true);
     }
 
-    const submitLogin = (event) => {
+    const submitLogin = async (event) => {
         event.preventDefault();
         if(email.includes('@') && password.trim().length >= 6){
             console.log("MANDO DATI PER LOGIN");
-            props.onLogin();
+            try{
+                await createUserWithEmailAndPassword(auth, email, password)
+            } catch(err){
+                console.error(err);
+            }
+            
+            auth_ctx.onLogin();
+            // props.onLogin();
         }
         else{
             if(!email.includes('@')){

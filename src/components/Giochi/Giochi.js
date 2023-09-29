@@ -6,6 +6,7 @@ import ListaGiochi from "./ListaGiochi";
 import ExerciseGuessTheFace from "./ExerciseGuessTheFace";
 import Card from '../UI/Card';
 import ExerciseGuessTheFruit from "./ExerciseGuessTheFruit";
+import GameContext from "../../context/game-context";
 
 function Giochi(){
     const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
@@ -44,7 +45,7 @@ function Giochi(){
         
     }
 
-    function endGame(risposteUtente){
+    function endGame(risposteUtente, domandeTotali){
         setGameObject(null);
         setGameResults(
             <Card
@@ -52,7 +53,7 @@ function Giochi(){
             children={
                 <div className={styles.wrapper_generico}>
                     <h1>RISULTATI UTENTE</h1>
-                    <p>Risposte corrette: {risposteUtente}</p>
+                    <p>Risposte corrette: {risposteUtente}/{domandeTotali}</p>
                     <GenericButton
                     onClick={chiudiSchedaRisultati}
                     small_button={true}
@@ -100,16 +101,18 @@ function Giochi(){
     }
 
     return(
-        <div className={styles.schermata_giochi}>
-            <h1 className={styles.page_title}>Giochi</h1>
-            {show_boxes}
+        <GameContext.Provider>
+            <div className={styles.schermata_giochi}>
+                <h1 className={styles.page_title}>Giochi</h1>
+                {show_boxes}
 
-            <div className={styles.wrapper_generico}>
-                {gameResults}
-                {gameObject}
-                {lista_giochi}
+                <div className={styles.wrapper_generico}>
+                    {gameResults}
+                    {gameObject}
+                    {lista_giochi}
+                </div>
             </div>
-        </div>
+        </GameContext.Provider>
     );
 }
 

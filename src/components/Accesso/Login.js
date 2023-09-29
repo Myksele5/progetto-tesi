@@ -2,7 +2,7 @@ import { useState } from "react";
 import LoginForm from "./LoginForm";
 import RegistrationForm from "./RegistrationForm";
 
-function Login(props){
+function Login(){
     const [mostraForm, setMostraForm] = useState('LOGIN');
 
     function showRegistrationForm(){
@@ -15,16 +15,11 @@ function Login(props){
         console.log('FORM CAMBIATO -> LOGIN')
     }
 
-    function hideForm(){
-        // setMostraForm(null);
-        props.onUserLogin();
-    }
-
     return(
         <>
         {mostraForm === 'LOGIN' && 
             <LoginForm
-            onLogin = {hideForm}
+            // onLogin = {hideForm}
             goToRegForm = {showRegistrationForm}>
             </LoginForm>
         }
