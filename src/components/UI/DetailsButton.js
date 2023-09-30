@@ -1,7 +1,7 @@
 import styles from './DetailsButton.module.css';
 import detailsForm from '../Images/details.png';
 
-function EditButton(props){
+function DetailsButton(props){
     return(
         <button onClick={props.onClick} className={styles.details_button}>
             <img src={detailsForm} alt='editPencil' className={styles.details_image}></img>
@@ -9,4 +9,4 @@ function EditButton(props){
     );
 }
 
-export default EditButton;
+export default DetailsButton;

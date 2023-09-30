@@ -2,6 +2,7 @@ import GenericButton from '../UI/GenericButton';
 import Card from '../UI/Card';
 import styles from './SchedaPaziente.module.css';
 import { useState } from 'react';
+import StatistichePaziente from './StatistichePaziente';
 
 function SchedaPaziente(props){
     const [titoloScheda, setTitoloScheda] = useState('Dati Personali');
@@ -84,9 +85,10 @@ function SchedaPaziente(props){
                     </>
                 }
                 {sezioneScheda === 'STATISTICHE' &&
-                    <>
-                    <h1>Non ci sono statistiche!</h1>
-                    </>
+                    // <>
+                    // <h1>Non ci sono statistiche!</h1>
+                    // </>
+                    <StatistichePaziente></StatistichePaziente>
                 }
 
                 <GenericButton

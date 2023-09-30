@@ -7,6 +7,7 @@ import TabellaAttività from "./TabellaAttività";
 import addImage from "../Images/plus.png";
 import styles from "./Attività.module.css";
 import someStyles from "./TabellaAttività.module.css";
+import StatistichePaziente from "../Pazienti/StatistichePaziente";
 
 function Attività(){
     const activities = [
@@ -83,7 +84,9 @@ function Attività(){
     return(
         <div className={styles.schermata_attività}>
 
-            <h1 className={styles.page_title}>Lista Attività</h1>
+            <h1 className={styles.page_title}>TESTING</h1>
+
+            <StatistichePaziente></StatistichePaziente>
 
             {/* <div className={styles.wrap_boxes}>
 
@@ -100,9 +103,9 @@ function Attività(){
                 {formNewAttività}
             </div> */}
 
-            <TabellaAttività
+            {/* <TabellaAttività
             elenco = {elencoAttività.map(fromArrayToTableAttività)}>
-            </TabellaAttività>
+            </TabellaAttività> */}
         </div>
     );
 }

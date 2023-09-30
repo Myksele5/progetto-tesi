@@ -8,6 +8,7 @@ import Attività from './components/Attività/Attività';
 import Giochi from './components/Giochi/Giochi';
 import Dialoghi from './components/Dialoghi/Dialoghi';
 import AuthContext from './context/auth-context';
+import { PatientContextProvider } from './context/patients-context';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -80,11 +81,12 @@ function App() {
           >
           </Login>
         }
-        
-        {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Pazienti' && <Pazienti/>}
-        {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Attività' && <Attività/>}
-        {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Giochi' && <Giochi/>}
-        {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Dialoghi' && <Dialoghi/>}
+        <PatientContextProvider>
+          {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Pazienti' && <Pazienti/>}
+          {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Attività' && <Attività/>}
+          {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Giochi' && <Giochi/>}
+          {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Dialoghi' && <Dialoghi/>}
+        </PatientContextProvider>
       </div>
 
     </>
