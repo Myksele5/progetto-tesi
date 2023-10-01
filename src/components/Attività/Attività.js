@@ -86,7 +86,7 @@ function Attività(){
 
             <h1 className={styles.page_title}>TESTING</h1>
 
-            <StatistichePaziente></StatistichePaziente>
+            {/* <StatistichePaziente></StatistichePaziente> */}
 
             {/* <div className={styles.wrap_boxes}>
 
@@ -103,9 +103,9 @@ function Attività(){
                 {formNewAttività}
             </div> */}
 
-            {/* <TabellaAttività
-            elenco = {elencoAttività.map(fromArrayToTableAttività)}>
-            </TabellaAttività> */}
+            <TabellaAttività
+            elenco = {elencoAttività.map(() => {})}>
+            </TabellaAttività>
         </div>
     );
 }

@@ -85,6 +85,11 @@ function AddPaziente(props){
             città: enteredCittà,
             datanascita: dateString,
             attività: 0,
+            statistiche: {
+                risposte_totali: 0,
+                risposte_corrette: 0,
+                risposte_sbagliate: 0
+            },
             id: Math.random().toString()
         };
 

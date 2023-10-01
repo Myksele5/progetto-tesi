@@ -11,7 +11,6 @@
 }
 
 .wrapper_modal{
-    
     margin-left: 15vw;
     /* top: 300px; */
     display: flex;
@@ -21,7 +20,15 @@
     width: calc(35vw + 10px);
     height: fit-content;
     padding: 5px;
-    background-color: rgb(236, 236, 236);
-    border: 3px solid rgb(255, 0, 0);
-    box-shadow: 1px 1px 5px 3px rgb(255, 0, 0);
+    background-color: rgba(236, 236, 236, 0.950);
+    border: 3px solid rgb(233, 33, 131);
+    box-shadow: 1px 1px 5px 3px rgb(233, 33, 131);
+}
+
+.underline_text{
+    /* text-decoration: underline rgb(233, 33, 131) 3px; */
+    padding: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
+    border: 3px solid rgb(233, 33, 131);
 }

@@ -25,10 +25,10 @@
 }
 
 .riempimento_barra_corrette{
-    height: 70%;
+    height: 0%;
     background-color: green;
 }
 .riempimento_barra_sbagliate{
-    height: 30%;
+    height: 0%;
     background-color: red;
 }

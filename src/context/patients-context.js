@@ -35,6 +35,11 @@ export function PatientContextProvider(props){
             datanascita: '05-07-1995',
             attività: 0,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 10,
+                risposte_corrette: 5,
+                risposte_sbagliate: 5
+            },
             id: Math.random().toString()
         },
         {
@@ -44,6 +49,11 @@ export function PatientContextProvider(props){
             datanascita: '31-01-1989',
             attività: 5,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 7,
+                risposte_corrette: 7,
+                risposte_sbagliate: 0
+            },
             id: Math.random().toString()
         },
         {
@@ -53,6 +63,11 @@ export function PatientContextProvider(props){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 20,
+                risposte_corrette: 5,
+                risposte_sbagliate: 15
+            },
             id: Math.random().toString()
         },
         {
@@ -62,6 +77,11 @@ export function PatientContextProvider(props){
             datanascita: '25-12-1992',
             attività: 2,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 14,
+                risposte_corrette: 5,
+                risposte_sbagliate: 9
+            },
             id: Math.random().toString()
         },
         {
@@ -71,6 +91,11 @@ export function PatientContextProvider(props){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 10,
+                risposte_corrette: 0,
+                risposte_sbagliate: 10
+            },
             id: Math.random().toString()
         },
         {
@@ -80,6 +105,11 @@ export function PatientContextProvider(props){
             datanascita: '31-12-1966',
             attività: 2,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 0,
+                risposte_corrette: 0,
+                risposte_sbagliate: 0
+            },
             id: Math.random().toString()
         },
         {
@@ -89,6 +119,11 @@ export function PatientContextProvider(props){
             datanascita: '14-10-1983',
             attività: 2,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 0,
+                risposte_corrette: 0,
+                risposte_sbagliate: 0
+            },
             id: Math.random().toString()
         },
         {
@@ -98,6 +133,11 @@ export function PatientContextProvider(props){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 0,
+                risposte_corrette: 0,
+                risposte_sbagliate: 0
+            },
             id: Math.random().toString()
         },
         {
@@ -107,6 +147,11 @@ export function PatientContextProvider(props){
             datanascita: '01-01-1995',
             attività: 10,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 0,
+                risposte_corrette: 0,
+                risposte_sbagliate: 0
+            },
             id: Math.random().toString()
         },
         {
@@ -116,6 +161,11 @@ export function PatientContextProvider(props){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 0,
+                risposte_corrette: 0,
+                risposte_sbagliate: 0
+            },
             id: Math.random().toString()
         },
         {
@@ -125,6 +175,11 @@ export function PatientContextProvider(props){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 0,
+                risposte_corrette: 0,
+                risposte_sbagliate: 0
+            },
             id: Math.random().toString()
         },
         {
@@ -134,6 +189,11 @@ export function PatientContextProvider(props){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 0,
+                risposte_corrette: 0,
+                risposte_sbagliate: 0
+            },
             id: Math.random().toString()
         },
         {
@@ -143,6 +203,11 @@ export function PatientContextProvider(props){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 0,
+                risposte_corrette: 0,
+                risposte_sbagliate: 0
+            },
             id: Math.random().toString()
         },
         {
@@ -152,6 +217,11 @@ export function PatientContextProvider(props){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 0,
+                risposte_corrette: 0,
+                risposte_sbagliate: 0
+            },
             id: Math.random().toString()
         },
         {
@@ -161,6 +231,11 @@ export function PatientContextProvider(props){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 0,
+                risposte_corrette: 0,
+                risposte_sbagliate: 0
+            },
             id: Math.random().toString()
         },
         {
@@ -170,6 +245,11 @@ export function PatientContextProvider(props){
             datanascita: '02-08-1995',
             attività: 2,
             opzioni: '',
+            statistiche: {
+                risposte_totali: 0,
+                risposte_corrette: 0,
+                risposte_sbagliate: 0
+            },
             id: Math.random().toString()
         }
     ]
@@ -193,7 +273,8 @@ export function PatientContextProvider(props){
                 <td className={`${someStyles['dati_tabella']} ${someStyles['opzioni']}`}>
                     <DetailsButton
                     onClick={() => {
-                        cliccaRiga(arrayDummyPazienti.id, arrayDummyPazienti.nome, arrayDummyPazienti.cognome, arrayDummyPazienti.città, arrayDummyPazienti.datanascita, arrayDummyPazienti.attività);
+                        // console.log(arrayDummyPazienti); //-----> Log per verificare che passa i dati del paziente corretto
+                        cliccaRiga(arrayDummyPazienti);
                     }}>
                     </DetailsButton>
 
@@ -202,10 +283,8 @@ export function PatientContextProvider(props){
                     </EditButton>
                     
                     <DeleteButton
-                    onClick={(event) => {
-                        let x = event.clientX;
-                        let y = event.clientY;
-                        confermaEliminazionePaziente(arrayDummyPazienti.id, x, y);
+                    onClick={() => {
+                        confermaEliminazionePaziente(arrayDummyPazienti.id, arrayDummyPazienti.nome, arrayDummyPazienti.cognome);
                     }}>
                     </DeleteButton>
                 </td>
@@ -241,17 +320,19 @@ export function PatientContextProvider(props){
         setShowTabella(true);
     }
 
-    function confermaEliminazionePaziente(pazienteID){
+    function confermaEliminazionePaziente(paziente_ID, paziente_Nome, paziente_Cognome){
         // const indexPaziente = arrayDummyPazienti.indexOf(pazienteID);
         console.log('ELIMINA QUESTA RIGA');
         // setShowTabella(false);
         
         modal_eliminazione = 
             <Modal
+            pazienteNome={paziente_Nome}
+            pazienteCognome={paziente_Cognome}
             CONFERMA={() =>{
                 setElencoPazienti(
                     elencoPrecedente => {
-                        return elencoPrecedente.filter(elencoPrecedente => elencoPrecedente.id !== pazienteID);
+                        return elencoPrecedente.filter(elencoPrecedente => elencoPrecedente.id !== paziente_ID);
                     }
                 );
                 setShowModal(false);
@@ -266,17 +347,18 @@ export function PatientContextProvider(props){
     }
 
     //FUNZIONE PER VISUALIZZARE LA SCHEDA DI UN SINGOLO PAZIENTE CON I SUOI DATI
-    function cliccaRiga(idd, nomee, cognomee, cittàà, dataa, attivitàà){
-        console.log(idd, nomee, cognomee, cittàà, dataa, attivitàà);
+    function cliccaRiga(pazientee){
+        // console.log(idd, nomee, cognomee, cittàà, dataa, attivitàà);
         console.log(typeof(elencoPazienti[2].datanascita));
         scheda_paziente = 
             <SchedaPaziente
-            id = {idd}
-            nome = {nomee.toUpperCase()}
-            cognome = {cognomee.toUpperCase()}
-            città = {cittàà.toUpperCase()}
-            datanascita = {dataa}
-            attività = {attivitàà}
+            id = {pazientee.id}
+            nome = {pazientee.nome.toUpperCase()}
+            cognome = {pazientee.cognome.toUpperCase()}
+            città = {pazientee.città.toUpperCase()}
+            datanascita = {pazientee.datanascita}
+            attività = {pazientee.attività}
+            stats_paziente = {pazientee.statistiche}
             goBackButton = {chiudiSchedaPaziente}>
             </SchedaPaziente>
         setShowSchedaPaziente(true);

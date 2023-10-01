@@ -1,18 +1,23 @@
 import styles from "./Giochi.module.css";
 import GenericButton from "../UI/GenericButton";
 import SearchBox from "../UI/SearchBox";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ListaGiochi from "./ListaGiochi";
 import ExerciseGuessTheFace from "./ExerciseGuessTheFace";
 import Card from '../UI/Card';
 import ExerciseGuessTheFruit from "./ExerciseGuessTheFruit";
 import GameContext from "../../context/game-context";
+import PatientContext from "../../context/patients-context";
+
+let risultati_gioco;
 
 function Giochi(){
+    const patients_ctx = useContext(PatientContext);
+
     const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
     const [showListaGiochi, setShowListaGiochi] = useState(true);
     const [gameObject, setGameObject] = useState(null);
-    const [gameResults, setGameResults] = useState(null);
+    const [gameResults, setGameResults] = useState(false);
 
     let lista_giochi;
     let show_boxes;
@@ -47,7 +52,7 @@ function Giochi(){
 
     function endGame(risposteUtente, domandeTotali){
         setGameObject(null);
-        setGameResults(
+        risultati_gioco =
             <Card
             altroStile={true}
             children={
@@ -60,17 +65,30 @@ function Giochi(){
                     buttonText='Chiudi Scheda'>
                     </GenericButton>
                     <GenericButton
+                    onClick={() => {assegnaRisultatiPaziente(domandeTotali, risposteUtente)}}
                     generic_button={true}
                     buttonText='Assegna risultati a...'>
                     </GenericButton>
                 </div>
                 }>
             </Card>
-        );
+        setGameResults(true);
+    }
+
+    function assegnaRisultatiPaziente(domandeTotali, risposteUtente){
+        patients_ctx.listaPazienti[0].statistiche.risposte_totali += domandeTotali;
+        patients_ctx.listaPazienti[0].statistiche.risposte_corrette += risposteUtente;
+        patients_ctx.listaPazienti[0].statistiche.risposte_sbagliate += (domandeTotali - risposteUtente);
+        // console.log(patients_ctx.listaPazienti[0].statistiche.risposte_sbagliate);
+        console.log("NUMERO DI DOMANDE ---->" + domandeTotali);
+        console.log("RISPOSTE CORRETTE ---->" + risposteUtente);
+        console.log("RISPOSTE SBAGLIATE ---->" + (domandeTotali - risposteUtente));
+        chiudiSchedaRisultati();
     }
 
     function chiudiSchedaRisultati(){
-        setGameResults(null);
+        risultati_gioco = null;
+        setGameResults(false);
         setShowSearchBoxAndButton(true);
         setShowListaGiochi(true);
     }
@@ -107,7 +125,7 @@ function Giochi(){
                 {show_boxes}
 
                 <div className={styles.wrapper_generico}>
-                    {gameResults}
+                    {gameResults && risultati_gioco}
                     {gameObject}
                     {lista_giochi}
                 </div>

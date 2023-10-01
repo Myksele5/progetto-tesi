@@ -88,7 +88,10 @@ function SchedaPaziente(props){
                     // <>
                     // <h1>Non ci sono statistiche!</h1>
                     // </>
-                    <StatistichePaziente></StatistichePaziente>
+                    <StatistichePaziente
+                    stats={props.stats_paziente}
+                    >
+                    </StatistichePaziente>
                 }
 
                 <GenericButton

@@ -162,7 +162,7 @@ function ExerciseGuessTheFace(props){
                 setColoraRispostaSbagliata_N2(false);
                 setColoraRispostaSbagliata_N3(false);
                 setDisableButton(false);
-                props.giocoTerminato(counter_correct_answers.toString(), questions.length.toString());
+                props.giocoTerminato(counter_correct_answers, questions.length);
                 counter_question_number = 0; //--------> GIOCO FINITO RESETTA IL CONTATORE
                 counter_correct_answers = 0; //--------> E RESETTO IL NUMERO DI RISPOSTE DELL'UTENTE
             }, 1500);  
