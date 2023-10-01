@@ -15,6 +15,9 @@ function AddPaziente(props){
     const [validData, setValidData] = useState(true);
     const [enteredData, setEnteredData] = useState('');
 
+    const [validCF, setValidCF] = useState(true);
+    const [enteredCF, setEnteredCF] = useState('');
+
     const nomeChangeHandler = (event) => {
         console.log(event.target.value);
         setEnteredNome(event.target.value);
@@ -38,13 +41,23 @@ function AddPaziente(props){
         setEnteredData(event.target.value);
         setValidData(true);
     }
+    
+    const CFChangeHandler = (event) => {
+        console.log(event.target.value);
+        setEnteredCF(event.target.value);
+        setValidCF(true);
+    }
 
     function formSubmitHandler(event){
         event.preventDefault();
 
         var dateee = new Date(enteredData);
 
-        if(enteredNome.trim().length < 1 || enteredCognome.trim().length < 1 || enteredCittà.trim().length < 1 || isNaN(dateee)){
+        if(enteredNome.trim().length < 1 
+        || enteredCognome.trim().length < 1 
+        || enteredCittà.trim().length < 1 
+        || isNaN(dateee)
+        || enteredCF.trim().length < 16 || enteredCF.trim().length > 16){
             if(enteredNome.trim().length < 1){
                 setValidNome(false);
                 // console.log(validNome);
@@ -70,6 +83,12 @@ function AddPaziente(props){
             else{
                 setValidData(true);
             }
+            if(enteredCF.trim().length < 16 || enteredCF.trim().length > 16){
+                setValidCF(false);
+            }
+            else{
+                setValidCF(true);
+            }
             return;
         }
 
@@ -90,6 +109,7 @@ function AddPaziente(props){
                 risposte_corrette: 0,
                 risposte_sbagliate: 0
             },
+            codicefiscale: enteredCF.toUpperCase(),
             id: Math.random().toString()
         };
 
@@ -124,6 +144,9 @@ function AddPaziente(props){
 
             <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}>Data di nascita:</label>
             <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" min="01-01-1800" max="31-31-2400" value={enteredData} onChange={dataNascitaChangeHandler}></input>
+
+            <label className={`${styles.label_style} ${!validCF ? styles.invalid : ""}`}>Codice Fiscale:</label>
+            <input className={`${styles.input_style} ${!validCF ? styles.invalid : ""}`} type="text" value={enteredCF} onChange={CFChangeHandler}></input>
 
             <GenericButton 
             type="submit" 

@@ -9,6 +9,19 @@
     /* list-style-type: none; */
 }
 
+.scrollable_div{
+    background-color: rgb(230, 230, 230);
+    padding-left: 15px;
+    border-bottom: 2px solid rgb(233, 33, 131);
+    width: 99%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    overflow-y: auto;
+}
+
 .wrap_buttons{
     width: 100%;
     display: flex;
@@ -17,12 +30,14 @@
 }
 
 .scheda_title{
+    display: block;
     font-size: 2vw;
     margin-top: 0;
     margin-bottom: 0;
 }
 
 .horizontal_line{
+    display: block;
     width: 100%;
     border: 1px solid rgb(233, 33, 131);
     /* margin-bottom: 25px; */
@@ -30,8 +45,8 @@
 
 .label_style{
     /* display: inline-block; */
-    width: 15vw;
-    font-size: 1.8vw;
+    width: 300px;
+    font-size: 1.5vw;
     text-align: center;
     background-color: white;
     border: 2px solid rgb(233, 33, 131);

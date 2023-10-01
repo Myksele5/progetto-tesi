@@ -31,7 +31,7 @@ function SchedaPaziente(props){
         altroStile={true}
         animazione={true}
         children={
-            <ul className={styles.lista}>
+            <div className={styles.lista}>
                 <div className={styles.wrap_buttons}>
                     <GenericButton
                     onClick={showDatiPersonali}
@@ -55,27 +55,32 @@ function SchedaPaziente(props){
                 <hr className={styles.horizontal_line}></hr>
 
                 {sezioneScheda === 'DATI_PERSONALI' &&
-                    <>
-                    <label className={styles.label_style}>Nome completo</label>
-                    <h3>{props.nome} {props.cognome}</h3>
-                    {/* <hr className={styles.horizontal_line}/> */}
-        
-                    <label className={styles.label_style}>Città di nascita</label>
-                    <h3>{props.città}</h3>
-                    {/* <hr className={styles.horizontal_line}/> */}
-        
-                    <label className={styles.label_style}>Data di nascita</label>
-                    <h3>{props.datanascita}</h3>
-                    {/* <hr className={styles.horizontal_line}/> */}
-        
-                    <label className={styles.label_style}>Attività associate</label>
-                    <h3>{props.attività}</h3>
-                    {/* <hr className={styles.horizontal_line}/> */}
-        
-                    <label className={styles.label_style}>Note opzionali</label>
-                    <h3>Da decidere</h3>
-                    {/* <hr className={styles.horizontal_line}/> */}
-                    </>
+                    <div className={styles.scrollable_div}>
+                        <label className={styles.label_style}>Nome completo</label>
+                        <h3>{props.nome} {props.cognome}</h3>
+                        {/* <hr className={styles.horizontal_line}/> */}
+            
+                        <label className={styles.label_style}>Città di nascita</label>
+                        <h3>{props.città}</h3>
+                        {/* <hr className={styles.horizontal_line}/> */}
+            
+                        <label className={styles.label_style}>Data di nascita</label>
+                        <h3>{props.datanascita}</h3>
+                        {/* <hr className={styles.horizontal_line}/> */}
+
+                        <label className={styles.label_style}>Codice Fiscale</label>
+                        <h3>{props.codicefiscale}</h3>
+                        {/* <hr className={styles.horizontal_line}/> */}
+            
+                        <label className={styles.label_style}>Attività associate</label>
+                        <h3>{props.attività}</h3>
+                        {/* <hr className={styles.horizontal_line}/> */}
+            
+                        <label className={styles.label_style}>Note opzionali</label>
+                        <h3>Da decidere</h3>
+                        {/* <hr className={styles.horizontal_line}/> */}
+                        
+                    </div>
                 }
                 {sezioneScheda === 'ATTIVITÀ' &&
                     <>
@@ -100,7 +105,7 @@ function SchedaPaziente(props){
                 onClick={props.goBackButton}
                 buttonText='Go Back'>
                 </GenericButton>
-            </ul>
+            </div>
         }>
         </Card>
     );

@@ -2,7 +2,7 @@ table{
     /* border: 1px solid darkgray; */
     border-spacing: 0;
     width: 55%;
-    margin: 5vh;
+    margin: 6vh;
 }
 
 th, td{
@@ -24,9 +24,10 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 }
 
 .table_wrapper{
-    width: 90%;
+    width: 100%;
     overflow: auto;
     box-shadow: 1px 2px 8px 5px rgb(33, 33, 131);
+    table-layout: fixed;
 }
 
 .intestazione_tabella{
@@ -35,59 +36,117 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     color: whitesmoke;
     border: 1px solid rgb(233, 33, 131);
     padding: 4px;
-    padding-left: 5px;
-    padding-right: 5px;
-    font-size: 1.3vw;
-    height: 9.5vh;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-size: 1.25vw;
+    height: 80px;
 }
 
 .intestazione_tabella.nome, .intestazione_tabella.cognome, .intestazione_tabella.città, .dati_tabella.nome, .dati_tabella.cognome, .dati_tabella.città{
-    min-width: 14vw;
-    max-width: 19.5vw;
+    width: 270px;
+}
+
+.intestazione_tabella.codicefiscale, .dati_tabella.codicefiscale{
+    width: 240px;
 }
 
 .intestazione_tabella.data, .intestazione_tabella.attività, .dati_tabella.data, .dati_tabella.attività{
-    min-width: 10vw;
-    max-width: 12vw;
+    width: 210px;
 }
 
 .intestazione_tabella.opzioni, .dati_tabella.opzioni{
-    width: 200px;
+    width: 190px;
 }
 
 .dati_tabella{
     background-color: transparent;
     color: rgb(59, 59, 241);
     border: 1px solid rgb(233, 33, 131);
-    font-size: 1.3vw;
-    height: 8vh;
+    font-size: 1.25vw;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 100px;
     /* min-height: 20vh; */
+}
+
+@media screen and (max-width: 1800px){
+    .table_wrapper{
+        width: 100%;
+    }
+
+    .intestazione_tabella, .dati_tabella{
+        color: orange;
+        font-size: 1.1vw;
+    }
+
+    .intestazione_tabella.nome, .intestazione_tabella.cognome, .intestazione_tabella.città, .dati_tabella.nome, .dati_tabella.cognome, .dati_tabella.città{
+        width: 220px;
+    }
+
+    .intestazione_tabella.data, .intestazione_tabella.attività, .dati_tabella.data, .dati_tabella.attività{
+        width: 150px;
+    }
+
+    .intestazione_tabella.codicefiscale, .dati_tabella.codicefiscale{
+        width: 190px;
+    }
+
+    .intestazione_tabella.opzioni, .dati_tabella.opzioni{
+        width: 150px;
+    }
 }
 
 @media screen and (max-width: 1600px){
     .table_wrapper{
-        width: 90%;
+        width: 95%;
     }
 
-    .intestazione_tabella{
-        color: orange;
+    .intestazione_tabella, .dati_tabella{
+        color: red;
+        font-size: 1.1vw;
+    }
+
+    .intestazione_tabella.nome, .intestazione_tabella.cognome, .intestazione_tabella.città, .dati_tabella.nome, .dati_tabella.cognome, .dati_tabella.città{
+        width: 200px;
+    }
+
+    .intestazione_tabella.data, .intestazione_tabella.attività, .dati_tabella.data, .dati_tabella.attività{
+        width: 130px;
+    }
+
+    .intestazione_tabella.codicefiscale, .dati_tabella.codicefiscale{
+        width: 170px;
+    }
+
+    .intestazione_tabella.opzioni, .dati_tabella.opzioni{
+        width: 140px;
     }
 }
 
 @media screen and (max-width: 1300px) {
     .table_wrapper{
-        width: 65%;
+        width: 90%;
     }
 
-    .intestazione_tabella{
-        color: lime;
+    .intestazione_tabella, .dati_tabella{
+        color: limegreen;
+        font-size: 1.1vw;
+    }
+
+    .intestazione_tabella.nome, .intestazione_tabella.cognome, .intestazione_tabella.città, .dati_tabella.nome, .dati_tabella.cognome, .dati_tabella.città{
+        width: 180px;
+    }
+
+    .intestazione_tabella.data, .intestazione_tabella.attività, .dati_tabella.data, .dati_tabella.attività{
+        width: 110px;
+    }
+
+    .intestazione_tabella.codicefiscale, .dati_tabella.codicefiscale{
+        width: 150px;
     }
 
     .intestazione_tabella.città, .intestazione_tabella.data, .dati_tabella.città, .dati_tabella.data{
         display: none;
     }
-    .intestazione_tabella.nome, .intestazione_tabella.cognome, .intestazione_tabella.città, .dati_tabella.nome, .dati_tabella.cognome, .dati_tabella.città{
-        min-width: 10vw;
-        max-width: 11vw;
-    }
+    
 }

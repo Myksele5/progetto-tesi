@@ -11,7 +11,8 @@ function TabellaPazienti(props){
                     <th className={`${styles['intestazione_tabella']} ${styles['cognome']}`}>COGNOME</th>
                     <th className={`${styles['intestazione_tabella']} ${styles['città']}`}>CITTA' DI NASCITA</th>
                     <th className={`${styles['intestazione_tabella']} ${styles['data']}`}>DATA DI NASCITA</th>
-                    <th className={styles.intestazione_tabella}>ATTIVITÀ</th>
+                    <th className={`${styles['intestazione_tabella']} ${styles['codicefiscale']}`}>CODICE FISCALE</th>
+                    {/* <th className={styles.intestazione_tabella}>ATTIVITÀ</th> */}
                     <th className={`${styles['intestazione_tabella']} ${styles['opzioni']}`}>OPZIONI</th>
                 </tr>
             </thead>

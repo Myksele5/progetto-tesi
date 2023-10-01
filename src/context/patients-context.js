@@ -29,6 +29,21 @@ export function PatientContextProvider(props){
 
     const arrayDummyPazienti = [
         {
+            nome: 'ProvaNomeSuperMegaLunghissimo',
+            cognome: 'EconUnCognomepurealtrettanto',
+            città: 'San Valentino in Abruzzo Citeriore e a e e e e eae e aea ee adwad dwadwaddwd',
+            datanascita: '05-07-1995',
+            attività: 0,
+            opzioni: '',
+            statistiche: {
+                risposte_totali: 10,
+                risposte_corrette: 5,
+                risposte_sbagliate: 5
+            },
+            codicefiscale: "ABCYRO41H24L077E",
+            id: Math.random().toString()
+        },
+        {
             nome: 'Michele',
             cognome: 'Sardone',
             città: 'Bari',
@@ -40,6 +55,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 5,
                 risposte_sbagliate: 5
             },
+            codicefiscale: "RTVYRO41H24L088E",
             id: Math.random().toString()
         },
         {
@@ -54,6 +70,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 7,
                 risposte_sbagliate: 0
             },
+            codicefiscale: "VZXGGH85E71F498O",
             id: Math.random().toString()
         },
         {
@@ -68,6 +85,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 5,
                 risposte_sbagliate: 15
             },
+            codicefiscale: "RJSNTY84H10D637E",
             id: Math.random().toString()
         },
         {
@@ -82,6 +100,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 5,
                 risposte_sbagliate: 9
             },
+            codicefiscale: "CSCCWH34M59A732J",
             id: Math.random().toString()
         },
         {
@@ -96,6 +115,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 0,
                 risposte_sbagliate: 10
             },
+            codicefiscale: "FHTFMP86E11G669Z",
             id: Math.random().toString()
         },
         {
@@ -110,6 +130,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 0,
                 risposte_sbagliate: 0
             },
+            codicefiscale: "PLLNRB95E02C398N",
             id: Math.random().toString()
         },
         {
@@ -124,6 +145,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 0,
                 risposte_sbagliate: 0
             },
+            codicefiscale: "CPBHRX62R58F417J",
             id: Math.random().toString()
         },
         {
@@ -138,6 +160,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 0,
                 risposte_sbagliate: 0
             },
+            codicefiscale: "XSHCXY39P68G329J",
             id: Math.random().toString()
         },
         {
@@ -152,6 +175,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 0,
                 risposte_sbagliate: 0
             },
+            codicefiscale: "NYFQDQ74H19A108T",
             id: Math.random().toString()
         },
         {
@@ -166,6 +190,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 0,
                 risposte_sbagliate: 0
             },
+            codicefiscale: "TZRMFN33C57H739O",
             id: Math.random().toString()
         },
         {
@@ -180,6 +205,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 0,
                 risposte_sbagliate: 0
             },
+            codicefiscale: "SRPWRS31T42A444D",
             id: Math.random().toString()
         },
         {
@@ -194,6 +220,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 0,
                 risposte_sbagliate: 0
             },
+            codicefiscale: "LVFKMJ65L12B956R",
             id: Math.random().toString()
         },
         {
@@ -208,6 +235,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 0,
                 risposte_sbagliate: 0
             },
+            codicefiscale: "GXLRBK42P46L063X",
             id: Math.random().toString()
         },
         {
@@ -222,6 +250,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 0,
                 risposte_sbagliate: 0
             },
+            codicefiscale: "RHDMHV37D54B265C",
             id: Math.random().toString()
         },
         {
@@ -236,6 +265,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 0,
                 risposte_sbagliate: 0
             },
+            codicefiscale: "KFPPGD64D29E441F",
             id: Math.random().toString()
         },
         {
@@ -250,6 +280,7 @@ export function PatientContextProvider(props){
                 risposte_corrette: 0,
                 risposte_sbagliate: 0
             },
+            codicefiscale: "CRHNHV72E26H300U",
             id: Math.random().toString()
         }
     ]
@@ -269,7 +300,8 @@ export function PatientContextProvider(props){
                 <td className={`${someStyles['dati_tabella']} ${someStyles['cognome']}`}>{arrayDummyPazienti.cognome}</td>
                 <td className={`${someStyles['dati_tabella']} ${someStyles['città']}`}>{arrayDummyPazienti.città}</td>
                 <td className={`${someStyles['dati_tabella']} ${someStyles['data']}`}>{arrayDummyPazienti.datanascita}</td>
-                <td className={someStyles.dati_tabella}>{arrayDummyPazienti.attività}</td>
+                <td className={`${someStyles['dati_tabella']} ${someStyles['codicefiscale']}`}>{arrayDummyPazienti.codicefiscale}</td>
+                {/* <td className={someStyles.dati_tabella}>{arrayDummyPazienti.attività}</td> */}
                 <td className={`${someStyles['dati_tabella']} ${someStyles['opzioni']}`}>
                     <DetailsButton
                     onClick={() => {
@@ -357,6 +389,7 @@ export function PatientContextProvider(props){
             cognome = {pazientee.cognome.toUpperCase()}
             città = {pazientee.città.toUpperCase()}
             datanascita = {pazientee.datanascita}
+            codicefiscale = {pazientee.codicefiscale}
             attività = {pazientee.attività}
             stats_paziente = {pazientee.statistiche}
             goBackButton = {chiudiSchedaPaziente}>
