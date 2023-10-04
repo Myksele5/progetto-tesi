@@ -187,7 +187,8 @@ function ExerciseGuessTheFace(props){
     }
 
     return(
-        <GameContext.Provider>
+        // <GameContext.Provider>
+        <>
             <hr className={styles.horizontal_line}></hr>
             <h1 className={styles.explanation}>Seleziona la risposta che ritieni corretta</h1>
             <hr className={styles.horizontal_line}></hr>
@@ -197,7 +198,8 @@ function ExerciseGuessTheFace(props){
             <div className={styles.wrapper_bottoni_risposte}>
                 {risposte}
             </div>
-        </GameContext.Provider>
+        </>
+        // </GameContext.Provider>
     );
 }
 

@@ -12,6 +12,7 @@ let modal_eliminazione;
 const PatientContext = React.createContext({
     listaPazienti: [],
     showTabella: null,
+    arrayToTable: () => {},
     arrayToLista: () => {},
     mostraRiga: () => {},
     showScheda: null,
@@ -293,20 +294,20 @@ export function PatientContextProvider(props){
     const [showModal, setShowModal] = useState(false);
 
     //FUNZIONE CHE RESTITUISCE LA SINGOLA RIGA DELLA TABELLA POPOLATA CON I DATI DEL PAZIENTE PRESI DALL'ARRAY
-    function fromArrayToTablePazienti(arrayDummyPazienti){
+    function fromArrayToTablePazienti(elencoPazienti){
         return(
-            <tr key={arrayDummyPazienti.id}>
-                <td className={`${someStyles['dati_tabella']} ${someStyles['nome']}`}>{arrayDummyPazienti.nome}</td>
-                <td className={`${someStyles['dati_tabella']} ${someStyles['cognome']}`}>{arrayDummyPazienti.cognome}</td>
-                <td className={`${someStyles['dati_tabella']} ${someStyles['città']}`}>{arrayDummyPazienti.città}</td>
-                <td className={`${someStyles['dati_tabella']} ${someStyles['data']}`}>{arrayDummyPazienti.datanascita}</td>
-                <td className={`${someStyles['dati_tabella']} ${someStyles['codicefiscale']}`}>{arrayDummyPazienti.codicefiscale}</td>
+            <tr key={elencoPazienti.id}>
+                <td className={`${someStyles['dati_tabella']} ${someStyles['nome']}`}>{elencoPazienti.nome}</td>
+                <td className={`${someStyles['dati_tabella']} ${someStyles['cognome']}`}>{elencoPazienti.cognome}</td>
+                <td className={`${someStyles['dati_tabella']} ${someStyles['città']}`}>{elencoPazienti.città}</td>
+                <td className={`${someStyles['dati_tabella']} ${someStyles['data']}`}>{elencoPazienti.datanascita}</td>
+                <td className={`${someStyles['dati_tabella']} ${someStyles['codicefiscale']}`}>{elencoPazienti.codicefiscale}</td>
                 {/* <td className={someStyles.dati_tabella}>{arrayDummyPazienti.attività}</td> */}
                 <td className={`${someStyles['dati_tabella']} ${someStyles['opzioni']}`}>
                     <DetailsButton
                     onClick={() => {
                         // console.log(arrayDummyPazienti); //-----> Log per verificare che passa i dati del paziente corretto
-                        cliccaRiga(arrayDummyPazienti);
+                        cliccaRiga(elencoPazienti);
                     }}>
                     </DetailsButton>
 
@@ -316,11 +317,19 @@ export function PatientContextProvider(props){
                     
                     <DeleteButton
                     onClick={() => {
-                        confermaEliminazionePaziente(arrayDummyPazienti.id, arrayDummyPazienti.nome, arrayDummyPazienti.cognome);
+                        confermaEliminazionePaziente(elencoPazienti.id, elencoPazienti.nome, elencoPazienti.cognome);
                     }}>
                     </DeleteButton>
                 </td>
             </tr>
+        );
+    }
+
+    function fromArrayToListaPazienti(elencoPazienti){
+        return(
+           <option key={elencoPazienti.id} value={elencoPazienti.id} >
+                {elencoPazienti.nome} {elencoPazienti.cognome} {'-- (ID: '}{elencoPazienti.id + ')'}
+           </option>
         );
     }
 
@@ -413,7 +422,8 @@ export function PatientContextProvider(props){
         value={{
             listaPazienti: elencoPazienti,
             showTabella: showTabella,
-            arrayToLista: fromArrayToTablePazienti,
+            arrayToTable: fromArrayToTablePazienti,
+            arrayToLista: fromArrayToListaPazienti,
             mostraRiga: cliccaRiga,
             showScheda: showSchedaPaziente,
             schedaPaziente: scheda_paziente,

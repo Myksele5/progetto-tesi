@@ -1,0 +1,6 @@
+.wrapper_risultati{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

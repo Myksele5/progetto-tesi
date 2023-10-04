@@ -8,6 +8,7 @@ import Card from '../UI/Card';
 import ExerciseGuessTheFruit from "./ExerciseGuessTheFruit";
 import GameContext from "../../context/game-context";
 import PatientContext from "../../context/patients-context";
+import RisultatiGioco from "./RisultatiGioco";
 
 let risultati_gioco;
 
@@ -53,40 +54,28 @@ function Giochi(){
     function endGame(risposteUtente, domandeTotali){
         setGameObject(null);
         risultati_gioco =
-            <Card
-            altroStile={true}
-            children={
-                <div className={styles.wrapper_generico}>
-                    <h1>RISULTATI UTENTE</h1>
-                    <p>Risposte corrette: {risposteUtente}/{domandeTotali}</p>
-                    <GenericButton
-                    onClick={chiudiSchedaRisultati}
-                    small_button={true}
-                    buttonText='Chiudi Scheda'>
-                    </GenericButton>
-                    <GenericButton
-                    onClick={() => {assegnaRisultatiPaziente(domandeTotali, risposteUtente)}}
-                    generic_button={true}
-                    buttonText='Assegna risultati a...'>
-                    </GenericButton>
-                </div>
-                }>
-            </Card>
+            <RisultatiGioco
+                numeroRisposteCorrette={risposteUtente}
+                numeroDomandeTotali={domandeTotali}
+                chiudiSchedaRisultati={chiudiScheda}
+                assegnaRisultatiPaziente={(INDICE) => {salvaRisultati(risposteUtente, domandeTotali, INDICE)}}
+            >
+            </RisultatiGioco>
         setGameResults(true);
     }
 
-    function assegnaRisultatiPaziente(domandeTotali, risposteUtente){
-        patients_ctx.listaPazienti[0].statistiche.risposte_totali += domandeTotali;
-        patients_ctx.listaPazienti[0].statistiche.risposte_corrette += risposteUtente;
-        patients_ctx.listaPazienti[0].statistiche.risposte_sbagliate += (domandeTotali - risposteUtente);
+    function salvaRisultati(risposteUtente, domandeTotali, INDICEArrayPaziente){
+        patients_ctx.listaPazienti[INDICEArrayPaziente].statistiche.risposte_totali += domandeTotali;
+        patients_ctx.listaPazienti[INDICEArrayPaziente].statistiche.risposte_corrette += risposteUtente;
+        patients_ctx.listaPazienti[INDICEArrayPaziente].statistiche.risposte_sbagliate += (domandeTotali - risposteUtente);
         // console.log(patients_ctx.listaPazienti[0].statistiche.risposte_sbagliate);
         console.log("NUMERO DI DOMANDE ---->" + domandeTotali);
         console.log("RISPOSTE CORRETTE ---->" + risposteUtente);
         console.log("RISPOSTE SBAGLIATE ---->" + (domandeTotali - risposteUtente));
-        chiudiSchedaRisultati();
+        chiudiScheda();
     }
 
-    function chiudiSchedaRisultati(){
+    function chiudiScheda(){
         risultati_gioco = null;
         setGameResults(false);
         setShowSearchBoxAndButton(true);
@@ -119,7 +108,7 @@ function Giochi(){
     }
 
     return(
-        <GameContext.Provider>
+        // <GameContext.Provider>
             <div className={styles.schermata_giochi}>
                 <h1 className={styles.page_title}>Giochi</h1>
                 {show_boxes}
@@ -130,7 +119,7 @@ function Giochi(){
                     {lista_giochi}
                 </div>
             </div>
-        </GameContext.Provider>
+        // </GameContext.Provider>
     );
 }
 

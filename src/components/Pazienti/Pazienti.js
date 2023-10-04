@@ -50,7 +50,7 @@ function Pazienti(){
 
                 {patients_ctx.showTabella && 
                     <TabellaPazienti
-                    elenco = {patients_ctx.listaPazienti.map(patients_ctx.arrayToLista)}>
+                    elenco = {patients_ctx.listaPazienti.map(patients_ctx.arrayToTable)}>
                     </TabellaPazienti>
                 }
             </div>

@@ -16,7 +16,7 @@
 }
 
 .is_disabled:disabled{
-    cursor: none;
+    cursor: not-allowed;
 }
 
 .correct_answer{
