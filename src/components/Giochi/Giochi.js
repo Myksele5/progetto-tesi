@@ -29,11 +29,11 @@ function Giochi(){
         switch(stringa){
             case 'GUESS_THE_FACE':
                 setGameObject(
-                    <div className={styles.wrapper_gioco}>
+                    // <div className={styles.wrapper_gioco}>
                         <ExerciseGuessTheFace
                         giocoTerminato={endGame}>
                         </ExerciseGuessTheFace>
-                    </div>
+                    // </div>
                 );
                 break;
             case 'GUESS_THE_FRUIT':

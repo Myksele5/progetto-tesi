@@ -1,5 +1,6 @@
 import styles from './ExerciseGuessTheFace.module.css';
 import GameButton from '../UI/GameButton';
+import GenericButton from '../UI/GenericButton';
 import { useState } from 'react';
 
 import Einstein from '../Images-Giochi/ALBERT_EINSTEIN.jpeg';
@@ -11,14 +12,27 @@ import GameContext from '../../context/game-context';
 
 let counter_question_number = 0;
 let counter_correct_answers = 0;
+var quattroRisposte = [];
 
 function ExerciseGuessTheFace(props){
+
+    const [risposta1, setRisposta1] = useState('');
+    const [risposta2, setRisposta2] = useState('');
+    const [risposta3, setRisposta3] = useState('');
+    const [risposta4, setRisposta4] = useState('');
+
+    const [gameStarted, setGameStarted] = useState(false);
+    const [hasAnswered, setHasAnswered] = useState(false);
     
     const [disableButton, setDisableButton] = useState(false);
-    const [coloraRispostaCorretta, setColoraRispostaCorretta] = useState(false);
+    const [coloraRispostaCorretta_N1, setColoraRispostaCorretta_N1] = useState(false);
+    const [coloraRispostaCorretta_N2, setColoraRispostaCorretta_N2] = useState(false);
+    const [coloraRispostaCorretta_N3, setColoraRispostaCorretta_N3] = useState(false);
+    const [coloraRispostaCorretta_N4, setColoraRispostaCorretta_N4] = useState(false);
     const [coloraRispostaSbagliata_N1, setColoraRispostaSbagliata_N1] = useState(false);
     const [coloraRispostaSbagliata_N2, setColoraRispostaSbagliata_N2] = useState(false);
     const [coloraRispostaSbagliata_N3, setColoraRispostaSbagliata_N3] = useState(false);
+    const [coloraRispostaSbagliata_N4, setColoraRispostaSbagliata_N4] = useState(false);
 
     const questions = [
         {
@@ -68,136 +82,252 @@ function ExerciseGuessTheFace(props){
         }
     ];
 
-    let risposte = [
+    // let risposte = [
         
-        <GameButton
-        onClick={() => {
-            checkTheAnswer('CORRECT');
-        }}
-        is_disabled={disableButton}
-        correct_answer={coloraRispostaCorretta}
-        game_button={true}
-        buttonText={questions[counter_question_number].question.correct_answer}>
-        </GameButton>,
+    //     <GameButton
+    //     onClick={() => {
+    //         checkTheAnswer('CORRECT');
+    //     }}
+    //     is_disabled={disableButton}
+    //     correct_answer={coloraRispostaCorretta}
+    //     game_button={true}
+    //     buttonText={questions[counter_question_number].question.correct_answer}>
+    //     </GameButton>,
 
-        <GameButton
-        onClick={() => {
-            checkTheAnswer('WRONG_N1');
-        }}
-        is_disabled={disableButton}
-        wrong_answer={coloraRispostaSbagliata_N1}
-        game_button={true}
-        buttonText={questions[counter_question_number].question.wrong_answer_n1}>
-        </GameButton>,
+    //     <GameButton
+    //     onClick={() => {
+    //         checkTheAnswer('WRONG_N1');
+    //     }}
+    //     is_disabled={disableButton}
+    //     wrong_answer={coloraRispostaSbagliata_N1}
+    //     game_button={true}
+    //     buttonText={questions[counter_question_number].question.wrong_answer_n1}>
+    //     </GameButton>,
 
-        <GameButton
-        onClick={() => {
-            checkTheAnswer('WRONG_N2');
-        }}
-        is_disabled={disableButton}
-        wrong_answer={coloraRispostaSbagliata_N2}
-        game_button={true}
-        buttonText={questions[counter_question_number].question.wrong_answer_n2}>
-        </GameButton>,
+    //     <GameButton
+    //     onClick={() => {
+    //         checkTheAnswer('WRONG_N2');
+    //     }}
+    //     is_disabled={disableButton}
+    //     wrong_answer={coloraRispostaSbagliata_N2}
+    //     game_button={true}
+    //     buttonText={questions[counter_question_number].question.wrong_answer_n2}>
+    //     </GameButton>,
 
-        <GameButton
-        onClick={() => {
-            checkTheAnswer('WRONG_N3');
-        }}
-        is_disabled={disableButton}
-        wrong_answer={coloraRispostaSbagliata_N3}
-        game_button={true}
-        buttonText={questions[counter_question_number].question.wrong_answer_n3}>
-        </GameButton>
+    //     <GameButton
+    //     onClick={() => {
+    //         checkTheAnswer('WRONG_N3');
+    //     }}
+    //     is_disabled={disableButton}
+    //     wrong_answer={coloraRispostaSbagliata_N3}
+    //     game_button={true}
+    //     buttonText={questions[counter_question_number].question.wrong_answer_n3}>
+    //     </GameButton>
 
-    ];
+    // ];
 
-    function checkTheAnswer(answer){
+    function checkTheAnswer(answer1, answer2, answer3, answer4, button){
         setDisableButton(true);
+        setHasAnswered(true);
 
-        // IMPOSTA IL COLORE DEI BOTTONI IN BASE ALLA RISPOSTA
-        switch(answer){
-            case 'CORRECT':
-                console.log('Risposta CORRETTA!');
-                setColoraRispostaCorretta(true);
+        let risp = questions[counter_question_number].question.correct_answer;
+
+        if(answer1 === risp){
+            setColoraRispostaCorretta_N1(true);
+            if(button === "BOTTONE_1"){
                 counter_correct_answers++;
-                break;
-            case 'WRONG_N1':
-                console.log('Risposta SBAGLIATA!');
-                setColoraRispostaSbagliata_N1(true);
-                setColoraRispostaCorretta(true);
-                break;
-            case 'WRONG_N2':
-                console.log('Risposta SBAGLIATA!');
-                setColoraRispostaSbagliata_N2(true);
-                setColoraRispostaCorretta(true);
-                break;
-            case 'WRONG_N3':
-                console.log('Risposta SBAGLIATA!');
-                setColoraRispostaSbagliata_N3(true);
-                setColoraRispostaCorretta(true);
-                break;
-            default:
-                break;
-        }
-
-        // AGGIORNA CONTATORE DELLA DOMANDA ======= GIOCO IN CORSO
-        if(counter_question_number < questions.length - 1){
+            }
             
-            setTimeout(() => {
-                counter_question_number++;
-                setColoraRispostaCorretta(false);
-                setColoraRispostaSbagliata_N1(false);
-                setColoraRispostaSbagliata_N2(false);
-                setColoraRispostaSbagliata_N3(false);
-                setDisableButton(false);
-            }, 1500);            
         }
-
-        // GIOCO TERMINATO ======= RESETTA LE COMPONENTI
         else{
-            setTimeout(() => {
-                setColoraRispostaCorretta(false);
-                setColoraRispostaSbagliata_N1(false);
-                setColoraRispostaSbagliata_N2(false);
-                setColoraRispostaSbagliata_N3(false);
-                setDisableButton(false);
-                props.giocoTerminato(counter_correct_answers, questions.length);
-                counter_question_number = 0; //--------> GIOCO FINITO RESETTA IL CONTATORE
-                counter_correct_answers = 0; //--------> E RESETTO IL NUMERO DI RISPOSTE DELL'UTENTE
-            }, 1500);  
-            
-            console.log('GIOCO TERMINATO, NASCONDI IL GIOCO E MOSTRA I RISULTATI')
+            if(button === "BOTTONE_1"){
+                setColoraRispostaSbagliata_N1(true);
+            }
         }
+
+
+        if(answer2 === risp){
+            setColoraRispostaCorretta_N2(true);
+            if(button === "BOTTONE_2"){
+                counter_correct_answers++;
+            }
+        }
+        else{
+            if(button === "BOTTONE_2"){
+                setColoraRispostaSbagliata_N2(true);
+            }
+        }
+
+        if(answer3 === risp){
+            setColoraRispostaCorretta_N3(true);
+            if(button === "BOTTONE_3"){
+                counter_correct_answers++;
+            }
+        }
+        else{
+            if(button === "BOTTONE_3"){
+                setColoraRispostaSbagliata_N3(true);
+            }
+        }
+
+        if(answer4 === risp){
+            setColoraRispostaCorretta_N4(true);
+            if(button === "BOTTONE_4"){
+                counter_correct_answers++;
+            }
+        }
+        else{
+            if(button === "BOTTONE_4"){
+                setColoraRispostaSbagliata_N4(true);
+            }
+        }
+
 
     }
 
-    function randomizeAnswers(){
-        for(let i = risposte.length-1; i > 0; i--){
+    function shuffleAnswers(){
+        
+        quattroRisposte[0] = questions[counter_question_number].question.correct_answer;
+        quattroRisposte[1] = questions[counter_question_number].question.wrong_answer_n1;
+        quattroRisposte[2] = questions[counter_question_number].question.wrong_answer_n2;
+        quattroRisposte[3] = questions[counter_question_number].question.wrong_answer_n3;
+        console.log(quattroRisposte);
+        
+        for(let i = quattroRisposte.length-1; i >= 0; i--){
             const j = Math.floor(Math.random() * (i+1));
-            const temp = risposte[i];
-            risposte[i] = risposte[j];
-            risposte[j] = temp;
+            const temp = quattroRisposte[i];
+            quattroRisposte[i] = quattroRisposte[j];
+            quattroRisposte[j] = temp;
+        }
+        console.log(quattroRisposte);
+        setRisposta1(quattroRisposte[0]);
+        setRisposta2(quattroRisposte[1]);
+        setRisposta3(quattroRisposte[2]);
+        setRisposta4(quattroRisposte[3]);
+
+        // counter_question_number++;
+    }
+
+    function iniziaGioco(){
+        setGameStarted(true);
+        counter_correct_answers = 0;
+        counter_question_number = 0;
+        shuffleAnswers();
+    }
+
+    function aggiornaLogica(){
+        if(counter_question_number < questions.length-1){
+            counter_question_number++;
+        }
+        else{
+            setGameStarted(false);
+            counter_question_number = 0;
+            props.giocoTerminato(counter_correct_answers, questions.length);
         }
 
-        return(
-            risposte
-        );
-        // Math.floor(Math.random() * risposte.length)
+        setColoraRispostaCorretta_N1(false);
+        setColoraRispostaCorretta_N2(false);
+        setColoraRispostaCorretta_N3(false);
+        setColoraRispostaCorretta_N4(false);
+
+        setColoraRispostaSbagliata_N1(false);
+        setColoraRispostaSbagliata_N2(false);
+        setColoraRispostaSbagliata_N3(false);
+        setColoraRispostaSbagliata_N4(false);
+
+        setDisableButton(false);
+        setHasAnswered(false);
+
+        shuffleAnswers();
     }
 
     return(
         // <GameContext.Provider>
         <>
             <hr className={styles.horizontal_line}></hr>
-            <h1 className={styles.explanation}>Seleziona la risposta che ritieni corretta</h1>
+            <h2 className={styles.explanation}>Seleziona la risposta che ritieni corretta</h2>
             <hr className={styles.horizontal_line}></hr>
-            <h2>Chi è questo personaggio?</h2>
-            <img className={styles.resize_image} src={questions[counter_question_number].face_image} alt='Face'></img>
-            <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>
-            <div className={styles.wrapper_bottoni_risposte}>
-                {risposte}
-            </div>
+            
+            {!gameStarted &&
+                <div className={styles.wrap_generico}>
+                    <h1>Quando sei pronto, clicca sul bottone</h1>
+                    <GenericButton
+                        onClick={iniziaGioco}
+                        alternative_button={true}
+                        buttonText={"INIZIA"}
+                    >
+                    </GenericButton>
+                </div>
+            }
+            
+            {gameStarted &&
+                <>
+                    <h3>Chi è questo personaggio?</h3>
+                    <img className={styles.resize_image} src={questions[counter_question_number].face_image} alt='Face'></img>
+                    <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>
+
+                    <div className={styles.wrap_generico}>
+                        {hasAnswered && 
+                            <GenericButton
+                                onClick={aggiornaLogica}
+                                alternative_button={true}
+                                buttonText={"PROSSIMA DOMANDA"}
+                            >
+                            </GenericButton>
+                        }
+                    </div>
+                    
+                    
+                    
+                    <div className={styles.wrapper_bottoni_risposte}>
+        
+                        {/* {risposte} */}
+        
+                        <GameButton
+                        onClick={() => {
+                            // console.log(risposta1);
+                            checkTheAnswer(risposta1, risposta2, risposta3, risposta4, 'BOTTONE_1')
+                        }}
+                        correct_answer={coloraRispostaCorretta_N1}
+                        wrong_answer={coloraRispostaSbagliata_N1}
+                        buttonText={risposta1}
+                        is_disabled={disableButton}
+                        game_button={true}></GameButton>
+
+                        <GameButton
+                        onClick={() => {
+                            checkTheAnswer(risposta1, risposta2, risposta3, risposta4, 'BOTTONE_2')
+                        }}
+                        correct_answer={coloraRispostaCorretta_N2}
+                        wrong_answer={coloraRispostaSbagliata_N2}
+                        buttonText={risposta2}
+                        is_disabled={disableButton}
+                        game_button={true}></GameButton>
+
+                        <GameButton
+                        onClick={() => {
+                            checkTheAnswer(risposta1, risposta2, risposta3, risposta4, 'BOTTONE_3')
+                        }}
+                        correct_answer={coloraRispostaCorretta_N3}
+                        wrong_answer={coloraRispostaSbagliata_N3}
+                        buttonText={risposta3}
+                        is_disabled={disableButton}
+                        game_button={true}></GameButton>
+
+                        <GameButton
+                        onClick={() => {
+                            checkTheAnswer(risposta1, risposta2, risposta3, risposta4, 'BOTTONE_4')
+                        }}
+                        correct_answer={coloraRispostaCorretta_N4}
+                        wrong_answer={coloraRispostaSbagliata_N4}
+                        buttonText={risposta4}
+                        is_disabled={disableButton}
+                        game_button={true}></GameButton>
+                    </div>
+                </>
+            }
+
+            
         </>
         // </GameContext.Provider>
     );

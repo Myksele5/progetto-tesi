@@ -11,10 +11,28 @@
     padding: 5px;
     box-shadow: 0 1px 5px 1px rgb(33, 33, 131);
     transition: 0.2s;
+    animation: animazione 1.5s normal;
 }
 
 .item_gioco:hover{
     background-color: lightcyan;
     box-shadow: 0 1px 15px 1px rgb(33, 33, 131);
     transition: 0.2s;
+}
+
+@keyframes animazione {
+    0%{
+        opacity: 10%;
+    }
+    25%{
+        opacity: 40%;
+    }
+    50%{
+        transform: translateX(-3%);
+        opacity: 65%;
+    }
+    100%{
+        transform: translateX(0%);
+        opacity: 100%;
+    }
 }

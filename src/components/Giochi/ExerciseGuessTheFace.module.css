@@ -1,3 +1,14 @@
+.wrap_generico{
+    width: 650px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    position: absolute;
+    top: 64%;
+}
+
 .explanation{
     font-size: 30px;
     margin: 5px;
@@ -26,6 +37,7 @@
 .wrapper_bottoni_risposte{
     width: fit-content;
     display: grid;
+    padding-top: 3%;
     grid-template-columns: 250px 250px;
     grid-template-rows: 70px 70px;
     column-gap: 100px;
