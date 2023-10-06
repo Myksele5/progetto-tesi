@@ -14,6 +14,8 @@ let counter_question_number = 0;
 let counter_correct_answers = 0;
 var quattroRisposte = [];
 
+let qualcosa;
+
 function ExerciseGuessTheFace(props){
 
     const [risposta1, setRisposta1] = useState('');
@@ -262,11 +264,11 @@ function ExerciseGuessTheFace(props){
             
             {gameStarted &&
                 <>
-                    <h3>Chi è questo personaggio?</h3>
+                    <h3 className={styles.domanda}>Chi è questo personaggio?</h3>
                     <img className={styles.resize_image} src={questions[counter_question_number].face_image} alt='Face'></img>
                     <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>
 
-                    <div className={styles.wrap_generico}>
+                    {/* <div className={styles.wrap_generico}> */}
                         {hasAnswered && 
                             <GenericButton
                                 onClick={aggiornaLogica}
@@ -275,11 +277,11 @@ function ExerciseGuessTheFace(props){
                             >
                             </GenericButton>
                         }
-                    </div>
+                    {/* </div> */}
                     
                     
                     
-                    <div className={styles.wrapper_bottoni_risposte}>
+                    <div id={qualcosa} className={styles.wrapper_bottoni_risposte}>
         
                         {/* {risposte} */}
         

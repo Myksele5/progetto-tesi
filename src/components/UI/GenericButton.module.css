@@ -74,14 +74,16 @@
     align-items: center;
     justify-content: space-evenly;
     margin: 7px;
-    width: 170px;
-    height: 40px;
-    font-size: 20px;
+    width: 200px;
+    height: 50px;
+    font-size: 1vw;
+    font-weight: bold;
     border: 2px solid transparent;
     border-radius: 10px;
     color: whitesmoke;
     cursor: pointer;
     background-color: rgb(50, 50, 192);
+    animation: animaz 1.2s forwards ease-in-out;
 }
 
 .alternative_button:hover{
@@ -119,4 +121,23 @@
         width: 20px;
         height: 20px
     }
+}
+
+@keyframes animaz {
+    0%{
+        opacity: 0%;
+    }
+    25%{
+        opacity: 25%;
+    }
+    50%{
+        opacity: 40%;
+    }
+    75%{
+        opacity: 60%;
+    }
+    100%{
+        opacity: 100%;
+    }
+    
 }
