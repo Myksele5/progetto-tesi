@@ -96,7 +96,7 @@ function AddPaziente(props){
         var month = dateee.toLocaleString('it-IT', {month: '2-digit'})
         var year = dateee.getFullYear();
 
-        let dateString = `${day}-${month}-${year}`;
+        let dateString = `${year}-${month}-${day}`;
 
         const datiNuovoPaziente = {
             nome: enteredNome,

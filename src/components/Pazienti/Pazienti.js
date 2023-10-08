@@ -35,6 +35,8 @@ function Pazienti(){
 
                 {patients_ctx.showScheda && patients_ctx.schedaPaziente}
 
+                {patients_ctx.showModifica && patients_ctx.modificaPaziente}
+
                 {patients_ctx.showFormNuovoPaziente && 
                     <Card
                     altroStile={true}

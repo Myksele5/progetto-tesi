@@ -5,8 +5,11 @@ import DeleteButton from "../components/UI/DeleteButton";
 import EditButton from "../components/UI/EditButton";
 import DetailsButton from "../components/UI/DetailsButton";
 import Modal from "../components/UI/Modal";
+import EditPaziente from "../components/Pazienti/EditPaziente";
+import Card from "../components/UI/Card";
 
 let scheda_paziente;
+let modifica_paziente;
 let modal_eliminazione;
 
 const PatientContext = React.createContext({
@@ -17,6 +20,10 @@ const PatientContext = React.createContext({
     mostraRiga: () => {},
     showScheda: null,
     schedaPaziente: null,
+    showModifica: null,
+    modificaPaziente: null,
+    modificaLista: () => {},
+    chiudiFormModifica: () => {},
     showModale: null,
     modale: null,
     formVisibile: () => {},
@@ -33,8 +40,8 @@ export function PatientContextProvider(props){
             nome: 'ProvaNomeSuperMegaLunghissimo',
             cognome: 'EconUnCognomepurealtrettanto',
             città: 'San Valentino in Abruzzo Citeriore e a e e e e eae e aea ee adwad dwadwaddwd',
-            datanascita: '05-07-1995',
-            attività: 0,
+            datanascita: '1995-07-05',
+            attività: 12,
             opzioni: '',
             statistiche: {
                 risposte_totali: 10,
@@ -42,13 +49,13 @@ export function PatientContextProvider(props){
                 risposte_sbagliate: 5
             },
             codicefiscale: "ABCYRO41H24L077E",
-            id: Math.random().toString()
+            id: "012345apollo"
         },
         {
             nome: 'Michele',
             cognome: 'Sardone',
             città: 'Bari',
-            datanascita: '05-07-1995',
+            datanascita: '1995-07-05',
             attività: 0,
             opzioni: '',
             statistiche: {
@@ -63,7 +70,7 @@ export function PatientContextProvider(props){
             nome: 'Vito',
             cognome: 'Sardone',
             città: 'Varsavia',
-            datanascita: '31-01-1989',
+            datanascita: '1989-01-31',
             attività: 5,
             opzioni: '',
             statistiche: {
@@ -78,7 +85,7 @@ export function PatientContextProvider(props){
             nome: 'Domenico',
             cognome: 'Casaburi',
             città: 'Bari',
-            datanascita: '02-08-1995',
+            datanascita: '1995-08-02',
             attività: 2,
             opzioni: '',
             statistiche: {
@@ -93,7 +100,7 @@ export function PatientContextProvider(props){
             nome: 'Marta',
             cognome: 'Wojcik',
             città: 'Varsavia',
-            datanascita: '25-12-1992',
+            datanascita: '1992-12-25',
             attività: 2,
             opzioni: '',
             statistiche: {
@@ -108,7 +115,7 @@ export function PatientContextProvider(props){
             nome: 'Domenico',
             cognome: 'Casaburi',
             città: 'Bari',
-            datanascita: '02-08-1995',
+            datanascita: '1995-08-02',
             attività: 2,
             opzioni: '',
             statistiche: {
@@ -123,7 +130,7 @@ export function PatientContextProvider(props){
             nome: 'Giuseppe',
             cognome: 'Sardone',
             città: 'Puerto de la Cruz',
-            datanascita: '31-12-1966',
+            datanascita: '1966-12-10',
             attività: 2,
             opzioni: '',
             statistiche: {
@@ -138,7 +145,7 @@ export function PatientContextProvider(props){
             nome: 'Maria Antonietta',
             cognome: 'Locuratolo',
             città: 'Bari',
-            datanascita: '14-10-1983',
+            datanascita: '1984-05-21',
             attività: 2,
             opzioni: '',
             statistiche: {
@@ -153,7 +160,7 @@ export function PatientContextProvider(props){
             nome: 'Carlo',
             cognome: 'Casaburi',
             città: 'Genova',
-            datanascita: '02-08-1995',
+            datanascita: '1995-08-02',
             attività: 2,
             opzioni: '',
             statistiche: {
@@ -168,7 +175,7 @@ export function PatientContextProvider(props){
             nome: 'Giulia',
             cognome: 'Antonacci',
             città: 'Bari',
-            datanascita: '01-01-1995',
+            datanascita: '1995-01-01',
             attività: 10,
             opzioni: '',
             statistiche: {
@@ -183,7 +190,7 @@ export function PatientContextProvider(props){
             nome: 'Domenico',
             cognome: 'Casaburi',
             città: 'Bari',
-            datanascita: '02-08-1995',
+            datanascita: '1995-08-02',
             attività: 2,
             opzioni: '',
             statistiche: {
@@ -198,7 +205,7 @@ export function PatientContextProvider(props){
             nome: 'Domenico',
             cognome: 'Casaburi',
             città: 'Bari',
-            datanascita: '02-08-1995',
+            datanascita: '1995-08-02',
             attività: 2,
             opzioni: '',
             statistiche: {
@@ -213,7 +220,7 @@ export function PatientContextProvider(props){
             nome: 'Domenico',
             cognome: 'Casaburi',
             città: 'Bari',
-            datanascita: '02-08-1995',
+            datanascita: '1995-08-02',
             attività: 2,
             opzioni: '',
             statistiche: {
@@ -228,7 +235,7 @@ export function PatientContextProvider(props){
             nome: 'Domenico',
             cognome: 'Casaburi',
             città: 'Bari',
-            datanascita: '02-08-1995',
+            datanascita: '1995-08-02',
             attività: 2,
             opzioni: '',
             statistiche: {
@@ -243,7 +250,7 @@ export function PatientContextProvider(props){
             nome: 'Domenico',
             cognome: 'Casaburi',
             città: 'Bari',
-            datanascita: '02-08-1995',
+            datanascita: '1995-08-02',
             attività: 2,
             opzioni: '',
             statistiche: {
@@ -258,7 +265,7 @@ export function PatientContextProvider(props){
             nome: 'Ermenegildo',
             cognome: 'Giangiovanni',
             città: 'Bari',
-            datanascita: '02-08-1995',
+            datanascita: '1995-08-02',
             attività: 2,
             opzioni: '',
             statistiche: {
@@ -273,7 +280,7 @@ export function PatientContextProvider(props){
             nome: 'Domenico',
             cognome: 'Casaburi',
             città: 'Bari',
-            datanascita: '02-08-1995',
+            datanascita: '1995-08-02',
             attività: 2,
             opzioni: '',
             statistiche: {
@@ -288,9 +295,11 @@ export function PatientContextProvider(props){
 
     const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
     const [showTabella, setShowTabella] = useState(true);
-    const [showFormNewPaziente, setShowFormNewPaziente] = useState(false);
     const [elencoPazienti, setElencoPazienti] = useState(arrayDummyPazienti);
+
+    const [showFormNewPaziente, setShowFormNewPaziente] = useState(false);
     const [showSchedaPaziente, setShowSchedaPaziente] = useState(false);
+    const [showModificaPaziente, setShowModificaPaziente] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
     //FUNZIONE CHE RESTITUISCE LA SINGOLA RIGA DELLA TABELLA POPOLATA CON I DATI DEL PAZIENTE PRESI DALL'ARRAY
@@ -311,8 +320,10 @@ export function PatientContextProvider(props){
                     }}>
                     </DetailsButton>
 
-                    <EditButton>
-
+                    <EditButton
+                    onClick={() =>{
+                        modificaDatiPaziente(elencoPazienti);
+                    }}>
                     </EditButton>
                     
                     <DeleteButton
@@ -393,15 +404,16 @@ export function PatientContextProvider(props){
         console.log(typeof(elencoPazienti[2].datanascita));
         scheda_paziente = 
             <SchedaPaziente
-            id = {pazientee.id}
-            nome = {pazientee.nome.toUpperCase()}
-            cognome = {pazientee.cognome.toUpperCase()}
-            città = {pazientee.città.toUpperCase()}
-            datanascita = {pazientee.datanascita}
-            codicefiscale = {pazientee.codicefiscale}
-            attività = {pazientee.attività}
-            stats_paziente = {pazientee.statistiche}
-            goBackButton = {chiudiSchedaPaziente}>
+                id = {pazientee.id}
+                nome = {pazientee.nome.toUpperCase()}
+                cognome = {pazientee.cognome.toUpperCase()}
+                città = {pazientee.città.toUpperCase()}
+                datanascita = {pazientee.datanascita}
+                codicefiscale = {pazientee.codicefiscale}
+                attività = {pazientee.attività}
+                stats_paziente = {pazientee.statistiche}
+                goBackButton = {chiudiSchedaPaziente}
+            >
             </SchedaPaziente>
         setShowSchedaPaziente(true);
         setShowTabella(false);
@@ -417,6 +429,52 @@ export function PatientContextProvider(props){
         setShowSearchBoxAndButton(true);
     }
 
+    function modificaDatiPaziente(pazienteee){
+        modifica_paziente = 
+            <Card
+            children={
+                <EditPaziente
+                    iddd={pazienteee.id}
+                    nomeee={pazienteee.nome}
+                    cognomeee={pazienteee.cognome}
+                    cittààà={pazienteee.città}
+                    dataaa={pazienteee.datanascita}
+                    attivitààà={pazienteee.attività}
+                    statisticheee={pazienteee.statistiche}
+                    cfff={pazienteee.codicefiscale}
+                >
+                </EditPaziente>
+            }>
+            </Card>
+
+        setShowModificaPaziente(true);
+        setShowSearchBoxAndButton(false);
+        setShowTabella(false);
+    }
+
+    function modificaPazienteLista(datiModificatiPaziente){
+        console.log(arrayDummyPazienti[0].id);
+        console.log(datiModificatiPaziente.id);
+        for(let i = 0; i < arrayDummyPazienti.length; i++){
+            if(arrayDummyPazienti[i].id === datiModificatiPaziente.id){
+                console.log("TROVATO ID CORRISPONDENTE");
+                arrayDummyPazienti[i] = datiModificatiPaziente
+                setElencoPazienti(arrayDummyPazienti);
+            }
+        }
+        console.log("TROVATO ID CORRISPONDENTE");
+        setShowModificaPaziente(false);
+        setShowSearchBoxAndButton(true);
+        setShowTabella(true);
+    }
+
+    function chiudiFormModificaPaziente(event){
+        event.preventDefault();
+        setShowModificaPaziente(false);
+        setShowSearchBoxAndButton(true);
+        setShowTabella(true);
+    }
+
     return(
         <PatientContext.Provider
         value={{
@@ -427,6 +485,10 @@ export function PatientContextProvider(props){
             mostraRiga: cliccaRiga,
             showScheda: showSchedaPaziente,
             schedaPaziente: scheda_paziente,
+            showModifica: showModificaPaziente,
+            modificaPaziente: modifica_paziente,
+            modificaLista: modificaPazienteLista,
+            chiudiFormModifica: chiudiFormModificaPaziente,
             showModale: showModal,
             modale: modal_eliminazione,
             formVisibile: formVisibile,
