@@ -102,14 +102,14 @@ function AddPaziente(props){
             nome: enteredNome,
             cognome: enteredCognome,
             città: enteredCittà,
-            datanascita: dateString,
-            attività: 0,
+            dataNascita: dateString,
+            // attività: 0,
             statistiche: {
-                risposte_totali: 0,
-                risposte_corrette: 0,
-                risposte_sbagliate: 0
+                risposteTotali: 0,
+                risposteCorrette: 0,
+                risposteSbagliate: 0
             },
-            codicefiscale: enteredCF.toUpperCase(),
+            codiceFiscale: enteredCF.toUpperCase(),
             id: Math.random().toString()
         };
 

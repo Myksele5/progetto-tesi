@@ -105,10 +105,10 @@ function EditPaziente(props){
             nome: nomeModifica,
             cognome: cognomeModifica,
             città: cittàModifica,
-            datanascita: dateString,
-            attività: props.attivitààà,
+            dataNascita: dateString,
+            // attività: props.attivitààà,
             statistiche: props.statisticheee,
-            codicefiscale: CFModifica.toUpperCase(),
+            codiceFiscale: CFModifica.toUpperCase(),
             id: props.iddd
         };
 

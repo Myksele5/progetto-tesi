@@ -8,6 +8,9 @@ import Modal from "../components/UI/Modal";
 import EditPaziente from "../components/Pazienti/EditPaziente";
 import Card from "../components/UI/Card";
 
+import { db } from "../config/firebase-config";
+import { collection, getDocs, addDoc, deleteDoc, updateDoc, doc } from "firebase/firestore";
+
 let scheda_paziente;
 let modifica_paziente;
 let modal_eliminazione;
@@ -295,22 +298,144 @@ export function PatientContextProvider(props){
 
     const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
     const [showTabella, setShowTabella] = useState(true);
-    const [elencoPazienti, setElencoPazienti] = useState(arrayDummyPazienti);
+    const [elencoPazienti, setElencoPazienti] = useState([]);
 
     const [showFormNewPaziente, setShowFormNewPaziente] = useState(false);
     const [showSchedaPaziente, setShowSchedaPaziente] = useState(false);
     const [showModificaPaziente, setShowModificaPaziente] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
-    //FUNZIONE CHE RESTITUISCE LA SINGOLA RIGA DELLA TABELLA POPOLATA CON I DATI DEL PAZIENTE PRESI DALL'ARRAY
+    const listaPazientiReference = collection(db, "pazienti")
+    
+    // --------- FUNZIONE PER RECUPERARE I PAZIENTI DAL DATABASE
+    const prendiListaPazienti = async () => {
+        try{
+            const data = await getDocs(listaPazientiReference);
+            const filteredData = data.docs.map((docPazien) => ({
+                ...docPazien.data(),
+                id: docPazien.id
+            }))
+            setElencoPazienti(filteredData);
+        } catch(err){
+            console.error(err);
+        }
+        
+    };
+
+    //ESEGUO LA FUNZIONE PER AVERE SEMPRE LA LISTA AGGIORNATA DEI PAZIENTI
+    prendiListaPazienti();
+
+    //------------- AGGIORNA db CON IL NUOVO PAZIENTE ---> VIENE ESEGUITA IN AddPaziente.js TRAMITE PROPS
+    async function aggiungiPaziente(datiPaziente){
+        try{
+            await addDoc(listaPazientiReference, {
+                nome: datiPaziente.nome,
+                cognome: datiPaziente.cognome,
+                città: datiPaziente.città,
+                dataNascita: datiPaziente.dataNascita,
+                codiceFiscale: datiPaziente.codiceFiscale,
+                statistiche: datiPaziente.statistiche
+            });
+        } catch(err){
+            console.error(err);
+        }
+        setShowFormNewPaziente(false);
+        setShowSearchBoxAndButton(true);
+        setShowTabella(true);
+    }
+
+    //FUNZIONE PER VISUALIZZARE FORM AGGIUNTA PAZIENTE
+    function formVisibile(){
+        setShowSearchBoxAndButton(false);
+        setShowFormNewPaziente(true);
+        setShowTabella(false);
+        setShowSchedaPaziente(false);
+    }
+
+    //FUNZIONE PER NASCONDERE FORM AGGIUNTA PAZIENTE
+    function formNonVisibile(){
+        setShowFormNewPaziente(false);
+        setShowSearchBoxAndButton(true);
+        setShowTabella(true);
+    }
+
+    //---------------- FUNZIONE PER ELIMINARE UN PAZIENTE
+    async function eliminaPaziente(pazienteID){
+        const pazienteDoc = doc(db, "pazienti", pazienteID);
+        await deleteDoc(pazienteDoc);
+    }
+
+    //FUNZIONE PER VISUALIZZARE IL MODALE DI ELIMINAZIONE
+    function confermaEliminazionePaziente(paziente_ID, paziente_Nome, paziente_Cognome){
+        console.log("ELIMINO PAZIENTE");
+        
+        modal_eliminazione = 
+            <Modal
+            pazienteNome={paziente_Nome}
+            pazienteCognome={paziente_Cognome}
+            CONFERMA={() =>{
+                eliminaPaziente(paziente_ID);
+                setShowModal(false);
+                // setShowTabella(true);
+            }}
+            ANNULLA={() => {
+                setShowModal(false);
+                // setShowTabella(true);
+            }}>
+            </Modal>;
+        setShowModal(true);
+    }
+
+    //---------------- FUNZIONE PER MODIFICARE I DATI DI UN PAZIENTE
+    async function modificaPaziente(pazienteOGGETTO){
+        const pazienteDoc = doc(db, "pazienti", pazienteOGGETTO.id);
+        await updateDoc(pazienteDoc, pazienteOGGETTO);
+        setShowModificaPaziente(false);
+        setShowSearchBoxAndButton(true);
+        setShowTabella(true);
+    }
+
+    //FUNZIONE PER MOSTRARE LA SCHEDA DI MODIFICA DEI DATI DEL PAZIENTE
+    function modificaDatiPaziente(pazienteee){
+        modifica_paziente = 
+            <Card
+            children={
+                <EditPaziente
+                    iddd={pazienteee.id}
+                    nomeee={pazienteee.nome}
+                    cognomeee={pazienteee.cognome}
+                    cittààà={pazienteee.città}
+                    dataaa={pazienteee.dataNascita}
+                    attivitààà={pazienteee.attività}
+                    statisticheee={pazienteee.statistiche}
+                    cfff={pazienteee.codiceFiscale}
+                >
+                </EditPaziente>
+            }>
+            </Card>
+
+        setShowModificaPaziente(true);
+        setShowSearchBoxAndButton(false);
+        setShowTabella(false);
+    }
+
+    //FUNZIONE PER CHIUDERE LA SCHEDA DI MODIFICA DEI DATI DEL PAZIENTE
+    function chiudiFormModificaPaziente(event){
+        event.preventDefault();
+        setShowModificaPaziente(false);
+        setShowSearchBoxAndButton(true);
+        setShowTabella(true);
+    }
+
+    //------------- FUNZIONE CHE RESTITUISCE LA SINGOLA RIGA DELLA TABELLA POPOLATA CON I DATI DEL PAZIENTE PRESI DAL db
     function fromArrayToTablePazienti(elencoPazienti){
         return(
             <tr key={elencoPazienti.id}>
                 <td className={`${someStyles['dati_tabella']} ${someStyles['nome']}`}>{elencoPazienti.nome}</td>
                 <td className={`${someStyles['dati_tabella']} ${someStyles['cognome']}`}>{elencoPazienti.cognome}</td>
                 <td className={`${someStyles['dati_tabella']} ${someStyles['città']}`}>{elencoPazienti.città}</td>
-                <td className={`${someStyles['dati_tabella']} ${someStyles['data']}`}>{elencoPazienti.datanascita}</td>
-                <td className={`${someStyles['dati_tabella']} ${someStyles['codicefiscale']}`}>{elencoPazienti.codicefiscale}</td>
+                <td className={`${someStyles['dati_tabella']} ${someStyles['data']}`}>{elencoPazienti.dataNascita}</td>
+                <td className={`${someStyles['dati_tabella']} ${someStyles['codicefiscale']}`}>{elencoPazienti.codiceFiscale}</td>
                 {/* <td className={someStyles.dati_tabella}>{arrayDummyPazienti.attività}</td> */}
                 <td className={`${someStyles['dati_tabella']} ${someStyles['opzioni']}`}>
                     <DetailsButton
@@ -336,6 +461,7 @@ export function PatientContextProvider(props){
         );
     }
 
+    //-------------- FUNZIONE CHE RESTITUISCE LE OPZIONI PER I MENU A DROPDOWN
     function fromArrayToListaPazienti(elencoPazienti){
         return(
            <option key={elencoPazienti.id} value={elencoPazienti.id} >
@@ -344,73 +470,19 @@ export function PatientContextProvider(props){
         );
     }
 
-    //FUNZIONE PER VISUALIZZARE FORM AGGIUNTA PAZIENTE
-    function formVisibile(){
-        setShowSearchBoxAndButton(false);
-        setShowFormNewPaziente(true);
-        setShowTabella(false);
-        setShowSchedaPaziente(false);
-    }
-
-    //FUNZIONE PER NASCONDERE FORM AGGIUNTA PAZIENTE
-    function formNonVisibile(){
-        setShowFormNewPaziente(false);
-        setShowSearchBoxAndButton(true);
-        setShowTabella(true);
-    }
-
-    //AGGIORNA ARRAY CON IL NUOVO PAZIENTE ---> VIENE ESEGUITA IN AddPaziente.js TRAMITE PROPS
-    function newPazienteHandler(datiPaziente){
-        console.log(datiPaziente);
-        setElencoPazienti(
-            elencoPrecedente => {
-                return [datiPaziente, ...elencoPrecedente]
-            }
-        );
-        setShowFormNewPaziente(false);
-        setShowSearchBoxAndButton(true);
-        setShowTabella(true);
-    }
-
-    function confermaEliminazionePaziente(paziente_ID, paziente_Nome, paziente_Cognome){
-        // const indexPaziente = arrayDummyPazienti.indexOf(pazienteID);
-        console.log('ELIMINA QUESTA RIGA');
-        // setShowTabella(false);
-        
-        modal_eliminazione = 
-            <Modal
-            pazienteNome={paziente_Nome}
-            pazienteCognome={paziente_Cognome}
-            CONFERMA={() =>{
-                setElencoPazienti(
-                    elencoPrecedente => {
-                        return elencoPrecedente.filter(elencoPrecedente => elencoPrecedente.id !== paziente_ID);
-                    }
-                );
-                setShowModal(false);
-                // setShowTabella(true);
-            }}
-            ANNULLA={() => {
-                setShowModal(false);
-                // setShowTabella(true);
-            }}>
-            </Modal>;
-        setShowModal(true);
-    }
-
     //FUNZIONE PER VISUALIZZARE LA SCHEDA DI UN SINGOLO PAZIENTE CON I SUOI DATI
     function cliccaRiga(pazientee){
         // console.log(idd, nomee, cognomee, cittàà, dataa, attivitàà);
-        console.log(typeof(elencoPazienti[2].datanascita));
+        // console.log(typeof(elencoPazienti[1].dataNascita));
         scheda_paziente = 
             <SchedaPaziente
                 id = {pazientee.id}
                 nome = {pazientee.nome.toUpperCase()}
                 cognome = {pazientee.cognome.toUpperCase()}
                 città = {pazientee.città.toUpperCase()}
-                datanascita = {pazientee.datanascita}
-                codicefiscale = {pazientee.codicefiscale}
-                attività = {pazientee.attività}
+                datanascita = {pazientee.dataNascita}
+                codicefiscale = {pazientee.codiceFiscale}
+                // attività = {pazientee.attività}
                 stats_paziente = {pazientee.statistiche}
                 goBackButton = {chiudiSchedaPaziente}
             >
@@ -429,52 +501,6 @@ export function PatientContextProvider(props){
         setShowSearchBoxAndButton(true);
     }
 
-    function modificaDatiPaziente(pazienteee){
-        modifica_paziente = 
-            <Card
-            children={
-                <EditPaziente
-                    iddd={pazienteee.id}
-                    nomeee={pazienteee.nome}
-                    cognomeee={pazienteee.cognome}
-                    cittààà={pazienteee.città}
-                    dataaa={pazienteee.datanascita}
-                    attivitààà={pazienteee.attività}
-                    statisticheee={pazienteee.statistiche}
-                    cfff={pazienteee.codicefiscale}
-                >
-                </EditPaziente>
-            }>
-            </Card>
-
-        setShowModificaPaziente(true);
-        setShowSearchBoxAndButton(false);
-        setShowTabella(false);
-    }
-
-    function modificaPazienteLista(datiModificatiPaziente){
-        console.log(arrayDummyPazienti[0].id);
-        console.log(datiModificatiPaziente.id);
-        for(let i = 0; i < arrayDummyPazienti.length; i++){
-            if(arrayDummyPazienti[i].id === datiModificatiPaziente.id){
-                console.log("TROVATO ID CORRISPONDENTE");
-                arrayDummyPazienti[i] = datiModificatiPaziente
-                setElencoPazienti(arrayDummyPazienti);
-            }
-        }
-        console.log("TROVATO ID CORRISPONDENTE");
-        setShowModificaPaziente(false);
-        setShowSearchBoxAndButton(true);
-        setShowTabella(true);
-    }
-
-    function chiudiFormModificaPaziente(event){
-        event.preventDefault();
-        setShowModificaPaziente(false);
-        setShowSearchBoxAndButton(true);
-        setShowTabella(true);
-    }
-
     return(
         <PatientContext.Provider
         value={{
@@ -487,13 +513,13 @@ export function PatientContextProvider(props){
             schedaPaziente: scheda_paziente,
             showModifica: showModificaPaziente,
             modificaPaziente: modifica_paziente,
-            modificaLista: modificaPazienteLista,
+            modificaLista: modificaPaziente,
             chiudiFormModifica: chiudiFormModificaPaziente,
             showModale: showModal,
             modale: modal_eliminazione,
             formVisibile: formVisibile,
             formNonVisibile: formNonVisibile,
-            nuovoPazienteHandler: newPazienteHandler,
+            nuovoPazienteHandler: aggiungiPaziente,
             showFormNuovoPaziente: showFormNewPaziente,
             showBarraRicercaBottone: showSearchBoxAndButton
         }}>
