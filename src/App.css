@@ -7,13 +7,15 @@ html{
   height: 100vh;
   width: auto;
   display: flex;
+  /* flex-direction: row-reverse; */
   justify-content: center;
   align-items: center;
 }
 
 .wrap_schermata{
-  width: 85vw;
-  margin-left: 15vw;
+  width: 100%;
+  /* width: 85vw; */
+  /* margin-left: 15vw; */
 }
 
 /* .App-logo {

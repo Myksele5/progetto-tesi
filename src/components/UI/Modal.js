@@ -6,8 +6,11 @@ function ModalToPort(props){
     return(
         <div className={styles.background_modal}>
             <div className={styles.wrapper_modal}>
-                <h2>Sei sicuro di voler eliminare il seguente paziente ?</h2>
-                <h2 className={styles.underline_text}>{props.pazienteNome} {props.pazienteCognome}</h2>
+                <h2 className={styles.modal_title_text}>{props.testoModale}</h2>
+                {props.pazienteNome !== undefined && props.pazienteCognome !== undefined && 
+                    <h2 className={styles.underline_text}>{props.pazienteNome} {props.pazienteCognome}</h2>
+                }
+                
                 <GenericButton
                 onClick={props.CONFERMA}
                 generic_button={true}
@@ -28,7 +31,8 @@ function Modal(props){
     return(
         <>
             {ReactDOM.createPortal(
-            <ModalToPort 
+            <ModalToPort
+            testoModale = {props.testoModale}
             CONFERMA={props.CONFERMA}
             ANNULLA={props.ANNULLA}
             pazienteNome={props.pazienteNome}

@@ -9,6 +9,7 @@ import Giochi from './components/Giochi/Giochi';
 import Dialoghi from './components/Dialoghi/Dialoghi';
 import AuthContext from './context/auth-context';
 import { PatientContextProvider } from './context/patients-context';
+import Modal from './components/UI/Modal';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -50,29 +51,35 @@ function App() {
     }
   }
 
-  // function userLoggedin(){
-  //   localStorage.setItem('logged_IN', '1');
-  //   console.log('SALVATI DATI DI LOGIN');
-  //   setIsLoggedIn(true);
-  //   setSchermataMostrata('SCHERMATA_Pazienti');
-  // }
-
-  // function userLoggedout(){
-  //   localStorage.removeItem('logged_IN', '1');
-  //   console.log('EFFETTUO LOGOUT');
-  //   setIsLoggedIn(false);
-  //   setSchermataMostrata('');
-  // }
 
   return (
     <>
 
       {auth_ctx.isLogged && 
+        
         <MainMenu
         // makeUserLogout = {userLoggedout}
         showSchermata = {changeSchermata}>
         </MainMenu>
+      
       }
+
+
+      {auth_ctx.isLogged && auth_ctx.logoutModal &&
+        <Modal
+          testoModale={"Sei sicuro di voler effettuare il logout?"}
+          CONFERMA = {() => {
+            auth_ctx.onLogout();
+          }}
+          ANNULLA = {() => {
+            auth_ctx.cancelLogout();
+          }}
+        >
+        </Modal>
+        
+      }
+
+      
         
       <div className="App">
         {!auth_ctx.isLogged && 
@@ -81,6 +88,8 @@ function App() {
           >
           </Login>
         }
+
+        
         <PatientContextProvider>
           {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Pazienti' && <Pazienti/>}
           {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Attività' && <Attività/>}

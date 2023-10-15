@@ -58,20 +58,23 @@ function Giochi(){
                 numeroRisposteCorrette={risposteUtente}
                 numeroDomandeTotali={domandeTotali}
                 chiudiSchedaRisultati={chiudiScheda}
-                assegnaRisultatiPaziente={(INDICE) => {salvaRisultati(risposteUtente, domandeTotali, INDICE)}}
+                assegnaRisultatiPaziente={(pazObj) => {salvaRisultati(risposteUtente, domandeTotali, pazObj)}}
             >
             </RisultatiGioco>
         setGameResults(true);
     }
 
-    function salvaRisultati(risposteUtente, domandeTotali, INDICEArrayPaziente){
-        patients_ctx.listaPazienti[INDICEArrayPaziente].statistiche.risposte_totali += domandeTotali;
-        patients_ctx.listaPazienti[INDICEArrayPaziente].statistiche.risposte_corrette += risposteUtente;
-        patients_ctx.listaPazienti[INDICEArrayPaziente].statistiche.risposte_sbagliate += (domandeTotali - risposteUtente);
-        // console.log(patients_ctx.listaPazienti[0].statistiche.risposte_sbagliate);
+    function salvaRisultati(risposteUtente, domandeTotali, pazienteDaAggiornare){
         console.log("NUMERO DI DOMANDE ---->" + domandeTotali);
         console.log("RISPOSTE CORRETTE ---->" + risposteUtente);
         console.log("RISPOSTE SBAGLIATE ---->" + (domandeTotali - risposteUtente));
+
+        pazienteDaAggiornare.statistiche.risposteTotali += domandeTotali;
+        pazienteDaAggiornare.statistiche.risposteCorrette += risposteUtente;
+        pazienteDaAggiornare.statistiche.risposteSbagliate += (domandeTotali - risposteUtente);
+
+        patients_ctx.modificaLista(pazienteDaAggiornare);
+        
         chiudiScheda();
     }
 

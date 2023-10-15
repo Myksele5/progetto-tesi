@@ -32,9 +32,9 @@ function MainMenuToPort(props){
         <div className={styles.wrap_menu}>
 
             <img className={styles.menu_image} src={brain} alt="blue_brain"></img>
-            <div className={styles.menu_option}>
+            <div className={styles.menu_button_logout}>
                 <GenericButton
-                onClick={auth_ctx.onLogout}
+                onClick={auth_ctx.onLogoutClick}
                 buttonText={'Log Out'}
                 small_button={true}
                 >

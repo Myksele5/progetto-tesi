@@ -55,6 +55,7 @@ function Pazienti(){
                     elenco = {patients_ctx.listaPazienti.map(patients_ctx.arrayToTable)}>
                     </TabellaPazienti>
                 }
+                
             </div>
         </div>
     );

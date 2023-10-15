@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SchedaPaziente from "../components/Pazienti/SchedaPaziente";
 import someStyles from '../components/Pazienti/TabellaPazienti.module.css';
 import DeleteButton from "../components/UI/DeleteButton";
@@ -323,7 +323,10 @@ export function PatientContextProvider(props){
     };
 
     //ESEGUO LA FUNZIONE PER AVERE SEMPRE LA LISTA AGGIORNATA DEI PAZIENTI
-    prendiListaPazienti();
+    useEffect(() => {
+        prendiListaPazienti();
+    }, []);
+    
 
     //------------- AGGIORNA db CON IL NUOVO PAZIENTE ---> VIENE ESEGUITA IN AddPaziente.js TRAMITE PROPS
     async function aggiungiPaziente(datiPaziente){
@@ -371,6 +374,7 @@ export function PatientContextProvider(props){
         
         modal_eliminazione = 
             <Modal
+            testoModale={"Sei sicuro di voler eliminare il seguente paziente?"}
             pazienteNome={paziente_Nome}
             pazienteCognome={paziente_Cognome}
             CONFERMA={() =>{

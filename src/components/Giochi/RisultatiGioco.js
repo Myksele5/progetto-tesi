@@ -4,20 +4,30 @@ import GenericButton from "../UI/GenericButton";
 import { useContext, useState } from "react";
 import PatientContext from "../../context/patients-context";
 
+var paziente_selezionato_obj;
+
 function RisultatiGioco(props){
     const patients_ctx = useContext(PatientContext);
 
+    var paziente_selezionato;
+    
     var indice = -2;
-    const [ind, setInd] = useState(indice);
+
+    const [paz, setPaz] = useState(null);
+    const [pazDaSalvare, setPazDaSalvare] = useState(null);
     const [disabledSaveButton, setDisabledSaveButton] = useState(true);
 
     //console.log(patients_ctx.listaPazienti.map(ogg => ogg.id).indexOf(value));
 
-    function trovaIndice(event){
+    function trovaPaziente(event){
+        var paziente_nome_mostrato;
+
         for(var i = 0; i < patients_ctx.listaPazienti.length; i++){
             if(patients_ctx.listaPazienti[i].id === event.target.value){
                 console.log("TROVATO");
-                return i;
+                paziente_nome_mostrato = patients_ctx.listaPazienti[i].nome + " " + patients_ctx.listaPazienti[i].cognome
+                paziente_selezionato_obj = patients_ctx.listaPazienti[i];
+                return paziente_nome_mostrato;
             }
             else{
                 console.log("NON TROVATO");
@@ -26,8 +36,12 @@ function RisultatiGioco(props){
         return -1;
     }
 
+    function creaPazienteObjDaSalvare(){
+
+    }
+
     function passaIndiceAGiochiPuntoJS(){
-        props.assegnaRisultatiPaziente(ind)
+        props.assegnaRisultatiPaziente(paziente_selezionato_obj)
     }
 
     return(
@@ -48,15 +62,16 @@ function RisultatiGioco(props){
                     generic_button={true}
                     buttonText='Assegna risultati a...'>
                     </GenericButton>
-                    <h2>PAZIENTE SELEZIONATO: {ind}</h2>
+                    <h2>PAZIENTE SELEZIONATO: {paz}</h2>
                     <select onChange={(event) => {
                         // console.log(event.target.value);
                         console.log(patients_ctx.listaPazienti.map(ogg => ogg.id).indexOf(event.target.value));
-                        indice = trovaIndice(event);
+                        // indice = trovaIndice(event);
+                        paziente_selezionato = trovaPaziente(event);
                         
-                        if(indice >= 0){
+                        if(paziente_selezionato !== -1){
                             setDisabledSaveButton(false);
-                            setInd(indice);
+                            setPaz(paziente_selezionato);
                         }
                         else{
                             setDisabledSaveButton(true);

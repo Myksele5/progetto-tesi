@@ -25,10 +25,16 @@
     box-shadow: 1px 1px 5px 3px rgb(233, 33, 131);
 }
 
+.modal_title_text{
+    font-size: 1.35vw;
+    padding-top: 5px;
+}
+
 .underline_text{
     /* text-decoration: underline rgb(233, 33, 131) 3px; */
-    padding: 1px;
+    /* padding: 1px;
     padding-left: 3px;
-    padding-right: 3px;
-    border: 3px solid rgb(233, 33, 131);
+    padding-right: 3px; */
+    text-decoration: underline solid rgb(233, 33, 131) 4px;
+    /* border: 3px solid rgb(233, 33, 131); */
 }
