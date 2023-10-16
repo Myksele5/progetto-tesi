@@ -1,0 +1,16 @@
+.radio_button{
+    width: 100px;
+    height: 40px;
+    background-color: lightyellow;
+    margin: 1px;
+}
+
+.radio_button:hover{
+    /* background-color: yellow; */
+    /* transition: 0.6s linear; */
+    cursor: pointer;
+}
+
+.is_selected{
+    background-color: lightsalmon;
+}
