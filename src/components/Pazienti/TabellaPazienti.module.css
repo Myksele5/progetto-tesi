@@ -24,7 +24,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 }
 
 .table_wrapper{
-    width: 75%;
+    width: 80%;
     overflow: auto;
     box-shadow: 1px 2px 8px 5px rgb(33, 33, 131);
     table-layout: fixed;
@@ -39,34 +39,35 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     padding-left: 3px;
     padding-right: 3px;
     font-size: 1.1vw;
+    /* width: 200px; */
     height: 70px;
 }
 
 .intestazione_tabella.nome, .intestazione_tabella.cognome, .intestazione_tabella.città, .dati_tabella.nome, .dati_tabella.cognome, .dati_tabella.città{
-    width: 240px;
+    width: 230px;
 }
 
 .intestazione_tabella.codicefiscale, .dati_tabella.codicefiscale{
-    width: 220px;
+    width: 250px;
 }
 
 .intestazione_tabella.data, .intestazione_tabella.attività, .dati_tabella.data, .dati_tabella.attività{
-    width: 190px;
+    width: 140px;
 }
 
 .intestazione_tabella.opzioni, .dati_tabella.opzioni{
-    width: 170px;
+    width: 150px;
 }
 
 .dati_tabella{
+    /* width: 350px; */
     background-color: transparent;
     color: rgb(59, 59, 241);
     border: 1px solid rgb(233, 33, 131);
-    font-size: 1.1vw;
+    font-size: 1.2vw;
     text-overflow: ellipsis;
     overflow: hidden;
     height: 100px;
-    /* min-height: 20vh; */
 }
 
 @media screen and (max-width: 1750px){
@@ -76,7 +77,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 
     .intestazione_tabella, .dati_tabella{
         color: orange;
-        font-size: 1vw;
+        font-size: 18px;
     }
 
     .intestazione_tabella.nome, .intestazione_tabella.cognome, .intestazione_tabella.città, .dati_tabella.nome, .dati_tabella.cognome, .dati_tabella.città{
@@ -84,7 +85,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     }
 
     .intestazione_tabella.data, .intestazione_tabella.attività, .dati_tabella.data, .dati_tabella.attività{
-        width: 150px;
+        width: 180px;
     }
 
     .intestazione_tabella.codicefiscale, .dati_tabella.codicefiscale{
@@ -92,7 +93,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     }
 
     .intestazione_tabella.opzioni, .dati_tabella.opzioni{
-        width: 160px;
+        width: 140px;
     }
 }
 
@@ -103,8 +104,8 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 
     .intestazione_tabella, .dati_tabella{
         color: red;
-        font-size: 1vw;
-        height: 50px;
+        font-size: 17px;
+        height: 65px;
     }
 
     .intestazione_tabella.nome, .intestazione_tabella.cognome, .intestazione_tabella.città, .dati_tabella.nome, .dati_tabella.cognome, .dati_tabella.città{
@@ -120,7 +121,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     }
 
     .intestazione_tabella.opzioni, .dati_tabella.opzioni{
-        width: 150px;
+        width: 130px;
     }
 }
 
@@ -131,7 +132,8 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 
     .intestazione_tabella, .dati_tabella{
         color: limegreen;
-        font-size: 0.95vw;
+        height: 60px;
+        font-size: 17px;
     }
 
     .intestazione_tabella.nome, .intestazione_tabella.cognome, .intestazione_tabella.città, .dati_tabella.nome, .dati_tabella.cognome, .dati_tabella.città{
@@ -146,7 +148,36 @@ tbody tr:nth-child(2n):hover .dati_tabella{
         width: 150px;
     }
 
-    .intestazione_tabella.città, .intestazione_tabella.data, .dati_tabella.città, .dati_tabella.data{
+    .intestazione_tabella.data, .dati_tabella.data{
+        display: none;
+    }
+    
+}
+
+@media screen and (max-width: 900px) {
+    .table_wrapper{
+        width: 40%;
+    }
+
+    .intestazione_tabella, .dati_tabella{
+        color: lightcoral;
+        font-size: 15px;
+        height: 100px;
+    }
+
+    .intestazione_tabella.nome, .intestazione_tabella.cognome, .intestazione_tabella.città, .dati_tabella.nome, .dati_tabella.cognome, .dati_tabella.città{
+        width: 100px;
+    }
+
+    .intestazione_tabella.data, .intestazione_tabella.attività, .dati_tabella.data, .dati_tabella.attività{
+        width: 110px;
+    }
+
+    .intestazione_tabella.codicefiscale, .dati_tabella.codicefiscale{
+        width: 150px;
+    }
+
+    .intestazione_tabella.data, .dati_tabella.data{
         display: none;
     }
     

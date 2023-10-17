@@ -53,7 +53,7 @@ function App() {
 
 
   return (
-    <>
+    <div className='App'>
 
       {auth_ctx.isLogged && 
         
@@ -63,7 +63,6 @@ function App() {
         </MainMenu>
       
       }
-
 
       {auth_ctx.isLogged && auth_ctx.logoutModal &&
         <Modal
@@ -81,7 +80,7 @@ function App() {
 
       
         
-      <div className="App">
+      {/* <div className="App"> */}
         {!auth_ctx.isLogged && 
           <Login
           // onUserLogin = {userLoggedin}
@@ -91,14 +90,16 @@ function App() {
 
         
         <PatientContextProvider>
-          {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Pazienti' && <Pazienti/>}
-          {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Attività' && <Attività/>}
-          {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Giochi' && <Giochi/>}
-          {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Dialoghi' && <Dialoghi/>}
+          
+            {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Pazienti' && <div className='wrap_schermata'><Pazienti/></div>}
+            {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Attività' && <div className='wrap_schermata'><Attività/></div>}
+            {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Giochi' && <div className='wrap_schermata'><Giochi/></div>}
+            {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Dialoghi' && <div className='wrap_schermata'><Dialoghi/></div>}
+          
         </PatientContextProvider>
-      </div>
+      {/* </div> */}
 
-    </>
+    </div>
   );
 }
 

@@ -8,6 +8,7 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.555);
     text-align: center;
+    z-index: 100;
 }
 
 .wrapper_modal{

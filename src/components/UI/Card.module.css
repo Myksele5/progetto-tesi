@@ -1,5 +1,5 @@
 .generic_wrapper{
-    width: calc(35vw + 10px);
+    width: fit-content;
     height: fit-content;
     margin: 1.5vw;
     padding: 5px;

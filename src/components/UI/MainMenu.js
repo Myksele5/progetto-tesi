@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom';
 import { useContext } from "react";
 import AuthContext from "../../context/auth-context";
 
-function MainMenuToPort(props){
+function MainMenu(props){
     const auth_ctx = useContext(AuthContext);
 
     function goToPazienti(){
@@ -74,11 +74,11 @@ function MainMenuToPort(props){
     );
 }
 
-function MainMenu(props){
+// function MainMenu(props){
 
-    return(
-        ReactDOM.createPortal(<MainMenuToPort showSchermata={props.showSchermata} makeUserLogout={props.makeUserLogout}></MainMenuToPort>, document.getElementById('main_menu'))
-    );
-}
+//     return(
+//         ReactDOM.createPortal(<MainMenuToPort showSchermata={props.showSchermata} makeUserLogout={props.makeUserLogout}></MainMenuToPort>, document.getElementById('main_menu'))
+//     );
+// }
 
 export default MainMenu;
