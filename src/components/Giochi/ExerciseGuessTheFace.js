@@ -8,7 +8,7 @@ import Dante from '../Images-Giochi/DANTE_ALIGHIERI.jpg';
 import Marilyn from '../Images-Giochi/MARILYN_MONROE.jpg';
 import Leonardo from '../Images-Giochi/LEONARDO_DA_VINCI.jpg';
 import Napoleone from '../Images-Giochi/NAPOLEONE_BONAPARTE.jpg';
-import GameContext from '../../context/game-context';
+
 
 let counter_question_number = 0;
 let counter_correct_answers = 0;
@@ -84,50 +84,6 @@ function ExerciseGuessTheFace(props){
         }
     ];
 
-    // let risposte = [
-        
-    //     <GameButton
-    //     onClick={() => {
-    //         checkTheAnswer('CORRECT');
-    //     }}
-    //     is_disabled={disableButton}
-    //     correct_answer={coloraRispostaCorretta}
-    //     game_button={true}
-    //     buttonText={questions[counter_question_number].question.correct_answer}>
-    //     </GameButton>,
-
-    //     <GameButton
-    //     onClick={() => {
-    //         checkTheAnswer('WRONG_N1');
-    //     }}
-    //     is_disabled={disableButton}
-    //     wrong_answer={coloraRispostaSbagliata_N1}
-    //     game_button={true}
-    //     buttonText={questions[counter_question_number].question.wrong_answer_n1}>
-    //     </GameButton>,
-
-    //     <GameButton
-    //     onClick={() => {
-    //         checkTheAnswer('WRONG_N2');
-    //     }}
-    //     is_disabled={disableButton}
-    //     wrong_answer={coloraRispostaSbagliata_N2}
-    //     game_button={true}
-    //     buttonText={questions[counter_question_number].question.wrong_answer_n2}>
-    //     </GameButton>,
-
-    //     <GameButton
-    //     onClick={() => {
-    //         checkTheAnswer('WRONG_N3');
-    //     }}
-    //     is_disabled={disableButton}
-    //     wrong_answer={coloraRispostaSbagliata_N3}
-    //     game_button={true}
-    //     buttonText={questions[counter_question_number].question.wrong_answer_n3}>
-    //     </GameButton>
-
-    // ];
-
     function checkTheAnswer(answer1, answer2, answer3, answer4, button){
         setDisableButton(true);
         setHasAnswered(true);
@@ -183,7 +139,6 @@ function ExerciseGuessTheFace(props){
                 setColoraRispostaSbagliata_N4(true);
             }
         }
-
 
     }
 

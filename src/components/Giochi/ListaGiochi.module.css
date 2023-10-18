@@ -12,6 +12,14 @@
     margin-left: 5px;
 }
 
+.game_subtitle{
+    margin-left: 5px;
+}
+
+.game_type{
+    color: red;
+}
+
 .buttons_wrap{
     display: flex;
     flex-direction: column;

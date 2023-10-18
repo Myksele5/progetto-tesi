@@ -33,7 +33,7 @@ const PatientContext = React.createContext({
     formNonVisibile: () => {},
     nuovoPazienteHandler: () => {},
     showFormNuovoPaziente: null,
-    showBarraRicercaBottone: () => {}
+    showBarraRicercaBottone: null
 });
 
 export function PatientContextProvider(props){

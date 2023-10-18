@@ -10,6 +10,7 @@ import Dialoghi from './components/Dialoghi/Dialoghi';
 import AuthContext from './context/auth-context';
 import { PatientContextProvider } from './context/patients-context';
 import Modal from './components/UI/Modal';
+import { GameContextProvider } from './context/game-context';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -93,7 +94,13 @@ function App() {
           
             {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Pazienti' && <div className='wrap_schermata'><Pazienti/></div>}
             {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Attività' && <div className='wrap_schermata'><Attività/></div>}
-            {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Giochi' && <div className='wrap_schermata'><Giochi/></div>}
+            {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Giochi' && 
+              <GameContextProvider>
+                <div className='wrap_schermata'>
+                  <Giochi/>
+                </div>
+              </GameContextProvider>
+                }
             {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Dialoghi' && <div className='wrap_schermata'><Dialoghi/></div>}
           
         </PatientContextProvider>

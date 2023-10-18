@@ -10,11 +10,8 @@ function RisultatiGioco(props){
     const patients_ctx = useContext(PatientContext);
 
     var paziente_selezionato;
-    
-    var indice = -2;
 
     const [paz, setPaz] = useState(null);
-    const [pazDaSalvare, setPazDaSalvare] = useState(null);
     const [disabledSaveButton, setDisabledSaveButton] = useState(true);
 
     //console.log(patients_ctx.listaPazienti.map(ogg => ogg.id).indexOf(value));
@@ -36,10 +33,6 @@ function RisultatiGioco(props){
         return -1;
     }
 
-    function creaPazienteObjDaSalvare(){
-
-    }
-
     function passaIndiceAGiochiPuntoJS(){
         props.assegnaRisultatiPaziente(paziente_selezionato_obj)
     }
@@ -49,37 +42,44 @@ function RisultatiGioco(props){
             altroStile={true}
             children={
                 <div className={styles.wrapper_risultati}>
-                    <h1>RISULTATI UTENTE</h1>
+                    <h1 className={styles.title_scheda}>RISULTATI UTENTE</h1>
+
                     <p>Risposte corrette: {props.numeroRisposteCorrette}/{props.numeroDomandeTotali}</p>
+
                     <GenericButton
                     onClick={props.chiudiSchedaRisultati}
                     small_button={true}
                     buttonText='Chiudi Scheda'>
                     </GenericButton>
+
                     <GenericButton
                     is_disabled={disabledSaveButton}
                     onClick={passaIndiceAGiochiPuntoJS}
                     generic_button={true}
                     buttonText='Assegna risultati a...'>
                     </GenericButton>
+                    
                     <h2>PAZIENTE SELEZIONATO: {paz}</h2>
-                    <select onChange={(event) => {
-                        // console.log(event.target.value);
-                        console.log(patients_ctx.listaPazienti.map(ogg => ogg.id).indexOf(event.target.value));
-                        // indice = trovaIndice(event);
-                        paziente_selezionato = trovaPaziente(event);
-                        
-                        if(paziente_selezionato !== -1){
-                            setDisabledSaveButton(false);
-                            setPaz(paziente_selezionato);
-                        }
-                        else{
-                            setDisabledSaveButton(true);
-                        }
-                        }}>
-                        <option hidden>-- select an option --</option>
-                        {patients_ctx.listaPazienti.map(patients_ctx.arrayToLista)}
-                    </select>
+                    <div className={styles.select_box}>
+                        <select onChange={(event) => {
+                            // console.log(event.target.value);
+                            console.log(patients_ctx.listaPazienti.map(ogg => ogg.id).indexOf(event.target.value));
+                            // indice = trovaIndice(event);
+                            paziente_selezionato = trovaPaziente(event);
+                            
+                            if(paziente_selezionato !== -1){
+                                setDisabledSaveButton(false);
+                                setPaz(paziente_selezionato);
+                            }
+                            else{
+                                setDisabledSaveButton(true);
+                            }
+                            }}>
+                            <option hidden>-- select an option --</option>
+                            {patients_ctx.listaPazienti.map(patients_ctx.arrayToLista)}
+                        </select>
+                    </div>
+                    
                     
                 </div>
                 }>

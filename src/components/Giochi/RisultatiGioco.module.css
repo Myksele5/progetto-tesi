@@ -4,3 +4,46 @@
     justify-content: center;
     align-items: center;
 }
+
+.title_scheda{
+    width: 800px;
+    text-align: center;
+}
+
+/* CONTROLLA COME RISOLVERE ESTETICA MENU DROPDOWN */
+.select_box{
+    position: relative;
+    background-color: red;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.select_box select{
+    width: 500px;
+    appearance: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.select_box::after, .select_box::before{
+    --size: 0.3rem;
+    position: absolute;
+    content: "";
+    right: 20px;
+    pointer-events: none;
+}
+
+.select_box::before{
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-bottom: var(--size) solid black;
+    top: 20%;
+}
+.select_box::after{
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-top: var(--size) solid black;
+    top: 55%;
+}
