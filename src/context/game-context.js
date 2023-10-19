@@ -1,7 +1,4 @@
 import React, {useState, useContext} from "react";
-import GameCard from "../components/UI/GameCard";
-import GenericButton from "../components/UI/GenericButton";
-import styles from "../components/Giochi/ListaGiochi.module.css";
 import RisultatiGioco from "../components/Giochi/RisultatiGioco";
 import ExerciseGuessTheFace from "../components/Giochi/ExerciseGuessTheFace";
 import ExerciseGuessTheFruit from "../components/Giochi/ExerciseGuessTheFruit";
@@ -26,110 +23,41 @@ const GameContext = React.createContext({
 export function GameContextProvider(props){
     const patients_ctx = useContext(PatientContext);
 
-    const elenco_giochi = [
-        <GameCard
-            children={
-                <>
-                    <div>
-                        <h1 className={styles.game_title}>INDOVINA IL VOLTO DEL PERSONAGGIO</h1>
-                        <h3 className={styles.game_subtitle}>Tipologia gioco: <span className={styles.game_type}>QUIZ</span></h3>
-                    </div>
-                    
-                    <div className={styles.buttons_wrap}>
-                        <GenericButton
-                        onClick={()=> {
-                            startGame("GUESS_THE_FACE")
-                        }}
-                        alternative_button={true}
-                        buttonText='Avvia Gioco'>
-                        </GenericButton>
-                        <GenericButton
-                        alternative_button={true}
-                        buttonText='Gestione Gioco'>
-                        </GenericButton>
-                    </div>
-                </>
-            }>
-        </GameCard>,
-
-        <GameCard
-            children={
-                <>
-                    <h1 className={styles.game_title}>INDOVINA IL FRUTTO</h1>
-                    <div className={styles.buttons_wrap}>
-                        <GenericButton
-                        onClick={()=> {
-                            startGame("GUESS_THE_FRUIT")
-                        }}
-                        alternative_button={true}
-                        buttonText='Avvia Gioco'>
-                        </GenericButton>
-                        <GenericButton
-                        alternative_button={true}
-                        buttonText='Gestione Gioco'>
-                        </GenericButton>
-                    </div>
-                </>
-            }>
-        </GameCard>,
-
-        <GameCard
-            children={
-                <>
-                    <h1 className={styles.game_title}>DOMANDE PERSONALI</h1>
-                    <div className={styles.buttons_wrap}>
-                        <GenericButton
-                        alternative_button={true}
-                        buttonText='Avvia Gioco'>
-                        </GenericButton>
-                        <GenericButton
-                        alternative_button={true}
-                        buttonText='Gestione Gioco'>
-                        </GenericButton>
-                    </div>
-                </>
-            }>
-        </GameCard>,
-
-        <GameCard
-            children={
-                <>
-                    <h1 className={styles.game_title}>RIFLESSI</h1>
-                    <div className={styles.buttons_wrap}>
-                        <GenericButton
-                        alternative_button={true}
-                        buttonText='Avvia Gioco'>
-                        </GenericButton>
-                        <GenericButton
-                        alternative_button={true}
-                        buttonText='Gestione Gioco'>
-                        </GenericButton>
-                    </div>
-                </>
-            }>
-        </GameCard>,
-
-        <GameCard
-            children={
-                <>
-                    <h1 className={styles.game_title}>ALTRO TIPO DI GIOCO</h1>
-                    <div className={styles.buttons_wrap}>
-                        <GenericButton
-                        alternative_button={true}
-                        buttonText='Avvia Gioco'>
-                        </GenericButton>
-                        <GenericButton
-                        alternative_button={true}
-                        buttonText='Gestione Gioco'>
-                        </GenericButton>
-                    </div>
-                </>
-            }>
-        </GameCard>
+    const dati_dei_giochi = [
+        {
+            nomeGioco: "Indovina il volto del personaggio",
+            tipoGioco: "QUIZ",
+            livelloGioco: "FACILE",
+            codiceGioco: "GUESS_THE_FACE"
+        },
+        {
+            nomeGioco: "Indovina il frutto",
+            tipoGioco: "QUIZ",
+            livelloGioco: "DIFFICILE",
+            codiceGioco: "GUESS_THE_FRUIT"
+        },
+        {
+            nomeGioco: "Domande personali",
+            tipoGioco: "QUIZ",
+            livelloGioco: "FACILE",
+            codiceGioco: ""
+        },
+        {
+            nomeGioco: "Clicca la figura",
+            tipoGioco: "RIFLESSI",
+            livelloGioco: "FACILE",
+            codiceGioco: ""
+        },
+        {
+            nomeGioco: "Differenza immagini",
+            tipoGioco: "QUIZ",
+            livelloGioco: "NORMALE",
+            codiceGioco: ""
+        }
     ];
 
     const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
-    const [elencoGiochi, setElencoGiochi] = useState(elenco_giochi)
+    const [elencoGiochi, setElencoGiochi] = useState(dati_dei_giochi)
     const [showElencoGiochi, setShowElencoGiochi] = useState(true);
     const [showAddNewGame, setShowAddNewGame] = useState(false);
     const [gameObject, setGameObject] = useState(null);
@@ -209,26 +137,16 @@ export function GameContextProvider(props){
         setShowAddNewGame(false);
     }
 
-    function addNewGameToList(event){
-        var new_game =
-        <GameCard
-            children={
-                <>
-                    <h1 className={styles.game_title}>PORCO IO</h1>
-                    <div className={styles.buttons_wrap}>
-                        <GenericButton
-                        alternative_button={true}
-                        buttonText='Avvia Gioco'>
-                        </GenericButton>
-                        <GenericButton
-                        alternative_button={true}
-                        buttonText='Gestione Gioco'>
-                        </GenericButton>
-                    </div>
-                </>
-            }>
-        </GameCard>
-        
+    
+
+    function addNewGameToList(name, type, level){
+        var new_game = {
+            nomeGioco: name,
+            tipoGioco: type,
+            livelloGioco: level,
+            codiceGioco: "QUALCOSA"
+        }
+
         setElencoGiochi(vecchioElenco => {
             return [new_game, ...vecchioElenco]
         });

@@ -7,6 +7,10 @@ import PatientContext from "../../context/patients-context";
 import GameContext from "../../context/game-context";
 
 function AddGioco(){
+    const [titoloGioco, setTitoloGioco] = useState("");
+    const [tipologiaGioco, setTipoGioco] = useState("");
+    const [livelloGioco, setLivelloGioco] = useState("NORMALE");
+
     const [selectedEasy, setSelectedEasy] = useState(false);
     const [selectedNormal, setSelectedNormal] = useState(true);
     const [selectedHard, setSelectedHard] = useState(false);
@@ -45,6 +49,17 @@ function AddGioco(){
         }
     }
 
+    function titoloGiocoChangeHandler(event){
+        setTitoloGioco(event.target.value);
+    }
+    function tipoGiocoChangeHandler(event){
+        setTipoGioco(event.target.value)
+    }
+    function livelloGiocoChangeHandler(stringa){
+        setLivelloGioco(stringa);
+        console.log(livelloGioco);
+    }
+
     return(
         <Card
         animazione={true}
@@ -55,7 +70,7 @@ function AddGioco(){
                 <div className={styles.wrapper_impostazioni_gioco}>
                 <h2>Gestisci le impostazioni del gioco</h2>
                     <label>Tipologia di gioco</label>
-                    <select>
+                    <select onChange={tipoGiocoChangeHandler}>
                         <option hidden>-- select an option --</option>
                         <option>QUIZ</option>
                         <option>DIFFERENZE TRA IMMAGINI</option>
@@ -69,6 +84,7 @@ function AddGioco(){
                         <RadioButton
                         onClick={() => {
                             selezioneDifficoltà("FACILE");
+                            livelloGiocoChangeHandler("FACILE");
                         }}
                         isSelected={selectedEasy}
                         buttonText={"FACILE"}>
@@ -77,6 +93,7 @@ function AddGioco(){
                         <RadioButton
                         onClick={() => {
                             selezioneDifficoltà("NORMALE");
+                            livelloGiocoChangeHandler("NORMALE");
                         }}
                         isSelected={selectedNormal}
                         buttonText={"NORMALE"}>
@@ -85,6 +102,7 @@ function AddGioco(){
                         <RadioButton
                         onClick={() => {
                             selezioneDifficoltà("DIFFICILE");
+                            livelloGiocoChangeHandler("DIFFICILE")
                         }}
                         isSelected={selectedHard}
                         buttonText={"DIFFICILE"}>
@@ -93,7 +111,7 @@ function AddGioco(){
                     </div>
 
                     <label>Inserisci nome del gioco</label>
-                    <input type="text"></input>
+                    <input type="text" onChange={titoloGiocoChangeHandler}></input>
 
                     <label>Seleziona numero di domande</label>
                     <input type="text"></input>
@@ -102,13 +120,12 @@ function AddGioco(){
                     <select>
                         <option hidden>-- select an option --</option>
                         {patients_ctx.listaPazienti.map(patients_ctx.arrayToLista)}
-                        {/* <option>1</option>
-                        <option>2</option>
-                        <option>3</option> */}
                     </select>
 
                     <GenericButton
-                    onClick={game_ctx.aggiungiGiocoAllaLista}
+                    onClick={() => {
+                        game_ctx.aggiungiGiocoAllaLista(titoloGioco, tipologiaGioco, livelloGioco);
+                    }}
                     generic_button={true}
                     buttonText={"Salva Gioco"}
                     >

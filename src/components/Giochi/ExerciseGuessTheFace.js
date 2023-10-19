@@ -8,6 +8,7 @@ import Dante from '../Images-Giochi/DANTE_ALIGHIERI.jpg';
 import Marilyn from '../Images-Giochi/MARILYN_MONROE.jpg';
 import Leonardo from '../Images-Giochi/LEONARDO_DA_VINCI.jpg';
 import Napoleone from '../Images-Giochi/NAPOLEONE_BONAPARTE.jpg';
+import PapaFrancesco from '../Images-Giochi/PAPA_FRANCESCO.jpg';
 
 
 let counter_question_number = 0;
@@ -80,6 +81,15 @@ function ExerciseGuessTheFace(props){
                     wrong_answer_n1: 'Giulio Cesare',
                     wrong_answer_n2: 'Luigi XIV',
                     wrong_answer_n3: 'Alessandro Magno'
+            }
+        },
+        {
+            face_image: PapaFrancesco,
+            question:{
+                    correct_answer: 'Papa Francesco',
+                    wrong_answer_n1: 'Papa Giovanni Paolo II',
+                    wrong_answer_n2: 'Francesco Totti',
+                    wrong_answer_n3: 'Giorgia Meloni'
             }
         }
     ];
