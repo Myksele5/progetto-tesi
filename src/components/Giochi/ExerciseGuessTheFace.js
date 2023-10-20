@@ -1,7 +1,7 @@
 import styles from './ExerciseGuessTheFace.module.css';
 import GameButton from '../UI/GameButton';
 import GenericButton from '../UI/GenericButton';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import Einstein from '../Images-Giochi/ALBERT_EINSTEIN.jpeg';
 import Dante from '../Images-Giochi/DANTE_ALIGHIERI.jpg';
@@ -9,6 +9,7 @@ import Marilyn from '../Images-Giochi/MARILYN_MONROE.jpg';
 import Leonardo from '../Images-Giochi/LEONARDO_DA_VINCI.jpg';
 import Napoleone from '../Images-Giochi/NAPOLEONE_BONAPARTE.jpg';
 import PapaFrancesco from '../Images-Giochi/PAPA_FRANCESCO.jpg';
+import GameContext from '../../context/game-context';
 
 
 let counter_question_number = 0;
@@ -37,62 +38,66 @@ function ExerciseGuessTheFace(props){
     const [coloraRispostaSbagliata_N3, setColoraRispostaSbagliata_N3] = useState(false);
     const [coloraRispostaSbagliata_N4, setColoraRispostaSbagliata_N4] = useState(false);
 
-    const questions = [
-        {
-            face_image: Einstein,
-            question:{
-                correct_answer: 'Albert Einstein',
-                wrong_answer_n1: 'Isaac Newton',
-                wrong_answer_n2: 'Enrico Fermi',
-                wrong_answer_n3: 'Silvio Berlusconi'
-            }
-        },
-        {
-            face_image: Dante,
-            question:{
-                correct_answer: 'Dante Alighieri',
-                wrong_answer_n1: 'Vincent Van Gogh',
-                wrong_answer_n2: 'Niccolò Machiavelli',
-                wrong_answer_n3: 'Giovanni Boccaccio'
-            }
-        },
-        {
-            face_image: Marilyn,
-            question:{
-                correct_answer: 'Marilyn Monroe',
-                wrong_answer_n1: 'Sophia Lauren',
-                wrong_answer_n2: 'Chiara Ferragni',
-                wrong_answer_n3: 'Meryl Streep'
-            }
-        },
-        {
-            face_image: Leonardo,
-            question:{
-                correct_answer: 'Leonardo da Vinci',
-                wrong_answer_n1: 'Wolfgang Mozart',
-                wrong_answer_n2: 'Socrate',
-                wrong_answer_n3: 'Caravaggio'
-            }
-        },
-        {
-            face_image: Napoleone,
-            question:{
-                    correct_answer: 'Napoleone Bonaparte',
-                    wrong_answer_n1: 'Giulio Cesare',
-                    wrong_answer_n2: 'Luigi XIV',
-                    wrong_answer_n3: 'Alessandro Magno'
-            }
-        },
-        {
-            face_image: PapaFrancesco,
-            question:{
-                    correct_answer: 'Papa Francesco',
-                    wrong_answer_n1: 'Papa Giovanni Paolo II',
-                    wrong_answer_n2: 'Francesco Totti',
-                    wrong_answer_n3: 'Giorgia Meloni'
-            }
-        }
-    ];
+    const game_ctx = useContext(GameContext);
+
+    const questions = game_ctx.listaGiochi[0].domandeGioco;
+
+    // const questions = [
+    //     {
+    //         face_image: Einstein,
+    //         question:{
+    //             correct_answer: 'Albert Einstein',
+    //             wrong_answer_n1: 'Isaac Newton',
+    //             wrong_answer_n2: 'Enrico Fermi',
+    //             wrong_answer_n3: 'Silvio Berlusconi'
+    //         }
+    //     },
+    //     {
+    //         face_image: Dante,
+    //         question:{
+    //             correct_answer: 'Dante Alighieri',
+    //             wrong_answer_n1: 'Vincent Van Gogh',
+    //             wrong_answer_n2: 'Niccolò Machiavelli',
+    //             wrong_answer_n3: 'Giovanni Boccaccio'
+    //         }
+    //     },
+    //     {
+    //         face_image: Marilyn,
+    //         question:{
+    //             correct_answer: 'Marilyn Monroe',
+    //             wrong_answer_n1: 'Sophia Lauren',
+    //             wrong_answer_n2: 'Chiara Ferragni',
+    //             wrong_answer_n3: 'Meryl Streep'
+    //         }
+    //     },
+    //     {
+    //         face_image: Leonardo,
+    //         question:{
+    //             correct_answer: 'Leonardo da Vinci',
+    //             wrong_answer_n1: 'Wolfgang Mozart',
+    //             wrong_answer_n2: 'Socrate',
+    //             wrong_answer_n3: 'Caravaggio'
+    //         }
+    //     },
+    //     {
+    //         face_image: Napoleone,
+    //         question:{
+    //                 correct_answer: 'Napoleone Bonaparte',
+    //                 wrong_answer_n1: 'Giulio Cesare',
+    //                 wrong_answer_n2: 'Luigi XIV',
+    //                 wrong_answer_n3: 'Alessandro Magno'
+    //         }
+    //     },
+    //     {
+    //         face_image: PapaFrancesco,
+    //         question:{
+    //                 correct_answer: 'Papa Francesco',
+    //                 wrong_answer_n1: 'Papa Giovanni Paolo II',
+    //                 wrong_answer_n2: 'Francesco Totti',
+    //                 wrong_answer_n3: 'Giorgia Meloni'
+    //         }
+    //     }
+    // ];
 
     function checkTheAnswer(answer1, answer2, answer3, answer4, button){
         setDisableButton(true);

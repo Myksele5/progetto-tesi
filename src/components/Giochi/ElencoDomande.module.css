@@ -1,0 +1,27 @@
+.flex_list_container{
+    display: flex;
+    list-style-type: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    /* width: 800px; */
+    /* border: 2px solid green; */
+}
+
+.list_item_content{
+    width: 165px;
+    height: 80px;
+    border: 1px solid red;
+    text-align: center;
+    margin: 1px;
+}
+
+.flex_list_container:hover{
+    background-color: gainsboro;
+}
+
+h4{
+    border-bottom: 1px solid red;
+    /* border-top: 1px solid red; */
+    margin: 0;
+    padding: 2px;
+}

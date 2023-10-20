@@ -5,6 +5,7 @@ import RadioButton from "../UI/RadioButton";
 import { useContext, useState } from "react";
 import PatientContext from "../../context/patients-context";
 import GameContext from "../../context/game-context";
+import ElencoDomande from "./ElencoDomande";
 
 function AddGioco(){
     const [titoloGioco, setTitoloGioco] = useState("");
@@ -73,7 +74,8 @@ function AddGioco(){
                     <select onChange={tipoGiocoChangeHandler}>
                         <option hidden>-- select an option --</option>
                         <option>QUIZ</option>
-                        <option>DIFFERENZE TRA IMMAGINI</option>
+                        <option>QUIZ CON IMMAGINI</option>
+                        <option>COMPLETA LA PAROLA</option>
                         <option>RIFLESSI</option>
                     </select>
                     
@@ -113,14 +115,16 @@ function AddGioco(){
                     <label>Inserisci nome del gioco</label>
                     <input type="text" onChange={titoloGiocoChangeHandler}></input>
 
-                    <label>Seleziona numero di domande</label>
-                    <input type="text"></input>
+                    {/* <label>Seleziona numero di domande</label>
+                    <input type="text"></input> */}
 
-                    <label>Assegna Gioco a... ------- PROBABILMENTE DA TOGLIERE DA QUESTO FORM</label>
+                    <h3>Domande disponibili:</h3>
+                    <ElencoDomande></ElencoDomande>
+                    {/* <label>Assegna Gioco a... ------- PROBABILMENTE DA TOGLIERE DA QUESTO FORM</label>
                     <select>
                         <option hidden>-- select an option --</option>
                         {patients_ctx.listaPazienti.map(patients_ctx.arrayToLista)}
-                    </select>
+                    </select> */}
 
                     <GenericButton
                     onClick={() => {
