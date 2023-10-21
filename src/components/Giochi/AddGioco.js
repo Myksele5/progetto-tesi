@@ -7,6 +7,8 @@ import PatientContext from "../../context/patients-context";
 import GameContext from "../../context/game-context";
 import ElencoDomande from "./ElencoDomande";
 
+var domande_nuovo_gioco = [];
+
 function AddGioco(){
     const [titoloGioco, setTitoloGioco] = useState("");
     const [tipologiaGioco, setTipoGioco] = useState("");
@@ -59,6 +61,29 @@ function AddGioco(){
     function livelloGiocoChangeHandler(stringa){
         setLivelloGioco(stringa);
         console.log(livelloGioco);
+    }
+
+    function creaOggettoDomande(isChecked, domandaDaAggiungere){
+        console.log(domandaDaAggiungere);
+
+        if(isChecked){
+            domande_nuovo_gioco.unshift({
+                face_image: domandaDaAggiungere.face_image,
+                question: domandaDaAggiungere.question
+            });
+            // console.log("AGGIUNTA DOMANDA---> " + domande_nuovo_gioco);
+        }
+        else{
+            for(var i=0; i < domande_nuovo_gioco.length; i++){
+                if(domandaDaAggiungere.question === domande_nuovo_gioco[i].question){
+                    domande_nuovo_gioco.splice(i, 1);
+                    break;
+                }
+            }
+
+            // console.log("rimossa DOMANDA---> " + domande_nuovo_gioco);
+        }
+        
     }
 
     return(
@@ -119,7 +144,11 @@ function AddGioco(){
                     <input type="text"></input> */}
 
                     <h3>Domande disponibili:</h3>
-                    <ElencoDomande></ElencoDomande>
+                    <ElencoDomande
+                        domandeNuovoGioco={creaOggettoDomande}
+                    >
+                    </ElencoDomande>
+
                     {/* <label>Assegna Gioco a... ------- PROBABILMENTE DA TOGLIERE DA QUESTO FORM</label>
                     <select>
                         <option hidden>-- select an option --</option>
@@ -128,7 +157,8 @@ function AddGioco(){
 
                     <GenericButton
                     onClick={() => {
-                        game_ctx.aggiungiGiocoAllaLista(titoloGioco, tipologiaGioco, livelloGioco);
+                        game_ctx.aggiungiGiocoAllaLista(titoloGioco, tipologiaGioco, livelloGioco, domande_nuovo_gioco);
+                        domande_nuovo_gioco = [];
                     }}
                     generic_button={true}
                     buttonText={"Salva Gioco"}

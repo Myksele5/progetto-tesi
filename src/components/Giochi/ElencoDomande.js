@@ -2,17 +2,18 @@ import { useContext } from "react";
 import GameContext from "../../context/game-context";
 import styles from "./ElencoDomande.module.css";
 
-function ElencoDomande(){
+function ElencoDomande(props){
     const game_ctx = useContext(GameContext);
     var listaDomande = game_ctx.domandeDeiQuizConImmagini;
 
     function verifyIsChecked(event, domanda){
         if (event.target.checked) {
             console.log('✅ Checkbox is checked');
-            console.log(domanda);
-          } else {
+        }
+        else{
             console.log('⛔️ Checkbox is NOT checked');
-          }
+        }
+        props.domandeNuovoGioco(event.target.checked, domanda);
     }
 
     function recuperaTutteLeDomande(singleQuestion){

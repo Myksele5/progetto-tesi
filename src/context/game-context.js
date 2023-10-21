@@ -12,6 +12,7 @@ import Napoleone from '../components/Images-Giochi/NAPOLEONE_BONAPARTE.jpg';
 import PapaFrancesco from '../components/Images-Giochi/PAPA_FRANCESCO.jpg';
 
 let risultati_gioco;
+let counter_CODICE_GIOCO = 0;
 
 const GameContext = React.createContext({
     listaGiochi: null,
@@ -36,7 +37,7 @@ export function GameContextProvider(props){
             nomeGioco: "Indovina il volto del personaggio",
             tipoGioco: "QUIZ CON IMMAGINI",
             livelloGioco: "FACILE",
-            codiceGioco: "GUESS_THE_FACE",
+            codiceGioco: "GUESS_THE_FAC",
             domandeGioco: [
                 {
                     face_image: Einstein,
@@ -171,28 +172,39 @@ export function GameContextProvider(props){
     const [gameObject, setGameObject] = useState(null);
     const [gameResults, setGameResults] = useState(false);
 
-    function startGame(stringa){
+    function startGame(stringa_TIPOGIOCO, stringa_CODICEGIOCO){
+        var indice_gioco;
+        for(var i = 0; i < elencoGiochi.length; i++){
+            if(stringa_CODICEGIOCO === elencoGiochi[i].codiceGioco){
+                indice_gioco = i;
+                break;
+            }
+        }
+        console.log("CODICE DEL GIOCO SELEZIONATO----> " + stringa_CODICEGIOCO);
         setShowSearchBoxAndButton(false);
         setShowElencoGiochi(false);
-        switch(stringa){
-            case 'GUESS_THE_FACE':
+
+        switch(stringa_TIPOGIOCO){
+            case 'QUIZ':
+                break;
+
+            case 'QUIZ CON IMMAGINI':
                 setGameObject(
                     // <div className={styles.wrapper_gioco}>
                         <ExerciseGuessTheFace
-                        giocoTerminato={endGame}>
+                        giocoTerminato={endGame}
+                        INDICEGIOCO={indice_gioco}>
                         </ExerciseGuessTheFace>
                     // </div>
                 );
                 break;
-            case 'GUESS_THE_FRUIT':
-                setGameObject(
-                    // <div className={styles.wrapper_gioco}>
-                        <ExerciseGuessTheFruit
-                        giocoTerminato={endGame}>
-                        </ExerciseGuessTheFruit>
-                    // </div>
-                );
+
+            case 'COMPLETA LA PAROLA':
                 break;
+
+            case 'RIFLESSI':
+                break;
+
             default:
                 setGameObject(null);
         }
@@ -245,19 +257,21 @@ export function GameContextProvider(props){
         setShowAddNewGame(false);
     }
 
-    
-
-    function addNewGameToList(name, type, level){
+    function addNewGameToList(name, type, level, questionsList){
         var new_game = {
             nomeGioco: name,
             tipoGioco: type,
             livelloGioco: level,
-            codiceGioco: "QUALCOSA"
+            codiceGioco: counter_CODICE_GIOCO,
+            domandeGioco: questionsList
         }
 
         setElencoGiochi(vecchioElenco => {
             return [new_game, ...vecchioElenco]
         });
+
+        console.log("CODICE DEL GIOCO APPENA CREATO---> " + counter_CODICE_GIOCO);
+        counter_CODICE_GIOCO++;
 
         closeFormCreateNewGame();
     }
