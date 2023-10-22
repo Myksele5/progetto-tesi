@@ -11,11 +11,19 @@ import Leonardo from '../components/Images-Giochi/LEONARDO_DA_VINCI.jpg';
 import Napoleone from '../components/Images-Giochi/NAPOLEONE_BONAPARTE.jpg';
 import PapaFrancesco from '../components/Images-Giochi/PAPA_FRANCESCO.jpg';
 
+import Albicocca from '../components/Images-Giochi/ALBICOCCA.jpg';
+import Banana from '../components/Images-Giochi/BANANA.jpg';
+import Ciliegia from '../components/Images-Giochi/CILIEGIA.jpg';
+import Fragola from '../components/Images-Giochi/FRAGOLA.jpg';
+import Mela from '../components/Images-Giochi/MELA.jpg';
+import Mirtillo from '../components/Images-Giochi/MIRTILLO_NERO.jpg';
+import Nespola from '../components/Images-Giochi/NESPOLA.jpeg';
+
 let risultati_gioco;
 let counter_CODICE_GIOCO = 0;
 
 const GameContext = React.createContext({
-    listaGiochi: null,
+    listaDomande: null,
     aggiungiGiocoAllaLista: ()=>{},
     showListaGiochi: false,
     showBarraRicercaBottone: null,
@@ -26,7 +34,8 @@ const GameContext = React.createContext({
     formCreaNuovoGioco: ()=>{},
     chiudiFormCreaNuovoGioco: ()=>{},
     iniziaGioco: ()=>{},
-    domandeDeiQuizConImmagini: null
+    domandeDeiQuizConImmagini: null,
+    domandeDeiQuizConImmaginiFrutti: null
 });
 
 export function GameContextProvider(props){
@@ -161,12 +170,171 @@ export function GameContextProvider(props){
                     wrong_answer_n2: 'Francesco Totti',
                     wrong_answer_n3: 'Giorgia Meloni'
             }
+        },
+        {
+            livelloDomanda: "facile",
+            categoria: "Frutti",
+            face_image: Albicocca,
+            question:{
+                correct_answer: 'Albicocca',
+                wrong_answer_n1: 'Mango',
+                wrong_answer_n2: 'Nocciola',
+                wrong_answer_n3: 'Arancia'
+            }
+        },
+        {
+            livelloDomanda: "facile",
+            categoria: "Frutti",
+            face_image: Banana,
+            question:{
+                correct_answer: 'Banana',
+                wrong_answer_n1: 'Carruba',
+                wrong_answer_n2: 'Bergamotto',
+                wrong_answer_n3: 'Platano'
+            }
+        },
+        {
+            livelloDomanda: "facile",
+            categoria: "Frutti",
+            face_image: Ciliegia,
+            question:{
+                correct_answer: 'Ciliegia',
+                wrong_answer_n1: 'Lampone',
+                wrong_answer_n2: 'Pesca',
+                wrong_answer_n3: 'Uva'
+            }
+        },
+        {
+            livelloDomanda: "facile",
+            categoria: "Frutti",
+            face_image: Fragola,
+            question:{
+                correct_answer: 'Fragola',
+                wrong_answer_n1: 'Arancia',
+                wrong_answer_n2: 'Litchi',
+                wrong_answer_n3: 'Prugna'
+            }
+        },
+        {
+            livelloDomanda: "facile",
+            categoria: "Frutti",
+            face_image: Mela,
+            question:{
+                    correct_answer: 'Mela',
+                    wrong_answer_n1: 'Pera',
+                    wrong_answer_n2: 'Limone',
+                    wrong_answer_n3: 'Papaya'
+            }
+        },
+        {
+            livelloDomanda: "facile",
+            categoria: "Frutti",
+            face_image: Mirtillo,
+            question:{
+                    correct_answer: 'Mirtillo',
+                    wrong_answer_n1: 'Noce',
+                    wrong_answer_n2: 'Lampone',
+                    wrong_answer_n3: 'Mora'
+            }
+        },
+        {
+            livelloDomanda: "facile",
+            categoria: "Frutti",
+            face_image: Nespola,
+            question:{
+                    correct_answer: 'Nespola',
+                    wrong_answer_n1: 'Pesca',
+                    wrong_answer_n2: 'Frutto della passione',
+                    wrong_answer_n3: 'Kiwi'
+            }
         }
     
     ];
 
+    const elencoDomandeQuizImmaginiFrutti = [
+        
+        // {
+        //     livelloDomanda: "facile",
+        //     categoria: "Frutti",
+        //     face_image: Albicocca,
+        //     question:{
+        //         correct_answer: 'Albicocca',
+        //         wrong_answer_n1: 'Mango',
+        //         wrong_answer_n2: 'Nocciola',
+        //         wrong_answer_n3: 'Arancia'
+        //     }
+        // },
+        // {
+        //     livelloDomanda: "facile",
+        //     categoria: "Frutti",
+        //     face_image: Banana,
+        //     question:{
+        //         correct_answer: 'Banana',
+        //         wrong_answer_n1: 'Carruba',
+        //         wrong_answer_n2: 'Bergamotto',
+        //         wrong_answer_n3: 'Platano'
+        //     }
+        // },
+        // {
+        //     livelloDomanda: "facile",
+        //     categoria: "Frutti",
+        //     face_image: Ciliegia,
+        //     question:{
+        //         correct_answer: 'Ciliegia',
+        //         wrong_answer_n1: 'Lampone',
+        //         wrong_answer_n2: 'Pesca',
+        //         wrong_answer_n3: 'Uva'
+        //     }
+        // },
+        // {
+        //     livelloDomanda: "facile",
+        //     categoria: "Frutti",
+        //     face_image: Fragola,
+        //     question:{
+        //         correct_answer: 'Fragola',
+        //         wrong_answer_n1: 'Arancia',
+        //         wrong_answer_n2: 'Litchi',
+        //         wrong_answer_n3: 'Prugna'
+        //     }
+        // },
+        // {
+        //     livelloDomanda: "facile",
+        //     categoria: "Frutti",
+        //     face_image: Mela,
+        //     question:{
+        //             correct_answer: 'Mela',
+        //             wrong_answer_n1: 'Pera',
+        //             wrong_answer_n2: 'Limone',
+        //             wrong_answer_n3: 'Papaya'
+        //     }
+        // },
+        // {
+        //     livelloDomanda: "facile",
+        //     categoria: "Frutti",
+        //     face_image: Mirtillo,
+        //     question:{
+        //             correct_answer: 'Mirtillo',
+        //             wrong_answer_n1: 'Noce',
+        //             wrong_answer_n2: 'Lampone',
+        //             wrong_answer_n3: 'Mora'
+        //     }
+        // },
+        // {
+        //     livelloDomanda: "facile",
+        //     categoria: "Frutti",
+        //     face_image: Nespola,
+        //     question:{
+        //             correct_answer: 'Nespola',
+        //             wrong_answer_n1: 'Pesca',
+        //             wrong_answer_n2: 'Frutto della passione',
+        //             wrong_answer_n3: 'Kiwi'
+        //     }
+        // }
+    
+    ];
+
     const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
-    const [elencoGiochi, setElencoGiochi] = useState(dati_dei_giochi)
+    const [elencoDomande, setElencoDomande] = useState(dati_dei_giochi)
     const [showElencoGiochi, setShowElencoGiochi] = useState(true);
     const [showAddNewGame, setShowAddNewGame] = useState(false);
     const [gameObject, setGameObject] = useState(null);
@@ -174,8 +342,8 @@ export function GameContextProvider(props){
 
     function startGame(stringa_TIPOGIOCO, stringa_CODICEGIOCO){
         var indice_gioco;
-        for(var i = 0; i < elencoGiochi.length; i++){
-            if(stringa_CODICEGIOCO === elencoGiochi[i].codiceGioco){
+        for(var i = 0; i < elencoDomande.length; i++){
+            if(stringa_CODICEGIOCO === elencoDomande[i].codiceGioco){
                 indice_gioco = i;
                 break;
             }
@@ -266,7 +434,7 @@ export function GameContextProvider(props){
             domandeGioco: questionsList
         }
 
-        setElencoGiochi(vecchioElenco => {
+        setElencoDomande(vecchioElenco => {
             return [new_game, ...vecchioElenco]
         });
 
@@ -279,7 +447,7 @@ export function GameContextProvider(props){
     return(
         <GameContext.Provider
         value={{
-            listaGiochi: elencoGiochi,
+            listaDomande: elencoDomande,
             aggiungiGiocoAllaLista: addNewGameToList,
             showListaGiochi: showElencoGiochi,
             showBarraRicercaBottone: showSearchBoxAndButton,
@@ -290,7 +458,8 @@ export function GameContextProvider(props){
             formCreaNuovoGioco: formCreateNewGame,
             chiudiFormCreaNuovoGioco: closeFormCreateNewGame,
             iniziaGioco: startGame,
-            domandeDeiQuizConImmagini: elencoDomandeQuizImmagini
+            domandeDeiQuizConImmagini: elencoDomandeQuizImmagini,
+            domandeDeiQuizConImmaginiFrutti: elencoDomandeQuizImmaginiFrutti
         }}
         >
             {props.children}

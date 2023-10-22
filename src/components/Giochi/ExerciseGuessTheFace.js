@@ -40,7 +40,7 @@ function ExerciseGuessTheFace(props){
     const game_ctx = useContext(GameContext);
 
 
-    const questions = game_ctx.listaGiochi[props.INDICEGIOCO].domandeGioco;
+    const questions = game_ctx.listaDomande[props.INDICEGIOCO].domandeGioco;
 
     function checkTheAnswer(answer1, answer2, answer3, answer4, button){
         setDisableButton(true);

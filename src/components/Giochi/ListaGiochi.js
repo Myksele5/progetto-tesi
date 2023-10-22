@@ -7,7 +7,7 @@ import GenericButton from "../UI/GenericButton";
 
 function ListaGiochi(){
     const game_ctx = useContext(GameContext);
-    var lista = game_ctx.listaGiochi;
+    var lista = game_ctx.listaDomande;
 
     function fromArrayToGameList(lista){
         return(
