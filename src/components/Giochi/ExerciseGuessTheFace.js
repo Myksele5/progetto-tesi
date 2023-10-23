@@ -15,9 +15,10 @@ let counter_question_number = 0;
 let counter_correct_answers = 0;
 var quattroRisposte = [];
 
-let qualcosa;
+var tipoQuiz;
 
 function ExerciseGuessTheFace(props){
+    tipoQuiz = props.TIPOGIOCO;
 
     const [risposta1, setRisposta1] = useState('');
     const [risposta2, setRisposta2] = useState('');
@@ -174,7 +175,10 @@ function ExerciseGuessTheFace(props){
             {gameStarted &&
                 <>
                     <h3 className={styles.domanda}>Chi è questo personaggio?</h3>
-                    <img className={styles.resize_image} src={questions[counter_question_number].face_image} alt='Face'></img>
+
+                    {tipoQuiz === "QUIZ CON IMMAGINI" && <img className={styles.resize_image} src={questions[counter_question_number].indovina} alt='Face'></img>}
+                    {tipoQuiz === "QUIZ" && <h1>{questions[counter_question_number].indovina}</h1>}
+
                     <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>
 
                     {/* <div className={styles.wrap_generico}> */}
@@ -190,7 +194,7 @@ function ExerciseGuessTheFace(props){
                     
                     
                     
-                    <div id={qualcosa} className={styles.wrapper_bottoni_risposte}>
+                    <div className={styles.wrapper_bottoni_risposte}>
         
                         {/* {risposte} */}
         

@@ -35,7 +35,7 @@ const GameContext = React.createContext({
     chiudiFormCreaNuovoGioco: ()=>{},
     iniziaGioco: ()=>{},
     domandeDeiQuizConImmagini: null,
-    domandeDeiQuizConImmaginiFrutti: null
+    domandeDeiQuiz: null
 });
 
 export function GameContextProvider(props){
@@ -49,7 +49,7 @@ export function GameContextProvider(props){
             codiceGioco: "GUESS_THE_FAC",
             domandeGioco: [
                 {
-                    face_image: Einstein,
+                    indovina: Einstein,
                     question:{
                         correct_answer: 'Albert Einstein',
                         wrong_answer_n1: 'Isaac Newton',
@@ -58,7 +58,7 @@ export function GameContextProvider(props){
                     }
                 },
                 {
-                    face_image: Dante,
+                    indovina: Dante,
                     question:{
                         correct_answer: 'Dante Alighieri',
                         wrong_answer_n1: 'Vincent Van Gogh',
@@ -67,7 +67,7 @@ export function GameContextProvider(props){
                     }
                 },
                 {
-                    face_image: Marilyn,
+                    indovina: Marilyn,
                     question:{
                         correct_answer: 'Marilyn Monroe',
                         wrong_answer_n1: 'Sophia Lauren',
@@ -108,7 +108,7 @@ export function GameContextProvider(props){
         {
             livelloDomanda: "facile",
             categoria: "Personaggi Famosi",
-            face_image: Einstein,
+            indovina: Einstein,
             question:{
                 correct_answer: 'Albert Einstein',
                 wrong_answer_n1: 'Isaac Newton',
@@ -119,7 +119,7 @@ export function GameContextProvider(props){
         {
             livelloDomanda: "facile",
             categoria: "Personaggi Famosi",
-            face_image: Dante,
+            indovina: Dante,
             question:{
                 correct_answer: 'Dante Alighieri',
                 wrong_answer_n1: 'Vincent Van Gogh',
@@ -130,7 +130,7 @@ export function GameContextProvider(props){
         {
             livelloDomanda: "normale",
             categoria: "Personaggi Famosi",
-            face_image: Marilyn,
+            indovina: Marilyn,
             question:{
                 correct_answer: 'Marilyn Monroe',
                 wrong_answer_n1: 'Sophia Lauren',
@@ -141,7 +141,7 @@ export function GameContextProvider(props){
         {
             livelloDomanda: "facile",
             categoria: "Personaggi Famosi",
-            face_image: Leonardo,
+            indovina: Leonardo,
             question:{
                 correct_answer: 'Leonardo da Vinci',
                 wrong_answer_n1: 'Wolfgang Mozart',
@@ -152,7 +152,7 @@ export function GameContextProvider(props){
         {
             livelloDomanda: "difficile",
             categoria: "Personaggi Famosi",
-            face_image: Napoleone,
+            indovina: Napoleone,
             question:{
                     correct_answer: 'Napoleone Bonaparte',
                     wrong_answer_n1: 'Giulio Cesare',
@@ -163,7 +163,7 @@ export function GameContextProvider(props){
         {
             livelloDomanda: "facile",
             categoria: "Personaggi Famosi",
-            face_image: PapaFrancesco,
+            indovina: PapaFrancesco,
             question:{
                     correct_answer: 'Papa Francesco',
                     wrong_answer_n1: 'Papa Giovanni Paolo II',
@@ -174,7 +174,7 @@ export function GameContextProvider(props){
         {
             livelloDomanda: "facile",
             categoria: "Frutti",
-            face_image: Albicocca,
+            indovina: Albicocca,
             question:{
                 correct_answer: 'Albicocca',
                 wrong_answer_n1: 'Mango',
@@ -185,7 +185,7 @@ export function GameContextProvider(props){
         {
             livelloDomanda: "facile",
             categoria: "Frutti",
-            face_image: Banana,
+            indovina: Banana,
             question:{
                 correct_answer: 'Banana',
                 wrong_answer_n1: 'Carruba',
@@ -196,7 +196,7 @@ export function GameContextProvider(props){
         {
             livelloDomanda: "facile",
             categoria: "Frutti",
-            face_image: Ciliegia,
+            indovina: Ciliegia,
             question:{
                 correct_answer: 'Ciliegia',
                 wrong_answer_n1: 'Lampone',
@@ -207,7 +207,7 @@ export function GameContextProvider(props){
         {
             livelloDomanda: "facile",
             categoria: "Frutti",
-            face_image: Fragola,
+            indovina: Fragola,
             question:{
                 correct_answer: 'Fragola',
                 wrong_answer_n1: 'Arancia',
@@ -218,7 +218,7 @@ export function GameContextProvider(props){
         {
             livelloDomanda: "facile",
             categoria: "Frutti",
-            face_image: Mela,
+            indovina: Mela,
             question:{
                     correct_answer: 'Mela',
                     wrong_answer_n1: 'Pera',
@@ -229,7 +229,7 @@ export function GameContextProvider(props){
         {
             livelloDomanda: "facile",
             categoria: "Frutti",
-            face_image: Mirtillo,
+            indovina: Mirtillo,
             question:{
                     correct_answer: 'Mirtillo',
                     wrong_answer_n1: 'Noce',
@@ -240,7 +240,7 @@ export function GameContextProvider(props){
         {
             livelloDomanda: "facile",
             categoria: "Frutti",
-            face_image: Nespola,
+            indovina: Nespola,
             question:{
                     correct_answer: 'Nespola',
                     wrong_answer_n1: 'Pesca',
@@ -251,85 +251,52 @@ export function GameContextProvider(props){
     
     ];
 
-    const elencoDomandeQuizImmaginiFrutti = [
+    const elencoDomandeQuiz = [
         
-        // {
-        //     livelloDomanda: "facile",
-        //     categoria: "Frutti",
-        //     face_image: Albicocca,
-        //     question:{
-        //         correct_answer: 'Albicocca',
-        //         wrong_answer_n1: 'Mango',
-        //         wrong_answer_n2: 'Nocciola',
-        //         wrong_answer_n3: 'Arancia'
-        //     }
-        // },
-        // {
-        //     livelloDomanda: "facile",
-        //     categoria: "Frutti",
-        //     face_image: Banana,
-        //     question:{
-        //         correct_answer: 'Banana',
-        //         wrong_answer_n1: 'Carruba',
-        //         wrong_answer_n2: 'Bergamotto',
-        //         wrong_answer_n3: 'Platano'
-        //     }
-        // },
-        // {
-        //     livelloDomanda: "facile",
-        //     categoria: "Frutti",
-        //     face_image: Ciliegia,
-        //     question:{
-        //         correct_answer: 'Ciliegia',
-        //         wrong_answer_n1: 'Lampone',
-        //         wrong_answer_n2: 'Pesca',
-        //         wrong_answer_n3: 'Uva'
-        //     }
-        // },
-        // {
-        //     livelloDomanda: "facile",
-        //     categoria: "Frutti",
-        //     face_image: Fragola,
-        //     question:{
-        //         correct_answer: 'Fragola',
-        //         wrong_answer_n1: 'Arancia',
-        //         wrong_answer_n2: 'Litchi',
-        //         wrong_answer_n3: 'Prugna'
-        //     }
-        // },
-        // {
-        //     livelloDomanda: "facile",
-        //     categoria: "Frutti",
-        //     face_image: Mela,
-        //     question:{
-        //             correct_answer: 'Mela',
-        //             wrong_answer_n1: 'Pera',
-        //             wrong_answer_n2: 'Limone',
-        //             wrong_answer_n3: 'Papaya'
-        //     }
-        // },
-        // {
-        //     livelloDomanda: "facile",
-        //     categoria: "Frutti",
-        //     face_image: Mirtillo,
-        //     question:{
-        //             correct_answer: 'Mirtillo',
-        //             wrong_answer_n1: 'Noce',
-        //             wrong_answer_n2: 'Lampone',
-        //             wrong_answer_n3: 'Mora'
-        //     }
-        // },
-        // {
-        //     livelloDomanda: "facile",
-        //     categoria: "Frutti",
-        //     face_image: Nespola,
-        //     question:{
-        //             correct_answer: 'Nespola',
-        //             wrong_answer_n1: 'Pesca',
-        //             wrong_answer_n2: 'Frutto della passione',
-        //             wrong_answer_n3: 'Kiwi'
-        //     }
-        // }
+        {
+            livelloDomanda: "facile",
+            categoria: "Storia",
+            indovina: "In quale anno è nata la Repubblica Italiana?",
+            question:{
+                correct_answer: '1946',
+                wrong_answer_n1: '1956',
+                wrong_answer_n2: '1990',
+                wrong_answer_n3: '1961'
+            }
+        },
+        {
+            livelloDomanda: "facile",
+            categoria: "Geografia",
+            indovina: "Madrid è la capitale di quale nazione?",
+            question:{
+                correct_answer: 'Spagna',
+                wrong_answer_n1: 'Italia',
+                wrong_answer_n2: 'Messico',
+                wrong_answer_n3: 'Portogallo'
+            }
+        },
+        {
+            livelloDomanda: "normale",
+            categoria: "Geografia",
+            indovina: "Qual è la montagna più alta del mondo?",
+            question:{
+                correct_answer: 'Everest',
+                wrong_answer_n1: 'Annapurna I',
+                wrong_answer_n2: 'K2',
+                wrong_answer_n3: 'Makalu'
+            }
+        },
+        {
+            livelloDomanda: "difficile",
+            categoria: "Geografia",
+            indovina: "Quale tra le seguenti nazioni è la più grande per dimensione?",
+            question:{
+                correct_answer: 'Russia',
+                wrong_answer_n1: 'Canada',
+                wrong_answer_n2: 'Stati Uniti',
+                wrong_answer_n3: 'Brasile'
+            }
+        }
     
     ];
 
@@ -354,16 +321,14 @@ export function GameContextProvider(props){
 
         switch(stringa_TIPOGIOCO){
             case 'QUIZ':
-                break;
-
             case 'QUIZ CON IMMAGINI':
                 setGameObject(
-                    // <div className={styles.wrapper_gioco}>
-                        <ExerciseGuessTheFace
+                    <ExerciseGuessTheFace
                         giocoTerminato={endGame}
-                        INDICEGIOCO={indice_gioco}>
-                        </ExerciseGuessTheFace>
-                    // </div>
+                        INDICEGIOCO={indice_gioco}
+                        TIPOGIOCO={stringa_TIPOGIOCO}
+                    >
+                    </ExerciseGuessTheFace>
                 );
                 break;
 
@@ -459,7 +424,7 @@ export function GameContextProvider(props){
             chiudiFormCreaNuovoGioco: closeFormCreateNewGame,
             iniziaGioco: startGame,
             domandeDeiQuizConImmagini: elencoDomandeQuizImmagini,
-            domandeDeiQuizConImmaginiFrutti: elencoDomandeQuizImmaginiFrutti
+            domandeDeiQuiz: elencoDomandeQuiz
         }}
         >
             {props.children}

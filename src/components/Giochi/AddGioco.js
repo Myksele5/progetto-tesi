@@ -11,7 +11,7 @@ var domande_nuovo_gioco = [];
 
 function AddGioco(){
     const [titoloGioco, setTitoloGioco] = useState("");
-    const [tipologiaGioco, setTipoGioco] = useState("");
+    const [tipologiaGioco, setTipologiaGioco] = useState("");
     const [livelloGioco, setLivelloGioco] = useState("NORMALE");
 
     const [selectedEasy, setSelectedEasy] = useState(false);
@@ -56,7 +56,8 @@ function AddGioco(){
         setTitoloGioco(event.target.value);
     }
     function tipoGiocoChangeHandler(event){
-        setTipoGioco(event.target.value)
+        setTipologiaGioco(event.target.value);
+        // console.log(event.target.value);
     }
     function livelloGiocoChangeHandler(stringa){
         setLivelloGioco(stringa);
@@ -68,7 +69,7 @@ function AddGioco(){
 
         if(isChecked){
             domande_nuovo_gioco.unshift({
-                face_image: domandaDaAggiungere.face_image,
+                indovina: domandaDaAggiungere.indovina,
                 question: domandaDaAggiungere.question
             });
             // console.log("AGGIUNTA DOMANDA---> " + domande_nuovo_gioco);
@@ -83,7 +84,10 @@ function AddGioco(){
 
             // console.log("rimossa DOMANDA---> " + domande_nuovo_gioco);
         }
-        
+    }
+
+    function resettaOggettoDomande(){
+        domande_nuovo_gioco.splice(0);
     }
 
     return(
@@ -146,6 +150,8 @@ function AddGioco(){
                     <h3>Domande disponibili:</h3>
                     <ElencoDomande
                         domandeNuovoGioco={creaOggettoDomande}
+                        resettaDomandeNuovoGioco={resettaOggettoDomande}
+                        tipoGioco={tipologiaGioco}
                     >
                     </ElencoDomande>
 
