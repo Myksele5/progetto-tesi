@@ -44,7 +44,7 @@ function RisultatiGioco(props){
                 <div className={styles.wrapper_risultati}>
                     <h1 className={styles.title_scheda}>RISULTATI UTENTE</h1>
 
-                    <p>Risposte corrette: {props.numeroRisposteCorrette}/{props.numeroDomandeTotali}</p>
+                    <h3 className={styles.numero_risposte}>Risposte corrette: {props.numeroRisposteCorrette}/{props.numeroDomandeTotali}</h3>
 
                     <GenericButton
                     onClick={props.chiudiSchedaRisultati}

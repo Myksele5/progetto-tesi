@@ -10,7 +10,7 @@ function Giochi(){
     const game_ctx = useContext(GameContext);
     
     return(
-        <div className={styles.schermata_giochi}>
+        <>
 
             <h1 className={styles.page_title}>Giochi</h1>
             {game_ctx.showBarraRicercaBottone && 
@@ -46,7 +46,7 @@ function Giochi(){
                 {game_ctx.oggettoGioco}
                 
             </div>
-        </div>
+        </>
 );
 }
 

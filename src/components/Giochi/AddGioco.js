@@ -98,9 +98,9 @@ function AddGioco(){
             <>
 
                 <div className={styles.wrapper_impostazioni_gioco}>
-                <h2>Gestisci le impostazioni del gioco</h2>
-                    <label>Tipologia di gioco</label>
-                    <select onChange={tipoGiocoChangeHandler}>
+                <h2 className={styles.title_scheda}>Gestisci le impostazioni del gioco</h2>
+                    <label className={styles.label_style}>Tipologia di gioco</label>
+                    <select className={styles.select_style} onChange={tipoGiocoChangeHandler}>
                         <option hidden>-- select an option --</option>
                         <option>QUIZ</option>
                         <option>QUIZ CON IMMAGINI</option>
@@ -109,7 +109,7 @@ function AddGioco(){
                     </select>
                     
 
-                    <label>Difficoltà Gioco</label>
+                    <label className={styles.label_style}>Difficoltà Gioco</label>
                     <div className={styles.group_bottoni}>
 
                         <RadioButton
@@ -141,25 +141,16 @@ function AddGioco(){
                         
                     </div>
 
-                    <label>Inserisci nome del gioco</label>
-                    <input type="text" onChange={titoloGiocoChangeHandler}></input>
+                    <label className={styles.label_style}>Inserisci nome del gioco</label>
+                    <input className={styles.textbox_style} type="text" onChange={titoloGiocoChangeHandler}></input>
 
-                    {/* <label>Seleziona numero di domande</label>
-                    <input type="text"></input> */}
-
-                    <h3>Domande disponibili:</h3>
+                    
                     <ElencoDomande
                         domandeNuovoGioco={creaOggettoDomande}
                         resettaDomandeNuovoGioco={resettaOggettoDomande}
                         tipoGioco={tipologiaGioco}
                     >
                     </ElencoDomande>
-
-                    {/* <label>Assegna Gioco a... ------- PROBABILMENTE DA TOGLIERE DA QUESTO FORM</label>
-                    <select>
-                        <option hidden>-- select an option --</option>
-                        {patients_ctx.listaPazienti.map(patients_ctx.arrayToLista)}
-                    </select> */}
 
                     <GenericButton
                     onClick={() => {

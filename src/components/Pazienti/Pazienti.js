@@ -12,7 +12,7 @@ function Pazienti(){
     const patients_ctx = useContext(PatientContext);
 
     return(
-        <div className={styles.schermata_pazienti}>
+        <>
 
             <h1 className={styles.page_title}>Lista Pazienti</h1>
 
@@ -57,7 +57,7 @@ function Pazienti(){
                 }
                 
             </div>
-        </div>
+        </>
     );
 }
 

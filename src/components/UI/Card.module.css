@@ -1,7 +1,7 @@
 .generic_wrapper{
     width: fit-content;
     height: fit-content;
-    margin: 1.5vw;
+    margin: 15px;
     padding: 5px;
     background-color: rgb(236, 236, 236);
     border: 3px solid rgb(59, 59, 241);

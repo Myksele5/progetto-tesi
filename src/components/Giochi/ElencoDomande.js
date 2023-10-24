@@ -52,41 +52,51 @@ function ElencoDomande(props){
     function recuperaTutteLeDomande(singleQuestion){
         if(singleQuestion.categoria === categoryFilter){
             return(
-                <div className={styles.flex_list_container}>
-                    <li className={styles.list_item_content}>
-                        <h4>Volto da indovinare</h4>
-                        <p>{singleQuestion.question.correct_answer}</p>
-                    </li>
-    
-                    <li className={styles.list_item_content}>
-                        <h4>Risposta sbagliata 1</h4>
-                        <p>{singleQuestion.question.wrong_answer_n1}</p>
-                    </li>
-    
-                    <li className={styles.list_item_content}>
-                        <h4>Risposta sbagliata 2</h4>
-                        <p>{singleQuestion.question.wrong_answer_n2}</p>
-                    </li>
-    
-                    <li className={styles.list_item_content}>
-                        <h4>Risposta sbagliata 3</h4>
-                        <p>{singleQuestion.question.wrong_answer_n3}</p>
-                    </li>
-    
-                    <li className={styles.list_item_content}>
-                        <h4>Livello Difficoltà</h4>
-                        <p>{singleQuestion.livelloDomanda}</p>
-                    </li>
+                <li className={styles.LIST_ITEM_STYLE}>
+
+                    {props.tipoGioco === "QUIZ" &&
+                        <div className={styles.flex_list_container}>
+                            <h4 className={styles.subtitle_style}>Domanda:</h4>
+                            <p className={styles.question_style}>{singleQuestion.indovina}</p>
+                        </div>
+                    }
+
+                    {props.tipoGioco === "QUIZ CON IMMAGINI" &&
+                        <div className={styles.flex_list_container}>
+                            <h4 className={styles.subtitle_style}>Immagine:</h4>
+                            <p className={styles.question_style}>{singleQuestion.question.correct_answer}</p>
+                        </div>
+                    }
                     
-                    <li className={styles.list_item_content}>
-                        <input onChange={(event)=>{
+
+                    <div className={styles.flex_list_container}>
+                        <h4 className={styles.subtitle_style}>Risposte:</h4>
+
+                        <div className={styles.separa_corrette_sbagliate}>
+                            <span className={styles.buttons_space}>
+                                <p>CORRETTA</p>
+                                <p className={styles.correct_answ}>{singleQuestion.question.correct_answer}</p>
+                            </span>
+                            
+                            <span className={styles.buttons_space}>
+                                <p>SBAGLIATE</p>
+                                <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n1}</p>
+                                <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n2}</p>
+                                <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n3}</p>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className={styles.flex_list_container}>
+                        <h4 className={styles.subtitle_style}>Inserisci nel quiz:</h4>
+                        <input className={styles.checkbox_style} type="checkbox" onChange={(event)=>{
                             verifyIsChecked(event, singleQuestion)
-                        }} type="checkbox"></input>
-                        <label>Inserisci nel quiz</label>
-                        {/* <button>RIMUOVI</button> */}
-                    </li>
-                    
-                </div>
+                            }}
+                        >
+                        </input>
+                    </div>
+
+                </li>
             );
         }
         else{
@@ -99,24 +109,34 @@ function ElencoDomande(props){
             {props.tipoGioco === "" && <p>Seleziona un tipo di gioco per visualizzare le domande</p>}
             {props.tipoGioco === "QUIZ CON IMMAGINI" && 
                 <>
-                    <select onChange={categoryChangeHandler}>
+                    <h3 className={styles.domande_disponibili}>Domande disponibili:</h3>
+                    <select className={styles.select_style} onChange={categoryChangeHandler}>
                         <option hidden>---SELEZIONA CATEGORIA---</option>
                         <option>Personaggi Famosi</option>
                         <option>Frutti</option>
                         {/* <option>Animali</option> */}
                     </select>
-                    {categoryFilter !== "" && imagesQuizQuestions.map(recuperaTutteLeDomande)}
+                    {
+                        <ul className={styles.wrapper_lista_domande}>
+                            {categoryFilter !== "" && imagesQuizQuestions.map(recuperaTutteLeDomande)}
+                        </ul>
+                    }
                     {/* {categoryFilter === "Frutti" && categoryQuestions.map(recuperaTutteLeDomande)} */}
                 </>
             }
             {props.tipoGioco === "QUIZ" && 
                 <>
-                    <select onChange={categoryChangeHandler}>
+                    <h3 className={styles.domande_disponibili}>Domande disponibili:</h3>
+                    <select className={styles.select_style} onChange={categoryChangeHandler}>
                         <option hidden>---SELEZIONA CATEGORIA---</option>
                         <option>Geografia</option>
                         <option>Storia</option>
                     </select>
-                    {categoryFilter !== "" && classicQuizQuestions.map(recuperaTutteLeDomande)}
+                    {
+                        <ul className={styles.wrapper_lista_domande}>
+                            {categoryFilter !== "" && classicQuizQuestions.map(recuperaTutteLeDomande)}
+                        </ul>
+                    }
                     {/* {categoryFilter === "Frutti" && categoryQuestions.map(recuperaTutteLeDomande)} */}
                 </>
             }

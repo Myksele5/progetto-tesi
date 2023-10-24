@@ -20,7 +20,7 @@ function Dialoghi(){
     </>
 
     return(
-        <div className={styles.schermata_dialoghi}>
+        <>
             <h1 className={styles.page_title}>Dialoghi</h1>
             <h3 className={styles.page_subtitle}>Seleziona tipo di dialogo</h3>
 
@@ -37,7 +37,7 @@ function Dialoghi(){
                 children = {dialoghi_con_mini}>
                 </Card>
             </div>
-        </div>
+        </>
     );
 }
 
