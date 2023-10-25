@@ -1,8 +1,10 @@
 .radio_button{
     width: 100px;
-    height: 40px;
-    background-color: lightyellow;
-    margin: 1px;
+    height: 35px;
+    background-color: rgb(211, 211, 211);
+    border-radius: 5px;
+    color: black;
+    margin: 1px 3px;
 }
 
 .radio_button:hover{
@@ -12,5 +14,7 @@
 }
 
 .is_selected{
-    background-color: lightsalmon;
+    background-color: rgb(59, 59, 241);
+    border: 1px solid rgb(233, 33, 131);
+    color: white;
 }

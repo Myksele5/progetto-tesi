@@ -23,7 +23,7 @@ let risultati_gioco;
 let counter_CODICE_GIOCO = 0;
 
 const GameContext = React.createContext({
-    listaDomande: null,
+    listaGiochi: null,
     aggiungiGiocoAllaLista: ()=>{},
     showListaGiochi: false,
     showBarraRicercaBottone: null,
@@ -35,7 +35,8 @@ const GameContext = React.createContext({
     chiudiFormCreaNuovoGioco: ()=>{},
     iniziaGioco: ()=>{},
     domandeDeiQuizConImmagini: null,
-    domandeDeiQuiz: null
+    domandeDeiQuiz: null,
+    aggiungiDomandaAllaLista: ()=>{}
 });
 
 export function GameContextProvider(props){
@@ -103,7 +104,7 @@ export function GameContextProvider(props){
         // }
     ];
 
-    const elencoDomandeQuizImmagini = [
+    const lista_domande_quiz_immagini = [
         
         {
             livelloDomanda: "facile",
@@ -251,7 +252,7 @@ export function GameContextProvider(props){
     
     ];
 
-    const elencoDomandeQuiz = [
+    const lista_domande_quiz = [
         
         {
             livelloDomanda: "facile",
@@ -301,16 +302,18 @@ export function GameContextProvider(props){
     ];
 
     const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
-    const [elencoDomande, setElencoDomande] = useState(dati_dei_giochi)
+    const [elencoGiochi, setElencoGiochi] = useState(dati_dei_giochi)
     const [showElencoGiochi, setShowElencoGiochi] = useState(true);
     const [showAddNewGame, setShowAddNewGame] = useState(false);
     const [gameObject, setGameObject] = useState(null);
     const [gameResults, setGameResults] = useState(false);
+    const [elencoDomandeQuiz, setElencoDomandeQuiz] = useState(lista_domande_quiz);
+    const [elencoDomandeQuizImmagini, setElencoDomandeQuizImmagini] = useState(lista_domande_quiz_immagini);
 
     function startGame(stringa_TIPOGIOCO, stringa_CODICEGIOCO){
         var indice_gioco;
-        for(var i = 0; i < elencoDomande.length; i++){
-            if(stringa_CODICEGIOCO === elencoDomande[i].codiceGioco){
+        for(var i = 0; i < elencoGiochi.length; i++){
+            if(stringa_CODICEGIOCO === elencoGiochi[i].codiceGioco){
                 indice_gioco = i;
                 break;
             }
@@ -399,7 +402,7 @@ export function GameContextProvider(props){
             domandeGioco: questionsList
         }
 
-        setElencoDomande(vecchioElenco => {
+        setElencoGiochi(vecchioElenco => {
             return [new_game, ...vecchioElenco]
         });
 
@@ -409,10 +412,16 @@ export function GameContextProvider(props){
         closeFormCreateNewGame();
     }
 
+    function addNewQuestionToList(nuova_domanda){
+        setElencoDomandeQuiz(vecchioElenco => {
+            return [nuova_domanda, ...vecchioElenco]
+        });
+    }
+
     return(
         <GameContext.Provider
         value={{
-            listaDomande: elencoDomande,
+            listaGiochi: elencoGiochi,
             aggiungiGiocoAllaLista: addNewGameToList,
             showListaGiochi: showElencoGiochi,
             showBarraRicercaBottone: showSearchBoxAndButton,
@@ -424,7 +433,8 @@ export function GameContextProvider(props){
             chiudiFormCreaNuovoGioco: closeFormCreateNewGame,
             iniziaGioco: startGame,
             domandeDeiQuizConImmagini: elencoDomandeQuizImmagini,
-            domandeDeiQuiz: elencoDomandeQuiz
+            domandeDeiQuiz: elencoDomandeQuiz,
+            aggiungiDomandaAllaLista: addNewQuestionToList
         }}
         >
             {props.children}

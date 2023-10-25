@@ -28,10 +28,13 @@ function Giochi(){
 
             <div className={styles.wrapper_generico}>
                 {game_ctx.showAggiungiNuovoGioco && 
-                    <AddGioco
-                        chiudiFormNewGame={game_ctx.chiudiFormCreaNuovoGioco}
-                    >
-                    </AddGioco>
+                    <>
+                        <AddGioco
+                            chiudiFormNewGame={game_ctx.chiudiFormCreaNuovoGioco}
+                        >
+                        </AddGioco>
+                        {/* <AddDomanda></AddDomanda> */}
+                    </>
                 }
 
                 {game_ctx.showListaGiochi && 

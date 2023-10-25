@@ -3,7 +3,6 @@ import Card from "../UI/Card";
 import GenericButton from "../UI/GenericButton";
 import RadioButton from "../UI/RadioButton";
 import { useContext, useState } from "react";
-import PatientContext from "../../context/patients-context";
 import GameContext from "../../context/game-context";
 import ElencoDomande from "./ElencoDomande";
 
@@ -18,7 +17,6 @@ function AddGioco(){
     const [selectedNormal, setSelectedNormal] = useState(true);
     const [selectedHard, setSelectedHard] = useState(false);
 
-    const patients_ctx = useContext(PatientContext);
     const game_ctx = useContext(GameContext);
 
     function selezioneDifficoltà(stringaDifficoltà){

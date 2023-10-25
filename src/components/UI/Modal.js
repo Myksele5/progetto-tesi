@@ -32,11 +32,11 @@ function Modal(props){
         <>
             {ReactDOM.createPortal(
             <ModalToPort
-            testoModale = {props.testoModale}
-            CONFERMA={props.CONFERMA}
-            ANNULLA={props.ANNULLA}
-            pazienteNome={props.pazienteNome}
-            pazienteCognome={props.pazienteCognome}
+                testoModale = {props.testoModale}
+                CONFERMA={props.CONFERMA}
+                ANNULLA={props.ANNULLA}
+                pazienteNome={props.pazienteNome}
+                pazienteCognome={props.pazienteCognome}
             >
             </ModalToPort>, document.getElementById('modale'))}
         </>

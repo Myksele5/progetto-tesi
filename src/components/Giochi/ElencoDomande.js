@@ -1,6 +1,8 @@
 import { useContext, useState } from "react";
 import GameContext from "../../context/game-context";
 import styles from "./ElencoDomande.module.css";
+import GenericButton from "../UI/GenericButton";
+import AddDomanda from "./AddDomanda";
 
 function ElencoDomande(props){
     const game_ctx = useContext(GameContext);
@@ -9,31 +11,25 @@ function ElencoDomande(props){
     const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
     const [classicQuizQuestions, setClassicQuizQuestions] = useState(game_ctx.domandeDeiQuiz);
 
+    const [showAddNewQuestion, setShowAddNewQuestion] = useState(false);
+
     function categoryChangeHandler(event){
         changingCategoryMakesQuestionsReset();
         
-        // if(event.target.value === "Personaggi Famosi"){
-            setCategoryFilter(event.target.value);
-            // setCategoryQuestions(game_ctx.domandeDeiQuizConImmagini);
-            // setCategoryQuestions(game_ctx.domandeDeiQuizConImmagini);
-            // return;
-        // }
-        // if(event.target.value === "Frutti"){
-            // setCategoryFilter("Frutti");
-            // setCategoryQuestions(game_ctx.domandeDeiQuizConImmagini);
-            // setCategoryQuestions(game_ctx.domandeDeiQuizConImmaginiFrutti);
-            // return;
-        // }
+        setCategoryFilter(event.target.value);
     }
 
-    // function filterQuestionsByCategory(item){
-    //     if(categoryFilter === "Personaggi Famosi"){
-    //         return item.categoria !== "Personaggi Famosi";
-    //     }
-    //     if(categoryFilter === "Frutti"){
-    //         return item.categoria !== "Frutti";
-    //     }
-    // }
+    function changingCategoryMakesQuestionsReset(){
+        props.resettaDomandeNuovoGioco();
+    }
+
+    function displayAddNewQuestion(){
+        setShowAddNewQuestion(true);
+    }
+
+    function hideAddNewQuestion(){
+        setShowAddNewQuestion(false);
+    }
 
     function verifyIsChecked(event, domanda){
         if (event.target.checked) {
@@ -43,10 +39,6 @@ function ElencoDomande(props){
             console.log('⛔️ Checkbox is NOT checked');
         }
         props.domandeNuovoGioco(event.target.checked, domanda);
-    }
-
-    function changingCategoryMakesQuestionsReset(){
-        props.resettaDomandeNuovoGioco();
     }
 
     function recuperaTutteLeDomande(singleQuestion){
@@ -104,40 +96,68 @@ function ElencoDomande(props){
         }
     }
 
+    function aggiornaElencoDomande(nuovaDomanda){
+        game_ctx.aggiungiDomandaAllaLista(nuovaDomanda);
+        // setClassicQuizQuestions(game_ctx.domandeDeiQuiz);
+    }
+
     return (
         <>
+            {showAddNewQuestion &&
+                <AddDomanda
+                    hideForm={hideAddNewQuestion}
+                    aggiornaDomande={aggiornaElencoDomande}
+                >
+                </AddDomanda>
+            }
             {props.tipoGioco === "" && <p>Seleziona un tipo di gioco per visualizzare le domande</p>}
             {props.tipoGioco === "QUIZ CON IMMAGINI" && 
                 <>
                     <h3 className={styles.domande_disponibili}>Domande disponibili:</h3>
-                    <select className={styles.select_style} onChange={categoryChangeHandler}>
-                        <option hidden>---SELEZIONA CATEGORIA---</option>
-                        <option>Personaggi Famosi</option>
-                        <option>Frutti</option>
-                        {/* <option>Animali</option> */}
-                    </select>
+                    <div className={styles.wrap_flex_generico}>
+                        <select className={styles.select_style} onChange={categoryChangeHandler}>
+                            <option hidden>---SELEZIONA CATEGORIA---</option>
+                            <option>Personaggi Famosi</option>
+                            <option>Frutti</option>
+                        </select>
+                        <GenericButton
+                            onClick={displayAddNewQuestion}
+                            generic_button={true}
+                            buttonText={"Aggiungi Domanda"}                    
+                        >
+                        </GenericButton>
+                    </div>
                     {
                         <ul className={styles.wrapper_lista_domande}>
                             {categoryFilter !== "" && imagesQuizQuestions.map(recuperaTutteLeDomande)}
                         </ul>
                     }
-                    {/* {categoryFilter === "Frutti" && categoryQuestions.map(recuperaTutteLeDomande)} */}
+                    
                 </>
             }
             {props.tipoGioco === "QUIZ" && 
                 <>
                     <h3 className={styles.domande_disponibili}>Domande disponibili:</h3>
-                    <select className={styles.select_style} onChange={categoryChangeHandler}>
-                        <option hidden>---SELEZIONA CATEGORIA---</option>
-                        <option>Geografia</option>
-                        <option>Storia</option>
-                    </select>
+                    <div className={styles.wrap_flex_generico}>
+                        <select className={styles.select_style} onChange={categoryChangeHandler}>
+                            <option hidden>---SELEZIONA CATEGORIA---</option>
+                            <option>Geografia</option>
+                            <option>Storia</option>
+                        </select>
+                        <GenericButton
+                            onClick={displayAddNewQuestion}
+                            generic_button={true}
+                            buttonText={"Aggiungi Domanda"}                    
+                        >
+                        </GenericButton>
+                    </div>
+                    
                     {
                         <ul className={styles.wrapper_lista_domande}>
                             {categoryFilter !== "" && classicQuizQuestions.map(recuperaTutteLeDomande)}
                         </ul>
                     }
-                    {/* {categoryFilter === "Frutti" && categoryQuestions.map(recuperaTutteLeDomande)} */}
+                    
                 </>
             }
         </>
