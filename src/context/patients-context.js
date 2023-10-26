@@ -345,6 +345,8 @@ export function PatientContextProvider(props){
         setShowFormNewPaziente(false);
         setShowSearchBoxAndButton(true);
         setShowTabella(true);
+
+        prendiListaPazienti();
     }
 
     //FUNZIONE PER VISUALIZZARE FORM AGGIUNTA PAZIENTE
@@ -366,6 +368,8 @@ export function PatientContextProvider(props){
     async function eliminaPaziente(pazienteID){
         const pazienteDoc = doc(db, "pazienti", pazienteID);
         await deleteDoc(pazienteDoc);
+
+        prendiListaPazienti();
     }
 
     //FUNZIONE PER VISUALIZZARE IL MODALE DI ELIMINAZIONE
@@ -397,6 +401,8 @@ export function PatientContextProvider(props){
         setShowModificaPaziente(false);
         setShowSearchBoxAndButton(true);
         setShowTabella(true);
+
+        prendiListaPazienti();
     }
 
     //FUNZIONE PER MOSTRARE LA SCHEDA DI MODIFICA DEI DATI DEL PAZIENTE

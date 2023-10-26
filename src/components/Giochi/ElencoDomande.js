@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import GameContext from "../../context/game-context";
 import styles from "./ElencoDomande.module.css";
 import GenericButton from "../UI/GenericButton";
-import AddDomanda from "./AddDomanda";
 
 function ElencoDomande(props){
     const game_ctx = useContext(GameContext);
@@ -10,8 +9,6 @@ function ElencoDomande(props){
     const [categoryFilter, setCategoryFilter] = useState("");
     const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
     const [classicQuizQuestions, setClassicQuizQuestions] = useState(game_ctx.domandeDeiQuiz);
-
-    const [showAddNewQuestion, setShowAddNewQuestion] = useState(false);
 
     function categoryChangeHandler(event){
         changingCategoryMakesQuestionsReset();
@@ -21,14 +18,6 @@ function ElencoDomande(props){
 
     function changingCategoryMakesQuestionsReset(){
         props.resettaDomandeNuovoGioco();
-    }
-
-    function displayAddNewQuestion(){
-        setShowAddNewQuestion(true);
-    }
-
-    function hideAddNewQuestion(){
-        setShowAddNewQuestion(false);
     }
 
     function verifyIsChecked(event, domanda){
@@ -96,37 +85,18 @@ function ElencoDomande(props){
         }
     }
 
-    function aggiornaElencoDomande(nuovaDomanda){
-        game_ctx.aggiungiDomandaAllaLista(nuovaDomanda);
-        // setClassicQuizQuestions(game_ctx.domandeDeiQuiz);
-    }
-
     return (
         <>
-            {showAddNewQuestion &&
-                <AddDomanda
-                    hideForm={hideAddNewQuestion}
-                    aggiornaDomande={aggiornaElencoDomande}
-                >
-                </AddDomanda>
-            }
             {props.tipoGioco === "" && <p>Seleziona un tipo di gioco per visualizzare le domande</p>}
             {props.tipoGioco === "QUIZ CON IMMAGINI" && 
                 <>
                     <h3 className={styles.domande_disponibili}>Domande disponibili:</h3>
-                    <div className={styles.wrap_flex_generico}>
-                        <select className={styles.select_style} onChange={categoryChangeHandler}>
-                            <option hidden>---SELEZIONA CATEGORIA---</option>
-                            <option>Personaggi Famosi</option>
-                            <option>Frutti</option>
-                        </select>
-                        <GenericButton
-                            onClick={displayAddNewQuestion}
-                            generic_button={true}
-                            buttonText={"Aggiungi Domanda"}                    
-                        >
-                        </GenericButton>
-                    </div>
+                    
+                    <select className={styles.select_style} onChange={categoryChangeHandler}>
+                        <option hidden>---SELEZIONA CATEGORIA---</option>
+                        <option>Personaggi Famosi</option>
+                        <option>Frutti</option>
+                    </select>
                     {
                         <ul className={styles.wrapper_lista_domande}>
                             {categoryFilter !== "" && imagesQuizQuestions.map(recuperaTutteLeDomande)}
@@ -138,19 +108,12 @@ function ElencoDomande(props){
             {props.tipoGioco === "QUIZ" && 
                 <>
                     <h3 className={styles.domande_disponibili}>Domande disponibili:</h3>
-                    <div className={styles.wrap_flex_generico}>
-                        <select className={styles.select_style} onChange={categoryChangeHandler}>
-                            <option hidden>---SELEZIONA CATEGORIA---</option>
-                            <option>Geografia</option>
-                            <option>Storia</option>
-                        </select>
-                        <GenericButton
-                            onClick={displayAddNewQuestion}
-                            generic_button={true}
-                            buttonText={"Aggiungi Domanda"}                    
-                        >
-                        </GenericButton>
-                    </div>
+
+                    <select className={styles.select_style} onChange={categoryChangeHandler}>
+                        <option hidden>---SELEZIONA CATEGORIA---</option>
+                        <option>Geografia</option>
+                        <option>Storia</option>
+                    </select>
                     
                     {
                         <ul className={styles.wrapper_lista_domande}>

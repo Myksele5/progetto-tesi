@@ -5,6 +5,7 @@ import { useContext } from "react";
 import ListaGiochi from "./ListaGiochi";
 import AddGioco from "./AddGioco";
 import GameContext from "../../context/game-context";
+import AddDomanda from "./AddDomanda";
 
 function Giochi(){
     const game_ctx = useContext(GameContext);
@@ -15,7 +16,12 @@ function Giochi(){
             <h1 className={styles.page_title}>Giochi</h1>
             {game_ctx.showBarraRicercaBottone && 
                 <div className={styles.wrap_boxes}>
-                    <SearchBox></SearchBox>
+                    <GenericButton
+                        onClick={game_ctx.formCreaNuovaDomanda}
+                        generic_button={true}
+                        buttonText={"Crea nuove domande"}
+                    >
+                    </GenericButton>
         
                     <GenericButton
                         onClick={game_ctx.formCreaNuovoGioco}
@@ -34,6 +40,16 @@ function Giochi(){
                         >
                         </AddGioco>
                         {/* <AddDomanda></AddDomanda> */}
+                    </>
+                }
+
+                {game_ctx.showAggiungiNuovaDomanda &&
+                    <>
+                        <AddDomanda
+                            hideForm={game_ctx.chiudiFormCreaNuovaDomanda}
+                            aggiornaDomande={game_ctx.aggiungiDomandaAllaLista}
+                        >
+                        </AddDomanda>
                     </>
                 }
 

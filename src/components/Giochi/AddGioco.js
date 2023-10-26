@@ -96,7 +96,7 @@ function AddGioco(){
             <>
 
                 <div className={styles.wrapper_impostazioni_gioco}>
-                <h2 className={styles.title_scheda}>Gestisci le impostazioni del gioco</h2>
+                <h2 className={styles.title_scheda}>Creazione nuovo gioco</h2>
                     <label className={styles.label_style}>Tipologia di gioco</label>
                     <select className={styles.select_style} onChange={tipoGiocoChangeHandler}>
                         <option hidden>-- select an option --</option>

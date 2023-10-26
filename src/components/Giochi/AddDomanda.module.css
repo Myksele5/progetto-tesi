@@ -1,23 +1,45 @@
-.background_wrapper{
-    position: fixed;
+.wrapper_flex{
+    width: 700px;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.555);
-    z-index: 5;
+    align-items: center;
+    border-radius: 5px;
 }
 
-.wrapper_flex{
-    position: absolute;
-    width: 400px;
-    left: 47%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid red;
+.title_scheda{
+    font-size: 30px;
+    text-align: center;
+}
+
+.label_style{
+    font-size: 16px;
+    margin: 2px;
+}
+
+.select_style{
+    width: 300px;
+    height: 25px;
     border-radius: 5px;
-    background-color: lightgrey;
+    border: 2px solid blue;
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.textbox_style{
+    width: 400px;
+    height: 25px;
+    font-size: 16px;
+    border: 2px solid blue;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-left: 30px;
+    margin-right: 30px;
+    text-align: center;
+}
+
+.textbox_style:focus{
+    border: 2px solid rgb(233, 33, 131);
+    border-radius: 5px;
+    outline: none;
 }

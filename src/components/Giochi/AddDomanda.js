@@ -3,17 +3,25 @@ import GenericButton from "../UI/GenericButton";
 import styles from "./AddDomanda.module.css";
 import ReactDOM from 'react-dom';
 import GameContext from "../../context/game-context";
+import Card from "../UI/Card";
 
-function AddDomandaToPort(props){
+function AddDomanda(props){
     const game_ctx = useContext(GameContext)
 
-    const [gameType, setGameType] = useState("");
+    const [imageFile, setImageFile] = useState(null);
+    const [gameType, setGameType] = useState("QUIZ");
     const [categoryQuestion, setCategoryQuestion] = useState("");
     const [indovina, setIndovina] = useState("");
     const [rispCorretta, setRispCorretta] = useState("");
     const [rispSbagliata_1, setRispSbagliata_1] = useState("");
     const [rispSbagliata_2, setRispSbagliata_2] = useState("");
     const [rispSbagliata_3, setRispSbagliata_3] = useState("");
+
+    function imageFileChangeHandler(event){
+        var file = event.target.files[0];
+        setImageFile(URL.createObjectURL(file));
+        console.log(file);
+    }
 
     function gameTypeChangeHandler(event){
         setGameType(event.target.value);
@@ -44,82 +52,111 @@ function AddDomandaToPort(props){
     }
     
     function creaNuovaDomanda(){
-        var new_question = {
-            livelloDomanda: "facile",
-            categoria: categoryQuestion,
-            indovina: indovina,
-            question: {
-                correct_answer: rispCorretta,
-                wrong_answer_n1: rispSbagliata_1,
-                wrong_answer_n2: rispSbagliata_2,
-                wrong_answer_n3: rispSbagliata_3
+        var new_question;
+
+        if(gameType === "QUIZ"){
+            new_question = {
+                livelloDomanda: "facile",
+                categoria: categoryQuestion,
+                indovina: indovina,
+                question: {
+                    correct_answer: rispCorretta,
+                    wrong_answer_n1: rispSbagliata_1,
+                    wrong_answer_n2: rispSbagliata_2,
+                    wrong_answer_n3: rispSbagliata_3
+                }
             }
         }
 
-        props.aggiornaDomande(new_question);
+        if(gameType === "QUIZ CON IMMAGINI"){
+            new_question = {
+                livelloDomanda: "facile",
+                categoria: categoryQuestion,
+                indovina: imageFile,
+                question: {
+                    correct_answer: rispCorretta,
+                    wrong_answer_n1: rispSbagliata_1,
+                    wrong_answer_n2: rispSbagliata_2,
+                    wrong_answer_n3: rispSbagliata_3
+                }
+            }
+        }
+
+        props.aggiornaDomande(new_question, gameType);
         props.hideForm();
     }
 
     return(
-        <div className={styles.background_wrapper}>
-            <div className={styles.wrapper_flex}>
-                <label>Tipo di gioco</label>
-                <select onChange={gameTypeChangeHandler}>
-                    <option>QUIZ</option>
-                    <option>QUIZ CON IMMAGINI</option>
-                    <option>COMPLETA LA PAROLA</option>
-                    <option>RIFLESSI</option>
-                </select>
+        <Card
+            animazione={true}
+            altroStile={true}
+            children={
+                <div className={styles.wrapper_flex}>
+                    <h1 className={styles.title_scheda}>Aggiungi nuova domanda</h1>
 
-                <label>Categoria domanda</label>
-                <select onChange={categoryQuestionChangeHandler}>
-                    <option>Geografia</option>
-                    <option>Storia</option>
-                </select>
+                    <label className={styles.label_style}>Tipo di gioco</label>
+                    <select className={styles.select_style} onChange={gameTypeChangeHandler}>
+                        <option>QUIZ</option>
+                        <option>QUIZ CON IMMAGINI</option>
+                        <option>COMPLETA LA PAROLA</option>
+                        <option>RIFLESSI</option>
+                    </select>
 
-                <label>Domanda: </label>
-                <input type="text" onChange={indovinaChangeHandler}></input>
+                    <label className={styles.label_style}>Categoria domanda</label>
+                    
 
-                <label>Risposta Corretta: </label>
-                <input type="text" onChange={rispostaCorrettaChangeHandler}></input>
+                    {gameType === "QUIZ" &&
+                        <>
+                            <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
+                                <option>Geografia</option>
+                                <option>Storia</option>
+                            </select>
+                            <label className={styles.label_style}>Domanda: </label>
+                            <input className={styles.textbox_style} type="text" onChange={indovinaChangeHandler}></input>
+                        </>
+                    }
 
-                <label>Risposta Sbagliata 1: </label>
-                <input type="text" onChange={rispostaSbagliata_1_ChangeHandler}></input>
+                    {gameType === "QUIZ CON IMMAGINI" &&
+                        <>
+                            <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
+                                <option>Personaggi Famosi</option>
+                                <option>Frutti</option>
+                            </select>
+                            <label className={styles.label_style}>Inserisci immagine: </label>
+                            <input type="file" accept="image/*" onChange={imageFileChangeHandler}></input>
+                        </>
+                    }
+                    
 
-                <label>Risposta Sbagliata 2: </label>
-                <input type="text" onChange={rispostaSbagliata_2_ChangeHandler}></input>
+                    <label className={styles.label_style}>Risposta Corretta: </label>
+                    <input className={styles.textbox_style} type="text" onChange={rispostaCorrettaChangeHandler}></input>
 
-                <label>Risposta Sbagliata 3: </label>
-                <input type="text" onChange={rispostaSbagliata_3_ChangeHandler}></input>
+                    <label className={styles.label_style}>Risposta Sbagliata 1: </label>
+                    <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_1_ChangeHandler}></input>
 
-                <GenericButton
-                    onClick={creaNuovaDomanda}
-                    generic_button={true}
-                    buttonText={"Salva domanda"}
-                >
-                </GenericButton>
+                    <label className={styles.label_style}>Risposta Sbagliata 2: </label>
+                    <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_2_ChangeHandler}></input>
 
-                <GenericButton
-                    onClick={props.hideForm}
-                    small_button={true}
-                    buttonText={"Chiudi scheda"}
-                >
-                </GenericButton>
-            </div>
-        </div>
-    );
-}
+                    <label className={styles.label_style}>Risposta Sbagliata 3: </label>
+                    <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_3_ChangeHandler}></input>
 
-function AddDomanda(props){
-    return(
-        <>
-            {ReactDOM.createPortal(
-                <AddDomandaToPort
-                    hideForm={props.hideForm}
-                    aggiornaDomande={props.aggiornaDomande}
-                >
-                </AddDomandaToPort>, document.getElementById('add_domanda'))}
-        </>
+                    <GenericButton
+                        onClick={creaNuovaDomanda}
+                        generic_button={true}
+                        buttonText={"Salva domanda"}
+                    >
+                    </GenericButton>
+
+                    <GenericButton
+                        onClick={props.hideForm}
+                        small_button={true}
+                        buttonText={"Chiudi scheda"}
+                    >
+                    </GenericButton>
+                </div>
+            }
+        >
+        </Card>
         
     );
 }

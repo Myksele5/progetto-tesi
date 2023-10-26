@@ -27,15 +27,18 @@ const GameContext = React.createContext({
     aggiungiGiocoAllaLista: ()=>{},
     showListaGiochi: false,
     showBarraRicercaBottone: null,
-    showAggiungiNuovoGioco: null,
     oggettoGioco: null,
     risultatiGioco: null,
     risposteUtente: null,
+    showAggiungiNuovoGioco: null,
     formCreaNuovoGioco: ()=>{},
     chiudiFormCreaNuovoGioco: ()=>{},
     iniziaGioco: ()=>{},
     domandeDeiQuizConImmagini: null,
     domandeDeiQuiz: null,
+    showAggiungiNuovaDomanda: null,
+    formCreaNuovaDomanda: ()=>{},
+    chiudiFormCreaNuovaDomanda: ()=>{},
     aggiungiDomandaAllaLista: ()=>{}
 });
 
@@ -305,6 +308,7 @@ export function GameContextProvider(props){
     const [elencoGiochi, setElencoGiochi] = useState(dati_dei_giochi)
     const [showElencoGiochi, setShowElencoGiochi] = useState(true);
     const [showAddNewGame, setShowAddNewGame] = useState(false);
+    const [showAddNewQuestion, setShowAddNewQuestion] = useState(false);
     const [gameObject, setGameObject] = useState(null);
     const [gameResults, setGameResults] = useState(false);
     const [elencoDomandeQuiz, setElencoDomandeQuiz] = useState(lista_domande_quiz);
@@ -412,10 +416,30 @@ export function GameContextProvider(props){
         closeFormCreateNewGame();
     }
 
-    function addNewQuestionToList(nuova_domanda){
-        setElencoDomandeQuiz(vecchioElenco => {
-            return [nuova_domanda, ...vecchioElenco]
-        });
+    function formCreateNewQuestion(){
+        setShowSearchBoxAndButton(false);
+        setShowElencoGiochi(false);
+        setShowAddNewQuestion(true);
+    }
+
+    function closeformCreateNewQuestion(){
+        setShowSearchBoxAndButton(true);
+        setShowElencoGiochi(true);
+        setShowAddNewQuestion(false);
+    }
+
+    function addNewQuestionToList(nuova_domanda, tipoGioco){
+        if(tipoGioco === "QUIZ"){
+            setElencoDomandeQuiz(vecchioElenco => {
+                return [nuova_domanda, ...vecchioElenco]
+            });
+        }
+        if(tipoGioco === "QUIZ CON IMMAGINI"){
+            setElencoDomandeQuizImmagini(vecchioElenco => {
+                return [nuova_domanda, ...vecchioElenco]
+            });
+        }
+        
     }
 
     return(
@@ -425,15 +449,18 @@ export function GameContextProvider(props){
             aggiungiGiocoAllaLista: addNewGameToList,
             showListaGiochi: showElencoGiochi,
             showBarraRicercaBottone: showSearchBoxAndButton,
-            showAggiungiNuovoGioco: showAddNewGame,
             oggettoGioco: gameObject,
             risultatiGioco: gameResults,
             risposteUtente: risultati_gioco,
+            showAggiungiNuovoGioco: showAddNewGame,
             formCreaNuovoGioco: formCreateNewGame,
             chiudiFormCreaNuovoGioco: closeFormCreateNewGame,
             iniziaGioco: startGame,
             domandeDeiQuizConImmagini: elencoDomandeQuizImmagini,
             domandeDeiQuiz: elencoDomandeQuiz,
+            showAggiungiNuovaDomanda: showAddNewQuestion,
+            formCreaNuovaDomanda: formCreateNewQuestion,
+            chiudiFormCreaNuovaDomanda: closeformCreateNewQuestion,
             aggiungiDomandaAllaLista: addNewQuestionToList
         }}
         >
