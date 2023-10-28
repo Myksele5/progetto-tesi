@@ -10,9 +10,11 @@ function ElencoDomande(props){
     const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
     const [classicQuizQuestions, setClassicQuizQuestions] = useState(game_ctx.domandeDeiQuiz);
 
+    var categorie = game_ctx.PROVIAMO(props.tipoGioco);
+
     function categoryChangeHandler(event){
         changingCategoryMakesQuestionsReset();
-        
+        // game_ctx.PROVIAMO();
         setCategoryFilter(event.target.value);
     }
 
@@ -28,6 +30,17 @@ function ElencoDomande(props){
             console.log('⛔️ Checkbox is NOT checked');
         }
         props.domandeNuovoGioco(event.target.checked, domanda);
+    }
+
+    
+
+    function mappaCategorie(lista){
+
+        return (
+            <option>
+                {lista.categoria}
+            </option>
+        );
     }
 
     function recuperaTutteLeDomande(singleQuestion){
@@ -94,8 +107,7 @@ function ElencoDomande(props){
                     
                     <select className={styles.select_style} onChange={categoryChangeHandler}>
                         <option hidden>---SELEZIONA CATEGORIA---</option>
-                        <option>Personaggi Famosi</option>
-                        <option>Frutti</option>
+                        {categorie.map(mappaCategorie)}
                     </select>
                     {
                         <ul className={styles.wrapper_lista_domande}>
@@ -111,8 +123,7 @@ function ElencoDomande(props){
 
                     <select className={styles.select_style} onChange={categoryChangeHandler}>
                         <option hidden>---SELEZIONA CATEGORIA---</option>
-                        <option>Geografia</option>
-                        <option>Storia</option>
+                        {categorie.map(mappaCategorie)}
                     </select>
                     
                     {

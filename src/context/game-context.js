@@ -39,7 +39,8 @@ const GameContext = React.createContext({
     showAggiungiNuovaDomanda: null,
     formCreaNuovaDomanda: ()=>{},
     chiudiFormCreaNuovaDomanda: ()=>{},
-    aggiungiDomandaAllaLista: ()=>{}
+    aggiungiDomandaAllaLista: ()=>{},
+    PROVIAMO: ()=>{}
 });
 
 export function GameContextProvider(props){
@@ -259,6 +260,28 @@ export function GameContextProvider(props){
         
         {
             livelloDomanda: "facile",
+            categoria: "Sport",
+            indovina: "Quale tra le seguenti squadre NBA ha vinto più titoli?",
+            question:{
+                correct_answer: 'Los Angeles Lakers',
+                wrong_answer_n1: 'Boston Celtics',
+                wrong_answer_n2: 'New York Knicks',
+                wrong_answer_n3: 'Chicago Bulls'
+            }
+        },
+        {
+            livelloDomanda: "facile",
+            categoria: "Sport",
+            indovina: "Quanti mondiali ha vinto la nazionale di calcio italana?",
+            question:{
+                correct_answer: '5',
+                wrong_answer_n1: '7',
+                wrong_answer_n2: '4',
+                wrong_answer_n3: '3'
+            }
+        },
+        {
+            livelloDomanda: "facile",
             categoria: "Storia",
             indovina: "In quale anno è nata la Repubblica Italiana?",
             question:{
@@ -442,6 +465,68 @@ export function GameContextProvider(props){
         
     }
 
+    function PROVAPROVA(tipoGioco){
+
+        // var QUALE_GIOCO_ARRAY = [];
+        var ULTIMA_CATEGORIA_AGGIUNTA;
+        var elenco_categorie = [];
+
+        if(tipoGioco === "QUIZ"){
+            for(var i=0; i < elencoDomandeQuiz.length; i++){
+                if(elenco_categorie.length <= 0){
+                    ULTIMA_CATEGORIA_AGGIUNTA = elencoDomandeQuiz[i].categoria;
+                    elenco_categorie.unshift({
+                        categoria: ULTIMA_CATEGORIA_AGGIUNTA
+                    });
+                    continue;
+                }
+                else{
+                    for(var j=0; j < elenco_categorie.length; j++){
+                        if(elencoDomandeQuiz[i].categoria === elenco_categorie[j]){
+                            break;
+                        }
+                        if(elencoDomandeQuiz[i].categoria !== elenco_categorie[j] && elencoDomandeQuiz[i].categoria !== ULTIMA_CATEGORIA_AGGIUNTA){
+                            ULTIMA_CATEGORIA_AGGIUNTA = elencoDomandeQuiz[i].categoria;
+                            elenco_categorie.unshift({
+                                categoria: ULTIMA_CATEGORIA_AGGIUNTA
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
+        if(tipoGioco === "QUIZ CON IMMAGINI"){
+            for(var i=0; i < elencoDomandeQuizImmagini.length; i++){
+                if(elenco_categorie.length <= 0){
+                    ULTIMA_CATEGORIA_AGGIUNTA = elencoDomandeQuizImmagini[i].categoria;
+                    elenco_categorie.unshift({
+                        categoria: ULTIMA_CATEGORIA_AGGIUNTA
+                    });
+                    continue;
+                }
+                else{
+                    for(var j=0; j < elenco_categorie.length; j++){
+                        if(elencoDomandeQuizImmagini[i].categoria === elenco_categorie[j]){
+                            break;
+                        }
+                        if(elencoDomandeQuizImmagini[i].categoria !== elenco_categorie[j] && elencoDomandeQuizImmagini[i].categoria !== ULTIMA_CATEGORIA_AGGIUNTA){
+                            ULTIMA_CATEGORIA_AGGIUNTA = elencoDomandeQuizImmagini[i].categoria;
+                            elenco_categorie.unshift({
+                                categoria: ULTIMA_CATEGORIA_AGGIUNTA
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
+        
+
+        console.log(elenco_categorie);
+        return elenco_categorie;
+    }
+
     return(
         <GameContext.Provider
         value={{
@@ -461,7 +546,8 @@ export function GameContextProvider(props){
             showAggiungiNuovaDomanda: showAddNewQuestion,
             formCreaNuovaDomanda: formCreateNewQuestion,
             chiudiFormCreaNuovaDomanda: closeformCreateNewQuestion,
-            aggiungiDomandaAllaLista: addNewQuestionToList
+            aggiungiDomandaAllaLista: addNewQuestionToList,
+            PROVIAMO: PROVAPROVA
         }}
         >
             {props.children}
