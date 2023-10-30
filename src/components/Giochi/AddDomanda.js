@@ -17,6 +17,10 @@ function AddDomanda(props){
     const [rispSbagliata_2, setRispSbagliata_2] = useState("");
     const [rispSbagliata_3, setRispSbagliata_3] = useState("");
 
+    const [aggiungiCategoria, setAggiungiCategoria] = useState(false);
+
+    var categorie = game_ctx.PROVIAMO(gameType);
+
     function imageFileChangeHandler(event){
         var file = event.target.files[0];
         setImageFile(URL.createObjectURL(file));
@@ -25,6 +29,7 @@ function AddDomanda(props){
 
     function gameTypeChangeHandler(event){
         setGameType(event.target.value);
+        setAggiungiCategoria(false);
     }
 
     function categoryQuestionChangeHandler(event){
@@ -49,6 +54,23 @@ function AddDomanda(props){
     
     function rispostaSbagliata_3_ChangeHandler(event){
         setRispSbagliata_3(event.target.value)
+    }
+
+    function categoriaCheckbox(event){
+        if(event.target.checked){
+            setAggiungiCategoria(true);
+        }
+        else{
+            setAggiungiCategoria(false);
+        }
+    }
+
+    function mappaCategorie(lista){
+        return (
+            <option>
+                {lista.categoria}
+            </option>
+        );
     }
     
     function creaNuovaDomanda(){
@@ -107,10 +129,25 @@ function AddDomanda(props){
 
                     {gameType === "QUIZ" &&
                         <>
-                            <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
-                                <option>Geografia</option>
-                                <option>Storia</option>
-                            </select>
+                            {!aggiungiCategoria &&
+                                <>
+                                    <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
+                                        {categorie.map(mappaCategorie)}
+                                    </select>
+                                </>
+                            }
+                            {aggiungiCategoria &&
+                                <>
+                                    <input className={styles.textbox_style} type="text" onChange={categoryQuestionChangeHandler}></input> 
+                                </>
+                            }
+
+                            <div className={styles.horizontal_flex}>
+                                <input className={styles.horizontal_flex_content} type="checkbox" onChange={categoriaCheckbox}></input>
+                                <label className={styles.horizontal_flex_content}>Aggiungi nuova categoria</label>
+                            </div>
+                            
+                            
                             <label className={styles.label_style}>Domanda: </label>
                             <input className={styles.textbox_style} type="text" onChange={indovinaChangeHandler}></input>
                         </>
@@ -118,12 +155,27 @@ function AddDomanda(props){
 
                     {gameType === "QUIZ CON IMMAGINI" &&
                         <>
-                            <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
-                                <option>Personaggi Famosi</option>
-                                <option>Frutti</option>
-                            </select>
+                            {!aggiungiCategoria &&
+                                <>
+                                    <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
+                                        {categorie.map(mappaCategorie)}
+                                    </select>
+                                </>
+                            }
+                            {aggiungiCategoria &&
+                                <>
+                                    <input className={styles.textbox_style} type="text" onChange={categoryQuestionChangeHandler}></input> 
+                                </>
+                            }
+
+                            <div className={styles.horizontal_flex}>
+                                <input className={styles.horizontal_flex_content} type="checkbox" onChange={categoriaCheckbox}></input>
+                                <label className={styles.horizontal_flex_content}>Aggiungi nuova categoria</label>
+                            </div>
+                            
                             <label className={styles.label_style}>Inserisci immagine: </label>
                             <input type="file" accept="image/*" onChange={imageFileChangeHandler}></input>
+                            <img className={styles.preview_image} src={imageFile}></img>
                         </>
                     }
                     

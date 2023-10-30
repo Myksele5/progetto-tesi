@@ -6,13 +6,13 @@
 }
 
 .title_form{
-    font-size: 40px;
+    font-size: 30px;
     margin: 10px;
 }
 
 .label_style{
-    margin: 3px;
-    font-size: 2.8vh;
+    margin: 1px;
+    font-size: 20px;
 }
 
 .label_style.invalid{
@@ -20,12 +20,13 @@
 }
 
 .input_style{
-    width: 400px;
-    height: 40px;
-    margin: 10px;
+    width: 350px;
+    height: 25px;
+    margin: 5px;
+    margin-bottom: 10px;
     border: 2px solid rgb(59, 59, 241);
     border-radius: 20px;
-    font-size: 2.6vh;
+    font-size: 22px;
     color: black;
     transition: 0.3s;
     text-align: center;
@@ -40,4 +41,10 @@
 
 .input_style.invalid{
     border: 2px solid red;
+}
+
+.horizontal_line{
+    display: block;
+    width: 100%;
+    border: 1px solid rgb(233, 33, 131);
 }

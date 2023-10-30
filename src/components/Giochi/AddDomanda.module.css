@@ -9,6 +9,8 @@
 .title_scheda{
     font-size: 30px;
     text-align: center;
+    margin: 4px;
+    margin-bottom: 10px;
 }
 
 .label_style{
@@ -42,4 +44,22 @@
     border: 2px solid rgb(233, 33, 131);
     border-radius: 5px;
     outline: none;
+}
+
+.preview_image{
+    width: 200px;
+    height: 150px;
+    margin: 10px;
+}
+
+.horizontal_flex_content{
+    font-size: 14px;
+    /* margin: 1px; */
+}
+
+.horizontal_flex{
+    margin: 0;
+    display: flex;
+    margin-bottom: 10px;
+    /* border: 1px solid rgb(233, 33, 131); */
 }

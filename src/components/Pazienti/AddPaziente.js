@@ -148,6 +148,14 @@ function AddPaziente(props){
             <label className={`${styles.label_style} ${!validCF ? styles.invalid : ""}`}>Codice Fiscale:</label>
             <input className={`${styles.input_style} ${!validCF ? styles.invalid : ""}`} type="text" value={enteredCF} onChange={CFChangeHandler}></input>
 
+            <hr className={styles.horizontal_line}></hr>
+
+            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Patologia:</label>
+            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text"></input>
+
+            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Terapie/Medicine:</label>
+            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text"></input>
+
             <GenericButton 
             type="submit" 
             generic_button={true}

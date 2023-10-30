@@ -35,7 +35,6 @@ function ElencoDomande(props){
     
 
     function mappaCategorie(lista){
-
         return (
             <option>
                 {lista.categoria}

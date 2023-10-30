@@ -12,7 +12,6 @@ function Giochi(){
     
     return(
         <>
-
             <h1 className={styles.page_title}>Giochi</h1>
             {game_ctx.showBarraRicercaBottone && 
                 <div className={styles.wrap_boxes}>

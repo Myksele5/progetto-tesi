@@ -72,10 +72,6 @@ function SchedaPaziente(props){
                         <h3>{props.codicefiscale}</h3>
                         {/* <hr className={styles.horizontal_line}/> */}
             
-                        <label className={styles.label_style}>Attività associate</label>
-                        <h3>{props.attività}</h3>
-                        {/* <hr className={styles.horizontal_line}/> */}
-            
                         <label className={styles.label_style}>Note opzionali</label>
                         <h3>Da decidere</h3>
                         {/* <hr className={styles.horizontal_line}/> */}

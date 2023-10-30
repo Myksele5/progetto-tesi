@@ -1,7 +1,4 @@
 .wrap_menu{
-    /* position: fixed; */
-    /* min-width: 250px;
-    max-width: 400px; */
     width: 350px;
     height: 100vh;
     display: flex;
