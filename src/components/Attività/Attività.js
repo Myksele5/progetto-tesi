@@ -9,7 +9,7 @@ function Attività(){
 
             <h1 className={styles.page_title}>TESTING</h1>
 
-            <AddDomanda></AddDomanda>
+            {/* <AddDomanda></AddDomanda> */}
 
         </>
     );

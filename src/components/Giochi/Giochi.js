@@ -52,6 +52,8 @@ function Giochi(){
                     </>
                 }
 
+                {game_ctx.showModificaGioco && game_ctx.giocoDaModificare}
+
                 {game_ctx.showListaGiochi && 
                     <ListaGiochi
                         nascondiListaGiochi={game_ctx.iniziaGioco}

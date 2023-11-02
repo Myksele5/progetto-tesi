@@ -18,7 +18,9 @@ import Fragola from '../components/Images-Giochi/FRAGOLA.jpg';
 import Mela from '../components/Images-Giochi/MELA.jpg';
 import Mirtillo from '../components/Images-Giochi/MIRTILLO_NERO.jpg';
 import Nespola from '../components/Images-Giochi/NESPOLA.jpeg';
+import EditGioco from "../components/Giochi/EditGioco";
 
+let modifica_gioco;
 let risultati_gioco;
 let counter_CODICE_GIOCO = 0;
 
@@ -40,7 +42,10 @@ const GameContext = React.createContext({
     formCreaNuovaDomanda: ()=>{},
     chiudiFormCreaNuovaDomanda: ()=>{},
     aggiungiDomandaAllaLista: ()=>{},
-    PROVIAMO: ()=>{}
+    recuperaCategorieDomande: ()=>{},
+    showModificaGioco: null,
+    modificaGioco: ()=>{},
+    giocoDaModificare: null
 });
 
 export function GameContextProvider(props){
@@ -336,6 +341,7 @@ export function GameContextProvider(props){
     const [gameResults, setGameResults] = useState(false);
     const [elencoDomandeQuiz, setElencoDomandeQuiz] = useState(lista_domande_quiz);
     const [elencoDomandeQuizImmagini, setElencoDomandeQuizImmagini] = useState(lista_domande_quiz_immagini);
+    const [showEditGame, setShowEditGame] = useState(false);
 
     function startGame(stringa_TIPOGIOCO, stringa_CODICEGIOCO){
         var indice_gioco;
@@ -465,7 +471,7 @@ export function GameContextProvider(props){
         
     }
 
-    function PROVAPROVA(tipoGioco){
+    function getAllCategories(tipoGioco){
 
         // var QUALE_GIOCO_ARRAY = [];
         var ULTIMA_CATEGORIA_AGGIUNTA;
@@ -527,6 +533,22 @@ export function GameContextProvider(props){
         return elenco_categorie;
     }
 
+    function editGame(listaa){
+        console.log(listaa);
+        setShowSearchBoxAndButton(false);
+        setShowElencoGiochi(false);
+        setShowEditGame(true);
+
+        modifica_gioco =
+            <EditGioco
+                nomeGioco={listaa.nomeGioco}
+                tipoGioco={listaa.tipoGioco}
+                difficulty={listaa.livelloGioco}
+                listaDomande={listaa.domandeGioco}
+            >
+            </EditGioco>
+    }
+
     return(
         <GameContext.Provider
         value={{
@@ -547,7 +569,10 @@ export function GameContextProvider(props){
             formCreaNuovaDomanda: formCreateNewQuestion,
             chiudiFormCreaNuovaDomanda: closeformCreateNewQuestion,
             aggiungiDomandaAllaLista: addNewQuestionToList,
-            PROVIAMO: PROVAPROVA
+            recuperaCategorieDomande: getAllCategories,
+            showModificaGioco: showEditGame,
+            modificaGioco: editGame,
+            giocoDaModificare: modifica_gioco
         }}
         >
             {props.children}

@@ -30,7 +30,11 @@ function ListaGiochi(){
                                 alternative_button={true}
                                 buttonText='Avvia Gioco'>
                                 </GenericButton>
+
                                 <GenericButton
+                                onClick={() => {
+                                    game_ctx.modificaGioco(lista)
+                                }}
                                 alternative_button={true}
                                 buttonText='Gestione Gioco'>
                                 </GenericButton>

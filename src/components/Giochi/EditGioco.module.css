@@ -1,0 +1,46 @@
+.wrapper_flex{
+    width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.title_scheda{
+    font-size: 23px;
+    width: 800px;
+    text-align: center;
+    margin: 4px;
+    margin-bottom: 10px;
+}
+
+.label_style{
+    font-size: 16px;
+    margin: 2px;
+}
+
+.textbox_style{
+    width: 400px;
+    height: 25px;
+    font-size: 16px;
+    border: 2px solid blue;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.textbox_style_NOT_ALLOWED{
+    width: 400px;
+    height: 25px;
+    font-size: 16px;
+    border: 2px solid blue;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+    cursor: not-allowed;
+}
+
+.textbox_style:focus{
+    border: 2px solid rgb(233, 33, 131);
+    border-radius: 5px;
+    outline: none;
+}

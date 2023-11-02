@@ -10,7 +10,7 @@ var domande_nuovo_gioco = [];
 
 function AddGioco(){
     const [titoloGioco, setTitoloGioco] = useState("");
-    const [tipologiaGioco, setTipologiaGioco] = useState("");
+    const [tipologiaGioco, setTipologiaGioco] = useState("QUIZ");
     const [livelloGioco, setLivelloGioco] = useState("NORMALE");
 
     const [selectedEasy, setSelectedEasy] = useState(false);

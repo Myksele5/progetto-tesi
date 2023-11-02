@@ -19,7 +19,7 @@ function AddDomanda(props){
 
     const [aggiungiCategoria, setAggiungiCategoria] = useState(false);
 
-    var categorie = game_ctx.PROVIAMO(gameType);
+    var categorie = game_ctx.recuperaCategorieDomande(gameType);
 
     function imageFileChangeHandler(event){
         var file = event.target.files[0];

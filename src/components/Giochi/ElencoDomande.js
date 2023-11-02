@@ -10,7 +10,7 @@ function ElencoDomande(props){
     const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
     const [classicQuizQuestions, setClassicQuizQuestions] = useState(game_ctx.domandeDeiQuiz);
 
-    var categorie = game_ctx.PROVIAMO(props.tipoGioco);
+    var categorie = game_ctx.recuperaCategorieDomande(props.tipoGioco);
 
     function categoryChangeHandler(event){
         changingCategoryMakesQuestionsReset();
