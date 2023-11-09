@@ -105,7 +105,7 @@ function ExerciseGuessTheFace(props){
         quattroRisposte[1] = questions[counter_question_number].question.wrong_answer_n1;
         quattroRisposte[2] = questions[counter_question_number].question.wrong_answer_n2;
         quattroRisposte[3] = questions[counter_question_number].question.wrong_answer_n3;
-        console.log(quattroRisposte);
+        // console.log(quattroRisposte);
         
         for(let i = quattroRisposte.length-1; i >= 0; i--){
             const j = Math.floor(Math.random() * (i+1));
@@ -113,7 +113,7 @@ function ExerciseGuessTheFace(props){
             quattroRisposte[i] = quattroRisposte[j];
             quattroRisposte[j] = temp;
         }
-        console.log(quattroRisposte);
+        // console.log(quattroRisposte);
         setRisposta1(quattroRisposte[0]);
         setRisposta2(quattroRisposte[1]);
         setRisposta3(quattroRisposte[2]);

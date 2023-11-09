@@ -3,7 +3,8 @@ import Card from "../UI/Card";
 import RadioButton from "../UI/RadioButton";
 import GenericButton from "../UI/GenericButton";
 import ElencoDomande from "./ElencoDomande";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import GameContext from "../../context/game-context";
 
 var domande_gioco_da_modificare = [];
 
@@ -15,6 +16,10 @@ function EditGioco(props){
     const [selectedEasy, setSelectedEasy] = useState(false);
     const [selectedNormal, setSelectedNormal] = useState(false);
     const [selectedHard, setSelectedHard] = useState(false);
+
+    const game_ctx = useContext(GameContext);
+
+    var categoriaFiltro = props.categoria;
 
     function highlightDifficulty(livelloGiocoModifica){
         if(livelloGiocoModifica === "FACILE"){
@@ -30,6 +35,7 @@ function EditGioco(props){
 
     useEffect(() => {
         highlightDifficulty(livelloGiocoModifica);
+        // domande_gioco_da_modificare = Array.from(props.listaDomande);
     });
 
     function nomeGiocoChangeHandler(event){
@@ -72,8 +78,11 @@ function EditGioco(props){
         }
     }
 
-    function resettaOggettoDomande(){
-        domande_gioco_da_modificare.splice(0);
+    function modificaOggettoDomande(domandeSelezionate){
+        domande_gioco_da_modificare = domandeSelezionate;
+
+        console.log("DOMANDE IN EditGioco.js DA SALVARE");
+        console.log(domandeSelezionate);
     }
 
     return(
@@ -125,24 +134,28 @@ function EditGioco(props){
                 <h3>-{props.listaDomande[2].question.correct_answer}</h3> */}
 
                 <ElencoDomande
-                    resettaDomandeNuovoGioco={resettaOggettoDomande}
+                    domandeNuovoGioco={modificaOggettoDomande}
                     tipoGioco={tipoGiocoModifica}
+                    // listaDomandeDaModificare={domande_gioco_da_modificare}
+                    categoria={categoriaFiltro}
                 >
                 </ElencoDomande>
 
                 <GenericButton
+                    onClick={() => {
+                        game_ctx.salvaGiocoModificato(nomeGiocoModifica, tipoGiocoModifica, livelloGiocoModifica, props.codiceGioco, domande_gioco_da_modificare)
+                    }}
                     generic_button={true}
                     buttonText={"Salva modifiche"}
                 >
                 </GenericButton>
 
                 <GenericButton
+                    onClick={game_ctx.chiudiFormModificaGioco}
                     small_button={true}
                     buttonText={"Chiudi scheda"}
                 >
                 </GenericButton>
-
-                {/* <ElencoDomande></ElencoDomande> */}
             </div>
         }
         >

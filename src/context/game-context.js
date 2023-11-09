@@ -23,6 +23,7 @@ import EditGioco from "../components/Giochi/EditGioco";
 let modifica_gioco;
 let risultati_gioco;
 let counter_CODICE_GIOCO = 0;
+let domande = [];
 
 const GameContext = React.createContext({
     listaGiochi: null,
@@ -45,7 +46,10 @@ const GameContext = React.createContext({
     recuperaCategorieDomande: ()=>{},
     showModificaGioco: null,
     modificaGioco: ()=>{},
-    giocoDaModificare: null
+    chiudiFormModificaGioco: ()=>{},
+    giocoDaModificare: null,
+    salvaGiocoModificato: ()=>{},
+    domandeDaModificare: null
 });
 
 export function GameContextProvider(props){
@@ -59,6 +63,7 @@ export function GameContextProvider(props){
             codiceGioco: "GUESS_THE_FAC",
             domandeGioco: [
                 {
+                    categoria: "Personaggi Famosi",
                     indovina: Einstein,
                     question:{
                         correct_answer: 'Albert Einstein',
@@ -68,6 +73,7 @@ export function GameContextProvider(props){
                     }
                 },
                 {
+                    categoria: "Personaggi Famosi",
                     indovina: Dante,
                     question:{
                         correct_answer: 'Dante Alighieri',
@@ -77,6 +83,7 @@ export function GameContextProvider(props){
                     }
                 },
                 {
+                    categoria: "Personaggi Famosi",
                     indovina: Marilyn,
                     question:{
                         correct_answer: 'Marilyn Monroe',
@@ -88,10 +95,34 @@ export function GameContextProvider(props){
             ]
         },
         {
-            nomeGioco: "Indovina il frutto",
+            nomeGioco: "Quiz sport",
             tipoGioco: "QUIZ",
-            livelloGioco: "DIFFICILE",
-            codiceGioco: "GUESS_THE_FRUIT"
+            livelloGioco: "NORMALE",
+            codiceGioco: "QUIZ_SPORTIVO",
+            domandeGioco:[
+                {
+                    isChecked: false,
+                    categoria: "Sport",
+                    indovina: "Quale tra le seguenti squadre NBA ha vinto più titoli?",
+                    question:{
+                        correct_answer: 'Los Angeles Lakers',
+                        wrong_answer_n1: 'Boston Celtics',
+                        wrong_answer_n2: 'New York Knicks',
+                        wrong_answer_n3: 'Chicago Bulls'
+                    }
+                },
+                {
+                    isChecked: false,
+                    categoria: "Sport",
+                    indovina: "Quanti mondiali ha vinto la nazionale di calcio italana?",
+                    question:{
+                        correct_answer: '5',
+                        wrong_answer_n1: '7',
+                        wrong_answer_n2: '4',
+                        wrong_answer_n3: '3'
+                    }
+                }
+            ]
         }
         // {
         //     nomeGioco: "Domande personali",
@@ -342,6 +373,7 @@ export function GameContextProvider(props){
     const [elencoDomandeQuiz, setElencoDomandeQuiz] = useState(lista_domande_quiz);
     const [elencoDomandeQuizImmagini, setElencoDomandeQuizImmagini] = useState(lista_domande_quiz_immagini);
     const [showEditGame, setShowEditGame] = useState(false);
+    const [domandeModifica, setDomandeModifica] = useState([]);
 
     function startGame(stringa_TIPOGIOCO, stringa_CODICEGIOCO){
         var indice_gioco;
@@ -418,6 +450,8 @@ export function GameContextProvider(props){
         setShowSearchBoxAndButton(false);
         setShowElencoGiochi(false);
         setShowAddNewGame(true);
+        // Il seguente setDomandeModifica serve per non avere la reference quando dopo aver modificato un gioco si va a crearne uno nuovo
+        setDomandeModifica([]);
     }
 
     function closeFormCreateNewGame(){
@@ -432,7 +466,7 @@ export function GameContextProvider(props){
             tipoGioco: type,
             livelloGioco: level,
             codiceGioco: counter_CODICE_GIOCO,
-            domandeGioco: questionsList
+            domandeGioco: [...questionsList]
         }
 
         setElencoGiochi(vecchioElenco => {
@@ -451,7 +485,7 @@ export function GameContextProvider(props){
         setShowAddNewQuestion(true);
     }
 
-    function closeformCreateNewQuestion(){
+    function closeFormCreateNewQuestion(){
         setShowSearchBoxAndButton(true);
         setShowElencoGiochi(true);
         setShowAddNewQuestion(false);
@@ -527,9 +561,7 @@ export function GameContextProvider(props){
             }
         }
 
-        
-
-        console.log(elenco_categorie);
+        // console.log(elenco_categorie);
         return elenco_categorie;
     }
 
@@ -543,10 +575,41 @@ export function GameContextProvider(props){
             <EditGioco
                 nomeGioco={listaa.nomeGioco}
                 tipoGioco={listaa.tipoGioco}
+                categoria={listaa.domandeGioco[0].categoria}
                 difficulty={listaa.livelloGioco}
-                listaDomande={listaa.domandeGioco}
+                codiceGioco={listaa.codiceGioco}
+                // listaDomande={listaa.domandeGioco}
             >
             </EditGioco>
+        setDomandeModifica(listaa.domandeGioco);
+    }
+
+    function closeFormEditGame(){
+        setShowSearchBoxAndButton(true);
+        setShowElencoGiochi(true);
+        setShowEditGame(false);
+    }
+
+    function addModifiedGameToList(name, type, level, gameID, questionsList){
+        var modified_game = {
+            nomeGioco: name,
+            tipoGioco: type,
+            livelloGioco: level,
+            codiceGioco: gameID,
+            domandeGioco: questionsList
+        }
+
+        for(let i=0; i < elencoGiochi.length; i++){
+            console.log("QUANTI GIOCHI CI SONO? --->" + elencoGiochi.length);
+            if(gameID === elencoGiochi[i].codiceGioco){
+                elencoGiochi[i] = modified_game;
+                setElencoGiochi(elencoGiochi);
+            }
+        }
+
+        console.log("CODICE DEL GIOCO MODIFICATO---> " + gameID);
+
+        closeFormEditGame();
     }
 
     return(
@@ -567,12 +630,15 @@ export function GameContextProvider(props){
             domandeDeiQuiz: elencoDomandeQuiz,
             showAggiungiNuovaDomanda: showAddNewQuestion,
             formCreaNuovaDomanda: formCreateNewQuestion,
-            chiudiFormCreaNuovaDomanda: closeformCreateNewQuestion,
+            chiudiFormCreaNuovaDomanda: closeFormCreateNewQuestion,
             aggiungiDomandaAllaLista: addNewQuestionToList,
             recuperaCategorieDomande: getAllCategories,
             showModificaGioco: showEditGame,
             modificaGioco: editGame,
-            giocoDaModificare: modifica_gioco
+            chiudiFormModificaGioco: closeFormEditGame,
+            giocoDaModificare: modifica_gioco,
+            salvaGiocoModificato: addModifiedGameToList,
+            domandeDaModificare: domandeModifica
         }}
         >
             {props.children}

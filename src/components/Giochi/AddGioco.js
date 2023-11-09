@@ -62,30 +62,11 @@ function AddGioco(){
         console.log(livelloGioco);
     }
 
-    function creaOggettoDomande(isChecked, domandaDaAggiungere){
-        console.log(domandaDaAggiungere);
+    function creaOggettoDomande(domandeSelezionate){
+        domande_nuovo_gioco = domandeSelezionate;
 
-        if(isChecked){
-            domande_nuovo_gioco.unshift({
-                indovina: domandaDaAggiungere.indovina,
-                question: domandaDaAggiungere.question
-            });
-            // console.log("AGGIUNTA DOMANDA---> " + domande_nuovo_gioco);
-        }
-        else{
-            for(var i=0; i < domande_nuovo_gioco.length; i++){
-                if(domandaDaAggiungere.question === domande_nuovo_gioco[i].question){
-                    domande_nuovo_gioco.splice(i, 1);
-                    break;
-                }
-            }
-
-            // console.log("rimossa DOMANDA---> " + domande_nuovo_gioco);
-        }
-    }
-
-    function resettaOggettoDomande(){
-        domande_nuovo_gioco.splice(0);
+        console.log("DOMANDE IN AddGioco.js DA SALVARE");
+        console.log(domande_nuovo_gioco);
     }
 
     return(
@@ -145,8 +126,8 @@ function AddGioco(){
                     
                     <ElencoDomande
                         domandeNuovoGioco={creaOggettoDomande}
-                        resettaDomandeNuovoGioco={resettaOggettoDomande}
                         tipoGioco={tipologiaGioco}
+                        // listaDomandeDaModificare={domande_nuovo_gioco}
                     >
                     </ElencoDomande>
 

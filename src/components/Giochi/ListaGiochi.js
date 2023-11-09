@@ -48,7 +48,7 @@ function ListaGiochi(){
     }
 
     return(
-
+        
         <>
             {lista.map(fromArrayToGameList)}
         </>
