@@ -6,6 +6,13 @@
     border-radius: 5px;
 }
 
+.wrapper_generico{
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+}
+
 .title_scheda{
     font-size: 30px;
     text-align: center;

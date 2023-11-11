@@ -129,33 +129,31 @@ function EditGioco(props){
                 <label className={styles.label_style}>Nome Gioco:</label>
                 <input className={styles.textbox_style} type="text" value={nomeGiocoModifica} onChange={nomeGiocoChangeHandler}></input>
 
-                {/* <h3>-{props.listaDomande[0].question.correct_answer}</h3>
-                <h3>-{props.listaDomande[1].question.correct_answer}</h3>
-                <h3>-{props.listaDomande[2].question.correct_answer}</h3> */}
 
                 <ElencoDomande
                     domandeNuovoGioco={modificaOggettoDomande}
                     tipoGioco={tipoGiocoModifica}
-                    // listaDomandeDaModificare={domande_gioco_da_modificare}
                     categoria={categoriaFiltro}
                 >
                 </ElencoDomande>
 
-                <GenericButton
-                    onClick={() => {
-                        game_ctx.salvaGiocoModificato(nomeGiocoModifica, tipoGiocoModifica, livelloGiocoModifica, props.codiceGioco, domande_gioco_da_modificare)
-                    }}
-                    generic_button={true}
-                    buttonText={"Salva modifiche"}
-                >
-                </GenericButton>
+                <div className={styles.wrapper_generico}>
+                    <GenericButton
+                        onClick={() => {
+                            game_ctx.salvaGiocoModificato(nomeGiocoModifica, tipoGiocoModifica, livelloGiocoModifica, props.codiceGioco, domande_gioco_da_modificare)
+                        }}
+                        generic_button={true}
+                        buttonText={"Salva modifiche"}
+                    >
+                    </GenericButton>
 
-                <GenericButton
-                    onClick={game_ctx.chiudiFormModificaGioco}
-                    small_button={true}
-                    buttonText={"Chiudi scheda"}
-                >
-                </GenericButton>
+                    <GenericButton
+                        onClick={game_ctx.chiudiFormModificaGioco}
+                        small_button={true}
+                        buttonText={"Chiudi scheda"}
+                    >
+                    </GenericButton>
+                </div>
             </div>
         }
         >

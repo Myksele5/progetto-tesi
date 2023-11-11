@@ -65,10 +65,10 @@ function AddDomanda(props){
         }
     }
 
-    function mappaCategorie(lista){
+    function mappaCategorie(categoria){
         return (
             <option>
-                {lista.categoria}
+                {categoria}
             </option>
         );
     }
@@ -132,6 +132,7 @@ function AddDomanda(props){
                             {!aggiungiCategoria &&
                                 <>
                                     <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
+                                        <option hidden>---SELEZIONA CATEGORIA---</option>
                                         {categorie.map(mappaCategorie)}
                                     </select>
                                 </>
@@ -158,6 +159,7 @@ function AddDomanda(props){
                             {!aggiungiCategoria &&
                                 <>
                                     <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
+                                        <option hidden>---SELEZIONA CATEGORIA---</option>
                                         {categorie.map(mappaCategorie)}
                                     </select>
                                 </>
@@ -192,19 +194,21 @@ function AddDomanda(props){
                     <label className={styles.label_style}>Risposta Sbagliata 3: </label>
                     <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_3_ChangeHandler}></input>
 
-                    <GenericButton
-                        onClick={creaNuovaDomanda}
-                        generic_button={true}
-                        buttonText={"Salva domanda"}
-                    >
-                    </GenericButton>
+                    <div className={styles.wrapper_generico}>
+                        <GenericButton
+                            onClick={creaNuovaDomanda}
+                            generic_button={true}
+                            buttonText={"Salva domanda"}
+                        >
+                        </GenericButton>
 
-                    <GenericButton
-                        onClick={props.hideForm}
-                        small_button={true}
-                        buttonText={"Chiudi scheda"}
-                    >
-                    </GenericButton>
+                        <GenericButton
+                            onClick={props.hideForm}
+                            small_button={true}
+                            buttonText={"Chiudi scheda"}
+                        >
+                        </GenericButton>
+                    </div>
                 </div>
             }
         >

@@ -1,8 +1,8 @@
 import React, {useState, useContext} from "react";
 import RisultatiGioco from "../components/Giochi/RisultatiGioco";
 import ExerciseGuessTheFace from "../components/Giochi/ExerciseGuessTheFace";
-import ExerciseGuessTheFruit from "../components/Giochi/ExerciseGuessTheFruit";
 import PatientContext from "./patients-context";
+import Modal from "../components/UI/Modal";
 
 import Einstein from '../components/Images-Giochi/ALBERT_EINSTEIN.jpeg';
 import Dante from '../components/Images-Giochi/DANTE_ALIGHIERI.jpg';
@@ -23,7 +23,7 @@ import EditGioco from "../components/Giochi/EditGioco";
 let modifica_gioco;
 let risultati_gioco;
 let counter_CODICE_GIOCO = 0;
-let domande = [];
+let modal_eliminazione;
 
 const GameContext = React.createContext({
     listaGiochi: null,
@@ -49,7 +49,10 @@ const GameContext = React.createContext({
     chiudiFormModificaGioco: ()=>{},
     giocoDaModificare: null,
     salvaGiocoModificato: ()=>{},
-    domandeDaModificare: null
+    domandeDaModificare: null,
+    showModale: null,
+    modale: null,
+    eliminaGioco: ()=>{}
 });
 
 export function GameContextProvider(props){
@@ -374,6 +377,7 @@ export function GameContextProvider(props){
     const [elencoDomandeQuizImmagini, setElencoDomandeQuizImmagini] = useState(lista_domande_quiz_immagini);
     const [showEditGame, setShowEditGame] = useState(false);
     const [domandeModifica, setDomandeModifica] = useState([]);
+    const [showModal, setShowModal] = useState(false);
 
     function startGame(stringa_TIPOGIOCO, stringa_CODICEGIOCO){
         var indice_gioco;
@@ -505,63 +509,33 @@ export function GameContextProvider(props){
         
     }
 
+    function uniqueCategories(categoria, indice, arrayCategorie){
+        return arrayCategorie.indexOf(categoria) === indice;
+    }
+
     function getAllCategories(tipoGioco){
 
-        // var QUALE_GIOCO_ARRAY = [];
         var ULTIMA_CATEGORIA_AGGIUNTA;
-        var elenco_categorie = [];
+        var elenco_temporaneo = [];
+        var elenco_categorie;
 
         if(tipoGioco === "QUIZ"){
             for(var i=0; i < elencoDomandeQuiz.length; i++){
-                if(elenco_categorie.length <= 0){
-                    ULTIMA_CATEGORIA_AGGIUNTA = elencoDomandeQuiz[i].categoria;
-                    elenco_categorie.unshift({
-                        categoria: ULTIMA_CATEGORIA_AGGIUNTA
-                    });
-                    continue;
-                }
-                else{
-                    for(var j=0; j < elenco_categorie.length; j++){
-                        if(elencoDomandeQuiz[i].categoria === elenco_categorie[j]){
-                            break;
-                        }
-                        if(elencoDomandeQuiz[i].categoria !== elenco_categorie[j] && elencoDomandeQuiz[i].categoria !== ULTIMA_CATEGORIA_AGGIUNTA){
-                            ULTIMA_CATEGORIA_AGGIUNTA = elencoDomandeQuiz[i].categoria;
-                            elenco_categorie.unshift({
-                                categoria: ULTIMA_CATEGORIA_AGGIUNTA
-                            });
-                        }
-                    }
-                }
+                ULTIMA_CATEGORIA_AGGIUNTA = elencoDomandeQuiz[i].categoria;
+                elenco_temporaneo.unshift(ULTIMA_CATEGORIA_AGGIUNTA);
             }
+            elenco_categorie = elenco_temporaneo.filter(uniqueCategories);
         }
 
         if(tipoGioco === "QUIZ CON IMMAGINI"){
             for(var i=0; i < elencoDomandeQuizImmagini.length; i++){
-                if(elenco_categorie.length <= 0){
-                    ULTIMA_CATEGORIA_AGGIUNTA = elencoDomandeQuizImmagini[i].categoria;
-                    elenco_categorie.unshift({
-                        categoria: ULTIMA_CATEGORIA_AGGIUNTA
-                    });
-                    continue;
-                }
-                else{
-                    for(var j=0; j < elenco_categorie.length; j++){
-                        if(elencoDomandeQuizImmagini[i].categoria === elenco_categorie[j]){
-                            break;
-                        }
-                        if(elencoDomandeQuizImmagini[i].categoria !== elenco_categorie[j] && elencoDomandeQuizImmagini[i].categoria !== ULTIMA_CATEGORIA_AGGIUNTA){
-                            ULTIMA_CATEGORIA_AGGIUNTA = elencoDomandeQuizImmagini[i].categoria;
-                            elenco_categorie.unshift({
-                                categoria: ULTIMA_CATEGORIA_AGGIUNTA
-                            });
-                        }
-                    }
-                }
+                ULTIMA_CATEGORIA_AGGIUNTA = elencoDomandeQuizImmagini[i].categoria;
+                elenco_temporaneo.unshift(ULTIMA_CATEGORIA_AGGIUNTA);
             }
+            elenco_categorie = elenco_temporaneo.filter(uniqueCategories);
         }
 
-        // console.log(elenco_categorie);
+        console.log(elenco_categorie);
         return elenco_categorie;
     }
 
@@ -612,6 +586,37 @@ export function GameContextProvider(props){
         closeFormEditGame();
     }
 
+    function modalDeleteGame(gameID){
+        modal_eliminazione =
+            <Modal
+                testoModale={"Sei sicuro di voler eliminare il gioco?"}
+                CONFERMA={() =>{
+                    deleteGame(gameID);
+                    setShowModal(false);
+                    // setShowTabella(true);
+                }}
+                ANNULLA={() => {
+                    setShowModal(false);
+                    // setShowTabella(true);
+                }}>
+            </Modal>;
+            
+        setShowModal(true);
+    }
+
+    function deleteGame(gameID){
+        for(let i=0; i < elencoGiochi.length; i++){
+            console.log("CERCO IL GIOCO");
+            if(gameID === elencoGiochi[i].codiceGioco){
+                console.log("GIOCO DA ELIMINARE TROVATO");
+                elencoGiochi.splice(i, 1);
+                
+                break;
+            }
+        }
+        setElencoGiochi(elencoGiochi);
+    }
+
     return(
         <GameContext.Provider
         value={{
@@ -638,7 +643,10 @@ export function GameContextProvider(props){
             chiudiFormModificaGioco: closeFormEditGame,
             giocoDaModificare: modifica_gioco,
             salvaGiocoModificato: addModifiedGameToList,
-            domandeDaModificare: domandeModifica
+            domandeDaModificare: domandeModifica,
+            showModale: showModal,
+            modale: modal_eliminazione,
+            eliminaGioco: modalDeleteGame
         }}
         >
             {props.children}

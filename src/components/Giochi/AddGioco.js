@@ -74,63 +74,62 @@ function AddGioco(){
         animazione={true}
         altroStile={true}
         children={
-            <>
-
-                <div className={styles.wrapper_impostazioni_gioco}>
+            <div className={styles.wrapper_impostazioni_gioco}>
                 <h2 className={styles.title_scheda}>Creazione nuovo gioco</h2>
-                    <label className={styles.label_style}>Tipologia di gioco</label>
-                    <select className={styles.select_style} onChange={tipoGiocoChangeHandler}>
-                        <option hidden>-- select an option --</option>
-                        <option>QUIZ</option>
-                        <option>QUIZ CON IMMAGINI</option>
-                        <option>COMPLETA LA PAROLA</option>
-                        <option>RIFLESSI</option>
-                    </select>
+                <label className={styles.label_style}>Tipologia di gioco</label>
+                <select className={styles.select_style} onChange={tipoGiocoChangeHandler}>
+                    <option hidden>-- select an option --</option>
+                    <option>QUIZ</option>
+                    <option>QUIZ CON IMMAGINI</option>
+                    <option>COMPLETA LA PAROLA</option>
+                    <option>RIFLESSI</option>
+                </select>
+                
+
+                <label className={styles.label_style}>Difficoltà Gioco</label>
+                <div className={styles.group_bottoni}>
+
+                    <RadioButton
+                    onClick={() => {
+                        selezioneDifficoltà("FACILE");
+                        livelloGiocoChangeHandler("FACILE");
+                    }}
+                    isSelected={selectedEasy}
+                    buttonText={"FACILE"}>
+                    </RadioButton>
+
+                    <RadioButton
+                    onClick={() => {
+                        selezioneDifficoltà("NORMALE");
+                        livelloGiocoChangeHandler("NORMALE");
+                    }}
+                    isSelected={selectedNormal}
+                    buttonText={"NORMALE"}>
+                    </RadioButton>
+
+                    <RadioButton
+                    onClick={() => {
+                        selezioneDifficoltà("DIFFICILE");
+                        livelloGiocoChangeHandler("DIFFICILE")
+                    }}
+                    isSelected={selectedHard}
+                    buttonText={"DIFFICILE"}>
+                    </RadioButton>
                     
+                </div>
 
-                    <label className={styles.label_style}>Difficoltà Gioco</label>
-                    <div className={styles.group_bottoni}>
+                <label className={styles.label_style}>Inserisci nome del gioco</label>
+                <input className={styles.textbox_style} type="text" onChange={titoloGiocoChangeHandler}></input>
 
-                        <RadioButton
-                        onClick={() => {
-                            selezioneDifficoltà("FACILE");
-                            livelloGiocoChangeHandler("FACILE");
-                        }}
-                        isSelected={selectedEasy}
-                        buttonText={"FACILE"}>
-                        </RadioButton>
+                
+                <ElencoDomande
+                    domandeNuovoGioco={creaOggettoDomande}
+                    tipoGioco={tipologiaGioco}
+                    // listaDomandeDaModificare={domande_nuovo_gioco}
+                >
+                </ElencoDomande>
 
-                        <RadioButton
-                        onClick={() => {
-                            selezioneDifficoltà("NORMALE");
-                            livelloGiocoChangeHandler("NORMALE");
-                        }}
-                        isSelected={selectedNormal}
-                        buttonText={"NORMALE"}>
-                        </RadioButton>
-
-                        <RadioButton
-                        onClick={() => {
-                            selezioneDifficoltà("DIFFICILE");
-                            livelloGiocoChangeHandler("DIFFICILE")
-                        }}
-                        isSelected={selectedHard}
-                        buttonText={"DIFFICILE"}>
-                        </RadioButton>
-                        
-                    </div>
-
-                    <label className={styles.label_style}>Inserisci nome del gioco</label>
-                    <input className={styles.textbox_style} type="text" onChange={titoloGiocoChangeHandler}></input>
-
-                    
-                    <ElencoDomande
-                        domandeNuovoGioco={creaOggettoDomande}
-                        tipoGioco={tipologiaGioco}
-                        // listaDomandeDaModificare={domande_nuovo_gioco}
-                    >
-                    </ElencoDomande>
-
+                <div className={styles.wrapper_generico}>
                     <GenericButton
                     onClick={() => {
                         game_ctx.aggiungiGiocoAllaLista(titoloGioco, tipologiaGioco, livelloGioco, domande_nuovo_gioco);
@@ -148,7 +147,7 @@ function AddGioco(){
                     >
                     </GenericButton>
                 </div>
-            </>
+            </div>
         }
         >
         </Card>

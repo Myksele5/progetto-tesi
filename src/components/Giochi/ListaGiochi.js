@@ -1,13 +1,16 @@
 import styles from "./ListaGiochi.module.css";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import GameContext from "../../context/game-context";
 import GameCard from "../UI/GameCard";
 import GenericButton from "../UI/GenericButton";
 
-
 function ListaGiochi(){
     const game_ctx = useContext(GameContext);
     var lista = game_ctx.listaGiochi;
+
+    useEffect(() => {
+        lista = game_ctx.listaGiochi;
+    }, [lista]);
 
     function fromArrayToGameList(lista){
         return(
@@ -38,6 +41,14 @@ function ListaGiochi(){
                                 alternative_button={true}
                                 buttonText='Gestione Gioco'>
                                 </GenericButton>
+
+                                <GenericButton
+                                onClick={() => {
+                                    game_ctx.eliminaGioco(lista.codiceGioco)
+                                }}
+                                small_button={true}
+                                buttonText='Elimina Gioco'>
+                                </GenericButton>
                             </div>
                         </>
                     }>
@@ -50,6 +61,7 @@ function ListaGiochi(){
     return(
         
         <>
+            {game_ctx.showModale && game_ctx.modale}
             {lista.map(fromArrayToGameList)}
         </>
     

@@ -63,18 +63,18 @@ function ElencoDomande(props){
         props.domandeNuovoGioco(llll);
     }
 
-    function mappaCategorie(lista){
-        if(lista.categoria === props.categoria){
+    function mappaCategorie(categoria){
+        if(categoria === props.categoria){
             return (
                 <option selected>
-                    {lista.categoria}
+                    {categoria}
                 </option>
             );
         }
         else{
             return (
                 <option>
-                    {lista.categoria}
+                    {categoria}
                 </option>
             );
         }
@@ -171,13 +171,15 @@ function ElencoDomande(props){
             {props.tipoGioco === "" && <p>Seleziona un tipo di gioco per visualizzare le domande</p>}
             {props.tipoGioco === "QUIZ CON IMMAGINI" && 
                 <>
-                    <h3 className={styles.domande_disponibili}>Domande disponibili:</h3>
-                    <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
-                    
-                    <select className={styles.select_style} onChange={categoryChangeHandler}>
-                        <option hidden>---SELEZIONA CATEGORIA---</option>
-                        {categorie.map(mappaCategorie)}
-                    </select>
+                    <div className={styles.wrapper_generico}>
+                        {/* <h3 className={styles.domande_disponibili}>Domande disponibili:</h3> */}
+                        <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
+                        
+                        <select className={styles.select_style} onChange={categoryChangeHandler}>
+                            <option hidden>---SELEZIONA CATEGORIA---</option>
+                            {categorie.map(mappaCategorie)}
+                        </select>
+                    </div>
                     {
                         <ul className={styles.wrapper_lista_domande}>
                             {categoryFilter !== "" && imagesQuizQuestions.map(recuperaTutteLeDomande)}
