@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
 import GenericButton from "../UI/GenericButton";
 import styles from "./AddDomanda.module.css";
-import ReactDOM from 'react-dom';
 import GameContext from "../../context/game-context";
 import Card from "../UI/Card";
+import ElencoDomande from "./ElencoDomande";
+import ElencoDomandeModificabili from "./ElencoDomandeModificabili";
 
 function AddDomanda(props){
     const game_ctx = useContext(GameContext)
@@ -17,6 +18,7 @@ function AddDomanda(props){
     const [rispSbagliata_2, setRispSbagliata_2] = useState("");
     const [rispSbagliata_3, setRispSbagliata_3] = useState("");
 
+    const [showQuestionsList, setShowQuestionsList] = useState(false);
     const [aggiungiCategoria, setAggiungiCategoria] = useState(false);
 
     var categorie = game_ctx.recuperaCategorieDomande(gameType);
@@ -109,111 +111,139 @@ function AddDomanda(props){
     }
 
     return(
-        <Card
-            animazione={true}
-            altroStile={true}
-            children={
-                <div className={styles.wrapper_flex}>
-                    <h1 className={styles.title_scheda}>Aggiungi nuova domanda</h1>
-
-                    <label className={styles.label_style}>Tipo di gioco</label>
-                    <select className={styles.select_style} onChange={gameTypeChangeHandler}>
-                        <option>QUIZ</option>
-                        <option>QUIZ CON IMMAGINI</option>
-                        <option>COMPLETA LA PAROLA</option>
-                        <option>RIFLESSI</option>
-                    </select>
-
-                    <label className={styles.label_style}>Categoria domanda</label>
-                    
-
-                    {gameType === "QUIZ" &&
-                        <>
-                            {!aggiungiCategoria &&
-                                <>
-                                    <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
-                                        <option hidden>---SELEZIONA CATEGORIA---</option>
-                                        {categorie.map(mappaCategorie)}
-                                    </select>
-                                </>
-                            }
-                            {aggiungiCategoria &&
-                                <>
-                                    <input className={styles.textbox_style} type="text" onChange={categoryQuestionChangeHandler}></input> 
-                                </>
-                            }
-
-                            <div className={styles.horizontal_flex}>
-                                <input className={styles.horizontal_flex_content} type="checkbox" onChange={categoriaCheckbox}></input>
-                                <label className={styles.horizontal_flex_content}>Aggiungi nuova categoria</label>
-                            </div>
-                            
-                            
-                            <label className={styles.label_style}>Domanda: </label>
-                            <input className={styles.textbox_style} type="text" onChange={indovinaChangeHandler}></input>
-                        </>
-                    }
-
-                    {gameType === "QUIZ CON IMMAGINI" &&
-                        <>
-                            {!aggiungiCategoria &&
-                                <>
-                                    <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
-                                        <option hidden>---SELEZIONA CATEGORIA---</option>
-                                        {categorie.map(mappaCategorie)}
-                                    </select>
-                                </>
-                            }
-                            {aggiungiCategoria &&
-                                <>
-                                    <input className={styles.textbox_style} type="text" onChange={categoryQuestionChangeHandler}></input> 
-                                </>
-                            }
-
-                            <div className={styles.horizontal_flex}>
-                                <input className={styles.horizontal_flex_content} type="checkbox" onChange={categoriaCheckbox}></input>
-                                <label className={styles.horizontal_flex_content}>Aggiungi nuova categoria</label>
-                            </div>
-                            
-                            <label className={styles.label_style}>Inserisci immagine: </label>
-                            <input type="file" accept="image/*" onChange={imageFileChangeHandler}></input>
-                            <img className={styles.preview_image} src={imageFile}></img>
-                        </>
-                    }
-                    
-
-                    <label className={styles.label_style}>Risposta Corretta: </label>
-                    <input className={styles.textbox_style} type="text" onChange={rispostaCorrettaChangeHandler}></input>
-
-                    <label className={styles.label_style}>Risposta Sbagliata 1: </label>
-                    <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_1_ChangeHandler}></input>
-
-                    <label className={styles.label_style}>Risposta Sbagliata 2: </label>
-                    <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_2_ChangeHandler}></input>
-
-                    <label className={styles.label_style}>Risposta Sbagliata 3: </label>
-                    <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_3_ChangeHandler}></input>
-
-                    <div className={styles.wrapper_generico}>
-                        <GenericButton
-                            onClick={creaNuovaDomanda}
-                            generic_button={true}
-                            buttonText={"Salva domanda"}
-                        >
-                        </GenericButton>
-
-                        <GenericButton
-                            onClick={props.hideForm}
-                            small_button={true}
-                            buttonText={"Chiudi scheda"}
-                        >
-                        </GenericButton>
-                    </div>
-                </div>
+        <>
+            {showQuestionsList &&
+                <>
+                    <GenericButton
+                        onClick={() => {
+                            setShowQuestionsList(false);
+                        }}
+                        generic_button={true}
+                        buttonText={"Aggiungi nuova domanda"}
+                    >
+                    </GenericButton>
+                    <ElencoDomandeModificabili></ElencoDomandeModificabili>
+                </>
             }
-        >
-        </Card>
-        
+            {!showQuestionsList &&
+                <>
+                    <Card
+                        animazione={true}
+                        altroStile={true}
+                        children={
+                            <div className={styles.wrapper_flex}>
+                                <h1 className={styles.title_scheda}>Aggiungi nuova domanda</h1>
+
+                                <label className={styles.label_style}>Tipo di gioco</label>
+                                <select className={styles.select_style} onChange={gameTypeChangeHandler}>
+                                    <option>QUIZ</option>
+                                    <option>QUIZ CON IMMAGINI</option>
+                                    <option>COMPLETA LA PAROLA</option>
+                                    <option>RIFLESSI</option>
+                                </select>
+
+                                <label className={styles.label_style}>Categoria domanda</label>
+                                
+
+                                {gameType === "QUIZ" &&
+                                    <>
+                                        {!aggiungiCategoria &&
+                                            <>
+                                                <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
+                                                    <option hidden>---SELEZIONA CATEGORIA---</option>
+                                                    {categorie.map(mappaCategorie)}
+                                                </select>
+                                            </>
+                                        }
+                                        {aggiungiCategoria &&
+                                            <>
+                                                <input className={styles.textbox_style} type="text" onChange={categoryQuestionChangeHandler}></input> 
+                                            </>
+                                        }
+
+                                        <div className={styles.horizontal_flex}>
+                                            <input className={styles.horizontal_flex_content} type="checkbox" onChange={categoriaCheckbox}></input>
+                                            <label className={styles.horizontal_flex_content}>Aggiungi nuova categoria</label>
+                                        </div>
+                                        
+                                        
+                                        <label className={styles.label_style}>Domanda: </label>
+                                        <input className={styles.textbox_style} type="text" onChange={indovinaChangeHandler}></input>
+                                    </>
+                                }
+
+                                {gameType === "QUIZ CON IMMAGINI" &&
+                                    <>
+                                        {!aggiungiCategoria &&
+                                            <>
+                                                <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
+                                                    <option hidden>---SELEZIONA CATEGORIA---</option>
+                                                    {categorie.map(mappaCategorie)}
+                                                </select>
+                                            </>
+                                        }
+                                        {aggiungiCategoria &&
+                                            <>
+                                                <input className={styles.textbox_style} type="text" onChange={categoryQuestionChangeHandler}></input> 
+                                            </>
+                                        }
+
+                                        <div className={styles.horizontal_flex}>
+                                            <input className={styles.horizontal_flex_content} type="checkbox" onChange={categoriaCheckbox}></input>
+                                            <label className={styles.horizontal_flex_content}>Aggiungi nuova categoria</label>
+                                        </div>
+                                        
+                                        <label className={styles.label_style}>Inserisci immagine: </label>
+                                        <input type="file" accept="image/*" onChange={imageFileChangeHandler}></input>
+                                        <img className={styles.preview_image} src={imageFile}></img>
+                                    </>
+                                }
+                                
+
+                                <label className={styles.label_style}>Risposta Corretta: </label>
+                                <input className={styles.textbox_style} type="text" onChange={rispostaCorrettaChangeHandler}></input>
+
+                                <label className={styles.label_style}>Risposta Sbagliata 1: </label>
+                                <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_1_ChangeHandler}></input>
+
+                                <label className={styles.label_style}>Risposta Sbagliata 2: </label>
+                                <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_2_ChangeHandler}></input>
+
+                                <label className={styles.label_style}>Risposta Sbagliata 3: </label>
+                                <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_3_ChangeHandler}></input>
+
+                                <div className={styles.wrapper_generico}>
+                                    <GenericButton
+                                        onClick={creaNuovaDomanda}
+                                        generic_button={true}
+                                        buttonText={"Salva domanda"}
+                                    >
+                                    </GenericButton>
+
+                                    <GenericButton
+                                        onClick={props.hideForm}
+                                        small_button={true}
+                                        buttonText={"Chiudi scheda"}
+                                    >
+                                    </GenericButton>
+                                </div>
+                            </div>
+                        }
+                    >
+                    </Card>
+                    <GenericButton
+                        onClick={() => {
+                            setShowQuestionsList(true);
+                        }}
+                        generic_button={true}
+                        buttonText={"Visualizza tutte le domande"}
+                    >
+                    </GenericButton>
+                </>
+            }
+            
+            
+        </>
     );
 }
 

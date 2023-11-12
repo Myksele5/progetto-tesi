@@ -1,0 +1,111 @@
+import styles from "./ElencoDomandeModificabili.module.css";
+import { useContext, useState } from "react";
+import GameContext from "../../context/game-context";
+
+function ElencoDomandeModificabili(){
+    const game_ctx = useContext(GameContext);
+
+    const [gameType, setGameType] = useState("QUIZ");
+    const [categoryFilter, setCategoryFilter] = useState("Geografia");
+    const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
+    const [classicQuizQuestions, setClassicQuizQuestions] = useState(game_ctx.domandeDeiQuiz);
+    
+    var categorie = game_ctx.recuperaCategorieDomande(gameType);
+
+    function gameTypeChangeHandler(event){
+        setGameType(event.target.value);
+    }
+    function categoryFilterChangeHandler(event){
+        setCategoryFilter(event.target.value);
+    }
+
+    function mappaCategorie(categoria){
+        return (
+            <option>
+                {categoria}
+            </option>
+        );
+    }
+
+    function recuperaTutteLeDomande(singleQuestion){
+        if(singleQuestion.categoria === categoryFilter){
+            console.log(singleQuestion.categoria);
+            return(
+                <li className={styles.LIST_ITEM_STYLE}>
+
+                    {gameType === "QUIZ" &&
+                        <div className={styles.flex_list_container}>
+                            <h4 className={styles.subtitle_style}>Domanda:</h4>
+                            <p className={styles.question_style}>{singleQuestion.indovina}</p>
+                        </div>
+                    }
+
+                    {gameType === "QUIZ CON IMMAGINI" &&
+                        <div className={styles.flex_list_container}>
+                            <h4 className={styles.subtitle_style}>Immagine:</h4>
+                            <p className={styles.question_style}>{singleQuestion.question.correct_answer}</p>
+                        </div>
+                    }
+                    
+
+                    <div className={styles.flex_list_container}>
+                        <h4 className={styles.subtitle_style}>Risposte:</h4>
+
+                        <div className={styles.separa_corrette_sbagliate}>
+                            <span className={styles.buttons_space}>
+                                <p>CORRETTA</p>
+                                <p className={styles.correct_answ}>{singleQuestion.question.correct_answer}</p>
+                            </span>
+                            
+                            <span className={styles.buttons_space}>
+                                <p>SBAGLIATE</p>
+                                <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n1}</p>
+                                <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n2}</p>
+                                <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n3}</p>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className={styles.flex_list_container}>
+                        <h4 className={styles.subtitle_style}>MODIFICA/ELIMINA DOMANDA</h4>
+                        
+                    </div>
+
+                </li>
+            );
+        }
+        else{
+            return null;
+        }
+    }
+
+    return(
+        <div>
+            <select className={styles.select_style} defaultValue={gameType} onClick={gameTypeChangeHandler}>
+                <option>QUIZ</option>
+                <option>QUIZ CON IMMAGINI</option>
+                <option>COMPLETA LA PAROLA</option>
+                <option>RIFLESSI</option>
+            </select>
+
+            <select className={styles.select_style} onChange={categoryFilterChangeHandler}>
+                {categorie.map(mappaCategorie)}
+            </select>
+
+            {gameType === "QUIZ" &&
+                <ul className={styles.wrapper_lista_domande}>
+                    {categoryFilter !== "" && classicQuizQuestions.map(recuperaTutteLeDomande)}
+                </ul>
+            }
+
+            {gameType === "QUIZ CON IMMAGINI" &&
+                <ul className={styles.wrapper_lista_domande}>
+                    {categoryFilter !== "" && imagesQuizQuestions.map(recuperaTutteLeDomande)}
+                </ul>
+            }
+            
+        </div>
+    );
+}
+
+export default ElencoDomandeModificabili;

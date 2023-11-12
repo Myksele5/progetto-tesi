@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import GameContext from "../../context/game-context";
 import styles from "./ElencoDomande.module.css";
-import GenericButton from "../UI/GenericButton";
 
 var COUNT_DOMANDE = 0;
 
@@ -25,7 +24,6 @@ function ElencoDomande(props){
 
     function categoryChangeHandler(event){
         changingCategoryMakesQuestionsReset();
-        // game_ctx.PROVIAMO();
         setCategoryFilter(event.target.value);
     }
 
@@ -180,11 +178,10 @@ function ElencoDomande(props){
                             {categorie.map(mappaCategorie)}
                         </select>
                     </div>
-                    {
-                        <ul className={styles.wrapper_lista_domande}>
-                            {categoryFilter !== "" && imagesQuizQuestions.map(recuperaTutteLeDomande)}
-                        </ul>
-                    }
+                    
+                    <ul className={styles.wrapper_lista_domande}>
+                        {categoryFilter !== "" && imagesQuizQuestions.map(recuperaTutteLeDomande)}
+                    </ul>
                     
                 </>
             }
@@ -198,11 +195,9 @@ function ElencoDomande(props){
                         {categorie.map(mappaCategorie)}
                     </select>
                     
-                    {
-                        <ul className={styles.wrapper_lista_domande}>
-                            {categoryFilter !== "" && classicQuizQuestions.map(recuperaTutteLeDomande)}
-                        </ul>
-                    }
+                    <ul className={styles.wrapper_lista_domande}>
+                        {categoryFilter !== "" && classicQuizQuestions.map(recuperaTutteLeDomande)}
+                    </ul>
                     
                 </>
             }

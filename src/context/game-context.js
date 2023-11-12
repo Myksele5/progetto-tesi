@@ -21,7 +21,7 @@ import Nespola from '../components/Images-Giochi/NESPOLA.jpeg';
 import EditGioco from "../components/Giochi/EditGioco";
 
 let modifica_gioco;
-let risultati_gioco;
+let risultati_utente_gioco;
 let counter_CODICE_GIOCO = 0;
 let modal_eliminazione;
 
@@ -418,7 +418,7 @@ export function GameContextProvider(props){
 
     function endGame(risposteUtente, domandeTotali){
         setGameObject(null);
-        risultati_gioco =
+        risultati_utente_gioco =
             <RisultatiGioco
                 numeroRisposteCorrette={risposteUtente}
                 numeroDomandeTotali={domandeTotali}
@@ -444,7 +444,7 @@ export function GameContextProvider(props){
     }
 
     function chiudiSchedaRisultati(){
-        risultati_gioco = null;
+        risultati_utente_gioco = null;
         setGameResults(false);
         setShowSearchBoxAndButton(true);
         setShowElencoGiochi(true);
@@ -528,8 +528,8 @@ export function GameContextProvider(props){
         }
 
         if(tipoGioco === "QUIZ CON IMMAGINI"){
-            for(var i=0; i < elencoDomandeQuizImmagini.length; i++){
-                ULTIMA_CATEGORIA_AGGIUNTA = elencoDomandeQuizImmagini[i].categoria;
+            for(var j=0; j < elencoDomandeQuizImmagini.length; j++){
+                ULTIMA_CATEGORIA_AGGIUNTA = elencoDomandeQuizImmagini[j].categoria;
                 elenco_temporaneo.unshift(ULTIMA_CATEGORIA_AGGIUNTA);
             }
             elenco_categorie = elenco_temporaneo.filter(uniqueCategories);
@@ -626,7 +626,7 @@ export function GameContextProvider(props){
             showBarraRicercaBottone: showSearchBoxAndButton,
             oggettoGioco: gameObject,
             risultatiGioco: gameResults,
-            risposteUtente: risultati_gioco,
+            risposteUtente: risultati_utente_gioco,
             showAggiungiNuovoGioco: showAddNewGame,
             formCreaNuovoGioco: formCreateNewGame,
             chiudiFormCreaNuovoGioco: closeFormCreateNewGame,

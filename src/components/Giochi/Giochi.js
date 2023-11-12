@@ -33,23 +33,18 @@ function Giochi(){
 
             <div className={styles.wrapper_generico}>
                 {game_ctx.showAggiungiNuovoGioco && 
-                    <>
-                        <AddGioco
-                            chiudiFormNewGame={game_ctx.chiudiFormCreaNuovoGioco}
-                        >
-                        </AddGioco>
-                        {/* <AddDomanda></AddDomanda> */}
-                    </>
+                    <AddGioco
+                        chiudiFormNewGame={game_ctx.chiudiFormCreaNuovoGioco}
+                    >
+                    </AddGioco>
                 }
 
                 {game_ctx.showAggiungiNuovaDomanda &&
-                    <>
-                        <AddDomanda
-                            hideForm={game_ctx.chiudiFormCreaNuovaDomanda}
-                            aggiornaDomande={game_ctx.aggiungiDomandaAllaLista}
-                        >
-                        </AddDomanda>
-                    </>
+                    <AddDomanda
+                        hideForm={game_ctx.chiudiFormCreaNuovaDomanda}
+                        aggiornaDomande={game_ctx.aggiungiDomandaAllaLista}
+                    >
+                    </AddDomanda>
                 }
 
                 {game_ctx.showModificaGioco && game_ctx.giocoDaModificare}
