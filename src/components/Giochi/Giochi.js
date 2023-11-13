@@ -1,29 +1,158 @@
 import styles from "./Giochi.module.css";
+import { useContext, useState } from "react";
+import GameContext from "../../context/game-context";
 import GenericButton from "../UI/GenericButton";
-import SearchBox from "../UI/SearchBox";
-import { useContext } from "react";
+import RisultatiGioco from "./RisultatiGioco";
 import ListaGiochi from "./ListaGiochi";
 import AddGioco from "./AddGioco";
-import GameContext from "../../context/game-context";
+import EditGioco from "./EditGioco";
 import AddDomanda from "./AddDomanda";
+import ExerciseGuessTheFace from "./ExerciseGuessTheFace";
+
+let modifica_gioco;
+let risultati_utente_gioco;
 
 function Giochi(){
     const game_ctx = useContext(GameContext);
+
+    const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
+    const [showElencoGiochi, setShowElencoGiochi] = useState(true);
+    const [showAddNewQuestion, setShowAddNewQuestion] = useState(false);
+    const [showAddNewGame, setShowAddNewGame] = useState(false);
+    const [showEditGame, setShowEditGame] = useState(false);
+    const [showGameResults, setShowGameResults] = useState(false);
+    const [gameObject, setGameObject] = useState(null);
+
     
+    function formCreateNewQuestion(){
+        setShowSearchBoxAndButton(false);
+        setShowElencoGiochi(false);
+        setShowAddNewQuestion(true);
+    }
+
+    function closeFormCreateNewQuestion(){
+        setShowSearchBoxAndButton(true);
+        setShowElencoGiochi(true);
+        setShowAddNewQuestion(false);
+    }
+
+    function formCreateNewGame(){
+        setShowSearchBoxAndButton(false);
+        setShowElencoGiochi(false);
+        setShowAddNewGame(true);
+    }
+
+    function closeFormCreateNewGame(){
+        setShowSearchBoxAndButton(true);
+        setShowElencoGiochi(true);
+        setShowAddNewGame(false);
+    }
+
+    function formEditGame(listaa){
+        modifica_gioco =
+            <EditGioco
+                nomeGioco={listaa.nomeGioco}
+                tipoGioco={listaa.tipoGioco}
+                categoria={listaa.domandeGioco[0].categoria}
+                difficulty={listaa.livelloGioco}
+                codiceGioco={listaa.codiceGioco}
+                chiudiFormModifica={closeFormEditGame}
+                // listaDomande={listaa.domandeGioco}
+            >
+            </EditGioco>
+        setShowSearchBoxAndButton(false);
+        setShowElencoGiochi(false);
+        setShowEditGame(true);
+    }
+
+    function closeFormEditGame(){
+        setShowSearchBoxAndButton(true);
+        setShowElencoGiochi(true);
+        setShowEditGame(false);
+    }
+
+    function avviaGiocoNascondiItems(){
+        setShowSearchBoxAndButton(false);
+        setShowElencoGiochi(false);
+    }
+
+    function startGame(stringa_TIPOGIOCO, stringa_CODICEGIOCO){
+        var indice_gioco;
+        for(var i = 0; i < game_ctx.listaGiochi.length; i++){
+            if(stringa_CODICEGIOCO === game_ctx.listaGiochi[i].codiceGioco){
+                indice_gioco = i;
+                break;
+            }
+        }
+        console.log("CODICE DEL GIOCO SELEZIONATO----> " + stringa_CODICEGIOCO);
+        
+        switch(stringa_TIPOGIOCO){
+            case 'QUIZ':
+            case 'QUIZ CON IMMAGINI':
+                setGameObject(
+                    <ExerciseGuessTheFace
+                        giocoTerminato={endGame}
+                        INDICEGIOCO={indice_gioco}
+                        TIPOGIOCO={stringa_TIPOGIOCO}
+                    >
+                    </ExerciseGuessTheFace>
+                );
+                break;
+
+            case 'COMPLETA LA PAROLA':
+                break;
+
+            case 'RIFLESSI':
+                break;
+
+            default:
+                setGameObject(null);
+        }
+        setShowSearchBoxAndButton(false);
+        setShowElencoGiochi(false);
+    }
+
+    function endGame(risposteUtente, domandeTotali){
+        setGameObject(null);
+        risultati_utente_gioco =
+            <RisultatiGioco
+                numeroRisposteCorrette={risposteUtente}
+                numeroDomandeTotali={domandeTotali}
+                chiudiSchedaRisultati={closeGameResults}
+                assegnaRisultatiPaziente={(pazObj) => {
+                    game_ctx.salvaRisultatiGiocoPaziente(risposteUtente, domandeTotali, pazObj)
+                    closeGameResults();
+                }}
+            >
+            </RisultatiGioco>
+        setShowGameResults(true);
+    }
+
+    function closeGameResults(){
+        risultati_utente_gioco = null;
+        setShowGameResults(false);
+        setShowSearchBoxAndButton(true);
+        setShowElencoGiochi(true);
+    }
+
     return(
         <>
             <h1 className={styles.page_title}>Giochi</h1>
-            {game_ctx.showBarraRicercaBottone && 
+            {showSearchBoxAndButton && 
                 <div className={styles.wrap_boxes}>
                     <GenericButton
-                        onClick={game_ctx.formCreaNuovaDomanda}
+                        onClick={formCreateNewQuestion}
                         generic_button={true}
                         buttonText={"Crea nuove domande"}
                     >
                     </GenericButton>
         
                     <GenericButton
-                        onClick={game_ctx.formCreaNuovoGioco}
+                        onClick={() => {
+                            formCreateNewGame();
+                            //LA SEGUENTE FUNZIONE SERVE PER RESETTARE L'OGGETTO CHE SI OCCUPA DI MODIFICARE LE DOMANDE DI UN GIOCO
+                            game_ctx.formCreaNuovoGioco();
+                        }}
                         generic_button={true}
                         buttonText={"Aggiungi Gioco"}
                     >
@@ -32,31 +161,35 @@ function Giochi(){
             }
 
             <div className={styles.wrapper_generico}>
-                {game_ctx.showAggiungiNuovoGioco && 
+                {showAddNewGame && 
                     <AddGioco
-                        chiudiFormNewGame={game_ctx.chiudiFormCreaNuovoGioco}
+                        chiudiFormNuovoGioco={closeFormCreateNewGame}
                     >
                     </AddGioco>
                 }
 
-                {game_ctx.showAggiungiNuovaDomanda &&
+                {showAddNewQuestion &&
                     <AddDomanda
-                        hideForm={game_ctx.chiudiFormCreaNuovaDomanda}
+                        chiudiFormNuovaDomanda={closeFormCreateNewQuestion}
                         aggiornaDomande={game_ctx.aggiungiDomandaAllaLista}
                     >
                     </AddDomanda>
                 }
 
-                {game_ctx.showModificaGioco && game_ctx.giocoDaModificare}
+                {showEditGame && modifica_gioco}
 
-                {game_ctx.showListaGiochi && 
-                    <ListaGiochi>
+                {showElencoGiochi && 
+                    <ListaGiochi
+                        iniziaGioco={startGame}
+                        mostraFormModificaGioco={formEditGame}
+                        avvioGiocoChiudoIlResto={avviaGiocoNascondiItems}
+                    >
                     </ListaGiochi>
                 }
 
-                {game_ctx.risultatiGioco && game_ctx.risposteUtente}
+                {showGameResults && risultati_utente_gioco}
 
-                {game_ctx.oggettoGioco}
+                {gameObject}
                 
             </div>
         </>

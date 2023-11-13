@@ -4,7 +4,7 @@ import GameContext from "../../context/game-context";
 import GameCard from "../UI/GameCard";
 import GenericButton from "../UI/GenericButton";
 
-function ListaGiochi(){
+function ListaGiochi(props){
     const game_ctx = useContext(GameContext);
     var lista = game_ctx.listaGiochi;
 
@@ -28,7 +28,7 @@ function ListaGiochi(){
                             <div className={styles.buttons_wrap}>
                                 <GenericButton
                                 onClick={()=> {
-                                    game_ctx.iniziaGioco(lista.tipoGioco, lista.codiceGioco)
+                                    props.iniziaGioco(lista.tipoGioco, lista.codiceGioco)
                                 }}
                                 alternative_button={true}
                                 buttonText='Avvia Gioco'>
@@ -37,6 +37,7 @@ function ListaGiochi(){
                                 <GenericButton
                                 onClick={() => {
                                     game_ctx.modificaGioco(lista)
+                                    props.mostraFormModificaGioco(lista);
                                 }}
                                 alternative_button={true}
                                 buttonText='Gestione Gioco'>

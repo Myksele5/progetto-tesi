@@ -8,7 +8,7 @@ import ElencoDomande from "./ElencoDomande";
 
 var domande_nuovo_gioco = [];
 
-function AddGioco(){
+function AddGioco(props){
     const [titoloGioco, setTitoloGioco] = useState("");
     const [tipologiaGioco, setTipologiaGioco] = useState("QUIZ");
     const [livelloGioco, setLivelloGioco] = useState("NORMALE");
@@ -134,6 +134,7 @@ function AddGioco(){
                     onClick={() => {
                         game_ctx.aggiungiGiocoAllaLista(titoloGioco, tipologiaGioco, livelloGioco, domande_nuovo_gioco);
                         domande_nuovo_gioco = [];
+                        props.chiudiFormNuovoGioco();
                     }}
                     generic_button={true}
                     buttonText={"Salva Gioco"}
@@ -141,7 +142,7 @@ function AddGioco(){
                     </GenericButton>
 
                     <GenericButton
-                    onClick={game_ctx.chiudiFormCreaNuovoGioco}
+                    onClick={props.chiudiFormNuovoGioco}
                     small_button={true}
                     buttonText={"Chiudi scheda"}
                     >

@@ -141,6 +141,7 @@ function EditGioco(props){
                     <GenericButton
                         onClick={() => {
                             game_ctx.salvaGiocoModificato(nomeGiocoModifica, tipoGiocoModifica, livelloGiocoModifica, props.codiceGioco, domande_gioco_da_modificare)
+                            props.chiudiFormModifica();
                         }}
                         generic_button={true}
                         buttonText={"Salva modifiche"}
@@ -148,7 +149,7 @@ function EditGioco(props){
                     </GenericButton>
 
                     <GenericButton
-                        onClick={game_ctx.chiudiFormModificaGioco}
+                        onClick={props.chiudiFormModifica}
                         small_button={true}
                         buttonText={"Chiudi scheda"}
                     >

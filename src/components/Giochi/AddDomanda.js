@@ -107,7 +107,7 @@ function AddDomanda(props){
         }
 
         props.aggiornaDomande(new_question, gameType);
-        props.hideForm();
+        props.chiudiFormNuovaDomanda();
     }
 
     return(
@@ -221,7 +221,7 @@ function AddDomanda(props){
                                     </GenericButton>
 
                                     <GenericButton
-                                        onClick={props.hideForm}
+                                        onClick={props.chiudiFormNuovaDomanda}
                                         small_button={true}
                                         buttonText={"Chiudi scheda"}
                                     >

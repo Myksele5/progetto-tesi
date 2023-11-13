@@ -1,6 +1,7 @@
 import styles from "./ElencoDomandeModificabili.module.css";
 import { useContext, useState } from "react";
 import GameContext from "../../context/game-context";
+import GenericButton from "../UI/GenericButton";
 
 function ElencoDomandeModificabili(){
     const game_ctx = useContext(GameContext);
@@ -68,6 +69,16 @@ function ElencoDomandeModificabili(){
 
                     <div className={styles.flex_list_container}>
                         <h4 className={styles.subtitle_style}>MODIFICA/ELIMINA DOMANDA</h4>
+                        <GenericButton
+                            generic_button={true}
+                            buttonText={"Modifica domanda"}
+                        >
+                        </GenericButton>
+                        <GenericButton
+                            small_button={true}
+                            buttonText={"Elimina domanda"}
+                        >
+                        </GenericButton>
                         
                     </div>
 

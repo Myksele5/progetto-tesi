@@ -1,6 +1,4 @@
 import React, {useState, useContext} from "react";
-import RisultatiGioco from "../components/Giochi/RisultatiGioco";
-import ExerciseGuessTheFace from "../components/Giochi/ExerciseGuessTheFace";
 import PatientContext from "./patients-context";
 import Modal from "../components/UI/Modal";
 
@@ -18,41 +16,25 @@ import Fragola from '../components/Images-Giochi/FRAGOLA.jpg';
 import Mela from '../components/Images-Giochi/MELA.jpg';
 import Mirtillo from '../components/Images-Giochi/MIRTILLO_NERO.jpg';
 import Nespola from '../components/Images-Giochi/NESPOLA.jpeg';
-import EditGioco from "../components/Giochi/EditGioco";
 
-let modifica_gioco;
-let risultati_utente_gioco;
 let counter_CODICE_GIOCO = 0;
 let modal_eliminazione;
 
 const GameContext = React.createContext({
     listaGiochi: null,
     aggiungiGiocoAllaLista: ()=>{},
-    showListaGiochi: false,
-    showBarraRicercaBottone: null,
-    oggettoGioco: null,
-    risultatiGioco: null,
-    risposteUtente: null,
-    showAggiungiNuovoGioco: null,
     formCreaNuovoGioco: ()=>{},
-    chiudiFormCreaNuovoGioco: ()=>{},
-    iniziaGioco: ()=>{},
+    domandeDaModificare: null,
+    modificaGioco: ()=>{},
+    salvaGiocoModificato: ()=>{},
+    eliminaGioco: ()=>{},
     domandeDeiQuizConImmagini: null,
     domandeDeiQuiz: null,
-    showAggiungiNuovaDomanda: null,
-    formCreaNuovaDomanda: ()=>{},
-    chiudiFormCreaNuovaDomanda: ()=>{},
     aggiungiDomandaAllaLista: ()=>{},
     recuperaCategorieDomande: ()=>{},
-    showModificaGioco: null,
-    modificaGioco: ()=>{},
-    chiudiFormModificaGioco: ()=>{},
-    giocoDaModificare: null,
-    salvaGiocoModificato: ()=>{},
-    domandeDaModificare: null,
     showModale: null,
     modale: null,
-    eliminaGioco: ()=>{}
+    salvaRisultatiGiocoPaziente: ()=>{}
 });
 
 export function GameContextProvider(props){
@@ -363,71 +345,13 @@ export function GameContextProvider(props){
                 wrong_answer_n3: 'Brasile'
             }
         }
-    
     ];
 
-    const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
     const [elencoGiochi, setElencoGiochi] = useState(dati_dei_giochi)
-    const [showElencoGiochi, setShowElencoGiochi] = useState(true);
-    const [showAddNewGame, setShowAddNewGame] = useState(false);
-    const [showAddNewQuestion, setShowAddNewQuestion] = useState(false);
-    const [gameObject, setGameObject] = useState(null);
-    const [gameResults, setGameResults] = useState(false);
     const [elencoDomandeQuiz, setElencoDomandeQuiz] = useState(lista_domande_quiz);
     const [elencoDomandeQuizImmagini, setElencoDomandeQuizImmagini] = useState(lista_domande_quiz_immagini);
-    const [showEditGame, setShowEditGame] = useState(false);
     const [domandeModifica, setDomandeModifica] = useState([]);
     const [showModal, setShowModal] = useState(false);
-
-    function startGame(stringa_TIPOGIOCO, stringa_CODICEGIOCO){
-        var indice_gioco;
-        for(var i = 0; i < elencoGiochi.length; i++){
-            if(stringa_CODICEGIOCO === elencoGiochi[i].codiceGioco){
-                indice_gioco = i;
-                break;
-            }
-        }
-        console.log("CODICE DEL GIOCO SELEZIONATO----> " + stringa_CODICEGIOCO);
-        setShowSearchBoxAndButton(false);
-        setShowElencoGiochi(false);
-
-        switch(stringa_TIPOGIOCO){
-            case 'QUIZ':
-            case 'QUIZ CON IMMAGINI':
-                setGameObject(
-                    <ExerciseGuessTheFace
-                        giocoTerminato={endGame}
-                        INDICEGIOCO={indice_gioco}
-                        TIPOGIOCO={stringa_TIPOGIOCO}
-                    >
-                    </ExerciseGuessTheFace>
-                );
-                break;
-
-            case 'COMPLETA LA PAROLA':
-                break;
-
-            case 'RIFLESSI':
-                break;
-
-            default:
-                setGameObject(null);
-        }
-        
-    }
-
-    function endGame(risposteUtente, domandeTotali){
-        setGameObject(null);
-        risultati_utente_gioco =
-            <RisultatiGioco
-                numeroRisposteCorrette={risposteUtente}
-                numeroDomandeTotali={domandeTotali}
-                chiudiSchedaRisultati={chiudiSchedaRisultati}
-                assegnaRisultatiPaziente={(pazObj) => {salvaRisultati(risposteUtente, domandeTotali, pazObj)}}
-            >
-            </RisultatiGioco>
-        setGameResults(true);
-    }
 
     function salvaRisultati(risposteUtente, domandeTotali, pazienteDaAggiornare){
         console.log("NUMERO DI DOMANDE ---->" + domandeTotali);
@@ -439,29 +363,10 @@ export function GameContextProvider(props){
         pazienteDaAggiornare.statistiche.risposteSbagliate += (domandeTotali - risposteUtente);
 
         patients_ctx.modificaLista(pazienteDaAggiornare);
-        
-        chiudiSchedaRisultati();
-    }
-
-    function chiudiSchedaRisultati(){
-        risultati_utente_gioco = null;
-        setGameResults(false);
-        setShowSearchBoxAndButton(true);
-        setShowElencoGiochi(true);
     }
 
     function formCreateNewGame(){
-        setShowSearchBoxAndButton(false);
-        setShowElencoGiochi(false);
-        setShowAddNewGame(true);
-        // Il seguente setDomandeModifica serve per non avere la reference quando dopo aver modificato un gioco si va a crearne uno nuovo
         setDomandeModifica([]);
-    }
-
-    function closeFormCreateNewGame(){
-        setShowSearchBoxAndButton(true);
-        setShowElencoGiochi(true);
-        setShowAddNewGame(false);
     }
 
     function addNewGameToList(name, type, level, questionsList){
@@ -479,20 +384,6 @@ export function GameContextProvider(props){
 
         console.log("CODICE DEL GIOCO APPENA CREATO---> " + counter_CODICE_GIOCO);
         counter_CODICE_GIOCO++;
-
-        closeFormCreateNewGame();
-    }
-
-    function formCreateNewQuestion(){
-        setShowSearchBoxAndButton(false);
-        setShowElencoGiochi(false);
-        setShowAddNewQuestion(true);
-    }
-
-    function closeFormCreateNewQuestion(){
-        setShowSearchBoxAndButton(true);
-        setShowElencoGiochi(true);
-        setShowAddNewQuestion(false);
     }
 
     function addNewQuestionToList(nuova_domanda, tipoGioco){
@@ -506,7 +397,6 @@ export function GameContextProvider(props){
                 return [nuova_domanda, ...vecchioElenco]
             });
         }
-        
     }
 
     function uniqueCategories(categoria, indice, arrayCategorie){
@@ -540,28 +430,7 @@ export function GameContextProvider(props){
     }
 
     function editGame(listaa){
-        console.log(listaa);
-        setShowSearchBoxAndButton(false);
-        setShowElencoGiochi(false);
-        setShowEditGame(true);
-
-        modifica_gioco =
-            <EditGioco
-                nomeGioco={listaa.nomeGioco}
-                tipoGioco={listaa.tipoGioco}
-                categoria={listaa.domandeGioco[0].categoria}
-                difficulty={listaa.livelloGioco}
-                codiceGioco={listaa.codiceGioco}
-                // listaDomande={listaa.domandeGioco}
-            >
-            </EditGioco>
         setDomandeModifica(listaa.domandeGioco);
-    }
-
-    function closeFormEditGame(){
-        setShowSearchBoxAndButton(true);
-        setShowElencoGiochi(true);
-        setShowEditGame(false);
     }
 
     function addModifiedGameToList(name, type, level, gameID, questionsList){
@@ -582,8 +451,6 @@ export function GameContextProvider(props){
         }
 
         console.log("CODICE DEL GIOCO MODIFICATO---> " + gameID);
-
-        closeFormEditGame();
     }
 
     function modalDeleteGame(gameID){
@@ -593,11 +460,9 @@ export function GameContextProvider(props){
                 CONFERMA={() =>{
                     deleteGame(gameID);
                     setShowModal(false);
-                    // setShowTabella(true);
                 }}
                 ANNULLA={() => {
                     setShowModal(false);
-                    // setShowTabella(true);
                 }}>
             </Modal>;
             
@@ -622,31 +487,18 @@ export function GameContextProvider(props){
         value={{
             listaGiochi: elencoGiochi,
             aggiungiGiocoAllaLista: addNewGameToList,
-            showListaGiochi: showElencoGiochi,
-            showBarraRicercaBottone: showSearchBoxAndButton,
-            oggettoGioco: gameObject,
-            risultatiGioco: gameResults,
-            risposteUtente: risultati_utente_gioco,
-            showAggiungiNuovoGioco: showAddNewGame,
             formCreaNuovoGioco: formCreateNewGame,
-            chiudiFormCreaNuovoGioco: closeFormCreateNewGame,
-            iniziaGioco: startGame,
+            domandeDaModificare: domandeModifica,
+            modificaGioco: editGame,
+            salvaGiocoModificato: addModifiedGameToList,
+            eliminaGioco: modalDeleteGame,
             domandeDeiQuizConImmagini: elencoDomandeQuizImmagini,
             domandeDeiQuiz: elencoDomandeQuiz,
-            showAggiungiNuovaDomanda: showAddNewQuestion,
-            formCreaNuovaDomanda: formCreateNewQuestion,
-            chiudiFormCreaNuovaDomanda: closeFormCreateNewQuestion,
             aggiungiDomandaAllaLista: addNewQuestionToList,
             recuperaCategorieDomande: getAllCategories,
-            showModificaGioco: showEditGame,
-            modificaGioco: editGame,
-            chiudiFormModificaGioco: closeFormEditGame,
-            giocoDaModificare: modifica_gioco,
-            salvaGiocoModificato: addModifiedGameToList,
-            domandeDaModificare: domandeModifica,
             showModale: showModal,
             modale: modal_eliminazione,
-            eliminaGioco: modalDeleteGame
+            salvaRisultatiGiocoPaziente: salvaRisultati
         }}
         >
             {props.children}
