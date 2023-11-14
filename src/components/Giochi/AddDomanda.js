@@ -18,7 +18,7 @@ function AddDomanda(props){
     const [rispSbagliata_2, setRispSbagliata_2] = useState("");
     const [rispSbagliata_3, setRispSbagliata_3] = useState("");
 
-    const [showQuestionsList, setShowQuestionsList] = useState(false);
+    const [showQuestionsList, setShowQuestionsList] = useState(true);
     const [aggiungiCategoria, setAggiungiCategoria] = useState(false);
 
     var categorie = game_ctx.recuperaCategorieDomande(gameType);
@@ -110,6 +110,10 @@ function AddDomanda(props){
         props.chiudiFormNuovaDomanda();
     }
 
+    function mostraFormModificaDomanda(tipoGioco, singleQuestion){
+        props.mostraModificaDomanda(tipoGioco, singleQuestion);
+    }
+
     return(
         <>
             {showQuestionsList &&
@@ -122,7 +126,10 @@ function AddDomanda(props){
                         buttonText={"Aggiungi nuova domanda"}
                     >
                     </GenericButton>
-                    <ElencoDomandeModificabili></ElencoDomandeModificabili>
+                    <ElencoDomandeModificabili
+                        modificaSingolaDomanda={mostraFormModificaDomanda}
+                    >
+                    </ElencoDomandeModificabili>
                 </>
             }
             {!showQuestionsList &&

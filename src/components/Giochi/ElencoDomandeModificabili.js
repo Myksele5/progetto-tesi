@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import GameContext from "../../context/game-context";
 import GenericButton from "../UI/GenericButton";
 
-function ElencoDomandeModificabili(){
+function ElencoDomandeModificabili(props){
     const game_ctx = useContext(GameContext);
 
     const [gameType, setGameType] = useState("QUIZ");
@@ -30,7 +30,7 @@ function ElencoDomandeModificabili(){
 
     function recuperaTutteLeDomande(singleQuestion){
         if(singleQuestion.categoria === categoryFilter){
-            console.log(singleQuestion.categoria);
+            // console.log(singleQuestion.categoria);
             return(
                 <li className={styles.LIST_ITEM_STYLE}>
 
@@ -70,11 +70,17 @@ function ElencoDomandeModificabili(){
                     <div className={styles.flex_list_container}>
                         <h4 className={styles.subtitle_style}>MODIFICA/ELIMINA DOMANDA</h4>
                         <GenericButton
+                            onClick={() => {
+                                props.modificaSingolaDomanda(gameType, singleQuestion);
+                            }}
                             generic_button={true}
                             buttonText={"Modifica domanda"}
                         >
                         </GenericButton>
                         <GenericButton
+                            onClick={() => {
+                                game_ctx.eliminaDomanda(gameType, singleQuestion.indovina);
+                            }}
                             small_button={true}
                             buttonText={"Elimina domanda"}
                         >
@@ -92,6 +98,7 @@ function ElencoDomandeModificabili(){
 
     return(
         <div>
+            {game_ctx.showModale && game_ctx.modale}
             <select className={styles.select_style} defaultValue={gameType} onClick={gameTypeChangeHandler}>
                 <option>QUIZ</option>
                 <option>QUIZ CON IMMAGINI</option>

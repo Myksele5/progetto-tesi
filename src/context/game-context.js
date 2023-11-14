@@ -34,7 +34,10 @@ const GameContext = React.createContext({
     recuperaCategorieDomande: ()=>{},
     showModale: null,
     modale: null,
-    salvaRisultatiGiocoPaziente: ()=>{}
+    salvaRisultatiGiocoPaziente: ()=>{},
+    eliminaDomanda: ()=>{},
+    salvaDomandaModificata: ()=>{}
+
 });
 
 export function GameContextProvider(props){
@@ -425,7 +428,7 @@ export function GameContextProvider(props){
             elenco_categorie = elenco_temporaneo.filter(uniqueCategories);
         }
 
-        console.log(elenco_categorie);
+        // console.log(elenco_categorie);
         return elenco_categorie;
     }
 
@@ -482,6 +485,83 @@ export function GameContextProvider(props){
         setElencoGiochi(elencoGiochi);
     }
 
+    function modalDeleteQuestion(tipoGioco, indovina){
+        modal_eliminazione =
+            <Modal
+                testoModale={"Sei sicuro di voler eliminare questa domanda?"}
+                CONFERMA={() =>{
+                    deleteQuestion(tipoGioco, indovina);
+                    setShowModal(false);
+                }}
+                ANNULLA={() => {
+                    setShowModal(false);
+                }}>
+            </Modal>;
+            
+        setShowModal(true);
+    }
+
+    function deleteQuestion(tipoGioco, indovina){
+        if(tipoGioco === "QUIZ"){
+            for(var i=0; i < elencoDomandeQuiz.length; i++){
+                if(indovina === elencoDomandeQuiz[i].indovina){
+                    elencoDomandeQuiz.splice(i, 1);
+
+                    break;
+                }
+            }
+        }
+        setElencoDomandeQuiz(elencoDomandeQuiz);
+
+        if(tipoGioco === "QUIZ CON IMMAGINI"){
+            for(var i=0; i < elencoDomandeQuizImmagini.length; i++){
+                if(indovina === elencoDomandeQuizImmagini[i].indovina){
+                    elencoDomandeQuizImmagini.splice(i, 1);
+
+                    break;
+                }
+            }
+        }
+        setElencoDomandeQuizImmagini(elencoDomandeQuizImmagini);
+    }
+
+    function addModifiedQuestionToList(tipoGioco, categoriaM, indovinaM, correttaM, sbagliata_1M, sbagliata_2M, sbagliata_3M){
+        var modified_question={
+            livelloDomanda: "facile",
+            categoria: categoriaM,
+            indovina: indovinaM,
+            question:{
+                    correct_answer: correttaM,
+                    wrong_answer_n1: sbagliata_1M,
+                    wrong_answer_n2: sbagliata_2M,
+                    wrong_answer_n3: sbagliata_3M
+            }
+        }
+
+        if(tipoGioco === "QUIZ"){
+            for(var i=0; i < elencoDomandeQuiz.length; i++){
+
+                if(indovinaM === elencoDomandeQuiz[i].indovina){
+                    console.log("TROVATA DOMANDA DA MODIFICARE");
+                    
+                    elencoDomandeQuiz[i] = modified_question;
+                    setElencoDomandeQuiz(elencoDomandeQuiz);
+                }
+            }
+        }
+        if(tipoGioco === "QUIZ CON IMMAGINI"){
+            for(var i=0; i < elencoDomandeQuizImmagini.length; i++){
+
+                if(indovinaM === elencoDomandeQuizImmagini[i].indovina){
+                    console.log("TROVATA DOMANDA DA MODIFICARE");
+                    
+                    elencoDomandeQuizImmagini[i] = modified_question;
+                    setElencoDomandeQuizImmagini(elencoDomandeQuizImmagini);
+                }
+            }
+        }
+    }
+
     return(
         <GameContext.Provider
         value={{
@@ -498,7 +578,9 @@ export function GameContextProvider(props){
             recuperaCategorieDomande: getAllCategories,
             showModale: showModal,
             modale: modal_eliminazione,
-            salvaRisultatiGiocoPaziente: salvaRisultati
+            salvaRisultatiGiocoPaziente: salvaRisultati,
+            eliminaDomanda: modalDeleteQuestion,
+            salvaDomandaModificata: addModifiedQuestionToList
         }}
         >
             {props.children}

@@ -8,8 +8,10 @@ import AddGioco from "./AddGioco";
 import EditGioco from "./EditGioco";
 import AddDomanda from "./AddDomanda";
 import ExerciseGuessTheFace from "./ExerciseGuessTheFace";
+import EditDomanda from "./EditDomanda";
 
 let modifica_gioco;
+let modifica_domanda;
 let risultati_utente_gioco;
 
 function Giochi(){
@@ -20,6 +22,7 @@ function Giochi(){
     const [showAddNewQuestion, setShowAddNewQuestion] = useState(false);
     const [showAddNewGame, setShowAddNewGame] = useState(false);
     const [showEditGame, setShowEditGame] = useState(false);
+    const [showEditQuestion, setShowEditQuestion] = useState(false);
     const [showGameResults, setShowGameResults] = useState(false);
     const [gameObject, setGameObject] = useState(null);
 
@@ -135,6 +138,29 @@ function Giochi(){
         setShowElencoGiochi(true);
     }
 
+    function formEditQuestion(tipoGioco, singleQuestion){
+        modifica_domanda =
+            <EditDomanda
+                tipoGioco={tipoGioco}
+                categoriaDomanda={singleQuestion.categoria}
+                indovina={singleQuestion.indovina}
+                corretta={singleQuestion.question.correct_answer}
+                sbagliata_1={singleQuestion.question.wrong_answer_n1}
+                sbagliata_2={singleQuestion.question.wrong_answer_n2}
+                sbagliata_3={singleQuestion.question.wrong_answer_n3}
+
+                chiudiFormModificaDomanda={closeFormEditQuestion}
+            >
+            </EditDomanda>
+        setShowAddNewQuestion(false);
+        setShowEditQuestion(true);
+    }
+
+    function closeFormEditQuestion(){
+        setShowEditQuestion(false);
+        setShowAddNewQuestion(true);
+    }
+
     return(
         <>
             <h1 className={styles.page_title}>Giochi</h1>
@@ -168,15 +194,18 @@ function Giochi(){
                     </AddGioco>
                 }
 
+                {showEditGame && modifica_gioco}
+
                 {showAddNewQuestion &&
                     <AddDomanda
                         chiudiFormNuovaDomanda={closeFormCreateNewQuestion}
                         aggiornaDomande={game_ctx.aggiungiDomandaAllaLista}
+                        mostraModificaDomanda={formEditQuestion}
                     >
                     </AddDomanda>
                 }
 
-                {showEditGame && modifica_gioco}
+                {showEditQuestion && modifica_domanda}
 
                 {showElencoGiochi && 
                     <ListaGiochi
