@@ -17,8 +17,9 @@
     }
 }
 
-.wrap_add_attività{
+.wrap_generico{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }

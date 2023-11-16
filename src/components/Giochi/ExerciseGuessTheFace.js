@@ -174,9 +174,12 @@ function ExerciseGuessTheFace(props){
             
             {gameStarted &&
                 <>
-                    <h3 className={styles.domanda}>Chi è questo personaggio?</h3>
-
-                    {tipoQuiz === "QUIZ CON IMMAGINI" && <img className={styles.resize_image} src={questions[counter_question_number].indovina} alt='Face'></img>}
+                    {tipoQuiz === "QUIZ CON IMMAGINI" && 
+                        <>
+                            <h3 className={styles.domanda}>Chi è questo personaggio?</h3>
+                            <img className={styles.resize_image} src={questions[counter_question_number].indovina} alt='Face'></img>
+                        </>
+                    }
                     {tipoQuiz === "QUIZ" && <h1>{questions[counter_question_number].indovina}</h1>}
 
                     <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>

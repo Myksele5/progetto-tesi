@@ -73,9 +73,9 @@
 .alternative_button{
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
     margin: 5px;
-    width: 190px;
+    width: 200px;
     height: 40px;
     font-size: 18px;
     /* font-weight: bold; */
