@@ -10,7 +10,7 @@ function Attività(){
             <h1 className={styles.page_title}>TESTING</h1>
 
             <div className={styles.wrap_generico}>
-                <GuessTheWord></GuessTheWord>
+                {/* <GuessTheWord></GuessTheWord> */}
             </div>
 
         </>

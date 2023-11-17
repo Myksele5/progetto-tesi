@@ -106,6 +106,14 @@ function AddDomanda(props){
             }
         }
 
+        if(gameType === "COMPLETA LA PAROLA"){
+            new_question = {
+                livelloDomanda: "facile",
+                categoria: categoryQuestion,
+                indovina: indovina.toUpperCase(),
+            }
+        }
+
         props.aggiornaDomande(new_question, gameType);
         props.chiudiFormNuovaDomanda();
     }
@@ -151,73 +159,62 @@ function AddDomanda(props){
 
                                 <label className={styles.label_style}>Categoria domanda</label>
                                 
+                                {!aggiungiCategoria &&
+                                    <>
+                                        <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
+                                            <option hidden>---SELEZIONA CATEGORIA---</option>
+                                            {categorie.map(mappaCategorie)}
+                                        </select>
+                                    </>
+                                }
+                                {aggiungiCategoria &&
+                                    <>
+                                        <input className={styles.textbox_style} type="text" onChange={categoryQuestionChangeHandler}></input> 
+                                    </>
+                                }
+
+                                <div className={styles.horizontal_flex}>
+                                    <input className={styles.horizontal_flex_content} type="checkbox" onChange={categoriaCheckbox}></input>
+                                    <label className={styles.horizontal_flex_content}>Aggiungi nuova categoria</label>
+                                </div>
 
                                 {gameType === "QUIZ" &&
                                     <>
-                                        {!aggiungiCategoria &&
-                                            <>
-                                                <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
-                                                    <option hidden>---SELEZIONA CATEGORIA---</option>
-                                                    {categorie.map(mappaCategorie)}
-                                                </select>
-                                            </>
-                                        }
-                                        {aggiungiCategoria &&
-                                            <>
-                                                <input className={styles.textbox_style} type="text" onChange={categoryQuestionChangeHandler}></input> 
-                                            </>
-                                        }
-
-                                        <div className={styles.horizontal_flex}>
-                                            <input className={styles.horizontal_flex_content} type="checkbox" onChange={categoriaCheckbox}></input>
-                                            <label className={styles.horizontal_flex_content}>Aggiungi nuova categoria</label>
-                                        </div>
-                                        
-                                        
-                                        <label className={styles.label_style}>Domanda: </label>
+                                        <label className={styles.label_style}>Inserisci domanda: </label>
                                         <input className={styles.textbox_style} type="text" onChange={indovinaChangeHandler}></input>
                                     </>
                                 }
 
                                 {gameType === "QUIZ CON IMMAGINI" &&
                                     <>
-                                        {!aggiungiCategoria &&
-                                            <>
-                                                <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
-                                                    <option hidden>---SELEZIONA CATEGORIA---</option>
-                                                    {categorie.map(mappaCategorie)}
-                                                </select>
-                                            </>
-                                        }
-                                        {aggiungiCategoria &&
-                                            <>
-                                                <input className={styles.textbox_style} type="text" onChange={categoryQuestionChangeHandler}></input> 
-                                            </>
-                                        }
-
-                                        <div className={styles.horizontal_flex}>
-                                            <input className={styles.horizontal_flex_content} type="checkbox" onChange={categoriaCheckbox}></input>
-                                            <label className={styles.horizontal_flex_content}>Aggiungi nuova categoria</label>
-                                        </div>
-                                        
                                         <label className={styles.label_style}>Inserisci immagine: </label>
                                         <input type="file" accept="image/*" onChange={imageFileChangeHandler}></input>
                                         <img className={styles.preview_image} src={imageFile}></img>
                                     </>
                                 }
+
+                                {gameType === "COMPLETA LA PAROLA" &&
+                                    <>
+                                        <label className={styles.label_style}>Inserisci parola da indovinare: </label>
+                                        <input className={styles.textbox_style} type="text" onChange={indovinaChangeHandler}></input>
+                                    </>
+                                }
                                 
-
-                                <label className={styles.label_style}>Risposta Corretta: </label>
-                                <input className={styles.textbox_style} type="text" onChange={rispostaCorrettaChangeHandler}></input>
-
-                                <label className={styles.label_style}>Risposta Sbagliata 1: </label>
-                                <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_1_ChangeHandler}></input>
-
-                                <label className={styles.label_style}>Risposta Sbagliata 2: </label>
-                                <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_2_ChangeHandler}></input>
-
-                                <label className={styles.label_style}>Risposta Sbagliata 3: </label>
-                                <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_3_ChangeHandler}></input>
+                                {(gameType === "QUIZ" || gameType === "QUIZ CON IMMAGINI") &&
+                                    <>
+                                        <label className={styles.label_style}>Risposta Corretta: </label>
+                                        <input className={styles.textbox_style} type="text" onChange={rispostaCorrettaChangeHandler}></input>
+        
+                                        <label className={styles.label_style}>Risposta Sbagliata 1: </label>
+                                        <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_1_ChangeHandler}></input>
+        
+                                        <label className={styles.label_style}>Risposta Sbagliata 2: </label>
+                                        <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_2_ChangeHandler}></input>
+        
+                                        <label className={styles.label_style}>Risposta Sbagliata 3: </label>
+                                        <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_3_ChangeHandler}></input>
+                                    </>
+                                }
 
                                 <div className={styles.wrapper_generico}>
                                     <GenericButton

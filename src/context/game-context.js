@@ -30,6 +30,7 @@ const GameContext = React.createContext({
     eliminaGioco: ()=>{},
     domandeDeiQuizConImmagini: null,
     domandeDeiQuiz: null,
+    elencoParole: null,
     aggiungiDomandaAllaLista: ()=>{},
     recuperaCategorieDomande: ()=>{},
     showModale: null,
@@ -89,7 +90,6 @@ export function GameContextProvider(props){
             codiceGioco: "QUIZ_SPORTIVO",
             domandeGioco:[
                 {
-                    isChecked: false,
                     categoria: "Sport",
                     indovina: "Quale tra le seguenti squadre NBA ha vinto più titoli?",
                     question:{
@@ -100,7 +100,6 @@ export function GameContextProvider(props){
                     }
                 },
                 {
-                    isChecked: false,
                     categoria: "Sport",
                     indovina: "Quanti mondiali ha vinto la nazionale di calcio italana?",
                     question:{
@@ -109,6 +108,30 @@ export function GameContextProvider(props){
                         wrong_answer_n2: '4',
                         wrong_answer_n3: '3'
                     }
+                }
+            ]
+        },
+        {
+            nomeGioco: "Completa i mesi",
+            tipoGioco: "COMPLETA LA PAROLA",
+            livelloGioco: "NORMALE",
+            codiceGioco: "C.L.P.",
+            domandeGioco:[
+                {
+                    categoria: "Tutti",
+                    indovina: "GENNAIO",
+                },
+                {
+                    categoria: "Tutti",
+                    indovina: "FEBBRAIO",
+                },
+                {
+                    categoria: "Tutti",
+                    indovina: "MARZO",
+                },
+                {
+                    categoria: "Tutti",
+                    indovina: "APRILE",
                 }
             ]
         }
@@ -350,9 +373,38 @@ export function GameContextProvider(props){
         }
     ];
 
+    const lista_parole_da_completare = [
+        {
+            livelloDomanda: "normale",
+            categoria: "Tutti",
+            indovina: "GENNAIO"
+        },
+        {
+            livelloDomanda: "normale",
+            categoria: "Tutti",
+            indovina: "FEBBRAIO"
+        },
+        {
+            livelloDomanda: "normale",
+            categoria: "Tutti",
+            indovina: "MARZO"
+        },
+        {
+            livelloDomanda: "facile",
+            categoria: "Tutti",
+            indovina: "APRILE"
+        },
+        {
+            livelloDomanda: "difficile",
+            categoria: "Tutti",
+            indovina: "MAGGIO"
+        }
+    ];
+
     const [elencoGiochi, setElencoGiochi] = useState(dati_dei_giochi)
     const [elencoDomandeQuiz, setElencoDomandeQuiz] = useState(lista_domande_quiz);
     const [elencoDomandeQuizImmagini, setElencoDomandeQuizImmagini] = useState(lista_domande_quiz_immagini);
+    const [elencoParoleDaCompletare, setElencoParoleDaCompletare] = useState(lista_parole_da_completare);
     const [domandeModifica, setDomandeModifica] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
@@ -400,6 +452,11 @@ export function GameContextProvider(props){
                 return [nuova_domanda, ...vecchioElenco]
             });
         }
+        if(tipoGioco === "COMPLETA LA PAROLA"){
+            setElencoParoleDaCompletare(vecchioElenco => {
+                return [nuova_domanda, ...vecchioElenco]
+            });
+        }
     }
 
     function uniqueCategories(categoria, indice, arrayCategorie){
@@ -423,6 +480,14 @@ export function GameContextProvider(props){
         if(tipoGioco === "QUIZ CON IMMAGINI"){
             for(var j=0; j < elencoDomandeQuizImmagini.length; j++){
                 ULTIMA_CATEGORIA_AGGIUNTA = elencoDomandeQuizImmagini[j].categoria;
+                elenco_temporaneo.unshift(ULTIMA_CATEGORIA_AGGIUNTA);
+            }
+            elenco_categorie = elenco_temporaneo.filter(uniqueCategories);
+        }
+
+        if(tipoGioco === "COMPLETA LA PAROLA"){
+            for(var x=0; x < elencoParoleDaCompletare.length; x++){
+                ULTIMA_CATEGORIA_AGGIUNTA = elencoParoleDaCompletare[x].categoria;
                 elenco_temporaneo.unshift(ULTIMA_CATEGORIA_AGGIUNTA);
             }
             elenco_categorie = elenco_temporaneo.filter(uniqueCategories);
@@ -510,8 +575,8 @@ export function GameContextProvider(props){
                     break;
                 }
             }
+            setElencoDomandeQuiz(elencoDomandeQuiz);
         }
-        setElencoDomandeQuiz(elencoDomandeQuiz);
 
         if(tipoGioco === "QUIZ CON IMMAGINI"){
             for(var i=0; i < elencoDomandeQuizImmagini.length; i++){
@@ -521,42 +586,78 @@ export function GameContextProvider(props){
                     break;
                 }
             }
+            setElencoDomandeQuizImmagini(elencoDomandeQuizImmagini);
         }
-        setElencoDomandeQuizImmagini(elencoDomandeQuizImmagini);
+
+        if(tipoGioco === "COMPLETA LA PAROLA"){
+            for(var i=0; i < elencoParoleDaCompletare.length; i++){
+                if(indovina === elencoParoleDaCompletare[i].indovina){
+                    elencoParoleDaCompletare.splice(i, 1);
+
+                    break;
+                }
+            }
+            setElencoParoleDaCompletare(elencoParoleDaCompletare);
+        }
     }
 
     function addModifiedQuestionToList(tipoGioco, categoriaM, indovinaM, correttaM, sbagliata_1M, sbagliata_2M, sbagliata_3M){
-        var modified_question={
-            livelloDomanda: "facile",
-            categoria: categoriaM,
-            indovina: indovinaM,
-            question:{
-                    correct_answer: correttaM,
-                    wrong_answer_n1: sbagliata_1M,
-                    wrong_answer_n2: sbagliata_2M,
-                    wrong_answer_n3: sbagliata_3M
+        var modified_question;
+
+        if(tipoGioco === "QUIZ" || tipoGioco === "QUIZ CON IMMAGINI"){
+            modified_question={
+                livelloDomanda: "facile",
+                categoria: categoriaM,
+                indovina: indovinaM,
+                question:{
+                        correct_answer: correttaM,
+                        wrong_answer_n1: sbagliata_1M,
+                        wrong_answer_n2: sbagliata_2M,
+                        wrong_answer_n3: sbagliata_3M
+                }
             }
-        }
 
-        if(tipoGioco === "QUIZ"){
-            for(var i=0; i < elencoDomandeQuiz.length; i++){
-
-                if(indovinaM === elencoDomandeQuiz[i].indovina){
-                    console.log("TROVATA DOMANDA DA MODIFICARE");
-                    
-                    elencoDomandeQuiz[i] = modified_question;
-                    setElencoDomandeQuiz(elencoDomandeQuiz);
+            if(tipoGioco === "QUIZ"){
+                for(var i=0; i < elencoDomandeQuiz.length; i++){
+    
+                //QUESTO CONTROLLO NON FUNZIONA BISOGNA INSERIRE UN ID UNICO---> si risolve con FIREBASE
+                    if(indovinaM === elencoDomandeQuiz[i].indovina){
+                        console.log("TROVATA DOMANDA DA MODIFICARE");
+                        
+                        elencoDomandeQuiz[i] = modified_question;
+                        setElencoDomandeQuiz(elencoDomandeQuiz);
+                    }
+                }
+            }
+            if(tipoGioco === "QUIZ CON IMMAGINI"){
+                for(var j=0; j < elencoDomandeQuizImmagini.length; j++){
+    
+                //QUESTO CONTROLLO NON FUNZIONA BISOGNA INSERIRE UN ID UNICO---> si risolve con FIREBASE
+                    if(indovinaM === elencoDomandeQuizImmagini[j].indovina){
+                        console.log("TROVATA DOMANDA DA MODIFICARE");
+                        
+                        elencoDomandeQuizImmagini[j] = modified_question;
+                        setElencoDomandeQuizImmagini(elencoDomandeQuizImmagini);
+                    }
                 }
             }
         }
-        if(tipoGioco === "QUIZ CON IMMAGINI"){
-            for(var i=0; i < elencoDomandeQuizImmagini.length; i++){
 
-                if(indovinaM === elencoDomandeQuizImmagini[i].indovina){
+        if(tipoGioco === "COMPLETA LA PAROLA"){
+            modified_question={
+                livelloDomanda: "facile",
+                categoria: categoriaM,
+                indovina: indovinaM.toUpperCase()
+            }
+
+            for(var x=0; x < elencoParoleDaCompletare.length; x++){
+                
+                //QUESTO CONTROLLO NON FUNZIONA BISOGNA INSERIRE UN ID UNICO---> si risolve con FIREBASE
+                if(indovinaM === elencoParoleDaCompletare[x].indovina){
                     console.log("TROVATA DOMANDA DA MODIFICARE");
                     
-                    elencoDomandeQuizImmagini[i] = modified_question;
-                    setElencoDomandeQuizImmagini(elencoDomandeQuizImmagini);
+                    elencoParoleDaCompletare[x] = modified_question;
+                    setElencoDomandeQuizImmagini(elencoParoleDaCompletare);
                 }
             }
         }
@@ -574,6 +675,7 @@ export function GameContextProvider(props){
             eliminaGioco: modalDeleteGame,
             domandeDeiQuizConImmagini: elencoDomandeQuizImmagini,
             domandeDeiQuiz: elencoDomandeQuiz,
+            elencoParole: elencoParoleDaCompletare,
             aggiungiDomandaAllaLista: addNewQuestionToList,
             recuperaCategorieDomande: getAllCategories,
             showModale: showModal,

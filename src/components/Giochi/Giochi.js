@@ -9,6 +9,7 @@ import EditGioco from "./EditGioco";
 import AddDomanda from "./AddDomanda";
 import ExerciseGuessTheFace from "./ExerciseGuessTheFace";
 import EditDomanda from "./EditDomanda";
+import GuessTheWord from "./GuessTheWord";
 
 let modifica_gioco;
 let modifica_domanda;
@@ -103,6 +104,14 @@ function Giochi(){
                 break;
 
             case 'COMPLETA LA PAROLA':
+                setGameObject(
+                    <GuessTheWord
+                        giocoTerminato={endGame}
+                        INDICEGIOCO={indice_gioco}
+                        TIPOGIOCO={stringa_TIPOGIOCO}
+                    >
+                    </GuessTheWord>
+                );
                 break;
 
             case 'RIFLESSI':
@@ -139,7 +148,8 @@ function Giochi(){
     }
 
     function formEditQuestion(tipoGioco, singleQuestion){
-        modifica_domanda =
+        if(tipoGioco === "QUIZ" || tipoGioco === "QUIZ CON IMMAGINI"){
+            modifica_domanda =
             <EditDomanda
                 tipoGioco={tipoGioco}
                 categoriaDomanda={singleQuestion.categoria}
@@ -152,6 +162,20 @@ function Giochi(){
                 chiudiFormModificaDomanda={closeFormEditQuestion}
             >
             </EditDomanda>
+        }
+
+        if(tipoGioco === "COMPLETA LA PAROLA"){
+            modifica_domanda =
+            <EditDomanda
+                tipoGioco={tipoGioco}
+                categoriaDomanda={singleQuestion.categoria}
+                indovina={singleQuestion.indovina}
+
+                chiudiFormModificaDomanda={closeFormEditQuestion}
+            >
+            </EditDomanda>
+        }
+        
         setShowAddNewQuestion(false);
         setShowEditQuestion(true);
     }

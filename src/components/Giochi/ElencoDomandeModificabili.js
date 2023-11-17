@@ -1,23 +1,30 @@
 import styles from "./ElencoDomandeModificabili.module.css";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import GameContext from "../../context/game-context";
 import GenericButton from "../UI/GenericButton";
 
 function ElencoDomandeModificabili(props){
     const game_ctx = useContext(GameContext);
 
-    const [gameType, setGameType] = useState("QUIZ");
-    const [categoryFilter, setCategoryFilter] = useState("Geografia");
     const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
     const [classicQuizQuestions, setClassicQuizQuestions] = useState(game_ctx.domandeDeiQuiz);
+    const [guessTheWordQuestions, setGuessTheWordQuestions] = useState(game_ctx.elencoParole);
+    const [gameType, setGameType] = useState("QUIZ");
+    const [categoryFilter, setCategoryFilter] = useState("Geografia");
     
     var categorie = game_ctx.recuperaCategorieDomande(gameType);
 
     function gameTypeChangeHandler(event){
         setGameType(event.target.value);
+        categorie = game_ctx.recuperaCategorieDomande(event.target.value);
+        {event.target.value === "QUIZ" && setCategoryFilter(categorie[0])}
+        {event.target.value === "QUIZ CON IMMAGINI" && setCategoryFilter(categorie[0])}
+        {event.target.value === "COMPLETA LA PAROLA" && setCategoryFilter(categorie[0])}
     }
+
     function categoryFilterChangeHandler(event){
         setCategoryFilter(event.target.value);
+        
     }
 
     function mappaCategorie(categoria){
@@ -47,25 +54,33 @@ function ElencoDomandeModificabili(props){
                             <p className={styles.question_style}>{singleQuestion.question.correct_answer}</p>
                         </div>
                     }
-                    
 
-                    <div className={styles.flex_list_container}>
-                        <h4 className={styles.subtitle_style}>Risposte:</h4>
-
-                        <div className={styles.separa_corrette_sbagliate}>
-                            <span className={styles.buttons_space}>
-                                <p>CORRETTA</p>
-                                <p className={styles.correct_answ}>{singleQuestion.question.correct_answer}</p>
-                            </span>
-                            
-                            <span className={styles.buttons_space}>
-                                <p>SBAGLIATE</p>
-                                <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n1}</p>
-                                <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n2}</p>
-                                <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n3}</p>
-                            </span>
+                    {gameType === "COMPLETA LA PAROLA" &&
+                        <div className={styles.flex_list_container}>
+                            <h4 className={styles.subtitle_style}>Parola da indovinare:</h4>
+                            <p className={styles.question_style}>{singleQuestion.indovina}</p>
                         </div>
-                    </div>
+                    }
+                    
+                    {(gameType === "QUIZ" || gameType === "QUIZ CON IMMAGINI") &&
+                        <div className={styles.flex_list_container}>
+                            <h4 className={styles.subtitle_style}>Risposte:</h4>
+
+                            <div className={styles.separa_corrette_sbagliate}>
+                                <span className={styles.buttons_space}>
+                                    <p>CORRETTA</p>
+                                    <p className={styles.correct_answ}>{singleQuestion.question.correct_answer}</p>
+                                </span>
+                                
+                                <span className={styles.buttons_space}>
+                                    <p>SBAGLIATE</p>
+                                    <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n1}</p>
+                                    <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n2}</p>
+                                    <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n3}</p>
+                                </span>
+                            </div>
+                        </div>
+                    }
 
                     <div className={styles.flex_list_container}>
                         <h4 className={styles.subtitle_style}>MODIFICA/ELIMINA DOMANDA</h4>
@@ -99,7 +114,7 @@ function ElencoDomandeModificabili(props){
     return(
         <div>
             {game_ctx.showModale && game_ctx.modale}
-            <select className={styles.select_style} defaultValue={gameType} onClick={gameTypeChangeHandler}>
+            <select className={styles.select_style} defaultValue={gameType} onChange={gameTypeChangeHandler}>
                 <option>QUIZ</option>
                 <option>QUIZ CON IMMAGINI</option>
                 <option>COMPLETA LA PAROLA</option>
@@ -119,6 +134,12 @@ function ElencoDomandeModificabili(props){
             {gameType === "QUIZ CON IMMAGINI" &&
                 <ul className={styles.wrapper_lista_domande}>
                     {categoryFilter !== "" && imagesQuizQuestions.map(recuperaTutteLeDomande)}
+                </ul>
+            }
+
+            {gameType === "COMPLETA LA PAROLA" &&
+                <ul className={styles.wrapper_lista_domande}>
+                    {categoryFilter !== "" && guessTheWordQuestions.map(recuperaTutteLeDomande)}
                 </ul>
             }
             

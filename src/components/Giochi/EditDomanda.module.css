@@ -45,3 +45,9 @@
     text-align: center;
     cursor: not-allowed;
 }
+
+.preview_image{
+    width: 200px;
+    height: 150px;
+    margin: 10px;
+}

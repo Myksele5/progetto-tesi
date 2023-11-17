@@ -39,8 +39,6 @@ function ExerciseGuessTheFace(props){
     const [coloraRispostaSbagliata_N4, setColoraRispostaSbagliata_N4] = useState(false);
 
     const game_ctx = useContext(GameContext);
-
-
     const questions = game_ctx.listaGiochi[props.INDICEGIOCO].domandeGioco;
 
     function checkTheAnswer(answer1, answer2, answer3, answer4, button){
@@ -183,19 +181,15 @@ function ExerciseGuessTheFace(props){
                     {tipoQuiz === "QUIZ" && <h1>{questions[counter_question_number].indovina}</h1>}
 
                     <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>
-
-                    {/* <div className={styles.wrap_generico}> */}
-                        {hasAnswered && 
-                            <GenericButton
-                                onClick={aggiornaLogica}
-                                alternative_button={true}
-                                buttonText={"PROSSIMA DOMANDA"}
-                            >
-                            </GenericButton>
-                        }
-                    {/* </div> */}
                     
-                    
+                    {hasAnswered && 
+                        <GenericButton
+                            onClick={aggiornaLogica}
+                            alternative_button={true}
+                            buttonText={"PROSSIMA DOMANDA"}
+                        >
+                        </GenericButton>
+                    }
                     
                     <div className={styles.wrapper_bottoni_risposte}>
         

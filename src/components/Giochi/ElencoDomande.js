@@ -10,6 +10,7 @@ function ElencoDomande(props){
     const [categoryFilter, setCategoryFilter] = useState(props.categoria);
     const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
     const [classicQuizQuestions, setClassicQuizQuestions] = useState(game_ctx.domandeDeiQuiz);
+    const [guessTheWordQuestions, setGuessTheWordQuestions] = useState(game_ctx.elencoParole);
     const [llll, setllll] = useState([...game_ctx.domandeDaModificare]);
     const [numeroDomandeSelezionate, setNumeroDomandeSelezionate] = useState(0);
 
@@ -49,7 +50,7 @@ function ElencoDomande(props){
             console.log('⛔️ Checkbox is NOT checked');
             COUNT_DOMANDE--;
             for(var i=0; i < llll.length; i++){
-                if(domanda.question.correct_answer === llll[i].question.correct_answer){
+                if(domanda.indovina === llll[i].indovina){
                     llll.splice(i, 1);
                     break;
                 }
@@ -95,7 +96,7 @@ function ElencoDomande(props){
             }
             else{
                 for(var i=0; i < llll.length; i++){
-                    if(singleQuestion.question.correct_answer === llll[i].question.correct_answer){
+                    if(singleQuestion.indovina === llll[i].indovina){
                         checkboxInputChecked =
                             <input checked className={styles.checkbox_style} type="checkbox" onChange={(event)=>{
                                 verifyIsChecked(event, singleQuestion)
@@ -131,25 +132,33 @@ function ElencoDomande(props){
                             <p className={styles.question_style}>{singleQuestion.question.correct_answer}</p>
                         </div>
                     }
-                    
 
-                    <div className={styles.flex_list_container}>
-                        <h4 className={styles.subtitle_style}>Risposte:</h4>
-
-                        <div className={styles.separa_corrette_sbagliate}>
-                            <span className={styles.buttons_space}>
-                                <p>CORRETTA</p>
-                                <p className={styles.correct_answ}>{singleQuestion.question.correct_answer}</p>
-                            </span>
-                            
-                            <span className={styles.buttons_space}>
-                                <p>SBAGLIATE</p>
-                                <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n1}</p>
-                                <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n2}</p>
-                                <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n3}</p>
-                            </span>
+                    {props.tipoGioco === "COMPLETA LA PAROLA" &&
+                        <div className={styles.flex_list_container}>
+                            <h4 className={styles.subtitle_style}>Parola da indovinare:</h4>
+                            <p className={styles.question_style}>{singleQuestion.indovina}</p>
                         </div>
-                    </div>
+                    }
+
+                    {(props.tipoGioco === "QUIZ" || props.tipoGioco === "QUIZ CON IMMAGINI") &&
+                        <div className={styles.flex_list_container}>
+                            <h4 className={styles.subtitle_style}>Risposte:</h4>
+
+                            <div className={styles.separa_corrette_sbagliate}>
+                                <span className={styles.buttons_space}>
+                                    <p>CORRETTA</p>
+                                    <p className={styles.correct_answ}>{singleQuestion.question.correct_answer}</p>
+                                </span>
+                                
+                                <span className={styles.buttons_space}>
+                                    <p>SBAGLIATE</p>
+                                    <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n1}</p>
+                                    <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n2}</p>
+                                    <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n3}</p>
+                                </span>
+                            </div>
+                        </div>
+                    }
 
                     <div className={styles.flex_list_container}>
                         <h4 className={styles.subtitle_style}>Inserisci nel quiz:</h4>
@@ -197,6 +206,24 @@ function ElencoDomande(props){
                     
                     <ul className={styles.wrapper_lista_domande}>
                         {categoryFilter !== "" && classicQuizQuestions.map(recuperaTutteLeDomande)}
+                    </ul>
+                    
+                </>
+            }
+            {props.tipoGioco === "COMPLETA LA PAROLA" && 
+                <>
+                    <div className={styles.wrapper_generico}>
+                        {/* <h3 className={styles.domande_disponibili}>Domande disponibili:</h3> */}
+                        <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
+                        
+                        <select className={styles.select_style} onChange={categoryChangeHandler}>
+                            <option hidden>---SELEZIONA CATEGORIA---</option>
+                            {categorie.map(mappaCategorie)}
+                        </select>
+                    </div>
+                    
+                    <ul className={styles.wrapper_lista_domande}>
+                        {categoryFilter !== "" && guessTheWordQuestions.map(recuperaTutteLeDomande)}
                     </ul>
                     
                 </>

@@ -1,22 +1,38 @@
 import styles from "./GuessTheWord.module.css";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import GenericButton from "../UI/GenericButton";
+import GameContext from "../../context/game-context";
 
-function GuessTheWord(){
+let counter_question_number = 0;
+let counter_correct_answers = 0;
+var parolaDaMostrare = [];
+
+function GuessTheWord(props){
     const [gameStarted, setGameStarted] = useState(false);
-    const [parolaDaIndovinare, setParolaDaIndovinare] = useState("ARCOBALENO");
-    const [parolaDaMostrare, setParolaDaMostrare] = useState([]);
+    // const [parolaDaIndovinare, setParolaDaIndovinare] = useState("");
+    // const [parolaDaMostrare, setParolaDaMostrare] = useState([]);
     const [indiceLetteraRimossa, setIndiceLetteraRimossa] = useState();
-    const [letteraInseritaDaUtente, setLetteraInseritaDaUtente] = useState();
+    const [letteraInseritaDaUtente, setLetteraInseritaDaUtente] = useState("");
 
     const [rispostaCorretta, setRispostaCorretta] = useState(null);
+    const [hasAnswered, setHasAnswered] = useState(false);
+
+    const game_ctx = useContext(GameContext);
+    const questions = game_ctx.listaGiochi[props.INDICEGIOCO].domandeGioco;
+
+    var parolaDaIndovinare = questions[counter_question_number].indovina;
+    
+
+    // useEffect(() => {
+    //     setParolaDaIndovinare(questions[counter_question_number].indovina);
+    // }, []);
 
     function iniziaGioco(){
         setGameStarted(true);
-        dividiParolaInLettere()
-        // counter_correct_answers = 0;
-        // counter_question_number = 0;
-        // shuffleAnswers();
+        parolaDaMostrare = [];
+        counter_correct_answers = 0;
+        counter_question_number = 0;
+        dividiParolaInLettere();
     }
 
     function letteraInseritaHandler(event){
@@ -47,6 +63,7 @@ function GuessTheWord(){
 
     function verificaRisposta(){
         var rispostaFINALE = "";
+        setHasAnswered(true);
 
         for(var i=0; i < parolaDaIndovinare.length; i++){
             if(i === indiceLetteraRimossa){
@@ -64,10 +81,28 @@ function GuessTheWord(){
 
         if(rispostaFINALE === parolaDaIndovinare){
             setRispostaCorretta(true);
+            counter_correct_answers++;
         }
         else{
             setRispostaCorretta(false);
         }
+    }
+
+    function aggiornaLogica(){
+        if(counter_question_number < questions.length-1){
+            counter_question_number++;
+        }
+        else{
+            setGameStarted(false);
+            counter_question_number = 0;
+            props.giocoTerminato(counter_correct_answers, questions.length);
+        }
+        setLetteraInseritaDaUtente("");
+        setRispostaCorretta(null);
+        parolaDaIndovinare = questions[counter_question_number].indovina;
+        parolaDaMostrare = [];
+        dividiParolaInLettere();
+        setHasAnswered(false);
     }
 
     return(
@@ -95,10 +130,13 @@ function GuessTheWord(){
                         {parolaDaMostrare}
                     </div>
 
+                    <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>
+
                     {rispostaCorretta !== null && !rispostaCorretta && <h2>sei proprio SCARSO</h2>}
                     {rispostaCorretta !== null && rispostaCorretta && <h2>RISPOSTA CORRETTA BRAVO u WAGNON MI</h2>}
 
                     <div className={styles.wrapper_horizontal_flex}>
+                        
                         <GenericButton
                             onClick={verificaRisposta}
                             alternative_button={true}
@@ -106,11 +144,15 @@ function GuessTheWord(){
                         >
                         </GenericButton>
 
-                        <GenericButton
-                            alternative_button={true}
-                            buttonText={"Prossima parola"}
-                        >
-                        </GenericButton>
+                        {hasAnswered &&
+                            <GenericButton
+                                onClick={aggiornaLogica}
+                                alternative_button={true}
+                                buttonText={"Prossima parola"}
+                            >
+                            </GenericButton>
+                        }
+                        
                     </div>
                     
                 </>
