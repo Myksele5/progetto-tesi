@@ -1,6 +1,6 @@
 import styles from './ExerciseGuessTheFace.module.css';
 import GameButton from '../UI/GameButton';
-import GenericButton from '../UI/GenericButton';
+import GenericAlternativeButton from '../UI/GenericAlternativeButton';
 import { useContext, useState } from 'react';
 
 import Einstein from '../Images-Giochi/ALBERT_EINSTEIN.jpeg';
@@ -161,12 +161,11 @@ function ExerciseGuessTheFace(props){
             {!gameStarted &&
                 <div className={styles.wrap_generico}>
                     <h1>Quando sei pronto, clicca sul bottone</h1>
-                    <GenericButton
+                    <GenericAlternativeButton
                         onClick={iniziaGioco}
-                        alternative_button={true}
                         buttonText={"INIZIA"}
                     >
-                    </GenericButton>
+                    </GenericAlternativeButton>
                 </div>
             }
             
@@ -183,12 +182,11 @@ function ExerciseGuessTheFace(props){
                     <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>
                     
                     {hasAnswered && 
-                        <GenericButton
+                        <GenericAlternativeButton
                             onClick={aggiornaLogica}
-                            alternative_button={true}
                             buttonText={"PROSSIMA DOMANDA"}
                         >
-                        </GenericButton>
+                        </GenericAlternativeButton>
                     }
                     
                     <div className={styles.wrapper_bottoni_risposte}>

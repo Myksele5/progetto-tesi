@@ -1,6 +1,6 @@
 import styles from "./GuessTheWord.module.css";
-import { useContext, useEffect, useState } from "react";
-import GenericButton from "../UI/GenericButton";
+import { useContext, useState } from "react";
+import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import GameContext from "../../context/game-context";
 
 let counter_question_number = 0;
@@ -9,8 +9,6 @@ var parolaDaMostrare = [];
 
 function GuessTheWord(props){
     const [gameStarted, setGameStarted] = useState(false);
-    // const [parolaDaIndovinare, setParolaDaIndovinare] = useState("");
-    // const [parolaDaMostrare, setParolaDaMostrare] = useState([]);
     const [indiceLetteraRimossa, setIndiceLetteraRimossa] = useState();
     const [letteraInseritaDaUtente, setLetteraInseritaDaUtente] = useState("");
 
@@ -21,11 +19,6 @@ function GuessTheWord(props){
     const questions = game_ctx.listaGiochi[props.INDICEGIOCO].domandeGioco;
 
     var parolaDaIndovinare = questions[counter_question_number].indovina;
-    
-
-    // useEffect(() => {
-    //     setParolaDaIndovinare(questions[counter_question_number].indovina);
-    // }, []);
 
     function iniziaGioco(){
         setGameStarted(true);
@@ -114,12 +107,11 @@ function GuessTheWord(props){
             {!gameStarted &&
                 <div className={styles.wrap_generico}>
                     <h1>Quando sei pronto, clicca sul bottone</h1>
-                    <GenericButton
+                    <GenericAlternativeButton
                         onClick={iniziaGioco}
-                        alternative_button={true}
                         buttonText={"INIZIA"}
                     >
-                    </GenericButton>
+                    </GenericAlternativeButton>
                 </div>
             }
 
@@ -132,25 +124,23 @@ function GuessTheWord(props){
 
                     <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>
 
-                    {rispostaCorretta !== null && !rispostaCorretta && <h2>sei proprio SCARSO</h2>}
-                    {rispostaCorretta !== null && rispostaCorretta && <h2>RISPOSTA CORRETTA BRAVO u WAGNON MI</h2>}
+                    {rispostaCorretta !== null && !rispostaCorretta && <h2 className={styles.WRONG}>Peccato, hai sbagliato.</h2>}
+                    {rispostaCorretta !== null && rispostaCorretta && <h2 className={styles.CORRECT}>RISPOSTA CORRETTA!</h2>}
 
                     <div className={styles.wrapper_horizontal_flex}>
                         
-                        <GenericButton
+                        <GenericAlternativeButton
                             onClick={verificaRisposta}
-                            alternative_button={true}
                             buttonText={"Verifica risposta"}
                         >
-                        </GenericButton>
+                        </GenericAlternativeButton>
 
                         {hasAnswered &&
-                            <GenericButton
+                            <GenericAlternativeButton
                                 onClick={aggiornaLogica}
-                                alternative_button={true}
                                 buttonText={"Prossima parola"}
                             >
-                            </GenericButton>
+                            </GenericAlternativeButton>
                         }
                         
                     </div>

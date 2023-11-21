@@ -3,6 +3,7 @@ import { useContext, useEffect } from "react";
 import GameContext from "../../context/game-context";
 import GameCard from "../UI/GameCard";
 import GenericButton from "../UI/GenericButton";
+import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 
 function ListaGiochi(props){
     const game_ctx = useContext(GameContext);
@@ -26,30 +27,31 @@ function ListaGiochi(props){
                             </div>
                             
                             <div className={styles.buttons_wrap}>
-                                <GenericButton
+                                <GenericAlternativeButton
                                 onClick={()=> {
                                     props.iniziaGioco(lista.tipoGioco, lista.codiceGioco)
                                 }}
-                                alternative_button={true}
+                                // alternative_button={true}
                                 buttonText='Avvia Gioco'>
-                                </GenericButton>
+                                </GenericAlternativeButton>
 
-                                <GenericButton
+                                <GenericAlternativeButton
                                 onClick={() => {
                                     game_ctx.modificaGioco(lista)
                                     props.mostraFormModificaGioco(lista);
                                 }}
-                                alternative_button={true}
+                                // alternative_button={true}
                                 buttonText='Gestione Gioco'>
-                                </GenericButton>
+                                </GenericAlternativeButton>
 
-                                <GenericButton
+                                <GenericAlternativeButton
                                 onClick={() => {
                                     game_ctx.eliminaGioco(lista.codiceGioco)
                                 }}
-                                small_button={true}
+                                // alternative_button={true}
+                                colore_rosso={true}
                                 buttonText='Elimina Gioco'>
-                                </GenericButton>
+                                </GenericAlternativeButton>
                             </div>
                         </>
                     }>

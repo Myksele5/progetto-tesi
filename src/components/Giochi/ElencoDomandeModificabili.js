@@ -83,7 +83,7 @@ function ElencoDomandeModificabili(props){
                     }
 
                     <div className={styles.flex_list_container}>
-                        <h4 className={styles.subtitle_style}>MODIFICA/ELIMINA DOMANDA</h4>
+                        <h4 className={styles.subtitle_style}>Gestione domanda:</h4>
                         <GenericButton
                             onClick={() => {
                                 props.modificaSingolaDomanda(gameType, singleQuestion);

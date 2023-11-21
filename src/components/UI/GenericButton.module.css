@@ -10,9 +10,9 @@
     align-items: center;
     justify-content: space-evenly;
     margin: 7px;
-    width: 240px;
-    height: 45px;
-    font-size: 21px;
+    width: 230px;
+    height: 40px;
+    font-size: 18px;
     font-weight: bold;
     border: 2px solid transparent;
     border-radius: 20px;
@@ -38,6 +38,7 @@
     background-color: rgb(0, 0, 60);
     border: 2px solid transparent;
     cursor: not-allowed;
+    transition: 0.3s;
     /* pointer-events: none; */
 }
 
@@ -55,7 +56,7 @@
     color: whitesmoke;
     cursor: pointer;
     background-color: rgb(175, 0, 0);
-    animation: animaz 1.2s forwards ease-in-out;
+    /* animation: animaz 1.2s forwards ease-in-out; */
 }
 
 .small_button:hover{
@@ -127,23 +128,4 @@
         width: 20px;
         height: 20px
     }
-}
-
-@keyframes animaz {
-    0%{
-        opacity: 0%;
-    }
-    25%{
-        opacity: 25%;
-    }
-    50%{
-        opacity: 40%;
-    }
-    75%{
-        opacity: 60%;
-    }
-    100%{
-        opacity: 100%;
-    }
-    
 }
