@@ -10,6 +10,7 @@ import AddDomanda from "./AddDomanda";
 import ExerciseGuessTheFace from "./ExerciseGuessTheFace";
 import EditDomanda from "./EditDomanda";
 import GuessTheWord from "./GuessTheWord";
+import ExerciseReflexes from "./ExerciseReflexes";
 
 let modifica_gioco;
 let modifica_domanda;
@@ -53,7 +54,20 @@ function Giochi(){
     }
 
     function formEditGame(listaa){
-        modifica_gioco =
+        if(listaa.tipoGioco === "RIFLESSI"){
+            modifica_gioco =
+            <EditGioco
+                nomeGioco={listaa.nomeGioco}
+                tipoGioco={listaa.tipoGioco}
+                difficulty={listaa.livelloGioco}
+                numeroRound={listaa.numeroRound}
+                codiceGioco={listaa.codiceGioco}
+                chiudiFormModifica={closeFormEditGame}
+            >
+            </EditGioco>
+        }
+        else{
+            modifica_gioco =
             <EditGioco
                 nomeGioco={listaa.nomeGioco}
                 tipoGioco={listaa.tipoGioco}
@@ -64,6 +78,8 @@ function Giochi(){
                 // listaDomande={listaa.domandeGioco}
             >
             </EditGioco>
+        }
+        
         setShowSearchBoxAndButton(false);
         setShowElencoGiochi(false);
         setShowEditGame(true);
@@ -115,6 +131,14 @@ function Giochi(){
                 break;
 
             case 'RIFLESSI':
+                setGameObject(
+                    <ExerciseReflexes
+                        giocoTerminato={endGame}
+                        INDICEGIOCO={indice_gioco}
+                        TIPOGIOCO={stringa_TIPOGIOCO}
+                    >
+                    </ExerciseReflexes>
+                );
                 break;
 
             default:

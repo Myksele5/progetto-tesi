@@ -118,7 +118,7 @@ function ElencoDomandeModificabili(props){
                 <option>QUIZ</option>
                 <option>QUIZ CON IMMAGINI</option>
                 <option>COMPLETA LA PAROLA</option>
-                <option>RIFLESSI</option>
+                {/* <option>RIFLESSI</option> */}
             </select>
 
             <select className={styles.select_style} onChange={categoryFilterChangeHandler}>

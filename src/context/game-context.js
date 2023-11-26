@@ -134,6 +134,13 @@ export function GameContextProvider(props){
                     indovina: "APRILE",
                 }
             ]
+        },
+        {
+            nomeGioco: "Training riflessi",
+            tipoGioco: "RIFLESSI",
+            livelloGioco: "FACILE",
+            codiceGioco: "REFLEXES-1",
+            numeroRound: 3
         }
         // {
         //     nomeGioco: "Domande personali",
@@ -425,14 +432,25 @@ export function GameContextProvider(props){
     }
 
     function addNewGameToList(name, type, level, questionsList){
-        var new_game = {
-            nomeGioco: name,
-            tipoGioco: type,
-            livelloGioco: level,
-            codiceGioco: counter_CODICE_GIOCO,
-            domandeGioco: [...questionsList]
+        if(type === "RIFLESSI"){
+            var new_game = {
+                nomeGioco: name,
+                tipoGioco: type,
+                livelloGioco: level,
+                codiceGioco: counter_CODICE_GIOCO,
+                numeroRound: questionsList
+            }
         }
-
+        else{
+            var new_game = {
+                nomeGioco: name,
+                tipoGioco: type,
+                livelloGioco: level,
+                codiceGioco: counter_CODICE_GIOCO,
+                domandeGioco: [...questionsList]
+            }
+        }
+        
         setElencoGiochi(vecchioElenco => {
             return [new_game, ...vecchioElenco]
         });
@@ -498,16 +516,32 @@ export function GameContextProvider(props){
     }
 
     function editGame(listaa){
-        setDomandeModifica(listaa.domandeGioco);
+        if(listaa.tipoGioco !== "RIFLESSI"){
+            setDomandeModifica(listaa.domandeGioco);
+        }
+        else{
+            setDomandeModifica([listaa.numeroRound]);
+        }
     }
 
     function addModifiedGameToList(name, type, level, gameID, questionsList){
-        var modified_game = {
-            nomeGioco: name,
-            tipoGioco: type,
-            livelloGioco: level,
-            codiceGioco: gameID,
-            domandeGioco: questionsList
+        if(type === "RIFLESSI"){
+            var modified_game = {
+                nomeGioco: name,
+                tipoGioco: type,
+                livelloGioco: level,
+                codiceGioco: gameID,
+                numeroRound: questionsList
+            }
+        }
+        else{
+            var modified_game = {
+                nomeGioco: name,
+                tipoGioco: type,
+                livelloGioco: level,
+                codiceGioco: gameID,
+                domandeGioco: questionsList
+            }
         }
 
         for(let i=0; i < elencoGiochi.length; i++){

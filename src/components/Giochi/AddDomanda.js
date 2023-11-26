@@ -154,7 +154,7 @@ function AddDomanda(props){
                                     <option>QUIZ</option>
                                     <option>QUIZ CON IMMAGINI</option>
                                     <option>COMPLETA LA PAROLA</option>
-                                    <option>RIFLESSI</option>
+                                    {/* <option>RIFLESSI</option> */}
                                 </select>
 
                                 <label className={styles.label_style}>Categoria domanda</label>

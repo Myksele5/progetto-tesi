@@ -1,8 +1,34 @@
+.wrap_generico{
+    width: 650px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    /* position: absolute; */
+    /* top: 64%; */
+}
+
+.wrapper_horizontal_flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spawn_area{
+    width: 1100px;
+    height: 500px;
+    border: 2px solid darkmagenta;
+    background-color: lightgrey;
+}
+
 .figura_cliccabile{
+    position: absolute;
     background-color: darkred;
     color: white;
-    width: 140px;
-    height: 140px;
+    width: 100px;
+    height: 100px;
 }
 
 .explanation{
@@ -12,11 +38,89 @@
 
 .domanda{
     font-size: 25px;
-    margin: 30px;
+    margin: 20px;
 }
 
 .horizontal_line{
     width: 99.5%;
     border: 1px solid rgb(233, 33, 131);
     margin: 5px;
+}
+
+.risposte_corrette{
+    border: 2px solid rgb(233, 33, 131);
+    font-size: 20px;
+    margin: 10px;
+    padding: 5px;
+}
+
+.CORRECT{
+    color: green;
+}
+
+.WRONG{
+    color: red;
+}
+
+.animazione_n1_EASY{
+    animation: muoviFigura_n1_EASY 10s infinite forwards;
+}
+
+.animazione_n2_EASY{
+    left: 560px;
+    animation: muoviFigura_n2_EASY 20s infinite forwards;
+}
+
+@keyframes muoviFigura_n1_EASY {
+    10%{
+        transform: translateX(-100px);
+    }
+    20%{
+        transform: translateX(100px) translateY(100px);
+    }
+    30%{
+        transform: translateX(350px) translateY(300px);
+    }
+    40%{
+        transform: translateX(300px) translateY(250px);
+    }
+    50%{
+        transform: translateX(200px) translateY(80px);
+    }
+    60%{
+        transform: translateX(380px) translateY(100px);
+    }
+    70%{
+        transform: translateX(250px) translateY(-50px);
+    }
+    80%{
+        transform: translateX(50px) translateY(220px);
+    }
+}
+
+@keyframes muoviFigura_n2_EASY {
+    10%{
+        transform: translateX(1000px);
+    }
+    20%{
+        transform: translateX(200px) translateY(300px);
+    }
+    30%{
+        transform: translateX(850px) translateY(300px);
+    }
+    40%{
+        transform: translateX(300px) translateY(250px);
+    }
+    50%{
+        transform: translateX(200px) translateY(80px);
+    }
+    60%{
+        transform: translateX(410px) translateY(130px);
+    }
+    70%{
+        transform: translateX(250px) translateY(80px);
+    }
+    80%{
+        transform: translateX(50px) translateY(220px);
+    }
 }

@@ -12,6 +12,7 @@ function EditGioco(props){
     const [nomeGiocoModifica, setNomeGiocoModifica] = useState(props.nomeGioco);
     const [tipoGiocoModifica, setTipoGiocoModifica] = useState(props.tipoGioco);
     const [livelloGiocoModifica, setLivelloGiocoModifica] = useState(props.difficulty);
+    const [numeroRoundModifica, setNumeroRoundModifica] =  useState(props.numeroRound);
 
     const [selectedEasy, setSelectedEasy] = useState(false);
     const [selectedNormal, setSelectedNormal] = useState(false);
@@ -41,10 +42,13 @@ function EditGioco(props){
     function nomeGiocoChangeHandler(event){
         setNomeGiocoModifica(event.target.value);
     }
-
     function livelloGiocoChangeHandler(stringa){
         setLivelloGiocoModifica(stringa);
         // console.log(livelloGioco);
+    }
+    function numeroRoundChangeHandler(event){
+        console.log(event.target.value);
+        setNumeroRoundModifica(event.target.value);
     }
 
     function selezioneDifficoltà(stringaDifficoltà){
@@ -128,7 +132,12 @@ function EditGioco(props){
 
                 <label className={styles.label_style}>Nome Gioco:</label>
                 <input className={styles.textbox_style} type="text" value={nomeGiocoModifica} onChange={nomeGiocoChangeHandler}></input>
-
+                {tipoGiocoModifica === "RIFLESSI" &&
+                    <>
+                        <label className={styles.label_style}>Numero di round da giocare:</label>
+                        <input className={styles.textbox_style} type="number" step={1} value={numeroRoundModifica} onChange={numeroRoundChangeHandler}></input>
+                    </>
+                }
 
                 <ElencoDomande
                     domandeNuovoGioco={modificaOggettoDomande}
@@ -140,7 +149,9 @@ function EditGioco(props){
                 <div className={styles.wrapper_generico}>
                     <GenericButton
                         onClick={() => {
-                            game_ctx.salvaGiocoModificato(nomeGiocoModifica, tipoGiocoModifica, livelloGiocoModifica, props.codiceGioco, domande_gioco_da_modificare)
+                            {tipoGiocoModifica !== "RIFLESSI" && game_ctx.salvaGiocoModificato(nomeGiocoModifica, tipoGiocoModifica, livelloGiocoModifica, props.codiceGioco, domande_gioco_da_modificare)}
+                            {tipoGiocoModifica === "RIFLESSI" && game_ctx.salvaGiocoModificato(nomeGiocoModifica, tipoGiocoModifica, livelloGiocoModifica, props.codiceGioco, numeroRoundModifica)}
+ 
                             props.chiudiFormModifica();
                         }}
                         generic_button={true}

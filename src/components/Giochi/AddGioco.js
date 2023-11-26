@@ -12,6 +12,7 @@ function AddGioco(props){
     const [titoloGioco, setTitoloGioco] = useState("");
     const [tipologiaGioco, setTipologiaGioco] = useState("QUIZ");
     const [livelloGioco, setLivelloGioco] = useState("NORMALE");
+    const [numeroRound, setNumeroRound] = useState(0);
 
     const [selectedEasy, setSelectedEasy] = useState(false);
     const [selectedNormal, setSelectedNormal] = useState(true);
@@ -60,6 +61,10 @@ function AddGioco(props){
     function livelloGiocoChangeHandler(stringa){
         setLivelloGioco(stringa);
         console.log(livelloGioco);
+    }
+    function numeroRoundChangeHandler(event){
+        console.log(event.target.value);
+        setNumeroRound(event.target.value);
     }
 
     function creaOggettoDomande(domandeSelezionate){
@@ -120,7 +125,12 @@ function AddGioco(props){
 
                 <label className={styles.label_style}>Inserisci nome del gioco</label>
                 <input className={styles.textbox_style} type="text" onChange={titoloGiocoChangeHandler}></input>
-
+                {tipologiaGioco === "RIFLESSI" &&
+                    <>
+                        <label className={styles.label_style}>Numero di round da giocare:</label>
+                        <input className={styles.textbox_style} type="number" step={1} onChange={numeroRoundChangeHandler}></input>
+                    </>
+                }
                 
                 <ElencoDomande
                     domandeNuovoGioco={creaOggettoDomande}
@@ -132,8 +142,11 @@ function AddGioco(props){
                 <div className={styles.wrapper_generico}>
                     <GenericButton
                     onClick={() => {
-                        game_ctx.aggiungiGiocoAllaLista(titoloGioco, tipologiaGioco, livelloGioco, domande_nuovo_gioco);
+                        {tipologiaGioco !== "RIFLESSI" && game_ctx.aggiungiGiocoAllaLista(titoloGioco, tipologiaGioco, livelloGioco, domande_nuovo_gioco)}
+                        {tipologiaGioco === "RIFLESSI" && game_ctx.aggiungiGiocoAllaLista(titoloGioco, tipologiaGioco, livelloGioco, numeroRound)}
+                        
                         domande_nuovo_gioco = [];
+                        setNumeroRound(0);
                         props.chiudiFormNuovoGioco();
                     }}
                     generic_button={true}
