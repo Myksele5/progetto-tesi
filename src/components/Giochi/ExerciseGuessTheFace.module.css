@@ -10,6 +10,12 @@
     /* top: 64%; */
 }
 
+.wrapper_horizontal_flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .explanation{
     font-size: 25px;
     margin: 5px;

@@ -29,7 +29,7 @@ function ListaGiochi(props){
                             <div className={styles.buttons_wrap}>
                                 <GenericAlternativeButton
                                 onClick={()=> {
-                                    props.iniziaGioco(lista.tipoGioco, lista.codiceGioco)
+                                    props.iniziaGioco(lista.tipoGioco, lista.codiceGioco, lista.livelloGioco)
                                 }}
                                 // alternative_button={true}
                                 buttonText='Avvia Gioco'>

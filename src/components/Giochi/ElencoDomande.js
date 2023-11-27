@@ -21,6 +21,10 @@ function ElencoDomande(props){
         // setllll([...game_ctx.domandeDaModificare]);
         setNumeroDomandeSelezionate(game_ctx.domandeDaModificare.length);
         COUNT_DOMANDE = game_ctx.domandeDaModificare.length;
+        console.log("Appena entrato queste sono le domande")
+        console.log(llll);
+        props.domandeNuovoGioco(llll);
+
     }, [game_ctx.domandeDaModificare.length]);
 
     function categoryChangeHandler(event){
@@ -32,7 +36,7 @@ function ElencoDomande(props){
         llll.splice(0);
         COUNT_DOMANDE = 0;
         setNumeroDomandeSelezionate(COUNT_DOMANDE);
-        console.log(llll);
+        // console.log(llll);
         props.domandeNuovoGioco(llll);
     }
 
@@ -83,7 +87,7 @@ function ElencoDomande(props){
     function recuperaTutteLeDomande(singleQuestion){
         var checkboxInputChecked;
         
-        console.log(game_ctx.domandeDaModificare === llll);
+        // console.log(game_ctx.domandeDaModificare === llll);
 
         if(singleQuestion.categoria === categoryFilter){
             if(llll.length <= 0){

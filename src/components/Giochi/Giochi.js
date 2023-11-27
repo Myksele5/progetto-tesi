@@ -96,7 +96,7 @@ function Giochi(){
         setShowElencoGiochi(false);
     }
 
-    function startGame(stringa_TIPOGIOCO, stringa_CODICEGIOCO){
+    function startGame(stringa_TIPOGIOCO, stringa_CODICEGIOCO, stringa_LIVELLOGIOCO){
         var indice_gioco;
         for(var i = 0; i < game_ctx.listaGiochi.length; i++){
             if(stringa_CODICEGIOCO === game_ctx.listaGiochi[i].codiceGioco){
@@ -114,6 +114,7 @@ function Giochi(){
                         giocoTerminato={endGame}
                         INDICEGIOCO={indice_gioco}
                         TIPOGIOCO={stringa_TIPOGIOCO}
+                        LIVELLOGIOCO={stringa_LIVELLOGIOCO}
                     >
                     </ExerciseGuessTheFace>
                 );

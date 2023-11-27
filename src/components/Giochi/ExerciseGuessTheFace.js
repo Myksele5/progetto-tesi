@@ -1,7 +1,7 @@
 import styles from './ExerciseGuessTheFace.module.css';
 import GameButton from '../UI/GameButton';
 import GenericAlternativeButton from '../UI/GenericAlternativeButton';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import Einstein from '../Images-Giochi/ALBERT_EINSTEIN.jpeg';
 import Dante from '../Images-Giochi/DANTE_ALIGHIERI.jpg';
@@ -16,6 +16,8 @@ let counter_correct_answers = 0;
 var quattroRisposte = [];
 
 var tipoQuiz;
+var secondi;
+var interval;
 
 function ExerciseGuessTheFace(props){
     tipoQuiz = props.TIPOGIOCO;
@@ -38,10 +40,47 @@ function ExerciseGuessTheFace(props){
     const [coloraRispostaSbagliata_N3, setColoraRispostaSbagliata_N3] = useState(false);
     const [coloraRispostaSbagliata_N4, setColoraRispostaSbagliata_N4] = useState(false);
 
+    const [timer, setTimer] = useState(undefined);
+
     const game_ctx = useContext(GameContext);
     const questions = game_ctx.listaGiochi[props.INDICEGIOCO].domandeGioco;
 
+    useEffect(() => {
+        if(props.LIVELLOGIOCO === "NORMALE"){
+            secondi = 15;
+            setTimer(secondi);
+        }
+        if(props.LIVELLOGIOCO === "DIFFICILE"){
+            secondi = 10;
+            setTimer(secondi);
+        }
+        interval = setInterval(() => {
+            if(secondi > 0){
+                secondi = secondi - 1;
+                setTimer(secondi);
+            }
+        }, 1000);
+
+        console.log("INTERVAL in useEffect--->" + interval);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        if(timer <=0){
+            clearInterval(interval);
+            setColoraRispostaSbagliata_N1(true);
+            setColoraRispostaSbagliata_N2(true);
+            setColoraRispostaSbagliata_N3(true);
+            setColoraRispostaSbagliata_N4(true);
+            setDisableButton(true);
+            setHasAnswered(true);
+        }
+    }, [timer]);
+
     function checkTheAnswer(answer1, answer2, answer3, answer4, button){
+        console.log("INTERVAL dentro checktheanswer--->" + interval);
+        clearInterval(interval);
         setDisableButton(true);
         setHasAnswered(true);
 
@@ -149,7 +188,34 @@ function ExerciseGuessTheFace(props){
         setDisableButton(false);
         setHasAnswered(false);
 
+        if(props.LIVELLOGIOCO === "NORMALE"){
+            secondi = 15;
+            setTimer(secondi);
+        }
+        if(props.LIVELLOGIOCO === "DIFFICILE"){
+            secondi = 10;
+            setTimer(secondi);
+        }
+        interval = setInterval(() => {
+            if(secondi > 0){
+                secondi = secondi - 1;
+                setTimer(secondi);
+            }
+        }, 1000);
+
         shuffleAnswers();
+    }
+
+    function tempoScaduto(){
+        if(timer <= 0){
+            clearInterval(interval);
+            setColoraRispostaSbagliata_N1(true);
+            setColoraRispostaSbagliata_N2(true);
+            setColoraRispostaSbagliata_N3(true);
+            setColoraRispostaSbagliata_N4(true);
+            setDisableButton(true);
+            setHasAnswered(true);
+        }
     }
 
     return(
@@ -179,7 +245,10 @@ function ExerciseGuessTheFace(props){
                     }
                     {tipoQuiz === "QUIZ" && <h1>{questions[counter_question_number].indovina}</h1>}
 
-                    <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>
+                    <div className={styles.wrapper_horizontal_flex}>
+                        <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>
+                        {props.LIVELLOGIOCO !== "FACILE" && <p onClick={tempoScaduto}>TIMER: {timer}</p>}
+                    </div>
                     
                     {hasAnswered && 
                         <GenericAlternativeButton

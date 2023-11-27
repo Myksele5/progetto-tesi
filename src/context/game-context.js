@@ -525,6 +525,9 @@ export function GameContextProvider(props){
     }
 
     function addModifiedGameToList(name, type, level, gameID, questionsList){
+        console.log("POCO PRIMA DI SALVARE");
+        console.log(questionsList);
+
         if(type === "RIFLESSI"){
             var modified_game = {
                 nomeGioco: name,
