@@ -126,6 +126,7 @@ function Giochi(){
                         giocoTerminato={endGame}
                         INDICEGIOCO={indice_gioco}
                         TIPOGIOCO={stringa_TIPOGIOCO}
+                        LIVELLOGIOCO={stringa_LIVELLOGIOCO}
                     >
                     </GuessTheWord>
                 );

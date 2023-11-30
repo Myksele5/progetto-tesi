@@ -58,7 +58,8 @@ export function GameContextProvider(props){
                         correct_answer: 'Albert Einstein',
                         wrong_answer_n1: 'Isaac Newton',
                         wrong_answer_n2: 'Enrico Fermi',
-                        wrong_answer_n3: 'Silvio Berlusconi'
+                        wrong_answer_n3: 'Silvio Berlusconi',
+                        wrong_answer_n4: 'Myks'
                     }
                 },
                 {
@@ -68,7 +69,8 @@ export function GameContextProvider(props){
                         correct_answer: 'Dante Alighieri',
                         wrong_answer_n1: 'Vincent Van Gogh',
                         wrong_answer_n2: 'Niccolò Machiavelli',
-                        wrong_answer_n3: 'Giovanni Boccaccio'
+                        wrong_answer_n3: 'Giovanni Boccaccio',
+                        wrong_answer_n4: 'Myks'
                     }
                 },
                 {

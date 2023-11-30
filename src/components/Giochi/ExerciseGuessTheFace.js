@@ -26,6 +26,7 @@ function ExerciseGuessTheFace(props){
     const [risposta2, setRisposta2] = useState('');
     const [risposta3, setRisposta3] = useState('');
     const [risposta4, setRisposta4] = useState('');
+    const [risposta5, setRisposta5] = useState('');
 
     const [gameStarted, setGameStarted] = useState(false);
     const [hasAnswered, setHasAnswered] = useState(false);
@@ -35,10 +36,12 @@ function ExerciseGuessTheFace(props){
     const [coloraRispostaCorretta_N2, setColoraRispostaCorretta_N2] = useState(false);
     const [coloraRispostaCorretta_N3, setColoraRispostaCorretta_N3] = useState(false);
     const [coloraRispostaCorretta_N4, setColoraRispostaCorretta_N4] = useState(false);
+    const [coloraRispostaCorretta_N5, setColoraRispostaCorretta_N5] = useState(false);
     const [coloraRispostaSbagliata_N1, setColoraRispostaSbagliata_N1] = useState(false);
     const [coloraRispostaSbagliata_N2, setColoraRispostaSbagliata_N2] = useState(false);
     const [coloraRispostaSbagliata_N3, setColoraRispostaSbagliata_N3] = useState(false);
     const [coloraRispostaSbagliata_N4, setColoraRispostaSbagliata_N4] = useState(false);
+    const [coloraRispostaSbagliata_N5, setColoraRispostaSbagliata_N5] = useState(false);
 
     const [timer, setTimer] = useState(undefined);
 
@@ -73,12 +76,13 @@ function ExerciseGuessTheFace(props){
             setColoraRispostaSbagliata_N2(true);
             setColoraRispostaSbagliata_N3(true);
             setColoraRispostaSbagliata_N4(true);
+            setColoraRispostaSbagliata_N5(true);
             setDisableButton(true);
             setHasAnswered(true);
         }
     }, [timer]);
 
-    function checkTheAnswer(answer1, answer2, answer3, answer4, button){
+    function checkTheAnswer(answer1, answer2, answer3, answer4, answer5, button){
         console.log("INTERVAL dentro checktheanswer--->" + interval);
         clearInterval(interval);
         setDisableButton(true);
@@ -134,15 +138,47 @@ function ExerciseGuessTheFace(props){
                 setColoraRispostaSbagliata_N4(true);
             }
         }
+        if(answer5 === risp){
+            setColoraRispostaCorretta_N5(true);
+            if(button === "BOTTONE_5"){
+                counter_correct_answers++;
+            }
+        }
+        else{
+            if(button === "BOTTONE_5"){
+                setColoraRispostaSbagliata_N5(true);
+            }
+        }
     }
 
     function shuffleAnswers(){
+        quattroRisposte.length = 0;
+
+        for(var i=0; i < Object.keys(questions[counter_question_number].question).length; i++){
+            if(i === 0){
+                quattroRisposte[0] = questions[counter_question_number].question.correct_answer;
+            }
+            if(i === 1){
+                quattroRisposte[1] = questions[counter_question_number].question.wrong_answer_n1;
+            }
+            if(i === 2){
+                quattroRisposte[2] = questions[counter_question_number].question.wrong_answer_n2;
+            }
+            if(i === 3){
+                quattroRisposte[3] = questions[counter_question_number].question.wrong_answer_n3;
+            }
+            if(i === 4){
+                quattroRisposte[4] = questions[counter_question_number].question.wrong_answer_n4;
+            }
+        }
         
-        quattroRisposte[0] = questions[counter_question_number].question.correct_answer;
-        quattroRisposte[1] = questions[counter_question_number].question.wrong_answer_n1;
-        quattroRisposte[2] = questions[counter_question_number].question.wrong_answer_n2;
-        quattroRisposte[3] = questions[counter_question_number].question.wrong_answer_n3;
-        // console.log(quattroRisposte);
+        // quattroRisposte[0] = questions[counter_question_number].question.correct_answer;
+        // quattroRisposte[1] = questions[counter_question_number].question.wrong_answer_n1;
+        // quattroRisposte[2] = questions[counter_question_number].question.wrong_answer_n2;
+        // quattroRisposte[3] = questions[counter_question_number].question.wrong_answer_n3;
+        // quattroRisposte[4] = questions[counter_question_number].question.wrong_answer_n4;
+        // console.log(quattroRisposte[4]);
+        console.log(Object.keys(questions[counter_question_number].question).length);
         
         for(let i = quattroRisposte.length-1; i >= 0; i--){
             const j = Math.floor(Math.random() * (i+1));
@@ -155,6 +191,7 @@ function ExerciseGuessTheFace(props){
         setRisposta2(quattroRisposte[1]);
         setRisposta3(quattroRisposte[2]);
         setRisposta4(quattroRisposte[3]);
+        setRisposta5(quattroRisposte[4]);
 
     }
 
@@ -179,11 +216,13 @@ function ExerciseGuessTheFace(props){
         setColoraRispostaCorretta_N2(false);
         setColoraRispostaCorretta_N3(false);
         setColoraRispostaCorretta_N4(false);
+        setColoraRispostaCorretta_N5(false);
 
         setColoraRispostaSbagliata_N1(false);
         setColoraRispostaSbagliata_N2(false);
         setColoraRispostaSbagliata_N3(false);
         setColoraRispostaSbagliata_N4(false);
+        setColoraRispostaSbagliata_N5(false);
 
         setDisableButton(false);
         setHasAnswered(false);
@@ -204,18 +243,6 @@ function ExerciseGuessTheFace(props){
         }, 1000);
 
         shuffleAnswers();
-    }
-
-    function tempoScaduto(){
-        if(timer <= 0){
-            clearInterval(interval);
-            setColoraRispostaSbagliata_N1(true);
-            setColoraRispostaSbagliata_N2(true);
-            setColoraRispostaSbagliata_N3(true);
-            setColoraRispostaSbagliata_N4(true);
-            setDisableButton(true);
-            setHasAnswered(true);
-        }
     }
 
     return(
@@ -247,7 +274,7 @@ function ExerciseGuessTheFace(props){
 
                     <div className={styles.wrapper_horizontal_flex}>
                         <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>
-                        {props.LIVELLOGIOCO !== "FACILE" && <p onClick={tempoScaduto}>TIMER: {timer}</p>}
+                        {props.LIVELLOGIOCO !== "FACILE" && <p>TIMER: {timer}</p>}
                     </div>
                     
                     {hasAnswered && 
@@ -265,7 +292,7 @@ function ExerciseGuessTheFace(props){
                         <GameButton
                         onClick={() => {
                             // console.log(risposta1);
-                            checkTheAnswer(risposta1, risposta2, risposta3, risposta4, 'BOTTONE_1')
+                            checkTheAnswer(risposta1, risposta2, risposta3, risposta4, risposta5, 'BOTTONE_1')
                         }}
                         correct_answer={coloraRispostaCorretta_N1}
                         wrong_answer={coloraRispostaSbagliata_N1}
@@ -275,7 +302,7 @@ function ExerciseGuessTheFace(props){
 
                         <GameButton
                         onClick={() => {
-                            checkTheAnswer(risposta1, risposta2, risposta3, risposta4, 'BOTTONE_2')
+                            checkTheAnswer(risposta1, risposta2, risposta3, risposta4, risposta5, 'BOTTONE_2')
                         }}
                         correct_answer={coloraRispostaCorretta_N2}
                         wrong_answer={coloraRispostaSbagliata_N2}
@@ -285,7 +312,7 @@ function ExerciseGuessTheFace(props){
 
                         <GameButton
                         onClick={() => {
-                            checkTheAnswer(risposta1, risposta2, risposta3, risposta4, 'BOTTONE_3')
+                            checkTheAnswer(risposta1, risposta2, risposta3, risposta4, risposta5, 'BOTTONE_3')
                         }}
                         correct_answer={coloraRispostaCorretta_N3}
                         wrong_answer={coloraRispostaSbagliata_N3}
@@ -295,13 +322,25 @@ function ExerciseGuessTheFace(props){
 
                         <GameButton
                         onClick={() => {
-                            checkTheAnswer(risposta1, risposta2, risposta3, risposta4, 'BOTTONE_4')
+                            checkTheAnswer(risposta1, risposta2, risposta3, risposta4, risposta5, 'BOTTONE_4')
                         }}
                         correct_answer={coloraRispostaCorretta_N4}
                         wrong_answer={coloraRispostaSbagliata_N4}
                         buttonText={risposta4}
                         is_disabled={disableButton}
                         game_button={true}></GameButton>
+
+                        {Object.keys(questions[counter_question_number].question).length > 4 &&
+                            <GameButton
+                            onClick={() => {
+                                checkTheAnswer(risposta1, risposta2, risposta3, risposta4, risposta5, 'BOTTONE_5')
+                            }}
+                            correct_answer={coloraRispostaCorretta_N5}
+                            wrong_answer={coloraRispostaSbagliata_N5}
+                            buttonText={risposta5}
+                            is_disabled={disableButton}
+                            game_button={true}></GameButton>
+                        }
                     </div>
                 </>
             }
