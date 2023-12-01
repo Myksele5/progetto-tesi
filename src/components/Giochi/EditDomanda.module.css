@@ -1,9 +1,16 @@
 .wrapper_flex{
-    width: 700px;
+    width: 900px;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 5px;
+}
+
+.wrapper_label_and_box{
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: baseline;
 }
 
 .wrapper_generico{
@@ -11,6 +18,16 @@
     /* flex-direction: column; */
     justify-content: center;
     align-items: center;
+}
+
+.wrapper_items{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 15px;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 .title_scheda{

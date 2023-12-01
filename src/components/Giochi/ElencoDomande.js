@@ -151,14 +151,33 @@ function ElencoDomande(props){
                             <div className={styles.separa_corrette_sbagliate}>
                                 <span className={styles.buttons_space}>
                                     <p>CORRETTA</p>
-                                    <p className={styles.correct_answ}>{singleQuestion.question.correct_answer}</p>
+                                    <p className={styles.correct_answ}>{singleQuestion.rispCorrette.correct_answer_n1}</p>
+
+                                    {Object.keys(singleQuestion.rispCorrette).length > 1 && singleQuestion.rispCorrette.correct_answer_n2.length > 0 &&
+                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrette.correct_answer_n2.toString()}</p>
+                                    }
+                                    {Object.keys(singleQuestion.rispCorrette).length > 2 && singleQuestion.rispCorrette.correct_answer_n3.length > 0 &&
+                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrette.correct_answer_n3.toString()}</p>
+                                    }
+                                    {Object.keys(singleQuestion.rispCorrette).length > 3 && singleQuestion.rispCorrette.correct_answer_n4.length > 0 &&
+                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrette.correct_answer_n4.toString()}</p>
+                                    }
                                 </span>
                                 
                                 <span className={styles.buttons_space}>
                                     <p>SBAGLIATE</p>
-                                    <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n1}</p>
-                                    <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n2}</p>
-                                    <p className={styles.wrong_answ}>{singleQuestion.question.wrong_answer_n3}</p>
+                                    <p className={styles.wrong_answ}>{singleQuestion.rispSbagliate.wrong_answer_n1.toString()}</p>
+                                    
+                                    {Object.keys(singleQuestion.rispSbagliate).length > 1 && singleQuestion.rispSbagliate.wrong_answer_n2.length > 0 &&
+                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliate.wrong_answer_n2.toString()}</p>
+                                    }
+                                    {Object.keys(singleQuestion.rispSbagliate).length > 2 && singleQuestion.rispSbagliate.wrong_answer_n3.length > 0 &&
+                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliate.wrong_answer_n3.toString()}</p>
+                                    }
+                                    {Object.keys(singleQuestion.rispSbagliate).length > 3 && singleQuestion.rispSbagliate.wrong_answer_n4.length > 0 &&
+                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliate.wrong_answer_n4.toString()}</p>
+                                    }
+
                                 </span>
                             </div>
                         </div>
@@ -183,7 +202,6 @@ function ElencoDomande(props){
             {props.tipoGioco === "QUIZ CON IMMAGINI" && 
                 <>
                     <div className={styles.wrapper_generico}>
-                        {/* <h3 className={styles.domande_disponibili}>Domande disponibili:</h3> */}
                         <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
                         
                         <select className={styles.select_style} onChange={categoryChangeHandler}>
@@ -200,13 +218,14 @@ function ElencoDomande(props){
             }
             {props.tipoGioco === "QUIZ" && 
                 <>
-                    <h3 className={styles.domande_disponibili}>Domande disponibili:</h3>
-                    <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
+                    <div className={styles.wrapper_generico}>
+                        <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
 
-                    <select className={styles.select_style} onChange={categoryChangeHandler}>
-                        <option hidden>---SELEZIONA CATEGORIA---</option>
-                        {categorie.map(mappaCategorie)}
-                    </select>
+                        <select className={styles.select_style} onChange={categoryChangeHandler}>
+                            <option hidden>---SELEZIONA CATEGORIA---</option>
+                            {categorie.map(mappaCategorie)}
+                        </select>
+                    </div>
                     
                     <ul className={styles.wrapper_lista_domande}>
                         {categoryFilter !== "" && classicQuizQuestions.map(recuperaTutteLeDomande)}

@@ -27,7 +27,6 @@ function Giochi(){
     const [showEditQuestion, setShowEditQuestion] = useState(false);
     const [showGameResults, setShowGameResults] = useState(false);
     const [gameObject, setGameObject] = useState(null);
-
     
     function formCreateNewQuestion(){
         setShowSearchBoxAndButton(false);
@@ -180,11 +179,10 @@ function Giochi(){
                 tipoGioco={tipoGioco}
                 categoriaDomanda={singleQuestion.categoria}
                 indovina={singleQuestion.indovina}
-                corretta={singleQuestion.question.correct_answer}
-                sbagliata_1={singleQuestion.question.wrong_answer_n1}
-                sbagliata_2={singleQuestion.question.wrong_answer_n2}
-                sbagliata_3={singleQuestion.question.wrong_answer_n3}
-
+                corrette={singleQuestion.rispCorrette}
+                sbagliate={singleQuestion.rispSbagliate}
+                count_corrette={Object.keys(singleQuestion.rispCorrette).length}
+                count_sbagliate={Object.keys(singleQuestion.rispSbagliate).length}
                 chiudiFormModificaDomanda={closeFormEditQuestion}
             >
             </EditDomanda>

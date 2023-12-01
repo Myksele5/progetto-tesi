@@ -5,18 +5,29 @@ import GameContext from "../../context/game-context";
 import Card from "../UI/Card";
 import ElencoDomande from "./ElencoDomande";
 import ElencoDomandeModificabili from "./ElencoDomandeModificabili";
+import GenericAlternativeButton from "../UI/GenericAlternativeButton";
+
+var counter_CORRETTE = 1;
+var counter_SBAGLIATE = 1;
 
 function AddDomanda(props){
     const game_ctx = useContext(GameContext)
+
+    const [totalAnswers_CORRECT, setTotalAnswers_CORRECT] = useState(counter_CORRETTE);
+    const [totalAnswers_WRONG, setTotalAnswers_WRONG] = useState(counter_SBAGLIATE);
 
     const [imageFile, setImageFile] = useState(null);
     const [gameType, setGameType] = useState("QUIZ");
     const [categoryQuestion, setCategoryQuestion] = useState("");
     const [indovina, setIndovina] = useState("");
-    const [rispCorretta, setRispCorretta] = useState("");
+    const [rispCorretta_1, setRispCorretta_1] = useState("");
+    const [rispCorretta_2, setRispCorretta_2] = useState("");
+    const [rispCorretta_3, setRispCorretta_3] = useState("");
+    const [rispCorretta_4, setRispCorretta_4] = useState("");
     const [rispSbagliata_1, setRispSbagliata_1] = useState("");
     const [rispSbagliata_2, setRispSbagliata_2] = useState("");
     const [rispSbagliata_3, setRispSbagliata_3] = useState("");
+    const [rispSbagliata_4, setRispSbagliata_4] = useState("");
 
     const [showQuestionsList, setShowQuestionsList] = useState(true);
     const [aggiungiCategoria, setAggiungiCategoria] = useState(false);
@@ -42,20 +53,30 @@ function AddDomanda(props){
         setIndovina(event.target.value);
     }
 
-    function rispostaCorrettaChangeHandler(event){
-        setRispCorretta(event.target.value)
+    function rispostaCorretta_1_ChangeHandler(event){
+        setRispCorretta_1(event.target.value)
+    }
+    function rispostaCorretta_2_ChangeHandler(event){
+        setRispCorretta_2(event.target.value)
+    }
+    function rispostaCorretta_3_ChangeHandler(event){
+        setRispCorretta_3(event.target.value)
+    }
+    function rispostaCorretta_4_ChangeHandler(event){
+        setRispCorretta_4(event.target.value)
     }
 
     function rispostaSbagliata_1_ChangeHandler(event){
         setRispSbagliata_1(event.target.value)
     }
-
     function rispostaSbagliata_2_ChangeHandler(event){
         setRispSbagliata_2(event.target.value)
-    }
-    
+    } 
     function rispostaSbagliata_3_ChangeHandler(event){
         setRispSbagliata_3(event.target.value)
+    }
+    function rispostaSbagliata_4_ChangeHandler(event){
+        setRispSbagliata_4(event.target.value)
     }
 
     function categoriaCheckbox(event){
@@ -78,17 +99,44 @@ function AddDomanda(props){
     function creaNuovaDomanda(){
         var new_question;
 
+        var correct_answers = {
+            correct_answer_n1: rispCorretta_1,
+        };
+
+        var wrong_answers = {
+            wrong_answer_n1: rispSbagliata_1,
+        };
+
+        if(rispCorretta_2.trim().length > 0){
+            correct_answers["correct_answer_n2"] = rispCorretta_2;
+        }
+        if(rispCorretta_3.trim().length > 0){
+            correct_answers["correct_answer_n3"] = rispCorretta_3;
+        }
+        if(rispCorretta_4.trim().length > 0){
+            correct_answers["correct_answer_n4"] = rispCorretta_4;
+        }
+        
+
+        if(rispSbagliata_2.trim().length > 0){
+            wrong_answers["wrong_answer_n2"] = rispSbagliata_2;
+        }
+        if(rispSbagliata_3.trim().length > 0){
+            wrong_answers["wrong_answer_n3"] = rispSbagliata_3;
+        }
+        if(rispSbagliata_4.trim().length > 0){
+            wrong_answers["wrong_answer_n4"] = rispSbagliata_4;
+        }
+
+        // console.log(all_answers);
+
         if(gameType === "QUIZ"){
             new_question = {
                 livelloDomanda: "facile",
                 categoria: categoryQuestion,
                 indovina: indovina,
-                question: {
-                    correct_answer: rispCorretta,
-                    wrong_answer_n1: rispSbagliata_1,
-                    wrong_answer_n2: rispSbagliata_2,
-                    wrong_answer_n3: rispSbagliata_3
-                }
+                rispCorrette: correct_answers,
+                rispSbagliate: wrong_answers
             }
         }
 
@@ -97,12 +145,8 @@ function AddDomanda(props){
                 livelloDomanda: "facile",
                 categoria: categoryQuestion,
                 indovina: imageFile,
-                question: {
-                    correct_answer: rispCorretta,
-                    wrong_answer_n1: rispSbagliata_1,
-                    wrong_answer_n2: rispSbagliata_2,
-                    wrong_answer_n3: rispSbagliata_3
-                }
+                rispCorrette: correct_answers,
+                rispSbagliate: wrong_answers
             }
         }
 
@@ -120,6 +164,38 @@ function AddDomanda(props){
 
     function mostraFormModificaDomanda(tipoGioco, singleQuestion){
         props.mostraModificaDomanda(tipoGioco, singleQuestion);
+    }
+
+    function aggiungiAlternativaCorretta(){
+        if(totalAnswers_CORRECT < 4){
+            counter_CORRETTE += 1;
+            setTotalAnswers_CORRECT(counter_CORRETTE);
+        }
+        console.log(counter_CORRETTE);
+    }
+
+    function rimuoviAlternativaCorretta(){
+        if(totalAnswers_CORRECT > 1){
+            counter_CORRETTE -= 1;
+            setTotalAnswers_CORRECT(counter_CORRETTE);
+        }
+        console.log(counter_CORRETTE);
+    }
+
+    function aggiungiAlternativaSbagliata(){
+        if(totalAnswers_WRONG < 4){
+            counter_SBAGLIATE += 1;
+            setTotalAnswers_WRONG(counter_SBAGLIATE);
+        }
+        console.log(counter_SBAGLIATE);
+    }
+
+    function rimuoviAlternativaSbagliata(){
+        if(totalAnswers_WRONG > 1){
+            counter_SBAGLIATE -= 1;
+            setTotalAnswers_WRONG(counter_SBAGLIATE);
+        }
+        console.log(counter_SBAGLIATE);
     }
 
     return(
@@ -146,37 +222,43 @@ function AddDomanda(props){
                         animazione={true}
                         altroStile={true}
                         children={
-                            <div className={styles.wrapper_flex}>
+                            <div className={styles.wrapper_impostazioni_gioco}>
                                 <h1 className={styles.title_scheda}>Aggiungi nuova domanda</h1>
 
-                                <label className={styles.label_style}>Tipo di gioco</label>
-                                <select className={styles.select_style} onChange={gameTypeChangeHandler}>
-                                    <option>QUIZ</option>
-                                    <option>QUIZ CON IMMAGINI</option>
-                                    <option>COMPLETA LA PAROLA</option>
-                                    {/* <option>RIFLESSI</option> */}
-                                </select>
-
-                                <label className={styles.label_style}>Categoria domanda</label>
-                                
-                                {!aggiungiCategoria &&
-                                    <>
-                                        <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
-                                            <option hidden>---SELEZIONA CATEGORIA---</option>
-                                            {categorie.map(mappaCategorie)}
+                                <div className={styles.wrapper_label_and_box}>
+                                    <div className={styles.wrapper_items}>
+                                        <label className={styles.label_style}>Tipo di gioco</label>
+                                        <select className={styles.select_style} onChange={gameTypeChangeHandler}>
+                                            <option>QUIZ</option>
+                                            <option>QUIZ CON IMMAGINI</option>
+                                            <option>COMPLETA LA PAROLA</option>
+                                            {/* <option>RIFLESSI</option> */}
                                         </select>
-                                    </>
-                                }
-                                {aggiungiCategoria &&
-                                    <>
-                                        <input className={styles.textbox_style} type="text" onChange={categoryQuestionChangeHandler}></input> 
-                                    </>
-                                }
+                                    </div>
 
-                                <div className={styles.horizontal_flex}>
-                                    <input className={styles.horizontal_flex_content} type="checkbox" onChange={categoriaCheckbox}></input>
-                                    <label className={styles.horizontal_flex_content}>Aggiungi nuova categoria</label>
+                                    <div className={styles.wrapper_items}>
+                                        <label className={styles.label_style}>Categoria domanda</label>
+                                        
+                                        {!aggiungiCategoria &&
+                                            <>
+                                                <select className={styles.select_style} onChange={categoryQuestionChangeHandler}>
+                                                    <option hidden>---SELEZIONA CATEGORIA---</option>
+                                                    {categorie.map(mappaCategorie)}
+                                                </select>
+                                            </>
+                                        }
+                                        {aggiungiCategoria &&
+                                            <>
+                                                <input className={styles.textbox_style} type="text" onChange={categoryQuestionChangeHandler}></input> 
+                                            </>
+                                        }
+                                        <div className={styles.horizontal_flex}>
+                                            <input className={styles.horizontal_flex_content} type="checkbox" onChange={categoriaCheckbox}></input>
+                                            <label className={styles.horizontal_flex_content}>Aggiungi nuova categoria</label>
+                                        </div>
+                                    </div>
                                 </div>
+                                
 
                                 {gameType === "QUIZ" &&
                                     <>
@@ -201,19 +283,83 @@ function AddDomanda(props){
                                 }
                                 
                                 {(gameType === "QUIZ" || gameType === "QUIZ CON IMMAGINI") &&
-                                    <>
-                                        <label className={styles.label_style}>Risposta Corretta: </label>
-                                        <input className={styles.textbox_style} type="text" onChange={rispostaCorrettaChangeHandler}></input>
-        
-                                        <label className={styles.label_style}>Risposta Sbagliata 1: </label>
-                                        <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_1_ChangeHandler}></input>
-        
-                                        <label className={styles.label_style}>Risposta Sbagliata 2: </label>
-                                        <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_2_ChangeHandler}></input>
-        
-                                        <label className={styles.label_style}>Risposta Sbagliata 3: </label>
-                                        <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_3_ChangeHandler}></input>
-                                    </>
+                                    <div className={styles.wrapper_generico}>
+                                        <div className={styles.wrapper_items}>
+                                            <label className={styles.label_style}>Risposta Corretta: </label>
+                                            <input className={styles.textbox_style} type="text" onChange={rispostaCorretta_1_ChangeHandler}></input>
+
+                                            {totalAnswers_CORRECT > 1 &&
+                                                <>
+                                                    <label className={styles.label_style}>Risposta Corretta: </label>
+                                                    <input className={styles.textbox_style} type="text" onChange={rispostaCorretta_2_ChangeHandler}></input>
+                                                </>
+                                            }
+
+                                            {totalAnswers_CORRECT > 2 &&
+                                                <>
+                                                    <label className={styles.label_style}>Risposta Corretta: </label>
+                                                    <input className={styles.textbox_style} type="text" onChange={rispostaCorretta_3_ChangeHandler}></input>
+                                                </>
+                                            }
+
+                                            {totalAnswers_CORRECT > 3 &&
+                                                <>
+                                                    <label className={styles.label_style}>Risposta Corretta: </label>
+                                                    <input className={styles.textbox_style} type="text" onChange={rispostaCorretta_4_ChangeHandler}></input>
+                                                </>
+                                            }
+
+                                            <GenericAlternativeButton
+                                                onClick={aggiungiAlternativaCorretta}
+                                                buttonText={"Aggiungi corretta"}
+                                            >
+                                            </GenericAlternativeButton>
+                                            <GenericAlternativeButton
+                                                onClick={rimuoviAlternativaCorretta}
+                                                colore_rosso={true}
+                                                buttonText={"Rimuovi corretta"}
+                                            >
+                                            </GenericAlternativeButton>
+                                        </div>
+
+                                        <div className={styles.wrapper_items}>
+                                            <label className={styles.label_style}>Risposta Sbagliata 1: </label>
+                                            <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_1_ChangeHandler}></input>
+
+                                            {totalAnswers_WRONG > 1 &&
+                                                <>
+                                                    <label className={styles.label_style}>Risposta Sbagliata 2: </label>
+                                                    <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_2_ChangeHandler}></input>
+                                                </>
+                                            }
+
+                                            {totalAnswers_WRONG > 2 &&
+                                                <>
+                                                    <label className={styles.label_style}>Risposta Sbagliata 3: </label>
+                                                    <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_3_ChangeHandler}></input>
+                                                </>
+                                            }
+
+                                            {totalAnswers_WRONG > 3 &&
+                                                <>
+                                                    <label className={styles.label_style}>Risposta Sbagliata 4: </label>
+                                                    <input className={styles.textbox_style} type="text" onChange={rispostaSbagliata_4_ChangeHandler}></input>
+                                                </>
+                                            }
+
+                                            <GenericAlternativeButton
+                                                onClick={aggiungiAlternativaSbagliata}
+                                                buttonText={"Aggiungi sbagliata"}
+                                            >
+                                            </GenericAlternativeButton>
+                                            <GenericAlternativeButton
+                                                onClick={rimuoviAlternativaSbagliata}
+                                                colore_rosso={true}
+                                                buttonText={"Rimuovi sbagliata"}
+                                            >
+                                            </GenericAlternativeButton>
+                                        </div>  
+                                    </div>
                                 }
 
                                 <div className={styles.wrapper_generico}>

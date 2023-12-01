@@ -92,43 +92,51 @@ function EditGioco(props){
     return(
         <Card
         children={
-            <div className={styles.wrapper_flex}>
-                <h1 className={styles.title_scheda}>Modifica il gioco</h1>
+            <div className={styles.wrapper_impostazioni_gioco}>
+                <h2 className={styles.title_scheda}>Modifica il gioco</h2>
 
-                <label className={styles.label_style}>Tipologia Gioco:</label>
-                <input className={styles.textbox_style_NOT_ALLOWED} type="text" value={tipoGiocoModifica} readOnly></input>
-
-                <label className={styles.label_style}>Difficoltà Gioco:</label>
-                <div className={styles.group_bottoni}>
-
-                        <RadioButton
-                        onClick={() => {
-                            selezioneDifficoltà("FACILE");
-                            livelloGiocoChangeHandler("FACILE");
-                        }}
-                        isSelected={selectedEasy}
-                        buttonText={"FACILE"}>
-                        </RadioButton>
-
-                        <RadioButton
-                        onClick={() => {
-                            selezioneDifficoltà("NORMALE");
-                            livelloGiocoChangeHandler("NORMALE");
-                        }}
-                        isSelected={selectedNormal}
-                        buttonText={"NORMALE"}>
-                        </RadioButton>
-
-                        <RadioButton
-                        onClick={() => {
-                            selezioneDifficoltà("DIFFICILE");
-                            livelloGiocoChangeHandler("DIFFICILE")
-                        }}
-                        isSelected={selectedHard}
-                        buttonText={"DIFFICILE"}>
-                        </RadioButton>
-                        
+                <div className={styles.wrapper_generico}>
+                    <div className={styles.wrapper_items}>
+                        <label className={styles.label_style}>Tipologia Gioco:</label>
+                        <input className={styles.textbox_style_NOT_ALLOWED} type="text" value={tipoGiocoModifica} readOnly></input>
                     </div>
+
+                    <div className={styles.wrapper_items}>
+                        <label className={styles.label_style}>Difficoltà Gioco:</label>
+                            <div className={styles.group_bottoni}>
+                                <RadioButton
+                                onClick={() => {
+                                    selezioneDifficoltà("FACILE");
+                                    livelloGiocoChangeHandler("FACILE");
+                                }}
+                                isSelected={selectedEasy}
+                                buttonText={"FACILE"}>
+                                </RadioButton>
+
+                                <RadioButton
+                                onClick={() => {
+                                    selezioneDifficoltà("NORMALE");
+                                    livelloGiocoChangeHandler("NORMALE");
+                                }}
+                                isSelected={selectedNormal}
+                                buttonText={"NORMALE"}>
+                                </RadioButton>
+
+                                <RadioButton
+                                onClick={() => {
+                                    selezioneDifficoltà("DIFFICILE");
+                                    livelloGiocoChangeHandler("DIFFICILE")
+                                }}
+                                isSelected={selectedHard}
+                                buttonText={"DIFFICILE"}>
+                                </RadioButton>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                
 
                 <label className={styles.label_style}>Nome Gioco:</label>
                 <input className={styles.textbox_style} type="text" value={nomeGiocoModifica} onChange={nomeGiocoChangeHandler}></input>

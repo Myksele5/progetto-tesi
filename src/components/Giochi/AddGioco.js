@@ -81,45 +81,52 @@ function AddGioco(props){
         children={
             <div className={styles.wrapper_impostazioni_gioco}>
                 <h2 className={styles.title_scheda}>Creazione nuovo gioco</h2>
-                <label className={styles.label_style}>Tipologia di gioco</label>
-                <select className={styles.select_style} onChange={tipoGiocoChangeHandler}>
-                    <option hidden>-- select an option --</option>
-                    <option>QUIZ</option>
-                    <option>QUIZ CON IMMAGINI</option>
-                    <option>COMPLETA LA PAROLA</option>
-                    <option>RIFLESSI</option>
-                </select>
-                
 
-                <label className={styles.label_style}>Difficoltà Gioco</label>
-                <div className={styles.group_bottoni}>
+                <div className={styles.wrapper_generico}>
+                    <div className={styles.wrapper_items}>
+                        <label className={styles.label_style}>Tipologia di gioco</label>
+                        <select className={styles.select_style} onChange={tipoGiocoChangeHandler}>
+                            <option hidden>-- select an option --</option>
+                            <option>QUIZ</option>
+                            <option>QUIZ CON IMMAGINI</option>
+                            <option>COMPLETA LA PAROLA</option>
+                            <option>RIFLESSI</option>
+                        </select>
+                    </div>
+                    
+                    <div className={styles.wrapper_items}>
+                        <label className={styles.label_style}>Difficoltà Gioco</label>
+                        <div className={styles.group_bottoni}>
 
-                    <RadioButton
-                    onClick={() => {
-                        selezioneDifficoltà("FACILE");
-                        livelloGiocoChangeHandler("FACILE");
-                    }}
-                    isSelected={selectedEasy}
-                    buttonText={"FACILE"}>
-                    </RadioButton>
+                            <RadioButton
+                            onClick={() => {
+                                selezioneDifficoltà("FACILE");
+                                livelloGiocoChangeHandler("FACILE");
+                            }}
+                            isSelected={selectedEasy}
+                            buttonText={"FACILE"}>
+                            </RadioButton>
 
-                    <RadioButton
-                    onClick={() => {
-                        selezioneDifficoltà("NORMALE");
-                        livelloGiocoChangeHandler("NORMALE");
-                    }}
-                    isSelected={selectedNormal}
-                    buttonText={"NORMALE"}>
-                    </RadioButton>
+                            <RadioButton
+                            onClick={() => {
+                                selezioneDifficoltà("NORMALE");
+                                livelloGiocoChangeHandler("NORMALE");
+                            }}
+                            isSelected={selectedNormal}
+                            buttonText={"NORMALE"}>
+                            </RadioButton>
 
-                    <RadioButton
-                    onClick={() => {
-                        selezioneDifficoltà("DIFFICILE");
-                        livelloGiocoChangeHandler("DIFFICILE")
-                    }}
-                    isSelected={selectedHard}
-                    buttonText={"DIFFICILE"}>
-                    </RadioButton>
+                            <RadioButton
+                            onClick={() => {
+                                selezioneDifficoltà("DIFFICILE");
+                                livelloGiocoChangeHandler("DIFFICILE")
+                            }}
+                            isSelected={selectedHard}
+                            buttonText={"DIFFICILE"}>
+                            </RadioButton>
+                            
+                        </div>
+                    </div>
                     
                 </div>
 

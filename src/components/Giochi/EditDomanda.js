@@ -1,21 +1,37 @@
 import styles from "./EditDomanda.module.css";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import GenericButton from "../UI/GenericButton";
+import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import Card from "../UI/Card";
 import GameContext from "../../context/game-context";
 
+var counter_CORRETTE;
+var counter_SBAGLIATE;
+
 function EditDomanda(props){
     const game_ctx = useContext(GameContext);
+
+    const [totalAnswers_CORRECT, setTotalAnswers_CORRECT] = useState(props.count_corrette);
+    const [totalAnswers_WRONG, setTotalAnswers_WRONG] = useState(props.count_sbagliate);
 
     const [imageFile, setImageFile] = useState(props.indovina);
     const [tipoGiocoModifica, setTipoGiocoModifica] = useState(props.tipoGioco);
     const [categoriaDomandaModifica, setCategoriaDomandaModifica] = useState(props.categoriaDomanda);
     const [indovinaModifica, setIndovinaModifica] = useState(props.indovina);
 
-    const [rispCorrettaModifica, setRispCorrettaModifica] = useState(props.corretta);
-    const [rispSbagliata_1Modifica, setRispSbagliata_1Modifica] = useState(props.sbagliata_1);
-    const [rispSbagliata_2Modifica, setRispSbagliata_2Modifica] = useState(props.sbagliata_2);
-    const [rispSbagliata_3Modifica, setRispSbagliata_3Modifica] = useState(props.sbagliata_3);
+    const [rispCorretta_1Modifica, setRispCorretta_1Modifica] = useState(props.corrette.correct_answer_n1);
+    const [rispCorretta_2Modifica, setRispCorretta_2Modifica] = useState(props.corrette.correct_answer_n2);
+    const [rispCorretta_3Modifica, setRispCorretta_3Modifica] = useState(props.corrette.correct_answer_n3);
+    const [rispCorretta_4Modifica, setRispCorretta_4Modifica] = useState(props.corrette.correct_answer_n4);
+    const [rispSbagliata_1Modifica, setRispSbagliata_1Modifica] = useState(props.sbagliate.wrong_answer_n1);
+    const [rispSbagliata_2Modifica, setRispSbagliata_2Modifica] = useState(props.sbagliate.wrong_answer_n2);
+    const [rispSbagliata_3Modifica, setRispSbagliata_3Modifica] = useState(props.sbagliate.wrong_answer_n3);
+    const [rispSbagliata_4Modifica, setRispSbagliata_4Modifica] = useState(props.sbagliate.wrong_answer_n4);
+
+    useEffect(() => {
+        counter_CORRETTE = props.count_corrette;
+        counter_SBAGLIATE = props.count_sbagliate;
+    }, []);
 
     function imageFileChangeHandler(event){
         var file = event.target.files[0];
@@ -27,20 +43,62 @@ function EditDomanda(props){
         setIndovinaModifica(event.target.value);
     }
 
-    function rispostaCorrettaChangeHandler(event){
-        setRispCorrettaModifica(event.target.value)
+    function rispostaCorretta_1_ChangeHandler(event){
+        setRispCorretta_1Modifica(event.target.value)
+    }
+    function rispostaCorretta_2_ChangeHandler(event){
+        setRispCorretta_2Modifica(event.target.value)
+    }
+    function rispostaCorretta_3_ChangeHandler(event){
+        setRispCorretta_3Modifica(event.target.value)
+    }
+    function rispostaCorretta_4_ChangeHandler(event){
+        setRispCorretta_4Modifica(event.target.value)
     }
 
     function rispostaSbagliata_1_ChangeHandler(event){
         setRispSbagliata_1Modifica(event.target.value)
     }
-
     function rispostaSbagliata_2_ChangeHandler(event){
         setRispSbagliata_2Modifica(event.target.value)
     }
-    
     function rispostaSbagliata_3_ChangeHandler(event){
         setRispSbagliata_3Modifica(event.target.value)
+    }
+    function rispostaSbagliata_4_ChangeHandler(event){
+        setRispSbagliata_4Modifica(event.target.value)
+    }
+
+    function aggiungiAlternativaCorretta(){
+        if(totalAnswers_CORRECT < 4){
+            counter_CORRETTE += 1;
+            setTotalAnswers_CORRECT(counter_CORRETTE);
+        }
+        console.log(counter_CORRETTE);
+    }
+
+    function rimuoviAlternativaCorretta(){
+        if(totalAnswers_CORRECT > 1){
+            counter_CORRETTE -= 1;
+            setTotalAnswers_CORRECT(counter_CORRETTE);
+        }
+        console.log(counter_CORRETTE);
+    }
+
+    function aggiungiAlternativaSbagliata(){
+        if(totalAnswers_WRONG < 4){
+            counter_SBAGLIATE += 1;
+            setTotalAnswers_WRONG(counter_SBAGLIATE);
+        }
+        console.log(counter_SBAGLIATE);
+    }
+
+    function rimuoviAlternativaSbagliata(){
+        if(totalAnswers_WRONG > 1){
+            counter_SBAGLIATE -= 1;
+            setTotalAnswers_WRONG(counter_SBAGLIATE);
+        }
+        console.log(counter_SBAGLIATE);
     }
 
     return(
@@ -81,24 +139,90 @@ function EditDomanda(props){
 
                     {(tipoGiocoModifica === "QUIZ" || tipoGiocoModifica === "QUIZ CON IMMAGINI") &&
                         <>
-                            <label className={styles.label_style}>Risposta Corretta: </label>
-                            <input className={styles.textbox_style} type="text" value={rispCorrettaModifica} onChange={rispostaCorrettaChangeHandler}></input>
-        
-                            <label className={styles.label_style}>Risposta Sbagliata 1: </label>
-                            <input className={styles.textbox_style} type="text" value={rispSbagliata_1Modifica} onChange={rispostaSbagliata_1_ChangeHandler}></input>
-        
-                            <label className={styles.label_style}>Risposta Sbagliata 2: </label>
-                            <input className={styles.textbox_style} type="text" value={rispSbagliata_2Modifica} onChange={rispostaSbagliata_2_ChangeHandler}></input>
-        
-                            <label className={styles.label_style}>Risposta Sbagliata 3: </label>
-                            <input className={styles.textbox_style} type="text" value={rispSbagliata_3Modifica} onChange={rispostaSbagliata_3_ChangeHandler}></input>
+                            <div className={styles.wrapper_generico}>
+                                <div className={styles.wrapper_items}>
+                                    <label className={styles.label_style}>Risposta Corretta: </label>
+                                    <input className={styles.textbox_style} type="text" value={rispCorretta_1Modifica} onChange={rispostaCorretta_1_ChangeHandler}></input>
+
+                                    {totalAnswers_CORRECT > 1 &&
+                                        <>
+                                            <label className={styles.label_style}>Risposta Corretta: </label>
+                                            <input className={styles.textbox_style} type="text" value={rispCorretta_2Modifica} onChange={rispostaCorretta_2_ChangeHandler}></input>
+                                        </>
+                                    }
+
+                                    {totalAnswers_CORRECT > 2 &&
+                                        <>
+                                            <label className={styles.label_style}>Risposta Corretta: </label>
+                                            <input className={styles.textbox_style} type="text" value={rispCorretta_3Modifica} onChange={rispostaCorretta_3_ChangeHandler}></input>
+                                        </>
+                                    }
+
+                                    {totalAnswers_CORRECT > 3 &&
+                                        <>
+                                            <label className={styles.label_style}>Risposta Corretta: </label>
+                                            <input className={styles.textbox_style} type="text" value={rispCorretta_4Modifica} onChange={rispostaCorretta_4_ChangeHandler}></input>
+                                        </>
+                                    }
+
+                                    <GenericAlternativeButton
+                                        onClick={aggiungiAlternativaCorretta}
+                                        buttonText={"Aggiungi corretta"}
+                                    >
+                                    </GenericAlternativeButton>
+                                    <GenericAlternativeButton
+                                        onClick={rimuoviAlternativaCorretta}
+                                        colore_rosso={true}
+                                        buttonText={"Rimuovi corretta"}
+                                    >
+                                    </GenericAlternativeButton>
+                                </div>
+
+                                <div className={styles.wrapper_items}>
+                                    <label className={styles.label_style}>Risposta Sbagliata 1: </label>
+                                    <input className={styles.textbox_style} type="text" value={rispSbagliata_1Modifica} onChange={rispostaSbagliata_1_ChangeHandler}></input>
+
+                                    {totalAnswers_WRONG > 1 &&
+                                        <>
+                                            <label className={styles.label_style}>Risposta Sbagliata 2: </label>
+                                            <input className={styles.textbox_style} type="text" value={rispSbagliata_2Modifica} onChange={rispostaSbagliata_2_ChangeHandler}></input>
+                                        </>
+                                    }
+
+                                    {totalAnswers_WRONG > 2 &&
+                                        <>
+                                            <label className={styles.label_style}>Risposta Sbagliata 3: </label>
+                                            <input className={styles.textbox_style} type="text" value={rispSbagliata_3Modifica} onChange={rispostaSbagliata_3_ChangeHandler}></input>
+                                        </>
+                                    }
+
+                                    {totalAnswers_WRONG > 3 &&
+                                        <>
+                                            <label className={styles.label_style}>Risposta Sbagliata 4: </label>
+                                            <input className={styles.textbox_style} type="text" value={rispSbagliata_4Modifica} onChange={rispostaSbagliata_4_ChangeHandler}></input>
+                                        </>
+                                    }
+
+                                    <GenericAlternativeButton
+                                        onClick={aggiungiAlternativaSbagliata}
+                                        buttonText={"Aggiungi sbagliata"}
+                                    >
+                                    </GenericAlternativeButton>
+                                    <GenericAlternativeButton
+                                        onClick={rimuoviAlternativaSbagliata}
+                                        colore_rosso={true}
+                                        buttonText={"Rimuovi sbagliata"}
+                                    >
+                                    </GenericAlternativeButton>
+                                </div>  
+                            </div>
                         </>
                     }
 
                     <div className={styles.wrapper_generico}>
                         <GenericButton
                             onClick={() => {
-                                game_ctx.salvaDomandaModificata(tipoGiocoModifica, categoriaDomandaModifica, indovinaModifica, rispCorrettaModifica, rispSbagliata_1Modifica, rispSbagliata_2Modifica, rispSbagliata_3Modifica);
+                                game_ctx.salvaDomandaModificata(tipoGiocoModifica, categoriaDomandaModifica, indovinaModifica, rispCorretta_1Modifica, rispSbagliata_1Modifica, rispSbagliata_2Modifica, rispSbagliata_3Modifica);
                                 props.chiudiFormModificaDomanda();
                             }}
                             generic_button={true}

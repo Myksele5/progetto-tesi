@@ -170,8 +170,10 @@ export function GameContextProvider(props){
             livelloDomanda: "facile",
             categoria: "Personaggi Famosi",
             indovina: Einstein,
-            question:{
-                correct_answer: 'Albert Einstein',
+            rispCorrette:{
+                correct_answer_n1: 'Albert Einstein'
+            },
+            rispSbagliate:{
                 wrong_answer_n1: 'Isaac Newton',
                 wrong_answer_n2: 'Enrico Fermi',
                 wrong_answer_n3: 'Silvio Berlusconi'
@@ -181,8 +183,10 @@ export function GameContextProvider(props){
             livelloDomanda: "facile",
             categoria: "Personaggi Famosi",
             indovina: Dante,
-            question:{
-                correct_answer: 'Dante Alighieri',
+            rispCorrette:{
+                correct_answer_n1: 'Dante Alighieri',
+            },
+            rispSbagliate:{
                 wrong_answer_n1: 'Vincent Van Gogh',
                 wrong_answer_n2: 'Niccolò Machiavelli',
                 wrong_answer_n3: 'Giovanni Boccaccio'
@@ -192,8 +196,10 @@ export function GameContextProvider(props){
             livelloDomanda: "normale",
             categoria: "Personaggi Famosi",
             indovina: Marilyn,
-            question:{
-                correct_answer: 'Marilyn Monroe',
+            rispCorrette:{
+                correct_answer_n1: 'Marilyn Monroe',
+            },
+            rispSbagliate:{
                 wrong_answer_n1: 'Sophia Lauren',
                 wrong_answer_n2: 'Chiara Ferragni',
                 wrong_answer_n3: 'Meryl Streep'
@@ -203,8 +209,10 @@ export function GameContextProvider(props){
             livelloDomanda: "facile",
             categoria: "Personaggi Famosi",
             indovina: Leonardo,
-            question:{
-                correct_answer: 'Leonardo da Vinci',
+            rispCorrette:{
+                correct_answer_n1: 'Leonardo da Vinci',
+            },
+            rispSbagliate:{
                 wrong_answer_n1: 'Wolfgang Mozart',
                 wrong_answer_n2: 'Socrate',
                 wrong_answer_n3: 'Caravaggio'
@@ -214,30 +222,36 @@ export function GameContextProvider(props){
             livelloDomanda: "difficile",
             categoria: "Personaggi Famosi",
             indovina: Napoleone,
-            question:{
-                    correct_answer: 'Napoleone Bonaparte',
-                    wrong_answer_n1: 'Giulio Cesare',
-                    wrong_answer_n2: 'Luigi XIV',
-                    wrong_answer_n3: 'Alessandro Magno'
+            rispCorrette:{
+                correct_answer_n1: 'Napoleone Bonaparte',
+            },
+            rispSbagliate:{
+                wrong_answer_n1: 'Giulio Cesare',
+                wrong_answer_n2: 'Luigi XIV',
+                wrong_answer_n3: 'Alessandro Magno'
             }
         },
         {
             livelloDomanda: "facile",
             categoria: "Personaggi Famosi",
             indovina: PapaFrancesco,
-            question:{
-                    correct_answer: 'Papa Francesco',
-                    wrong_answer_n1: 'Papa Giovanni Paolo II',
-                    wrong_answer_n2: 'Francesco Totti',
-                    wrong_answer_n3: 'Giorgia Meloni'
+            rispCorrette:{
+                correct_answer_n1: 'Papa Francesco',
+            },
+            rispSbagliate:{
+                wrong_answer_n1: 'Papa Giovanni Paolo II',
+                wrong_answer_n2: 'Francesco Totti',
+                wrong_answer_n3: 'Giorgia Meloni'
             }
         },
         {
             livelloDomanda: "facile",
             categoria: "Frutti",
             indovina: Albicocca,
-            question:{
-                correct_answer: 'Albicocca',
+            rispCorrette:{
+                correct_answer_n1: 'Albicocca',
+            },
+            rispSbagliate:{
                 wrong_answer_n1: 'Mango',
                 wrong_answer_n2: 'Nocciola',
                 wrong_answer_n3: 'Arancia'
@@ -247,8 +261,10 @@ export function GameContextProvider(props){
             livelloDomanda: "facile",
             categoria: "Frutti",
             indovina: Banana,
-            question:{
-                correct_answer: 'Banana',
+            rispCorrette:{
+                correct_answer_n1: 'Banana',
+            },
+            rispSbagliate:{
                 wrong_answer_n1: 'Carruba',
                 wrong_answer_n2: 'Bergamotto',
                 wrong_answer_n3: 'Platano'
@@ -258,8 +274,10 @@ export function GameContextProvider(props){
             livelloDomanda: "facile",
             categoria: "Frutti",
             indovina: Ciliegia,
-            question:{
-                correct_answer: 'Ciliegia',
+            rispCorrette:{
+                correct_answer_n1: 'Ciliegia',
+            },
+            rispSbagliate:{
                 wrong_answer_n1: 'Lampone',
                 wrong_answer_n2: 'Pesca',
                 wrong_answer_n3: 'Uva'
@@ -269,8 +287,10 @@ export function GameContextProvider(props){
             livelloDomanda: "facile",
             categoria: "Frutti",
             indovina: Fragola,
-            question:{
-                correct_answer: 'Fragola',
+            rispCorrette:{
+                correct_answer_n1: 'Fragola',
+            },
+            rispSbagliate:{
                 wrong_answer_n1: 'Arancia',
                 wrong_answer_n2: 'Litchi',
                 wrong_answer_n3: 'Prugna'
@@ -280,33 +300,39 @@ export function GameContextProvider(props){
             livelloDomanda: "facile",
             categoria: "Frutti",
             indovina: Mela,
-            question:{
-                    correct_answer: 'Mela',
-                    wrong_answer_n1: 'Pera',
-                    wrong_answer_n2: 'Limone',
-                    wrong_answer_n3: 'Papaya'
+            rispCorrette:{
+                correct_answer_n1: 'Mela',
+            },
+            rispSbagliate:{
+                wrong_answer_n1: 'Pera',
+                wrong_answer_n2: 'Limone',
+                wrong_answer_n3: 'Papaya'
             }
         },
         {
             livelloDomanda: "facile",
             categoria: "Frutti",
             indovina: Mirtillo,
-            question:{
-                    correct_answer: 'Mirtillo',
-                    wrong_answer_n1: 'Noce',
-                    wrong_answer_n2: 'Lampone',
-                    wrong_answer_n3: 'Mora'
+            rispCorrette:{
+                correct_answer_n1: 'Mirtillo',
+            },
+            rispSbagliate:{
+                wrong_answer_n1: 'Noce',
+                wrong_answer_n2: 'Lampone',
+                wrong_answer_n3: 'Mora'
             }
         },
         {
             livelloDomanda: "facile",
             categoria: "Frutti",
             indovina: Nespola,
-            question:{
-                    correct_answer: 'Nespola',
-                    wrong_answer_n1: 'Pesca',
-                    wrong_answer_n2: 'Frutto della passione',
-                    wrong_answer_n3: 'Kiwi'
+            rispCorrette:{
+                correct_answer_n1: 'Nespola',
+            },
+            rispSbagliate:{
+                wrong_answer_n1: 'Pesca',
+                wrong_answer_n2: 'Frutto della passione',
+                wrong_answer_n3: 'Kiwi'
             }
         }
     
@@ -318,8 +344,10 @@ export function GameContextProvider(props){
             livelloDomanda: "facile",
             categoria: "Sport",
             indovina: "Quale tra le seguenti squadre NBA ha vinto più titoli?",
-            question:{
-                correct_answer: 'Los Angeles Lakers',
+            rispCorrette:{
+                correct_answer_n1: 'Los Angeles Lakers',
+            },
+            rispSbagliate:{
                 wrong_answer_n1: 'Boston Celtics',
                 wrong_answer_n2: 'New York Knicks',
                 wrong_answer_n3: 'Chicago Bulls'
@@ -329,8 +357,10 @@ export function GameContextProvider(props){
             livelloDomanda: "facile",
             categoria: "Sport",
             indovina: "Quanti mondiali ha vinto la nazionale di calcio italana?",
-            question:{
-                correct_answer: '5',
+            rispCorrette:{
+                correct_answer_n1: '5',
+            },
+            rispSbagliate:{
                 wrong_answer_n1: '7',
                 wrong_answer_n2: '4',
                 wrong_answer_n3: '3'
@@ -340,8 +370,10 @@ export function GameContextProvider(props){
             livelloDomanda: "facile",
             categoria: "Storia",
             indovina: "In quale anno è nata la Repubblica Italiana?",
-            question:{
-                correct_answer: '1946',
+            rispCorrette:{
+                correct_answer_n1: '1946',
+            },
+            rispSbagliate:{
                 wrong_answer_n1: '1956',
                 wrong_answer_n2: '1990',
                 wrong_answer_n3: '1961'
@@ -351,8 +383,10 @@ export function GameContextProvider(props){
             livelloDomanda: "facile",
             categoria: "Geografia",
             indovina: "Madrid è la capitale di quale nazione?",
-            question:{
-                correct_answer: 'Spagna',
+            rispCorrette:{
+                correct_answer_n1: 'Spagna',
+            },
+            rispSbagliate:{
                 wrong_answer_n1: 'Italia',
                 wrong_answer_n2: 'Messico',
                 wrong_answer_n3: 'Portogallo'
@@ -362,8 +396,10 @@ export function GameContextProvider(props){
             livelloDomanda: "normale",
             categoria: "Geografia",
             indovina: "Qual è la montagna più alta del mondo?",
-            question:{
-                correct_answer: 'Everest',
+            rispCorrette:{
+                correct_answer_n1: 'Everest',
+            },
+            rispSbagliate:{
                 wrong_answer_n1: 'Annapurna I',
                 wrong_answer_n2: 'K2',
                 wrong_answer_n3: 'Makalu'
@@ -373,8 +409,10 @@ export function GameContextProvider(props){
             livelloDomanda: "difficile",
             categoria: "Geografia",
             indovina: "Quale tra le seguenti nazioni è la più grande per dimensione?",
-            question:{
-                correct_answer: 'Russia',
+            rispCorrette:{
+                correct_answer_n1: 'Russia',
+            },
+            rispSbagliate:{
                 wrong_answer_n1: 'Canada',
                 wrong_answer_n2: 'Stati Uniti',
                 wrong_answer_n3: 'Brasile'
@@ -648,8 +686,10 @@ export function GameContextProvider(props){
                 livelloDomanda: "facile",
                 categoria: categoriaM,
                 indovina: indovinaM,
-                question:{
-                        correct_answer: correttaM,
+                rispCorrette:{
+                        correct_answer_n1: correttaM,
+                },
+                rispSbagliate:{
                         wrong_answer_n1: sbagliata_1M,
                         wrong_answer_n2: sbagliata_2M,
                         wrong_answer_n3: sbagliata_3M
