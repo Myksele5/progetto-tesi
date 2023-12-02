@@ -54,30 +54,38 @@ export function GameContextProvider(props){
                 {
                     categoria: "Personaggi Famosi",
                     indovina: Einstein,
-                    question:{
-                        correct_answer: 'Albert Einstein',
+                    rispCorrette:{
+                        correct_answer_n1: 'Albert Einstein',
+                        correct_answer_n2: 'Einstein',
+                        correct_answer_n3: 'Albert',
+                        correct_answer_n4: 'Alb Ein',
+                    },
+                    rispSbagliate:{
                         wrong_answer_n1: 'Isaac Newton',
                         wrong_answer_n2: 'Enrico Fermi',
                         wrong_answer_n3: 'Silvio Berlusconi',
-                        wrong_answer_n4: 'Myks'
+                        wrong_answer_n4: 'Nikola Tesla',
                     }
                 },
                 {
                     categoria: "Personaggi Famosi",
                     indovina: Dante,
-                    question:{
-                        correct_answer: 'Dante Alighieri',
+                    rispCorrette:{
+                        correct_answer_n1: 'Dante Alighieri',
+                    },
+                    rispSbagliate:{
                         wrong_answer_n1: 'Vincent Van Gogh',
                         wrong_answer_n2: 'Niccolò Machiavelli',
                         wrong_answer_n3: 'Giovanni Boccaccio',
-                        wrong_answer_n4: 'Myks'
                     }
                 },
                 {
                     categoria: "Personaggi Famosi",
                     indovina: Marilyn,
-                    question:{
-                        correct_answer: 'Marilyn Monroe',
+                    rispCorrette:{
+                        correct_answer_n1: 'Marilyn Monroe'
+                    },
+                    rispSbagliate:{
                         wrong_answer_n1: 'Sophia Lauren',
                         wrong_answer_n2: 'Chiara Ferragni',
                         wrong_answer_n3: 'Meryl Streep'
@@ -94,8 +102,10 @@ export function GameContextProvider(props){
                 {
                     categoria: "Sport",
                     indovina: "Quale tra le seguenti squadre NBA ha vinto più titoli?",
-                    question:{
-                        correct_answer: 'Los Angeles Lakers',
+                    rispCorrette:{
+                        correct_answer_n1: 'Los Angeles Lakers',
+                    },
+                    rispSbagliate:{
                         wrong_answer_n1: 'Boston Celtics',
                         wrong_answer_n2: 'New York Knicks',
                         wrong_answer_n3: 'Chicago Bulls'
@@ -104,8 +114,10 @@ export function GameContextProvider(props){
                 {
                     categoria: "Sport",
                     indovina: "Quanti mondiali ha vinto la nazionale di calcio italana?",
-                    question:{
-                        correct_answer: '5',
+                    rispCorrette:{
+                        correct_answer_n1: '5',
+                    },
+                    rispSbagliate:{
                         wrong_answer_n1: '7',
                         wrong_answer_n2: '4',
                         wrong_answer_n3: '3'
@@ -678,64 +690,41 @@ export function GameContextProvider(props){
         }
     }
 
-    function addModifiedQuestionToList(tipoGioco, categoriaM, indovinaM, correttaM, sbagliata_1M, sbagliata_2M, sbagliata_3M){
-        var modified_question;
+    function addModifiedQuestionToList(tipoGioco, domandaModificata){
+        if(tipoGioco === "QUIZ"){
+            for(var i=0; i < elencoDomandeQuiz.length; i++){
 
-        if(tipoGioco === "QUIZ" || tipoGioco === "QUIZ CON IMMAGINI"){
-            modified_question={
-                livelloDomanda: "facile",
-                categoria: categoriaM,
-                indovina: indovinaM,
-                rispCorrette:{
-                        correct_answer_n1: correttaM,
-                },
-                rispSbagliate:{
-                        wrong_answer_n1: sbagliata_1M,
-                        wrong_answer_n2: sbagliata_2M,
-                        wrong_answer_n3: sbagliata_3M
-                }
-            }
-
-            if(tipoGioco === "QUIZ"){
-                for(var i=0; i < elencoDomandeQuiz.length; i++){
-    
-                //QUESTO CONTROLLO NON FUNZIONA BISOGNA INSERIRE UN ID UNICO---> si risolve con FIREBASE
-                    if(indovinaM === elencoDomandeQuiz[i].indovina){
-                        console.log("TROVATA DOMANDA DA MODIFICARE");
-                        
-                        elencoDomandeQuiz[i] = modified_question;
-                        setElencoDomandeQuiz(elencoDomandeQuiz);
-                    }
-                }
-            }
-            if(tipoGioco === "QUIZ CON IMMAGINI"){
-                for(var j=0; j < elencoDomandeQuizImmagini.length; j++){
-    
-                //QUESTO CONTROLLO NON FUNZIONA BISOGNA INSERIRE UN ID UNICO---> si risolve con FIREBASE
-                    if(indovinaM === elencoDomandeQuizImmagini[j].indovina){
-                        console.log("TROVATA DOMANDA DA MODIFICARE");
-                        
-                        elencoDomandeQuizImmagini[j] = modified_question;
-                        setElencoDomandeQuizImmagini(elencoDomandeQuizImmagini);
-                    }
+            //QUESTO CONTROLLO NON FUNZIONA BISOGNA INSERIRE UN ID UNICO---> si risolve con FIREBASE
+                if(domandaModificata.indovina === elencoDomandeQuiz[i].indovina){
+                    console.log("TROVATA DOMANDA DA MODIFICARE");
+                    
+                    elencoDomandeQuiz[i] = domandaModificata;
+                    setElencoDomandeQuiz(elencoDomandeQuiz);
                 }
             }
         }
+        if(tipoGioco === "QUIZ CON IMMAGINI"){
+            for(var j=0; j < elencoDomandeQuizImmagini.length; j++){
+
+            //QUESTO CONTROLLO NON FUNZIONA BISOGNA INSERIRE UN ID UNICO---> si risolve con FIREBASE
+                if(domandaModificata.indovina === elencoDomandeQuizImmagini[j].indovina){
+                    console.log("TROVATA DOMANDA DA MODIFICARE");
+                    
+                    elencoDomandeQuizImmagini[j] = domandaModificata;
+                    setElencoDomandeQuizImmagini(elencoDomandeQuizImmagini);
+                }
+            }
+        }
+        
 
         if(tipoGioco === "COMPLETA LA PAROLA"){
-            modified_question={
-                livelloDomanda: "facile",
-                categoria: categoriaM,
-                indovina: indovinaM.toUpperCase()
-            }
-
             for(var x=0; x < elencoParoleDaCompletare.length; x++){
                 
                 //QUESTO CONTROLLO NON FUNZIONA BISOGNA INSERIRE UN ID UNICO---> si risolve con FIREBASE
-                if(indovinaM === elencoParoleDaCompletare[x].indovina){
+                if(domandaModificata.indovina === elencoParoleDaCompletare[x].indovina){
                     console.log("TROVATA DOMANDA DA MODIFICARE");
                     
-                    elencoParoleDaCompletare[x] = modified_question;
+                    elencoParoleDaCompletare[x] = domandaModificata;
                     setElencoDomandeQuizImmagini(elencoParoleDaCompletare);
                 }
             }

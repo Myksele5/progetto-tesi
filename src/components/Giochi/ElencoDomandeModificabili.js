@@ -52,7 +52,7 @@ function ElencoDomandeModificabili(props){
                     {gameType === "QUIZ CON IMMAGINI" &&
                         <div className={styles.flex_list_container}>
                             <h4 className={styles.subtitle_style}>Immagine:</h4>
-                            <p className={styles.question_style}>{singleQuestion.question.correct_answer}</p>
+                            <p className={styles.question_style}>{singleQuestion.rispCorrette.correct_answer_n1}</p>
                         </div>
                     }
 

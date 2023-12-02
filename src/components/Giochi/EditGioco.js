@@ -134,10 +134,6 @@ function EditGioco(props){
                     </div>
                 </div>
 
-                
-
-                
-
                 <label className={styles.label_style}>Nome Gioco:</label>
                 <input className={styles.textbox_style} type="text" value={nomeGiocoModifica} onChange={nomeGiocoChangeHandler}></input>
                 {tipoGiocoModifica === "RIFLESSI" &&

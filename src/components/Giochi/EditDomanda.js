@@ -101,6 +101,81 @@ function EditDomanda(props){
         console.log(counter_SBAGLIATE);
     }
 
+    function salvaDomanda(){
+        var modified_question;
+        var risposteCORRETTE;
+        var risposteSBAGLIATE;
+
+        if(tipoGiocoModifica === "QUIZ" || tipoGiocoModifica === "QUIZ CON IMMAGINI"){
+            risposteCORRETTE = {
+                correct_answer_n1: rispCorretta_1Modifica
+            }
+            risposteSBAGLIATE = {
+                wrong_answer_n1: rispSbagliata_1Modifica
+            }
+
+            if(typeof rispCorretta_2Modifica !== undefined && totalAnswers_CORRECT === 2){
+                risposteCORRETTE = {
+                    correct_answer_n1: rispCorretta_1Modifica,
+                    correct_answer_n2: rispCorretta_2Modifica
+                }
+            }
+            if(rispCorretta_3Modifica !== undefined && totalAnswers_CORRECT === 3){
+                risposteCORRETTE = {
+                    correct_answer_n1: rispCorretta_1Modifica,
+                    correct_answer_n2: rispCorretta_2Modifica,
+                    correct_answer_n3: rispCorretta_3Modifica
+                }
+            }
+            if(rispCorretta_4Modifica !== undefined && totalAnswers_CORRECT === 4){
+                risposteCORRETTE = {
+                    correct_answer_n1: rispCorretta_1Modifica,
+                    correct_answer_n2: rispCorretta_2Modifica,
+                    correct_answer_n3: rispCorretta_3Modifica,
+                    correct_answer_n4: rispCorretta_4Modifica
+                }
+            }
+            if(rispSbagliata_2Modifica !== undefined && totalAnswers_WRONG === 2){
+                risposteSBAGLIATE = {
+                    wrong_answer_n1: rispSbagliata_1Modifica,
+                    wrong_answer_n2: rispSbagliata_2Modifica
+                }
+            }
+            if(rispSbagliata_3Modifica !== undefined && totalAnswers_WRONG === 3){
+                risposteSBAGLIATE = {
+                    wrong_answer_n1: rispSbagliata_1Modifica,
+                    wrong_answer_n2: rispSbagliata_2Modifica,
+                    wrong_answer_n3: rispSbagliata_3Modifica
+                }
+            }
+            if(rispSbagliata_4Modifica !== undefined && totalAnswers_WRONG === 4){
+                risposteSBAGLIATE = {
+                    wrong_answer_n1: rispSbagliata_1Modifica,
+                    wrong_answer_n2: rispSbagliata_2Modifica,
+                    wrong_answer_n3: rispSbagliata_3Modifica,
+                    wrong_answer_n4: rispSbagliata_4Modifica,
+                }
+            }
+
+            modified_question = {
+                categoria: categoriaDomandaModifica,
+                indovina: indovinaModifica,
+                rispCorrette: risposteCORRETTE,
+                rispSbagliate: risposteSBAGLIATE
+            }
+        }
+
+        if(tipoGiocoModifica === "COMPLETA LA PAROLA"){
+            modified_question = {
+                categoria: categoriaDomandaModifica,
+                indovina: indovinaModifica.toUpperCase()
+            }
+        }
+
+        game_ctx.salvaDomandaModificata(tipoGiocoModifica, modified_question);
+        props.chiudiFormModificaDomanda();
+    }
+
     return(
         <Card
             animazione={true}
@@ -221,10 +296,7 @@ function EditDomanda(props){
 
                     <div className={styles.wrapper_generico}>
                         <GenericButton
-                            onClick={() => {
-                                game_ctx.salvaDomandaModificata(tipoGiocoModifica, categoriaDomandaModifica, indovinaModifica, rispCorretta_1Modifica, rispSbagliata_1Modifica, rispSbagliata_2Modifica, rispSbagliata_3Modifica);
-                                props.chiudiFormModificaDomanda();
-                            }}
+                            onClick={salvaDomanda}
                             generic_button={true}
                             buttonText={"Salva domanda"}
                         >

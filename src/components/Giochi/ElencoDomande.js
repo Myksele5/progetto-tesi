@@ -47,7 +47,8 @@ function ElencoDomande(props){
             llll.unshift({
                 categoria: domanda.categoria,
                 indovina: domanda.indovina,
-                question: domanda.question
+                rispCorrette: domanda.rispCorrette,
+                rispSbagliate: domanda.rispSbagliate
             });
         }
         else{
@@ -61,6 +62,7 @@ function ElencoDomande(props){
             }
         }
 
+        console.log(llll.question);
         console.log(llll);
         setNumeroDomandeSelezionate(COUNT_DOMANDE);
         props.domandeNuovoGioco(llll);
@@ -133,7 +135,8 @@ function ElencoDomande(props){
                     {props.tipoGioco === "QUIZ CON IMMAGINI" &&
                         <div className={styles.flex_list_container}>
                             <h4 className={styles.subtitle_style}>Immagine:</h4>
-                            <p className={styles.question_style}>{singleQuestion.question.correct_answer}</p>
+                            <p className={styles.question_style}>{singleQuestion.indovina}</p>
+                            <img className={styles.preview_image} src={singleQuestion.indovina}></img>
                         </div>
                     }
 
