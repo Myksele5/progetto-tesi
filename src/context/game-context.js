@@ -104,11 +104,13 @@ export function GameContextProvider(props){
                     indovina: "Quale tra le seguenti squadre NBA ha vinto più titoli?",
                     rispCorrette:{
                         correct_answer_n1: 'Los Angeles Lakers',
+                        correct_answer_n2: 'LA Lakers',
                     },
                     rispSbagliate:{
                         wrong_answer_n1: 'Boston Celtics',
                         wrong_answer_n2: 'New York Knicks',
-                        wrong_answer_n3: 'Chicago Bulls'
+                        wrong_answer_n3: 'Chicago Bulls',
+                        wrong_answer_n4: 'Miami Heat'
                     }
                 },
                 {

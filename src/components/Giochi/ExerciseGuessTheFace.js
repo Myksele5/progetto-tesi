@@ -13,7 +13,8 @@ import GameContext from '../../context/game-context';
 
 let counter_question_number = 0;
 let counter_correct_answers = 0;
-var quattroRisposte = [];
+var arrayRisposte = [];
+var arrayRisposteCorrette = [];
 
 var tipoQuiz;
 var secondi;
@@ -94,166 +95,350 @@ function ExerciseGuessTheFace(props){
         }
     }, [timer]);
 
+    useEffect(() => {
+        arrayRisposteCorrette = [];
+
+        // SULLA LINEA DEL CICLO for SI è VERIFICATO UN BUG(solo una volta), NON RIESCO A RICREARLO---> MANTIENI QUESTO COMMENTO FINO A QUANDO NON OTTIENI INFO IN MERITO
+        for(var i=0; i < Object.keys(questions[counter_question_number].rispCorrette).length; i++){
+            if(i === 0){
+                arrayRisposteCorrette.push(questions[counter_question_number].rispCorrette.correct_answer_n1);
+            }
+            if(i === 1){
+                arrayRisposteCorrette.push(questions[counter_question_number].rispCorrette.correct_answer_n2);
+            }
+            if(i === 2){
+                arrayRisposteCorrette.push(questions[counter_question_number].rispCorrette.correct_answer_n3);
+            }
+            if(i === 3){
+                arrayRisposteCorrette.push(questions[counter_question_number].rispCorrette.correct_answer_n4);
+            }
+        }
+        console.log(arrayRisposteCorrette);
+    }, [counter_question_number]);
+
     function checkTheAnswer(answer1, answer2, answer3, answer4, answer5, answer6, answer7, answer8, button){
+        let risp1 = questions[counter_question_number].rispCorrette.correct_answer_n1;
+        let risp2 = questions[counter_question_number].rispCorrette.correct_answer_n2;
+        let risp3 = questions[counter_question_number].rispCorrette.correct_answer_n3;
+        let risp4 = questions[counter_question_number].rispCorrette.correct_answer_n4;
+
+        let numeroRisposteCorrette = Object.keys(questions[counter_question_number].rispCorrette).length;
+        console.log(numeroRisposteCorrette);
+
         console.log("INTERVAL dentro checktheanswer--->" + interval);
-        clearInterval(interval);
-        setDisableButton(true);
-        setHasAnswered(true);
 
-        let risp = questions[counter_question_number].rispCorrette.correct_answer_n1;
-
-        if(answer1 === risp){
+        if((answer1 === risp1 || answer1 === risp2 || answer1 === risp3 || answer1 === risp4) && button === "BOTTONE_1"){
             setColoraRispostaCorretta_N1(true);
             if(button === "BOTTONE_1"){
-                counter_correct_answers++;
+                for(var i=0; i < arrayRisposteCorrette.length; i++){
+                    if(answer1 === arrayRisposteCorrette[i]){
+                        arrayRisposteCorrette.splice(i, 1);
+                    }
+                }
+                if(arrayRisposteCorrette.length === 0){
+                    counter_correct_answers++;
+                    clearInterval(interval);
+                    setDisableButton(true);
+                    setHasAnswered(true);
+                }
             }
         }
         else{
             if(button === "BOTTONE_1"){
+                for(var x=0; x < arrayRisposteCorrette.length; x++){
+                    arrayRisposteCorrette[x] === answer1 ? setColoraRispostaCorretta_N1(true) : arrayRisposteCorrette[x] === answer2 ? setColoraRispostaCorretta_N2(true) :
+                    arrayRisposteCorrette[x] === answer3 ? setColoraRispostaCorretta_N3(true) : arrayRisposteCorrette[x] === answer4 ? setColoraRispostaCorretta_N4(true) :
+                    arrayRisposteCorrette[x] === answer5 ? setColoraRispostaCorretta_N5(true) : arrayRisposteCorrette[x] === answer6 ? setColoraRispostaCorretta_N6(true) :
+                    arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
+                    setColoraRispostaCorretta_N8(false);
+                }
                 setColoraRispostaSbagliata_N1(true);
+                clearInterval(interval);
+                setDisableButton(true);
+                setHasAnswered(true);
             }
         }
 
 
-        if(answer2 === risp){
+        if((answer2 === risp1 || answer2 === risp2 || answer2 === risp3 || answer2 === risp4) && button === "BOTTONE_2"){
             setColoraRispostaCorretta_N2(true);
             if(button === "BOTTONE_2"){
-                counter_correct_answers++;
+                for(var i=0; i < arrayRisposteCorrette.length; i++){
+                    if(answer2 === arrayRisposteCorrette[i]){
+                        arrayRisposteCorrette.splice(i, 1);
+                    }
+                }
+                if(arrayRisposteCorrette.length === 0){
+                    counter_correct_answers++;
+                    clearInterval(interval);
+                    setDisableButton(true);
+                    setHasAnswered(true);
+                }
             }
         }
         else{
             if(button === "BOTTONE_2"){
+                for(var x=0; x < arrayRisposteCorrette.length; x++){
+                    arrayRisposteCorrette[x] === answer1 ? setColoraRispostaCorretta_N1(true) : arrayRisposteCorrette[x] === answer2 ? setColoraRispostaCorretta_N2(true) :
+                    arrayRisposteCorrette[x] === answer3 ? setColoraRispostaCorretta_N3(true) : arrayRisposteCorrette[x] === answer4 ? setColoraRispostaCorretta_N4(true) :
+                    arrayRisposteCorrette[x] === answer5 ? setColoraRispostaCorretta_N5(true) : arrayRisposteCorrette[x] === answer6 ? setColoraRispostaCorretta_N6(true) :
+                    arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
+                    setColoraRispostaCorretta_N8(false);
+                }
                 setColoraRispostaSbagliata_N2(true);
+                clearInterval(interval);
+                setDisableButton(true);
+                setHasAnswered(true);
             }
         }
 
-        if(answer3 === risp){
+        if((answer3 === risp1 || answer3 === risp2 || answer3 === risp3 || answer3 === risp4) && button === "BOTTONE_3"){
             setColoraRispostaCorretta_N3(true);
             if(button === "BOTTONE_3"){
-                counter_correct_answers++;
+                for(var i=0; i < arrayRisposteCorrette.length; i++){
+                    if(answer3 === arrayRisposteCorrette[i]){
+                        arrayRisposteCorrette.splice(i, 1);
+                    }
+                }
+                if(arrayRisposteCorrette.length === 0){
+                    counter_correct_answers++;
+                    clearInterval(interval);
+                    setDisableButton(true);
+                    setHasAnswered(true);
+                }
             }
         }
         else{
             if(button === "BOTTONE_3"){
+                for(var x=0; x < arrayRisposteCorrette.length; x++){
+                    arrayRisposteCorrette[x] === answer1 ? setColoraRispostaCorretta_N1(true) : arrayRisposteCorrette[x] === answer2 ? setColoraRispostaCorretta_N2(true) :
+                    arrayRisposteCorrette[x] === answer3 ? setColoraRispostaCorretta_N3(true) : arrayRisposteCorrette[x] === answer4 ? setColoraRispostaCorretta_N4(true) :
+                    arrayRisposteCorrette[x] === answer5 ? setColoraRispostaCorretta_N5(true) : arrayRisposteCorrette[x] === answer6 ? setColoraRispostaCorretta_N6(true) :
+                    arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
+                    setColoraRispostaCorretta_N8(false);
+                }
                 setColoraRispostaSbagliata_N3(true);
+                clearInterval(interval);
+                setDisableButton(true);
+                setHasAnswered(true);
             }
         }
 
-        if(answer4 === risp){
+        if((answer4 === risp1 || answer4 === risp2 || answer4 === risp3 || answer4 === risp4) && button === "BOTTONE_4"){
             setColoraRispostaCorretta_N4(true);
             if(button === "BOTTONE_4"){
-                counter_correct_answers++;
+                for(var i=0; i < arrayRisposteCorrette.length; i++){
+                    if(answer4 === arrayRisposteCorrette[i]){
+                        arrayRisposteCorrette.splice(i, 1);
+                    }
+                }
+                if(arrayRisposteCorrette.length === 0){
+                    counter_correct_answers++;
+                    clearInterval(interval);
+                    setDisableButton(true);
+                    setHasAnswered(true);
+                }
             }
         }
         else{
             if(button === "BOTTONE_4"){
+                for(var x=0; x < arrayRisposteCorrette.length; x++){
+                    arrayRisposteCorrette[x] === answer1 ? setColoraRispostaCorretta_N1(true) : arrayRisposteCorrette[x] === answer2 ? setColoraRispostaCorretta_N2(true) :
+                    arrayRisposteCorrette[x] === answer3 ? setColoraRispostaCorretta_N3(true) : arrayRisposteCorrette[x] === answer4 ? setColoraRispostaCorretta_N4(true) :
+                    arrayRisposteCorrette[x] === answer5 ? setColoraRispostaCorretta_N5(true) : arrayRisposteCorrette[x] === answer6 ? setColoraRispostaCorretta_N6(true) :
+                    arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
+                    setColoraRispostaCorretta_N8(false);
+                }
                 setColoraRispostaSbagliata_N4(true);
+                clearInterval(interval);
+                setDisableButton(true);
+                setHasAnswered(true);
             }
         }
-        if(answer5 === risp){
+        if((answer5 === risp1 || answer5 === risp2 || answer5 === risp3 || answer5 === risp4) && button === "BOTTONE_5"){
             setColoraRispostaCorretta_N5(true);
             if(button === "BOTTONE_5"){
-                counter_correct_answers++;
+                for(var i=0; i < arrayRisposteCorrette.length; i++){
+                    if(answer5 === arrayRisposteCorrette[i]){
+                        arrayRisposteCorrette.splice(i, 1);
+                    }
+                }
+                if(arrayRisposteCorrette.length === 0){
+                    counter_correct_answers++;
+                    clearInterval(interval);
+                    setDisableButton(true);
+                    setHasAnswered(true);
+                }
             }
         }
         else{
             if(button === "BOTTONE_5"){
+                for(var x=0; x < arrayRisposteCorrette.length; x++){
+                    arrayRisposteCorrette[x] === answer1 ? setColoraRispostaCorretta_N1(true) : arrayRisposteCorrette[x] === answer2 ? setColoraRispostaCorretta_N2(true) :
+                    arrayRisposteCorrette[x] === answer3 ? setColoraRispostaCorretta_N3(true) : arrayRisposteCorrette[x] === answer4 ? setColoraRispostaCorretta_N4(true) :
+                    arrayRisposteCorrette[x] === answer5 ? setColoraRispostaCorretta_N5(true) : arrayRisposteCorrette[x] === answer6 ? setColoraRispostaCorretta_N6(true) :
+                    arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
+                    setColoraRispostaCorretta_N8(false);
+                }
                 setColoraRispostaSbagliata_N5(true);
+                clearInterval(interval);
+                setDisableButton(true);
+                setHasAnswered(true);
             }
         }
-        if(answer6 === risp){
+        if((answer6 === risp1 || answer6 === risp2 || answer6 === risp3 || answer6 === risp4) && button === "BOTTONE_6"){
             setColoraRispostaCorretta_N6(true);
             if(button === "BOTTONE_6"){
-                counter_correct_answers++;
+                for(var i=0; i < arrayRisposteCorrette.length; i++){
+                    if(answer6 === arrayRisposteCorrette[i]){
+                        arrayRisposteCorrette.splice(i, 1);
+                    }
+                }
+                if(arrayRisposteCorrette.length === 0){
+                    counter_correct_answers++;
+                    clearInterval(interval);
+                    setDisableButton(true);
+                    setHasAnswered(true);
+                }
             }
         }
         else{
             if(button === "BOTTONE_6"){
+                for(var x=0; x < arrayRisposteCorrette.length; x++){
+                    arrayRisposteCorrette[x] === answer1 ? setColoraRispostaCorretta_N1(true) : arrayRisposteCorrette[x] === answer2 ? setColoraRispostaCorretta_N2(true) :
+                    arrayRisposteCorrette[x] === answer3 ? setColoraRispostaCorretta_N3(true) : arrayRisposteCorrette[x] === answer4 ? setColoraRispostaCorretta_N4(true) :
+                    arrayRisposteCorrette[x] === answer5 ? setColoraRispostaCorretta_N5(true) : arrayRisposteCorrette[x] === answer6 ? setColoraRispostaCorretta_N6(true) :
+                    arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
+                    setColoraRispostaCorretta_N8(false);
+                }
                 setColoraRispostaSbagliata_N6(true);
+                clearInterval(interval);
+                setDisableButton(true);
+                setHasAnswered(true);
             }
         }
-        if(answer7 === risp){
+        if((answer7 === risp1 || answer7 === risp2 || answer7 === risp3 || answer7 === risp4) && button === "BOTTONE_7"){
             setColoraRispostaCorretta_N7(true);
             if(button === "BOTTONE_7"){
-                counter_correct_answers++;
+                for(var i=0; i < arrayRisposteCorrette.length; i++){
+                    if(answer7 === arrayRisposteCorrette[i]){
+                        arrayRisposteCorrette.splice(i, 1);
+                    }
+                }
+                if(arrayRisposteCorrette.length === 0){
+                    counter_correct_answers++;
+                    clearInterval(interval);
+                    setDisableButton(true);
+                    setHasAnswered(true);
+                }
             }
         }
         else{
             if(button === "BOTTONE_7"){
+                for(var x=0; x < arrayRisposteCorrette.length; x++){
+                    arrayRisposteCorrette[x] === answer1 ? setColoraRispostaCorretta_N1(true) : arrayRisposteCorrette[x] === answer2 ? setColoraRispostaCorretta_N2(true) :
+                    arrayRisposteCorrette[x] === answer3 ? setColoraRispostaCorretta_N3(true) : arrayRisposteCorrette[x] === answer4 ? setColoraRispostaCorretta_N4(true) :
+                    arrayRisposteCorrette[x] === answer5 ? setColoraRispostaCorretta_N5(true) : arrayRisposteCorrette[x] === answer6 ? setColoraRispostaCorretta_N6(true) :
+                    arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
+                    setColoraRispostaCorretta_N8(false);
+                }
                 setColoraRispostaSbagliata_N7(true);
+                clearInterval(interval);
+                setDisableButton(true);
+                setHasAnswered(true);
             }
         }
-        if(answer8 === risp){
+        if((answer8 === risp1 || answer8 === risp2 || answer8 === risp3 || answer8 === risp4) && button === "BOTTONE_8"){
             setColoraRispostaCorretta_N8(true);
             if(button === "BOTTONE_8"){
-                counter_correct_answers++;
+                for(var i=0; i < arrayRisposteCorrette.length; i++){
+                    if(answer8 === arrayRisposteCorrette[i]){
+                        arrayRisposteCorrette.splice(i, 1);
+                    }
+                }
+                if(arrayRisposteCorrette.length === 0){
+                    counter_correct_answers++;
+                    clearInterval(interval);
+                    setDisableButton(true);
+                    setHasAnswered(true);
+                }
             }
         }
         else{
             if(button === "BOTTONE_8"){
+                for(var x=0; x < arrayRisposteCorrette.length; x++){
+                    arrayRisposteCorrette[x] === answer1 ? setColoraRispostaCorretta_N1(true) : arrayRisposteCorrette[x] === answer2 ? setColoraRispostaCorretta_N2(true) :
+                    arrayRisposteCorrette[x] === answer3 ? setColoraRispostaCorretta_N3(true) : arrayRisposteCorrette[x] === answer4 ? setColoraRispostaCorretta_N4(true) :
+                    arrayRisposteCorrette[x] === answer5 ? setColoraRispostaCorretta_N5(true) : arrayRisposteCorrette[x] === answer6 ? setColoraRispostaCorretta_N6(true) :
+                    arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
+                    setColoraRispostaCorretta_N8(false);
+                }
                 setColoraRispostaSbagliata_N8(true);
+                clearInterval(interval);
+                setDisableButton(true);
+                setHasAnswered(true);
             }
         }
     }
 
     function shuffleAnswers(){
-        quattroRisposte.length = 0;
+        arrayRisposte.length = 0;
         var numeroTotaleRisposte_CORRETTE = Object.keys(questions[counter_question_number].rispCorrette).length;
         var numeroTotaleRisposte_SBAGLIATE = Object.keys(questions[counter_question_number].rispSbagliate).length;
         // console.log(numeroTotaleRisposte);
 
         for(var i=0; i < numeroTotaleRisposte_CORRETTE; i++){
             if(i === 0){
-                quattroRisposte[i] = questions[counter_question_number].rispCorrette.correct_answer_n1;
+                arrayRisposte[i] = questions[counter_question_number].rispCorrette.correct_answer_n1;
             }
             if(i === 1){
-                quattroRisposte[i] = questions[counter_question_number].rispCorrette.correct_answer_n2;
+                arrayRisposte[i] = questions[counter_question_number].rispCorrette.correct_answer_n2;
             }
             if(i === 2){
-                quattroRisposte[i] = questions[counter_question_number].rispCorrette.correct_answer_n3;
+                arrayRisposte[i] = questions[counter_question_number].rispCorrette.correct_answer_n3;
             }
             if(i === 3){
-                quattroRisposte[i] = questions[counter_question_number].rispCorrette.correct_answer_n4;
+                arrayRisposte[i] = questions[counter_question_number].rispCorrette.correct_answer_n4;
             }
         }
         for(var j=0; j < numeroTotaleRisposte_SBAGLIATE; j++){
             if(j === 0){
-                quattroRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliate.wrong_answer_n1;
+                arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliate.wrong_answer_n1;
             }
             if(j === 1){
-                quattroRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliate.wrong_answer_n2;
+                arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliate.wrong_answer_n2;
             }
             if(j === 2){
-                quattroRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliate.wrong_answer_n3;
+                arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliate.wrong_answer_n3;
             }
             if(j === 3){
-                quattroRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliate.wrong_answer_n4;
+                arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliate.wrong_answer_n4;
             }
         }
         
-        // quattroRisposte[0] = questions[counter_question_number].question.correct_answer;
-        // quattroRisposte[1] = questions[counter_question_number].question.wrong_answer_n1;
-        // quattroRisposte[2] = questions[counter_question_number].question.wrong_answer_n2;
-        // quattroRisposte[3] = questions[counter_question_number].question.wrong_answer_n3;
-        // quattroRisposte[4] = questions[counter_question_number].question.wrong_answer_n4;
-        // console.log(quattroRisposte[4]);
+        // arrayRisposte[0] = questions[counter_question_number].question.correct_answer;
+        // arrayRisposte[1] = questions[counter_question_number].question.wrong_answer_n1;
+        // arrayRisposte[2] = questions[counter_question_number].question.wrong_answer_n2;
+        // arrayRisposte[3] = questions[counter_question_number].question.wrong_answer_n3;
+        // arrayRisposte[4] = questions[counter_question_number].question.wrong_answer_n4;
+        // console.log(arrayRisposte[4]);
         // console.log(Object.keys(questions[counter_question_number].question).length);
         
-        for(let i = quattroRisposte.length-1; i >= 0; i--){
+        for(let i = arrayRisposte.length-1; i >= 0; i--){
             const j = Math.floor(Math.random() * (i+1));
-            const temp = quattroRisposte[i];
-            quattroRisposte[i] = quattroRisposte[j];
-            quattroRisposte[j] = temp;
+            const temp = arrayRisposte[i];
+            arrayRisposte[i] = arrayRisposte[j];
+            arrayRisposte[j] = temp;
         }
-        // console.log(quattroRisposte);
-        setRisposta1(quattroRisposte[0]);
-        setRisposta2(quattroRisposte[1]);
-        setRisposta3(quattroRisposte[2]);
-        setRisposta4(quattroRisposte[3]);
-        setRisposta5(quattroRisposte[4]);
-        setRisposta6(quattroRisposte[5]);
-        setRisposta7(quattroRisposte[6]);
-        setRisposta8(quattroRisposte[7]);
+        // console.log(arrayRisposte);
+        setRisposta1(arrayRisposte[0]);
+        setRisposta2(arrayRisposte[1]);
+        setRisposta3(arrayRisposte[2]);
+        setRisposta4(arrayRisposte[3]);
+        setRisposta5(arrayRisposte[4]);
+        setRisposta6(arrayRisposte[5]);
+        setRisposta7(arrayRisposte[6]);
+        setRisposta8(arrayRisposte[7]);
 
     }
 
@@ -378,7 +563,7 @@ function ExerciseGuessTheFace(props){
                         is_disabled={disableButton}
                         game_button={true}></GameButton>
 
-                        {quattroRisposte.length > 2 &&
+                        {arrayRisposte.length > 2 &&
                             <GameButton
                             onClick={() => {
                                 checkTheAnswer(risposta1, risposta2, risposta3, risposta4, risposta5, risposta6, risposta7, risposta8, 'BOTTONE_3')
@@ -390,7 +575,7 @@ function ExerciseGuessTheFace(props){
                             game_button={true}></GameButton>
                         }
 
-                        {quattroRisposte.length > 3 &&
+                        {arrayRisposte.length > 3 &&
                             <GameButton
                             onClick={() => {
                                 checkTheAnswer(risposta1, risposta2, risposta3, risposta4, risposta5, risposta6, risposta7, risposta8, 'BOTTONE_4')
@@ -402,7 +587,7 @@ function ExerciseGuessTheFace(props){
                             game_button={true}></GameButton>
                         }
 
-                        {quattroRisposte.length > 4 &&
+                        {arrayRisposte.length > 4 &&
                             <GameButton
                             onClick={() => {
                                 checkTheAnswer(risposta1, risposta2, risposta3, risposta4, risposta5, risposta6, risposta7, risposta8, 'BOTTONE_5')
@@ -413,7 +598,7 @@ function ExerciseGuessTheFace(props){
                             is_disabled={disableButton}
                             game_button={true}></GameButton>
                         }
-                        {quattroRisposte.length > 5 &&
+                        {arrayRisposte.length > 5 &&
                             <GameButton
                             onClick={() => {
                                 checkTheAnswer(risposta1, risposta2, risposta3, risposta4, risposta5, risposta6, risposta7, risposta8, 'BOTTONE_6')
@@ -424,7 +609,7 @@ function ExerciseGuessTheFace(props){
                             is_disabled={disableButton}
                             game_button={true}></GameButton>
                         }
-                        {quattroRisposte.length > 6 &&
+                        {arrayRisposte.length > 6 &&
                             <GameButton
                             onClick={() => {
                                 checkTheAnswer(risposta1, risposta2, risposta3, risposta4, risposta5, risposta6, risposta7, risposta8, 'BOTTONE_7')
@@ -435,7 +620,7 @@ function ExerciseGuessTheFace(props){
                             is_disabled={disableButton}
                             game_button={true}></GameButton>
                         }
-                        {quattroRisposte.length > 7 &&
+                        {arrayRisposte.length > 7 &&
                             <GameButton
                             onClick={() => {
                                 checkTheAnswer(risposta1, risposta2, risposta3, risposta4, risposta5, risposta6, risposta7, risposta8, 'BOTTONE_8')
