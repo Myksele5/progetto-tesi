@@ -134,16 +134,21 @@ function ElencoDomandeModificabili(props){
     return(
         <div>
             {game_ctx.showModale && game_ctx.modale}
-            <select className={styles.select_style} defaultValue={gameType} onChange={gameTypeChangeHandler}>
-                <option>QUIZ</option>
-                <option>QUIZ CON IMMAGINI</option>
-                <option>COMPLETA LA PAROLA</option>
-                {/* <option>RIFLESSI</option> */}
-            </select>
+            
+            <div className={styles.wrap_flex_generico}>
+                <select className={styles.select_style} defaultValue={gameType} onChange={gameTypeChangeHandler}>
+                    <option>QUIZ</option>
+                    <option>QUIZ CON IMMAGINI</option>
+                    <option>COMPLETA LA PAROLA</option>
+                    {/* <option>RIFLESSI</option> */}
+                </select>
 
-            <select className={styles.select_style} onChange={categoryFilterChangeHandler}>
-                {categorie.map(mappaCategorie)}
-            </select>
+                <select className={styles.select_style} onChange={categoryFilterChangeHandler}>
+                    {categorie.map(mappaCategorie)}
+                </select>
+            </div>
+
+            
 
             {gameType === "QUIZ" &&
                 <ul className={styles.wrapper_lista_domande}>

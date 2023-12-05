@@ -43,6 +43,14 @@
     background-color: rgb(100, 0, 0);
 }
 
+@media screen and (max-width: 1200px) {
+    .alternative_button{
+        width: 160px;
+        height: 35px;
+        font-size: 15px;
+    }
+}
+
 @keyframes animaz {
     0%{
         opacity: 0%;

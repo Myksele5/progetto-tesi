@@ -19,6 +19,14 @@
     transition: 0.2s;
 }
 
+@media screen and (max-width: 1200px) {
+    .item_gioco{
+        border: 2px solid rgb(159, 59, 241);
+        box-shadow: 0 1px 5px 1px rgb(159, 59, 241);
+        width: 600px;
+    }
+}
+
 @keyframes animazione {
     0%{
         opacity: 10%;
