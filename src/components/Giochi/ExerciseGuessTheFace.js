@@ -59,6 +59,8 @@ function ExerciseGuessTheFace(props){
     const questions = game_ctx.listaGiochi[props.INDICEGIOCO].domandeGioco;
 
     useEffect(() => {
+        counter_question_number = 0;
+
         if(props.LIVELLOGIOCO === "NORMALE"){
             secondi = 15;
             setTimer(secondi);
