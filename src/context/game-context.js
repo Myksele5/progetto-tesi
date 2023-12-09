@@ -46,6 +46,28 @@ export function GameContextProvider(props){
 
     const dati_dei_giochi = [
         {
+            nomeGioco: "Gioco di prova-SINGOLA DOMANDA",
+            tipoGioco: "QUIZ CON IMMAGINI",
+            livelloGioco: "DIFFICILE",
+            codiceGioco: "PROVA_PROVA",
+            domandeGioco: [
+                {
+                    categoria: "Personaggi Famosi",
+                    indovina: Einstein,
+                    rispCorrette:{
+                        correct_answer_n1: 'Albert Einstein',
+                        correct_answer_n2: 'Einstein',
+                    },
+                    rispSbagliate:{
+                        wrong_answer_n1: 'Isaac Newton',
+                        wrong_answer_n2: 'Enrico Fermi',
+                        wrong_answer_n3: 'Silvio Berlusconi',
+                        wrong_answer_n4: 'Nikola Tesla',
+                    }
+                }
+            ]
+        },
+        {
             nomeGioco: "Indovina il volto del personaggio",
             tipoGioco: "QUIZ CON IMMAGINI",
             livelloGioco: "FACILE",
@@ -57,8 +79,6 @@ export function GameContextProvider(props){
                     rispCorrette:{
                         correct_answer_n1: 'Albert Einstein',
                         correct_answer_n2: 'Einstein',
-                        correct_answer_n3: 'Albert',
-                        correct_answer_n4: 'Alb Ein',
                     },
                     rispSbagliate:{
                         wrong_answer_n1: 'Isaac Newton',
