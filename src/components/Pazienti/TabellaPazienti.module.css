@@ -17,7 +17,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 }
 
 .table_wrapper{
-    width: 80%;
+    width: 1000px;
     overflow: auto;
     box-shadow: 1px 2px 8px 5px rgb(33, 33, 131);
     table-layout: fixed;
@@ -67,7 +67,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 
 @media screen and (max-width: 1750px){
     .table_wrapper{
-        width: 70%;
+        width: 950px;
     }
 
     .intestazione_tabella, .dati_tabella{
@@ -95,7 +95,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 
 @media screen and (max-width: 1500px){
     .table_wrapper{
-        width: 60%;
+        width: 900px;
     }
 
     .intestazione_tabella, .dati_tabella{
@@ -123,7 +123,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 
 @media screen and (max-width: 1200px) {
     .table_wrapper{
-        width: 60%;
+        width: 850px;
     }
 
     .intestazione_tabella, .dati_tabella{
@@ -152,7 +152,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 
 @media screen and (max-width: 900px) {
     .table_wrapper{
-        width: 40%;
+        width: 800px;
     }
 
     .intestazione_tabella, .dati_tabella{
