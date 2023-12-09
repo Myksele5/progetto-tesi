@@ -44,30 +44,22 @@ function MainMenu(props){
 
             <button onClick = {goToPazienti} className={styles.menu_option}>
                 <img className={styles.image_option} src={patient} alt="pazienti"></img>
-                {/* <div className={styles.wrap_text}> */}
-                    <p className={styles.text_option}>Pazienti</p>
-                {/* </div> */}
+                <p className={styles.text_option}>Pazienti</p>
             </button>
 
             <button onClick = {goToAttività} className={styles.menu_option}>
-                <img className={styles.image_option} src={activity} alt="attività"></img>
-                {/* <div className={styles.wrap_text}> */}
-                    <p className={styles.text_option}>Attività</p>
-                {/* </div> */}
+                <img className={styles.image_option} src={activity} alt="tests"></img>
+                <p className={styles.text_option}>MMSE/MOCA</p>
             </button>
 
             <button onClick = {goToGiochi} className={styles.menu_option}>
                 <img className={styles.image_option} src={game} alt="giochi"></img>
-                {/* <div className={styles.wrap_text}> */}
-                    <p className={styles.text_option}>Giochi</p>
-                {/* </div> */}
+                <p className={styles.text_option}>Giochi</p>
             </button>
 
             <button onClick = {goToDialoghi} className={styles.menu_option}>
                 <img className={styles.image_option} src={dialogue} alt="dialoghi"></img>
-                {/* <div className={styles.wrap_text}> */}
-                    <p className={styles.text_option}>Dialoghi</p>
-                {/* </div> */}
+                <p className={styles.text_option}>Dialoghi</p>
             </button>
 
         </div>

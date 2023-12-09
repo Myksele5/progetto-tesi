@@ -202,14 +202,23 @@ function AddDomanda(props){
         <>
             {showQuestionsList &&
                 <>
-                    <GenericButton
-                        onClick={() => {
-                            setShowQuestionsList(false);
-                        }}
-                        generic_button={true}
-                        buttonText={"Aggiungi nuova domanda"}
-                    >
-                    </GenericButton>
+                    <div className={styles.wrapper_generico}>
+                        <GenericButton
+                            onClick={() => {
+                                setShowQuestionsList(false);
+                            }}
+                            generic_button={true}
+                            buttonText={"Aggiungi nuova domanda"}
+                        >
+                        </GenericButton>
+                        <GenericButton
+                            onClick={props.chiudiFormNuovaDomanda}
+                            small_button={true}
+                            buttonText={"Chiudi scheda"}
+                        >
+                        </GenericButton>
+                    </div>
+
                     <ElencoDomandeModificabili
                         modificaSingolaDomanda={mostraFormModificaDomanda}
                     >
@@ -362,33 +371,33 @@ function AddDomanda(props){
                                     </div>
                                 }
 
-                                <div className={styles.wrapper_generico}>
-                                    <GenericButton
-                                        onClick={creaNuovaDomanda}
-                                        generic_button={true}
-                                        buttonText={"Salva domanda"}
-                                    >
-                                    </GenericButton>
-
-                                    <GenericButton
-                                        onClick={props.chiudiFormNuovaDomanda}
-                                        small_button={true}
-                                        buttonText={"Chiudi scheda"}
-                                    >
-                                    </GenericButton>
-                                </div>
+                                <GenericButton
+                                    onClick={creaNuovaDomanda}
+                                    generic_button={true}
+                                    buttonText={"Salva domanda"}
+                                >
+                                </GenericButton>
                             </div>
                         }
                     >
                     </Card>
-                    <GenericButton
-                        onClick={() => {
-                            setShowQuestionsList(true);
-                        }}
-                        generic_button={true}
-                        buttonText={"Visualizza tutte le domande"}
-                    >
-                    </GenericButton>
+                    <div className={styles.wrapper_generico}>
+                        <GenericButton
+                            onClick={() => {
+                                setShowQuestionsList(true);
+                            }}
+                            generic_button={true}
+                            buttonText={"Visualizza tutte le domande"}
+                        >
+                        </GenericButton>
+                        <GenericButton
+                            onClick={props.chiudiFormNuovaDomanda}
+                            small_button={true}
+                            buttonText={"Chiudi scheda"}
+                        >
+                        </GenericButton>
+                    </div>
+                    
                 </>
             }
             

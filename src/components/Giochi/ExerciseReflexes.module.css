@@ -38,7 +38,7 @@
 
 .domanda{
     font-size: 25px;
-    margin: 20px;
+    margin: 10px;
 }
 
 .horizontal_line{
@@ -63,64 +63,109 @@
 }
 
 .animazione_n1_EASY{
+    /* left: 660px; */
     animation: muoviFigura_n1_EASY 10s infinite forwards;
 }
 
 .animazione_n2_EASY{
-    left: 560px;
-    animation: muoviFigura_n2_EASY 20s infinite forwards;
+    /* left: 560px; */
+    animation: muoviFigura_n2_EASY 15s infinite alternate forwards;
+}
+
+.animazione_n3_EASY{
+    /* left: 560px; */
+    animation: muoviFigura_n3_EASY 15s infinite alternate forwards;
+}
+
+@media screen and (max-width: 1400px) {
+    .spawn_area{
+        width: 950px;
+    }
 }
 
 @keyframes muoviFigura_n1_EASY {
     10%{
-        transform: translateX(-100px);
+        transform: translateX(-10vw);
     }
     20%{
-        transform: translateX(100px) translateY(100px);
+        transform: translateX(-15vw) translateY(10vh);
     }
     30%{
-        transform: translateX(350px) translateY(300px);
+        transform: translateX(2vw) translateY(30vh);
     }
     40%{
-        transform: translateX(300px) translateY(250px);
+        transform: translateX(20vw) translateY(25vh);
     }
     50%{
-        transform: translateX(200px) translateY(80px);
+        transform: translateX(15vw) translateY(8vh);
     }
     60%{
-        transform: translateX(380px) translateY(100px);
+        transform: translateX(21vw) translateY(10vh);
     }
     70%{
-        transform: translateX(250px) translateY(-50px);
+        transform: translateX(25vw) translateY(-5vh);
     }
     80%{
-        transform: translateX(50px) translateY(220px);
+        transform: translateX(5vw) translateY(20vh);
     }
 }
 
 @keyframes muoviFigura_n2_EASY {
     10%{
-        transform: translateX(1000px);
+        transform: translateY(-10vh);
     }
     20%{
-        transform: translateX(200px) translateY(300px);
+        transform: translateX(-20vw) translateY(-9vh);
     }
     30%{
-        transform: translateX(850px) translateY(300px);
+        transform: translateX(-25vw) translateY(17vh);
     }
     40%{
-        transform: translateX(300px) translateY(250px);
+        transform: translateX(-23vw) translateY(24vh);
     }
     50%{
-        transform: translateX(200px) translateY(80px);
+        transform: translateX(-11vw) translateY(8vh);
     }
     60%{
-        transform: translateX(410px) translateY(130px);
+        transform: translateX(4vw) translateY(-10vh);
     }
     70%{
-        transform: translateX(250px) translateY(80px);
+        transform: translateX(20vw) translateY(8vh);
     }
     80%{
-        transform: translateX(50px) translateY(220px);
+        transform: translateX(5vw) translateY(20vh);
+    }
+    90%{
+        transform: translateX(-5vw) translateY(16vh);
+    }
+}
+
+@keyframes muoviFigura_n3_EASY {
+    10%{
+        transform: translateY(10vh);
+    }
+    20%{
+        transform: translateX(-22vw) translateY(-9vh);
+    }
+    30%{
+        transform: translateX(5vw) translateY(-1vh);
+    }
+    40%{
+        transform: translateX(13vw) translateY(21vh);
+    }
+    50%{
+        transform: translateX(1vw) translateY(8vh);
+    }
+    60%{
+        transform: translateX(14vw) translateY(-10vh);
+    }
+    70%{
+        transform: translateX(20vw) translateY(8vh);
+    }
+    80%{
+        transform: translateX(8vw) translateY(20vh);
+    }
+    90%{
+        transform: translateX(-5vw) translateY(16vh);
     }
 }
