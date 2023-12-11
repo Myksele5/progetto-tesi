@@ -13,19 +13,9 @@ import Modal from './components/UI/Modal';
 import { GameContextProvider } from './context/game-context';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [schermataMostrata, setSchermataMostrata] = useState('SCHERMATA_Pazienti');
 
   const auth_ctx = useContext(AuthContext);
-
-  // useEffect(() => {
-  //   const key_logged_in = localStorage.getItem('logged_IN');
-
-  //   if(key_logged_in === '1'){
-  //     setIsLoggedIn(true);
-  //     setSchermataMostrata('SCHERMATA_Pazienti');
-  //   }
-  // }, [setIsLoggedIn, setSchermataMostrata]);
 
   function changeSchermata(schermata){
     console.log('CAMBIO SCHERMATA');
@@ -52,20 +42,10 @@ function App() {
     }
   }
 
-
   return (
     <div className='App'>
 
-      {auth_ctx.isLogged && 
-        
-        <MainMenu
-        // makeUserLogout = {userLoggedout}
-        showSchermata = {changeSchermata}>
-        </MainMenu>
-      
-      }
-
-      {auth_ctx.isLogged && auth_ctx.logoutModal &&
+      {auth_ctx.utenteLoggato !== null && auth_ctx.logoutModal &&
         <Modal
           testoModale={"Sei sicuro di voler effettuare il logout?"}
           CONFERMA = {() => {
@@ -78,33 +58,31 @@ function App() {
         </Modal>
         
       }
+        
+      {auth_ctx.utenteLoggato === null && <Login></Login>}
 
+      {auth_ctx.utenteLoggato !== null && 
+        
+        <MainMenu
+          showSchermata = {changeSchermata}>
+        </MainMenu>
       
-        
-      {/* <div className="App"> */}
-        {!auth_ctx.isLogged && 
-          <Login
-          // onUserLogin = {userLoggedin}
-          >
-          </Login>
-        }
+      }
 
+      <PatientContextProvider>
         
-        <PatientContextProvider>
-          
-            {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Pazienti' && <div className='wrap_schermata'><Pazienti/></div>}
-            {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Attività' && <div className='wrap_schermata'><Attività/></div>}
-            {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Giochi' && 
-              <GameContextProvider>
-                <div className='wrap_schermata'>
-                  <Giochi/>
-                </div>
-              </GameContextProvider>
-                }
-            {auth_ctx.isLogged && schermataMostrata === 'SCHERMATA_Dialoghi' && <div className='wrap_schermata'><Dialoghi/></div>}
-          
-        </PatientContextProvider>
-      {/* </div> */}
+        {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Pazienti' && <div className='wrap_schermata'><Pazienti/></div>}
+        {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Attività' && <div className='wrap_schermata'><Attività/></div>}
+        {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Giochi' && 
+          <GameContextProvider>
+            <div className='wrap_schermata'>
+              <Giochi/>
+            </div>
+          </GameContextProvider>
+            }
+        {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Dialoghi' && <div className='wrap_schermata'><Dialoghi/></div>}
+      
+      </PatientContextProvider>
 
     </div>
   );

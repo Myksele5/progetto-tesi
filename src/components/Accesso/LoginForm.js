@@ -1,20 +1,25 @@
 import { auth } from "../../config/firebase-config";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
-import { useContext, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./LoginForm.module.css";
 import GenericButton from "../UI/GenericButton";
 import Card from "../UI/Card";
-import AuthContext from "../../context/auth-context";
 
 function LoginForm(props){
+    const [erroreLogin, setErroreLogin] = useState(false);
+
     const [validEmail, setValidEmail] = useState(true);
     const [email, setEmail] = useState('');
 
     const [validPassword, setValidPassword] = useState(true);
     const [password, setPassword] = useState('');
 
-    const auth_ctx = useContext(AuthContext)
+    useEffect(() => {
+        setValidEmail(true);
+        setValidPassword(true);
+        setErroreLogin(false);
+    }, [email,password]);
 
     const goToRegistrationForm = () => {
         // console.log("DEVO ANDARE ALLA REGISTRAZIONE");
@@ -22,28 +27,31 @@ function LoginForm(props){
         // props.onShowMe('FORM-REGISTRATION');
     }
 
+    const goToRecoverPassword = () => {
+        props.goToPswDiment();
+    }
+
     const emailChangeHandler = (event) =>{
         setEmail(event.target.value);
-        setValidEmail(true);
     }
 
     const passwordChangeHandler = (event) =>{
         setPassword(event.target.value);
-        setValidPassword(true);
     }
 
     const submitLogin = async (event) => {
         event.preventDefault();
         if(email.includes('@') && password.trim().length >= 6){
             console.log("MANDO DATI PER LOGIN");
-            try{
-                await createUserWithEmailAndPassword(auth, email, password)
-            } catch(err){
+            await signInWithEmailAndPassword(auth, email, password)
+            .catch((FirebaseAuthInvalidCredentialsException) =>{
+                setErroreLogin(true);
+                setValidEmail(false);
+                setValidPassword(false);
+            })
+            .catch((err) => {
                 console.error(err);
-            }
-            
-            auth_ctx.onLogin();
-            // props.onLogin();
+            })
         }
         else{
             if(!email.includes('@')){
@@ -67,14 +75,19 @@ function LoginForm(props){
                 <label className={`${styles.label_box} ${!validPassword ? styles.invalid : ''}`}>Password</label>
                 <input className={`${styles.input_box} ${!validPassword ? styles.invalid : ''}`}type="password" placeholder="Inserisci la tua password" value={password} onChange={passwordChangeHandler}></input>
                 
+                {erroreLogin && <h2 style={{color: "red"}}>Credenziali non corrette</h2>}
+
                 <GenericButton
-                type = "submit"
-                generic_button={true}
-                buttonText = 'Accedi'>
+                    type = "submit"
+                    generic_button={true}
+                    buttonText = 'Accedi'
+                >
                 </GenericButton>
+
+                {/* <h1>{`LOGGATO CON ${auth_ctx.utenteLoggato}`} </h1> */}
                 
                 <h5 className={styles.log_reg} onClick={goToRegistrationForm}>Clicca qui per registrarti!</h5>
-                <h5 className={styles.psw_dimenticata}>Password dimenticata?</h5>
+                <h5 className={styles.psw_dimenticata} onClick={goToRecoverPassword}>Password dimenticata?</h5>
             </form>
         }>
         </Card>

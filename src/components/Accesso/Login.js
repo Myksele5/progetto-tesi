@@ -1,6 +1,7 @@
 import { useState } from "react";
 import LoginForm from "./LoginForm";
 import RegistrationForm from "./RegistrationForm";
+import PswDimenticata from "./PswDimenticata";
 
 function Login(){
     const [mostraForm, setMostraForm] = useState('LOGIN');
@@ -15,18 +16,31 @@ function Login(){
         console.log('FORM CAMBIATO -> LOGIN')
     }
 
+    function showRecuperoPassword(){
+        setMostraForm('RECUPERO_PASSWORD');
+        console.log('FORM CAMBIATO -> RECUPERO_PASSWORD')
+    }
+
     return(
         <>
         {mostraForm === 'LOGIN' && 
             <LoginForm
-            // onLogin = {hideForm}
-            goToRegForm = {showRegistrationForm}>
+                goToPswDiment = {showRecuperoPassword}
+                goToRegForm = {showRegistrationForm}
+            >
             </LoginForm>
         }
         {mostraForm === 'REGISTRATION' && 
             <RegistrationForm
-            goToLoginForm = {showLoginForm}>
+                goToLoginForm = {showLoginForm}
+            >
             </RegistrationForm>
+        }
+        {mostraForm === 'RECUPERO_PASSWORD' && 
+            <PswDimenticata
+                goToLoginForm={showLoginForm}
+            >
+            </PswDimenticata>
         }
         </>
     );
