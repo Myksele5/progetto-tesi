@@ -14,7 +14,7 @@ function Pazienti(){
     return(
         <>
 
-            <h1 className={styles.page_title}>Lista Pazienti</h1>
+            <h1 className={styles.page_title}>Lista Pazienti PROVAPROVA</h1>
 
             {patients_ctx.showBarraRicercaBottone && 
                 <div className={styles.wrap_boxes}>
