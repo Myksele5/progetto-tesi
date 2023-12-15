@@ -32,13 +32,14 @@
 }
 
 .explanation{
-    font-size: 25px;
+    font-size: 16px;
     margin: 5px;
 }
 
-.domanda{
+.round{
     font-size: 25px;
     margin: 10px;
+    margin-bottom: 5px;
 }
 
 .horizontal_line{
@@ -56,10 +57,12 @@
 
 .CORRECT{
     color: green;
+    margin: 10px;
 }
 
 .WRONG{
     color: red;
+    margin: 10px;
 }
 
 .animazione_n1_EASY{
@@ -77,9 +80,23 @@
     animation: muoviFigura_n3_EASY 15s infinite alternate forwards;
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1550px) {
     .spawn_area{
         width: 950px;
+    }
+
+    .round{
+        font-size: 20px;
+    }
+
+    .risposte_corrette{
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-height: 700px) {
+    .spawn_area{
+        height: 470px;
     }
 }
 

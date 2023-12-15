@@ -153,7 +153,7 @@ function ElencoDomande(props){
 
                             <div className={styles.separa_corrette_sbagliate}>
                                 <span className={styles.buttons_space}>
-                                    <p>CORRETTA</p>
+                                    {/* <p className={styles.subtitle_style}>CORRETTA</p> */}
                                     <p className={styles.correct_answ}>{singleQuestion.rispCorrette.correct_answer_n1}</p>
 
                                     {Object.keys(singleQuestion.rispCorrette).length > 1 && singleQuestion.rispCorrette.correct_answer_n2.length > 0 &&
@@ -168,7 +168,7 @@ function ElencoDomande(props){
                                 </span>
                                 
                                 <span className={styles.buttons_space}>
-                                    <p>SBAGLIATE</p>
+                                    {/* <p className={styles.subtitle_style}>SBAGLIATE</p> */}
                                     <p className={styles.wrong_answ}>{singleQuestion.rispSbagliate.wrong_answer_n1.toString()}</p>
                                     
                                     {Object.keys(singleQuestion.rispSbagliate).length > 1 && singleQuestion.rispSbagliate.wrong_answer_n2.length > 0 &&

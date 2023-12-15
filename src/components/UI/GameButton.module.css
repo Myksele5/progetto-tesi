@@ -33,7 +33,7 @@
     transition: 0.3s;
 }
 
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1550px) {
     .game_button{
         width: 200px;
         height: 60px;

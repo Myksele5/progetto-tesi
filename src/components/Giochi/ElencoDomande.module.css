@@ -3,7 +3,7 @@
     border: 2px solid rgb(233, 33, 131);
     border-radius: 5px;
     background-color: white;
-    width: 800px;
+    width: 1000px;
     height: fit-content;
 }
 .LIST_ITEM_STYLE:hover{
@@ -24,7 +24,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 95%;
+    width: 1100px;
     height: 450px;
     border: 1px solid black;
     background-color: rgb(221, 221, 221);
@@ -65,20 +65,18 @@
 .question_style{
     width: 100%;
     text-align: center;
-    margin: 10px 5px;
+    margin: 8px;
 }
 
 .buttons_space{
     display: flex;
     align-items: center;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    max-width: 400px;
+    margin: 6px;
 }
 
 .subtitle_style{
     margin: 0;
-    margin-left: 7px;
+    margin-left: 5px;
     margin-right: 10px;
 }
 
@@ -91,8 +89,9 @@
     background-color: green;
     color: white;
     text-align: center;
-    width: 30px;
-    
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    width: 65px;
 }
 
 .wrong_answ{
@@ -104,7 +103,9 @@
     background-color: red;
     color: white;
     text-align: center;
-
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    width: 65px;
 }
 
 .checkbox_style{
@@ -113,6 +114,7 @@
 }
 
 .select_style{
+    margin: 5px;
     width: 300px;
     height: 25px;
     border-radius: 5px;
@@ -129,17 +131,26 @@
 .wrap_flex_generico{
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 
 @media screen and (max-width: 1550px) {
     .LIST_ITEM_STYLE{
-        width: 800px;
+        width: 850px;
     }
 
     .wrapper_lista_domande{
+        width: 920px;
         height: 400px;
+    }
+
+    .subtitle_style{
+        font-size: 15px;
+    }
+
+    .questions_style{
+        font-size: 15px;
     }
 
     .select_style{
@@ -155,5 +166,25 @@
     .wrong_answ{
         font-size: 13px;
         margin: 2px;
+    }
+}
+
+@media screen and (max-width: 1300px) {
+    .LIST_ITEM_STYLE{
+        width: 750px;
+    }
+
+    .wrapper_lista_domande{
+        width: 800px;
+        height: 360px;
+    }
+    
+    .select_style{
+        width: 220px;
+        height: 18px;
+        font-size: 12px;
+    }
+    .domande_disponibili{
+        font-size: 14px;
     }
 }

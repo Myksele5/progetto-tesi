@@ -88,12 +88,14 @@
     }
 
     .select_style{
-        width: 250px;
-        height: 25px;
+        width: 220px;
+        height: 18px;
+        font-size: 12px;
     }
 
     .textbox_style{
-        width: 320px;
-        height: 25px;
+        width: 220px;
+        height: 16px;
+        font-size: 13px;
     }
 }

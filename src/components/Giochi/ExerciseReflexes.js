@@ -22,20 +22,6 @@ function ExerciseReflexes(props){
     useEffect(() => {
         randomMovement = Math.floor(Math.random() * (4-1) + 1);
         console.log("Numero RANDOM--->" + randomMovement);
-
-        // switch (randomMovement){
-        //     case 1:
-        //         movingStyle = "styles.animazione_n1_EASY";
-        //         break;
-        //     case 2:
-        //         movingStyle = "styles.animazione_n2_EASY";
-        //         break;
-        //     case 3:
-        //         movingStyle = "styles.animazione_n3_EASY";
-        //         break;
-        //     default:
-        //         break;
-        // }
     }, [isMoving])
 
     function verificaRispostaPreso(event){
@@ -71,16 +57,6 @@ function ExerciseReflexes(props){
         setBersaglioPreso(null);
     }
 
-    // function PROVA(){
-    //     let elem = document.getElementById("AA");
-    //     let rect = elem.getBoundingClientRect();
-    //     console.log(rect);
-    //     console.log(positionRef.current.offsetTop);
-    //     var screenX = window.screen.width;
-    //     var screenY = window.screen.height;
-    //     console.log("dimensioni schermo" + screenX + screenY);
-    // }
-
     function iniziaGioco(){
         setGameStarted(true);
         counter_correct_answers = 0;
@@ -106,12 +82,12 @@ function ExerciseReflexes(props){
                     <h2 className={styles.explanation}>Clicca sulla figura</h2>
                     <hr className={styles.horizontal_line}></hr>
                     
-                    <h2 className={styles.domanda}>ROUND {counter_round_inCorso}</h2>
+                    
         
                     <div className={styles.wrapper_horizontal_flex}>
-                        {bersaglioPreso !== null && bersaglioPreso && <p className={styles.CORRECT}>Ottimi riflessi! +1</p>}
-                        {bersaglioPreso !== null && !bersaglioPreso && <p className={styles.WRONG}>Hai mancato il bersaglio.</p>}
+                        <h2 className={styles.round}>ROUND {counter_round_inCorso}</h2>
                         <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{roundTotali}</p>
+                        
                     </div>
                     
                     <div className={styles.spawn_area} onClick={verificaRispostaMancato}></div>
@@ -119,11 +95,15 @@ function ExerciseReflexes(props){
 
         
                     {!isMoving &&
-                        <GenericAlternativeButton
-                            onClick={aggiornaLogica}
-                            buttonText={"PROSSIMO ROUND"}
-                        >
-                        </GenericAlternativeButton>
+                        <div className={styles.wrapper_horizontal_flex}>
+                            <GenericAlternativeButton
+                                onClick={aggiornaLogica}
+                                buttonText={"PROSSIMO ROUND"}
+                            >
+                            </GenericAlternativeButton>
+                            {bersaglioPreso !== null && bersaglioPreso && <p className={styles.CORRECT}>Ottimi riflessi! +1</p>}
+                            {bersaglioPreso !== null && !bersaglioPreso && <p className={styles.WRONG}>Hai mancato il bersaglio.</p>}
+                        </div>
                     }
                 </>
             }

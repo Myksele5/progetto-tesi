@@ -89,21 +89,22 @@
         height: 20px
     }
 }
-@media screen and ((max-width: 1300px) or (max-height: 700px)) {
+@media screen and ((max-width: 1100px) or (max-height: 700px)) {
 
     .generic_button{
-        width: 200px;
-        height: 40px;
-        font-size: 17px;
+        width: 120px;
+        height: 30px;
+        font-size: 12px;
     }
 
     .small_button{
-        width: 120px;
-        height: 40px;
+        width: 110px;
+        height: 30px;
+        font-size: 12px;
     }
 
     .imgg{
-        width: 20px;
-        height: 20px
+        width: 18px;
+        height: 18px
     }
 }

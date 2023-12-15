@@ -19,3 +19,9 @@
     justify-content: center;
     align-items: center;
 }
+
+@media screen and (max-width: 1100px) {
+    .page_title{
+        font-size: 20px;
+    }
+}
