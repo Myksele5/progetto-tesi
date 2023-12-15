@@ -1,5 +1,5 @@
 .wrapper_flex{
-    width: 900px;
+    width: 800px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,7 +9,7 @@
 .wrapper_label_and_box{
     display: flex;
     /* flex-direction: column; */
-    justify-content: center;
+    justify-content: space-between;
     align-items: baseline;
 }
 
@@ -31,10 +31,10 @@
 }
 
 .title_scheda{
-    font-size: 30px;
+    font-size: 20px;
     text-align: center;
     margin: 4px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .label_style{
@@ -43,28 +43,34 @@
 }
 
 .textbox_style{
-    width: 400px;
-    height: 25px;
+    width: 300px;
+    height: 20px;
     font-size: 16px;
     border: 2px solid blue;
     border-radius: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     text-align: center;
 }
 
 .textbox_style_NOT_ALLOWED{
-    width: 400px;
-    height: 25px;
+    width: 300px;
+    height: 20px;
     font-size: 16px;
     border: 2px solid blue;
     border-radius: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     text-align: center;
     cursor: not-allowed;
 }
 
 .preview_image{
-    width: 200px;
-    height: 150px;
-    margin: 10px;
+    width: 150px;
+    height: 100px;
+    margin: 8px;
+}
+
+@media screen and (max-width: 1550px) {
+    .label_style{
+        font-size: 14px;
+    }
 }

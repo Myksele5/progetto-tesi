@@ -6,7 +6,6 @@
     width: 200px;
     height: 40px;
     font-size: 18px;
-    /* font-weight: bold; */
     border: 2px solid transparent;
     border-radius: 10px;
     color: whitesmoke;
@@ -43,9 +42,9 @@
     background-color: rgb(100, 0, 0);
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1550px) {
     .alternative_button{
-        width: 160px;
+        width: 150px;
         height: 35px;
         font-size: 15px;
     }

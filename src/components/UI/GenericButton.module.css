@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    margin: 7px;
+    margin: 5px;
     width: 230px;
     height: 40px;
     font-size: 18px;
@@ -70,6 +70,25 @@
     margin: 0.2vw;
 }
 
+@media screen and (max-width: 1550px) {
+
+    .generic_button{
+        width: 180px;
+        height: 35px;
+        font-size: 14px;
+    }
+
+    .small_button{
+        width: 150px;
+        height: 35px;
+        font-size: 14px;
+    }
+
+    .imgg{
+        width: 20px;
+        height: 20px
+    }
+}
 @media screen and ((max-width: 1300px) or (max-height: 700px)) {
 
     .generic_button{
@@ -81,11 +100,6 @@
     .small_button{
         width: 120px;
         height: 40px;
-    }
-
-    .alternative_button{
-        width: 160px;
-        height: 35px;
     }
 
     .imgg{

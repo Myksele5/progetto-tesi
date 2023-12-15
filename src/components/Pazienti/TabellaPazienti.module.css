@@ -70,9 +70,12 @@ tbody tr:nth-child(2n):hover .dati_tabella{
         width: 950px;
     }
 
-    .intestazione_tabella, .dati_tabella{
+    .intestazione_tabella{
         color: orange;
-        color: rgb(59, 59, 241);
+        font-size: 18px;
+    }
+    .dati_tabella{
+        color: orange;
         font-size: 18px;
     }
 

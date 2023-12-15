@@ -91,6 +91,8 @@ function EditGioco(props){
 
     return(
         <Card
+        animazione={true}
+        altroStile={true}
         children={
             <div className={styles.wrapper_impostazioni_gioco}>
                 <h2 className={styles.title_scheda}>Modifica il gioco</h2>

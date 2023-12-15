@@ -6,8 +6,10 @@
     justify-content: center;
     align-items: center;
     color: white;
-    /* position: absolute; */
-    /* top: 64%; */
+}
+
+.frase_inizio_gioco{
+    color: rgb(59, 59, 241);
 }
 
 .wrapper_horizontal_flex{
@@ -17,13 +19,15 @@
 }
 
 .explanation{
-    font-size: 25px;
+    font-size: 15px;
     margin: 5px;
+    color: rgb(59, 59, 241);
 }
 
 .domanda{
-    font-size: 20px;
+    font-size: 17px;
     margin: 15px;
+    color: rgb(59, 59, 241);
 }
 
 .horizontal_line{
@@ -42,9 +46,10 @@
 
 .risposte_corrette{
     border: 2px solid rgb(233, 33, 131);
-    font-size: 20px;
+    font-size: 15px;
     margin: 10px;
     padding: 5px;
+    color: rgb(59, 59, 241);
 }
 
 .wrapper_bottoni_risposte{
@@ -59,15 +64,15 @@
     /* border: 3px solid purple; */
 }
 
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1550px) {
     .resize_image{
-        width: 450px;
-        height: 300px;
+        width: 420px;
+        height: 270px;
     }
 
     .wrapper_bottoni_risposte{
-        grid-template-columns: 200px 200px;
-        grid-template-rows: 60px 60px;
+        grid-template-columns: 200px 200px 200px 200px;
+        grid-template-rows: 60px 60px 60px 60px;
         column-gap: 80px;
         row-gap: 50px;
         /* border: 3px solid purple; */

@@ -278,7 +278,7 @@ function AddDomanda(props){
 
                                 {gameType === "QUIZ CON IMMAGINI" &&
                                     <>
-                                        <label className={styles.label_style}>Inserisci immagine: </label>
+                                        {/* <label className={styles.label_style}>Inserisci immagine: </label> */}
                                         <input type="file" accept="image/*" onChange={imageFileChangeHandler}></input>
                                         <img className={styles.preview_image} src={imageFile}></img>
                                     </>
@@ -318,17 +318,20 @@ function AddDomanda(props){
                                                 </>
                                             }
 
-                                            <GenericAlternativeButton
-                                                onClick={aggiungiAlternativaCorretta}
-                                                buttonText={"Aggiungi corretta"}
-                                            >
-                                            </GenericAlternativeButton>
-                                            <GenericAlternativeButton
-                                                onClick={rimuoviAlternativaCorretta}
-                                                colore_rosso={true}
-                                                buttonText={"Rimuovi corretta"}
-                                            >
-                                            </GenericAlternativeButton>
+                                            <div className={styles.wrapper_generico}>
+                                                <GenericAlternativeButton
+                                                    onClick={aggiungiAlternativaCorretta}
+                                                    buttonText={"Aggiungi corretta"}
+                                                >
+                                                </GenericAlternativeButton>
+                                                <GenericAlternativeButton
+                                                    onClick={rimuoviAlternativaCorretta}
+                                                    colore_rosso={true}
+                                                    buttonText={"Rimuovi corretta"}
+                                                >
+                                                </GenericAlternativeButton>
+                                            </div>
+                                            
                                         </div>
 
                                         <div className={styles.wrapper_items}>
@@ -356,17 +359,20 @@ function AddDomanda(props){
                                                 </>
                                             }
 
-                                            <GenericAlternativeButton
-                                                onClick={aggiungiAlternativaSbagliata}
-                                                buttonText={"Aggiungi sbagliata"}
-                                            >
-                                            </GenericAlternativeButton>
-                                            <GenericAlternativeButton
-                                                onClick={rimuoviAlternativaSbagliata}
-                                                colore_rosso={true}
-                                                buttonText={"Rimuovi sbagliata"}
-                                            >
-                                            </GenericAlternativeButton>
+                                            <div className={styles.wrapper_generico}>
+                                                <GenericAlternativeButton
+                                                    onClick={aggiungiAlternativaSbagliata}
+                                                    buttonText={"Aggiungi sbagliata"}
+                                                >
+                                                </GenericAlternativeButton>
+                                                <GenericAlternativeButton
+                                                    onClick={rimuoviAlternativaSbagliata}
+                                                    colore_rosso={true}
+                                                    buttonText={"Rimuovi sbagliata"}
+                                                >
+                                                </GenericAlternativeButton>
+                                            </div>
+                                            
                                         </div>  
                                     </div>
                                 }

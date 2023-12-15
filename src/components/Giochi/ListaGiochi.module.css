@@ -10,6 +10,7 @@
 .game_title{
     font-size: 26px;
     margin-left: 5px;
+    color: rgb(59, 59, 241);
 }
 
 .game_subtitle{
@@ -17,6 +18,7 @@
     margin-left: 5px;
     margin-top: 2px;
     margin-bottom: 2px;
+    color: rgb(59, 59, 241);
 }
 
 .game_type{

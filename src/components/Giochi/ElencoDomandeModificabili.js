@@ -53,6 +53,7 @@ function ElencoDomandeModificabili(props){
                         <div className={styles.flex_list_container}>
                             <h4 className={styles.subtitle_style}>Immagine:</h4>
                             <p className={styles.question_style}>{singleQuestion.rispCorrette.correct_answer_n1}</p>
+                            <img className={styles.preview_image} src={singleQuestion.indovina}></img>
                         </div>
                     }
 
@@ -103,23 +104,26 @@ function ElencoDomandeModificabili(props){
                     }
 
                     <div className={styles.flex_list_container}>
-                        <h4 className={styles.subtitle_style}>Gestione domanda:</h4>
-                        <GenericButton
-                            onClick={() => {
-                                props.modificaSingolaDomanda(gameType, singleQuestion);
-                            }}
-                            generic_button={true}
-                            buttonText={"Modifica domanda"}
-                        >
-                        </GenericButton>
-                        <GenericButton
-                            onClick={() => {
-                                game_ctx.eliminaDomanda(gameType, singleQuestion.indovina);
-                            }}
-                            small_button={true}
-                            buttonText={"Elimina domanda"}
-                        >
-                        </GenericButton>
+                        <h4 className={styles.subtitle_style}>Opzioni:</h4>
+                        <div className={styles.separa_corrette_sbagliate}>
+                            <GenericButton
+                                onClick={() => {
+                                    props.modificaSingolaDomanda(gameType, singleQuestion);
+                                }}
+                                generic_button={true}
+                                buttonText={"Modifica domanda"}
+                            >
+                            </GenericButton>
+                            <GenericButton
+                                onClick={() => {
+                                    game_ctx.eliminaDomanda(gameType, singleQuestion.indovina);
+                                }}
+                                small_button={true}
+                                buttonText={"Elimina domanda"}
+                            >
+                            </GenericButton>
+                        </div>
+                        
                         
                     </div>
 
