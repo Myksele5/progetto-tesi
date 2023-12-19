@@ -64,13 +64,19 @@
 }
 
 .preview_image{
-    width: 150px;
-    height: 100px;
-    margin: 8px;
+    width: 280px;
+    height: 175px;
+    margin: 10px;
 }
 
 @media screen and (max-width: 1550px) {
     .label_style{
         font-size: 14px;
+    }
+
+    .preview_image{
+        width: 250px;
+        height: 150px;
+        margin: 10px;
     }
 }

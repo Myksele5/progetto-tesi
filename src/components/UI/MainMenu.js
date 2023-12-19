@@ -33,18 +33,21 @@ function MainMenu(props){
 
             <img className={styles.menu_image} src={brain} alt="blue_brain"></img>
 
-            <div className={styles.wrapper_generico}>
-                <p className={styles.utente_loggato}>{`UTENTE-> ${auth_ctx.utenteLoggato}`}</p>
+            <div style={{display: "flex", justifyContent: "center"}}>
+                <div className={styles.wrapper_generico}>
+                    <p className={styles.utente_loggato}>{`UTENTE-> ${auth_ctx.utenteLoggato}`}</p>
+                    <GenericButton
+                    onClick={auth_ctx.onLogoutClick}
+                    buttonText={'Log Out'}
+                    small_button={true}
+                    >
+                    </GenericButton>
+                </div>
             </div>
 
-            <div className={styles.menu_button_logout}>
-                <GenericButton
-                onClick={auth_ctx.onLogoutClick}
-                buttonText={'Log Out'}
-                small_button={true}
-                >
-                </GenericButton>
-            </div>
+            {/* <div className={styles.menu_button_logout}>
+                
+            </div> */}
             
             
 

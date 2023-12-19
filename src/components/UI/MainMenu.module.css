@@ -1,8 +1,6 @@
 .utente_loggato{
     /* margin: 1px; */
     color: white;
-    border: 2px solid rgb(233, 33, 131);
-    border-radius: 10px;
     padding: 3px;
     margin: 5px;
     margin-bottom: 0;
@@ -10,8 +8,14 @@
 
 .wrapper_generico{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: fit-content;
+    margin: 50px 0px;
+    border: 1px solid rgb(233, 33, 131);
+    border-radius: 10px;
+    background-image: radial-gradient(ellipse at top, purple, transparent);
 }
 
 .wrap_menu{
@@ -51,7 +55,7 @@
     justify-content: space-between;
 }
 
-.menu_option:nth-child(4){
+.menu_option:nth-child(3){
     /* margin-top: 50px; */
     border-top: 2px solid rgb(233, 33, 131);
 }

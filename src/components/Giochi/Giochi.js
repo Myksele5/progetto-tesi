@@ -194,7 +194,8 @@ function Giochi(){
                 tipoGioco={tipoGioco}
                 categoriaDomanda={singleQuestion.categoria}
                 indovina={singleQuestion.indovina}
-
+                corrette={""}
+                sbagliate={""}
                 chiudiFormModificaDomanda={closeFormEditQuestion}
             >
             </EditDomanda>
