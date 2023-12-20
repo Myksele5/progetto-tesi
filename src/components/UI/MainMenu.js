@@ -33,7 +33,7 @@ function MainMenu(props){
 
             <img className={styles.menu_image} src={brain} alt="blue_brain"></img>
 
-            <div style={{display: "flex", justifyContent: "center"}}>
+            <div className={styles.wrap_profilo}>
                 <div className={styles.wrapper_generico}>
                     <p className={styles.utente_loggato}>{`UTENTE-> ${auth_ctx.utenteLoggato}`}</p>
                     <GenericButton
@@ -44,12 +44,6 @@ function MainMenu(props){
                     </GenericButton>
                 </div>
             </div>
-
-            {/* <div className={styles.menu_button_logout}>
-                
-            </div> */}
-            
-            
 
             <button onClick = {goToPazienti} className={styles.menu_option}>
                 <img className={styles.image_option} src={patient} alt="pazienti"></img>

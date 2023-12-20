@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SchedaPaziente from "../components/Pazienti/SchedaPaziente";
 import someStyles from '../components/Pazienti/TabellaPazienti.module.css';
 import DeleteButton from "../components/UI/DeleteButton";
@@ -8,8 +8,9 @@ import Modal from "../components/UI/Modal";
 import EditPaziente from "../components/Pazienti/EditPaziente";
 import Card from "../components/UI/Card";
 
-import { db } from "../config/firebase-config";
+import { auth, db } from "../config/firebase-config";
 import { collection, getDocs, addDoc, deleteDoc, updateDoc, doc } from "firebase/firestore";
+import AuthContext from "./auth-context";
 
 let scheda_paziente;
 let modifica_paziente;
@@ -295,6 +296,10 @@ export function PatientContextProvider(props){
             id: Math.random().toString()
         }
     ]
+    const auth_ctx = useContext(AuthContext);
+    
+    //QUESTO STATO SERVE PER DARE IL TEMPO A FIREBASE DI FETCHARE E A REACT DI AGGIORNARE L'ELENCO DEI PAZIENTI
+    const [isLoading, setIsLoading] = useState(true);
 
     const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
     const [showTabella, setShowTabella] = useState(true);
@@ -305,7 +310,7 @@ export function PatientContextProvider(props){
     const [showModificaPaziente, setShowModificaPaziente] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
-    const listaPazientiReference = collection(db, "pazienti")
+    const listaPazientiReference = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `pazienti`);
     
     // --------- FUNZIONE PER RECUPERARE I PAZIENTI DAL DATABASE
     const prendiListaPazienti = async () => {
@@ -315,17 +320,19 @@ export function PatientContextProvider(props){
                 ...docPazien.data(),
                 id: docPazien.id
             }))
+            setIsLoading(false);
             setElencoPazienti(filteredData);
+            console.log(filteredData);
         } catch(err){
             console.error(err);
         }
-        
     };
 
     //ESEGUO LA FUNZIONE PER AVERE SEMPRE LA LISTA AGGIORNATA DEI PAZIENTI
     useEffect(() => {
+        console.log("CARICO LISTA PAZIENTI....");
         prendiListaPazienti();
-    }, []);
+    }, [isLoading, auth_ctx.utenteLoggato]);
     
 
     //------------- AGGIORNA db CON IL NUOVO PAZIENTE ---> VIENE ESEGUITA IN AddPaziente.js TRAMITE PROPS
@@ -366,7 +373,7 @@ export function PatientContextProvider(props){
 
     //---------------- FUNZIONE PER ELIMINARE UN PAZIENTE
     async function eliminaPaziente(pazienteID){
-        const pazienteDoc = doc(db, "pazienti", pazienteID);
+        const pazienteDoc = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `pazienti`, pazienteID);
         await deleteDoc(pazienteDoc);
 
         prendiListaPazienti();
@@ -396,7 +403,7 @@ export function PatientContextProvider(props){
 
     //---------------- FUNZIONE PER MODIFICARE I DATI DI UN PAZIENTE
     async function modificaPaziente(pazienteOGGETTO){
-        const pazienteDoc = doc(db, "pazienti", pazienteOGGETTO.id);
+        const pazienteDoc = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `pazienti`, pazienteOGGETTO.id);
         await updateDoc(pazienteDoc, pazienteOGGETTO);
         setShowModificaPaziente(false);
         setShowSearchBoxAndButton(true);
@@ -439,36 +446,44 @@ export function PatientContextProvider(props){
 
     //------------- FUNZIONE CHE RESTITUISCE LA SINGOLA RIGA DELLA TABELLA POPOLATA CON I DATI DEL PAZIENTE PRESI DAL db
     function fromArrayToTablePazienti(elencoPazienti){
-        return(
-            <tr key={elencoPazienti.id}>
-                <td className={`${someStyles['dati_tabella']} ${someStyles['nome']}`}>{elencoPazienti.nome}</td>
-                <td className={`${someStyles['dati_tabella']} ${someStyles['cognome']}`}>{elencoPazienti.cognome}</td>
-                <td className={`${someStyles['dati_tabella']} ${someStyles['città']}`}>{elencoPazienti.città}</td>
-                <td className={`${someStyles['dati_tabella']} ${someStyles['data']}`}>{elencoPazienti.dataNascita}</td>
-                <td className={`${someStyles['dati_tabella']} ${someStyles['codicefiscale']}`}>{elencoPazienti.codiceFiscale}</td>
-                {/* <td className={someStyles.dati_tabella}>{arrayDummyPazienti.attività}</td> */}
-                <td className={`${someStyles['dati_tabella']} ${someStyles['opzioni']}`}>
-                    <DetailsButton
-                    onClick={() => {
-                        // console.log(arrayDummyPazienti); //-----> Log per verificare che passa i dati del paziente corretto
-                        cliccaRiga(elencoPazienti);
-                    }}>
-                    </DetailsButton>
-
-                    <EditButton
-                    onClick={() =>{
-                        modificaDatiPaziente(elencoPazienti);
-                    }}>
-                    </EditButton>
-                    
-                    <DeleteButton
-                    onClick={() => {
-                        confermaEliminazionePaziente(elencoPazienti.id, elencoPazienti.nome, elencoPazienti.cognome);
-                    }}>
-                    </DeleteButton>
-                </td>
-            </tr>
-        );
+        if(Object.keys(elencoPazienti).length > 0){
+            console.log(elencoPazienti);
+            return(
+                <tr key={elencoPazienti.id}>
+                    <td className={`${someStyles['dati_tabella']} ${someStyles['nome']}`}>{elencoPazienti.nome}</td>
+                    <td className={`${someStyles['dati_tabella']} ${someStyles['cognome']}`}>{elencoPazienti.cognome}</td>
+                    <td className={`${someStyles['dati_tabella']} ${someStyles['città']}`}>{elencoPazienti.città}</td>
+                    <td className={`${someStyles['dati_tabella']} ${someStyles['data']}`}>{elencoPazienti.dataNascita}</td>
+                    <td className={`${someStyles['dati_tabella']} ${someStyles['codicefiscale']}`}>{elencoPazienti.codiceFiscale}</td>
+                    {/* <td className={someStyles.dati_tabella}>{arrayDummyPazienti.attività}</td> */}
+                    <td className={`${someStyles['dati_tabella']} ${someStyles['opzioni']}`}>
+                        <DetailsButton
+                        onClick={() => {
+                            cliccaRiga(elencoPazienti);
+                        }}>
+                        </DetailsButton>
+    
+                        <EditButton
+                        onClick={() =>{
+                            modificaDatiPaziente(elencoPazienti);
+                        }}>
+                        </EditButton>
+                        
+                        <DeleteButton
+                        onClick={() => {
+                            confermaEliminazionePaziente(elencoPazienti.id, elencoPazienti.nome, elencoPazienti.cognome);
+                        }}>
+                        </DeleteButton>
+                    </td>
+                </tr>
+            );
+        }
+        else{
+            console.log(elencoPazienti);
+            return(
+                <p>Non ci sono pazienti da mostrare. Creane uno</p>
+            );
+        }
     }
 
     //-------------- FUNZIONE CHE RESTITUISCE LE OPZIONI PER I MENU A DROPDOWN

@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 
 import { auth, db } from "../../config/firebase-config";
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 
 var SALVADATI = false;
 
 function RegistrationForm(props){
-    const listaUtentiReference = collection(db, "listaUtenti")
+    // const listaUtentiReference = doc(db, "listaUtenti")
     const [aBuonFine, setABuonFine] = useState(null);
 
     const [titolo, setTitolo] = useState("Dottore");
@@ -75,6 +75,7 @@ function RegistrationForm(props){
             await createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 console.log(userCredential);
+                console.log(userCredential.user.uid);
                 SALVADATI = true;
                 setABuonFine(true);
             })
@@ -87,16 +88,39 @@ function RegistrationForm(props){
             })
 
             if(SALVADATI){
-                await addDoc(listaUtentiReference, {
+                await setDoc(doc(db, `${email}`, `info`), {
                     nome: nome,
                     cognome: cognome,
                     email: email,
                     password: password,
-                    titolo: titolo
+                    titolo: titolo,
+                    UID: auth.currentUser.uid
                 })
                 .catch((err) => {
                     console.log(err);
                 });
+
+                // await setDoc(doc(db, `${email}`, `info`, `listaPazienti`), {})
+                // .catch((err) => {
+                //     console.log(err);
+                // });
+
+                // await setDoc(doc(db, `${email}`, `info`, `listaGiochi`), {})
+                // .catch((err) => {
+                //     console.log(err);
+                // });
+
+                // const creaGiochiSubCollectionsReference = doc(db, `listaUtenti`, `${auth.currentUser.uid}`, `giochi`, `listaGiochi`);
+                // await setDoc(creaGiochiSubCollectionsReference, {})
+                // .catch((err) => {
+                //     console.log(err);
+                // });
+
+                // const creaPazientiSubCollectionsReference = doc(db, `listaUtenti`, `${auth.currentUser.uid}`, `pazienti`, `listaPazienti`);
+                // await setDoc(creaPazientiSubCollectionsReference, {})
+                // .catch((err) => {
+                //     console.log(err);
+                // });
 
                 await sendEmailVerification(auth.currentUser);
             }

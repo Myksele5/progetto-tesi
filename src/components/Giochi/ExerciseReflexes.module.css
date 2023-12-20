@@ -18,7 +18,7 @@
 
 .spawn_area{
     width: 1100px;
-    height: 500px;
+    height: 640px;
     border: 2px solid darkmagenta;
     background-color: lightgrey;
 }
@@ -94,7 +94,13 @@
     }
 }
 
-@media screen and (max-height: 700px) {
+@media screen and (max-height: 850px) {
+    .spawn_area{
+        height: 540px;
+    }
+}
+
+@media screen and (max-height: 750px) {
     .spawn_area{
         height: 470px;
     }

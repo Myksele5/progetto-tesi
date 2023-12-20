@@ -5,28 +5,28 @@ import { auth } from "../config/firebase-config";
 
 const AuthContext = React.createContext({
     isLogged: false,
-    onLogin: ()=>{},
     logoutModal: null,
     onLogoutClick: ()=>{},
     cancelLogout: ()=>{},
     onLogout: ()=>{},
-    utenteLoggato: null
+    utenteLoggato: null,
+    utenteLoggatoUID: null
 });
 
 export function AuthContextProvider(props){
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [utenteLoggato, setUtenteLoggato] = useState(null);
+    const [utenteLoggatoUID, setUtenteLoggatoUID] = useState(null);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     useEffect(() => {
         const authentication = onAuthStateChanged(auth, (utente) => {
           if(utente){
             setUtenteLoggato(utente.email);
-            // setIsLoggedIn(true);
-            console.log(utente);
+            setUtenteLoggatoUID(utente.uid);
+            console.log(utente.uid);
+            console.log(auth.currentUser.email);
           }
           else{
-            // setIsLoggedIn(false);
             setUtenteLoggato(null);
           }
         })
@@ -35,12 +35,6 @@ export function AuthContextProvider(props){
           authentication();
         }
     }, []);
-
-    function userLoggedin(){
-      // localStorage.setItem('logged_IN', '1');
-      // console.log('SALVATI DATI DI LOGIN');
-      setIsLoggedIn(true);
-    }
 
     function userClickedLoggedout(){
       setShowLogoutModal(true);
@@ -57,20 +51,18 @@ export function AuthContextProvider(props){
         console.error(err);
       })
       console.log('EFFETTUO LOGOUT');
-      // setIsLoggedIn(false);
       closeModalLogout();
     }
 
     return (
       <AuthContext.Provider
       value={{
-          isLogged: isLoggedIn,
-          onLogin: userLoggedin,
           logoutModal: showLogoutModal,
           onLogoutClick: userClickedLoggedout,
           cancelLogout: closeModalLogout,
           onLogout: userLoggedout,
-          utenteLoggato: utenteLoggato
+          utenteLoggato: utenteLoggato,
+          utenteLoggatoUID: utenteLoggatoUID
       }}>
           {props.children}
       </AuthContext.Provider>
