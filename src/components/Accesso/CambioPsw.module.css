@@ -1,0 +1,58 @@
+.center_elements{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title{
+    font-size: 6.5vh;
+    margin: 5px;
+}
+
+.label_box{
+    margin: 3px;
+    font-size: 3.5vh;
+}
+
+.label_box.invalid{
+    color: red;
+}
+
+.input_box{
+    width: 24vw;
+    height: 3.9vh;
+    margin: 5px;
+    border: 2px solid rgb(59, 59, 241);
+    border-radius: 20px;
+    font-size: 2.6vh;
+    text-align: center;
+    color: black;
+    transition: 0.3s;
+}
+
+.input_box.invalid{
+    border: 2px solid red;
+}
+
+.input_box:focus{
+    border: 2px solid rgb(233, 33, 131);
+    transition: 0.3s;
+    box-shadow: 1px 1px 5px 1px black;
+    outline: none;
+}
+
+.log_reg{
+    margin: 7px;
+    font-size: 1.8vh;
+    cursor: pointer;
+}
+
+.log_reg:hover{
+    color: darkblue;
+    transition: 0.2s;
+}
+
+.log_reg:active{
+    text-decoration: underline;
+}

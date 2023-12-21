@@ -1,9 +1,10 @@
 // import logo from './logo.svg';
 import './App.css';
+import { useContext, useState } from 'react';
+
 import Login from './components/Accesso/Login';
 import Pazienti from './components/Pazienti/Pazienti';
 import MainMenu from './components/UI/MainMenu';
-import { useContext, useEffect, useState } from 'react';
 import Attività from './components/Attività/Attività';
 import Giochi from './components/Giochi/Giochi';
 import Dialoghi from './components/Dialoghi/Dialoghi';

@@ -29,6 +29,8 @@ function Pazienti(){
                 </div>
             }
 
+            <h2>Pulsante</h2>
+
             <div className={styles.wrapper_generico}>
 
                 {patients_ctx.showModale && patients_ctx.modale}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import LoginForm from "./LoginForm";
 import RegistrationForm from "./RegistrationForm";
 import PswDimenticata from "./PswDimenticata";
+import CambioPsw from "./CambioPsw";
 
 function Login(){
     const [mostraForm, setMostraForm] = useState('LOGIN');
@@ -41,6 +42,7 @@ function Login(){
                 goToLoginForm={showLoginForm}
             >
             </PswDimenticata>
+            // <CambioPsw></CambioPsw>
         }
         </>
     );
