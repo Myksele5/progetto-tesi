@@ -447,7 +447,7 @@ export function PatientContextProvider(props){
     //------------- FUNZIONE CHE RESTITUISCE LA SINGOLA RIGA DELLA TABELLA POPOLATA CON I DATI DEL PAZIENTE PRESI DAL db
     function fromArrayToTablePazienti(elencoPazienti){
         if(Object.keys(elencoPazienti).length > 0){
-            console.log(elencoPazienti);
+            // console.log(elencoPazienti);
             return(
                 <tr key={elencoPazienti.id}>
                     <td className={`${someStyles['dati_tabella']} ${someStyles['nome']}`}>{elencoPazienti.nome}</td>

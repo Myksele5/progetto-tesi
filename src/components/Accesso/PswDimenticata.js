@@ -26,12 +26,16 @@ function PswDimenticata(props){
     const submitPswRecovery = async (event) => {
         event.preventDefault();
         if(email.includes('@')){
-            await sendPasswordResetEmail(auth, email)
+            await sendPasswordResetEmail(auth, email, {
+                url: 'https://progetto-tesi-8abcf.web.app/'
+            })
             .then(() => {
                 alert("Fatto! Se in precedenza hai creato un account, riceverai una email per cambiare password.")
             })
-            .catch((FirebaseAuthInvalidCredentialsException) => {
+            .catch((FirebaseAuthInvalidCredentialsException, err) => {
                 setValidEmail(false);
+                console.error(err);
+                console.error(FirebaseAuthInvalidCredentialsException);
             })
             .catch((err) => {
                 console.error(err);
