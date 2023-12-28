@@ -37,9 +37,6 @@ function CambioPsw(){
         return new URLSearchParams(location.search);
     }
 
-    // const emailChangeHandler = (event) => {
-    //     setEmail(event.target.value);
-    // }
     const passwordChangeHandler = (event) => {
         setNewPassword(event.target.value);
     }
@@ -47,7 +44,6 @@ function CambioPsw(){
     const submitChangePassword = async (event) => {
         event.preventDefault();
 
-        // setValidEmail(true);
         setValidNewPassword(true);
 
         auth_ctx.confirmPasswordReset(query.get('oobCode'), newPassword)

@@ -9,6 +9,7 @@ import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 
 var counter_CORRETTE = 1;
 var counter_SBAGLIATE = 1;
+var file;
 
 function AddDomanda(props){
     const game_ctx = useContext(GameContext)
@@ -35,9 +36,9 @@ function AddDomanda(props){
     var categorie = game_ctx.recuperaCategorieDomande(gameType);
 
     function imageFileChangeHandler(event){
-        var file = event.target.files[0];
+        file = event.target.files[0];
         setImageFile(URL.createObjectURL(file));
-        console.log(file);
+        console.log(file.name);
     }
 
     function gameTypeChangeHandler(event){
@@ -55,6 +56,7 @@ function AddDomanda(props){
 
     function rispostaCorretta_1_ChangeHandler(event){
         setRispCorretta_1(event.target.value)
+        console.log(file.name);
     }
     function rispostaCorretta_2_ChangeHandler(event){
         setRispCorretta_2(event.target.value)
@@ -144,7 +146,8 @@ function AddDomanda(props){
             new_question = {
                 livelloDomanda: "facile",
                 categoria: categoryQuestion,
-                indovina: imageFile,
+                indovina: indovina,
+                fileXstorage: file,
                 rispCorrette: correct_answers,
                 rispSbagliate: wrong_answers
             }
@@ -278,9 +281,10 @@ function AddDomanda(props){
 
                                 {gameType === "QUIZ CON IMMAGINI" &&
                                     <>
-                                        {/* <label className={styles.label_style}>Inserisci immagine: </label> */}
                                         <input type="file" accept="image/*" onChange={imageFileChangeHandler}></input>
                                         <img className={styles.preview_image} src={imageFile}></img>
+                                        <label className={styles.label_style}>Inserisci nome immagine: </label>
+                                        <input className={styles.textbox_style} type="text" onChange={indovinaChangeHandler}></input>
                                     </>
                                 }
 

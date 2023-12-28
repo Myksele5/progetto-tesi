@@ -122,7 +122,7 @@ function RegistrationForm(props){
                 //     console.log(err);
                 // });
 
-                await sendEmailVerification(auth.currentUser);
+                // await sendEmailVerification(auth.currentUser);
             }
             
         }

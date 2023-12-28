@@ -16,6 +16,10 @@ import Fragola from '../components/Images-Giochi/FRAGOLA.jpg';
 import Mela from '../components/Images-Giochi/MELA.jpg';
 import Mirtillo from '../components/Images-Giochi/MIRTILLO_NERO.jpg';
 import Nespola from '../components/Images-Giochi/NESPOLA.jpeg';
+import { addDoc, collection } from "firebase/firestore";
+import { db, storage } from "../config/firebase-config";
+import { ref, uploadBytes } from "firebase/storage";
+import AuthContext from "./auth-context";
 
 let counter_CODICE_GIOCO = 0;
 let modal_eliminazione;
@@ -489,6 +493,8 @@ export function GameContextProvider(props){
     const [domandeModifica, setDomandeModifica] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
+    const auth_ctx = useContext(AuthContext);
+
     function salvaRisultati(risposteUtente, domandeTotali, pazienteDaAggiornare){
         console.log("NUMERO DI DOMANDE ---->" + domandeTotali);
         console.log("RISPOSTE CORRETTE ---->" + risposteUtente);
@@ -533,21 +539,58 @@ export function GameContextProvider(props){
         counter_CODICE_GIOCO++;
     }
 
-    function addNewQuestionToList(nuova_domanda, tipoGioco){
+    async function addNewQuestionToList(nuova_domanda, tipoGioco){
         if(tipoGioco === "QUIZ"){
+            const listaDomandeGiochiReference = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-quiz`);
+
             setElencoDomandeQuiz(vecchioElenco => {
                 return [nuova_domanda, ...vecchioElenco]
             });
+
+            try {
+                await addDoc(listaDomandeGiochiReference, nuova_domanda)
+            } catch (err) {
+                console.error(err)
+            }
         }
         if(tipoGioco === "QUIZ CON IMMAGINI"){
+            const listaDomandeGiochiReference = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-quiz-immagini`);
+            const listaImmaginiStorage = ref(storage, `${auth_ctx.utenteLoggato}/${nuova_domanda.indovina}`);
+
             setElencoDomandeQuizImmagini(vecchioElenco => {
                 return [nuova_domanda, ...vecchioElenco]
             });
+
+            try {
+                await uploadBytes(listaImmaginiStorage, nuova_domanda.fileXstorage)
+                .then(alert("Immagine salvata!"))
+            } catch (err) {
+                console.error(err)
+            }
+
+            console.log(nuova_domanda.indovina);
+            console.log(nuova_domanda.fileXstorage);
+            delete nuova_domanda.fileXstorage;
+
+            try {
+                await addDoc(listaDomandeGiochiReference, nuova_domanda)
+                .then(alert("Domanda salvata!"))
+            } catch (err) {
+                console.error(err)
+            }
         }
         if(tipoGioco === "COMPLETA LA PAROLA"){
+            const listaDomandeGiochiReference = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-c.l.p.`);
+
             setElencoParoleDaCompletare(vecchioElenco => {
                 return [nuova_domanda, ...vecchioElenco]
             });
+
+            try {
+                await addDoc(listaDomandeGiochiReference, nuova_domanda)
+            } catch (err) {
+                console.error(err)
+            }
         }
     }
 
