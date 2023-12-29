@@ -14,10 +14,11 @@ function EditDomanda(props){
     const [totalAnswers_CORRECT, setTotalAnswers_CORRECT] = useState(props.count_corrette);
     const [totalAnswers_WRONG, setTotalAnswers_WRONG] = useState(props.count_sbagliate);
 
-    const [imageFile, setImageFile] = useState(props.indovina);
+    const [imageFile, setImageFile] = useState(props.immagine);
     const [tipoGiocoModifica, setTipoGiocoModifica] = useState(props.tipoGioco);
     const [categoriaDomandaModifica, setCategoriaDomandaModifica] = useState(props.categoriaDomanda);
     const [indovinaModifica, setIndovinaModifica] = useState(props.indovina);
+    const [ID, setID] = useState(props.id);
 
     const [rispCorretta_1Modifica, setRispCorretta_1Modifica] = useState(props.corrette.correct_answer_n1);
     const [rispCorretta_2Modifica, setRispCorretta_2Modifica] = useState(props.corrette.correct_answer_n2);
@@ -172,7 +173,7 @@ function EditDomanda(props){
             }
         }
 
-        game_ctx.salvaDomandaModificata(tipoGiocoModifica, modified_question);
+        game_ctx.salvaDomandaModificata(tipoGiocoModifica, modified_question, ID);
         props.chiudiFormModificaDomanda();
     }
 
@@ -208,6 +209,8 @@ function EditDomanda(props){
                             <label className={styles.label_style}>Immagine: </label>
                             <input type="file" accept="image/*" onChange={imageFileChangeHandler}></input>
                             <img className={styles.preview_image} src={imageFile}></img>
+                            <label className={styles.label_style}>Inserisci nome immagine: </label>
+                            <input className={styles.textbox_style_NOT_ALLOWED} type="text" value={indovinaModifica} onChange={indovinaChangeHandler} readOnly></input>
                         </>
                     }
 

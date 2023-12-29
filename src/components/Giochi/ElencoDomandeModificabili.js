@@ -2,17 +2,28 @@ import styles from "./ElencoDomandeModificabili.module.css";
 import { useContext, useEffect, useState } from "react";
 import GameContext from "../../context/game-context";
 import GenericButton from "../UI/GenericButton";
+import { getBytes, getDownloadURL, listAll, ref } from "firebase/storage";
+import AuthContext from "../../context/auth-context";
+import { storage } from "../../config/firebase-config";
 
 function ElencoDomandeModificabili(props){
     const game_ctx = useContext(GameContext);
+    const auth_ctx = useContext(AuthContext);
 
     const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
+    const [imagesList, setImagesList] = useState([]);
     const [classicQuizQuestions, setClassicQuizQuestions] = useState(game_ctx.domandeDeiQuiz);
     const [guessTheWordQuestions, setGuessTheWordQuestions] = useState(game_ctx.elencoParole);
     const [gameType, setGameType] = useState("QUIZ");
-    const [categoryFilter, setCategoryFilter] = useState("Geografia");
+    const [categoryFilter, setCategoryFilter] = useState("Storia");
     
     var categorie = game_ctx.recuperaCategorieDomande(gameType);
+
+    useEffect(() => {
+        getAllImages()
+        console.log(imagesList);
+        // setClassicQuizQuestions(game_ctx.domandeDeiQuiz)
+    }, [])
 
     function gameTypeChangeHandler(event){
         setGameType(event.target.value);
@@ -35,7 +46,44 @@ function ElencoDomandeModificabili(props){
         );
     }
 
+    async function getAllImages(){
+        const listaImmaginiStorage = ref(storage, `${auth_ctx.utenteLoggato}/`);
+        await listAll(listaImmaginiStorage)
+        .then((response) => {
+            // console.log(getDownloadURL(response.items[0]))
+            // console.log(response)
+            response.items.forEach((item) => {
+                console.log(item)
+                var imageName = item.name
+                getDownloadURL(item)
+                .then((url) => {
+                    setImagesList((previous) => [...previous, {
+                        imageURL: url,
+                        name: imageName
+                    }]);
+                    // console.log(imagesList.name);
+                })
+            })    
+        })
+        // image = await getDownloadURL(imagesList[0])
+        .catch((err) => {
+            console.error(err);
+        });
+    }
+
+    function getSingleImage(domandaSingola){
+        for(var i=0; i < imagesList.length; i++){
+            if(domandaSingola.indovina === imagesList[i].name){
+                domandaSingola['immagine'] = imagesList[i].imageURL;
+                console.log(domandaSingola.immagine);
+                return domandaSingola.immagine;
+            }
+        }
+        return;
+    }
+
     function recuperaTutteLeDomande(singleQuestion){
+
         // console.log(Object.keys(singleQuestion.rispCorrette).length);
         if(singleQuestion.categoria === categoryFilter){
             // console.log(singleQuestion.categoria);
@@ -49,11 +97,12 @@ function ElencoDomandeModificabili(props){
                         </div>
                     }
 
-                    {gameType === "QUIZ CON IMMAGINI" &&
+                    {gameType === "QUIZ CON IMMAGINI" && 
                         <div className={styles.flex_list_container}>
                             <h4 className={styles.subtitle_style}>Immagine:</h4>
                             <p className={styles.question_style}>{singleQuestion.rispCorrette.correct_answer_n1}</p>
-                            <img className={styles.preview_image} src={singleQuestion.indovina}></img>
+                            {console.log(singleQuestion.indovina)}
+                            <img className={styles.preview_image} src={getSingleImage(singleQuestion)}></img>
                         </div>
                     }
 

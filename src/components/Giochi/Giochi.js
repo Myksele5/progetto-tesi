@@ -173,12 +173,29 @@ function Giochi(){
     }
 
     function formEditQuestion(tipoGioco, singleQuestion){
-        if(tipoGioco === "QUIZ" || tipoGioco === "QUIZ CON IMMAGINI"){
+        if(tipoGioco === "QUIZ"){
             modifica_domanda =
             <EditDomanda
+                id={singleQuestion.id}
                 tipoGioco={tipoGioco}
                 categoriaDomanda={singleQuestion.categoria}
                 indovina={singleQuestion.indovina}
+                corrette={singleQuestion.rispCorrette}
+                sbagliate={singleQuestion.rispSbagliate}
+                count_corrette={Object.keys(singleQuestion.rispCorrette).length}
+                count_sbagliate={Object.keys(singleQuestion.rispSbagliate).length}
+                chiudiFormModificaDomanda={closeFormEditQuestion}
+            >
+            </EditDomanda>
+        }
+        if(tipoGioco === "QUIZ CON IMMAGINI"){
+            modifica_domanda =
+            <EditDomanda
+                id={singleQuestion.id}
+                tipoGioco={tipoGioco}
+                categoriaDomanda={singleQuestion.categoria}
+                indovina={singleQuestion.indovina}
+                immagine={singleQuestion.immagine}
                 corrette={singleQuestion.rispCorrette}
                 sbagliate={singleQuestion.rispSbagliate}
                 count_corrette={Object.keys(singleQuestion.rispCorrette).length}
@@ -191,6 +208,7 @@ function Giochi(){
         if(tipoGioco === "COMPLETA LA PAROLA"){
             modifica_domanda =
             <EditDomanda
+                id={singleQuestion.id}
                 tipoGioco={tipoGioco}
                 categoriaDomanda={singleQuestion.categoria}
                 indovina={singleQuestion.indovina}

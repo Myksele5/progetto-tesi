@@ -56,7 +56,7 @@ function AddDomanda(props){
 
     function rispostaCorretta_1_ChangeHandler(event){
         setRispCorretta_1(event.target.value)
-        console.log(file.name);
+        // console.log(file.name);
     }
     function rispostaCorretta_2_ChangeHandler(event){
         setRispCorretta_2(event.target.value)
