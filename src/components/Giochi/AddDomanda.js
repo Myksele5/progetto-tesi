@@ -146,7 +146,7 @@ function AddDomanda(props){
             new_question = {
                 livelloDomanda: "facile",
                 categoria: categoryQuestion,
-                indovina: indovina,
+                // indovina: indovina,
                 fileXstorage: file,
                 rispCorrette: correct_answers,
                 rispSbagliate: wrong_answers
@@ -283,8 +283,6 @@ function AddDomanda(props){
                                     <>
                                         <input type="file" accept="image/*" onChange={imageFileChangeHandler}></input>
                                         <img className={styles.preview_image} src={imageFile}></img>
-                                        <label className={styles.label_style}>Inserisci nome immagine: </label>
-                                        <input className={styles.textbox_style} type="text" onChange={indovinaChangeHandler}></input>
                                     </>
                                 }
 

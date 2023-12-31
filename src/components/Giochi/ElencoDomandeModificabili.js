@@ -21,7 +21,7 @@ function ElencoDomandeModificabili(props){
 
     useEffect(() => {
         getAllImages()
-        console.log(imagesList);
+        // console.log(imagesList);
         // setClassicQuizQuestions(game_ctx.domandeDeiQuiz)
     }, [])
 
@@ -35,7 +35,7 @@ function ElencoDomandeModificabili(props){
 
     function categoryFilterChangeHandler(event){
         setCategoryFilter(event.target.value);
-        
+        console.log(imagesList);
     }
 
     function mappaCategorie(categoria){
@@ -47,35 +47,53 @@ function ElencoDomandeModificabili(props){
     }
 
     async function getAllImages(){
+        setImagesList([]);
         const listaImmaginiStorage = ref(storage, `${auth_ctx.utenteLoggato}/`);
-        await listAll(listaImmaginiStorage)
-        .then((response) => {
-            // console.log(getDownloadURL(response.items[0]))
-            // console.log(response)
-            response.items.forEach((item) => {
-                console.log(item)
-                var imageName = item.name
-                getDownloadURL(item)
-                .then((url) => {
-                    setImagesList((previous) => [...previous, {
-                        imageURL: url,
-                        name: imageName
-                    }]);
-                    // console.log(imagesList.name);
-                })
-            })    
-        })
-        // image = await getDownloadURL(imagesList[0])
+        const response = await listAll(listaImmaginiStorage)
         .catch((err) => {
             console.error(err);
         });
+        for(var i=0; i < response.items.length; i++){
+            // console.log(response);
+            await getDownloadURL(response.items[i])
+            .then((url) => {
+                var imageName = response.items[i].name;
+                setImagesList((previous) => [...previous, {
+                    imageURL: url,
+                    name: imageName
+                }]);
+                // console.log(imagesList.name);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        }
+        // .then((response) => {
+        //     // console.log(getDownloadURL(response.items[0]))
+        //     // console.log(response)
+        //     response.items.forEach((item) => {
+        //         console.log(item)
+        //         var imageName = item.name
+        //         getDownloadURL(item)
+        //         .then((url) => {
+        //             setImagesList((previous) => [...previous, {
+        //                 imageURL: url,
+        //                 name: imageName
+        //             }]);
+        //             // console.log(imagesList.name);
+        //         })
+        //     })    
+        // })
+        // image = await getDownloadURL(imagesList[0])
     }
 
     function getSingleImage(domandaSingola){
         for(var i=0; i < imagesList.length; i++){
-            if(domandaSingola.indovina === imagesList[i].name){
+            // console.log(imagesList[i].name)
+            // console.log(domandaSingola.indovina)
+            if(domandaSingola.id === imagesList[i].name){
                 domandaSingola['immagine'] = imagesList[i].imageURL;
-                console.log(domandaSingola.immagine);
+                // console.log(domandaSingola.immagine);
                 return domandaSingola.immagine;
             }
         }
@@ -101,7 +119,7 @@ function ElencoDomandeModificabili(props){
                         <div className={styles.flex_list_container}>
                             <h4 className={styles.subtitle_style}>Immagine:</h4>
                             <p className={styles.question_style}>{singleQuestion.rispCorrette.correct_answer_n1}</p>
-                            {console.log(singleQuestion.indovina)}
+                            {/* {console.log(singleQuestion.indovina)} */}
                             <img className={styles.preview_image} src={getSingleImage(singleQuestion)}></img>
                         </div>
                     }

@@ -590,15 +590,23 @@ export function GameContextProvider(props){
             }
         }
         if(tipoGioco === "QUIZ CON IMMAGINI"){
+            const image = nuova_domanda.fileXstorage;
             const listaDomandeGiochiReference = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-quiz-immagini`);
-            const listaImmaginiStorage = ref(storage, `${auth_ctx.utenteLoggato}/${nuova_domanda.indovina}`);
-
-            // setElencoDomandeQuizImmagini(vecchioElenco => {
-            //     return [nuova_domanda, ...vecchioElenco]
-            // });
+            var provaLOG;
+            delete nuova_domanda.fileXstorage;
 
             try {
-                await uploadBytes(listaImmaginiStorage, nuova_domanda.fileXstorage)
+                provaLOG = await addDoc(listaDomandeGiochiReference, nuova_domanda)
+                .then(alert("Domanda salvata!"))
+            } catch (err) {
+                console.error(err)
+            }
+            console.log(provaLOG.id);
+
+            const listaImmaginiStorage = ref(storage, `${auth_ctx.utenteLoggato}/${provaLOG.id}`);
+
+            try {
+                await uploadBytes(listaImmaginiStorage, image)
                 .then(alert("Immagine salvata!"))
             } catch (err) {
                 console.error(err)
@@ -606,14 +614,11 @@ export function GameContextProvider(props){
 
             console.log(nuova_domanda.indovina);
             console.log(nuova_domanda.fileXstorage);
-            delete nuova_domanda.fileXstorage;
-
-            try {
-                await addDoc(listaDomandeGiochiReference, nuova_domanda)
-                .then(alert("Domanda salvata!"))
-            } catch (err) {
-                console.error(err)
-            }
+            
+            // setElencoDomandeQuizImmagini(vecchioElenco => {
+            //     return [nuova_domanda, ...vecchioElenco]
+            // });
+            
         }
         if(tipoGioco === "COMPLETA LA PAROLA"){
             const listaDomandeGiochiReference = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-c.l.p.`);
@@ -782,7 +787,7 @@ export function GameContextProvider(props){
                     await deleteDoc(giocoDoc)
                     .catch((err) => {console.error(err)});
 
-                    const listaImmaginiQuizRef= ref(storage, `${auth_ctx.utenteLoggato}/${indovina}`);
+                    const listaImmaginiQuizRef= ref(storage, `${auth_ctx.utenteLoggato}/${id}`);
                     await deleteObject(listaImmaginiQuizRef)
                     .then(() => {alert("Immagine cancellata.")})
                     .catch((err) => {console.error(err)});
@@ -814,8 +819,11 @@ export function GameContextProvider(props){
 
     async function addModifiedQuestionToList(tipoGioco, domandaModificata, ID){
         if(tipoGioco === "QUIZ"){
-            for(var i=0; i < elencoDomandeQuiz.length; i++){
+            delete domandaModificata.fileXstorage;
+            delete domandaModificata.fileXstorageDACANCELLARE;
+            delete domandaModificata.indovinaDACANCELLARE;
 
+            for(var i=0; i < elencoDomandeQuiz.length; i++){
             //QUESTO CONTROLLO NON FUNZIONA BISOGNA INSERIRE UN ID UNICO---> si risolve con FIREBASE
                 if(ID === elencoDomandeQuiz[i].id){
                     console.log("TROVATA DOMANDA DA MODIFICARE");
@@ -828,22 +836,48 @@ export function GameContextProvider(props){
                     // setElencoDomandeQuiz(elencoDomandeQuiz);
                 }
             }
+            // getAllGamesQuestions();
         }
         if(tipoGioco === "QUIZ CON IMMAGINI"){
+            delete domandaModificata.indovina;
+
             for(var j=0; j < elencoDomandeQuizImmagini.length; j++){
 
             //QUESTO CONTROLLO NON FUNZIONA BISOGNA INSERIRE UN ID UNICO---> si risolve con FIREBASE
                 if(ID === elencoDomandeQuizImmagini[j].id){
                     console.log("TROVATA DOMANDA DA MODIFICARE");
+                    var image = null;
+
+                    if(Object.hasOwn(domandaModificata, 'fileXstorage')){
+                        image = domandaModificata.fileXstorage;
+                    }
+                    delete domandaModificata.fileXstorage;
+
                     const giocoDoc = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-quiz-immagini`, ID);
                     await updateDoc(giocoDoc, domandaModificata)
                     .then(() => {alert("Domanda modificata!")})
                     .catch((err) => {console.error(err)});
                     
+                    
+                    if(image !== null){
+                        const listaImmaginiStorage = ref(storage, `${auth_ctx.utenteLoggato}/${ID}`);
+                        await uploadBytes(listaImmaginiStorage, image)
+                        .then(() => {
+                            alert("Immagine salvata!");
+                        })
+                        .catch((err) => {
+                            console.error(err)
+                        });
+                    }
+
                     // elencoDomandeQuizImmagini[j] = domandaModificata;
                     // setElencoDomandeQuizImmagini(elencoDomandeQuizImmagini);
+                    // setElencoDomandeQuizImmagini(vecchioElenco => {
+                    //     return [nuova_domanda, ...vecchioElenco]
+                    // });
                 }
             }
+            // getAllGamesQuestions();
         }
         
 
@@ -862,6 +896,7 @@ export function GameContextProvider(props){
                     // setElencoDomandeQuizImmagini(elencoParoleDaCompletare);
                 }
             }
+            // getAllGamesQuestions();
         }
         getAllGamesQuestions();
     }

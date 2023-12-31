@@ -7,6 +7,7 @@ import GameContext from "../../context/game-context";
 
 var counter_CORRETTE;
 var counter_SBAGLIATE;
+var file;
 
 function EditDomanda(props){
     const game_ctx = useContext(GameContext);
@@ -35,9 +36,13 @@ function EditDomanda(props){
     }, []);
 
     function imageFileChangeHandler(event){
-        var file = event.target.files[0];
+        file = event.target.files[0];
         setImageFile(URL.createObjectURL(file));
+        console.log(props.immagine);
         console.log(file);
+        console.log(imageFile);
+        console.log(props.immagine === imageFile);
+        // console.log(file);
     }
 
     function indovinaChangeHandler(event){
@@ -115,7 +120,7 @@ function EditDomanda(props){
                 wrong_answer_n1: rispSbagliata_1Modifica
             }
 
-            if(typeof rispCorretta_2Modifica !== undefined && totalAnswers_CORRECT === 2){
+            if(rispCorretta_2Modifica !== undefined && totalAnswers_CORRECT === 2){
                 risposteCORRETTE = {
                     correct_answer_n1: rispCorretta_1Modifica,
                     correct_answer_n2: rispCorretta_2Modifica
@@ -157,13 +162,24 @@ function EditDomanda(props){
                     wrong_answer_n4: rispSbagliata_4Modifica,
                 }
             }
-
-            modified_question = {
-                categoria: categoriaDomandaModifica,
-                indovina: indovinaModifica,
-                rispCorrette: risposteCORRETTE,
-                rispSbagliate: risposteSBAGLIATE
+            if(imageFile !== props.immagine){
+                modified_question = {
+                    categoria: categoriaDomandaModifica,
+                    indovina: indovinaModifica,
+                    fileXstorage: file,
+                    rispCorrette: risposteCORRETTE,
+                    rispSbagliate: risposteSBAGLIATE
+                }
+            }else{
+                modified_question = {
+                    categoria: categoriaDomandaModifica,
+                    indovina: indovinaModifica,
+                    rispCorrette: risposteCORRETTE,
+                    rispSbagliate: risposteSBAGLIATE
+                }   
             }
+
+            
         }
 
         if(tipoGiocoModifica === "COMPLETA LA PAROLA"){
@@ -209,8 +225,6 @@ function EditDomanda(props){
                             <label className={styles.label_style}>Immagine: </label>
                             <input type="file" accept="image/*" onChange={imageFileChangeHandler}></input>
                             <img className={styles.preview_image} src={imageFile}></img>
-                            <label className={styles.label_style}>Inserisci nome immagine: </label>
-                            <input className={styles.textbox_style_NOT_ALLOWED} type="text" value={indovinaModifica} onChange={indovinaChangeHandler} readOnly></input>
                         </>
                     }
 
