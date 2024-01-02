@@ -83,6 +83,17 @@ function EditGioco(props){
     }
 
     function modificaOggettoDomande(domandeSelezionate){
+        if(tipoGiocoModifica === "QUIZ CON IMMAGINI"){
+            for(var i=0; i < domandeSelezionate.length; i++){
+                delete domandeSelezionate[i].indovina;
+            }
+        }
+        if(tipoGiocoModifica === "COMPLETA LA PAROLA"){
+            for(var i=0; i < domandeSelezionate.length; i++){
+                delete domandeSelezionate[i].rispCorrette;
+                delete domandeSelezionate[i].rispSbagliate;
+            }
+        }
         domande_gioco_da_modificare = domandeSelezionate;
 
         console.log("DOMANDE IN EditGioco.js DA SALVARE");

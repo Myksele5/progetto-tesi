@@ -10,6 +10,9 @@ import Leonardo from '../Images-Giochi/LEONARDO_DA_VINCI.jpg';
 import Napoleone from '../Images-Giochi/NAPOLEONE_BONAPARTE.jpg';
 import PapaFrancesco from '../Images-Giochi/PAPA_FRANCESCO.jpg';
 import GameContext from '../../context/game-context';
+import { getDownloadURL, listAll, ref } from 'firebase/storage';
+import { storage } from '../../config/firebase-config';
+import AuthContext from '../../context/auth-context';
 
 let counter_question_number = 0;
 let counter_correct_answers = 0;
@@ -22,6 +25,9 @@ var interval;
 
 function ExerciseGuessTheFace(props){
     tipoQuiz = props.TIPOGIOCO;
+
+    const [image, setImage] = useState('');
+    const [imagesList, setImagesList] = useState([]);
 
     const [risposta1, setRisposta1] = useState('');
     const [risposta2, setRisposta2] = useState('');
@@ -55,10 +61,18 @@ function ExerciseGuessTheFace(props){
 
     const [timer, setTimer] = useState(undefined);
 
+    const auth_ctx = useContext(AuthContext);
     const game_ctx = useContext(GameContext);
     const questions = game_ctx.listaGiochi[props.INDICEGIOCO].domandeGioco;
 
     useEffect(() => {
+        getSingleImage();
+    }, [counter_question_number])
+
+    useEffect(() => {
+        if(tipoQuiz === "QUIZ CON IMMAGINI"){
+            getAllImages();
+        }
         counter_question_number = 0;
 
         if(props.LIVELLOGIOCO === "NORMALE"){
@@ -80,6 +94,42 @@ function ExerciseGuessTheFace(props){
 
         return () => clearInterval(interval);
     }, []);
+
+    async function getAllImages(){
+        setImagesList([]);
+        const listaImmaginiStorage = ref(storage, `${auth_ctx.utenteLoggato}/`);
+        const response = await listAll(listaImmaginiStorage)
+        .catch((err) => {
+            console.error(err);
+        });
+        for(var i=0; i < response.items.length; i++){
+            // console.log(response);
+            await getDownloadURL(response.items[i])
+            .then((url) => {
+                var imageName = response.items[i].name;
+                setImagesList((previous) => [...previous, {
+                    imageURL: url,
+                    name: imageName
+                }]);
+                // console.log(imagesList.name);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        }
+
+        getSingleImage();
+    }
+
+    function getSingleImage(){
+        for(var i=0; i < imagesList.length; i++){
+            // console.log(imagesList[i].name)
+            // console.log(domandaSingola.indovina)
+            if(questions[counter_question_number].id === imagesList[i].name){
+                setImage(imagesList[i].imageURL);
+            }
+        }
+    }
 
     useEffect(() => {
         if(timer <=0){
@@ -445,6 +495,9 @@ function ExerciseGuessTheFace(props){
     }
 
     function iniziaGioco(){
+        if(tipoQuiz === "QUIZ CON IMMAGINI"){
+            getSingleImage();
+        }
         setGameStarted(true);
         counter_correct_answers = 0;
         counter_question_number = 0;
@@ -522,7 +575,7 @@ function ExerciseGuessTheFace(props){
                     {tipoQuiz === "QUIZ CON IMMAGINI" && 
                         <>
                             <h3 className={styles.domanda}>Chi è questo personaggio?</h3>
-                            <img className={styles.resize_image} src={questions[counter_question_number].indovina} alt='Face'></img>
+                            <img className={styles.resize_image} src={image} alt='Face'></img>
                         </>
                     }
                     {tipoQuiz === "QUIZ" && <h1>{questions[counter_question_number].indovina}</h1>}

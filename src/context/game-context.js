@@ -21,7 +21,7 @@ import { db, storage } from "../config/firebase-config";
 import { deleteObject, ref, uploadBytes } from "firebase/storage";
 import AuthContext from "./auth-context";
 
-let counter_CODICE_GIOCO = 0;
+// let counter_CODICE_GIOCO = 0;
 let modal_eliminazione;
 
 const GameContext = React.createContext({
@@ -486,7 +486,7 @@ export function GameContextProvider(props){
         }
     ];
 
-    const [elencoGiochi, setElencoGiochi] = useState(dati_dei_giochi)
+    const [elencoGiochi, setElencoGiochi] = useState([])
     const [elencoDomandeQuiz, setElencoDomandeQuiz] = useState([]);
     const [elencoDomandeQuizImmagini, setElencoDomandeQuizImmagini] = useState([]);
     const [elencoParoleDaCompletare, setElencoParoleDaCompletare] = useState([]);
@@ -503,10 +503,12 @@ export function GameContextProvider(props){
         const domandeQuiz = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-quiz`);
         const domandeQuizImmagini = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-quiz-immagini`);
         const domandeCLP = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-c.l.p.`);
+        const giochiDB = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `giochi`);
 
         const docsDomandeQuiz = await getDocs(domandeQuiz);
         const docsDomandeQuizImmagini = await getDocs(domandeQuizImmagini);
         const docsDomandeCLP = await getDocs(domandeCLP);
+        const docsGiochi = await getDocs(giochiDB);
 
         const listaDomandeQuiz = docsDomandeQuiz.docs.map((domanda) => ({
             ...domanda.data(),
@@ -526,9 +528,16 @@ export function GameContextProvider(props){
         }))
         console.log(listaDomandeCLP);
 
+        const listaGiochi = docsGiochi.docs.map((gioco) => ({
+            ...gioco.data(),
+            id: gioco.id
+        }))
+        console.log(listaGiochi);
+
         setElencoDomandeQuiz(listaDomandeQuiz);
         setElencoDomandeQuizImmagini(listaDomandeQuizImmagini);
         setElencoParoleDaCompletare(listaDomandeCLP);
+        setElencoGiochi(listaGiochi);
     }
 
     function salvaRisultati(risposteUtente, domandeTotali, pazienteDaAggiornare){
@@ -547,13 +556,12 @@ export function GameContextProvider(props){
         setDomandeModifica([]);
     }
 
-    function addNewGameToList(name, type, level, questionsList){
+    async function addNewGameToList(name, type, level, questionsList){
         if(type === "RIFLESSI"){
             var new_game = {
                 nomeGioco: name,
                 tipoGioco: type,
                 livelloGioco: level,
-                codiceGioco: counter_CODICE_GIOCO,
                 numeroRound: questionsList
             }
         }
@@ -562,17 +570,23 @@ export function GameContextProvider(props){
                 nomeGioco: name,
                 tipoGioco: type,
                 livelloGioco: level,
-                codiceGioco: counter_CODICE_GIOCO,
                 domandeGioco: [...questionsList]
             }
+        }
+
+        const listaGiochiReference = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `giochi`)
+        try {
+            await addDoc(listaGiochiReference, new_game)
+        } catch (err) {
+            console.error(err)
         }
         
         setElencoGiochi(vecchioElenco => {
             return [new_game, ...vecchioElenco]
         });
 
-        console.log("CODICE DEL GIOCO APPENA CREATO---> " + counter_CODICE_GIOCO);
-        counter_CODICE_GIOCO++;
+        // console.log("CODICE DEL GIOCO APPENA CREATO---> " + counter_CODICE_GIOCO);
+        // counter_CODICE_GIOCO++;
     }
 
     async function addNewQuestionToList(nuova_domanda, tipoGioco){
@@ -683,7 +697,7 @@ export function GameContextProvider(props){
         }
     }
 
-    function addModifiedGameToList(name, type, level, gameID, questionsList){
+    async function addModifiedGameToList(name, type, level, gameID, questionsList){
         console.log("POCO PRIMA DI SALVARE");
         console.log(questionsList);
 
@@ -692,7 +706,7 @@ export function GameContextProvider(props){
                 nomeGioco: name,
                 tipoGioco: type,
                 livelloGioco: level,
-                codiceGioco: gameID,
+                // codiceGioco: gameID,
                 numeroRound: questionsList
             }
         }
@@ -701,19 +715,24 @@ export function GameContextProvider(props){
                 nomeGioco: name,
                 tipoGioco: type,
                 livelloGioco: level,
-                codiceGioco: gameID,
+                // codiceGioco: gameID,
                 domandeGioco: questionsList
             }
         }
 
         for(let i=0; i < elencoGiochi.length; i++){
             console.log("QUANTI GIOCHI CI SONO? --->" + elencoGiochi.length);
-            if(gameID === elencoGiochi[i].codiceGioco){
-                elencoGiochi[i] = modified_game;
-                setElencoGiochi(elencoGiochi);
+            if(gameID === elencoGiochi[i].id){
+                const giocoReference = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `giochi`, `${elencoGiochi[i].id}`);
+                await updateDoc(giocoReference, modified_game)
+                .catch((err) => {
+                    console.error(err)
+                })
+                // elencoGiochi[i] = modified_game;
+                // setElencoGiochi(elencoGiochi);
             }
         }
-
+        getAllGamesQuestions();
         console.log("CODICE DEL GIOCO MODIFICATO---> " + gameID);
     }
 
@@ -733,17 +752,23 @@ export function GameContextProvider(props){
         setShowModal(true);
     }
 
-    function deleteGame(gameID){
+    async function deleteGame(gameID){
         for(let i=0; i < elencoGiochi.length; i++){
             console.log("CERCO IL GIOCO");
-            if(gameID === elencoGiochi[i].codiceGioco){
+            if(gameID === elencoGiochi[i].id){
+                const giocoReference = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `giochi`, `${gameID}`);
+                await deleteDoc(giocoReference)
+                .catch((err) => {
+                    console.error(err);
+                });
+
                 console.log("GIOCO DA ELIMINARE TROVATO");
-                elencoGiochi.splice(i, 1);
+                // elencoGiochi.splice(i, 1);
                 
                 break;
             }
         }
-        setElencoGiochi(elencoGiochi);
+        getAllGamesQuestions();
     }
 
     function modalDeleteQuestion(tipoGioco, indovina){

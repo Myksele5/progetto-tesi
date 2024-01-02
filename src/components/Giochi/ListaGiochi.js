@@ -15,7 +15,7 @@ function ListaGiochi(props){
 
     function fromArrayToGameList(lista){
         return(
-            <ul className={styles.lista_giochi}>
+            <ul className={styles.lista_giochi} key={lista.id}>
                 <GameCard
                     children={
                         <>
@@ -29,7 +29,7 @@ function ListaGiochi(props){
                             <div className={styles.buttons_wrap}>
                                 <GenericAlternativeButton
                                 onClick={()=> {
-                                    props.iniziaGioco(lista.tipoGioco, lista.codiceGioco, lista.livelloGioco)
+                                    props.iniziaGioco(lista.tipoGioco, lista.id, lista.livelloGioco)
                                 }}
                                 // alternative_button={true}
                                 buttonText='Avvia Gioco'>
@@ -46,7 +46,7 @@ function ListaGiochi(props){
 
                                 <GenericAlternativeButton
                                 onClick={() => {
-                                    game_ctx.eliminaGioco(lista.codiceGioco)
+                                    game_ctx.eliminaGioco(lista.id)
                                 }}
                                 // alternative_button={true}
                                 colore_rosso={true}

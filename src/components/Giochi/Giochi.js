@@ -60,7 +60,7 @@ function Giochi(){
                 tipoGioco={listaa.tipoGioco}
                 difficulty={listaa.livelloGioco}
                 numeroRound={listaa.numeroRound}
-                codiceGioco={listaa.codiceGioco}
+                codiceGioco={listaa.id}
                 chiudiFormModifica={closeFormEditGame}
             >
             </EditGioco>
@@ -72,7 +72,7 @@ function Giochi(){
                 tipoGioco={listaa.tipoGioco}
                 categoria={listaa.domandeGioco[0].categoria}
                 difficulty={listaa.livelloGioco}
-                codiceGioco={listaa.codiceGioco}
+                codiceGioco={listaa.id}
                 chiudiFormModifica={closeFormEditGame}
                 // listaDomande={listaa.domandeGioco}
             >
@@ -98,7 +98,7 @@ function Giochi(){
     function startGame(stringa_TIPOGIOCO, stringa_CODICEGIOCO, stringa_LIVELLOGIOCO){
         var indice_gioco;
         for(var i = 0; i < game_ctx.listaGiochi.length; i++){
-            if(stringa_CODICEGIOCO === game_ctx.listaGiochi[i].codiceGioco){
+            if(stringa_CODICEGIOCO === game_ctx.listaGiochi[i].id){
                 indice_gioco = i;
                 break;
             }

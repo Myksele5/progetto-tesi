@@ -404,6 +404,7 @@ export function PatientContextProvider(props){
     //---------------- FUNZIONE PER MODIFICARE I DATI DI UN PAZIENTE
     async function modificaPaziente(pazienteOGGETTO){
         const pazienteDoc = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `pazienti`, pazienteOGGETTO.id);
+        delete pazienteOGGETTO.id
         await updateDoc(pazienteDoc, pazienteOGGETTO);
         setShowModificaPaziente(false);
         setShowSearchBoxAndButton(true);

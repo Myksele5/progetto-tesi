@@ -68,6 +68,17 @@ function AddGioco(props){
     }
 
     function creaOggettoDomande(domandeSelezionate){
+        if(tipologiaGioco === "QUIZ CON IMMAGINI"){
+            for(var i=0; i < domandeSelezionate.length; i++){
+                delete domandeSelezionate[i].indovina;
+            }
+        }
+        if(tipologiaGioco === "COMPLETA LA PAROLA"){
+            for(var i=0; i < domandeSelezionate.length; i++){
+                delete domandeSelezionate[i].rispCorrette;
+                delete domandeSelezionate[i].rispSbagliate;
+            }
+        }
         domande_nuovo_gioco = domandeSelezionate;
 
         console.log("DOMANDE IN AddGioco.js DA SALVARE");

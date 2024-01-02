@@ -1,14 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import GameContext from "../../context/game-context";
 import styles from "./ElencoDomande.module.css";
+import { getDownloadURL, listAll, ref } from "firebase/storage";
+import { storage } from "../../config/firebase-config";
+import AuthContext from "../../context/auth-context";
 
 var COUNT_DOMANDE = 0;
 
 function ElencoDomande(props){
     const game_ctx = useContext(GameContext);
+    const auth_ctx = useContext(AuthContext);
 
     const [categoryFilter, setCategoryFilter] = useState(props.categoria);
     const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
+    const [imagesList, setImagesList] = useState([]);
     const [classicQuizQuestions, setClassicQuizQuestions] = useState(game_ctx.domandeDeiQuiz);
     const [guessTheWordQuestions, setGuessTheWordQuestions] = useState(game_ctx.elencoParole);
     const [llll, setllll] = useState([...game_ctx.domandeDaModificare]);
@@ -26,6 +31,49 @@ function ElencoDomande(props){
         props.domandeNuovoGioco(llll);
 
     }, [game_ctx.domandeDaModificare.length]);
+
+    useEffect(() => {
+        getAllImages()
+        // console.log(imagesList);
+        // setClassicQuizQuestions(game_ctx.domandeDeiQuiz)
+    }, [])
+
+    async function getAllImages(){
+        setImagesList([]);
+        const listaImmaginiStorage = ref(storage, `${auth_ctx.utenteLoggato}/`);
+        const response = await listAll(listaImmaginiStorage)
+        .catch((err) => {
+            console.error(err);
+        });
+        for(var i=0; i < response.items.length; i++){
+            // console.log(response);
+            await getDownloadURL(response.items[i])
+            .then((url) => {
+                var imageName = response.items[i].name;
+                setImagesList((previous) => [...previous, {
+                    imageURL: url,
+                    name: imageName
+                }]);
+                // console.log(imagesList.name);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        }
+    }
+
+    function getSingleImage(domandaSingola){
+        for(var i=0; i < imagesList.length; i++){
+            // console.log(imagesList[i].name)
+            // console.log(domandaSingola.indovina)
+            if(domandaSingola.id === imagesList[i].name){
+                domandaSingola['immagine'] = imagesList[i].imageURL;
+                // console.log(domandaSingola.immagine);
+                return domandaSingola.immagine;
+            }
+        }
+        return;
+    }
 
     function categoryChangeHandler(event){
         changingCategoryMakesQuestionsReset();
@@ -45,6 +93,7 @@ function ElencoDomande(props){
             console.log('✅ Checkbox is checked');
             COUNT_DOMANDE++;
             llll.unshift({
+                id: domanda.id,
                 categoria: domanda.categoria,
                 indovina: domanda.indovina,
                 rispCorrette: domanda.rispCorrette,
@@ -55,14 +104,14 @@ function ElencoDomande(props){
             console.log('⛔️ Checkbox is NOT checked');
             COUNT_DOMANDE--;
             for(var i=0; i < llll.length; i++){
-                if(domanda.indovina === llll[i].indovina){
+                if(domanda.id === llll[i].id){
                     llll.splice(i, 1);
                     break;
                 }
             }
         }
 
-        console.log(llll.question);
+        // console.log(llll.question);
         console.log(llll);
         setNumeroDomandeSelezionate(COUNT_DOMANDE);
         props.domandeNuovoGioco(llll);
@@ -102,7 +151,7 @@ function ElencoDomande(props){
             }
             else{
                 for(var i=0; i < llll.length; i++){
-                    if(singleQuestion.indovina === llll[i].indovina){
+                    if(singleQuestion.id === llll[i].id){
                         checkboxInputChecked =
                             <input checked className={styles.checkbox_style} type="checkbox" onChange={(event)=>{
                                 verifyIsChecked(event, singleQuestion)
@@ -135,8 +184,8 @@ function ElencoDomande(props){
                     {props.tipoGioco === "QUIZ CON IMMAGINI" &&
                         <div className={styles.flex_list_container}>
                             <h4 className={styles.subtitle_style}>Immagine:</h4>
-                            <p className={styles.question_style}>{singleQuestion.indovina}</p>
-                            <img className={styles.preview_image} src={singleQuestion.indovina}></img>
+                            <p className={styles.question_style}>{singleQuestion.rispCorrette.correct_answer_n1}</p>
+                            <img className={styles.preview_image} src={getSingleImage(singleQuestion)}></img>
                         </div>
                     }
 
