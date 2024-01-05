@@ -19,6 +19,11 @@ function EditPaziente(props){
     const [validCF, setValidCF] = useState(true);
     const [CFModifica, setCFModifica] = useState(props.cfff);
 
+    const [patologiaModifica, setPatologiaModifica] = useState(props.patologiaaa);
+    const [noteParticolariModifica, setNoteParticolariModifica] = useState(props.noteee);
+    const [medicineModifica, setMedicineModifica] = useState(props.medicineee);
+    const [terapiaModifica, setTerapiaModifica] = useState(props.terapiaaa);
+
     const patients_ctx = useContext(PatientContext);
 
     const nomeChangeHandler = (event) => {
@@ -49,6 +54,26 @@ function EditPaziente(props){
         console.log(event.target.value);
         setCFModifica(event.target.value);
         setValidCF(true);
+    }
+
+    const patologiaChangeHandler = (event) => {
+        console.log(event.target.value);
+        setPatologiaModifica(event.target.value);
+    }
+
+    const noteParticolariChangeHandler = (event) => {
+        console.log(event.target.value);
+        setNoteParticolariModifica(event.target.value);
+    }
+
+    const medicineChangeHandler = (event) => {
+        console.log(event.target.value);
+        setMedicineModifica(event.target.value);
+    }
+
+    const terapiaChangeHandler = (event) => {
+        console.log(event.target.value);
+        setTerapiaModifica(event.target.value);
     }
 
     function formModifyHandler(event){
@@ -119,21 +144,48 @@ function EditPaziente(props){
         <form className={styles.center_form} onSubmit={formModifyHandler}>
             <h1 className={styles.title_form}>Modifica i dati del paziente</h1>
             <h4>Stai modificando i dati di un paziente già esistente!<br/>Controlla con attenzione prima di salvare</h4>
+
+            <div className={styles.wrapper_flex}>
+                <section className={styles.section_style}>
+                    <h3 className={styles.subtitle_form}>DATI PERSONALI</h3>
+
+                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome:</label>
+                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={nomeModifica} onChange={nomeChangeHandler}></input>
+
+                    <label className={`${styles.label_style} ${!validCognome ? styles.invalid : ""}`}>Cognome</label>
+                    <input className={`${styles.input_style} ${!validCognome ? styles.invalid : ""}`} type="text" value={cognomeModifica} onChange={cognomeChangeHandler}></input>
+
+                    <label className={`${styles.label_style} ${!validCittà ? styles.invalid : ""}`}>Città di nascita:</label>
+                    <input className={`${styles.input_style} ${!validCittà ? styles.invalid : ""}`} type="text" value={cittàModifica} onChange={cittàChangeHandler}></input>
+
+                    <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}>Data di nascita:</label>
+                    <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" value={dataModifica} onChange={dataNascitaChangeHandler}></input>
+                    
+                    <label className={`${styles.label_style} ${!validCF ? styles.invalid : ""}`}>Codice Fiscale:</label>
+                    <input className={`${styles.input_style} ${!validCF ? styles.invalid : ""}`} type="text" value={CFModifica} onChange={CFChangeHandler}></input>
+                </section>
+                
+                <section className={styles.section_style}>
+                    <h3 className={styles.subtitle_form}>SCHEDA MEDICA</h3>
+
+                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Patologia:</label>
+                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={patologiaModifica} onChange={patologiaChangeHandler}></input>
+
+                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Segni/Note particolari:</label>
+                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={noteParticolariModifica} onChange={noteParticolariChangeHandler}></input>
+
+                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Medicine:</label>
+                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={medicineModifica} onChange={medicineChangeHandler}></input>
+
+                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Terapia consigliata:</label>
+                    <textarea className={`${styles.input_style_LARGE} ${!validNome ? styles.invalid : ""}`} type="text" value={terapiaModifica} onChange={terapiaChangeHandler}></textarea>
+                </section>
+                <section className={styles.section_style}>
+
+                </section>
+            </div>
             
-            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome:</label>
-            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={nomeModifica} onChange={nomeChangeHandler}></input>
-
-            <label className={`${styles.label_style} ${!validCognome ? styles.invalid : ""}`}>Cognome</label>
-            <input className={`${styles.input_style} ${!validCognome ? styles.invalid : ""}`} type="text" value={cognomeModifica} onChange={cognomeChangeHandler}></input>
-
-            <label className={`${styles.label_style} ${!validCittà ? styles.invalid : ""}`}>Città di nascita:</label>
-            <input className={`${styles.input_style} ${!validCittà ? styles.invalid : ""}`} type="text" value={cittàModifica} onChange={cittàChangeHandler}></input>
-
-            <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}>Data di nascita:</label>
-            <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" value={dataModifica} onChange={dataNascitaChangeHandler}></input>
             
-            <label className={`${styles.label_style} ${!validCF ? styles.invalid : ""}`}>Codice Fiscale:</label>
-            <input className={`${styles.input_style} ${!validCF ? styles.invalid : ""}`} type="text" value={CFModifica} onChange={CFChangeHandler}></input>
 
             <GenericButton
             type="submit"

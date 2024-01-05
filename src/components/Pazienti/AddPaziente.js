@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import GenericButton from "../UI/GenericButton";
 import styles from './AddPaziente.module.css';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../config/firebase-config";
+import AuthContext from "../../context/auth-context";
 
 function AddPaziente(props){
+    const [emailDottore, setEmailDottore] = useState('');
+    const [passwordDottore, setPasswordDottore] = useState('');
+    const auth_ctx = useContext(AuthContext);
+    const [modaleCREAZIONEUTENTE, setModaleCREAZIONEUTENTE] = useState(false);
+
     const [validNome, setValidNome] = useState(true);
     const [enteredNome, setEnteredNome] = useState('');
 
@@ -17,6 +25,24 @@ function AddPaziente(props){
 
     const [validCF, setValidCF] = useState(true);
     const [enteredCF, setEnteredCF] = useState('');
+
+    const [enteredPatologia, setEnteredPatologia] = useState('');
+    const [enteredNoteParticolari, setEnteredNoteParticolari] = useState('');
+    const [enteredMedicine, setEnteredMedicine] = useState('');
+    const [enteredTerapia, setEnteredTerapia] = useState('');
+
+    const [enteredEmail, setEnteredEmail] = useState('');
+    const [enteredPsw, setEnteredPsw] = useState('');
+
+    useEffect(() => {
+        setEmailDottore(auth_ctx.utenteLoggato);
+        // console.log(utente);
+    }, [])
+
+    const passwordDottoreChangeHandler = (event) => {
+        console.log(event.target.value);
+        setPasswordDottore(event.target.value);
+    }
 
     const nomeChangeHandler = (event) => {
         console.log(event.target.value);
@@ -48,8 +74,38 @@ function AddPaziente(props){
         setValidCF(true);
     }
 
-    function formSubmitHandler(event){
-        event.preventDefault();
+    const patologiaChangeHandler = (event) => {
+        console.log(event.target.value);
+        setEnteredPatologia(event.target.value);
+    }
+
+    const noteParticolariChangeHandler = (event) => {
+        console.log(event.target.value);
+        setEnteredNoteParticolari(event.target.value);
+    }
+
+    const medicineChangeHandler = (event) => {
+        console.log(event.target.value);
+        setEnteredMedicine(event.target.value);
+    }
+
+    const terapiaChangeHandler = (event) => {
+        console.log(event.target.value);
+        setEnteredTerapia(event.target.value);
+    }
+
+    const emailChangeHandler = (event) => {
+        console.log(event.target.value);
+        setEnteredEmail(event.target.value);
+    }
+
+    const pswChangeHandler = (event) => {
+        console.log(event.target.value);
+        setEnteredPsw(event.target.value);
+    }
+
+    function formSubmitHandler(){
+        // event.preventDefault();
 
         var dateee = new Date(enteredData);
 
@@ -110,10 +166,18 @@ function AddPaziente(props){
                 risposteSbagliate: 0
             },
             codiceFiscale: enteredCF.toUpperCase(),
-            id: Math.random().toString()
+            patologia: enteredPatologia,
+            note: enteredNoteParticolari,
+            medicine: enteredMedicine,
+            terapia: enteredTerapia,
+            ACCOUNT_CREATO: modaleCREAZIONEUTENTE
         };
 
         props.onCreateNewPaziente(datiNuovoPaziente);
+
+        if(modaleCREAZIONEUTENTE){
+            creaAccountPaziente();
+        }
         setEnteredNome('');
         // setValidNome(true);
         setEnteredCognome('');
@@ -124,37 +188,105 @@ function AddPaziente(props){
         // setValidData(true);
     }
 
+    function modalePasswordDottore(event){
+        event.preventDefault();
+
+        if(enteredEmail.trim().length > 1 && enteredPsw.trim().length > 5){
+            setModaleCREAZIONEUTENTE(true);
+            // creaAccountPaziente();
+        }
+        else{
+            formSubmitHandler();
+        }
+    }
+
+    async function creaAccountPaziente(){
+        await createUserWithEmailAndPassword(auth, enteredEmail, enteredPsw)
+        .then(alert("Account paziente creato!"))
+        .catch((err) => {
+            console.error(err)
+        });
+
+        await signInWithEmailAndPassword(auth, emailDottore, passwordDottore)
+        .catch((err) => {
+            console.error(err)
+        });
+    }
+
     function hideForm(event){
         event.preventDefault();
         props.hideFormNewPaziente();
     }
 
     return(
-        <form className={styles.center_form} onSubmit={formSubmitHandler}>
+        <form className={styles.center_form} onSubmit={modalePasswordDottore}>
             <h1 className={styles.title_form}>Inserisci i dati del nuovo paziente</h1>
 
-            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome:</label>
-            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNome} onChange={nomeChangeHandler}></input>
+            <div className={styles.wrapper_flex}>
+                <section className={styles.section_style}>
+                    <h3 className={styles.subtitle_form}>DATI PERSONALI</h3>
 
-            <label className={`${styles.label_style} ${!validCognome ? styles.invalid : ""}`}>Cognome:</label>
-            <input className={`${styles.input_style} ${!validCognome ? styles.invalid : ""}`} type="text" value={enteredCognome} onChange={cognomeChangeHandler}></input>
+                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome:</label>
+                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNome} onChange={nomeChangeHandler}></input>
 
-            <label className={`${styles.label_style} ${!validCittà ? styles.invalid : ""}`}>Città di nascita:</label>
-            <input className={`${styles.input_style} ${!validCittà ? styles.invalid : ""}`} type="text" value={enteredCittà} onChange={cittàChangeHandler}></input>
+                    <label className={`${styles.label_style} ${!validCognome ? styles.invalid : ""}`}>Cognome:</label>
+                    <input className={`${styles.input_style} ${!validCognome ? styles.invalid : ""}`} type="text" value={enteredCognome} onChange={cognomeChangeHandler}></input>
 
-            <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}>Data di nascita:</label>
-            <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" min="01-01-1800" max="31-31-2400" value={enteredData} onChange={dataNascitaChangeHandler}></input>
+                    <label className={`${styles.label_style} ${!validCittà ? styles.invalid : ""}`}>Città di nascita:</label>
+                    <input className={`${styles.input_style} ${!validCittà ? styles.invalid : ""}`} type="text" value={enteredCittà} onChange={cittàChangeHandler}></input>
 
-            <label className={`${styles.label_style} ${!validCF ? styles.invalid : ""}`}>Codice Fiscale:</label>
-            <input className={`${styles.input_style} ${!validCF ? styles.invalid : ""}`} type="text" value={enteredCF} onChange={CFChangeHandler}></input>
+                    <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}>Data di nascita:</label>
+                    <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" min="01-01-1800" max="31-31-2400" value={enteredData} onChange={dataNascitaChangeHandler}></input>
 
-            <hr className={styles.horizontal_line}></hr>
+                    <label className={`${styles.label_style} ${!validCF ? styles.invalid : ""}`}>Codice Fiscale:</label>
+                    <input className={`${styles.input_style} ${!validCF ? styles.invalid : ""}`} type="text" value={enteredCF} onChange={CFChangeHandler}></input>
+                </section>
 
-            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Patologia:</label>
-            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text"></input>
+                <section className={styles.section_style}>
+                    <h3 className={styles.subtitle_form}>SCHEDA MEDICA</h3>
 
-            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Terapie/Medicine:</label>
-            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text"></input>
+                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Patologia:</label>
+                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredPatologia} onChange={patologiaChangeHandler}></input>
+
+                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Segni/Note particolari:</label>
+                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNoteParticolari} onChange={noteParticolariChangeHandler}></input>
+
+                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Medicine:</label>
+                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredMedicine} onChange={medicineChangeHandler}></input>
+
+                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Terapia consigliata:</label>
+                    <textarea className={`${styles.input_style_LARGE} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredTerapia} onChange={terapiaChangeHandler}></textarea>
+                </section>
+
+                <section className={styles.section_style}>
+                    <h3 className={styles.subtitle_form}>CREDENZIALI</h3>
+
+                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Email:</label>
+                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="email" value={enteredEmail} onChange={emailChangeHandler}></input>
+
+                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Password:</label>
+                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredPsw} onChange={pswChangeHandler}></input>
+                    
+                    <p className={styles.paragraph_style}><b>Attenzione!</b> Queste credenziali serviranno al paziente </p>
+                    <p className={styles.paragraph_style}>per potersi collegare alla piattaforma e svolgere attività.</p>
+                    <p className={styles.paragraph_style}>Se inserite, verrà creato un profilo per il paziente</p>
+
+                    {modaleCREAZIONEUTENTE &&
+                        <div>
+                            <label>Inserisci password</label>
+                            <input value={passwordDottore} onChange={passwordDottoreChangeHandler}></input>
+                            <button onClick={formSubmitHandler}>CONFERMA</button>
+                        </div>
+                    }
+                </section>
+            </div>
+            
+
+            
+
+            {/* <hr className={styles.horizontal_line}></hr> */}
+
+            
 
             <GenericButton 
             type="submit" 

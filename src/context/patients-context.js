@@ -344,7 +344,12 @@ export function PatientContextProvider(props){
                 città: datiPaziente.città,
                 dataNascita: datiPaziente.dataNascita,
                 codiceFiscale: datiPaziente.codiceFiscale,
-                statistiche: datiPaziente.statistiche
+                statistiche: datiPaziente.statistiche,
+                patologia: datiPaziente.patologia,
+                note: datiPaziente.note,
+                medicine: datiPaziente.medicine,
+                terapia: datiPaziente.terapia,
+                ACCOUNT_CREATO: datiPaziente.ACCOUNT_CREATO
             });
         } catch(err){
             console.error(err);
@@ -427,6 +432,10 @@ export function PatientContextProvider(props){
                     attivitààà={pazienteee.attività}
                     statisticheee={pazienteee.statistiche}
                     cfff={pazienteee.codiceFiscale}
+                    patologiaaa={pazienteee.patologia}
+                    noteee={pazienteee.note}
+                    medicineee={pazienteee.medicine}
+                    terapiaaa={pazienteee.terapia}
                 >
                 </EditPaziente>
             }>

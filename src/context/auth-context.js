@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 // import Modal from "../components/UI/Modal";
 import { onAuthStateChanged, signOut, confirmPasswordReset } from "firebase/auth";
-import { auth } from "../config/firebase-config";
+import { auth, db } from "../config/firebase-config";
 
 const AuthContext = React.createContext({
     isLogged: false,
@@ -36,6 +36,10 @@ export function AuthContextProvider(props){
           authentication();
         }
     }, []);
+
+    async function getAccountType(){
+      //Da completare
+    }
 
     async function resetPassword(oobCode, newPassword){
       await confirmPasswordReset(auth, oobCode, newPassword)
