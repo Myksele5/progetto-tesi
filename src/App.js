@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import Login from './components/Accesso/Login';
 import Pazienti from './components/Pazienti/Pazienti';
@@ -14,9 +14,18 @@ import Modal from './components/UI/Modal';
 import { GameContextProvider } from './context/game-context';
 
 function App() {
-  const [schermataMostrata, setSchermataMostrata] = useState('SCHERMATA_Pazienti');
+  const [schermataMostrata, setSchermataMostrata] = useState('');
 
   const auth_ctx = useContext(AuthContext);
+
+  useEffect(() => {
+    if(auth_ctx.tipoAccount === "Paziente"){
+      setSchermataMostrata('SCHERMATA_Giochi')
+    }
+    else{
+      setSchermataMostrata('SCHERMATA_Pazienti')
+    }
+  }, [auth_ctx.tipoAccount])
 
   function changeSchermata(schermata){
     console.log('CAMBIO SCHERMATA');

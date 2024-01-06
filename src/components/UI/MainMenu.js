@@ -45,10 +45,13 @@ function MainMenu(props){
                 </div>
             </div>
 
-            <button onClick = {goToPazienti} className={styles.menu_option}>
-                <img className={styles.image_option} src={patient} alt="pazienti"></img>
-                <p className={styles.text_option}>Pazienti</p>
-            </button>
+            {(auth_ctx.tipoAccount === "Dottore" || auth_ctx.tipoAccount === "Dottoressa") && 
+                <button onClick = {goToPazienti} className={styles.menu_option}>
+                    <img className={styles.image_option} src={patient} alt="pazienti"></img>
+                    <p className={styles.text_option}>Pazienti</p>
+                </button>
+            }
+            
 
             <button onClick = {goToAttività} className={styles.menu_option}>
                 <img className={styles.image_option} src={activity} alt="tests"></img>

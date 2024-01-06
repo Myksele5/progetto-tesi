@@ -2,7 +2,7 @@
 import styles from './TabellaPazienti.module.css';
 
 function TabellaPazienti(props){
-    console.log(props.elenco.length);
+    // console.log(props.elenco.length);
 
     if(props.elenco.length > 0){
         return(

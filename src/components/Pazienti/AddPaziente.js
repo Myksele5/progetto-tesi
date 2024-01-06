@@ -6,10 +6,11 @@ import { auth } from "../../config/firebase-config";
 import AuthContext from "../../context/auth-context";
 
 function AddPaziente(props){
+    const auth_ctx = useContext(AuthContext);
     const [emailDottore, setEmailDottore] = useState('');
     const [passwordDottore, setPasswordDottore] = useState('');
-    const auth_ctx = useContext(AuthContext);
     const [modaleCREAZIONEUTENTE, setModaleCREAZIONEUTENTE] = useState(false);
+    const [accountCreato, setAccountCreato] = useState(false);
 
     const [validNome, setValidNome] = useState(true);
     const [enteredNome, setEnteredNome] = useState('');
@@ -106,6 +107,11 @@ function AddPaziente(props){
 
     function formSubmitHandler(){
         // event.preventDefault();
+        var account_creato = false;
+        if(modaleCREAZIONEUTENTE){
+            account_creato = creaAccountPaziente();
+            console.log(account_creato)
+        }
 
         var dateee = new Date(enteredData);
 
@@ -170,14 +176,12 @@ function AddPaziente(props){
             note: enteredNoteParticolari,
             medicine: enteredMedicine,
             terapia: enteredTerapia,
-            ACCOUNT_CREATO: modaleCREAZIONEUTENTE
+            ACCOUNT_CREATO: accountCreato
         };
 
         props.onCreateNewPaziente(datiNuovoPaziente);
 
-        if(modaleCREAZIONEUTENTE){
-            creaAccountPaziente();
-        }
+        
         setEnteredNome('');
         // setValidNome(true);
         setEnteredCognome('');
@@ -201,16 +205,37 @@ function AddPaziente(props){
     }
 
     async function creaAccountPaziente(){
-        await createUserWithEmailAndPassword(auth, enteredEmail, enteredPsw)
-        .then(alert("Account paziente creato!"))
+        var aBuonFine;
+
+        await signInWithEmailAndPassword(auth, emailDottore, passwordDottore)
+        .then(aBuonFine = true)
         .catch((err) => {
+            alert("PSW SBAGLIATA")
+            aBuonFine = false;
             console.error(err)
         });
 
+        if(aBuonFine){
+            await createUserWithEmailAndPassword(auth, enteredEmail, enteredPsw)
+            .then(alert("Account paziente creato!"))
+            .catch((err) => {
+                console.error(err)
+            });
+            setAccountCreato(aBuonFine);
+        }
+        else{
+            return
+        }
+        
         await signInWithEmailAndPassword(auth, emailDottore, passwordDottore)
+        // .then(aBuonFine = true)
         .catch((err) => {
+            alert("PSW SBAGLIATA")
+            // aBuonFine = false;
             console.error(err)
         });
+        
+        return
     }
 
     function hideForm(event){

@@ -11,12 +11,14 @@ import ExerciseGuessTheFace from "./ExerciseGuessTheFace";
 import EditDomanda from "./EditDomanda";
 import GuessTheWord from "./GuessTheWord";
 import ExerciseReflexes from "./ExerciseReflexes";
+import AuthContext from "../../context/auth-context";
 
 let modifica_gioco;
 let modifica_domanda;
 let risultati_utente_gioco;
 
 function Giochi(){
+    const auth_ctx = useContext(AuthContext);
     const game_ctx = useContext(GameContext);
 
     const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
@@ -231,7 +233,7 @@ function Giochi(){
     return(
         <>
             <h1 className={styles.page_title}>Giochi</h1>
-            {showSearchBoxAndButton && 
+            {showSearchBoxAndButton && auth_ctx.tipoAccount !== "Paziente" &&
                 <div className={styles.wrap_boxes}>
                     <GenericButton
                         onClick={formCreateNewQuestion}

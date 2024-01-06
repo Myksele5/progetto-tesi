@@ -5,6 +5,7 @@ import RadioButton from "../UI/RadioButton";
 import { useContext, useState } from "react";
 import GameContext from "../../context/game-context";
 import ElencoDomande from "./ElencoDomande";
+import AuthContext from "../../context/auth-context";
 
 var domande_nuovo_gioco = [];
 
@@ -19,6 +20,7 @@ function AddGioco(props){
     const [selectedHard, setSelectedHard] = useState(false);
 
     const game_ctx = useContext(GameContext);
+    const auth_ctx = useContext(AuthContext)
 
     function selezioneDifficoltà(stringaDifficoltà){
         switch (stringaDifficoltà){
@@ -53,6 +55,7 @@ function AddGioco(props){
 
     function titoloGiocoChangeHandler(event){
         setTitoloGioco(event.target.value);
+        console.log(auth_ctx.tipoAccount)
     }
     function tipoGiocoChangeHandler(event){
         setTipologiaGioco(event.target.value);

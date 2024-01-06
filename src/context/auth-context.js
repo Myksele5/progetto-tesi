@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 // import Modal from "../components/UI/Modal";
 import { onAuthStateChanged, signOut, confirmPasswordReset } from "firebase/auth";
 import { auth, db } from "../config/firebase-config";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 
 const AuthContext = React.createContext({
     isLogged: false,
@@ -11,12 +12,15 @@ const AuthContext = React.createContext({
     onLogout: ()=>{},
     utenteLoggato: null,
     utenteLoggatoUID: null,
+    tipoAccount: null,
     confirmPasswordReset: ()=>{}
 });
+var email;
 
 export function AuthContextProvider(props){
     const [utenteLoggato, setUtenteLoggato] = useState(null);
     const [utenteLoggatoUID, setUtenteLoggatoUID] = useState(null);
+    const [tipoAccount, setTipoAccount] = useState('');
     const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     useEffect(() => {
@@ -24,8 +28,11 @@ export function AuthContextProvider(props){
           if(utente){
             setUtenteLoggato(utente.email);
             setUtenteLoggatoUID(utente.uid);
-            console.log(utente.uid);
+            // email = utente.email;
+            // console.log(utente.uid);
             console.log(auth.currentUser.email);
+            getAccountType();
+
           }
           else{
             setUtenteLoggato(null);
@@ -37,8 +44,23 @@ export function AuthContextProvider(props){
         }
     }, []);
 
+    useEffect(() => {
+      // console.log(email);
+      console.log(tipoAccount);
+    }, [tipoAccount])
+
     async function getAccountType(){
       //Da completare
+      const userRef = await getDoc(doc(db, `${auth.currentUser.email}`, `info`));
+      if(userRef.exists()){
+        console.log(userRef.data().titolo)
+        setTipoAccount(userRef.data().titolo)
+      }
+      else{
+        // alert("trovato niente")
+        setTipoAccount("Paziente")
+      }
+      // console.log(userDoc.data());
     }
 
     async function resetPassword(oobCode, newPassword){
@@ -79,6 +101,7 @@ export function AuthContextProvider(props){
           onLogout: userLoggedout,
           utenteLoggato: utenteLoggato,
           utenteLoggatoUID: utenteLoggatoUID,
+          tipoAccount: tipoAccount,
           confirmPasswordReset: resetPassword
       }}>
           {props.children}
