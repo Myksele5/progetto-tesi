@@ -1,0 +1,123 @@
+let serverMgr = null;
+
+export function getServerMgr(cb) {
+    if(serverMgr === null) {
+        initServerMgr(() => {
+            serverMgr.init(cb);
+            //return serverMgr 
+        })
+    } else {        
+        return serverMgr;
+    }
+}
+
+function initServerMgr(cb) {
+    serverMgr = {};
+
+    serverMgr.init = (cb) => {
+        if (cb) cb();
+    }
+
+    serverMgr.requestFetchData = async (service, args) => {
+        let prova = args
+        ?
+        JSON.stringify({
+            "service": service,
+            ...args 
+        })
+        :
+        JSON.stringify({
+            "service": service
+        })
+
+        try{
+            const response = await fetch("http://myks.altervista.org/connection.php", {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                },
+                body: prova
+            })
+            const data = await response.text();
+            console.log("requestFetchData: " + data)
+            return JSON.parse(data); 
+        }
+        catch (error) {
+            console.log("ERROR requestFetchData: " + error)
+        }
+    }
+
+    serverMgr.getLogin = async (email, password, cb) => {
+        let result = await serverMgr.requestFetchData("getLogin", {email: email, password: password})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+    serverMgr.getAccount = async (email, cb) => {
+        let result = await serverMgr.requestFetchData("getAccount", {email: email})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.addAccount = async (nome, cognome, titolo, email, password, cb) => {
+        let result = await serverMgr.requestFetchData("addAccount", {nome: nome, cognome: cognome, titolo: titolo, email: email, password: password})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.getPatientsList = async (UID, cb) => {
+        let result = await serverMgr.requestFetchData("getPatientsList", {doct_UID: UID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.addPaziente = async (doct_UID, nome, cognome, city, codiceFiscale, dataNascita, patologia, note, medicine, terapia, cb) => {
+        let result = await serverMgr.requestFetchData("addPaziente", {
+            doct_UID: doct_UID,
+            nome: nome,
+            cognome: cognome,
+            city: city,
+            codiceFiscale: codiceFiscale,
+            dataNascita: dataNascita,
+            patologia: patologia,
+            note: note,
+            medicine: medicine,
+            terapia: terapia,
+            // statistiche: statistiche
+        })
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    if (cb) cb();
+}

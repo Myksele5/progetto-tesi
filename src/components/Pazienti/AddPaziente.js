@@ -7,10 +7,10 @@ import AuthContext from "../../context/auth-context";
 
 function AddPaziente(props){
     const auth_ctx = useContext(AuthContext);
-    const [emailDottore, setEmailDottore] = useState('');
-    const [passwordDottore, setPasswordDottore] = useState('');
-    const [modaleCREAZIONEUTENTE, setModaleCREAZIONEUTENTE] = useState(false);
-    const [accountCreato, setAccountCreato] = useState(false);
+    // const [emailDottore, setEmailDottore] = useState('');
+    // const [passwordDottore, setPasswordDottore] = useState('');
+    // const [modaleCREAZIONEUTENTE, setModaleCREAZIONEUTENTE] = useState(false);
+    // const [accountCreato, setAccountCreato] = useState(false);
 
     const [validNome, setValidNome] = useState(true);
     const [enteredNome, setEnteredNome] = useState('');
@@ -35,15 +35,15 @@ function AddPaziente(props){
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPsw, setEnteredPsw] = useState('');
 
-    useEffect(() => {
-        setEmailDottore(auth_ctx.utenteLoggato);
-        // console.log(utente);
-    }, [])
+    // useEffect(() => {
+    //     setEmailDottore(auth_ctx.utenteLoggato);
+    //     // console.log(utente);
+    // }, [])
 
-    const passwordDottoreChangeHandler = (event) => {
-        console.log(event.target.value);
-        setPasswordDottore(event.target.value);
-    }
+    // const passwordDottoreChangeHandler = (event) => {
+    //     console.log(event.target.value);
+    //     setPasswordDottore(event.target.value);
+    // }
 
     const nomeChangeHandler = (event) => {
         console.log(event.target.value);
@@ -105,13 +105,13 @@ function AddPaziente(props){
         setEnteredPsw(event.target.value);
     }
 
-    function formSubmitHandler(){
-        // event.preventDefault();
+    function formSubmitHandler(event){
+        event.preventDefault();
         var account_creato = false;
-        if(modaleCREAZIONEUTENTE){
-            account_creato = creaAccountPaziente();
-            console.log(account_creato)
-        }
+        // if(modaleCREAZIONEUTENTE){
+        //     account_creato = creaAccountPaziente();
+        //     console.log(account_creato)
+        // }
 
         var dateee = new Date(enteredData);
 
@@ -161,26 +161,25 @@ function AddPaziente(props){
         let dateString = `${year}-${month}-${day}`;
 
         const datiNuovoPaziente = {
+            doct_UID: auth_ctx.utenteLoggatoUID,
             nome: enteredNome,
             cognome: enteredCognome,
-            città: enteredCittà,
-            dataNascita: dateString,
-            // attività: 0,
-            statistiche: {
-                risposteTotali: 0,
-                risposteCorrette: 0,
-                risposteSbagliate: 0
-            },
+            city: enteredCittà,
             codiceFiscale: enteredCF.toUpperCase(),
+            dataNascita: dateString,
             patologia: enteredPatologia,
-            note: enteredNoteParticolari,
             medicine: enteredMedicine,
             terapia: enteredTerapia,
-            ACCOUNT_CREATO: accountCreato
+            note: enteredNoteParticolari
+            // statistiche: {
+            //     "risposteTotali": 0,
+            //     "risposteCorrette": 0,
+            //     "risposteSbagliate": 0
+            // }
+            // ACCOUNT_CREATO: accountCreato
         };
 
         props.onCreateNewPaziente(datiNuovoPaziente);
-
         
         setEnteredNome('');
         // setValidNome(true);
@@ -192,48 +191,48 @@ function AddPaziente(props){
         // setValidData(true);
     }
 
-    function modalePasswordDottore(event){
-        event.preventDefault();
+    // function modalePasswordDottore(event){
+    //     event.preventDefault();
 
-        if(enteredEmail.trim().length > 1 && enteredPsw.trim().length > 5){
-            setModaleCREAZIONEUTENTE(true);
-            // creaAccountPaziente();
-        }
-        else{
-            formSubmitHandler();
-        }
-    }
+    //     if(enteredEmail.trim().length > 1 && enteredPsw.trim().length > 5){
+    //         setModaleCREAZIONEUTENTE(true);
+    //         // creaAccountPaziente();
+    //     }
+    //     else{
+    //         formSubmitHandler();
+    //     }
+    // }
 
     async function creaAccountPaziente(){
         var aBuonFine;
 
-        await signInWithEmailAndPassword(auth, emailDottore, passwordDottore)
-        .then(aBuonFine = true)
-        .catch((err) => {
-            alert("PSW SBAGLIATA")
-            aBuonFine = false;
-            console.error(err)
-        });
-
-        if(aBuonFine){
-            await createUserWithEmailAndPassword(auth, enteredEmail, enteredPsw)
-            .then(alert("Account paziente creato!"))
-            .catch((err) => {
-                console.error(err)
-            });
-            setAccountCreato(aBuonFine);
-        }
-        else{
-            return
-        }
-        
-        await signInWithEmailAndPassword(auth, emailDottore, passwordDottore)
+        // await signInWithEmailAndPassword(auth, emailDottore, passwordDottore)
         // .then(aBuonFine = true)
-        .catch((err) => {
-            alert("PSW SBAGLIATA")
-            // aBuonFine = false;
-            console.error(err)
-        });
+        // .catch((err) => {
+        //     alert("PSW SBAGLIATA")
+        //     aBuonFine = false;
+        //     console.error(err)
+        // });
+
+        // if(aBuonFine){
+        //     await createUserWithEmailAndPassword(auth, enteredEmail, enteredPsw)
+        //     .then(alert("Account paziente creato!"))
+        //     .catch((err) => {
+        //         console.error(err)
+        //     });
+        //     setAccountCreato(aBuonFine);
+        // }
+        // else{
+        //     return
+        // }
+        
+        // await signInWithEmailAndPassword(auth, emailDottore, passwordDottore)
+        // // .then(aBuonFine = true)
+        // .catch((err) => {
+        //     alert("PSW SBAGLIATA")
+        //     // aBuonFine = false;
+        //     console.error(err)
+        // });
         
         return
     }
@@ -244,7 +243,7 @@ function AddPaziente(props){
     }
 
     return(
-        <form className={styles.center_form} onSubmit={modalePasswordDottore}>
+        <form className={styles.center_form} onSubmit={formSubmitHandler}>
             <h1 className={styles.title_form}>Inserisci i dati del nuovo paziente</h1>
 
             <div className={styles.wrapper_flex}>
@@ -296,22 +295,17 @@ function AddPaziente(props){
                     <p className={styles.paragraph_style}>per potersi collegare alla piattaforma e svolgere attività.</p>
                     <p className={styles.paragraph_style}>Se inserite, verrà creato un profilo per il paziente</p>
 
-                    {modaleCREAZIONEUTENTE &&
+                    {/* {modaleCREAZIONEUTENTE &&
                         <div>
                             <label>Inserisci password</label>
                             <input value={passwordDottore} onChange={passwordDottoreChangeHandler}></input>
                             <button onClick={formSubmitHandler}>CONFERMA</button>
                         </div>
-                    }
+                    } */}
                 </section>
             </div>
-            
-
-            
 
             {/* <hr className={styles.horizontal_line}></hr> */}
-
-            
 
             <GenericButton 
             type="submit" 

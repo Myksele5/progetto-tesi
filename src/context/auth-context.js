@@ -5,6 +5,7 @@ import { auth, db } from "../config/firebase-config";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 
 const AuthContext = React.createContext({
+    login: ()=>{},
     isLogged: false,
     logoutModal: null,
     onLogoutClick: ()=>{},
@@ -15,7 +16,7 @@ const AuthContext = React.createContext({
     tipoAccount: null,
     confirmPasswordReset: ()=>{}
 });
-var email;
+// var email;
 
 export function AuthContextProvider(props){
     const [utenteLoggato, setUtenteLoggato] = useState(null);
@@ -23,44 +24,48 @@ export function AuthContextProvider(props){
     const [tipoAccount, setTipoAccount] = useState('');
     const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-    useEffect(() => {
-        const authentication = onAuthStateChanged(auth, (utente) => {
-          if(utente){
-            setUtenteLoggato(utente.email);
-            setUtenteLoggatoUID(utente.uid);
-            // email = utente.email;
-            // console.log(utente.uid);
-            console.log(auth.currentUser.email);
-            getAccountType();
+    // useEffect(() => {
+    //     const authentication = onAuthStateChanged(auth, (utente) => {
+    //       if(utente){
+    //         setUtenteLoggato(utente.email);
+    //         setUtenteLoggatoUID(utente.uid);
+    //         // email = utente.email;
+    //         // console.log(utente.uid);
+    //         console.log(auth.currentUser.email);
+    //         getAccountType();
 
-          }
-          else{
-            setUtenteLoggato(null);
-          }
-        })
+    //       }
+    //       else{
+    //         setUtenteLoggato(null);
+    //       }
+    //     })
 
-        return () => {
-          authentication();
-        }
-    }, []);
+    //     return () => {
+    //       authentication();
+    //     }
+    // }, []);
 
-    useEffect(() => {
-      // console.log(email);
-      console.log(tipoAccount);
-    }, [tipoAccount])
+    // useEffect(() => {
+    //   // console.log(email);
+    //   console.log(tipoAccount);
+    // }, [tipoAccount])
 
-    async function getAccountType(){
-      //Da completare
-      const userRef = await getDoc(doc(db, `${auth.currentUser.email}`, `info`));
-      if(userRef.exists()){
-        console.log(userRef.data().titolo)
-        setTipoAccount(userRef.data().titolo)
+    function setAccountLogged(email, UID, tipoAccount){
+      setUtenteLoggato(email);
+      setUtenteLoggatoUID(UID);
+      switch(tipoAccount){
+        case 1:
+          setTipoAccount("Dottore");
+          break;
+        case 2:
+          setTipoAccount("Dottoressa");
+          break;
+        case 3:
+          setTipoAccount("Paziente");
+          break;
+        default:
+          break;
       }
-      else{
-        // alert("trovato niente")
-        setTipoAccount("Paziente")
-      }
-      // console.log(userDoc.data());
     }
 
     async function resetPassword(oobCode, newPassword){
@@ -82,19 +87,19 @@ export function AuthContextProvider(props){
       setShowLogoutModal(false);
     }
 
-    async function userLoggedout(){
+    function userLoggedout(){
       // localStorage.removeItem('logged_IN', '1');
-      await signOut(auth)
-      .catch((err) => {
-        console.error(err);
-      })
       console.log('EFFETTUO LOGOUT');
+      setUtenteLoggato(null);
+      setUtenteLoggatoUID(null);
+      setTipoAccount('');
       closeModalLogout();
     }
 
     return (
       <AuthContext.Provider
       value={{
+          login: setAccountLogged,
           logoutModal: showLogoutModal,
           onLogoutClick: userClickedLoggedout,
           cancelLogout: closeModalLogout,

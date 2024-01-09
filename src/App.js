@@ -12,11 +12,23 @@ import AuthContext from './context/auth-context';
 import { PatientContextProvider } from './context/patients-context';
 import Modal from './components/UI/Modal';
 import { GameContextProvider } from './context/game-context';
+import { getServerMgr } from './backend_conn/ServerMgr';
 
 function App() {
+  const [singletonHasLoaded, setSingletonHasLoaded] = useState(false);
   const [schermataMostrata, setSchermataMostrata] = useState('');
 
   const auth_ctx = useContext(AuthContext);
+
+  useEffect(() => {
+    initSingleton()
+    .then(setSingletonHasLoaded(true))
+  }, [])
+
+  useEffect(async () => {
+    let result = await getServerMgr().getAccount();
+    console.log(result);
+  }, [])
 
   useEffect(() => {
     if(auth_ctx.tipoAccount === "Paziente"){
@@ -26,6 +38,12 @@ function App() {
       setSchermataMostrata('SCHERMATA_Pazienti')
     }
   }, [auth_ctx.tipoAccount])
+
+  function initSingleton(){
+    return new Promise((resolve, reject) => {
+      getServerMgr(resolve)
+    })
+  }
 
   function changeSchermata(schermata){
     console.log('CAMBIO SCHERMATA');
@@ -52,50 +70,59 @@ function App() {
     }
   }
 
-  return (
-    <div className='App'>
-
-      {auth_ctx.utenteLoggato !== null && auth_ctx.logoutModal &&
-        <Modal
-          testoModale={"Sei sicuro di voler effettuare il logout?"}
-          CONFERMA = {() => {
-            auth_ctx.onLogout();
-          }}
-          ANNULLA = {() => {
-            auth_ctx.cancelLogout();
-          }}
-        >
-        </Modal>
+  if(singletonHasLoaded){
+    return (
+      <div className='App'>
+  
+        {auth_ctx.utenteLoggato !== null && auth_ctx.logoutModal &&
+          <Modal
+            testoModale={"Sei sicuro di voler effettuare il logout?"}
+            CONFERMA = {() => {
+              auth_ctx.onLogout();
+            }}
+            ANNULLA = {() => {
+              auth_ctx.cancelLogout();
+            }}
+          >
+          </Modal>
+          
+        }
+          
+        {auth_ctx.utenteLoggato === null && <Login></Login>}
+  
+        {auth_ctx.utenteLoggato !== null && 
+          
+          <MainMenu
+            showSchermata = {changeSchermata}>
+          </MainMenu>
         
-      }
+        }
+  
+        <PatientContextProvider>
+          
+          {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Pazienti' && <div className='wrap_schermata'><Pazienti/></div>}
+          {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Attività' && <div className='wrap_schermata'><Attività/></div>}
+          {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Giochi' && 
+            <GameContextProvider>
+              <div className='wrap_schermata'>
+                <Giochi/>
+              </div>
+            </GameContextProvider>
+              }
+          {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Dialoghi' && <div className='wrap_schermata'><Dialoghi/></div>}
         
-      {auth_ctx.utenteLoggato === null && <Login></Login>}
+        </PatientContextProvider>
+  
+      </div>
+    );
+  }
+  else{
+    return(
+      <div>LOADING</div>
+    );
+  }
 
-      {auth_ctx.utenteLoggato !== null && 
-        
-        <MainMenu
-          showSchermata = {changeSchermata}>
-        </MainMenu>
-      
-      }
-
-      <PatientContextProvider>
-        
-        {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Pazienti' && <div className='wrap_schermata'><Pazienti/></div>}
-        {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Attività' && <div className='wrap_schermata'><Attività/></div>}
-        {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Giochi' && 
-          <GameContextProvider>
-            <div className='wrap_schermata'>
-              <Giochi/>
-            </div>
-          </GameContextProvider>
-            }
-        {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Dialoghi' && <div className='wrap_schermata'><Dialoghi/></div>}
-      
-      </PatientContextProvider>
-
-    </div>
-  );
+  
 }
 
 export default App;

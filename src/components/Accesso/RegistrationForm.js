@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 import { auth, db } from "../../config/firebase-config";
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
-
-var SALVADATI = false;
+import { getServerMgr } from "../../backend_conn/ServerMgr";
 
 function RegistrationForm(props){
     // const listaUtentiReference = doc(db, "listaUtenti")
-    const [aBuonFine, setABuonFine] = useState(null);
+    var emailEsistente = false;
+    const [registrEffettuata, setRegistrEffettuata] = useState(null);
 
     const [titolo, setTitolo] = useState("Dottore");
 
@@ -27,14 +27,73 @@ function RegistrationForm(props){
     const [validPassword, setValidPassword] = useState(true);
     const [password, setPassword] = useState('');
 
-    useEffect(() => {
-        setABuonFine(null);
-        SALVADATI = false;
-    }, [nome,cognome,email,password,titolo]);
+    const submitRegistration = async (event) =>{
+        event.preventDefault();
+        let result;
+
+        switch(titolo){
+            case "Dottore":
+                setTitolo(1);
+                break;
+            case "Dottoressa":
+                setTitolo(2);
+                break;
+            default:
+                break;
+        }
+
+        if(email.includes('@') && password.trim().length >= 6){
+            console.log("MANDO DATI PER LOGIN");
+
+            result = await getServerMgr().getAccount()
+            .catch((err) => {
+                console.error(err);
+            });
+
+            if(result !== undefined){
+                for(var i=0; i < result.length; i++){
+                    if(result[i].email === email){
+                        setValidNome(false);
+                        setValidCognome(false);
+                        setValidEmail(false);
+                        setValidPassword(false);
+                        // setABuonFine(false);
+                        emailEsistente = true;
+                        alert("Email già associata ad un account!");
+                        break;
+                    }
+                    else{
+                        emailEsistente = false;
+                    }
+                }
+                if(!emailEsistente){
+                    let result2;
+                    result2 = await getServerMgr().addAccount(nome, cognome, titolo, email, password)
+                    .then(setRegistrEffettuata(true))
+                    .catch((err) => {
+                        console.error(err);
+                        setRegistrEffettuata(false);
+                    });
+                }
+            }
+            else{
+                let result2;
+                result2 = await getServerMgr().addAccount(nome, cognome, titolo, email, password)
+                .then(setRegistrEffettuata(true))
+                .catch((err) => {
+                    console.error(err);
+                })
+                // alert("NESSUN ACCOUNT TROVATO");
+            }        
+        }
+    }
 
     useEffect(() => {
-        SALVADATI = false;
-    }, []);
+        setValidEmail(true);
+        setValidPassword(true);
+        setValidNome(true);
+        setValidCognome(true);
+    }, [nome,cognome,email,password,titolo]);
 
     const goToLoginForm = () => {
         // console.log("VAI AL FORM PER LOGGARE");
@@ -67,85 +126,10 @@ function RegistrationForm(props){
         setValidPassword(true);
     }
 
-    const submitRegistration = async (event) =>{
-        event.preventDefault();
-        if(email.includes('@') && password.trim().length >= 6){
-            console.log("MANDO DATI PER LOGIN");
-            
-            await createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                console.log(userCredential);
-                console.log(userCredential.user.uid);
-                SALVADATI = true;
-                setABuonFine(true);
-            })
-            .catch((FirebaseAuthUserCollisionException) => {
-                SALVADATI = false;
-                setABuonFine(false);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-
-            if(SALVADATI){
-                await setDoc(doc(db, `${email}`, `info`), {
-                    nome: nome,
-                    cognome: cognome,
-                    email: email,
-                    password: password,
-                    titolo: titolo,
-                    UID: auth.currentUser.uid
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-
-                // await setDoc(doc(db, `${email}`, `info`, `listaPazienti`), {})
-                // .catch((err) => {
-                //     console.log(err);
-                // });
-
-                // await setDoc(doc(db, `${email}`, `info`, `listaGiochi`), {})
-                // .catch((err) => {
-                //     console.log(err);
-                // });
-
-                // const creaGiochiSubCollectionsReference = doc(db, `listaUtenti`, `${auth.currentUser.uid}`, `giochi`, `listaGiochi`);
-                // await setDoc(creaGiochiSubCollectionsReference, {})
-                // .catch((err) => {
-                //     console.log(err);
-                // });
-
-                // const creaPazientiSubCollectionsReference = doc(db, `listaUtenti`, `${auth.currentUser.uid}`, `pazienti`, `listaPazienti`);
-                // await setDoc(creaPazientiSubCollectionsReference, {})
-                // .catch((err) => {
-                //     console.log(err);
-                // });
-
-                // await sendEmailVerification(auth.currentUser);
-            }
-            
-        }
-        else{
-            if(!email.includes('@')){
-                setValidEmail(false);
-            }
-            if(password.trim().length < 6){
-                setValidPassword(false);
-            }
-            if(nome.trim().length < 2){
-                setValidNome(false);
-            }
-            if(nome.trim().length < 2){
-                setValidCognome(false);
-            }
-        }
-    }
-
     return(
         <Card
         children = {
-            <form className={styles.center_elements}>
+            <form className={styles.center_elements} onSubmit={submitRegistration}>
                 <h1 className={styles.title}>Registrazione</h1>
 
                 <label className={styles.label_box}>Titolo</label>
@@ -166,11 +150,11 @@ function RegistrationForm(props){
                 <label className={`${styles.label_box} ${!validCognome ? styles.invalid : ''}`}>Cognome</label>
                 <input className={`${styles.input_box} ${!validCognome ? styles.invalid : ''}`} type="text" placeholder="Inserisci cognome" value={cognome} onChange={cognomeChangeHandler}></input>
                 
-                {aBuonFine !== null && aBuonFine && <h2>Registrazione effettuata!</h2>}
-                {aBuonFine !== null && !aBuonFine && <h2>Email già registrata al sito. Prova con un'altra</h2>}
+                {/* {registrEffettuata !== null && registrEffettuata && <h2>Registrazione effettuata!</h2>}
+                {registrEffettuata !== null && !registrEffettuata && <h2>Email già registrata al sito. Prova con un'altra</h2>} */}
 
                 <GenericButton
-                    onClick={submitRegistration}
+                    type="submit"
                     generic_button={true}
                     buttonText = 'Registrati'
                 >

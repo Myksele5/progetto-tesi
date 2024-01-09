@@ -11,6 +11,7 @@ import Card from "../components/UI/Card";
 import { auth, db } from "../config/firebase-config";
 import { collection, getDocs, addDoc, deleteDoc, updateDoc, doc } from "firebase/firestore";
 import AuthContext from "./auth-context";
+import { getServerMgr } from "../backend_conn/ServerMgr";
 
 let scheda_paziente;
 let modifica_paziente;
@@ -313,20 +314,40 @@ export function PatientContextProvider(props){
     const listaPazientiReference = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `pazienti`);
     
     // --------- FUNZIONE PER RECUPERARE I PAZIENTI DAL DATABASE
+    // const prendiListaPazienti = async () => {
+    //     try{
+    //         const data = await getDocs(listaPazientiReference);
+    //         const filteredData = data.docs.map((docPazien) => ({
+    //             ...docPazien.data(),
+    //             id: docPazien.id
+    //         }))
+    //         setIsLoading(false);
+    //         setElencoPazienti(filteredData);
+    //         console.log(filteredData);
+    //     } catch(err){
+    //         console.error(err);
+    //     }
+    // };
+
     const prendiListaPazienti = async () => {
-        try{
-            const data = await getDocs(listaPazientiReference);
-            const filteredData = data.docs.map((docPazien) => ({
-                ...docPazien.data(),
-                id: docPazien.id
-            }))
-            setIsLoading(false);
-            setElencoPazienti(filteredData);
-            console.log(filteredData);
-        } catch(err){
-            console.error(err);
+        if(auth_ctx.utenteLoggato !== null){
+            console.log(auth_ctx.utenteLoggato)
+            console.log(auth_ctx.utenteLoggatoUID)
+            let result;
+            result = await getServerMgr().getPatientsList(auth_ctx.utenteLoggatoUID)
+            .catch((err) => {
+                console.error(err)
+            });
+    
+            if(result !== null){
+                setElencoPazienti(result);
+            }
+            else{
+                setElencoPazienti([]);
+            }
+            // console.log(result[0]);
         }
-    };
+    }
 
     //ESEGUO LA FUNZIONE PER AVERE SEMPRE LA LISTA AGGIORNATA DEI PAZIENTI
     useEffect(() => {
@@ -337,23 +358,17 @@ export function PatientContextProvider(props){
 
     //------------- AGGIORNA db CON IL NUOVO PAZIENTE ---> VIENE ESEGUITA IN AddPaziente.js TRAMITE PROPS
     async function aggiungiPaziente(datiPaziente){
-        try{
-            await addDoc(listaPazientiReference, {
-                nome: datiPaziente.nome,
-                cognome: datiPaziente.cognome,
-                città: datiPaziente.città,
-                dataNascita: datiPaziente.dataNascita,
-                codiceFiscale: datiPaziente.codiceFiscale,
-                statistiche: datiPaziente.statistiche,
-                patologia: datiPaziente.patologia,
-                note: datiPaziente.note,
-                medicine: datiPaziente.medicine,
-                terapia: datiPaziente.terapia,
-                ACCOUNT_CREATO: datiPaziente.ACCOUNT_CREATO
-            });
-        } catch(err){
+        let result;
+        
+        result = await getServerMgr().addPaziente(
+            datiPaziente.doct_UID, datiPaziente.nome, datiPaziente.cognome, datiPaziente.city, datiPaziente.codiceFiscale, datiPaziente.dataNascita, datiPaziente.patologia,
+            datiPaziente.medicine, datiPaziente.terapia, datiPaziente.note
+        )
+        .then(console.log(result))
+        .catch((err) => {
             console.error(err);
-        }
+        });
+        
         setShowFormNewPaziente(false);
         setShowSearchBoxAndButton(true);
         setShowTabella(true);
@@ -427,7 +442,7 @@ export function PatientContextProvider(props){
                     iddd={pazienteee.id}
                     nomeee={pazienteee.nome}
                     cognomeee={pazienteee.cognome}
-                    cittààà={pazienteee.città}
+                    cittààà={pazienteee.city}
                     dataaa={pazienteee.dataNascita}
                     attivitààà={pazienteee.attività}
                     statisticheee={pazienteee.statistiche}
@@ -459,10 +474,10 @@ export function PatientContextProvider(props){
         if(Object.keys(elencoPazienti).length > 0){
             // console.log(elencoPazienti);
             return(
-                <tr key={elencoPazienti.id}>
+                <tr key={elencoPazienti.ID}>
                     <td className={`${someStyles['dati_tabella']} ${someStyles['nome']}`}>{elencoPazienti.nome}</td>
                     <td className={`${someStyles['dati_tabella']} ${someStyles['cognome']}`}>{elencoPazienti.cognome}</td>
-                    <td className={`${someStyles['dati_tabella']} ${someStyles['città']}`}>{elencoPazienti.città}</td>
+                    <td className={`${someStyles['dati_tabella']} ${someStyles['città']}`}>{elencoPazienti.city}</td>
                     <td className={`${someStyles['dati_tabella']} ${someStyles['data']}`}>{elencoPazienti.dataNascita}</td>
                     <td className={`${someStyles['dati_tabella']} ${someStyles['codicefiscale']}`}>{elencoPazienti.codiceFiscale}</td>
                     {/* <td className={someStyles.dati_tabella}>{arrayDummyPazienti.attività}</td> */}
@@ -514,7 +529,7 @@ export function PatientContextProvider(props){
                 id = {pazientee.id}
                 nome = {pazientee.nome.toUpperCase()}
                 cognome = {pazientee.cognome.toUpperCase()}
-                città = {pazientee.città.toUpperCase()}
+                città = {pazientee.city.toUpperCase()}
                 datanascita = {pazientee.dataNascita}
                 codicefiscale = {pazientee.codiceFiscale}
                 // attività = {pazientee.attività}

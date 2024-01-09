@@ -1,12 +1,16 @@
 import { auth } from "../../config/firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./LoginForm.module.css";
 import GenericButton from "../UI/GenericButton";
 import Card from "../UI/Card";
+import { getServerMgr } from "../../backend_conn/ServerMgr";
+import AuthContext from "../../context/auth-context";
 
 function LoginForm(props){
+    const auth_ctx = useContext(AuthContext);
+
     const [erroreLogin, setErroreLogin] = useState(false);
 
     const [validEmail, setValidEmail] = useState(true);
@@ -39,27 +43,49 @@ function LoginForm(props){
         setPassword(event.target.value);
     }
 
+    // const submitLogin = async (event) => {
+    //     event.preventDefault();
+    //     if(email.includes('@') && password.trim().length >= 6){
+    //         console.log("MANDO DATI PER LOGIN");
+    //         await signInWithEmailAndPassword(auth, email, password)
+    //         .catch((FirebaseAuthInvalidCredentialsException) =>{
+    //             setErroreLogin(true);
+    //             setValidEmail(false);
+    //             setValidPassword(false);
+    //         })
+    //         .catch((err) => {
+    //             console.error(err);
+    //         })
+    //     }
+    //     else{
+    //         if(!email.includes('@')){
+    //             setValidEmail(false);
+    //         }
+    //         if(password.trim().length < 6){
+    //             setValidPassword(false);
+    //         }
+    //     }
+    // }
+
     const submitLogin = async (event) => {
         event.preventDefault();
+        let result;
+
         if(email.includes('@') && password.trim().length >= 6){
-            console.log("MANDO DATI PER LOGIN");
-            await signInWithEmailAndPassword(auth, email, password)
-            .catch((FirebaseAuthInvalidCredentialsException) =>{
-                setErroreLogin(true);
-                setValidEmail(false);
-                setValidPassword(false);
-            })
+            result = await getServerMgr().getLogin(email, password)
             .catch((err) => {
                 console.error(err);
-            })
+            });
+        }
+
+        if(result !== undefined){
+            console.log("PROVA", result[0]);
+            auth_ctx.login(email, result[0].UID, result[0].titolo)
+            
         }
         else{
-            if(!email.includes('@')){
-                setValidEmail(false);
-            }
-            if(password.trim().length < 6){
-                setValidPassword(false);
-            }
+            setValidEmail(false);
+            setValidPassword(false);
         }
     }
 
