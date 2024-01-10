@@ -34,6 +34,24 @@
     case "addPaziente":
         $query_result = addPaziente($conn);
         break;
+    case "updatePaziente":
+        $query_result = updatePaziente($conn);
+        break;
+    case "deletePaziente":
+        $query_result = deletePaziente($conn);
+        break;
+    case "getQuestionsList":
+        $query_result = getQuestionsList($conn);
+        break;
+    case "addQuestion":
+        $query_result = addQuestion($conn);
+        break;
+    case "updateQuestion":
+        $query_result = updateQuestion($conn);
+        break;
+    case "deleteQuestion":
+        $query_result = deleteQuestion($conn);
+        break;
     default:
     	break;
 	}
@@ -181,6 +199,133 @@
         $insertNewPatient->execute();
         
         $insertNewPatient->bind_result($result);
+        return $result;
+    }
+
+    function updatePaziente($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $nome = $dataJson["nome"];
+        $cognome = $dataJson["cognome"];
+        $city = $dataJson["city"];
+        $codiceFiscale = $dataJson["codiceFiscale"];
+        $dataNascita = $dataJson["dataNascita"];
+        $patologia = $dataJson["patologia"];
+        $medicine = $dataJson["medicine"];
+        $terapia = $dataJson["terapia"];
+        $note = $dataJson["note"];
+        $ID = $dataJson["ID"];
+        // $statistiche = $dataJson["statistiche"];
+        
+        $updatePatient = $i_conn->prepare(
+            "UPDATE `patients` SET `nome` = ?, `cognome` = ?, `city` = ?, `codiceFiscale` = ?, `dataNascita` = ?, `patologia` = ?, `medicine` = ?, `terapia` = ?, `note` = ?
+            WHERE `patients`.`ID` = ?"
+        );
+        $updatePatient->bind_param("sssssssssi", $nome, $cognome, $city, $codiceFiscale, $dataNascita, $patologia, $medicine, $terapia, $note, $ID);
+        $updatePatient->execute();
+        
+        $updatePatient->bind_result($result);
+        return $result;
+    }
+
+    function deletePaziente($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $ID = $dataJson["ID"];
+        
+        $deletePatient = $i_conn->prepare("DELETE FROM `patients` WHERE `patients`.`ID` = ?");
+        $deletePatient->bind_param("i", $ID);
+        $deletePatient->execute();
+        
+        $deletePatient->bind_result($result);
+        return $result;
+    }
+
+    function getQuestionsList($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $doctor_UID = $dataJson["doctor_UID"];
+        
+        $retrieveQuestionsList = $i_conn->prepare("SELECT * FROM `gamesQuestions` WHERE doctor_UID = ?");
+        $retrieveQuestionsList->bind_param("i", $doctor_UID);
+        
+        $retrieveQuestionsList->execute();
+        $result = $retrieveQuestionsList->get_result();
+        return $result;
+    }
+
+    function addQuestion($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $doctor_UID = $dataJson["doctor_UID"];
+        $tipoGioco = $dataJson["tipoGioco"];
+        $categoria = $dataJson["categoria"];
+        $domanda = $dataJson["domanda"];
+        $rispCorrettaN1 = $dataJson["rispCorrettaN1"];
+        $rispCorrettaN2 = $dataJson["rispCorrettaN2"];
+        $rispCorrettaN3 = $dataJson["rispCorrettaN3"];
+        $rispCorrettaN4 = $dataJson["rispCorrettaN4"];
+        $rispSbagliataN1 = $dataJson["rispSbagliataN1"];
+        $rispSbagliataN2 = $dataJson["rispSbagliataN2"];
+        $rispSbagliataN3 = $dataJson["rispSbagliataN3"];
+        $rispSbagliataN4 = $dataJson["rispSbagliataN4"];
+        
+        $insertNewQuestion = $i_conn->prepare(
+            "INSERT INTO `gamesQuestions` (`doctor_UID`, `tipoGioco`, `categoria`, `domanda`, `rispCorrettaN1`, `rispCorrettaN2`, `rispCorrettaN3`, `rispCorrettaN4`,
+             `rispSbagliataN1`, `rispSbagliataN2`, `rispSbagliataN3`, `rispSbagliataN4`) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        );
+        $insertNewQuestion->bind_param("isssssssssss", $doctor_UID, $tipoGioco, $categoria, $domanda, $rispCorrettaN1, $rispCorrettaN2, $rispCorrettaN3, $rispCorrettaN4,
+                                        $rispSbagliataN1, $rispSbagliataN2, $rispSbagliataN3, $rispSbagliataN4);
+        $insertNewQuestion->execute();
+        
+        $insertNewQuestion->bind_result($result);
+        return $result;
+    }
+
+    function updateQuestion($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $domanda = $dataJson["domanda"];
+        $rispCorrettaN1 = $dataJson["rispCorrettaN1"];
+        $rispCorrettaN2 = $dataJson["rispCorrettaN2"];
+        $rispCorrettaN3 = $dataJson["rispCorrettaN3"];
+        $rispCorrettaN4 = $dataJson["rispCorrettaN4"];
+        $rispSbagliataN1 = $dataJson["rispSbagliataN1"];
+        $rispSbagliataN2 = $dataJson["rispSbagliataN2"];
+        $rispSbagliataN3 = $dataJson["rispSbagliataN3"];
+        $rispSbagliataN4 = $dataJson["rispSbagliataN4"];
+        $ID = $dataJson["ID"];
+        
+        $insertNewQuestion = $i_conn->prepare(
+            "UPDATE `gamesQuestions` SET `domanda` = ?, `rispCorrettaN1` = ?, `rispCorrettaN2` = ?, `rispCorrettaN3` = ?, `rispCorrettaN4` = ?,
+             `rispSbagliataN1` = ?, `rispSbagliataN2` = ?, `rispSbagliataN3` = ?, `rispSbagliataN4` = ?
+            WHERE `gamesQuestions`.`ID` = ?"
+        );
+        $insertNewQuestion->bind_param("sssssssssi", $domanda, $rispCorrettaN1, $rispCorrettaN2, $rispCorrettaN3, $rispCorrettaN4,
+                                        $rispSbagliataN1, $rispSbagliataN2, $rispSbagliataN3, $rispSbagliataN4, $ID);
+        $insertNewQuestion->execute();
+        
+        $insertNewQuestion->bind_result($result);
+        return $result;
+    }
+
+    function deleteQuestion($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $ID = $dataJson["ID"];
+        
+        $deleteQuestion = $i_conn->prepare("DELETE FROM `gamesQuestions` WHERE `gamesQuestions`.`ID` = ?");
+        $deleteQuestion->bind_param("i", $ID);
+        $deleteQuestion->execute();
+        
+        $deleteQuestion->bind_result($result);
         return $result;
     }
     

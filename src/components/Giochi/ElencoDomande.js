@@ -11,6 +11,7 @@ function ElencoDomande(props){
     const game_ctx = useContext(GameContext);
     const auth_ctx = useContext(AuthContext);
 
+    const [questionsList, setQuestionsList] = useState(game_ctx.domande);
     const [categoryFilter, setCategoryFilter] = useState(props.categoria);
     const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
     const [imagesList, setImagesList] = useState([]);
@@ -89,22 +90,29 @@ function ElencoDomande(props){
     }
 
     function verifyIsChecked(event, domanda){
+        console.log(domanda);
         if (event.target.checked) {
             console.log('✅ Checkbox is checked');
             COUNT_DOMANDE++;
             llll.unshift({
-                id: domanda.id,
+                ID: domanda.ID,
                 categoria: domanda.categoria,
-                indovina: domanda.indovina,
-                rispCorrette: domanda.rispCorrette,
-                rispSbagliate: domanda.rispSbagliate
+                domanda: domanda.domanda,
+                rispCorrettaN1: domanda.rispCorrettaN1,
+                rispCorrettaN2: domanda.rispCorrettaN2,
+                rispCorrettaN3: domanda.rispCorrettaN3,
+                rispCorrettaN4: domanda.rispCorrettaN4,
+                rispSbagliataN1: domanda.rispSbagliataN1,
+                rispSbagliataN2: domanda.rispSbagliataN2,
+                rispSbagliataN3: domanda.rispSbagliataN3,
+                rispSbagliataN4: domanda.rispSbagliataN4
             });
         }
         else{
             console.log('⛔️ Checkbox is NOT checked');
             COUNT_DOMANDE--;
             for(var i=0; i < llll.length; i++){
-                if(domanda.id === llll[i].id){
+                if(domanda.ID === llll[i].ID){
                     llll.splice(i, 1);
                     break;
                 }
@@ -140,7 +148,7 @@ function ElencoDomande(props){
         
         // console.log(game_ctx.domandeDaModificare === llll);
 
-        if(singleQuestion.categoria === categoryFilter){
+        if(singleQuestion.tipoGioco === props.tipoGioco && singleQuestion.categoria === categoryFilter){
             if(llll.length <= 0){
                 checkboxInputChecked =
                     <input className={styles.checkbox_style} type="checkbox" onChange={(event)=>{
@@ -151,7 +159,7 @@ function ElencoDomande(props){
             }
             else{
                 for(var i=0; i < llll.length; i++){
-                    if(singleQuestion.id === llll[i].id){
+                    if(singleQuestion.ID === llll[i].ID){
                         checkboxInputChecked =
                             <input checked className={styles.checkbox_style} type="checkbox" onChange={(event)=>{
                                 verifyIsChecked(event, singleQuestion)
@@ -177,22 +185,23 @@ function ElencoDomande(props){
                     {props.tipoGioco === "QUIZ" &&
                         <div className={styles.flex_list_container}>
                             <h4 className={styles.subtitle_style}>Domanda:</h4>
-                            <p className={styles.question_style}>{singleQuestion.indovina}</p>
+                            <p className={styles.question_style}>{singleQuestion.domanda}</p>
                         </div>
                     }
 
                     {props.tipoGioco === "QUIZ CON IMMAGINI" &&
                         <div className={styles.flex_list_container}>
                             <h4 className={styles.subtitle_style}>Immagine:</h4>
-                            <p className={styles.question_style}>{singleQuestion.rispCorrette.correct_answer_n1}</p>
                             <img className={styles.preview_image} src={getSingleImage(singleQuestion)}></img>
+                            <h4 className={styles.subtitle_style}>Domanda:</h4>
+                            <p className={styles.question_style}>{singleQuestion.domanda}</p>
                         </div>
                     }
 
                     {props.tipoGioco === "COMPLETA LA PAROLA" &&
                         <div className={styles.flex_list_container}>
                             <h4 className={styles.subtitle_style}>Parola da indovinare:</h4>
-                            <p className={styles.question_style}>{singleQuestion.indovina}</p>
+                            <p className={styles.question_style}>{singleQuestion.domanda}</p>
                         </div>
                     }
 
@@ -203,31 +212,31 @@ function ElencoDomande(props){
                             <div className={styles.separa_corrette_sbagliate}>
                                 <span className={styles.buttons_space}>
                                     {/* <p className={styles.subtitle_style}>CORRETTA</p> */}
-                                    <p className={styles.correct_answ}>{singleQuestion.rispCorrette.correct_answer_n1}</p>
+                                    <p className={styles.correct_answ}>{singleQuestion.rispCorrettaN1}</p>
 
-                                    {Object.keys(singleQuestion.rispCorrette).length > 1 && singleQuestion.rispCorrette.correct_answer_n2.length > 0 &&
-                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrette.correct_answer_n2.toString()}</p>
+                                    {singleQuestion.rispCorrettaN2.trim().length > 0 &&
+                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrettaN2.toString()}</p>
                                     }
-                                    {Object.keys(singleQuestion.rispCorrette).length > 2 && singleQuestion.rispCorrette.correct_answer_n3.length > 0 &&
-                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrette.correct_answer_n3.toString()}</p>
+                                    {singleQuestion.rispCorrettaN3.trim().length > 0 &&
+                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrettaN3.toString()}</p>
                                     }
-                                    {Object.keys(singleQuestion.rispCorrette).length > 3 && singleQuestion.rispCorrette.correct_answer_n4.length > 0 &&
-                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrette.correct_answer_n4.toString()}</p>
+                                    {singleQuestion.rispCorrettaN4.trim().length > 0 &&
+                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrettaN4.toString()}</p>
                                     }
                                 </span>
                                 
                                 <span className={styles.buttons_space}>
                                     {/* <p className={styles.subtitle_style}>SBAGLIATE</p> */}
-                                    <p className={styles.wrong_answ}>{singleQuestion.rispSbagliate.wrong_answer_n1.toString()}</p>
+                                    <p className={styles.wrong_answ}>{singleQuestion.rispSbagliataN1}</p>
                                     
-                                    {Object.keys(singleQuestion.rispSbagliate).length > 1 && singleQuestion.rispSbagliate.wrong_answer_n2.length > 0 &&
-                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliate.wrong_answer_n2.toString()}</p>
+                                    {singleQuestion.rispSbagliataN2.trim().length > 0 &&
+                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliataN2.toString()}</p>
                                     }
-                                    {Object.keys(singleQuestion.rispSbagliate).length > 2 && singleQuestion.rispSbagliate.wrong_answer_n3.length > 0 &&
-                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliate.wrong_answer_n3.toString()}</p>
+                                    {singleQuestion.rispSbagliataN3.trim().length > 0 &&
+                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliataN3.toString()}</p>
                                     }
-                                    {Object.keys(singleQuestion.rispSbagliate).length > 3 && singleQuestion.rispSbagliate.wrong_answer_n4.length > 0 &&
-                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliate.wrong_answer_n4.toString()}</p>
+                                    {singleQuestion.rispSbagliataN4.trim().length > 0 &&
+                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliataN4.toString()}</p>
                                     }
 
                                 </span>
@@ -250,8 +259,20 @@ function ElencoDomande(props){
 
     return (
         <>
-            {props.tipoGioco === "" && <p>Seleziona un tipo di gioco per visualizzare le domande</p>}
-            {props.tipoGioco === "QUIZ CON IMMAGINI" && 
+            <div className={styles.wrapper_generico}>
+                <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
+                
+                <select className={styles.select_style} onChange={categoryChangeHandler}>
+                    <option hidden>---SELEZIONA CATEGORIA---</option>
+                    {categorie.map(mappaCategorie)}
+                </select>
+            </div>
+            
+            <ul className={styles.wrapper_lista_domande}>
+                {categoryFilter !== "" && questionsList.map(recuperaTutteLeDomande)}
+            </ul>
+            {/* {props.tipoGioco === "" && <p>Seleziona un tipo di gioco per visualizzare le domande</p>} */}
+            {/* {props.tipoGioco === "QUIZ CON IMMAGINI" && 
                 <>
                     <div className={styles.wrapper_generico}>
                         <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
@@ -267,8 +288,8 @@ function ElencoDomande(props){
                     </ul>
                     
                 </>
-            }
-            {props.tipoGioco === "QUIZ" && 
+            } */}
+            {/* {props.tipoGioco === "QUIZ" && 
                 <>
                     <div className={styles.wrapper_generico}>
                         <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
@@ -284,11 +305,10 @@ function ElencoDomande(props){
                     </ul>
                     
                 </>
-            }
-            {props.tipoGioco === "COMPLETA LA PAROLA" && 
+            } */}
+            {/* {props.tipoGioco === "COMPLETA LA PAROLA" && 
                 <>
                     <div className={styles.wrapper_generico}>
-                        {/* <h3 className={styles.domande_disponibili}>Domande disponibili:</h3> */}
                         <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
                         
                         <select className={styles.select_style} onChange={categoryChangeHandler}>
@@ -302,7 +322,7 @@ function ElencoDomande(props){
                     </ul>
                     
                 </>
-            }
+            } */}
         </>
     );
 }

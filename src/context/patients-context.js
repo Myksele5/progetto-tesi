@@ -393,8 +393,13 @@ export function PatientContextProvider(props){
 
     //---------------- FUNZIONE PER ELIMINARE UN PAZIENTE
     async function eliminaPaziente(pazienteID){
-        const pazienteDoc = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `pazienti`, pazienteID);
-        await deleteDoc(pazienteDoc);
+        let result;
+
+        result = await getServerMgr().deletePaziente(pazienteID)
+        .then(console.log(result))
+        .catch((err) => {
+            console.error(err);
+        });
 
         prendiListaPazienti();
     }
@@ -423,9 +428,16 @@ export function PatientContextProvider(props){
 
     //---------------- FUNZIONE PER MODIFICARE I DATI DI UN PAZIENTE
     async function modificaPaziente(pazienteOGGETTO){
-        const pazienteDoc = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `pazienti`, pazienteOGGETTO.id);
-        delete pazienteOGGETTO.id
-        await updateDoc(pazienteDoc, pazienteOGGETTO);
+        let result;
+        
+        result = await getServerMgr().updatePaziente(
+            pazienteOGGETTO.nome, pazienteOGGETTO.cognome, pazienteOGGETTO.city, pazienteOGGETTO.codiceFiscale, pazienteOGGETTO.dataNascita, pazienteOGGETTO.patologia,
+            pazienteOGGETTO.medicine, pazienteOGGETTO.terapia, pazienteOGGETTO.note, pazienteOGGETTO.ID
+        )
+        .then(console.log(result))
+        .catch((err) => {
+            console.error(err);
+        });
         setShowModificaPaziente(false);
         setShowSearchBoxAndButton(true);
         setShowTabella(true);
@@ -439,7 +451,7 @@ export function PatientContextProvider(props){
             <Card
             children={
                 <EditPaziente
-                    iddd={pazienteee.id}
+                    iddd={pazienteee.ID}
                     nomeee={pazienteee.nome}
                     cognomeee={pazienteee.cognome}
                     cittààà={pazienteee.city}
@@ -496,7 +508,7 @@ export function PatientContextProvider(props){
                         
                         <DeleteButton
                         onClick={() => {
-                            confermaEliminazionePaziente(elencoPazienti.id, elencoPazienti.nome, elencoPazienti.cognome);
+                            confermaEliminazionePaziente(elencoPazienti.ID, elencoPazienti.nome, elencoPazienti.cognome);
                         }}>
                         </DeleteButton>
                     </td>

@@ -6,6 +6,7 @@ import Card from "../UI/Card";
 import ElencoDomande from "./ElencoDomande";
 import ElencoDomandeModificabili from "./ElencoDomandeModificabili";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
+import AuthContext from "../../context/auth-context";
 
 var counter_CORRETTE = 1;
 var counter_SBAGLIATE = 1;
@@ -13,6 +14,7 @@ var file;
 
 function AddDomanda(props){
     const game_ctx = useContext(GameContext)
+    const auth_ctx = useContext(AuthContext);
 
     const [totalAnswers_CORRECT, setTotalAnswers_CORRECT] = useState(counter_CORRETTE);
     const [totalAnswers_WRONG, setTotalAnswers_WRONG] = useState(counter_SBAGLIATE);
@@ -20,7 +22,7 @@ function AddDomanda(props){
     const [imageFile, setImageFile] = useState(null);
     const [gameType, setGameType] = useState("QUIZ");
     const [categoryQuestion, setCategoryQuestion] = useState("");
-    const [indovina, setIndovina] = useState("");
+    const [domanda, setDomanda] = useState("");
     const [rispCorretta_1, setRispCorretta_1] = useState("");
     const [rispCorretta_2, setRispCorretta_2] = useState("");
     const [rispCorretta_3, setRispCorretta_3] = useState("");
@@ -50,8 +52,8 @@ function AddDomanda(props){
         setCategoryQuestion(event.target.value);
     }
 
-    function indovinaChangeHandler(event){
-        setIndovina(event.target.value);
+    function domandaChangeHandler(event){
+        setDomanda(event.target.value);
     }
 
     function rispostaCorretta_1_ChangeHandler(event){
@@ -112,31 +114,49 @@ function AddDomanda(props){
         if(rispCorretta_2.trim().length > 0){
             correct_answers["correct_answer_n2"] = rispCorretta_2;
         }
+        else{
+            correct_answers["correct_answer_n2"] = "";
+        }
         if(rispCorretta_3.trim().length > 0){
             correct_answers["correct_answer_n3"] = rispCorretta_3;
+        }
+        else{
+            correct_answers["correct_answer_n3"] = "";
         }
         if(rispCorretta_4.trim().length > 0){
             correct_answers["correct_answer_n4"] = rispCorretta_4;
         }
-        
+        else{
+            correct_answers["correct_answer_n4"] = "";
+        }
 
         if(rispSbagliata_2.trim().length > 0){
             wrong_answers["wrong_answer_n2"] = rispSbagliata_2;
         }
+        else{
+            wrong_answers["wrong_answer_n2"] = "";
+        }
         if(rispSbagliata_3.trim().length > 0){
             wrong_answers["wrong_answer_n3"] = rispSbagliata_3;
         }
+        else{
+            wrong_answers["wrong_answer_n3"] = "";
+        }
         if(rispSbagliata_4.trim().length > 0){
             wrong_answers["wrong_answer_n4"] = rispSbagliata_4;
+        }
+        else{
+            wrong_answers["wrong_answer_n4"] = "";
         }
 
         // console.log(all_answers);
 
         if(gameType === "QUIZ"){
             new_question = {
-                livelloDomanda: "facile",
+                doctor_UID: auth_ctx.utenteLoggatoUID,
+                tipoGioco: gameType,
                 categoria: categoryQuestion,
-                indovina: indovina,
+                domanda: domanda,
                 rispCorrette: correct_answers,
                 rispSbagliate: wrong_answers
             }
@@ -144,24 +164,35 @@ function AddDomanda(props){
 
         if(gameType === "QUIZ CON IMMAGINI"){
             new_question = {
-                livelloDomanda: "facile",
+                doctor_UID: auth_ctx.utenteLoggatoUID,
+                tipoGioco: gameType,
                 categoria: categoryQuestion,
-                // indovina: indovina,
-                fileXstorage: file,
+                domanda: domanda,
+                rispCorrette: correct_answers,
+                rispSbagliate: wrong_answers
+            }
+            // new_question = {
+            //     livelloDomanda: "facile",
+            //     categoria: categoryQuestion,
+            //     // indovina: indovina,
+            //     fileXstorage: file,
+            //     rispCorrette: correct_answers,
+            //     rispSbagliate: wrong_answers
+            // }
+        }
+
+        if(gameType === "COMPLETA LA PAROLA"){
+            new_question = {
+                doctor_UID: auth_ctx.utenteLoggatoUID,
+                tipoGioco: gameType,
+                categoria: categoryQuestion,
+                domanda: domanda.toUpperCase(),
                 rispCorrette: correct_answers,
                 rispSbagliate: wrong_answers
             }
         }
 
-        if(gameType === "COMPLETA LA PAROLA"){
-            new_question = {
-                livelloDomanda: "facile",
-                categoria: categoryQuestion,
-                indovina: indovina.toUpperCase(),
-            }
-        }
-
-        props.aggiornaDomande(new_question, gameType);
+        props.aggiungiDomanda(new_question);
         props.chiudiFormNuovaDomanda();
     }
 
@@ -275,7 +306,7 @@ function AddDomanda(props){
                                 {gameType === "QUIZ" &&
                                     <>
                                         <label className={styles.label_style}>Inserisci domanda: </label>
-                                        <input className={styles.textbox_style} type="text" onChange={indovinaChangeHandler}></input>
+                                        <input className={styles.textbox_style} type="text" onChange={domandaChangeHandler}></input>
                                     </>
                                 }
 
@@ -283,13 +314,15 @@ function AddDomanda(props){
                                     <>
                                         <input type="file" accept="image/*" onChange={imageFileChangeHandler}></input>
                                         <img className={styles.preview_image} src={imageFile}></img>
+                                        <label className={styles.label_style}>Inserisci domanda: </label>
+                                        <input className={styles.textbox_style} type="text" onChange={domandaChangeHandler}></input>
                                     </>
                                 }
 
                                 {gameType === "COMPLETA LA PAROLA" &&
                                     <>
                                         <label className={styles.label_style}>Inserisci parola da indovinare: </label>
-                                        <input className={styles.textbox_style} type="text" onChange={indovinaChangeHandler}></input>
+                                        <input className={styles.textbox_style} type="text" onChange={domandaChangeHandler}></input>
                                     </>
                                 }
                                 

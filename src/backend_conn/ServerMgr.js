@@ -95,7 +95,7 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.addPaziente = async (doct_UID, nome, cognome, city, codiceFiscale, dataNascita, patologia, note, medicine, terapia, cb) => {
+    serverMgr.addPaziente = async (doct_UID, nome, cognome, city, codiceFiscale, dataNascita, patologia, medicine, terapia, note, cb) => {
         let result = await serverMgr.requestFetchData("addPaziente", {
             doct_UID: doct_UID,
             nome: nome,
@@ -104,11 +104,119 @@ function initServerMgr(cb) {
             codiceFiscale: codiceFiscale,
             dataNascita: dataNascita,
             patologia: patologia,
-            note: note,
             medicine: medicine,
             terapia: terapia,
+            note: note
             // statistiche: statistiche
         })
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.updatePaziente = async (nome, cognome, city, codiceFiscale, dataNascita, patologia, medicine, terapia, note, ID, cb) => {
+        let result = await serverMgr.requestFetchData("updatePaziente", {
+            nome: nome,
+            cognome: cognome,
+            city: city,
+            codiceFiscale: codiceFiscale,
+            dataNascita: dataNascita,
+            patologia: patologia,
+            medicine: medicine,
+            terapia: terapia,
+            note: note,
+            ID: ID
+            // statistiche: statistiche
+        })
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.deletePaziente = async (ID, cb) => {
+        let result = await serverMgr.requestFetchData("deletePaziente", {ID: ID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.getQuestionsList = async (doctor_UID, cb) => {
+        let result = await serverMgr.requestFetchData("getQuestionsList", {doctor_UID: doctor_UID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.addQuestion = async (doctor_UID, tipoGioco, categoria, domanda, rispCorrettaN1, rispCorrettaN2, rispCorrettaN3, rispCorrettaN4, rispSbagliataN1, rispSbagliataN2, rispSbagliataN3, rispSbagliataN4, cb) => {
+        let result = await serverMgr.requestFetchData("addQuestion", {
+            doctor_UID: doctor_UID,
+            tipoGioco: tipoGioco,
+            categoria: categoria,
+            domanda: domanda,
+            rispCorrettaN1: rispCorrettaN1,
+            rispCorrettaN2: rispCorrettaN2,
+            rispCorrettaN3: rispCorrettaN3,
+            rispCorrettaN4: rispCorrettaN4,
+            rispSbagliataN1: rispSbagliataN1,
+            rispSbagliataN2: rispSbagliataN2,
+            rispSbagliataN3: rispSbagliataN3,
+            rispSbagliataN4: rispSbagliataN4
+        })
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.updateQuestion = async (domanda, rispCorrettaN1, rispCorrettaN2, rispCorrettaN3, rispCorrettaN4, rispSbagliataN1, rispSbagliataN2, rispSbagliataN3, rispSbagliataN4, ID, cb) => {
+        let result = await serverMgr.requestFetchData("updateQuestion", {
+            domanda: domanda,
+            rispCorrettaN1: rispCorrettaN1,
+            rispCorrettaN2: rispCorrettaN2,
+            rispCorrettaN3: rispCorrettaN3,
+            rispCorrettaN4: rispCorrettaN4,
+            rispSbagliataN1: rispSbagliataN1,
+            rispSbagliataN2: rispSbagliataN2,
+            rispSbagliataN3: rispSbagliataN3,
+            rispSbagliataN4: rispSbagliataN4,
+            ID: ID
+        })
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.deleteQuestion = async (ID, cb) => {
+        let result = await serverMgr.requestFetchData("deleteQuestion", {ID: ID})
         if(cb) {
             // console.log("getInventory: " + result)
             cb(result)

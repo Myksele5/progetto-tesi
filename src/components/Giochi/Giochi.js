@@ -268,7 +268,7 @@ function Giochi(){
                 {showAddNewQuestion &&
                     <AddDomanda
                         chiudiFormNuovaDomanda={closeFormCreateNewQuestion}
-                        aggiornaDomande={game_ctx.aggiungiDomandaAllaLista}
+                        aggiungiDomanda={game_ctx.aggiungiDomandaAllaLista}
                         mostraModificaDomanda={formEditQuestion}
                     >
                     </AddDomanda>

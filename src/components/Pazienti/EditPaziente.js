@@ -129,12 +129,15 @@ function EditPaziente(props){
         const datiPazienteModificati = {
             nome: nomeModifica,
             cognome: cognomeModifica,
-            città: cittàModifica,
-            dataNascita: dateString,
-            // attività: props.attivitààà,
-            statistiche: props.statisticheee,
+            city: cittàModifica,
             codiceFiscale: CFModifica.toUpperCase(),
-            id: props.iddd
+            dataNascita: dateString,
+            patologia: patologiaModifica,
+            medicine: medicineModifica,
+            terapia: terapiaModifica,
+            note: noteParticolariModifica,
+            // statistiche: props.statisticheee,
+            ID: props.iddd
         };
 
         patients_ctx.modificaLista(datiPazienteModificati);

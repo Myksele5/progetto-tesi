@@ -10,14 +10,15 @@ function ElencoDomandeModificabili(props){
     const game_ctx = useContext(GameContext);
     const auth_ctx = useContext(AuthContext);
 
+    const [questionsList, setQuestionsList] = useState(game_ctx.domande);
     const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
     const [imagesList, setImagesList] = useState([]);
     const [classicQuizQuestions, setClassicQuizQuestions] = useState(game_ctx.domandeDeiQuiz);
     const [guessTheWordQuestions, setGuessTheWordQuestions] = useState(game_ctx.elencoParole);
     const [gameType, setGameType] = useState("QUIZ");
-    const [categoryFilter, setCategoryFilter] = useState("Storia");
     
     var categorie = game_ctx.recuperaCategorieDomande(gameType);
+    const [categoryFilter, setCategoryFilter] = useState(categorie[0]);
 
     useEffect(() => {
         getAllImages()
@@ -68,23 +69,6 @@ function ElencoDomandeModificabili(props){
                 console.error(err);
             });
         }
-        // .then((response) => {
-        //     // console.log(getDownloadURL(response.items[0]))
-        //     // console.log(response)
-        //     response.items.forEach((item) => {
-        //         console.log(item)
-        //         var imageName = item.name
-        //         getDownloadURL(item)
-        //         .then((url) => {
-        //             setImagesList((previous) => [...previous, {
-        //                 imageURL: url,
-        //                 name: imageName
-        //             }]);
-        //             // console.log(imagesList.name);
-        //         })
-        //     })    
-        // })
-        // image = await getDownloadURL(imagesList[0])
     }
 
     function getSingleImage(domandaSingola){
@@ -103,7 +87,7 @@ function ElencoDomandeModificabili(props){
     function recuperaTutteLeDomande(singleQuestion){
 
         // console.log(Object.keys(singleQuestion.rispCorrette).length);
-        if(singleQuestion.categoria === categoryFilter){
+        if(singleQuestion.tipoGioco === gameType && singleQuestion.categoria === categoryFilter){
             // console.log(singleQuestion.categoria);
             return(
                 <li className={styles.LIST_ITEM_STYLE}>
@@ -111,23 +95,24 @@ function ElencoDomandeModificabili(props){
                     {gameType === "QUIZ" &&
                         <div className={styles.flex_list_container}>
                             <h4 className={styles.subtitle_style}>Domanda:</h4>
-                            <p className={styles.question_style}>{singleQuestion.indovina}</p>
+                            <p className={styles.question_style}>{singleQuestion.domanda}</p>
                         </div>
                     }
 
                     {gameType === "QUIZ CON IMMAGINI" && 
                         <div className={styles.flex_list_container}>
                             <h4 className={styles.subtitle_style}>Immagine:</h4>
-                            <p className={styles.question_style}>{singleQuestion.rispCorrette.correct_answer_n1}</p>
-                            {/* {console.log(singleQuestion.indovina)} */}
+                            {/* <p className={styles.question_style}>{singleQuestion.rispCorrettaN1}</p> */}
                             <img className={styles.preview_image} src={getSingleImage(singleQuestion)}></img>
+                            <h4 className={styles.subtitle_style}>Domanda:</h4>
+                            <p className={styles.question_style}>{singleQuestion.domanda}</p>
                         </div>
                     }
 
                     {gameType === "COMPLETA LA PAROLA" &&
                         <div className={styles.flex_list_container}>
                             <h4 className={styles.subtitle_style}>Parola da indovinare:</h4>
-                            <p className={styles.question_style}>{singleQuestion.indovina}</p>
+                            <p className={styles.question_style}>{singleQuestion.domanda}</p>
                         </div>
                     }
                     
@@ -138,31 +123,31 @@ function ElencoDomandeModificabili(props){
                             <div className={styles.separa_corrette_sbagliate}>
                                 <span className={styles.buttons_space}>
                                     <p className={styles.subtitle_style}>CORRETTA</p>
-                                    <p className={styles.correct_answ}>{singleQuestion.rispCorrette.correct_answer_n1}</p>
+                                    <p className={styles.correct_answ}>{singleQuestion.rispCorrettaN1}</p>
 
-                                    {Object.keys(singleQuestion.rispCorrette).length > 1 && singleQuestion.rispCorrette.correct_answer_n2.length > 0 &&
-                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrette.correct_answer_n2.toString()}</p>
+                                    {singleQuestion.rispCorrettaN2.trim().length > 0 &&
+                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrettaN2.toString()}</p>
                                     }
-                                    {Object.keys(singleQuestion.rispCorrette).length > 2 && singleQuestion.rispCorrette.correct_answer_n3.length > 0 &&
-                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrette.correct_answer_n3.toString()}</p>
+                                    {singleQuestion.rispCorrettaN3.trim().length > 0 &&
+                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrettaN3.toString()}</p>
                                     }
-                                    {Object.keys(singleQuestion.rispCorrette).length > 3 && singleQuestion.rispCorrette.correct_answer_n4.length > 0 &&
-                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrette.correct_answer_n4.toString()}</p>
+                                    {singleQuestion.rispCorrettaN4.trim().length > 0 &&
+                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrettaN4.toString()}</p>
                                     }
                                 </span>
                                 
                                 <span className={styles.buttons_space}>
                                     <p className={styles.subtitle_style}>SBAGLIATE</p>
-                                    <p className={styles.wrong_answ}>{singleQuestion.rispSbagliate.wrong_answer_n1.toString()}</p>
+                                    <p className={styles.wrong_answ}>{singleQuestion.rispSbagliataN1}</p>
                                     
-                                    {Object.keys(singleQuestion.rispSbagliate).length > 1 && singleQuestion.rispSbagliate.wrong_answer_n2.length > 0 &&
-                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliate.wrong_answer_n2.toString()}</p>
+                                    {singleQuestion.rispSbagliataN2.trim().length > 0 &&
+                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliataN2.toString()}</p>
                                     }
-                                    {Object.keys(singleQuestion.rispSbagliate).length > 2 && singleQuestion.rispSbagliate.wrong_answer_n3.length > 0 &&
-                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliate.wrong_answer_n3.toString()}</p>
+                                    {singleQuestion.rispSbagliataN3.trim().length > 0 &&
+                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliataN3.toString()}</p>
                                     }
-                                    {Object.keys(singleQuestion.rispSbagliate).length > 3 && singleQuestion.rispSbagliate.wrong_answer_n4.length > 0 &&
-                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliate.wrong_answer_n4.toString()}</p>
+                                    {singleQuestion.rispSbagliataN4.trim().length > 0 &&
+                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliataN4.toString()}</p>
                                     }
 
                                 </span>
@@ -175,7 +160,7 @@ function ElencoDomandeModificabili(props){
                         <div className={styles.separa_corrette_sbagliate}>
                             <GenericButton
                                 onClick={() => {
-                                    props.modificaSingolaDomanda(gameType, singleQuestion);
+                                    props.modificaSingolaDomanda(singleQuestion);
                                 }}
                                 generic_button={true}
                                 buttonText={"Modifica domanda"}
@@ -183,7 +168,7 @@ function ElencoDomandeModificabili(props){
                             </GenericButton>
                             <GenericButton
                                 onClick={() => {
-                                    game_ctx.eliminaDomanda(gameType, singleQuestion.indovina);
+                                    game_ctx.eliminaDomanda(singleQuestion.ID);
                                 }}
                                 small_button={true}
                                 buttonText={"Elimina domanda"}
@@ -219,9 +204,11 @@ function ElencoDomandeModificabili(props){
                 </select>
             </div>
 
-            
+            <ul className={styles.wrapper_lista_domande}>
+                    {categoryFilter !== "" && questionsList.map(recuperaTutteLeDomande)}
+            </ul>
 
-            {gameType === "QUIZ" &&
+            {/* {gameType === "QUIZ" &&
                 <ul className={styles.wrapper_lista_domande}>
                     {categoryFilter !== "" && classicQuizQuestions.map(recuperaTutteLeDomande)}
                 </ul>
@@ -237,7 +224,7 @@ function ElencoDomandeModificabili(props){
                 <ul className={styles.wrapper_lista_domande}>
                     {categoryFilter !== "" && guessTheWordQuestions.map(recuperaTutteLeDomande)}
                 </ul>
-            }
+            } */}
             
         </div>
     );
