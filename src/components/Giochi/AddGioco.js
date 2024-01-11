@@ -8,6 +8,7 @@ import ElencoDomande from "./ElencoDomande";
 import AuthContext from "../../context/auth-context";
 
 var domande_nuovo_gioco = [];
+var categoriaGioco;
 
 function AddGioco(props){
     const [titoloGioco, setTitoloGioco] = useState("");
@@ -55,7 +56,7 @@ function AddGioco(props){
 
     function titoloGiocoChangeHandler(event){
         setTitoloGioco(event.target.value);
-        console.log(auth_ctx.tipoAccount)
+        // console.log(auth_ctx.tipoAccount)
     }
     function tipoGiocoChangeHandler(event){
         setTipologiaGioco(event.target.value);
@@ -70,19 +71,9 @@ function AddGioco(props){
         setNumeroRound(event.target.value);
     }
 
-    function creaOggettoDomande(domandeSelezionate){
-        if(tipologiaGioco === "QUIZ CON IMMAGINI"){
-            for(var i=0; i < domandeSelezionate.length; i++){
-                delete domandeSelezionate[i].indovina;
-            }
-        }
-        if(tipologiaGioco === "COMPLETA LA PAROLA"){
-            for(var i=0; i < domandeSelezionate.length; i++){
-                delete domandeSelezionate[i].rispCorrette;
-                delete domandeSelezionate[i].rispSbagliate;
-            }
-        }
-        domande_nuovo_gioco = domandeSelezionate;
+    function creaOggettoDomande(domandeSelezionate, categoriaGame){
+        domande_nuovo_gioco = JSON.stringify(domandeSelezionate);
+        categoriaGioco = categoriaGame;
 
         console.log("DOMANDE IN AddGioco.js DA SALVARE");
         console.log(domande_nuovo_gioco);
@@ -153,18 +144,20 @@ function AddGioco(props){
                     </>
                 }
                 
-                <ElencoDomande
-                    domandeNuovoGioco={creaOggettoDomande}
-                    tipoGioco={tipologiaGioco}
-                    // listaDomandeDaModificare={domande_nuovo_gioco}
-                >
-                </ElencoDomande>
+                {tipologiaGioco !== "RIFLESSI" && 
+                    <ElencoDomande
+                        domandeNuovoGioco={creaOggettoDomande}
+                        tipoGioco={tipologiaGioco}
+                        // listaDomandeDaModificare={domande_nuovo_gioco}
+                    >
+                    </ElencoDomande>
+                }
 
                 <div className={styles.wrapper_generico}>
                     <GenericButton
                     onClick={() => {
-                        {tipologiaGioco !== "RIFLESSI" && game_ctx.aggiungiGiocoAllaLista(titoloGioco, tipologiaGioco, livelloGioco, domande_nuovo_gioco)}
-                        {tipologiaGioco === "RIFLESSI" && game_ctx.aggiungiGiocoAllaLista(titoloGioco, tipologiaGioco, livelloGioco, numeroRound)}
+                        {tipologiaGioco !== "RIFLESSI" && game_ctx.aggiungiGiocoAllaLista(titoloGioco, tipologiaGioco, livelloGioco, categoriaGioco, domande_nuovo_gioco)}
+                        {tipologiaGioco === "RIFLESSI" && game_ctx.aggiungiGiocoAllaLista(titoloGioco, tipologiaGioco, livelloGioco, "REFLEXES_GAME", numeroRound)}
                         
                         domande_nuovo_gioco = [];
                         setNumeroRound(0);

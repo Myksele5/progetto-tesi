@@ -227,5 +227,66 @@ function initServerMgr(cb) {
         }
     }
 
+    serverMgr.getGamesList = async (creatorID, cb) => {
+        let result = await serverMgr.requestFetchData("getGamesList", {creatorID: creatorID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.addGame = async (creatorID, nomeGioco, tipoGioco, livelloGioco, categoriaGioco, domande, cb) => {
+        let result = await serverMgr.requestFetchData("addGame", {
+            creatorID: creatorID,
+            nomeGioco: nomeGioco,
+            tipoGioco: tipoGioco,
+            livelloGioco: livelloGioco,
+            categoriaGioco: categoriaGioco,
+            domande: domande
+        })
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.updateGame = async (nomeGioco, livelloGioco, categoriaGioco, domande, gameID, cb) => {
+        let result = await serverMgr.requestFetchData("updateGame", {
+            nomeGioco: nomeGioco,
+            livelloGioco: livelloGioco,
+            categoriaGioco: categoriaGioco,
+            domande: domande,
+            gameID: gameID
+        })
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.deleteGame = async (gameID, cb) => {
+        let result = await serverMgr.requestFetchData("deleteGame", {gameID: gameID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
     if (cb) cb();
 }

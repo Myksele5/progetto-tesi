@@ -5,34 +5,57 @@ import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import Card from "../UI/Card";
 import GameContext from "../../context/game-context";
 
-var counter_CORRETTE;
-var counter_SBAGLIATE;
+var counter_CORRETTE = 1;
+var counter_SBAGLIATE = 1;
 var file;
 
 function EditDomanda(props){
     const game_ctx = useContext(GameContext);
 
-    const [totalAnswers_CORRECT, setTotalAnswers_CORRECT] = useState(props.count_corrette);
-    const [totalAnswers_WRONG, setTotalAnswers_WRONG] = useState(props.count_sbagliate);
+    const [totalAnswers_CORRECT, setTotalAnswers_CORRECT] = useState(1);
+    const [totalAnswers_WRONG, setTotalAnswers_WRONG] = useState(1);
 
     const [imageFile, setImageFile] = useState(props.immagine);
     const [tipoGiocoModifica, setTipoGiocoModifica] = useState(props.tipoGioco);
     const [categoriaDomandaModifica, setCategoriaDomandaModifica] = useState(props.categoriaDomanda);
-    const [indovinaModifica, setIndovinaModifica] = useState(props.indovina);
-    const [ID, setID] = useState(props.id);
+    const [domandaModifica, setDomandaModifica] = useState(props.domanda);
+    const [ID, setID] = useState(props.ID);
 
-    const [rispCorretta_1Modifica, setRispCorretta_1Modifica] = useState(props.corrette.correct_answer_n1);
-    const [rispCorretta_2Modifica, setRispCorretta_2Modifica] = useState(props.corrette.correct_answer_n2);
-    const [rispCorretta_3Modifica, setRispCorretta_3Modifica] = useState(props.corrette.correct_answer_n3);
-    const [rispCorretta_4Modifica, setRispCorretta_4Modifica] = useState(props.corrette.correct_answer_n4);
-    const [rispSbagliata_1Modifica, setRispSbagliata_1Modifica] = useState(props.sbagliate.wrong_answer_n1);
-    const [rispSbagliata_2Modifica, setRispSbagliata_2Modifica] = useState(props.sbagliate.wrong_answer_n2);
-    const [rispSbagliata_3Modifica, setRispSbagliata_3Modifica] = useState(props.sbagliate.wrong_answer_n3);
-    const [rispSbagliata_4Modifica, setRispSbagliata_4Modifica] = useState(props.sbagliate.wrong_answer_n4);
+    const [rispCorretta_1Modifica, setRispCorretta_1Modifica] = useState(props.correttaN1);
+    const [rispCorretta_2Modifica, setRispCorretta_2Modifica] = useState(props.correttaN2);
+    const [rispCorretta_3Modifica, setRispCorretta_3Modifica] = useState(props.correttaN3);
+    const [rispCorretta_4Modifica, setRispCorretta_4Modifica] = useState(props.correttaN4);
+    const [rispSbagliata_1Modifica, setRispSbagliata_1Modifica] = useState(props.sbagliataN1);
+    const [rispSbagliata_2Modifica, setRispSbagliata_2Modifica] = useState(props.sbagliataN2);
+    const [rispSbagliata_3Modifica, setRispSbagliata_3Modifica] = useState(props.sbagliataN3);
+    const [rispSbagliata_4Modifica, setRispSbagliata_4Modifica] = useState(props.sbagliataN4);
 
     useEffect(() => {
-        counter_CORRETTE = props.count_corrette;
-        counter_SBAGLIATE = props.count_sbagliate;
+        counter_CORRETTE = 1;
+        counter_SBAGLIATE = 1;
+        if(rispCorretta_2Modifica.trim().length > 0){
+            counter_CORRETTE += 1;
+        }
+        if(rispCorretta_3Modifica.trim().length > 0){
+            counter_CORRETTE += 1;
+        }
+        if(rispCorretta_4Modifica.trim().length > 0){
+            counter_CORRETTE += 1;
+        }
+        if(rispSbagliata_2Modifica.trim().length > 0){
+            counter_SBAGLIATE += 1;
+        }
+        if(rispSbagliata_3Modifica.trim().length > 0){
+            counter_SBAGLIATE += 1;
+        }
+        if(rispSbagliata_4Modifica.trim().length > 0){
+            counter_SBAGLIATE += 1;
+        }
+
+        setTotalAnswers_CORRECT(counter_CORRETTE);
+        setTotalAnswers_WRONG(counter_SBAGLIATE);
+        // counter_CORRETTE = props.count_corrette;
+        // counter_SBAGLIATE = props.count_sbagliate;
     }, []);
 
     function imageFileChangeHandler(event){
@@ -45,8 +68,8 @@ function EditDomanda(props){
         // console.log(file);
     }
 
-    function indovinaChangeHandler(event){
-        setIndovinaModifica(event.target.value);
+    function domandaChangeHandler(event){
+        setDomandaModifica(event.target.value);
     }
 
     function rispostaCorretta_1_ChangeHandler(event){
@@ -109,87 +132,88 @@ function EditDomanda(props){
 
     function salvaDomanda(){
         var modified_question;
-        var risposteCORRETTE;
-        var risposteSBAGLIATE;
+        var correct_answers = {
+            correct_answer_n1: rispCorretta_1Modifica,
+        };
 
-        if(tipoGiocoModifica === "QUIZ" || tipoGiocoModifica === "QUIZ CON IMMAGINI"){
-            risposteCORRETTE = {
-                correct_answer_n1: rispCorretta_1Modifica
-            }
-            risposteSBAGLIATE = {
-                wrong_answer_n1: rispSbagliata_1Modifica
-            }
+        var wrong_answers = {
+            wrong_answer_n1: rispSbagliata_1Modifica,
+        };
 
-            if(rispCorretta_2Modifica !== undefined && totalAnswers_CORRECT === 2){
-                risposteCORRETTE = {
-                    correct_answer_n1: rispCorretta_1Modifica,
-                    correct_answer_n2: rispCorretta_2Modifica
-                }
-            }
-            if(rispCorretta_3Modifica !== undefined && totalAnswers_CORRECT === 3){
-                risposteCORRETTE = {
-                    correct_answer_n1: rispCorretta_1Modifica,
-                    correct_answer_n2: rispCorretta_2Modifica,
-                    correct_answer_n3: rispCorretta_3Modifica
-                }
-            }
-            if(rispCorretta_4Modifica !== undefined && totalAnswers_CORRECT === 4){
-                risposteCORRETTE = {
-                    correct_answer_n1: rispCorretta_1Modifica,
-                    correct_answer_n2: rispCorretta_2Modifica,
-                    correct_answer_n3: rispCorretta_3Modifica,
-                    correct_answer_n4: rispCorretta_4Modifica
-                }
-            }
-            if(rispSbagliata_2Modifica !== undefined && totalAnswers_WRONG === 2){
-                risposteSBAGLIATE = {
-                    wrong_answer_n1: rispSbagliata_1Modifica,
-                    wrong_answer_n2: rispSbagliata_2Modifica
-                }
-            }
-            if(rispSbagliata_3Modifica !== undefined && totalAnswers_WRONG === 3){
-                risposteSBAGLIATE = {
-                    wrong_answer_n1: rispSbagliata_1Modifica,
-                    wrong_answer_n2: rispSbagliata_2Modifica,
-                    wrong_answer_n3: rispSbagliata_3Modifica
-                }
-            }
-            if(rispSbagliata_4Modifica !== undefined && totalAnswers_WRONG === 4){
-                risposteSBAGLIATE = {
-                    wrong_answer_n1: rispSbagliata_1Modifica,
-                    wrong_answer_n2: rispSbagliata_2Modifica,
-                    wrong_answer_n3: rispSbagliata_3Modifica,
-                    wrong_answer_n4: rispSbagliata_4Modifica,
-                }
-            }
-            if(imageFile !== props.immagine){
-                modified_question = {
-                    categoria: categoriaDomandaModifica,
-                    indovina: indovinaModifica,
-                    fileXstorage: file,
-                    rispCorrette: risposteCORRETTE,
-                    rispSbagliate: risposteSBAGLIATE
-                }
-            }else{
-                modified_question = {
-                    categoria: categoriaDomandaModifica,
-                    indovina: indovinaModifica,
-                    rispCorrette: risposteCORRETTE,
-                    rispSbagliate: risposteSBAGLIATE
-                }   
-            }
+        if(rispCorretta_2Modifica.trim().length > 0){
+            correct_answers["correct_answer_n2"] = rispCorretta_2Modifica;
+        }
+        else{
+            correct_answers["correct_answer_n2"] = "";
+        }
+        if(rispCorretta_3Modifica.trim().length > 0){
+            correct_answers["correct_answer_n3"] = rispCorretta_3Modifica;
+        }
+        else{
+            correct_answers["correct_answer_n3"] = "";
+        }
+        if(rispCorretta_4Modifica.trim().length > 0){
+            correct_answers["correct_answer_n4"] = rispCorretta_4Modifica;
+        }
+        else{
+            correct_answers["correct_answer_n4"] = "";
+        }
 
-            
+        if(rispSbagliata_2Modifica.trim().length > 0){
+            wrong_answers["wrong_answer_n2"] = rispSbagliata_2Modifica;
+        }
+        else{
+            wrong_answers["wrong_answer_n2"] = "";
+        }
+        if(rispSbagliata_3Modifica.trim().length > 0){
+            wrong_answers["wrong_answer_n3"] = rispSbagliata_3Modifica;
+        }
+        else{
+            wrong_answers["wrong_answer_n3"] = "";
+        }
+        if(rispSbagliata_4Modifica.trim().length > 0){
+            wrong_answers["wrong_answer_n4"] = rispSbagliata_4Modifica;
+        }
+        else{
+            wrong_answers["wrong_answer_n4"] = "";
+        }
+
+        if(tipoGiocoModifica === "QUIZ"){
+            modified_question = {
+                domanda: domandaModifica,
+                rispCorrette: correct_answers,
+                rispSbagliate: wrong_answers,
+                ID: ID
+            }
+        }
+
+        if(tipoGiocoModifica === "QUIZ CON IMMAGINI"){
+            modified_question = {
+                domanda: domandaModifica,
+                rispCorrette: correct_answers,
+                rispSbagliate: wrong_answers,
+                ID: ID
+            }
+            // new_question = {
+            //     livelloDomanda: "facile",
+            //     categoria: categoryQuestion,
+            //     // indovina: indovina,
+            //     fileXstorage: file,
+            //     rispCorrette: correct_answers,
+            //     rispSbagliate: wrong_answers
+            // }
         }
 
         if(tipoGiocoModifica === "COMPLETA LA PAROLA"){
             modified_question = {
-                categoria: categoriaDomandaModifica,
-                indovina: indovinaModifica.toUpperCase()
+                domanda: domandaModifica.toUpperCase(),
+                rispCorrette: correct_answers,
+                rispSbagliate: wrong_answers,
+                ID: ID
             }
         }
 
-        game_ctx.salvaDomandaModificata(tipoGiocoModifica, modified_question, ID);
+        game_ctx.salvaDomandaModificata(modified_question, ID);
         props.chiudiFormModificaDomanda();
     }
 
@@ -216,7 +240,7 @@ function EditDomanda(props){
                     {tipoGiocoModifica === "QUIZ" && 
                         <>
                             <label className={styles.label_style}>Domanda: </label>
-                            <input className={styles.textbox_style} type="text" value={indovinaModifica} onChange={indovinaChangeHandler}></input>
+                            <input className={styles.textbox_style} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
                         </>
                     }
 
@@ -225,13 +249,15 @@ function EditDomanda(props){
                             <label className={styles.label_style}>Immagine: </label>
                             <input type="file" accept="image/*" onChange={imageFileChangeHandler}></input>
                             <img className={styles.preview_image} src={imageFile}></img>
+                            <label className={styles.label_style}>Domanda: </label>
+                            <input className={styles.textbox_style} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
                         </>
                     }
 
                     {tipoGiocoModifica === "COMPLETA LA PAROLA" && 
                         <>
                             <label className={styles.label_style}>Parola da indovinare: </label>
-                            <input className={styles.textbox_style} type="text" value={indovinaModifica} onChange={indovinaChangeHandler}></input>
+                            <input className={styles.textbox_style} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
                         </>
                     }
 

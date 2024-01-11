@@ -10,10 +10,11 @@ import { getServerMgr } from "../../backend_conn/ServerMgr";
 
 function RegistrationForm(props){
     // const listaUtentiReference = doc(db, "listaUtenti")
-    var emailEsistente = false;
+    var emailEsistente = null;
     const [registrEffettuata, setRegistrEffettuata] = useState(null);
 
     const [titolo, setTitolo] = useState("Dottore");
+    let titoloID;
 
     const [validNome, setValidNome] = useState(true);
     const [nome, setNome] = useState("");
@@ -33,10 +34,10 @@ function RegistrationForm(props){
 
         switch(titolo){
             case "Dottore":
-                setTitolo(1);
+                titoloID = 1;
                 break;
             case "Dottoressa":
-                setTitolo(2);
+                titoloID = 2;
                 break;
             default:
                 break;
@@ -68,7 +69,7 @@ function RegistrationForm(props){
                 }
                 if(!emailEsistente){
                     let result2;
-                    result2 = await getServerMgr().addAccount(nome, cognome, titolo, email, password)
+                    result2 = await getServerMgr().addAccount(nome, cognome, titoloID, email, password)
                     .then(setRegistrEffettuata(true))
                     .catch((err) => {
                         console.error(err);
@@ -78,7 +79,7 @@ function RegistrationForm(props){
             }
             else{
                 let result2;
-                result2 = await getServerMgr().addAccount(nome, cognome, titolo, email, password)
+                result2 = await getServerMgr().addAccount(nome, cognome, titoloID, email, password)
                 .then(setRegistrEffettuata(true))
                 .catch((err) => {
                     console.error(err);
@@ -93,6 +94,7 @@ function RegistrationForm(props){
         setValidPassword(true);
         setValidNome(true);
         setValidCognome(true);
+        emailEsistente = null;
     }, [nome,cognome,email,password,titolo]);
 
     const goToLoginForm = () => {
@@ -150,8 +152,8 @@ function RegistrationForm(props){
                 <label className={`${styles.label_box} ${!validCognome ? styles.invalid : ''}`}>Cognome</label>
                 <input className={`${styles.input_box} ${!validCognome ? styles.invalid : ''}`} type="text" placeholder="Inserisci cognome" value={cognome} onChange={cognomeChangeHandler}></input>
                 
-                {/* {registrEffettuata !== null && registrEffettuata && <h2>Registrazione effettuata!</h2>}
-                {registrEffettuata !== null && !registrEffettuata && <h2>Email già registrata al sito. Prova con un'altra</h2>} */}
+                {emailEsistente !== null && !emailEsistente && <h2>Registrazione effettuata!</h2>}
+                {/* {emailEsistente !== null && emailEsistente && <h2>Email già registrata al sito. Prova con un'altra</h2>} */}
 
                 <GenericButton
                     type="submit"

@@ -160,7 +160,7 @@ function ElencoDomandeModificabili(props){
                         <div className={styles.separa_corrette_sbagliate}>
                             <GenericButton
                                 onClick={() => {
-                                    props.modificaSingolaDomanda(singleQuestion);
+                                    props.modificaSingolaDomanda(gameType, singleQuestion, singleQuestion.ID);
                                 }}
                                 generic_button={true}
                                 buttonText={"Modifica domanda"}

@@ -13,10 +13,10 @@ function ElencoDomande(props){
 
     const [questionsList, setQuestionsList] = useState(game_ctx.domande);
     const [categoryFilter, setCategoryFilter] = useState(props.categoria);
-    const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
+    // const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
     const [imagesList, setImagesList] = useState([]);
-    const [classicQuizQuestions, setClassicQuizQuestions] = useState(game_ctx.domandeDeiQuiz);
-    const [guessTheWordQuestions, setGuessTheWordQuestions] = useState(game_ctx.elencoParole);
+    // const [classicQuizQuestions, setClassicQuizQuestions] = useState(game_ctx.domandeDeiQuiz);
+    // const [guessTheWordQuestions, setGuessTheWordQuestions] = useState(game_ctx.elencoParole);
     const [llll, setllll] = useState([...game_ctx.domandeDaModificare]);
     const [numeroDomandeSelezionate, setNumeroDomandeSelezionate] = useState(0);
 
@@ -96,16 +96,16 @@ function ElencoDomande(props){
             COUNT_DOMANDE++;
             llll.unshift({
                 ID: domanda.ID,
-                categoria: domanda.categoria,
-                domanda: domanda.domanda,
-                rispCorrettaN1: domanda.rispCorrettaN1,
-                rispCorrettaN2: domanda.rispCorrettaN2,
-                rispCorrettaN3: domanda.rispCorrettaN3,
-                rispCorrettaN4: domanda.rispCorrettaN4,
-                rispSbagliataN1: domanda.rispSbagliataN1,
-                rispSbagliataN2: domanda.rispSbagliataN2,
-                rispSbagliataN3: domanda.rispSbagliataN3,
-                rispSbagliataN4: domanda.rispSbagliataN4
+                // categoria: domanda.categoria,
+                // domanda: domanda.domanda,
+                // rispCorrettaN1: domanda.rispCorrettaN1,
+                // rispCorrettaN2: domanda.rispCorrettaN2,
+                // rispCorrettaN3: domanda.rispCorrettaN3,
+                // rispCorrettaN4: domanda.rispCorrettaN4,
+                // rispSbagliataN1: domanda.rispSbagliataN1,
+                // rispSbagliataN2: domanda.rispSbagliataN2,
+                // rispSbagliataN3: domanda.rispSbagliataN3,
+                // rispSbagliataN4: domanda.rispSbagliataN4
             });
         }
         else{
@@ -122,7 +122,7 @@ function ElencoDomande(props){
         // console.log(llll.question);
         console.log(llll);
         setNumeroDomandeSelezionate(COUNT_DOMANDE);
-        props.domandeNuovoGioco(llll);
+        props.domandeNuovoGioco(llll, categoryFilter);
     }
 
     function mappaCategorie(categoria){

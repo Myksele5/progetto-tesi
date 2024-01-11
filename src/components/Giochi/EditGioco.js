@@ -20,6 +20,7 @@ function EditGioco(props){
 
     const game_ctx = useContext(GameContext);
 
+    var giocoID = props.gameID;
     var categoriaFiltro = props.categoria;
 
     function highlightDifficulty(livelloGiocoModifica){
@@ -83,18 +84,7 @@ function EditGioco(props){
     }
 
     function modificaOggettoDomande(domandeSelezionate){
-        if(tipoGiocoModifica === "QUIZ CON IMMAGINI"){
-            for(var i=0; i < domandeSelezionate.length; i++){
-                delete domandeSelezionate[i].indovina;
-            }
-        }
-        if(tipoGiocoModifica === "COMPLETA LA PAROLA"){
-            for(var i=0; i < domandeSelezionate.length; i++){
-                delete domandeSelezionate[i].rispCorrette;
-                delete domandeSelezionate[i].rispSbagliate;
-            }
-        }
-        domande_gioco_da_modificare = domandeSelezionate;
+        domande_gioco_da_modificare = JSON.stringify(domandeSelezionate);
 
         console.log("DOMANDE IN EditGioco.js DA SALVARE");
         console.log(domandeSelezionate);
@@ -156,18 +146,20 @@ function EditGioco(props){
                     </>
                 }
 
-                <ElencoDomande
-                    domandeNuovoGioco={modificaOggettoDomande}
-                    tipoGioco={tipoGiocoModifica}
-                    categoria={categoriaFiltro}
-                >
-                </ElencoDomande>
+                {tipoGiocoModifica !== "RIFLESSI" && 
+                    <ElencoDomande
+                        domandeNuovoGioco={modificaOggettoDomande}
+                        tipoGioco={tipoGiocoModifica}
+                        categoria={categoriaFiltro}
+                    >
+                    </ElencoDomande>
+                }
 
                 <div className={styles.wrapper_generico}>
                     <GenericButton
                         onClick={() => {
-                            {tipoGiocoModifica !== "RIFLESSI" && game_ctx.salvaGiocoModificato(nomeGiocoModifica, tipoGiocoModifica, livelloGiocoModifica, props.codiceGioco, domande_gioco_da_modificare)}
-                            {tipoGiocoModifica === "RIFLESSI" && game_ctx.salvaGiocoModificato(nomeGiocoModifica, tipoGiocoModifica, livelloGiocoModifica, props.codiceGioco, numeroRoundModifica)}
+                            {tipoGiocoModifica !== "RIFLESSI" && game_ctx.salvaGiocoModificato(nomeGiocoModifica, livelloGiocoModifica, categoriaFiltro, domande_gioco_da_modificare, giocoID)}
+                            {tipoGiocoModifica === "RIFLESSI" && game_ctx.salvaGiocoModificato(nomeGiocoModifica, livelloGiocoModifica, "REFLEXES_GAME", numeroRoundModifica, giocoID)}
  
                             props.chiudiFormModifica();
                         }}

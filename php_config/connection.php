@@ -52,6 +52,18 @@
     case "deleteQuestion":
         $query_result = deleteQuestion($conn);
         break;
+    case "getGamesList":
+        $query_result = getGamesList($conn);
+        break;
+    case "addGame":
+        $query_result = addGame($conn);
+        break;
+    case "updateGame":
+        $query_result = updateGame($conn);
+        break;
+    case "deleteGame":
+        $query_result = deleteGame($conn);
+        break;
     default:
     	break;
 	}
@@ -302,16 +314,16 @@
         $rispSbagliataN4 = $dataJson["rispSbagliataN4"];
         $ID = $dataJson["ID"];
         
-        $insertNewQuestion = $i_conn->prepare(
+        $updateQuestion = $i_conn->prepare(
             "UPDATE `gamesQuestions` SET `domanda` = ?, `rispCorrettaN1` = ?, `rispCorrettaN2` = ?, `rispCorrettaN3` = ?, `rispCorrettaN4` = ?,
              `rispSbagliataN1` = ?, `rispSbagliataN2` = ?, `rispSbagliataN3` = ?, `rispSbagliataN4` = ?
             WHERE `gamesQuestions`.`ID` = ?"
         );
-        $insertNewQuestion->bind_param("sssssssssi", $domanda, $rispCorrettaN1, $rispCorrettaN2, $rispCorrettaN3, $rispCorrettaN4,
+        $updateQuestion->bind_param("sssssssssi", $domanda, $rispCorrettaN1, $rispCorrettaN2, $rispCorrettaN3, $rispCorrettaN4,
                                         $rispSbagliataN1, $rispSbagliataN2, $rispSbagliataN3, $rispSbagliataN4, $ID);
-        $insertNewQuestion->execute();
+        $updateQuestion->execute();
         
-        $insertNewQuestion->bind_result($result);
+        $updateQuestion->bind_result($result);
         return $result;
     }
 
@@ -326,6 +338,73 @@
         $deleteQuestion->execute();
         
         $deleteQuestion->bind_result($result);
+        return $result;
+    }
+
+    function getGamesList($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $creatorID = $dataJson["creatorID"];
+        
+        $retrieveGamesList = $i_conn->prepare("SELECT * FROM `games` WHERE creatorID = ?");
+        $retrieveGamesList->bind_param("i", $creatorID);
+        
+        $retrieveGamesList->execute();
+        $result = $retrieveGamesList->get_result();
+        return $result;
+    }
+
+    function addGame($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $creatorID = $dataJson["creatorID"];
+        $nomeGioco = $dataJson["nomeGioco"];
+        $tipoGioco = $dataJson["tipoGioco"];
+        $livelloGioco = $dataJson["livelloGioco"];
+        $categoriaGioco = $dataJson["categoriaGioco"];
+        $domande = $dataJson["domande"];
+        
+        $insertNewGame = $i_conn->prepare(
+            "INSERT INTO `games` (`creatorID`, `nomeGioco`, `tipoGioco`, `livelloGioco`, `categoriaGioco`, `domande`) VALUES (?, ?, ?, ?, ?, ?)"
+        );
+        $insertNewGame->bind_param("isssss", $creatorID, $nomeGioco, $tipoGioco, $livelloGioco, $categoriaGioco, $domande);
+        $insertNewGame->execute();
+        
+        $insertNewGame->bind_result($result);
+        return $result;
+    }
+
+    function updateGame($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $nomeGioco = $dataJson["nomeGioco"];
+        $livelloGioco = $dataJson["livelloGioco"];
+        $categoriaGioco = $dataJson["categoriaGioco"];
+        $domande = $dataJson["domande"];
+        $gameID = $dataJson["gameID"];
+        
+        $updateGame = $i_conn->prepare("UPDATE `games` SET `nomeGioco` = ?, `livelloGioco` = ?, `categoriaGioco` = ?, `domande` = ? WHERE `games`.`gameID` = ?");
+        $updateGame->bind_param("ssssi", $nomeGioco, $livelloGioco, $categoriaGioco, $domande, $gameID);
+        $updateGame->execute();
+        
+        $updateGame->bind_result($result);
+        return $result;
+    }
+
+    function deleteGame($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $gameID = $dataJson["gameID"];
+        
+        $deleteGame = $i_conn->prepare("DELETE FROM `games` WHERE `games`.`gameID` = ?");
+        $deleteGame->bind_param("i", $gameID);
+        $deleteGame->execute();
+        
+        $deleteGame->bind_result($result);
         return $result;
     }
     

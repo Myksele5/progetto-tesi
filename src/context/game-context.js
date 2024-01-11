@@ -51,59 +51,34 @@ export function GameContextProvider(props){
     }, [])
 
     async function getAllGamesQuestions(){
-        let result;
+        let resultQuestions;
+        let resultGames;
 
-        result = await getServerMgr().getQuestionsList(auth_ctx.utenteLoggatoUID)
+        resultQuestions = await getServerMgr().getQuestionsList(auth_ctx.utenteLoggatoUID)
         .catch((err) => {
             console.error(err)
         });
 
-        if(result !== null){
-            setElencoDomande(result);
-            console.log(result);
+        if(resultQuestions !== null){
+            setElencoDomande(resultQuestions);
+            console.log(resultQuestions);
         }
         else{
             setElencoDomande([]);
         }
 
-        // const domandeQuiz = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-quiz`);
-        // const domandeQuizImmagini = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-quiz-immagini`);
-        // const domandeCLP = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-c.l.p.`);
-        const giochiDB = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `giochi`);
+        resultGames = await getServerMgr().getGamesList(auth_ctx.utenteLoggatoUID)
+        .catch((err) => {
+            console.error(err)
+        });
 
-        // const docsDomandeQuiz = await getDocs(domandeQuiz);
-        // const docsDomandeQuizImmagini = await getDocs(domandeQuizImmagini);
-        // const docsDomandeCLP = await getDocs(domandeCLP);
-        const docsGiochi = await getDocs(giochiDB);
-
-        // const listaDomandeQuiz = docsDomandeQuiz.docs.map((domanda) => ({
-        //     ...domanda.data(),
-        //     id: domanda.id
-        // }))
-        // console.log(listaDomandeQuiz);
-
-        // const listaDomandeQuizImmagini = docsDomandeQuizImmagini.docs.map((domanda) => ({
-        //     ...domanda.data(),
-        //     id: domanda.id
-        // }))
-        // console.log(listaDomandeQuizImmagini);
-
-        // const listaDomandeCLP = docsDomandeCLP.docs.map((domanda) => ({
-        //     ...domanda.data(),
-        //     id: domanda.id
-        // }))
-        // console.log(listaDomandeCLP);
-
-        const listaGiochi = docsGiochi.docs.map((gioco) => ({
-            ...gioco.data(),
-            id: gioco.id
-        }))
-        console.log(listaGiochi);
-
-        // setElencoDomandeQuiz(listaDomandeQuiz);
-        // setElencoDomandeQuizImmagini(listaDomandeQuizImmagini);
-        // setElencoParoleDaCompletare(listaDomandeCLP);
-        setElencoGiochi(listaGiochi);
+        if(resultGames !== null){
+            setElencoGiochi(resultGames);
+            console.log(resultGames);
+        }
+        else{
+            setElencoGiochi([]);
+        }
     }
 
     function salvaRisultati(risposteUtente, domandeTotali, pazienteDaAggiornare){
@@ -122,37 +97,15 @@ export function GameContextProvider(props){
         setDomandeModifica([]);
     }
 
-    async function addNewGameToList(name, type, level, questionsList){
-        if(type === "RIFLESSI"){
-            var new_game = {
-                nomeGioco: name,
-                tipoGioco: type,
-                livelloGioco: level,
-                numeroRound: questionsList
-            }
-        }
-        else{
-            var new_game = {
-                nomeGioco: name,
-                tipoGioco: type,
-                livelloGioco: level,
-                domandeGioco: [...questionsList]
-            }
-        }
+    async function addNewGameToList(name, type, level, category, questionsList){
+        let result;
 
-        const listaGiochiReference = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `giochi`)
-        try {
-            await addDoc(listaGiochiReference, new_game)
-        } catch (err) {
+        result = await getServerMgr().addGame(auth_ctx.utenteLoggatoUID, name, type, level, category, questionsList)
+        .catch((err) => {
             console.error(err)
-        }
-        
-        setElencoGiochi(vecchioElenco => {
-            return [new_game, ...vecchioElenco]
         });
 
-        // console.log("CODICE DEL GIOCO APPENA CREATO---> " + counter_CODICE_GIOCO);
-        // counter_CODICE_GIOCO++;
+        getAllGamesQuestions();
     }
 
     async function addNewQuestionToList(nuova_domanda){
@@ -197,80 +150,34 @@ export function GameContextProvider(props){
 
         elenco_categorie = elenco_temporaneo.filter(uniqueCategories);
 
-        // if(tipoGioco === "QUIZ"){
-        //     for(var i=0; i < elencoDomande.length; i++){
-        //         ULTIMA_CATEGORIA_AGGIUNTA = elencoDomandeQuiz[i].categoria;
-        //         elenco_temporaneo.unshift(ULTIMA_CATEGORIA_AGGIUNTA);
-        //     }
-        //     elenco_categorie = elenco_temporaneo.filter(uniqueCategories);
-        // }
-
-        // if(tipoGioco === "QUIZ CON IMMAGINI"){
-        //     for(var j=0; j < elencoDomandeQuizImmagini.length; j++){
-        //         ULTIMA_CATEGORIA_AGGIUNTA = elencoDomandeQuizImmagini[j].categoria;
-        //         elenco_temporaneo.unshift(ULTIMA_CATEGORIA_AGGIUNTA);
-        //     }
-        //     elenco_categorie = elenco_temporaneo.filter(uniqueCategories);
-        // }
-
-        // if(tipoGioco === "COMPLETA LA PAROLA"){
-        //     for(var x=0; x < elencoParoleDaCompletare.length; x++){
-        //         ULTIMA_CATEGORIA_AGGIUNTA = elencoParoleDaCompletare[x].categoria;
-        //         elenco_temporaneo.unshift(ULTIMA_CATEGORIA_AGGIUNTA);
-        //     }
-        //     elenco_categorie = elenco_temporaneo.filter(uniqueCategories);
-        // }
-
-        // console.log(elenco_categorie);
         return elenco_categorie;
     }
 
     function editGame(listaa){
+        let domandeParsate = JSON.parse(listaa.domande);
+        console.log(domandeParsate);
+
         if(listaa.tipoGioco !== "RIFLESSI"){
-            setDomandeModifica(listaa.domandeGioco);
+            setDomandeModifica(domandeParsate);
         }
         else{
             setDomandeModifica([listaa.numeroRound]);
         }
     }
 
-    async function addModifiedGameToList(name, type, level, gameID, questionsList){
+    async function addModifiedGameToList(name, level, category, questionsList, gameID){
         console.log("POCO PRIMA DI SALVARE");
         console.log(questionsList);
 
-        if(type === "RIFLESSI"){
-            var modified_game = {
-                nomeGioco: name,
-                tipoGioco: type,
-                livelloGioco: level,
-                // codiceGioco: gameID,
-                numeroRound: questionsList
-            }
-        }
-        else{
-            var modified_game = {
-                nomeGioco: name,
-                tipoGioco: type,
-                livelloGioco: level,
-                // codiceGioco: gameID,
-                domandeGioco: questionsList
-            }
-        }
+        let result;
 
-        for(let i=0; i < elencoGiochi.length; i++){
-            console.log("QUANTI GIOCHI CI SONO? --->" + elencoGiochi.length);
-            if(gameID === elencoGiochi[i].id){
-                const giocoReference = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `giochi`, `${elencoGiochi[i].id}`);
-                await updateDoc(giocoReference, modified_game)
-                .catch((err) => {
-                    console.error(err)
-                })
-                // elencoGiochi[i] = modified_game;
-                // setElencoGiochi(elencoGiochi);
-            }
-        }
+        result = await getServerMgr().updateGame(name, level, category, questionsList, gameID)
+        .catch((err) => {
+            console.error(err)
+        });
+
         getAllGamesQuestions();
-        console.log("CODICE DEL GIOCO MODIFICATO---> " + gameID);
+        // console.log("CODICE DEL GIOCO MODIFICATO---> " + gameID);
     }
 
     function modalDeleteGame(gameID){
@@ -290,21 +197,13 @@ export function GameContextProvider(props){
     }
 
     async function deleteGame(gameID){
-        for(let i=0; i < elencoGiochi.length; i++){
-            console.log("CERCO IL GIOCO");
-            if(gameID === elencoGiochi[i].id){
-                const giocoReference = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `giochi`, `${gameID}`);
-                await deleteDoc(giocoReference)
-                .catch((err) => {
-                    console.error(err);
-                });
+        let result;
 
-                console.log("GIOCO DA ELIMINARE TROVATO");
-                // elencoGiochi.splice(i, 1);
-                
-                break;
-            }
-        }
+        result = await getServerMgr().deleteGame(gameID)
+        .catch((err) => {
+            console.error(err)
+        });
+
         getAllGamesQuestions();
     }
 
@@ -332,141 +231,17 @@ export function GameContextProvider(props){
             console.error(err)
         });
 
-        // if(tipoGioco === "QUIZ"){
-
-        //     for(var i=0; i < elencoDomandeQuiz.length; i++){
-        //         if(indovina === elencoDomandeQuiz[i].indovina){
-        //             var id = elencoDomandeQuiz[i].id;
-        //             const giocoDoc = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-quiz`, id);
-        //             await deleteDoc(giocoDoc)
-        //             .catch((err) => {console.error(err)});
-
-        //             elencoDomandeQuiz.splice(i, 1);
-        //             break;
-        //         }
-        //     }
-        //     // setElencoDomandeQuiz(elencoDomandeQuiz);
-        // }
-
-        // if(tipoGioco === "QUIZ CON IMMAGINI"){
-        //     for(var i=0; i < elencoDomandeQuizImmagini.length; i++){
-        //         if(indovina === elencoDomandeQuizImmagini[i].indovina){
-        //             var id = elencoDomandeQuizImmagini[i].id;
-        //             const giocoDoc = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-quiz-immagini`, id);
-        //             await deleteDoc(giocoDoc)
-        //             .catch((err) => {console.error(err)});
-
-        //             const listaImmaginiQuizRef= ref(storage, `${auth_ctx.utenteLoggato}/${id}`);
-        //             await deleteObject(listaImmaginiQuizRef)
-        //             .then(() => {alert("Immagine cancellata.")})
-        //             .catch((err) => {console.error(err)});
-
-        //             // elencoDomandeQuizImmagini.splice(i, 1);
-        //             break;
-        //         }
-        //     }
-        //     // setElencoDomandeQuizImmagini(elencoDomandeQuizImmagini);
-        // }
-
-        // if(tipoGioco === "COMPLETA LA PAROLA"){
-        //     for(var i=0; i < elencoParoleDaCompletare.length; i++){
-        //         if(indovina === elencoParoleDaCompletare[i].indovina){
-        //             // elencoParoleDaCompletare.splice(i, 1);
-        //             var id = elencoParoleDaCompletare[i].id;
-        //             const giocoDoc = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-c.l.p.`, id);
-        //             await deleteDoc(giocoDoc)
-        //             .catch((err) => {console.error(err)});
-
-        //             // elencoParoleDaCompletare.splice(i, 1);
-        //             break;
-        //         }
-        //     }
-        //     // setElencoParoleDaCompletare(elencoParoleDaCompletare);
-        // }
         getAllGamesQuestions();
     }
 
-    async function addModifiedQuestionToList(tipoGioco, domandaModificata, ID){
-        if(tipoGioco === "QUIZ"){
-            delete domandaModificata.fileXstorage;
-            delete domandaModificata.fileXstorageDACANCELLARE;
-            delete domandaModificata.indovinaDACANCELLARE;
+    async function addModifiedQuestionToList(domandaModificata, ID){
+        let result;
 
-            for(var i=0; i < elencoDomandeQuiz.length; i++){
-            //QUESTO CONTROLLO NON FUNZIONA BISOGNA INSERIRE UN ID UNICO---> si risolve con FIREBASE
-                if(ID === elencoDomandeQuiz[i].id){
-                    console.log("TROVATA DOMANDA DA MODIFICARE");
-                    const giocoDoc = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-quiz`, ID);
-                    await updateDoc(giocoDoc, domandaModificata)
-                    .then(() => {alert("Domanda modificata!")})
-                    .catch((err) => {console.error(err)});
-
-                    // elencoDomandeQuiz[i] = domandaModificata;
-                    // setElencoDomandeQuiz(elencoDomandeQuiz);
-                }
-            }
-            // getAllGamesQuestions();
-        }
-        if(tipoGioco === "QUIZ CON IMMAGINI"){
-            delete domandaModificata.indovina;
-
-            for(var j=0; j < elencoDomandeQuizImmagini.length; j++){
-
-            //QUESTO CONTROLLO NON FUNZIONA BISOGNA INSERIRE UN ID UNICO---> si risolve con FIREBASE
-                if(ID === elencoDomandeQuizImmagini[j].id){
-                    console.log("TROVATA DOMANDA DA MODIFICARE");
-                    var image = null;
-
-                    if(Object.hasOwn(domandaModificata, 'fileXstorage')){
-                        image = domandaModificata.fileXstorage;
-                    }
-                    delete domandaModificata.fileXstorage;
-
-                    const giocoDoc = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-quiz-immagini`, ID);
-                    await updateDoc(giocoDoc, domandaModificata)
-                    .then(() => {alert("Domanda modificata!")})
-                    .catch((err) => {console.error(err)});
-                    
-                    
-                    if(image !== null){
-                        const listaImmaginiStorage = ref(storage, `${auth_ctx.utenteLoggato}/${ID}`);
-                        await uploadBytes(listaImmaginiStorage, image)
-                        .then(() => {
-                            alert("Immagine salvata!");
-                        })
-                        .catch((err) => {
-                            console.error(err)
-                        });
-                    }
-
-                    // elencoDomandeQuizImmagini[j] = domandaModificata;
-                    // setElencoDomandeQuizImmagini(elencoDomandeQuizImmagini);
-                    // setElencoDomandeQuizImmagini(vecchioElenco => {
-                    //     return [nuova_domanda, ...vecchioElenco]
-                    // });
-                }
-            }
-            // getAllGamesQuestions();
-        }
-        
-
-        if(tipoGioco === "COMPLETA LA PAROLA"){
-            for(var x=0; x < elencoParoleDaCompletare.length; x++){
-                
-                //QUESTO CONTROLLO NON FUNZIONA BISOGNA INSERIRE UN ID UNICO---> si risolve con FIREBASE
-                if(ID === elencoParoleDaCompletare[x].id){
-                    console.log("TROVATA DOMANDA DA MODIFICARE");
-                    const giocoDoc = doc(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-c.l.p.`, ID);
-                    await updateDoc(giocoDoc, domandaModificata)
-                    .then(() => {alert("Domanda modificata!")})
-                    .catch((err) => {console.error(err)});
-                    
-                    // elencoParoleDaCompletare[x] = domandaModificata;
-                    // setElencoDomandeQuizImmagini(elencoParoleDaCompletare);
-                }
-            }
-            // getAllGamesQuestions();
-        }
+        result = await getServerMgr().updateQuestion(
+            domandaModificata.domanda, domandaModificata.rispCorrette.correct_answer_n1, domandaModificata.rispCorrette.correct_answer_n2, 
+            domandaModificata.rispCorrette.correct_answer_n3, domandaModificata.rispCorrette.correct_answer_n4, domandaModificata.rispSbagliate.wrong_answer_n1,
+            domandaModificata.rispSbagliate.wrong_answer_n2, domandaModificata.rispSbagliate.wrong_answer_n3, domandaModificata.rispSbagliate.wrong_answer_n4, ID
+        )
         getAllGamesQuestions();
     }
 

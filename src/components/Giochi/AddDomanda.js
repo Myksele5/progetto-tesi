@@ -196,8 +196,8 @@ function AddDomanda(props){
         props.chiudiFormNuovaDomanda();
     }
 
-    function mostraFormModificaDomanda(tipoGioco, singleQuestion){
-        props.mostraModificaDomanda(tipoGioco, singleQuestion);
+    function mostraFormModificaDomanda(tipoGioco, singleQuestion, ID){
+        props.mostraModificaDomanda(tipoGioco, singleQuestion, ID);
     }
 
     function aggiungiAlternativaCorretta(){

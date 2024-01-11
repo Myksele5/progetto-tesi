@@ -55,14 +55,17 @@ function Giochi(){
     }
 
     function formEditGame(listaa){
+        let numeroRound = JSON.parse(listaa.domande);
+        // console.log(testjson);
+
         if(listaa.tipoGioco === "RIFLESSI"){
             modifica_gioco =
             <EditGioco
                 nomeGioco={listaa.nomeGioco}
                 tipoGioco={listaa.tipoGioco}
                 difficulty={listaa.livelloGioco}
-                numeroRound={listaa.numeroRound}
-                codiceGioco={listaa.id}
+                numeroRound={numeroRound}
+                gameID={listaa.gameID}
                 chiudiFormModifica={closeFormEditGame}
             >
             </EditGioco>
@@ -72,9 +75,9 @@ function Giochi(){
             <EditGioco
                 nomeGioco={listaa.nomeGioco}
                 tipoGioco={listaa.tipoGioco}
-                categoria={listaa.domandeGioco[0].categoria}
+                categoria={listaa.categoriaGioco}
                 difficulty={listaa.livelloGioco}
-                codiceGioco={listaa.id}
+                gameID={listaa.gameID}
                 chiudiFormModifica={closeFormEditGame}
                 // listaDomande={listaa.domandeGioco}
             >
@@ -100,7 +103,7 @@ function Giochi(){
     function startGame(stringa_TIPOGIOCO, stringa_CODICEGIOCO, stringa_LIVELLOGIOCO){
         var indice_gioco;
         for(var i = 0; i < game_ctx.listaGiochi.length; i++){
-            if(stringa_CODICEGIOCO === game_ctx.listaGiochi[i].id){
+            if(stringa_CODICEGIOCO === game_ctx.listaGiochi[i].gameID){
                 indice_gioco = i;
                 break;
             }
@@ -174,18 +177,22 @@ function Giochi(){
         setShowElencoGiochi(true);
     }
 
-    function formEditQuestion(tipoGioco, singleQuestion){
+    function formEditQuestion(tipoGioco, singleQuestion, ID){
         if(tipoGioco === "QUIZ"){
             modifica_domanda =
             <EditDomanda
-                id={singleQuestion.id}
+                ID={ID}
                 tipoGioco={tipoGioco}
                 categoriaDomanda={singleQuestion.categoria}
-                indovina={singleQuestion.indovina}
-                corrette={singleQuestion.rispCorrette}
-                sbagliate={singleQuestion.rispSbagliate}
-                count_corrette={Object.keys(singleQuestion.rispCorrette).length}
-                count_sbagliate={Object.keys(singleQuestion.rispSbagliate).length}
+                domanda={singleQuestion.domanda}
+                correttaN1={singleQuestion.rispCorrettaN1}
+                correttaN2={singleQuestion.rispCorrettaN2}
+                correttaN3={singleQuestion.rispCorrettaN3}
+                correttaN4={singleQuestion.rispCorrettaN4}
+                sbagliataN1={singleQuestion.rispSbagliataN1}
+                sbagliataN2={singleQuestion.rispSbagliataN2}
+                sbagliataN3={singleQuestion.rispSbagliataN3}
+                sbagliataN4={singleQuestion.rispSbagliataN4}
                 chiudiFormModificaDomanda={closeFormEditQuestion}
             >
             </EditDomanda>
@@ -193,15 +200,18 @@ function Giochi(){
         if(tipoGioco === "QUIZ CON IMMAGINI"){
             modifica_domanda =
             <EditDomanda
-                id={singleQuestion.id}
+                ID={ID}
                 tipoGioco={tipoGioco}
                 categoriaDomanda={singleQuestion.categoria}
-                indovina={singleQuestion.indovina}
-                immagine={singleQuestion.immagine}
-                corrette={singleQuestion.rispCorrette}
-                sbagliate={singleQuestion.rispSbagliate}
-                count_corrette={Object.keys(singleQuestion.rispCorrette).length}
-                count_sbagliate={Object.keys(singleQuestion.rispSbagliate).length}
+                domanda={singleQuestion.domanda}
+                correttaN1={singleQuestion.rispCorrettaN1}
+                correttaN2={singleQuestion.rispCorrettaN2}
+                correttaN3={singleQuestion.rispCorrettaN3}
+                correttaN4={singleQuestion.rispCorrettaN4}
+                sbagliataN1={singleQuestion.rispSbagliataN1}
+                sbagliataN2={singleQuestion.rispSbagliataN2}
+                sbagliataN3={singleQuestion.rispSbagliataN3}
+                sbagliataN4={singleQuestion.rispSbagliataN4}
                 chiudiFormModificaDomanda={closeFormEditQuestion}
             >
             </EditDomanda>
@@ -210,12 +220,18 @@ function Giochi(){
         if(tipoGioco === "COMPLETA LA PAROLA"){
             modifica_domanda =
             <EditDomanda
-                id={singleQuestion.id}
+                ID={ID}
                 tipoGioco={tipoGioco}
                 categoriaDomanda={singleQuestion.categoria}
-                indovina={singleQuestion.indovina}
-                corrette={""}
-                sbagliate={""}
+                domanda={singleQuestion.domanda}
+                correttaN1={singleQuestion.rispCorrettaN1}
+                correttaN2={singleQuestion.rispCorrettaN2}
+                correttaN3={singleQuestion.rispCorrettaN3}
+                correttaN4={singleQuestion.rispCorrettaN4}
+                sbagliataN1={singleQuestion.rispSbagliataN1}
+                sbagliataN2={singleQuestion.rispSbagliataN2}
+                sbagliataN3={singleQuestion.rispSbagliataN3}
+                sbagliataN4={singleQuestion.rispSbagliataN4}
                 chiudiFormModificaDomanda={closeFormEditQuestion}
             >
             </EditDomanda>
