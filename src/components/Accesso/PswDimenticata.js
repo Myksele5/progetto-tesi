@@ -4,6 +4,7 @@ import Card from '../UI/Card';
 import GenericButton from '../UI/GenericButton';
 import { auth } from '../../config/firebase-config';
 import { sendPasswordResetEmail } from 'firebase/auth';
+import { getServerMgr } from '../../backend_conn/ServerMgr';
 
 function PswDimenticata(props){
     const [validEmail, setValidEmail] = useState(true);
@@ -25,27 +26,33 @@ function PswDimenticata(props){
 
     const submitPswRecovery = async (event) => {
         event.preventDefault();
-        if(email.includes('@')){
-            await sendPasswordResetEmail(auth, email, {
-                url: 'https://progetto-tesi-8abcf.web.app/'
-            })
-            .then(() => {
-                alert("Fatto! Se in precedenza hai creato un account, riceverai una email per cambiare password.")
-            })
-            .catch((FirebaseAuthInvalidCredentialsException, err) => {
-                setValidEmail(false);
-                console.error(err);
-                console.error(FirebaseAuthInvalidCredentialsException);
-            })
-            .catch((err) => {
-                console.error(err);
-            })
-        }
-        else{
-            if(!email.includes('@')){
-                setValidEmail(false);
-            }
-        }   
+
+        let result;
+        result = await getServerMgr().pswRecovery_code(email)
+        .catch((err) => {
+            console.error(err)
+        });
+        // if(email.includes('@')){
+        //     await sendPasswordResetEmail(auth, email, {
+        //         url: 'https://progetto-tesi-8abcf.web.app/'
+        //     })
+        //     .then(() => {
+        //         alert("Fatto! Se in precedenza hai creato un account, riceverai una email per cambiare password.")
+        //     })
+        //     .catch((FirebaseAuthInvalidCredentialsException, err) => {
+        //         setValidEmail(false);
+        //         console.error(err);
+        //         console.error(FirebaseAuthInvalidCredentialsException);
+        //     })
+        //     .catch((err) => {
+        //         console.error(err);
+        //     })
+        // }
+        // else{
+        //     if(!email.includes('@')){
+        //         setValidEmail(false);
+        //     }
+        // }   
     }
 
     return(

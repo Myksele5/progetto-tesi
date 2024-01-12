@@ -64,6 +64,15 @@
     case "deleteGame":
         $query_result = deleteGame($conn);
         break;
+    case "pswRecovery_code":
+        $query_result = pswRecovery_code($conn);
+        break;
+    case "pswRecovery_checkEmail":
+        $query_result = pswRecovery_checkEmail($conn);
+        break;
+    case "pswRecovery_reset":
+        $query_result = pswRecovery_reset($conn);
+        break;
     default:
     	break;
 	}
@@ -405,6 +414,90 @@
         $deleteGame->execute();
         
         $deleteGame->bind_result($result);
+        return $result;
+    }
+
+    function generateRandomString() {
+        return substr(md5(rand()), 0, 10);
+    }
+
+    function pswRecovery_code($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $email = $dataJson["email"];
+        // echo "Test".$email;
+
+        $variabile = generateRandomString();
+        // echo "Prova".$variabile;
+        
+        $codeRecovery = $i_conn->prepare("INSERT INTO `recuperoPsw` (`codiceUnico`, `email`) VALUES (?, ?)");
+        $codeRecovery->bind_param("ss", $variabile, $email);
+        $codeRecovery->execute();
+        
+        $codeRecovery->bind_result($result);
+
+        $subject = 'Reset Password';
+        $message = 'http://localhost:3000/psw_recovery?code='.$variabile;
+        $headers = array(
+            'From' => 'webmaster@example.com',
+            'X-Mailer' => 'PHP/' . phpversion()
+        );
+        
+        mail($email, $subject, $message, $headers);
+        return $result;
+    }
+
+    function pswRecovery_checkEmail($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $gameID = $dataJson["gameID"];
+        
+        $deleteGame = $i_conn->prepare("DELETE FROM `games` WHERE `games`.`gameID` = ?");
+        $deleteGame->bind_param("i", $gameID);
+        $deleteGame->execute();
+        
+        $deleteGame->bind_result($result);
+        return $result;
+    }
+
+    function pswRecovery_reset($i_conn){
+        echo "INIZIO";
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $psw = $dataJson["psw"];
+        $codiceUnico = $dataJson["codiceUnico"];
+
+        echo $codiceUnico;
+        echo $psw;
+        
+        // $result = $i_conn->query("SELECT `email` FROM `recuperoPsw` WHERE codiceUnico = \"$codice\"");
+        // $result = $i_conn->query("SELECT `email` FROM `recuperoPsw`");
+        
+        $checkEmail = $i_conn->prepare("SELECT `email` FROM `recuperoPsw`");
+        // $checkEmail->bind_param("s", $codiceUnico);
+        $checkEmail->execute();
+        
+        // $checkEmail->bind_result($result);
+        $result = $checkEmail->get_result();
+
+        $row = $result->fetch_array(MYSQLI_NUM);
+
+        // var_dump($row);
+        echo $row[0];
+
+        // echo $result;
+
+        // if($result != null){
+            
+        //     $resetPsw = $i_conn->prepare("UPDATE `accounts` SET `password` = ? WHERE `email` = ?");
+        //     $resetPsw->bind_param("ss", $psw, $result);
+        //     $resetPsw->execute();
+            
+        //     $resetPsw->bind_result($result);
+        // }
         return $result;
     }
     

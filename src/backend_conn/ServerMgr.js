@@ -288,5 +288,29 @@ function initServerMgr(cb) {
         }
     }
 
+    serverMgr.pswRecovery_code = async (email, cb) => {
+        let result = await serverMgr.requestFetchData("pswRecovery_code", {email: email})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.pswRecovery_reset = async (psw, codiceUnico, cb) => {
+        let result = await serverMgr.requestFetchData("pswRecovery_reset", {psw: psw, codiceUnico: codiceUnico})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
     if (cb) cb();
 }

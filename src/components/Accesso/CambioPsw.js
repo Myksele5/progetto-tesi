@@ -8,9 +8,11 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, auth } from "../../config/firebase-config";
 import { Link, useLocation } from "react-router-dom";
 import AuthContext from "../../context/auth-context";
+import { getServerMgr } from "../../backend_conn/ServerMgr";
 // import { auth } from "../../config/firebase-config";
 
 function CambioPsw(){
+    const [singletonHasLoaded, setSingletonHasLoaded] = useState(false);
     const [validNewPassword, setValidNewPassword] = useState(true);
     // const [validEmail, setValidEmail] = useState(true);
     const [newPassword, setNewPassword] = useState('');
@@ -23,15 +25,21 @@ function CambioPsw(){
     const query = getQuery();
 
     useEffect(() => {
+        initSingleton()
+        .then(setSingletonHasLoaded(true))
+      }, [])
+
+    useEffect(() => {
         setValidNewPassword(true);
         // const query = getQuery();
-        console.log(query.get('mode'));
-        console.log(query.get('oobCode'));
-        console.log(query.get('continueUrl'));
+        console.log(query.get('code'));
     }, [newPassword])
-    // useEffect(() => {
-    //     setValidEmail(true);
-    // }, [email])
+
+    function initSingleton(){
+        return new Promise((resolve, reject) => {
+          getServerMgr(resolve)
+        })
+      }
 
     function getQuery(){
         return new URLSearchParams(location.search);
@@ -44,18 +52,25 @@ function CambioPsw(){
     const submitChangePassword = async (event) => {
         event.preventDefault();
 
-        setValidNewPassword(true);
+        let result;
 
-        auth_ctx.confirmPasswordReset(query.get('oobCode'), newPassword)
-        .then(() => {
-            alert("Password cambiata con successo!");
-            setPSWChanged(true);
-        })
+        result = await getServerMgr().pswRecovery_reset(newPassword, query.get('code'))
+        .then(console.log(result))
         .catch((err) => {
-            console.error(err);
-            setValidNewPassword(false);
-            setPSWChanged(false);
+            console.error(err)
         });
+        // setValidNewPassword(true);
+
+        // auth_ctx.confirmPasswordReset(query.get('oobCode'), newPassword)
+        // .then(() => {
+        //     alert("Password cambiata con successo!");
+        //     setPSWChanged(true);
+        // })
+        // .catch((err) => {
+        //     console.error(err);
+        //     setValidNewPassword(false);
+        //     setPSWChanged(false);
+        // });
         // // const auth = getAuth();
 
         // const emailAccountReference = doc(db, `${email}`, `info`);
@@ -99,47 +114,55 @@ function CambioPsw(){
         
     }
 
-    return(
-        <div className={styles.wrap_center_card}>
-            <Card
-                children = {
-                    <form className={styles.center_elements} onSubmit={submitChangePassword}>
-                        <h1 className={styles.title}>Cambio password</h1>
-
-                        {/* <label className={`${styles.label_box} ${!validEmail ? styles.invalid : ''}`}>Inserisci la tua email</label>
-                        <input className={`${styles.input_box} ${!validEmail ? styles.invalid : ''}`} type="email" placeholder="Inserisci email.." value={email} onChange={emailChangeHandler}></input> */}
-
-                        <label className={`${styles.label_box} ${!validNewPassword ? styles.invalid : ''}`}>Inserisci nuova password</label>
-                        <input className={`${styles.input_box} ${!validNewPassword ? styles.invalid : ''}`} type="password" placeholder="Inserisci nuova password.." value={newPassword} onChange={passwordChangeHandler}></input>
-
-                        {!validNewPassword && <h2 style={{color: "red"}}>Inserisci una password sicura!</h2>}
-                        {/* {!validEmail && <h2 style={{color: "red"}}>Inserisci una email valida!</h2>} */}
-
-                        <GenericButton
-                            type = "submit"
-                            generic_button={true}
-                            buttonText = 'Invia'
-                        >
-                        </GenericButton>
-
-                        {PSWChanged &&
-                            
-                            <GenericAlternativeButton
+    if(singletonHasLoaded){
+        return(
+            <div className={styles.wrap_center_card}>
+                <Card
+                    children = {
+                        <form className={styles.center_elements} onSubmit={submitChangePassword}>
+                            <h1 className={styles.title}>Cambio password</h1>
+    
+                            {/* <label className={`${styles.label_box} ${!validEmail ? styles.invalid : ''}`}>Inserisci la tua email</label>
+                            <input className={`${styles.input_box} ${!validEmail ? styles.invalid : ''}`} type="email" placeholder="Inserisci email.." value={email} onChange={emailChangeHandler}></input> */}
+    
+                            <label className={`${styles.label_box} ${!validNewPassword ? styles.invalid : ''}`}>Inserisci nuova password</label>
+                            <input className={`${styles.input_box} ${!validNewPassword ? styles.invalid : ''}`} type="password" placeholder="Inserisci nuova password.." value={newPassword} onChange={passwordChangeHandler}></input>
+    
+                            {!validNewPassword && <h2 style={{color: "red"}}>Inserisci una password sicura!</h2>}
+                            {/* {!validEmail && <h2 style={{color: "red"}}>Inserisci una email valida!</h2>} */}
+    
+                            <GenericButton
+                                type = "submit"
                                 generic_button={true}
-                                buttonText={
-                                    <Link style={{color: "white", textDecoration: "none"}} to="/">Go to Login</Link>
-                                }
-                            >    
-                            </GenericAlternativeButton>
-                        }
-                        
-                        {/* <h5 className={styles.log_reg} onClick={goToLoginForm}>Vai al Login</h5> */}
-                    </form>
-                }
-            >
-            </Card>
-        </div>
-    );
+                                buttonText = 'Invia'
+                            >
+                            </GenericButton>
+    
+                            {PSWChanged &&
+                                
+                                <GenericAlternativeButton
+                                    generic_button={true}
+                                    buttonText={
+                                        <Link style={{color: "white", textDecoration: "none"}} to="/">Go to Login</Link>
+                                    }
+                                >    
+                                </GenericAlternativeButton>
+                            }
+                            
+                            {/* <h5 className={styles.log_reg} onClick={goToLoginForm}>Vai al Login</h5> */}
+                        </form>
+                    }
+                >
+                </Card>
+            </div>
+        );
+    }
+    else{
+        return(
+            <div>LOADING</div>
+          );
+    }
+    
 }
 
 export default CambioPsw;
