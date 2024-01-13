@@ -137,11 +137,13 @@ function Giochi(){
                 break;
 
             case 'RIFLESSI':
+                const n_rounds = JSON.parse(game_ctx.listaGiochi[indice_gioco].domande);
                 setGameObject(
                     <ExerciseReflexes
                         giocoTerminato={endGame}
                         INDICEGIOCO={indice_gioco}
                         TIPOGIOCO={stringa_TIPOGIOCO}
+                        numeroRound={n_rounds}
                     >
                     </ExerciseReflexes>
                 );

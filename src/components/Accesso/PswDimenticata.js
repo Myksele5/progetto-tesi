@@ -28,10 +28,40 @@ function PswDimenticata(props){
         event.preventDefault();
 
         let result;
-        result = await getServerMgr().pswRecovery_code(email)
+        let result2;
+        let result3;
+        result = await getServerMgr().pswRecovery_checkEmail(email)
         .catch((err) => {
             console.error(err)
         });
+
+        if(result !== null){
+            console.log(result);
+            result2 = await getServerMgr().pswRecovery_code(email)
+            .catch((err) => {
+                console.error(err)
+            });
+        }
+        else{
+            console.log("NESSUNA EMAIL");
+        }
+
+        if(result2 !== null){
+            console.log(result2);
+            result3 = await getServerMgr().updateCode(email)
+            .catch((err) => {
+                console.error(err)
+            });
+        }
+        else{
+            console.log("PRIMO CODICE")
+            result3 = await getServerMgr().insertFirstCode(email)
+            .catch((err) => {
+                console.error(err)
+            });
+        }
+
+        // console.log(result);
         // if(email.includes('@')){
         //     await sendPasswordResetEmail(auth, email, {
         //         url: 'https://progetto-tesi-8abcf.web.app/'

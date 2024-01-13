@@ -13,7 +13,7 @@ function ExerciseReflexes(props){
     const [bersaglioPreso, setBersaglioPreso] = useState(null);
 
     const game_ctx = useContext(GameContext);
-    const roundTotali = game_ctx.listaGiochi[props.INDICEGIOCO].numeroRound;
+    const roundTotali = props.numeroRound;
 
     const movingStyle = isMoving && randomMovement === 1 ? `${styles.animazione_n1_EASY}` : isMoving && randomMovement === 2 ? `${styles.animazione_n2_EASY}` : 
                         isMoving && randomMovement === 3 ? `${styles.animazione_n3_EASY}` : ""; 

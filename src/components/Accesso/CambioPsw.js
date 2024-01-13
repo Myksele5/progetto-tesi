@@ -17,7 +17,7 @@ function CambioPsw(){
     // const [validEmail, setValidEmail] = useState(true);
     const [newPassword, setNewPassword] = useState('');
     // const [email, setEmail] = useState('');
-    const [PSWChanged, setPSWChanged] = useState(false);
+    const [PSWChanged, setPSWChanged] = useState(null);
     
     const location = useLocation();
 
@@ -53,12 +53,25 @@ function CambioPsw(){
         event.preventDefault();
 
         let result;
+        if(newPassword.trim().length > 5){
+            result = await getServerMgr().pswRecovery_reset(newPassword, query.get('code'))
+            .then(console.log(result))
+            .catch((err) => {
+                console.error(err)
+            });
+    
+            if(result !== null){
+                setPSWChanged(true);
+            }
+            else{
+                setPSWChanged(false);
+            }
+        }
+        else{
+            setValidNewPassword(false);
+        }
 
-        result = await getServerMgr().pswRecovery_reset(newPassword, query.get('code'))
-        .then(console.log(result))
-        .catch((err) => {
-            console.error(err)
-        });
+        
         // setValidNewPassword(true);
 
         // auth_ctx.confirmPasswordReset(query.get('oobCode'), newPassword)
@@ -128,7 +141,7 @@ function CambioPsw(){
                             <label className={`${styles.label_box} ${!validNewPassword ? styles.invalid : ''}`}>Inserisci nuova password</label>
                             <input className={`${styles.input_box} ${!validNewPassword ? styles.invalid : ''}`} type="password" placeholder="Inserisci nuova password.." value={newPassword} onChange={passwordChangeHandler}></input>
     
-                            {!validNewPassword && <h2 style={{color: "red"}}>Inserisci una password sicura!</h2>}
+                            {!validNewPassword && <h2 style={{color: "red"}}>Inserisci una password valida!</h2>}
                             {/* {!validEmail && <h2 style={{color: "red"}}>Inserisci una email valida!</h2>} */}
     
                             <GenericButton
@@ -139,14 +152,19 @@ function CambioPsw(){
                             </GenericButton>
     
                             {PSWChanged &&
-                                
-                                <GenericAlternativeButton
-                                    generic_button={true}
-                                    buttonText={
-                                        <Link style={{color: "white", textDecoration: "none"}} to="/">Go to Login</Link>
-                                    }
-                                >    
-                                </GenericAlternativeButton>
+                                <>
+                                    <GenericAlternativeButton
+                                        generic_button={true}
+                                        buttonText={
+                                            <Link style={{color: "white", textDecoration: "none"}} to="/">Go to Login</Link>
+                                        }
+                                    >    
+                                    </GenericAlternativeButton>
+                                    <h2 className={styles.label_box}>Password cambiata!</h2>
+                                </>
+                            }
+                            {PSWChanged !== null && !PSWChanged &&
+                                <h2>Si è verificato un errore! Riprova tra qualche minuto.</h2>
                             }
                             
                             {/* <h5 className={styles.log_reg} onClick={goToLoginForm}>Vai al Login</h5> */}
