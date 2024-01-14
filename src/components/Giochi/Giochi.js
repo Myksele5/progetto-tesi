@@ -55,7 +55,7 @@ function Giochi(){
     }
 
     function formEditGame(listaa){
-        let numeroRound = JSON.parse(listaa.domande);
+        // let numeroRound = JSON.parse(listaa.domande);
         // console.log(testjson);
 
         if(listaa.tipoGioco === "RIFLESSI"){
@@ -64,7 +64,8 @@ function Giochi(){
                 nomeGioco={listaa.nomeGioco}
                 tipoGioco={listaa.tipoGioco}
                 difficulty={listaa.livelloGioco}
-                numeroRound={numeroRound}
+                categoria={listaa.categoriaGioco}
+                // numeroRound={numeroRound}
                 gameID={listaa.gameID}
                 chiudiFormModifica={closeFormEditGame}
             >
@@ -125,15 +126,20 @@ function Giochi(){
                 break;
 
             case 'COMPLETA LA PAROLA':
-                setGameObject(
-                    <GuessTheWord
-                        giocoTerminato={endGame}
-                        INDICEGIOCO={indice_gioco}
-                        TIPOGIOCO={stringa_TIPOGIOCO}
-                        LIVELLOGIOCO={stringa_LIVELLOGIOCO}
-                    >
-                    </GuessTheWord>
-                );
+                const listaParole = JSON.parse(game_ctx.listaGiochi[indice_gioco].domande);
+                // console.log(listaParole);
+                for(var i=0; i < listaParole.length; i++){
+                    console.log(listaParole[i]);
+                }
+                // setGameObject(
+                //     <GuessTheWord
+                //         giocoTerminato={endGame}
+                //         INDICEGIOCO={indice_gioco}
+                //         TIPOGIOCO={stringa_TIPOGIOCO}
+                //         LIVELLOGIOCO={stringa_LIVELLOGIOCO}
+                //     >
+                //     </GuessTheWord>
+                // );
                 break;
 
             case 'RIFLESSI':

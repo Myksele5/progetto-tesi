@@ -63,7 +63,11 @@ function ExerciseGuessTheFace(props){
 
     const auth_ctx = useContext(AuthContext);
     const game_ctx = useContext(GameContext);
-    const questions = game_ctx.listaGiochi[props.INDICEGIOCO].domandeGioco;
+    const questions = game_ctx.listaGiochi[props.INDICEGIOCO].domandeID.map((item) => (
+        game_ctx.domande.filter((elem) => (
+            elem.ID == item
+        ))[0]
+    ));
 
     useEffect(() => {
         getSingleImage();

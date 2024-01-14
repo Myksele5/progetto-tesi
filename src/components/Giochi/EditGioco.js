@@ -5,23 +5,26 @@ import GenericButton from "../UI/GenericButton";
 import ElencoDomande from "./ElencoDomande";
 import { useContext, useEffect, useState } from "react";
 import GameContext from "../../context/game-context";
+import { getServerMgr } from "../../backend_conn/ServerMgr";
 
 var domande_gioco_da_modificare = [];
+var categoriaGioco;
 
 function EditGioco(props){
+    const game_ctx = useContext(GameContext);
+
     const [nomeGiocoModifica, setNomeGiocoModifica] = useState(props.nomeGioco);
     const [tipoGiocoModifica, setTipoGiocoModifica] = useState(props.tipoGioco);
     const [livelloGiocoModifica, setLivelloGiocoModifica] = useState(props.difficulty);
-    const [numeroRoundModifica, setNumeroRoundModifica] =  useState(props.numeroRound);
+    const [numeroRoundModifica, setNumeroRoundModifica] =  useState(game_ctx.domandeDaModificare[0]);
+    const [domandeSelected, setDomandeSelected] = useState([]);
 
     const [selectedEasy, setSelectedEasy] = useState(false);
     const [selectedNormal, setSelectedNormal] = useState(false);
     const [selectedHard, setSelectedHard] = useState(false);
 
-    const game_ctx = useContext(GameContext);
-
     var giocoID = props.gameID;
-    var categoriaFiltro = props.categoria;
+    // var categoriaFiltro = props.categoria;
 
     function highlightDifficulty(livelloGiocoModifica){
         if(livelloGiocoModifica === "FACILE"){
@@ -34,6 +37,10 @@ function EditGioco(props){
             setSelectedHard(true);
         }
     }
+    useEffect(() => {
+        categoriaGioco = props.categoria;
+        console.log(game_ctx.domandeDaModificare[0])
+    }, [])
 
     useEffect(() => {
         highlightDifficulty(livelloGiocoModifica);
@@ -49,7 +56,7 @@ function EditGioco(props){
     }
     function numeroRoundChangeHandler(event){
         console.log(event.target.value);
-        setNumeroRoundModifica(event.target.value);
+        setNumeroRoundModifica([event.target.value]);
     }
 
     function selezioneDifficoltà(stringaDifficoltà){
@@ -83,11 +90,32 @@ function EditGioco(props){
         }
     }
 
-    function modificaOggettoDomande(domandeSelezionate){
-        domande_gioco_da_modificare = JSON.stringify(domandeSelezionate);
+    function modificaOggettoDomande(domandeSelezionate, categoriaGame){
+        // domande_gioco_da_modificare = JSON.stringify(domandeSelezionate);
+        setDomandeSelected(domandeSelezionate);
+        categoriaGioco = categoriaGame;
 
         console.log("DOMANDE IN EditGioco.js DA SALVARE");
         console.log(domandeSelezionate);
+    }
+
+    async function salvaGiocoAggiornato(){
+        if(tipoGiocoModifica === "RIFLESSI"){
+            await getServerMgr().updateGame(nomeGiocoModifica, livelloGiocoModifica, categoriaGioco, numeroRoundModifica, giocoID)
+            .catch((err) => {
+                console.error(err)
+            });
+        }
+        else{
+            await getServerMgr().updateGame(nomeGiocoModifica, livelloGiocoModifica, categoriaGioco, domandeSelected, giocoID)
+            .catch((err) => {
+                console.error(err)
+            });
+        }
+        
+
+        props.chiudiFormModifica();
+        game_ctx.prendiTuttiGiochiDomande();
     }
 
     return(
@@ -150,19 +178,21 @@ function EditGioco(props){
                     <ElencoDomande
                         domandeNuovoGioco={modificaOggettoDomande}
                         tipoGioco={tipoGiocoModifica}
-                        categoria={categoriaFiltro}
+                        categoria={props.categoria}
                     >
                     </ElencoDomande>
                 }
 
-                <div className={styles.wrapper_generico}>
-                    <GenericButton
-                        onClick={() => {
+                        {/* () => {
                             {tipoGiocoModifica !== "RIFLESSI" && game_ctx.salvaGiocoModificato(nomeGiocoModifica, livelloGiocoModifica, categoriaFiltro, domande_gioco_da_modificare, giocoID)}
                             {tipoGiocoModifica === "RIFLESSI" && game_ctx.salvaGiocoModificato(nomeGiocoModifica, livelloGiocoModifica, "REFLEXES_GAME", numeroRoundModifica, giocoID)}
  
                             props.chiudiFormModifica();
-                        }}
+                        } */}
+
+                <div className={styles.wrapper_generico}>
+                    <GenericButton
+                        onClick={salvaGiocoAggiornato}
                         generic_button={true}
                         buttonText={"Salva modifiche"}
                     >

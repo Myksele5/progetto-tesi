@@ -246,8 +246,11 @@ function initServerMgr(cb) {
             tipoGioco: tipoGioco,
             livelloGioco: livelloGioco,
             categoriaGioco: categoriaGioco,
-            domande: domande
+            // domande: domande
         })
+
+        await serverMgr.requestFetchData("addBridgeQuestions", {gameID: result, domande: domande});
+
         if(cb) {
             // console.log("getInventory: " + result)
             cb(result)
@@ -263,9 +266,14 @@ function initServerMgr(cb) {
             nomeGioco: nomeGioco,
             livelloGioco: livelloGioco,
             categoriaGioco: categoriaGioco,
-            domande: domande,
+            // domande: domande,
             gameID: gameID
         })
+
+        await serverMgr.requestFetchData("updateBridgeQuestions", {gameID: gameID});
+
+        await serverMgr.requestFetchData("addBridgeQuestions", {gameID: gameID, domande: domande});
+
         if(cb) {
             // console.log("getInventory: " + result)
             cb(result)
@@ -338,6 +346,30 @@ function initServerMgr(cb) {
 
     serverMgr.updateCode = async (email, cb) => {
         let result = await serverMgr.requestFetchData("updateCode", {email: email})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.getQuestionsFromGame = async (email, cb) => {
+        let result = await serverMgr.requestFetchData("getQuestionsFromGame", {email: email})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.getBridge = async (cb) => {
+        let result = await serverMgr.requestFetchData("getBridge")
         if(cb) {
             // console.log("getInventory: " + result)
             cb(result)

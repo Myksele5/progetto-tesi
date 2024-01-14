@@ -20,16 +20,14 @@ const GameContext = React.createContext({
     salvaGiocoModificato: ()=>{},
     eliminaGioco: ()=>{},
     domande: null,
-    domandeDeiQuizConImmagini: null,
-    domandeDeiQuiz: null,
-    elencoParole: null,
     aggiungiDomandaAllaLista: ()=>{},
     recuperaCategorieDomande: ()=>{},
     showModale: null,
     modale: null,
     salvaRisultatiGiocoPaziente: ()=>{},
     eliminaDomanda: ()=>{},
-    salvaDomandaModificata: ()=>{}
+    salvaDomandaModificata: ()=>{},
+    prendiTuttiGiochiDomande:()=>{}
 
 });
 
@@ -38,9 +36,6 @@ export function GameContextProvider(props){
 
     const [elencoGiochi, setElencoGiochi] = useState([])
     const [elencoDomande, setElencoDomande] = useState([]);
-    const [elencoDomandeQuiz, setElencoDomandeQuiz] = useState([]);
-    const [elencoDomandeQuizImmagini, setElencoDomandeQuizImmagini] = useState([]);
-    const [elencoParoleDaCompletare, setElencoParoleDaCompletare] = useState([]);
     const [domandeModifica, setDomandeModifica] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
@@ -53,6 +48,25 @@ export function GameContextProvider(props){
     async function getAllGamesQuestions(){
         let resultQuestions;
         let resultGames;
+        let bridge;
+
+        const parseResult = (resultsArray) => {
+            let markersList = {}
+            resultsArray.forEach((item) => {
+                let currentMarker = (({categoriaGioco, creatorID, gameID, livelloGioco, nomeGioco, tipoGioco}) => ({categoriaGioco, creatorID, gameID, livelloGioco, nomeGioco, tipoGioco, domandeID: []}))(item);
+                markersList[item.gameID] ??= currentMarker
+                if(item.IDquestion !== null) {
+                    markersList[item.gameID].domandeID.push(item.IDquestion)
+                }
+            })
+
+            let arrayGiochi = []
+            Object.keys(markersList).forEach((item) => {
+                arrayGiochi.push(markersList[item])
+            })
+
+            return arrayGiochi;
+        }
 
         resultQuestions = await getServerMgr().getQuestionsList(auth_ctx.utenteLoggatoUID)
         .catch((err) => {
@@ -72,9 +86,10 @@ export function GameContextProvider(props){
             console.error(err)
         });
 
-        if(resultGames !== null){
-            setElencoGiochi(resultGames);
-            console.log(resultGames);
+        if(resultGames){
+            let rispostaParsata = parseResult(resultGames);
+            setElencoGiochi(rispostaParsata);
+            console.log(rispostaParsata);
         }
         else{
             setElencoGiochi([]);
@@ -154,15 +169,16 @@ export function GameContextProvider(props){
     }
 
     function editGame(listaa){
-        let domandeParsate = JSON.parse(listaa.domande);
+        let domandeParsate = listaa.domandeID;
         console.log(domandeParsate);
+        setDomandeModifica(domandeParsate);
 
-        if(listaa.tipoGioco !== "RIFLESSI"){
-            setDomandeModifica(domandeParsate);
-        }
-        else{
-            setDomandeModifica([listaa.numeroRound]);
-        }
+        // if(listaa.tipoGioco !== "RIFLESSI"){
+        //     setDomandeModifica(domandeParsate);
+        // }
+        // else{
+        //     setDomandeModifica([listaa.numeroRound]);
+        // }
     }
 
     async function addModifiedGameToList(name, level, category, questionsList, gameID){
@@ -256,16 +272,14 @@ export function GameContextProvider(props){
             salvaGiocoModificato: addModifiedGameToList,
             eliminaGioco: modalDeleteGame,
             domande: elencoDomande,
-            domandeDeiQuizConImmagini: elencoDomandeQuizImmagini,
-            domandeDeiQuiz: elencoDomandeQuiz,
-            elencoParole: elencoParoleDaCompletare,
             aggiungiDomandaAllaLista: addNewQuestionToList,
             recuperaCategorieDomande: getAllCategories,
             showModale: showModal,
             modale: modal_eliminazione,
             salvaRisultatiGiocoPaziente: salvaRisultati,
             eliminaDomanda: modalDeleteQuestion,
-            salvaDomandaModificata: addModifiedQuestionToList
+            salvaDomandaModificata: addModifiedQuestionToList,
+            prendiTuttiGiochiDomande: getAllGamesQuestions
         }}
         >
             {props.children}

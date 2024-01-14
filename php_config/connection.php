@@ -56,7 +56,7 @@
         $query_result = getGamesList($conn);
         break;
     case "addGame":
-        $query_result = addGame($conn);
+        addGame($conn);
         break;
     case "updateGame":
         $query_result = updateGame($conn);
@@ -79,12 +79,33 @@
     case "updateCode":
         $query_result = updateCode($conn);
         break;
+    case "getQuestionsFromGame":
+        $query_result = getQuestionsFromGame($conn);
+        break;
+    case "addBridgeQuestions":
+        $query_result = addBridgeQuestions($conn);
+        break;
+    case "updateBridgeQuestions":
+        $query_result = updateBridgeQuestions($conn);
+        break;
+    case "getBridge":
+        $query_result = getBridge($conn);
+        break;
     default:
     	break;
 	}
     
-    //echo $query_result;
-    echo parseResultToJson($query_result);
+    if($query_result){
+        echo parseResultToJson($query_result);
+    }
+    // echo parseResultToJson($query_result);
+    // $gigino = parseResultToJson($query_result);
+    // if($gigino == null){
+    //     echo $query_result;
+    // }
+    // else{
+    //     echo $gigino;
+    // }
     
     $conn->close();
     
@@ -362,7 +383,7 @@
         
         $creatorID = $dataJson["creatorID"];
         
-        $retrieveGamesList = $i_conn->prepare("SELECT * FROM `games` WHERE creatorID = ?");
+        $retrieveGamesList = $i_conn->prepare("SELECT * FROM `games` LEFT JOIN `bridgeToQuestionsGames` ON `games`.`gameID` = `bridgeToQuestionsGames`.`IDgame` WHERE creatorID = ?");
         $retrieveGamesList->bind_param("i", $creatorID);
         
         $retrieveGamesList->execute();
@@ -387,7 +408,9 @@
         $insertNewGame->bind_param("isssss", $creatorID, $nomeGioco, $tipoGioco, $livelloGioco, $categoriaGioco, $domande);
         $insertNewGame->execute();
         
-        $insertNewGame->bind_result($result);
+        $result = $insertNewGame->insert_id;
+        echo $result;
+
         return $result;
     }
 
@@ -398,11 +421,11 @@
         $nomeGioco = $dataJson["nomeGioco"];
         $livelloGioco = $dataJson["livelloGioco"];
         $categoriaGioco = $dataJson["categoriaGioco"];
-        $domande = $dataJson["domande"];
+        // $domande = $dataJson["domande"];
         $gameID = $dataJson["gameID"];
         
-        $updateGame = $i_conn->prepare("UPDATE `games` SET `nomeGioco` = ?, `livelloGioco` = ?, `categoriaGioco` = ?, `domande` = ? WHERE `games`.`gameID` = ?");
-        $updateGame->bind_param("ssssi", $nomeGioco, $livelloGioco, $categoriaGioco, $domande, $gameID);
+        $updateGame = $i_conn->prepare("UPDATE `games` SET `nomeGioco` = ?, `livelloGioco` = ?, `categoriaGioco` = ? WHERE `games`.`gameID` = ?");
+        $updateGame->bind_param("sssi", $nomeGioco, $livelloGioco, $categoriaGioco, $gameID);
         $updateGame->execute();
         
         $updateGame->bind_result($result);
@@ -535,6 +558,75 @@
         );
         
         mail($email, $subject, $message, $headers);
+
+        return $result;
+    }
+
+    function getQuestionsFromGame($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $email = $dataJson["email"];
+
+        $variabile = generateRandomString();
+
+        $codeRecovery = $i_conn->prepare("UPDATE `recuperoPsw` SET `codiceUnico` = ? WHERE email = ?");
+        $codeRecovery->bind_param("ss", $variabile, $email);
+        $codeRecovery->execute();
+        $codeRecovery->bind_result($result);
+
+        $subject = 'Reset Password';
+        $message = 'http://localhost:3000/psw_recovery?code='.$variabile;
+        $headers = array(
+            'From' => 'webmaster@example.com',
+            'X-Mailer' => 'PHP/' . phpversion()
+        );
+        
+        mail($email, $subject, $message, $headers);
+
+        return $result;
+    }
+
+    function addBridgeQuestions($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $gameID = $dataJson["gameID"];
+        $domande = $dataJson["domande"];
+
+        foreach($domande as $qstn) {
+            echo $qstn;
+            // Insert a row into the table
+            $bridgeQuestQuery = $i_conn->prepare("INSERT INTO `bridgeToQuestionsGames`(`IDgame`, `IDquestion`) VALUES (?, ?)");
+            $bridgeQuestQuery->bind_param("ii", $gameID, $qstn);
+
+            $bridgeQuestQuery->execute();
+        }
+
+        return $result;
+    }
+
+    function updateBridgeQuestions($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $gameID = $dataJson["gameID"];
+        // $domande = $dataJson["domande"];
+        
+        // echo $qstn;
+        // Insert a row into the table
+        $bridgeQuestQuery = $i_conn->prepare("DELETE FROM `bridgeToQuestionsGames` WHERE IDgame = ?");
+        $bridgeQuestQuery->bind_param("i", $gameID);
+
+        $bridgeQuestQuery->execute();
+        
+
+        return $result;
+    }
+
+    function getBridge($i_conn){
+
+        $result = $i_conn->query("SELECT * FROM `bridgeToQuestionsGames`");
 
         return $result;
     }

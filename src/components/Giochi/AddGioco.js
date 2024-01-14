@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import GameContext from "../../context/game-context";
 import ElencoDomande from "./ElencoDomande";
 import AuthContext from "../../context/auth-context";
+import { getServerMgr } from "../../backend_conn/ServerMgr";
 
 var domande_nuovo_gioco = [];
 var categoriaGioco;
@@ -14,7 +15,8 @@ function AddGioco(props){
     const [titoloGioco, setTitoloGioco] = useState("");
     const [tipologiaGioco, setTipologiaGioco] = useState("QUIZ");
     const [livelloGioco, setLivelloGioco] = useState("NORMALE");
-    const [numeroRound, setNumeroRound] = useState(0);
+    // const [numeroRound, setNumeroRound] = useState(0);
+    const [domandeSelected, setDomandeSelected] = useState([]);
 
     const [selectedEasy, setSelectedEasy] = useState(false);
     const [selectedNormal, setSelectedNormal] = useState(true);
@@ -68,15 +70,30 @@ function AddGioco(props){
     }
     function numeroRoundChangeHandler(event){
         console.log(event.target.value);
-        setNumeroRound(event.target.value);
+        setDomandeSelected([event.target.value]);
     }
 
     function creaOggettoDomande(domandeSelezionate, categoriaGame){
-        domande_nuovo_gioco = JSON.stringify(domandeSelezionate);
+        // domande_nuovo_gioco = JSON.stringify(domandeSelezionate);
         categoriaGioco = categoriaGame;
+        setDomandeSelected(domandeSelezionate);
 
-        console.log("DOMANDE IN AddGioco.js DA SALVARE");
-        console.log(domande_nuovo_gioco);
+        // console.log("DOMANDE IN AddGioco.js DA SALVARE");
+        // console.log(domande_nuovo_gioco);
+    }
+
+    async function salvaNuovoGioco(){
+        if(tipologiaGioco === "RIFLESSI"){
+            categoriaGioco = "REFLEXES_GAME";
+        }
+
+        await getServerMgr().addGame(auth_ctx.utenteLoggatoUID, titoloGioco, tipologiaGioco, livelloGioco, categoriaGioco, domandeSelected)
+        .catch((err) => {
+            console.error(err)
+        });
+
+        props.chiudiFormNuovoGioco();
+        game_ctx.prendiTuttiGiochiDomande();
     }
 
     return(
@@ -155,14 +172,7 @@ function AddGioco(props){
 
                 <div className={styles.wrapper_generico}>
                     <GenericButton
-                    onClick={() => {
-                        {tipologiaGioco !== "RIFLESSI" && game_ctx.aggiungiGiocoAllaLista(titoloGioco, tipologiaGioco, livelloGioco, categoriaGioco, domande_nuovo_gioco)}
-                        {tipologiaGioco === "RIFLESSI" && game_ctx.aggiungiGiocoAllaLista(titoloGioco, tipologiaGioco, livelloGioco, "REFLEXES_GAME", numeroRound)}
-                        
-                        domande_nuovo_gioco = [];
-                        setNumeroRound(0);
-                        props.chiudiFormNuovoGioco();
-                    }}
+                    onClick={salvaNuovoGioco}
                     generic_button={true}
                     buttonText={"Salva Gioco"}
                     >

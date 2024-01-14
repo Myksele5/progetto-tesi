@@ -94,8 +94,8 @@ function ElencoDomande(props){
         if (event.target.checked) {
             console.log('✅ Checkbox is checked');
             COUNT_DOMANDE++;
-            llll.unshift({
-                ID: domanda.ID,
+            llll.unshift(
+                domanda.ID,
                 // categoria: domanda.categoria,
                 // domanda: domanda.domanda,
                 // rispCorrettaN1: domanda.rispCorrettaN1,
@@ -106,13 +106,13 @@ function ElencoDomande(props){
                 // rispSbagliataN2: domanda.rispSbagliataN2,
                 // rispSbagliataN3: domanda.rispSbagliataN3,
                 // rispSbagliataN4: domanda.rispSbagliataN4
-            });
+            );
         }
         else{
             console.log('⛔️ Checkbox is NOT checked');
             COUNT_DOMANDE--;
             for(var i=0; i < llll.length; i++){
-                if(domanda.ID === llll[i].ID){
+                if(domanda.ID === llll[i]){
                     llll.splice(i, 1);
                     break;
                 }
@@ -159,7 +159,7 @@ function ElencoDomande(props){
             }
             else{
                 for(var i=0; i < llll.length; i++){
-                    if(singleQuestion.ID === llll[i].ID){
+                    if(singleQuestion.ID === llll[i]){
                         checkboxInputChecked =
                             <input checked className={styles.checkbox_style} type="checkbox" onChange={(event)=>{
                                 verifyIsChecked(event, singleQuestion)
