@@ -4,6 +4,7 @@ import styles from './AddPaziente.module.css';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebase-config";
 import AuthContext from "../../context/auth-context";
+import { getServerMgr } from "../../backend_conn/ServerMgr";
 
 function AddPaziente(props){
     const auth_ctx = useContext(AuthContext);
@@ -11,6 +12,7 @@ function AddPaziente(props){
     // const [passwordDottore, setPasswordDottore] = useState('');
     // const [modaleCREAZIONEUTENTE, setModaleCREAZIONEUTENTE] = useState(false);
     // const [accountCreato, setAccountCreato] = useState(false);
+    var emailEsistente = null;
 
     const [validNome, setValidNome] = useState(true);
     const [enteredNome, setEnteredNome] = useState('');
@@ -108,10 +110,10 @@ function AddPaziente(props){
     function formSubmitHandler(event){
         event.preventDefault();
         var account_creato = false;
-        // if(modaleCREAZIONEUTENTE){
-        //     account_creato = creaAccountPaziente();
-        //     console.log(account_creato)
-        // }
+        if(enteredEmail.includes('@') && enteredPsw.trim().length > 5){
+            // setModaleCREAZIONEUTENTE(true);
+            creaAccountPaziente();
+        }
 
         var dateee = new Date(enteredData);
 
@@ -191,49 +193,50 @@ function AddPaziente(props){
         // setValidData(true);
     }
 
-    // function modalePasswordDottore(event){
-    //     event.preventDefault();
-
-    //     if(enteredEmail.trim().length > 1 && enteredPsw.trim().length > 5){
-    //         setModaleCREAZIONEUTENTE(true);
-    //         // creaAccountPaziente();
-    //     }
-    //     else{
-    //         formSubmitHandler();
-    //     }
-    // }
-
     async function creaAccountPaziente(){
-        var aBuonFine;
+        let result;
+        result = await getServerMgr().getAccount()
+        .then(console.log(result))
+        .catch((err) => {
+            console.error(err);
+        });
 
-        // await signInWithEmailAndPassword(auth, emailDottore, passwordDottore)
-        // .then(aBuonFine = true)
-        // .catch((err) => {
-        //     alert("PSW SBAGLIATA")
-        //     aBuonFine = false;
-        //     console.error(err)
-        // });
+        if(result !== undefined){
+            for(var i=0; i < result.length; i++){
+                if(result[i].email === enteredEmail){
+                    // setValidNome(false);
+                    // setValidCognome(false);
+                    // setValidEmail(false);
+                    // setValidPassword(false);
+                    // // setABuonFine(false);
+                    emailEsistente = true;
+                    alert("Email già associata ad un account!");
+                    break;
+                }
+                else{
+                    emailEsistente = false;
+                }
+            }
+            if(!emailEsistente){
+                let result2;
+                result2 = await getServerMgr().addAccount(enteredNome, enteredCognome, 3, enteredEmail, enteredPsw)
+                .then(alert("ACCOUNT CREATO!"))
+                .catch((err) => {
+                    console.error(err);
+                    // setRegistrEffettuata(false);
+                });
+            }
+        }
+        else{
+            let result2;
+            result2 = await getServerMgr().addAccount(enteredNome, enteredCognome, 3, enteredEmail, enteredPsw)
+            .then(alert("ACCOUNT CREATO!"))
+            .catch((err) => {
+                console.error(err);
+            })
+            // alert("NESSUN ACCOUNT TROVATO");
+        }  
 
-        // if(aBuonFine){
-        //     await createUserWithEmailAndPassword(auth, enteredEmail, enteredPsw)
-        //     .then(alert("Account paziente creato!"))
-        //     .catch((err) => {
-        //         console.error(err)
-        //     });
-        //     setAccountCreato(aBuonFine);
-        // }
-        // else{
-        //     return
-        // }
-        
-        // await signInWithEmailAndPassword(auth, emailDottore, passwordDottore)
-        // // .then(aBuonFine = true)
-        // .catch((err) => {
-        //     alert("PSW SBAGLIATA")
-        //     // aBuonFine = false;
-        //     console.error(err)
-        // });
-        
         return
     }
 

@@ -70,17 +70,17 @@ function RegistrationForm(props){
                 if(!emailEsistente){
                     let result2;
                     result2 = await getServerMgr().addAccount(nome, cognome, titoloID, email, password)
-                    .then(setRegistrEffettuata(true))
+                    .then(alert("ACCOUNT CREATO!"))
                     .catch((err) => {
                         console.error(err);
-                        setRegistrEffettuata(false);
+                        // setRegistrEffettuata(false);
                     });
                 }
             }
             else{
                 let result2;
                 result2 = await getServerMgr().addAccount(nome, cognome, titoloID, email, password)
-                .then(setRegistrEffettuata(true))
+                .then(alert("ACCOUNT CREATO!"))
                 .catch((err) => {
                     console.error(err);
                 })

@@ -2,7 +2,7 @@ import styles from "./AddGioco.module.css";
 import Card from "../UI/Card";
 import GenericButton from "../UI/GenericButton";
 import RadioButton from "../UI/RadioButton";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import GameContext from "../../context/game-context";
 import ElencoDomande from "./ElencoDomande";
 import AuthContext from "../../context/auth-context";
@@ -24,6 +24,10 @@ function AddGioco(props){
 
     const game_ctx = useContext(GameContext);
     const auth_ctx = useContext(AuthContext)
+
+    useEffect(() => {
+        setDomandeSelected([]);
+    }, [tipologiaGioco])
 
     function selezioneDifficoltà(stringaDifficoltà){
         switch (stringaDifficoltà){
@@ -69,8 +73,10 @@ function AddGioco(props){
         console.log(livelloGioco);
     }
     function numeroRoundChangeHandler(event){
-        console.log(event.target.value);
-        setDomandeSelected([event.target.value]);
+        var array = [parseInt(event.target.value)];
+        // array.push(event.target.value);
+        console.log(array);
+        setDomandeSelected(array);
     }
 
     function creaOggettoDomande(domandeSelezionate, categoriaGame){
@@ -78,11 +84,12 @@ function AddGioco(props){
         categoriaGioco = categoriaGame;
         setDomandeSelected(domandeSelezionate);
 
-        // console.log("DOMANDE IN AddGioco.js DA SALVARE");
-        // console.log(domande_nuovo_gioco);
+        console.log("DOMANDE IN AddGioco.js DA SALVARE");
+        console.log(domandeSelezionate);
     }
 
     async function salvaNuovoGioco(){
+        console.log(domandeSelected);
         if(tipologiaGioco === "RIFLESSI"){
             categoriaGioco = "REFLEXES_GAME";
         }

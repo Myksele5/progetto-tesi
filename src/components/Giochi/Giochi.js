@@ -34,6 +34,21 @@ function Giochi(){
         setShowSearchBoxAndButton(false);
         setShowElencoGiochi(false);
         setShowAddNewQuestion(true);
+        var domandeDelGioco = [];
+        var oggettoDomandeIDGioco = game_ctx.listaGiochi[1].domandeID;
+        for(var i=0; i < game_ctx.domande.length; i++){
+            oggettoDomandeIDGioco.forEach((item) => {
+                if(item === game_ctx.domande[i].ID){
+                    // console.log(game_ctx.domande[i]);
+                    domandeDelGioco.push(game_ctx.domande[i]);
+                }
+            })
+        }
+
+        console.log(domandeDelGioco);
+        
+        console.log(game_ctx.domande[0]);
+        console.log(oggettoDomandeIDGioco);
     }
 
     function closeFormCreateNewQuestion(){
@@ -110,6 +125,18 @@ function Giochi(){
             }
         }
         console.log("CODICE DEL GIOCO SELEZIONATO----> " + stringa_CODICEGIOCO);
+
+        var domandeDelGioco = [];
+        var oggettoDomandeIDGioco = game_ctx.listaGiochi[indice_gioco].domandeID;
+        console.log(oggettoDomandeIDGioco);
+        for(var i=0; i < game_ctx.domande.length; i++){
+            oggettoDomandeIDGioco.forEach((item) => {
+                if(item === game_ctx.domande[i].ID){
+                    // console.log(game_ctx.domande[i]);
+                    domandeDelGioco.push(game_ctx.domande[i]);
+                }
+            })
+        }
         
         switch(stringa_TIPOGIOCO){
             case 'QUIZ':
@@ -120,36 +147,39 @@ function Giochi(){
                         INDICEGIOCO={indice_gioco}
                         TIPOGIOCO={stringa_TIPOGIOCO}
                         LIVELLOGIOCO={stringa_LIVELLOGIOCO}
+                        domandeGioco={domandeDelGioco}
                     >
                     </ExerciseGuessTheFace>
                 );
                 break;
 
             case 'COMPLETA LA PAROLA':
-                const listaParole = JSON.parse(game_ctx.listaGiochi[indice_gioco].domande);
+                // const listaParole = JSON.parse(game_ctx.listaGiochi[indice_gioco].domande);
                 // console.log(listaParole);
-                for(var i=0; i < listaParole.length; i++){
-                    console.log(listaParole[i]);
-                }
-                // setGameObject(
-                //     <GuessTheWord
-                //         giocoTerminato={endGame}
-                //         INDICEGIOCO={indice_gioco}
-                //         TIPOGIOCO={stringa_TIPOGIOCO}
-                //         LIVELLOGIOCO={stringa_LIVELLOGIOCO}
-                //     >
-                //     </GuessTheWord>
-                // );
+                // for(var i=0; i < listaParole.length; i++){
+                //     console.log(listaParole[i]);
+                // }
+                setGameObject(
+                    <GuessTheWord
+                        giocoTerminato={endGame}
+                        INDICEGIOCO={indice_gioco}
+                        TIPOGIOCO={stringa_TIPOGIOCO}
+                        LIVELLOGIOCO={stringa_LIVELLOGIOCO}
+                        domandeGioco={domandeDelGioco}
+                    >
+                    </GuessTheWord>
+                );
                 break;
 
             case 'RIFLESSI':
-                const n_rounds = JSON.parse(game_ctx.listaGiochi[indice_gioco].domande);
+                // const n_rounds = JSON.parse(game_ctx.listaGiochi[indice_gioco].domande);
+                console.log(domandeDelGioco)
                 setGameObject(
                     <ExerciseReflexes
                         giocoTerminato={endGame}
                         INDICEGIOCO={indice_gioco}
                         TIPOGIOCO={stringa_TIPOGIOCO}
-                        numeroRound={n_rounds}
+                        numeroRound={oggettoDomandeIDGioco}
                     >
                     </ExerciseReflexes>
                 );

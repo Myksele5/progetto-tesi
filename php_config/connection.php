@@ -400,12 +400,12 @@
         $tipoGioco = $dataJson["tipoGioco"];
         $livelloGioco = $dataJson["livelloGioco"];
         $categoriaGioco = $dataJson["categoriaGioco"];
-        $domande = $dataJson["domande"];
+        // $domande = $dataJson["domande"];
         
         $insertNewGame = $i_conn->prepare(
-            "INSERT INTO `games` (`creatorID`, `nomeGioco`, `tipoGioco`, `livelloGioco`, `categoriaGioco`, `domande`) VALUES (?, ?, ?, ?, ?, ?)"
+            "INSERT INTO `games` (`creatorID`, `nomeGioco`, `tipoGioco`, `livelloGioco`, `categoriaGioco`) VALUES (?, ?, ?, ?, ?)"
         );
-        $insertNewGame->bind_param("isssss", $creatorID, $nomeGioco, $tipoGioco, $livelloGioco, $categoriaGioco, $domande);
+        $insertNewGame->bind_param("issss", $creatorID, $nomeGioco, $tipoGioco, $livelloGioco, $categoriaGioco);
         $insertNewGame->execute();
         
         $result = $insertNewGame->insert_id;
@@ -597,7 +597,7 @@
         foreach($domande as $qstn) {
             echo $qstn;
             // Insert a row into the table
-            $bridgeQuestQuery = $i_conn->prepare("INSERT INTO `bridgeToQuestionsGames`(`IDgame`, `IDquestion`) VALUES (?, ?)");
+            $bridgeQuestQuery = $i_conn->prepare("INSERT INTO `bridgeToQuestionsGames` (`IDgame`, `IDquestion`) VALUES (?, ?)");
             $bridgeQuestQuery->bind_param("ii", $gameID, $qstn);
 
             $bridgeQuestQuery->execute();

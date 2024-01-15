@@ -21,9 +21,9 @@ function GuessTheWord(props){
     const [timer, setTimer] = useState(undefined);
 
     const game_ctx = useContext(GameContext);
-    const questions = game_ctx.listaGiochi[props.INDICEGIOCO].domandeGioco;
+    const questions = props.domandeGioco;
 
-    var parolaDaIndovinare = questions[counter_question_number].indovina;
+    var parolaDaIndovinare = questions[counter_question_number].domanda;
 
     useEffect(() => {
         if(props.LIVELLOGIOCO === "NORMALE"){
@@ -129,7 +129,7 @@ function GuessTheWord(props){
         }
         setLetteraInseritaDaUtente("");
         setRispostaCorretta(null);
-        parolaDaIndovinare = questions[counter_question_number].indovina;
+        parolaDaIndovinare = questions[counter_question_number].domanda;
         parolaDaMostrare = [];
         dividiParolaInLettere();
         setHasAnswered(false);

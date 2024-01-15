@@ -22,6 +22,7 @@ function ExerciseReflexes(props){
     useEffect(() => {
         randomMovement = Math.floor(Math.random() * (4-1) + 1);
         console.log("Numero RANDOM--->" + randomMovement);
+        // console.log(roundTotali);
     }, [isMoving])
 
     function verificaRispostaPreso(event){

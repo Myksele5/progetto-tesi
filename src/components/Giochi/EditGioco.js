@@ -16,8 +16,8 @@ function EditGioco(props){
     const [nomeGiocoModifica, setNomeGiocoModifica] = useState(props.nomeGioco);
     const [tipoGiocoModifica, setTipoGiocoModifica] = useState(props.tipoGioco);
     const [livelloGiocoModifica, setLivelloGiocoModifica] = useState(props.difficulty);
-    const [numeroRoundModifica, setNumeroRoundModifica] =  useState(game_ctx.domandeDaModificare[0]);
-    const [domandeSelected, setDomandeSelected] = useState([]);
+    // const [numeroRoundModifica, setNumeroRoundModifica] =  useState(game_ctx.domandeDaModificare[0]);
+    const [domandeSelected, setDomandeSelected] = useState(game_ctx.domandeDaModificare);
 
     const [selectedEasy, setSelectedEasy] = useState(false);
     const [selectedNormal, setSelectedNormal] = useState(false);
@@ -39,7 +39,7 @@ function EditGioco(props){
     }
     useEffect(() => {
         categoriaGioco = props.categoria;
-        console.log(game_ctx.domandeDaModificare[0])
+        console.log(game_ctx.domandeDaModificare)
     }, [])
 
     useEffect(() => {
@@ -55,8 +55,10 @@ function EditGioco(props){
         // console.log(livelloGioco);
     }
     function numeroRoundChangeHandler(event){
-        console.log(event.target.value);
-        setNumeroRoundModifica([event.target.value]);
+        var array = [parseInt(event.target.value)];
+        // array.push(event.target.value);
+        console.log(array);
+        setDomandeSelected(array);
     }
 
     function selezioneDifficoltà(stringaDifficoltà){
@@ -100,19 +102,11 @@ function EditGioco(props){
     }
 
     async function salvaGiocoAggiornato(){
-        if(tipoGiocoModifica === "RIFLESSI"){
-            await getServerMgr().updateGame(nomeGiocoModifica, livelloGiocoModifica, categoriaGioco, numeroRoundModifica, giocoID)
-            .catch((err) => {
-                console.error(err)
-            });
-        }
-        else{
-            await getServerMgr().updateGame(nomeGiocoModifica, livelloGiocoModifica, categoriaGioco, domandeSelected, giocoID)
-            .catch((err) => {
-                console.error(err)
-            });
-        }
-        
+    
+        await getServerMgr().updateGame(nomeGiocoModifica, livelloGiocoModifica, categoriaGioco, domandeSelected, giocoID)
+        .catch((err) => {
+            console.error(err)
+        });
 
         props.chiudiFormModifica();
         game_ctx.prendiTuttiGiochiDomande();
@@ -170,7 +164,7 @@ function EditGioco(props){
                 {tipoGiocoModifica === "RIFLESSI" &&
                     <>
                         <label className={styles.label_style}>Numero di round da giocare:</label>
-                        <input className={styles.textbox_style} type="number" step={1} value={numeroRoundModifica} onChange={numeroRoundChangeHandler}></input>
+                        <input className={styles.textbox_style} type="number" step={1} value={domandeSelected} onChange={numeroRoundChangeHandler}></input>
                     </>
                 }
 

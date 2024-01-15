@@ -18,6 +18,7 @@ let counter_question_number = 0;
 let counter_correct_answers = 0;
 var arrayRisposte = [];
 var arrayRisposteCorrette = [];
+var arrayRisposteSbagliate = [];
 
 var tipoQuiz;
 var secondi;
@@ -63,11 +64,7 @@ function ExerciseGuessTheFace(props){
 
     const auth_ctx = useContext(AuthContext);
     const game_ctx = useContext(GameContext);
-    const questions = game_ctx.listaGiochi[props.INDICEGIOCO].domandeID.map((item) => (
-        game_ctx.domande.filter((elem) => (
-            elem.ID == item
-        ))[0]
-    ));
+    const questions = props.domandeGioco;
 
     useEffect(() => {
         getSingleImage();
@@ -153,32 +150,48 @@ function ExerciseGuessTheFace(props){
 
     useEffect(() => {
         arrayRisposteCorrette = [];
+        arrayRisposteSbagliate = [];
 
         // SULLA LINEA DEL CICLO for SI è VERIFICATO UN BUG(solo una volta), NON RIESCO A RICREARLO---> MANTIENI QUESTO COMMENTO FINO A QUANDO NON OTTIENI INFO IN MERITO
-        for(var i=0; i < Object.keys(questions[counter_question_number].rispCorrette).length; i++){
-            if(i === 0){
-                arrayRisposteCorrette.push(questions[counter_question_number].rispCorrette.correct_answer_n1);
+        // for(var i=0; i < Object.keys(questions[counter_question_number].rispCorrette).length; i++){
+            if(questions[counter_question_number].rispCorrettaN1.trim().length > 0){
+                arrayRisposteCorrette.push(questions[counter_question_number].rispCorrettaN1);
             }
-            if(i === 1){
-                arrayRisposteCorrette.push(questions[counter_question_number].rispCorrette.correct_answer_n2);
+            if(questions[counter_question_number].rispCorrettaN2.trim().length > 0){
+                arrayRisposteCorrette.push(questions[counter_question_number].rispCorrettaN2);
             }
-            if(i === 2){
-                arrayRisposteCorrette.push(questions[counter_question_number].rispCorrette.correct_answer_n3);
+            if(questions[counter_question_number].rispCorrettaN3.trim().length > 0){
+                arrayRisposteCorrette.push(questions[counter_question_number].rispCorrettaN3);
             }
-            if(i === 3){
-                arrayRisposteCorrette.push(questions[counter_question_number].rispCorrette.correct_answer_n4);
+            if(questions[counter_question_number].rispCorrettaN4.trim().length > 0){
+                arrayRisposteCorrette.push(questions[counter_question_number].rispCorrettaN4);
             }
-        }
+
+            if(questions[counter_question_number].rispSbagliataN1.trim().length > 0){
+                arrayRisposteSbagliate.push(questions[counter_question_number].rispSbagliataN1);
+            }
+            if(questions[counter_question_number].rispSbagliataN2.trim().length > 0){
+                arrayRisposteSbagliate.push(questions[counter_question_number].rispSbagliataN2);
+            }
+            if(questions[counter_question_number].rispSbagliataN3.trim().length > 0){
+                arrayRisposteSbagliate.push(questions[counter_question_number].rispSbagliataN3);
+            }
+            if(questions[counter_question_number].rispSbagliataN4.trim().length > 0){
+                arrayRisposteSbagliate.push(questions[counter_question_number].rispSbagliataN4);
+            }
+        // }
         console.log(arrayRisposteCorrette);
+        console.log(arrayRisposteSbagliate);
+        shuffleAnswers();
     }, [counter_question_number]);
 
     function checkTheAnswer(answer1, answer2, answer3, answer4, answer5, answer6, answer7, answer8, button){
-        let risp1 = questions[counter_question_number].rispCorrette.correct_answer_n1;
-        let risp2 = questions[counter_question_number].rispCorrette.correct_answer_n2;
-        let risp3 = questions[counter_question_number].rispCorrette.correct_answer_n3;
-        let risp4 = questions[counter_question_number].rispCorrette.correct_answer_n4;
+        let risp1 = questions[counter_question_number].rispCorrettaN1;
+        let risp2 = questions[counter_question_number].rispCorrettaN2;
+        let risp3 = questions[counter_question_number].rispCorrettaN3;
+        let risp4 = questions[counter_question_number].rispCorrettaN4;
 
-        let numeroRisposteCorrette = Object.keys(questions[counter_question_number].rispCorrette).length;
+        let numeroRisposteCorrette = arrayRisposteCorrette.length;
         console.log(numeroRisposteCorrette);
 
         console.log("INTERVAL dentro checktheanswer--->" + interval);
@@ -439,37 +452,39 @@ function ExerciseGuessTheFace(props){
 
     function shuffleAnswers(){
         arrayRisposte.length = 0;
-        var numeroTotaleRisposte_CORRETTE = Object.keys(questions[counter_question_number].rispCorrette).length;
-        var numeroTotaleRisposte_SBAGLIATE = Object.keys(questions[counter_question_number].rispSbagliate).length;
+        var numeroTotaleRisposte_CORRETTE = arrayRisposteCorrette.length;
+        var numeroTotaleRisposte_SBAGLIATE = arrayRisposteSbagliate.length;
         // console.log(numeroTotaleRisposte);
 
         for(var i=0; i < numeroTotaleRisposte_CORRETTE; i++){
-            if(i === 0){
-                arrayRisposte[i] = questions[counter_question_number].rispCorrette.correct_answer_n1;
-            }
-            if(i === 1){
-                arrayRisposte[i] = questions[counter_question_number].rispCorrette.correct_answer_n2;
-            }
-            if(i === 2){
-                arrayRisposte[i] = questions[counter_question_number].rispCorrette.correct_answer_n3;
-            }
-            if(i === 3){
-                arrayRisposte[i] = questions[counter_question_number].rispCorrette.correct_answer_n4;
-            }
+            arrayRisposte.push(arrayRisposteCorrette[i]);
+            // if(questions[counter_question_number].rispCorrettaN1.trim().length > 0){
+            //     arrayRisposte[i] = questions[counter_question_number].rispCorrettaN1;
+            // }
+            // if(questions[counter_question_number].rispCorrettaN2.trim().length > 0){
+            //     arrayRisposte[i] = questions[counter_question_number].rispCorrettaN2;
+            // }
+            // if(questions[counter_question_number].rispCorrettaN3.trim().length > 0){
+            //     arrayRisposte[i] = questions[counter_question_number].rispCorrettaN3;
+            // }
+            // if(questions[counter_question_number].rispCorrettaN4.trim().length > 0){
+            //     arrayRisposte[i] = questions[counter_question_number].rispCorrettaN4;
+            // }
         }
         for(var j=0; j < numeroTotaleRisposte_SBAGLIATE; j++){
-            if(j === 0){
-                arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliate.wrong_answer_n1;
-            }
-            if(j === 1){
-                arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliate.wrong_answer_n2;
-            }
-            if(j === 2){
-                arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliate.wrong_answer_n3;
-            }
-            if(j === 3){
-                arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliate.wrong_answer_n4;
-            }
+            arrayRisposte.push(arrayRisposteSbagliate[j]);
+            // if(questions[counter_question_number].rispSbagliataN1.trim().length > 0){
+            //     arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliataN1;
+            // }
+            // if(questions[counter_question_number].rispSbagliataN2.trim().length > 0){
+            //     arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliataN2;
+            // }
+            // if(questions[counter_question_number].rispSbagliataN3.trim().length > 0){
+            //     arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliataN3;
+            // }
+            // if(questions[counter_question_number].rispSbagliataN4.trim().length > 0){
+            //     arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliataN4;
+            // }
         }
         
         // arrayRisposte[0] = questions[counter_question_number].question.correct_answer;
@@ -496,6 +511,7 @@ function ExerciseGuessTheFace(props){
         setRisposta7(arrayRisposte[6]);
         setRisposta8(arrayRisposte[7]);
 
+        console.log(arrayRisposte);
     }
 
     function iniziaGioco(){
@@ -511,6 +527,7 @@ function ExerciseGuessTheFace(props){
     function aggiornaLogica(){
         if(counter_question_number < questions.length-1){
             counter_question_number++;
+            arrayRisposte = [];
         }
         else{
             setGameStarted(false);
@@ -582,7 +599,7 @@ function ExerciseGuessTheFace(props){
                             <img className={styles.resize_image} src={image} alt='Face'></img>
                         </>
                     }
-                    {tipoQuiz === "QUIZ" && <h1>{questions[counter_question_number].indovina}</h1>}
+                    {tipoQuiz === "QUIZ" && <h1>{questions[counter_question_number].domanda}</h1>}
 
                     <div className={styles.wrapper_horizontal_flex}>
                         <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>
