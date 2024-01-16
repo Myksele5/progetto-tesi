@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import GenericButton from "../UI/GenericButton";
 import styles from "./AddDomanda.module.css";
 import GameContext from "../../context/game-context";
@@ -7,6 +7,8 @@ import ElencoDomande from "./ElencoDomande";
 import ElencoDomandeModificabili from "./ElencoDomandeModificabili";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import AuthContext from "../../context/auth-context";
+import { getServerMgr } from "../../backend_conn/ServerMgr";
+import axios from "axios";
 
 var counter_CORRETTE = 1;
 var counter_SBAGLIATE = 1;
@@ -37,10 +39,77 @@ function AddDomanda(props){
 
     var categorie = game_ctx.recuperaCategorieDomande(gameType);
 
+    const [myFile, setMyFile] = useState(null);
+    const [msg, setMsg] = useState("");
+    const [flagUpload, setFlagUpload] = useState(1);
+
+    useEffect(() => {
+        if(flagUpload != 1){
+        uploadFile();
+        }    
+    }, [flagUpload])
+    function selectFile() {
+        document.getElementById("mfile").click();
+    }
+    function setFile(e) {
+        setMyFile(e.target.files[0]);
+        setFlagUpload((prevState) => (prevState + 1))
+    }
+    function uploadFile(){
+        const url="http://myks.altervista.org/provaScript.php"
+        const data = new FormData();
+        data.append("file", myFile);
+        axios.post(url, data).then(response => setMsg(response.data)).catch(error => setMsg(error))
+    }
+
+    function uploadImage(){
+        uploadFile();
+        // var filesss = document.getElementById("userFile").files;
+        // console.log(filesss.length);
+
+        // if(filesss.length > 0){
+        //     var formDataaa = new FormData();
+        //     formDataaa.append("userFile", filesss[0]);
+        //     formDataaa.append("service", "addImage");
+        //     var xhttp = new XMLHttpRequest();
+
+        //     xhttp.open("POST", "http://myks.altervista.org/connection.php");
+        //     xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+        //     xhttp.setRequestHeader("Access-Control-Allow-Credentials", "true");
+        //     xhttp.setRequestHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        //     xhttp.setRequestHeader("Access-Control-Allow-Headers",  "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Access-Control-Request-Method, Access-Control-Request-Headers, content-type");
+        //     xhttp.setRequestHeader('Content-type', 'application/json');
+
+        //     xhttp.onreadystatechange = function() {
+        //         if (this.readyState == 4 && this.status == 200) {
+  
+        //              var response = this.responseText;
+        //              if(response == 1){
+        //                   alert("Upload successfully.");
+        //                     console.log(response);
+        //              }else{
+        //                   alert("File not uploaded.");
+        //                     console.log(response);
+        //              }
+        //         }
+        //    };
+
+        //    xhttp.send(formDataaa);
+        // }
+        // else{
+        //     alert("Please select a file");
+        // }
+        // await getServerMgr().addImage(file)
+        // .catch((err) => {
+        //     console.error(err)
+        // });
+    }
+
     function imageFileChangeHandler(event){
         file = event.target.files[0];
         setImageFile(URL.createObjectURL(file));
         console.log(file.name);
+        
     }
 
     function gameTypeChangeHandler(event){
@@ -169,16 +238,12 @@ function AddDomanda(props){
                 categoria: categoryQuestion,
                 domanda: domanda,
                 rispCorrette: correct_answers,
-                rispSbagliate: wrong_answers
+                rispSbagliate: wrong_answers,
+                immagine: file.name
             }
-            // new_question = {
-            //     livelloDomanda: "facile",
-            //     categoria: categoryQuestion,
-            //     // indovina: indovina,
-            //     fileXstorage: file,
-            //     rispCorrette: correct_answers,
-            //     rispSbagliate: wrong_answers
-            // }
+            
+            uploadImage();
+
         }
 
         if(gameType === "COMPLETA LA PAROLA"){
@@ -312,7 +377,8 @@ function AddDomanda(props){
 
                                 {gameType === "QUIZ CON IMMAGINI" &&
                                     <>
-                                        <input type="file" accept="image/*" onChange={imageFileChangeHandler}></input>
+                                        <input type="file" name="mfile" id="mfile" onChange={setFile} style={{display: 'none'}}></input>
+                                        <button onClick={selectFile}>{"Select file"}</button>
                                         <img className={styles.preview_image} src={imageFile}></img>
                                         <label className={styles.label_style}>Inserisci domanda: </label>
                                         <input className={styles.textbox_style} type="text" onChange={domandaChangeHandler}></input>
@@ -413,6 +479,7 @@ function AddDomanda(props){
                                 }
 
                                 <GenericButton
+                                    method={"post"}
                                     onClick={creaNuovaDomanda}
                                     generic_button={true}
                                     buttonText={"Salva domanda"}

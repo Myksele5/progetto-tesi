@@ -167,7 +167,7 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.addQuestion = async (doctor_UID, tipoGioco, categoria, domanda, rispCorrettaN1, rispCorrettaN2, rispCorrettaN3, rispCorrettaN4, rispSbagliataN1, rispSbagliataN2, rispSbagliataN3, rispSbagliataN4, cb) => {
+    serverMgr.addQuestion = async (doctor_UID, tipoGioco, categoria, domanda, rispCorrettaN1, rispCorrettaN2, rispCorrettaN3, rispCorrettaN4, rispSbagliataN1, rispSbagliataN2, rispSbagliataN3, rispSbagliataN4, immagine, cb) => {
         let result = await serverMgr.requestFetchData("addQuestion", {
             doctor_UID: doctor_UID,
             tipoGioco: tipoGioco,
@@ -180,7 +180,8 @@ function initServerMgr(cb) {
             rispSbagliataN1: rispSbagliataN1,
             rispSbagliataN2: rispSbagliataN2,
             rispSbagliataN3: rispSbagliataN3,
-            rispSbagliataN4: rispSbagliataN4
+            rispSbagliataN4: rispSbagliataN4,
+            immagine: immagine
         })
         if(cb) {
             // console.log("getInventory: " + result)
@@ -239,7 +240,7 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.addGame = async (creatorID, nomeGioco, tipoGioco, livelloGioco, categoriaGioco, domande, cb) => {
+    serverMgr.addGame = async (creatorID, nomeGioco, tipoGioco, livelloGioco, categoriaGioco, domande, nRound, cb) => {
         let result = await serverMgr.requestFetchData("addGame", {
             creatorID: creatorID,
             nomeGioco: nomeGioco,
@@ -247,6 +248,7 @@ function initServerMgr(cb) {
             livelloGioco: livelloGioco,
             categoriaGioco: categoriaGioco,
             // domande: domande
+            numeroRound: nRound
         })
 
         await serverMgr.requestFetchData("addBridgeQuestions", {gameID: result, domande: domande});
@@ -261,12 +263,13 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.updateGame = async (nomeGioco, livelloGioco, categoriaGioco, domande, gameID, cb) => {
+    serverMgr.updateGame = async (nomeGioco, livelloGioco, categoriaGioco, domande, nRound, gameID, cb) => {
         let result = await serverMgr.requestFetchData("updateGame", {
             nomeGioco: nomeGioco,
             livelloGioco: livelloGioco,
             categoriaGioco: categoriaGioco,
             // domande: domande,
+            numeroRound: nRound,
             gameID: gameID
         })
 
@@ -370,6 +373,18 @@ function initServerMgr(cb) {
 
     serverMgr.getBridge = async (cb) => {
         let result = await serverMgr.requestFetchData("getBridge")
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.addImage = async (file, cb) => {
+        let result = await serverMgr.requestFetchData("addImage", {file})
         if(cb) {
             // console.log("getInventory: " + result)
             cb(result)

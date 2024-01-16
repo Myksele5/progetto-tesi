@@ -53,7 +53,7 @@ export function GameContextProvider(props){
         const parseResult = (resultsArray) => {
             let markersList = {}
             resultsArray.forEach((item) => {
-                let currentMarker = (({categoriaGioco, creatorID, gameID, livelloGioco, nomeGioco, tipoGioco}) => ({categoriaGioco, creatorID, gameID, livelloGioco, nomeGioco, tipoGioco, domandeID: []}))(item);
+                let currentMarker = (({categoriaGioco, creatorID, gameID, livelloGioco, nomeGioco, tipoGioco, numeroRound}) => ({categoriaGioco, creatorID, gameID, livelloGioco, nomeGioco, tipoGioco,numeroRound, domandeID: []}))(item);
                 markersList[item.gameID] ??= currentMarker
                 if(item.IDquestion !== null) {
                     markersList[item.gameID].domandeID.push(item.IDquestion)
@@ -130,7 +130,8 @@ export function GameContextProvider(props){
         result = await getServerMgr().addQuestion(
             nuova_domanda.doctor_UID, nuova_domanda.tipoGioco, nuova_domanda.categoria, nuova_domanda.domanda,
             nuova_domanda.rispCorrette.correct_answer_n1, nuova_domanda.rispCorrette.correct_answer_n2, nuova_domanda.rispCorrette.correct_answer_n3, nuova_domanda.rispCorrette.correct_answer_n4,
-            nuova_domanda.rispSbagliate.wrong_answer_n1, nuova_domanda.rispSbagliate.wrong_answer_n2, nuova_domanda.rispSbagliate.wrong_answer_n3, nuova_domanda.rispSbagliate.wrong_answer_n4
+            nuova_domanda.rispSbagliate.wrong_answer_n1, nuova_domanda.rispSbagliate.wrong_answer_n2, nuova_domanda.rispSbagliate.wrong_answer_n3, nuova_domanda.rispSbagliate.wrong_answer_n4,
+            nuova_domanda.immagine
         )
 
         // const listaDomandeGiochiReference = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-quiz`);

@@ -88,8 +88,11 @@
     case "updateBridgeQuestions":
         $query_result = updateBridgeQuestions($conn);
         break;
-    case "getBridge":
-        $query_result = getBridge($conn);
+    // case "getBridge":
+    //     $query_result = getBridge($conn);
+    //     break;
+    case "addImage":
+        $query_result = addImage($conn);
         break;
     default:
     	break;
@@ -321,14 +324,15 @@
         $rispSbagliataN2 = $dataJson["rispSbagliataN2"];
         $rispSbagliataN3 = $dataJson["rispSbagliataN3"];
         $rispSbagliataN4 = $dataJson["rispSbagliataN4"];
+        $immagine = $dataJson["immagine"];
         
         $insertNewQuestion = $i_conn->prepare(
             "INSERT INTO `gamesQuestions` (`doctor_UID`, `tipoGioco`, `categoria`, `domanda`, `rispCorrettaN1`, `rispCorrettaN2`, `rispCorrettaN3`, `rispCorrettaN4`,
-             `rispSbagliataN1`, `rispSbagliataN2`, `rispSbagliataN3`, `rispSbagliataN4`) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+             `rispSbagliataN1`, `rispSbagliataN2`, `rispSbagliataN3`, `rispSbagliataN4`, `immagine`) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
-        $insertNewQuestion->bind_param("isssssssssss", $doctor_UID, $tipoGioco, $categoria, $domanda, $rispCorrettaN1, $rispCorrettaN2, $rispCorrettaN3, $rispCorrettaN4,
-                                        $rispSbagliataN1, $rispSbagliataN2, $rispSbagliataN3, $rispSbagliataN4);
+        $insertNewQuestion->bind_param("issssssssssss", $doctor_UID, $tipoGioco, $categoria, $domanda, $rispCorrettaN1, $rispCorrettaN2, $rispCorrettaN3, $rispCorrettaN4,
+                                        $rispSbagliataN1, $rispSbagliataN2, $rispSbagliataN3, $rispSbagliataN4, $immagine);
         $insertNewQuestion->execute();
         
         $insertNewQuestion->bind_result($result);
@@ -401,11 +405,10 @@
         $livelloGioco = $dataJson["livelloGioco"];
         $categoriaGioco = $dataJson["categoriaGioco"];
         // $domande = $dataJson["domande"];
+        $numeroRound = $dataJson["numeroRound"];
         
-        $insertNewGame = $i_conn->prepare(
-            "INSERT INTO `games` (`creatorID`, `nomeGioco`, `tipoGioco`, `livelloGioco`, `categoriaGioco`) VALUES (?, ?, ?, ?, ?)"
-        );
-        $insertNewGame->bind_param("issss", $creatorID, $nomeGioco, $tipoGioco, $livelloGioco, $categoriaGioco);
+        $insertNewGame = $i_conn->prepare("INSERT INTO `games` (`creatorID`, `nomeGioco`, `tipoGioco`, `livelloGioco`, `categoriaGioco`, `numeroRound`) VALUES (?, ?, ?, ?, ?, ?)");
+        $insertNewGame->bind_param("issssi", $creatorID, $nomeGioco, $tipoGioco, $livelloGioco, $categoriaGioco, $numeroRound);
         $insertNewGame->execute();
         
         $result = $insertNewGame->insert_id;
@@ -422,10 +425,11 @@
         $livelloGioco = $dataJson["livelloGioco"];
         $categoriaGioco = $dataJson["categoriaGioco"];
         // $domande = $dataJson["domande"];
+        $numeroRound = $dataJson["numeroRound"]; 
         $gameID = $dataJson["gameID"];
         
-        $updateGame = $i_conn->prepare("UPDATE `games` SET `nomeGioco` = ?, `livelloGioco` = ?, `categoriaGioco` = ? WHERE `games`.`gameID` = ?");
-        $updateGame->bind_param("sssi", $nomeGioco, $livelloGioco, $categoriaGioco, $gameID);
+        $updateGame = $i_conn->prepare("UPDATE `games` SET `nomeGioco` = ?, `livelloGioco` = ?, `categoriaGioco` = ?, `numeroRound` = ? WHERE `games`.`gameID` = ?");
+        $updateGame->bind_param("sssii", $nomeGioco, $livelloGioco, $categoriaGioco, $numeroRound, $gameID);
         $updateGame->execute();
         
         $updateGame->bind_result($result);
@@ -624,11 +628,81 @@
         return $result;
     }
 
-    function getBridge($i_conn){
+    // function getBridge($i_conn){
 
-        $result = $i_conn->query("SELECT * FROM `bridgeToQuestionsGames`");
+    //     $result = $i_conn->query("SELECT * FROM `bridgeToQuestionsGames`");
 
-        return $result;
+    //     return $result;
+    // }
+
+    function addImage($i_conn){
+        if(isset($_FILES['userFile']['name'])){
+            // file name
+            $filename = $_FILES['userFile']['name'];
+       
+            // Location
+            $location = 'immagini/'.$filename;
+       
+            // file extension
+            $file_extension = pathinfo($location, PATHINFO_EXTENSION);
+            $file_extension = strtolower($file_extension);
+       
+            // Valid extensions
+            $valid_ext = array("jpg","png","jpeg");
+       
+            $response = 0;
+            if(in_array($file_extension,$valid_ext)){
+                 // Upload file
+                 if(move_uploaded_file($_FILES['file']['tmp_name'],$location)){
+                      $response = 1;
+                 } 
+            }
+       
+            echo $response;
+            exit;
+            // $data = file_get_contents("php://input");
+            // $dataJson = json_decode($data, true);
+            
+            // $uploadDirectory = "immagini";
+            // $nomeFile = basename($_FILES['userFile']['name']);
+            // $FILE_MAX_SIZE = 500000;
+
+            // if(is_dir($uploadDirectory)){
+            //     echo "DIRECTORY ESISTE";
+            //     echo $nomeFile;
+            // }
+            // else{
+            //     echo "Non trovo niente....";
+            // }
+
+            // print is_dir($uploadDirectory);
+            // echo $_FILES['userFile']['name'];
+
+            // if(file_exists($_FILES['userFile']['name'])){
+            //     echo "FILE ESISTE";
+            // }
+            // else{
+            //     echo "Dove sta il file?";
+            // }
+
+            // if($_FILES['userFile']['size'] < $FILE_MAX_SIZE){
+            //     if(move_uploaded_file($_FILES['userFile']['name'], $uploadDirectory.$nomeFile)){
+            //         print "FILE VALIDO! Inviato con successo.";
+            //     }
+            //     else{
+            //         print "NON VA BENE!";
+            //     }
+            // }
+            // else{
+            //     print "Dimensioni del file troppo grandi!";
+            // }
+            // $bridgeQuestQuery = $i_conn->prepare("DELETE FROM `bridgeToQuestionsGames` WHERE IDgame = ?");
+            // $bridgeQuestQuery->bind_param("i", $gameID);
+
+            // $bridgeQuestQuery->execute();
+            
+
+            // return $result;
+        }
     }
-    
 ?>

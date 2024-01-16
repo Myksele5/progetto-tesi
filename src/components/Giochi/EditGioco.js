@@ -16,7 +16,7 @@ function EditGioco(props){
     const [nomeGiocoModifica, setNomeGiocoModifica] = useState(props.nomeGioco);
     const [tipoGiocoModifica, setTipoGiocoModifica] = useState(props.tipoGioco);
     const [livelloGiocoModifica, setLivelloGiocoModifica] = useState(props.difficulty);
-    // const [numeroRoundModifica, setNumeroRoundModifica] =  useState(game_ctx.domandeDaModificare[0]);
+    const [numeroRoundModifica, setNumeroRoundModifica] =  useState(props.numeroRound);
     const [domandeSelected, setDomandeSelected] = useState(game_ctx.domandeDaModificare);
 
     const [selectedEasy, setSelectedEasy] = useState(false);
@@ -55,10 +55,8 @@ function EditGioco(props){
         // console.log(livelloGioco);
     }
     function numeroRoundChangeHandler(event){
-        var array = [parseInt(event.target.value)];
-        // array.push(event.target.value);
-        console.log(array);
-        setDomandeSelected(array);
+        setNumeroRoundModifica(event.target.value);
+        console.log(event.target.value);
     }
 
     function selezioneDifficoltà(stringaDifficoltà){
@@ -103,7 +101,7 @@ function EditGioco(props){
 
     async function salvaGiocoAggiornato(){
     
-        await getServerMgr().updateGame(nomeGiocoModifica, livelloGiocoModifica, categoriaGioco, domandeSelected, giocoID)
+        await getServerMgr().updateGame(nomeGiocoModifica, livelloGiocoModifica, categoriaGioco, domandeSelected, numeroRoundModifica, giocoID)
         .catch((err) => {
             console.error(err)
         });
@@ -164,7 +162,7 @@ function EditGioco(props){
                 {tipoGiocoModifica === "RIFLESSI" &&
                     <>
                         <label className={styles.label_style}>Numero di round da giocare:</label>
-                        <input className={styles.textbox_style} type="number" step={1} value={domandeSelected} onChange={numeroRoundChangeHandler}></input>
+                        <input className={styles.textbox_style} type="number" step={1} value={numeroRoundModifica} onChange={numeroRoundChangeHandler}></input>
                     </>
                 }
 

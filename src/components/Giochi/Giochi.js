@@ -80,7 +80,7 @@ function Giochi(){
                 tipoGioco={listaa.tipoGioco}
                 difficulty={listaa.livelloGioco}
                 categoria={listaa.categoriaGioco}
-                // numeroRound={numeroRound}
+                numeroRound={listaa.numeroRound}
                 gameID={listaa.gameID}
                 chiudiFormModifica={closeFormEditGame}
             >
@@ -137,6 +137,7 @@ function Giochi(){
                 }
             })
         }
+        console.log(game_ctx.listaGiochi[indice_gioco].numeroRound);
         
         switch(stringa_TIPOGIOCO){
             case 'QUIZ':
@@ -179,7 +180,7 @@ function Giochi(){
                         giocoTerminato={endGame}
                         INDICEGIOCO={indice_gioco}
                         TIPOGIOCO={stringa_TIPOGIOCO}
-                        numeroRound={oggettoDomandeIDGioco}
+                        numeroRound={game_ctx.listaGiochi[indice_gioco].numeroRound}
                     >
                     </ExerciseReflexes>
                 );
@@ -250,6 +251,7 @@ function Giochi(){
                 sbagliataN2={singleQuestion.rispSbagliataN2}
                 sbagliataN3={singleQuestion.rispSbagliataN3}
                 sbagliataN4={singleQuestion.rispSbagliataN4}
+                immagine={singleQuestion.immagine}
                 chiudiFormModificaDomanda={closeFormEditQuestion}
             >
             </EditDomanda>

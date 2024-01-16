@@ -15,7 +15,7 @@ function AddGioco(props){
     const [titoloGioco, setTitoloGioco] = useState("");
     const [tipologiaGioco, setTipologiaGioco] = useState("QUIZ");
     const [livelloGioco, setLivelloGioco] = useState("NORMALE");
-    // const [numeroRound, setNumeroRound] = useState(0);
+    const [numeroRound, setNumeroRound] = useState(null);
     const [domandeSelected, setDomandeSelected] = useState([]);
 
     const [selectedEasy, setSelectedEasy] = useState(false);
@@ -27,6 +27,7 @@ function AddGioco(props){
 
     useEffect(() => {
         setDomandeSelected([]);
+        setNumeroRound(null);
     }, [tipologiaGioco])
 
     function selezioneDifficoltà(stringaDifficoltà){
@@ -73,10 +74,8 @@ function AddGioco(props){
         console.log(livelloGioco);
     }
     function numeroRoundChangeHandler(event){
-        var array = [parseInt(event.target.value)];
-        // array.push(event.target.value);
-        console.log(array);
-        setDomandeSelected(array);
+        setNumeroRound(event.target.value);
+        console.log(event.target.value);
     }
 
     function creaOggettoDomande(domandeSelezionate, categoriaGame){
@@ -94,7 +93,7 @@ function AddGioco(props){
             categoriaGioco = "REFLEXES_GAME";
         }
 
-        await getServerMgr().addGame(auth_ctx.utenteLoggatoUID, titoloGioco, tipologiaGioco, livelloGioco, categoriaGioco, domandeSelected)
+        await getServerMgr().addGame(auth_ctx.utenteLoggatoUID, titoloGioco, tipologiaGioco, livelloGioco, categoriaGioco, domandeSelected, numeroRound)
         .catch((err) => {
             console.error(err)
         });
