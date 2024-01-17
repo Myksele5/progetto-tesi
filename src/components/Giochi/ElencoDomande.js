@@ -22,6 +22,8 @@ function ElencoDomande(props){
 
     var categorie = game_ctx.recuperaCategorieDomande(props.tipoGioco);
 
+    const websiteUrl = "http://myks.altervista.org/uploads/";
+
     //------- CREA QUI L'ARRAY CHE CONTIENE LE DOMANDE DENTRO verifyIsChecked
     useEffect(() => {
         // setllll([...game_ctx.domandeDaModificare]);
@@ -32,49 +34,6 @@ function ElencoDomande(props){
         props.domandeNuovoGioco(llll);
 
     }, [game_ctx.domandeDaModificare.length]);
-
-    useEffect(() => {
-        getAllImages()
-        // console.log(imagesList);
-        // setClassicQuizQuestions(game_ctx.domandeDeiQuiz)
-    }, [])
-
-    async function getAllImages(){
-        setImagesList([]);
-        const listaImmaginiStorage = ref(storage, `${auth_ctx.utenteLoggato}/`);
-        const response = await listAll(listaImmaginiStorage)
-        .catch((err) => {
-            console.error(err);
-        });
-        for(var i=0; i < response.items.length; i++){
-            // console.log(response);
-            await getDownloadURL(response.items[i])
-            .then((url) => {
-                var imageName = response.items[i].name;
-                setImagesList((previous) => [...previous, {
-                    imageURL: url,
-                    name: imageName
-                }]);
-                // console.log(imagesList.name);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-        }
-    }
-
-    function getSingleImage(domandaSingola){
-        for(var i=0; i < imagesList.length; i++){
-            // console.log(imagesList[i].name)
-            // console.log(domandaSingola.indovina)
-            if(domandaSingola.id === imagesList[i].name){
-                domandaSingola['immagine'] = imagesList[i].imageURL;
-                // console.log(domandaSingola.immagine);
-                return domandaSingola.immagine;
-            }
-        }
-        return;
-    }
 
     function categoryChangeHandler(event){
         changingCategoryMakesQuestionsReset();
@@ -192,7 +151,7 @@ function ElencoDomande(props){
                     {props.tipoGioco === "QUIZ CON IMMAGINI" &&
                         <div className={styles.flex_list_container}>
                             <h4 className={styles.subtitle_style}>Immagine:</h4>
-                            <img className={styles.preview_image} src={getSingleImage(singleQuestion)}></img>
+                            <img className={styles.preview_image} src={websiteUrl.concat(singleQuestion.immagine)}></img>
                             <h4 className={styles.subtitle_style}>Domanda:</h4>
                             <p className={styles.question_style}>{singleQuestion.domanda}</p>
                         </div>

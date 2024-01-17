@@ -352,15 +352,16 @@
         $rispSbagliataN2 = $dataJson["rispSbagliataN2"];
         $rispSbagliataN3 = $dataJson["rispSbagliataN3"];
         $rispSbagliataN4 = $dataJson["rispSbagliataN4"];
+        $immagine = $dataJson["immagine"];
         $ID = $dataJson["ID"];
         
         $updateQuestion = $i_conn->prepare(
             "UPDATE `gamesQuestions` SET `domanda` = ?, `rispCorrettaN1` = ?, `rispCorrettaN2` = ?, `rispCorrettaN3` = ?, `rispCorrettaN4` = ?,
-             `rispSbagliataN1` = ?, `rispSbagliataN2` = ?, `rispSbagliataN3` = ?, `rispSbagliataN4` = ?
+             `rispSbagliataN1` = ?, `rispSbagliataN2` = ?, `rispSbagliataN3` = ?, `rispSbagliataN4` = ?, `immagine` = ?
             WHERE `gamesQuestions`.`ID` = ?"
         );
-        $updateQuestion->bind_param("sssssssssi", $domanda, $rispCorrettaN1, $rispCorrettaN2, $rispCorrettaN3, $rispCorrettaN4,
-                                        $rispSbagliataN1, $rispSbagliataN2, $rispSbagliataN3, $rispSbagliataN4, $ID);
+        $updateQuestion->bind_param("ssssssssssi", $domanda, $rispCorrettaN1, $rispCorrettaN2, $rispCorrettaN3, $rispCorrettaN4,
+                                        $rispSbagliataN1, $rispSbagliataN2, $rispSbagliataN3, $rispSbagliataN4, $immagine, $ID);
         $updateQuestion->execute();
         
         $updateQuestion->bind_result($result);
@@ -626,83 +627,5 @@
         
 
         return $result;
-    }
-
-    // function getBridge($i_conn){
-
-    //     $result = $i_conn->query("SELECT * FROM `bridgeToQuestionsGames`");
-
-    //     return $result;
-    // }
-
-    function addImage($i_conn){
-        if(isset($_FILES['userFile']['name'])){
-            // file name
-            $filename = $_FILES['userFile']['name'];
-       
-            // Location
-            $location = 'immagini/'.$filename;
-       
-            // file extension
-            $file_extension = pathinfo($location, PATHINFO_EXTENSION);
-            $file_extension = strtolower($file_extension);
-       
-            // Valid extensions
-            $valid_ext = array("jpg","png","jpeg");
-       
-            $response = 0;
-            if(in_array($file_extension,$valid_ext)){
-                 // Upload file
-                 if(move_uploaded_file($_FILES['file']['tmp_name'],$location)){
-                      $response = 1;
-                 } 
-            }
-       
-            echo $response;
-            exit;
-            // $data = file_get_contents("php://input");
-            // $dataJson = json_decode($data, true);
-            
-            // $uploadDirectory = "immagini";
-            // $nomeFile = basename($_FILES['userFile']['name']);
-            // $FILE_MAX_SIZE = 500000;
-
-            // if(is_dir($uploadDirectory)){
-            //     echo "DIRECTORY ESISTE";
-            //     echo $nomeFile;
-            // }
-            // else{
-            //     echo "Non trovo niente....";
-            // }
-
-            // print is_dir($uploadDirectory);
-            // echo $_FILES['userFile']['name'];
-
-            // if(file_exists($_FILES['userFile']['name'])){
-            //     echo "FILE ESISTE";
-            // }
-            // else{
-            //     echo "Dove sta il file?";
-            // }
-
-            // if($_FILES['userFile']['size'] < $FILE_MAX_SIZE){
-            //     if(move_uploaded_file($_FILES['userFile']['name'], $uploadDirectory.$nomeFile)){
-            //         print "FILE VALIDO! Inviato con successo.";
-            //     }
-            //     else{
-            //         print "NON VA BENE!";
-            //     }
-            // }
-            // else{
-            //     print "Dimensioni del file troppo grandi!";
-            // }
-            // $bridgeQuestQuery = $i_conn->prepare("DELETE FROM `bridgeToQuestionsGames` WHERE IDgame = ?");
-            // $bridgeQuestQuery->bind_param("i", $gameID);
-
-            // $bridgeQuestQuery->execute();
-            
-
-            // return $result;
-        }
     }
 ?>

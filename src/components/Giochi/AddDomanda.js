@@ -12,6 +12,7 @@ import axios from "axios";
 
 var counter_CORRETTE = 1;
 var counter_SBAGLIATE = 1;
+var image;
 var file;
 
 function AddDomanda(props){
@@ -21,7 +22,6 @@ function AddDomanda(props){
     const [totalAnswers_CORRECT, setTotalAnswers_CORRECT] = useState(counter_CORRETTE);
     const [totalAnswers_WRONG, setTotalAnswers_WRONG] = useState(counter_SBAGLIATE);
 
-    const [imageFile, setImageFile] = useState(null);
     const [gameType, setGameType] = useState("QUIZ");
     const [categoryQuestion, setCategoryQuestion] = useState("");
     const [domanda, setDomanda] = useState("");
@@ -38,21 +38,29 @@ function AddDomanda(props){
     const [aggiungiCategoria, setAggiungiCategoria] = useState(false);
 
     var categorie = game_ctx.recuperaCategorieDomande(gameType);
-
+    
+    const [imageFile, setImageFile] = useState(null);
     const [myFile, setMyFile] = useState(null);
     const [msg, setMsg] = useState("");
     const [flagUpload, setFlagUpload] = useState(1);
 
-    useEffect(() => {
-        if(flagUpload != 1){
-        uploadFile();
-        }    
-    }, [flagUpload])
+    // useEffect(() => {
+    //     if(flagUpload != 1){
+    //     uploadFile();
+    //     }    
+    // }, [flagUpload])
     function selectFile() {
-        document.getElementById("mfile").click();
+        image = document.getElementById("mfile").click();
+        // setImageFile(image.files[0]);
+        // console.log(image);
     }
     function setFile(e) {
         setMyFile(e.target.files[0]);
+        console.log(e.target.files[0].name);
+        if(e.target.files.length > 0){
+            setImageFile(URL.createObjectURL(e.target.files[0]));
+        }
+        // setImageFile(URL.createObjectURL(e.target.files[0]));
         setFlagUpload((prevState) => (prevState + 1))
     }
     function uploadFile(){
@@ -63,46 +71,12 @@ function AddDomanda(props){
     }
 
     function uploadImage(){
-        uploadFile();
-        // var filesss = document.getElementById("userFile").files;
-        // console.log(filesss.length);
-
-        // if(filesss.length > 0){
-        //     var formDataaa = new FormData();
-        //     formDataaa.append("userFile", filesss[0]);
-        //     formDataaa.append("service", "addImage");
-        //     var xhttp = new XMLHttpRequest();
-
-        //     xhttp.open("POST", "http://myks.altervista.org/connection.php");
-        //     xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
-        //     xhttp.setRequestHeader("Access-Control-Allow-Credentials", "true");
-        //     xhttp.setRequestHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-        //     xhttp.setRequestHeader("Access-Control-Allow-Headers",  "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Access-Control-Request-Method, Access-Control-Request-Headers, content-type");
-        //     xhttp.setRequestHeader('Content-type', 'application/json');
-
-        //     xhttp.onreadystatechange = function() {
-        //         if (this.readyState == 4 && this.status == 200) {
-  
-        //              var response = this.responseText;
-        //              if(response == 1){
-        //                   alert("Upload successfully.");
-        //                     console.log(response);
-        //              }else{
-        //                   alert("File not uploaded.");
-        //                     console.log(response);
-        //              }
-        //         }
-        //    };
-
-        //    xhttp.send(formDataaa);
-        // }
-        // else{
-        //     alert("Please select a file");
-        // }
-        // await getServerMgr().addImage(file)
-        // .catch((err) => {
-        //     console.error(err)
-        // });
+        if(flagUpload !== 1){
+            uploadFile();
+        }
+        else{
+            alert("Si è verificato un errore! Riprova tra qualche minuto");
+        }
     }
 
     function imageFileChangeHandler(event){
@@ -239,7 +213,7 @@ function AddDomanda(props){
                 domanda: domanda,
                 rispCorrette: correct_answers,
                 rispSbagliate: wrong_answers,
-                immagine: file.name
+                immagine: myFile.name
             }
             
             uploadImage();

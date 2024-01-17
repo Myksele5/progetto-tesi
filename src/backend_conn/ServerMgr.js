@@ -193,7 +193,7 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.updateQuestion = async (domanda, rispCorrettaN1, rispCorrettaN2, rispCorrettaN3, rispCorrettaN4, rispSbagliataN1, rispSbagliataN2, rispSbagliataN3, rispSbagliataN4, ID, cb) => {
+    serverMgr.updateQuestion = async (domanda, rispCorrettaN1, rispCorrettaN2, rispCorrettaN3, rispCorrettaN4, rispSbagliataN1, rispSbagliataN2, rispSbagliataN3, rispSbagliataN4, immagine, ID, cb) => {
         let result = await serverMgr.requestFetchData("updateQuestion", {
             domanda: domanda,
             rispCorrettaN1: rispCorrettaN1,
@@ -204,6 +204,7 @@ function initServerMgr(cb) {
             rispSbagliataN2: rispSbagliataN2,
             rispSbagliataN3: rispSbagliataN3,
             rispSbagliataN4: rispSbagliataN4,
+            immagine: immagine,
             ID: ID
         })
         if(cb) {

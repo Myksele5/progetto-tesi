@@ -4,18 +4,20 @@ import GenericButton from "../UI/GenericButton";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import Card from "../UI/Card";
 import GameContext from "../../context/game-context";
+import axios from "axios";
 
 var counter_CORRETTE = 1;
 var counter_SBAGLIATE = 1;
+var image;
 var file;
 
 function EditDomanda(props){
     const game_ctx = useContext(GameContext);
+    const websiteUrl = "http://myks.altervista.org/uploads/";
 
     const [totalAnswers_CORRECT, setTotalAnswers_CORRECT] = useState(1);
     const [totalAnswers_WRONG, setTotalAnswers_WRONG] = useState(1);
 
-    const [imageFile, setImageFile] = useState(props.immagine);
     const [tipoGiocoModifica, setTipoGiocoModifica] = useState(props.tipoGioco);
     const [categoriaDomandaModifica, setCategoriaDomandaModifica] = useState(props.categoriaDomanda);
     const [domandaModifica, setDomandaModifica] = useState(props.domanda);
@@ -29,6 +31,45 @@ function EditDomanda(props){
     const [rispSbagliata_2Modifica, setRispSbagliata_2Modifica] = useState(props.sbagliataN2);
     const [rispSbagliata_3Modifica, setRispSbagliata_3Modifica] = useState(props.sbagliataN3);
     const [rispSbagliata_4Modifica, setRispSbagliata_4Modifica] = useState(props.sbagliataN4);
+
+    const [imageFile, setImageFile] = useState(websiteUrl.concat(props.immagine));
+    const [myFile, setMyFile] = useState(null);
+    const [msg, setMsg] = useState("");
+    const [flagUpload, setFlagUpload] = useState(1);
+
+    useEffect(() => {
+        console.log(myFile);
+    }, []);
+
+    function selectFile() {
+        image = document.getElementById("mfile").click();
+        // setImageFile(image.files[0]);
+        // console.log(image);
+    }
+    function setFile(e) {
+        setMyFile(e.target.files[0]);
+        console.log(e.target.files[0].name);
+        if(e.target.files.length > 0){
+            setImageFile(URL.createObjectURL(e.target.files[0]));
+        }
+        // setImageFile(URL.createObjectURL(e.target.files[0]));
+        setFlagUpload((prevState) => (prevState + 1))
+    }
+    function uploadFile(){
+        const url="http://myks.altervista.org/provaScript.php"
+        const data = new FormData();
+        data.append("file", myFile);
+        axios.post(url, data).then(response => setMsg(response.data)).catch(error => setMsg(error))
+    }
+
+    function uploadImage(){
+        if(flagUpload !== 1){
+            uploadFile();
+        }
+        else{
+            alert("Si è verificato un errore! Riprova tra qualche minuto");
+        }
+    }
 
     useEffect(() => {
         counter_CORRETTE = 1;
@@ -188,20 +229,24 @@ function EditDomanda(props){
         }
 
         if(tipoGiocoModifica === "QUIZ CON IMMAGINI"){
+            var qualeImg;
+
+            if(!myFile){
+                qualeImg = props.immagine;
+            }
+            else{
+                qualeImg = myFile.name;
+            }
             modified_question = {
                 domanda: domandaModifica,
                 rispCorrette: correct_answers,
                 rispSbagliate: wrong_answers,
+                immagine: qualeImg,
                 ID: ID
             }
-            // new_question = {
-            //     livelloDomanda: "facile",
-            //     categoria: categoryQuestion,
-            //     // indovina: indovina,
-            //     fileXstorage: file,
-            //     rispCorrette: correct_answers,
-            //     rispSbagliate: wrong_answers
-            // }
+
+            uploadImage();
+
         }
 
         if(tipoGiocoModifica === "COMPLETA LA PAROLA"){
@@ -246,8 +291,8 @@ function EditDomanda(props){
 
                     {tipoGiocoModifica === "QUIZ CON IMMAGINI" && 
                         <>
-                            <label className={styles.label_style}>Immagine: </label>
-                            <input type="file" accept="image/*" onChange={imageFileChangeHandler}></input>
+                            <input type="file" name="mfile" id="mfile" onChange={setFile} style={{display: 'none'}}></input>
+                            <button onClick={selectFile}>{"Select file"}</button>
                             <img className={styles.preview_image} src={imageFile}></img>
                             <label className={styles.label_style}>Domanda: </label>
                             <input className={styles.textbox_style} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>

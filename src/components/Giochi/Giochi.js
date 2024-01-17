@@ -137,7 +137,7 @@ function Giochi(){
                 }
             })
         }
-        console.log(game_ctx.listaGiochi[indice_gioco].numeroRound);
+        console.log(game_ctx.listaGiochi[indice_gioco]);
         
         switch(stringa_TIPOGIOCO){
             case 'QUIZ':

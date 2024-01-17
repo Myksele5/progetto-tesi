@@ -255,9 +255,9 @@ export function GameContextProvider(props){
         let result;
 
         result = await getServerMgr().updateQuestion(
-            domandaModificata.domanda, domandaModificata.rispCorrette.correct_answer_n1, domandaModificata.rispCorrette.correct_answer_n2, 
-            domandaModificata.rispCorrette.correct_answer_n3, domandaModificata.rispCorrette.correct_answer_n4, domandaModificata.rispSbagliate.wrong_answer_n1,
-            domandaModificata.rispSbagliate.wrong_answer_n2, domandaModificata.rispSbagliate.wrong_answer_n3, domandaModificata.rispSbagliate.wrong_answer_n4, ID
+            domandaModificata.domanda, domandaModificata.rispCorrette.correct_answer_n1, domandaModificata.rispCorrette.correct_answer_n2, domandaModificata.rispCorrette.correct_answer_n3,
+            domandaModificata.rispCorrette.correct_answer_n4, domandaModificata.rispSbagliate.wrong_answer_n1, domandaModificata.rispSbagliate.wrong_answer_n2, domandaModificata.rispSbagliate.wrong_answer_n3,
+            domandaModificata.rispSbagliate.wrong_answer_n4, domandaModificata.immagine, ID
         )
         getAllGamesQuestions();
     }

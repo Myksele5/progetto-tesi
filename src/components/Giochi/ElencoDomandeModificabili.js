@@ -20,11 +20,7 @@ function ElencoDomandeModificabili(props){
     var categorie = game_ctx.recuperaCategorieDomande(gameType);
     const [categoryFilter, setCategoryFilter] = useState(categorie[0]);
 
-    useEffect(() => {
-        getAllImages()
-        // console.log(imagesList);
-        // setClassicQuizQuestions(game_ctx.domandeDeiQuiz)
-    }, [])
+    const websiteUrl = "http://myks.altervista.org/uploads/";
 
     function gameTypeChangeHandler(event){
         setGameType(event.target.value);
@@ -47,43 +43,6 @@ function ElencoDomandeModificabili(props){
         );
     }
 
-    async function getAllImages(){
-        setImagesList([]);
-        const listaImmaginiStorage = ref(storage, `${auth_ctx.utenteLoggato}/`);
-        const response = await listAll(listaImmaginiStorage)
-        .catch((err) => {
-            console.error(err);
-        });
-        for(var i=0; i < response.items.length; i++){
-            // console.log(response);
-            await getDownloadURL(response.items[i])
-            .then((url) => {
-                var imageName = response.items[i].name;
-                setImagesList((previous) => [...previous, {
-                    imageURL: url,
-                    name: imageName
-                }]);
-                // console.log(imagesList.name);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-        }
-    }
-
-    function getSingleImage(domandaSingola){
-        for(var i=0; i < imagesList.length; i++){
-            // console.log(imagesList[i].name)
-            // console.log(domandaSingola.indovina)
-            if(domandaSingola.id === imagesList[i].name){
-                domandaSingola['immagine'] = imagesList[i].imageURL;
-                // console.log(domandaSingola.immagine);
-                return domandaSingola.immagine;
-            }
-        }
-        return;
-    }
-
     function recuperaTutteLeDomande(singleQuestion){
 
         // console.log(Object.keys(singleQuestion.rispCorrette).length);
@@ -103,7 +62,7 @@ function ElencoDomandeModificabili(props){
                         <div className={styles.flex_list_container}>
                             <h4 className={styles.subtitle_style}>Immagine:</h4>
                             {/* <p className={styles.question_style}>{singleQuestion.rispCorrettaN1}</p> */}
-                            <img className={styles.preview_image} src={getSingleImage(singleQuestion)}></img>
+                            <img className={styles.preview_image} src={websiteUrl.concat(singleQuestion.immagine)}></img>
                             <h4 className={styles.subtitle_style}>Domanda:</h4>
                             <p className={styles.question_style}>{singleQuestion.domanda}</p>
                         </div>
