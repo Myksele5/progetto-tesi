@@ -4,7 +4,7 @@ import GenericButton from "../UI/GenericButton";
 import { useContext, useState } from "react";
 import PatientContext from "../../context/patients-context";
 
-var paziente_selezionato_obj;
+var paziente_selezionato_ID;
 
 function RisultatiGioco(props){
     const patients_ctx = useContext(PatientContext);
@@ -18,23 +18,27 @@ function RisultatiGioco(props){
 
     function trovaPaziente(event){
         var paziente_nome_mostrato;
+        console.log(event.target.value);
 
         for(var i = 0; i < patients_ctx.listaPazienti.length; i++){
-            if(patients_ctx.listaPazienti[i].id === event.target.value){
+            if(patients_ctx.listaPazienti[i].ID === parseInt(event.target.value)){
                 console.log("TROVATO");
                 paziente_nome_mostrato = patients_ctx.listaPazienti[i].nome + " " + patients_ctx.listaPazienti[i].cognome
-                paziente_selezionato_obj = patients_ctx.listaPazienti[i];
+                paziente_selezionato_ID = patients_ctx.listaPazienti[i].ID;
                 return paziente_nome_mostrato;
             }
             else{
                 console.log("NON TROVATO");
+                console.log(patients_ctx.listaPazienti[i].ID);
             }
         }
         return -1;
     }
 
     function passaIndiceAGiochiPuntoJS(){
-        props.assegnaRisultatiPaziente(paziente_selezionato_obj)
+        console.log(paziente_selezionato_ID);
+        props.assegnaRisultatiPaziente(paziente_selezionato_ID);
+        // props.assegnaRisultatiPaziente(paziente_selezionato_obj)
     }
 
     return(
@@ -64,7 +68,7 @@ function RisultatiGioco(props){
                     <div className={styles.select_box}>
                         <select onChange={(event) => {
                             // console.log(event.target.value);
-                            console.log(patients_ctx.listaPazienti.map(ogg => ogg.id).indexOf(event.target.value));
+                            console.log(patients_ctx.listaPazienti.map(ogg => ogg.ID).indexOf(event.target.value));
                             // indice = trovaIndice(event);
                             paziente_selezionato = trovaPaziente(event);
                             

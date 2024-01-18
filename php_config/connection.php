@@ -88,11 +88,11 @@
     case "updateBridgeQuestions":
         $query_result = updateBridgeQuestions($conn);
         break;
-    // case "getBridge":
-    //     $query_result = getBridge($conn);
-    //     break;
-    case "addImage":
-        $query_result = addImage($conn);
+    case "saveGameResults":
+        $query_result = saveGameResults($conn);
+        break;
+    case "getPatientStatistics":
+        $query_result = getPatientStatistics($conn);
         break;
     default:
     	break;
@@ -626,6 +626,44 @@
         $bridgeQuestQuery->execute();
         
 
+        return $result;
+    }
+
+    function saveGameResults($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $pazienteID = $dataJson["pazienteID"];
+        $giocoID = $dataJson["giocoID"];
+        $rispTotali = $dataJson["rispTotali"];
+        $rispCorrette = $dataJson["rispCorrette"];
+        $rispSbagliate = $dataJson["rispSbagliate"];
+        $dataSvolgimento = $dataJson["dataSvolgimento"];
+        
+        // Insert a row into the table
+        $insertGameResultQuery = $i_conn->prepare(
+            "INSERT INTO `resultsGames` (`pazienteID`, `giocoID`, `rispTotali`, `rispCorrette`, `rispSbagliate`, `dataSvolgimento`)
+            VALUES (?, ?, ?, ?, ?, ?)"
+        );
+        $insertGameResultQuery->bind_param("iiiiis", $pazienteID, $giocoID, $rispTotali, $rispCorrette, $rispSbagliate, $dataSvolgimento);
+
+        $insertGameResultQuery->execute();
+        $insertGameResultQuery->bind_result($result);
+
+        return $result;
+    }
+
+    function getPatientStatistics($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $pazienteID = $dataJson["pazienteID"];
+        
+        $retrieveQuestionsList = $i_conn->prepare("SELECT * FROM `resultsGames` WHERE pazienteID = ?");
+        $retrieveQuestionsList->bind_param("i", $pazienteID);
+        
+        $retrieveQuestionsList->execute();
+        $result = $retrieveQuestionsList->get_result();
         return $result;
     }
 ?>

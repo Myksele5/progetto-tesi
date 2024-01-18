@@ -39,264 +39,6 @@ const PatientContext = React.createContext({
 });
 
 export function PatientContextProvider(props){
-
-    const arrayDummyPazienti = [
-        {
-            nome: 'ProvaNomeSuperMegaLunghissimo',
-            cognome: 'EconUnCognomepurealtrettanto',
-            città: 'San Valentino in Abruzzo Citeriore e a e e e e eae e aea ee adwad dwadwaddwd',
-            datanascita: '1995-07-05',
-            attività: 12,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 10,
-                risposte_corrette: 5,
-                risposte_sbagliate: 5
-            },
-            codicefiscale: "ABCYRO41H24L077E",
-            id: "012345apollo"
-        },
-        {
-            nome: 'Michele',
-            cognome: 'Sardone',
-            città: 'Bari',
-            datanascita: '1995-07-05',
-            attività: 0,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 10,
-                risposte_corrette: 5,
-                risposte_sbagliate: 5
-            },
-            codicefiscale: "RTVYRO41H24L088E",
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Vito',
-            cognome: 'Sardone',
-            città: 'Varsavia',
-            datanascita: '1989-01-31',
-            attività: 5,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 7,
-                risposte_corrette: 7,
-                risposte_sbagliate: 0
-            },
-            codicefiscale: "VZXGGH85E71F498O",
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '1995-08-02',
-            attività: 2,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 20,
-                risposte_corrette: 5,
-                risposte_sbagliate: 15
-            },
-            codicefiscale: "RJSNTY84H10D637E",
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Marta',
-            cognome: 'Wojcik',
-            città: 'Varsavia',
-            datanascita: '1992-12-25',
-            attività: 2,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 14,
-                risposte_corrette: 5,
-                risposte_sbagliate: 9
-            },
-            codicefiscale: "CSCCWH34M59A732J",
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '1995-08-02',
-            attività: 2,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 10,
-                risposte_corrette: 0,
-                risposte_sbagliate: 10
-            },
-            codicefiscale: "FHTFMP86E11G669Z",
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Giuseppe',
-            cognome: 'Sardone',
-            città: 'Puerto de la Cruz',
-            datanascita: '1966-12-10',
-            attività: 2,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 0,
-                risposte_corrette: 0,
-                risposte_sbagliate: 0
-            },
-            codicefiscale: "PLLNRB95E02C398N",
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Maria Antonietta',
-            cognome: 'Locuratolo',
-            città: 'Bari',
-            datanascita: '1984-05-21',
-            attività: 2,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 0,
-                risposte_corrette: 0,
-                risposte_sbagliate: 0
-            },
-            codicefiscale: "CPBHRX62R58F417J",
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Carlo',
-            cognome: 'Casaburi',
-            città: 'Genova',
-            datanascita: '1995-08-02',
-            attività: 2,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 0,
-                risposte_corrette: 0,
-                risposte_sbagliate: 0
-            },
-            codicefiscale: "XSHCXY39P68G329J",
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Giulia',
-            cognome: 'Antonacci',
-            città: 'Bari',
-            datanascita: '1995-01-01',
-            attività: 10,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 0,
-                risposte_corrette: 0,
-                risposte_sbagliate: 0
-            },
-            codicefiscale: "NYFQDQ74H19A108T",
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '1995-08-02',
-            attività: 2,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 0,
-                risposte_corrette: 0,
-                risposte_sbagliate: 0
-            },
-            codicefiscale: "TZRMFN33C57H739O",
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '1995-08-02',
-            attività: 2,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 0,
-                risposte_corrette: 0,
-                risposte_sbagliate: 0
-            },
-            codicefiscale: "SRPWRS31T42A444D",
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '1995-08-02',
-            attività: 2,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 0,
-                risposte_corrette: 0,
-                risposte_sbagliate: 0
-            },
-            codicefiscale: "LVFKMJ65L12B956R",
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '1995-08-02',
-            attività: 2,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 0,
-                risposte_corrette: 0,
-                risposte_sbagliate: 0
-            },
-            codicefiscale: "GXLRBK42P46L063X",
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '1995-08-02',
-            attività: 2,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 0,
-                risposte_corrette: 0,
-                risposte_sbagliate: 0
-            },
-            codicefiscale: "RHDMHV37D54B265C",
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Ermenegildo',
-            cognome: 'Giangiovanni',
-            città: 'Bari',
-            datanascita: '1995-08-02',
-            attività: 2,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 0,
-                risposte_corrette: 0,
-                risposte_sbagliate: 0
-            },
-            codicefiscale: "KFPPGD64D29E441F",
-            id: Math.random().toString()
-        },
-        {
-            nome: 'Domenico',
-            cognome: 'Casaburi',
-            città: 'Bari',
-            datanascita: '1995-08-02',
-            attività: 2,
-            opzioni: '',
-            statistiche: {
-                risposte_totali: 0,
-                risposte_corrette: 0,
-                risposte_sbagliate: 0
-            },
-            codicefiscale: "CRHNHV72E26H300U",
-            id: Math.random().toString()
-        }
-    ]
     const auth_ctx = useContext(AuthContext);
     
     //QUESTO STATO SERVE PER DARE IL TEMPO A FIREBASE DI FETCHARE E A REACT DI AGGIORNARE L'ELENCO DEI PAZIENTI
@@ -310,24 +52,6 @@ export function PatientContextProvider(props){
     const [showSchedaPaziente, setShowSchedaPaziente] = useState(false);
     const [showModificaPaziente, setShowModificaPaziente] = useState(false);
     const [showModal, setShowModal] = useState(false);
-
-    const listaPazientiReference = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `pazienti`);
-    
-    // --------- FUNZIONE PER RECUPERARE I PAZIENTI DAL DATABASE
-    // const prendiListaPazienti = async () => {
-    //     try{
-    //         const data = await getDocs(listaPazientiReference);
-    //         const filteredData = data.docs.map((docPazien) => ({
-    //             ...docPazien.data(),
-    //             id: docPazien.id
-    //         }))
-    //         setIsLoading(false);
-    //         setElencoPazienti(filteredData);
-    //         console.log(filteredData);
-    //     } catch(err){
-    //         console.error(err);
-    //     }
-    // };
 
     const prendiListaPazienti = async () => {
         if(auth_ctx.utenteLoggato !== null){
@@ -526,8 +250,8 @@ export function PatientContextProvider(props){
     //-------------- FUNZIONE CHE RESTITUISCE LE OPZIONI PER I MENU A DROPDOWN
     function fromArrayToListaPazienti(elencoPazienti){
         return(
-           <option key={elencoPazienti.id} value={elencoPazienti.id} >
-                {elencoPazienti.nome} {elencoPazienti.cognome} {'-- (ID: '}{elencoPazienti.id + ')'}
+           <option key={elencoPazienti.ID} value={elencoPazienti.ID} >
+                {elencoPazienti.nome} {elencoPazienti.cognome} {'-- (C.F.: '}{elencoPazienti.codiceFiscale + ')'}
            </option>
         );
     }
@@ -538,7 +262,7 @@ export function PatientContextProvider(props){
         // console.log(typeof(elencoPazienti[1].dataNascita));
         scheda_paziente = 
             <SchedaPaziente
-                id = {pazientee.id}
+                id = {pazientee.ID}
                 nome = {pazientee.nome.toUpperCase()}
                 cognome = {pazientee.cognome.toUpperCase()}
                 città = {pazientee.city.toUpperCase()}

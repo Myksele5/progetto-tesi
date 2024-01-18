@@ -384,8 +384,27 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.addImage = async (file, cb) => {
-        let result = await serverMgr.requestFetchData("addImage", {file})
+    serverMgr.saveGameResults = async (pazienteID, giocoID, rispTotali, rispCorrette, rispSbagliate, dataSvolgimento, cb) => {
+        let result = await serverMgr.requestFetchData("saveGameResults", {
+            pazienteID: pazienteID,
+            giocoID: giocoID,
+            rispTotali: rispTotali,
+            rispCorrette: rispCorrette,
+            rispSbagliate: rispSbagliate,
+            dataSvolgimento: dataSvolgimento
+        })
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.getPatientStatistics = async (pazienteID, cb) => {
+        let result = await serverMgr.requestFetchData("getPatientStatistics", {pazienteID: pazienteID})
         if(cb) {
             // console.log("getInventory: " + result)
             cb(result)

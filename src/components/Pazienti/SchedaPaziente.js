@@ -90,6 +90,7 @@ function SchedaPaziente(props){
                     // <h1>Non ci sono statistiche!</h1>
                     // </>
                     <StatistichePaziente
+                    pazienteID={props.id}
                     stats={props.stats_paziente}
                     >
                     </StatistichePaziente>

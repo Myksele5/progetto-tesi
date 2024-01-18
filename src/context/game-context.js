@@ -96,16 +96,32 @@ export function GameContextProvider(props){
         }
     }
 
-    function salvaRisultati(risposteUtente, domandeTotali, pazienteDaAggiornare){
-        console.log("NUMERO DI DOMANDE ---->" + domandeTotali);
-        console.log("RISPOSTE CORRETTE ---->" + risposteUtente);
-        console.log("RISPOSTE SBAGLIATE ---->" + (domandeTotali - risposteUtente));
+    async function salvaRisultati(pazienteID, giocoID, risposteTotali, risposteCorrette, risposteSbagliate){
+        console.log("NUMERO DI DOMANDE ---->" + risposteTotali);
+        console.log("RISPOSTE CORRETTE ---->" + risposteCorrette);
+        console.log("RISPOSTE SBAGLIATE ---->" + risposteSbagliate);
 
-        pazienteDaAggiornare.statistiche.risposteTotali += domandeTotali;
-        pazienteDaAggiornare.statistiche.risposteCorrette += risposteUtente;
-        pazienteDaAggiornare.statistiche.risposteSbagliate += (domandeTotali - risposteUtente);
+        var today = new Date();
+        var day = today.toLocaleString('it-IT', {day: '2-digit'})
+        var month = today.toLocaleString('it-IT', {month: '2-digit'})
+        var year = today.getFullYear();
 
-        patients_ctx.modificaLista(pazienteDaAggiornare);
+        console.log(today);
+        console.log(day);
+        console.log(month);
+        console.log(year);
+
+        let dateString = `${year}-${month}-${day}`;
+
+        console.log(dateString);
+
+        await getServerMgr().saveGameResults(pazienteID, giocoID, risposteTotali, risposteCorrette, risposteSbagliate, dateString);
+
+        // pazienteDaAggiornare.statistiche.risposteTotali += domandeTotali;
+        // pazienteDaAggiornare.statistiche.risposteCorrette += risposteUtente;
+        // pazienteDaAggiornare.statistiche.risposteSbagliate += (domandeTotali - risposteUtente);
+
+        // patients_ctx.modificaLista(pazienteDaAggiornare);
     }
 
     function formCreateNewGame(){

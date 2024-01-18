@@ -17,6 +17,8 @@ let modifica_gioco;
 let modifica_domanda;
 let risultati_utente_gioco;
 
+var giocoSvoltoID;
+
 function Giochi(){
     const auth_ctx = useContext(AuthContext);
     const game_ctx = useContext(GameContext);
@@ -121,6 +123,7 @@ function Giochi(){
         for(var i = 0; i < game_ctx.listaGiochi.length; i++){
             if(stringa_CODICEGIOCO === game_ctx.listaGiochi[i].gameID){
                 indice_gioco = i;
+                giocoSvoltoID = game_ctx.listaGiochi[i].gameID;
                 break;
             }
         }
@@ -200,8 +203,8 @@ function Giochi(){
                 numeroRisposteCorrette={risposteUtente}
                 numeroDomandeTotali={domandeTotali}
                 chiudiSchedaRisultati={closeGameResults}
-                assegnaRisultatiPaziente={(pazObj) => {
-                    game_ctx.salvaRisultatiGiocoPaziente(risposteUtente, domandeTotali, pazObj)
+                assegnaRisultatiPaziente={(pazID) => {
+                    game_ctx.salvaRisultatiGiocoPaziente(pazID, giocoSvoltoID, domandeTotali, risposteUtente, (domandeTotali-risposteUtente))
                     closeGameResults();
                 }}
             >
