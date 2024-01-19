@@ -6,22 +6,35 @@ import game from "../Images/chess.png";
 import dialogue from "../Images/chat.png";
 import GenericButton from "./GenericButton";
 import ReactDOM from 'react-dom';
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "../../context/auth-context";
 
 function MainMenu(props){
     const auth_ctx = useContext(AuthContext);
 
+    const [highlightMenuButton_PAZIENTI, setHighlightMenuButton_PAZIENTI] = useState(true);
+    const [highlightMenuButton_TEST, setHighlightMenuButton_TEST] = useState(false);
+    const [highlightMenuButton_GIOCHI, setHighlightMenuButton_GIOCHI] = useState(false);
+
     function goToPazienti(){
         props.showSchermata(0);
+        setHighlightMenuButton_PAZIENTI(true);
+        setHighlightMenuButton_TEST(false);
+        setHighlightMenuButton_GIOCHI(false);
     }
 
     function goToAttività(){
         props.showSchermata(1);
+        setHighlightMenuButton_PAZIENTI(false);
+        setHighlightMenuButton_TEST(true);
+        setHighlightMenuButton_GIOCHI(false);
     }
 
     function goToGiochi(){
         props.showSchermata(2);
+        setHighlightMenuButton_PAZIENTI(false);
+        setHighlightMenuButton_TEST(false);
+        setHighlightMenuButton_GIOCHI(true);
     }
 
     function goToDialoghi(){
@@ -46,21 +59,21 @@ function MainMenu(props){
             </div>
 
             {(auth_ctx.tipoAccount === "Dottore" || auth_ctx.tipoAccount === "Dottoressa") && 
-                <button onClick = {goToPazienti} className={styles.menu_option}>
+                <button onClick = {goToPazienti} className={`${styles.menu_option} ${highlightMenuButton_PAZIENTI ? styles.menu_option_SELECTED : ''}`}>
                     <img className={styles.image_option} src={patient} alt="pazienti"></img>
-                    <p className={styles.text_option}>Pazienti</p>
+                    <p className={`${styles.text_option} ${highlightMenuButton_PAZIENTI ? styles.text_option_SELECTED : ''}`}>Pazienti</p>
                 </button>
             }
             
 
-            <button onClick = {goToAttività} className={styles.menu_option}>
+            <button onClick = {goToAttività} className={`${styles.menu_option} ${highlightMenuButton_TEST ? styles.menu_option_SELECTED : ''}`}>
                 <img className={styles.image_option} src={activity} alt="tests"></img>
-                <p className={styles.text_option}>MMSE/MOCA</p>
+                <p className={`${styles.text_option} ${highlightMenuButton_TEST ? styles.text_option_SELECTED : ''}`}>MMSE/MOCA</p>
             </button>
 
-            <button onClick = {goToGiochi} className={styles.menu_option}>
+            <button onClick = {goToGiochi} className={`${styles.menu_option} ${highlightMenuButton_GIOCHI ? styles.menu_option_SELECTED : ''}`}>
                 <img className={styles.image_option} src={game} alt="giochi"></img>
-                <p className={styles.text_option}>Giochi</p>
+                <p className={`${styles.text_option} ${highlightMenuButton_GIOCHI ? styles.text_option_SELECTED : ''}`}>Giochi</p>
             </button>
 
             {/* <button onClick = {goToDialoghi} className={styles.menu_option}>

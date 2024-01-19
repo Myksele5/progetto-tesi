@@ -18,10 +18,16 @@
     }
 }
 
-.wrap_generico{
-    display: flex;
-    flex-direction: column;
+.wrapper_generico{
+    /* background-color: cadetblue; */
+    display: grid;
     justify-content: center;
-    align-items: center;
-    color: rgb(59, 59, 241);
+    /* align-items: center; */
+    margin-top: 15px;
+    grid-template-columns: 350px 350px 350px;
+    column-gap: 20px;
+    grid-template-rows: fit-content;
+    row-gap: 10px;
+    /* background-color: red; */
+    /* margin-left: 30px; */
 }

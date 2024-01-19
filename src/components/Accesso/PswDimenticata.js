@@ -60,29 +60,7 @@ function PswDimenticata(props){
                 console.error(err)
             });
         }
-
-        // console.log(result);
-        // if(email.includes('@')){
-        //     await sendPasswordResetEmail(auth, email, {
-        //         url: 'https://progetto-tesi-8abcf.web.app/'
-        //     })
-        //     .then(() => {
-        //         alert("Fatto! Se in precedenza hai creato un account, riceverai una email per cambiare password.")
-        //     })
-        //     .catch((FirebaseAuthInvalidCredentialsException, err) => {
-        //         setValidEmail(false);
-        //         console.error(err);
-        //         console.error(FirebaseAuthInvalidCredentialsException);
-        //     })
-        //     .catch((err) => {
-        //         console.error(err);
-        //     })
-        // }
-        // else{
-        //     if(!email.includes('@')){
-        //         setValidEmail(false);
-        //     }
-        // }   
+ 
     }
 
     return(

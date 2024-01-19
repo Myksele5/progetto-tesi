@@ -139,7 +139,7 @@ function CambioPsw(){
                             <input className={`${styles.input_box} ${!validEmail ? styles.invalid : ''}`} type="email" placeholder="Inserisci email.." value={email} onChange={emailChangeHandler}></input> */}
     
                             <label className={`${styles.label_box} ${!validNewPassword ? styles.invalid : ''}`}>Inserisci nuova password</label>
-                            <input className={`${styles.input_box} ${!validNewPassword ? styles.invalid : ''}`} type="password" placeholder="Inserisci nuova password.." value={newPassword} onChange={passwordChangeHandler}></input>
+                            <input className={`${styles.input_box} ${!validNewPassword ? styles.invalid : ''}`} type="password" placeholder="Nuova password.." value={newPassword} onChange={passwordChangeHandler}></input>
     
                             {!validNewPassword && <h2 style={{color: "red"}}>Inserisci una password valida!</h2>}
                             {/* {!validEmail && <h2 style={{color: "red"}}>Inserisci una email valida!</h2>} */}

@@ -60,6 +60,18 @@
     align-items: center;
     justify-content: space-between;
 }
+.menu_option_SELECTED{
+    /* height: 120px; */
+    background: rgb(33, 33, 131);
+    color: rgb(233, 33, 131);
+    pointer-events: none;
+    /* border: 1px solid rgb(233, 33, 131);
+    border-left: none;
+    border-right: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; */
+}
 
 .menu_option:nth-child(3){
     /* margin-top: 50px; */
@@ -89,6 +101,10 @@
     margin-right: 10px;
     color: white;
     font-size: 28px;
+}
+
+.text_option_SELECTED{
+    color: rgb(233, 33, 131);
 }
 
 .image_option{
