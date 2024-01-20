@@ -78,7 +78,46 @@
 }
 
 @media screen and (max-width: 500px) {
+    .title{
+        font-size: 28px;
+    }
+
     .input_box{
-        width: 300px;
+        width: 250px;
+        height: 30px;
+        font-size: 18px;
+    }
+
+    .label_box{
+        font-size: 18px;
+    }
+
+    .log_reg{
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-height: 550px) {
+    .title{
+        font-size: 28px;
+    }
+    
+    .dropdown_box{
+        height: 25px;
+        font-size: 17px;
+    }
+
+    .input_box{
+        height: 23px;
+        font-size: 17px;
+    }
+
+    .label_box{
+        font-size: 18px;
+    }
+
+    .log_reg{
+        font-size: 10px;
+        margin: 3px;
     }
 }

@@ -102,7 +102,50 @@
 }
 
 @media screen and (max-width: 500px) {
+    .title{
+        font-size: 30px;
+    }
+
     .input_box{
         width: 300px;
+        height: 30px;
+        font-size: 18px;
+    }
+
+    .label_box{
+        font-size: 20px;
+    }
+
+    .log_reg{
+        font-size: 11px;
+    }
+
+    .psw_dimenticata{
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-height: 350px) {
+    .title{
+        font-size: 28px;
+    }
+
+    .input_box{
+        height: 25px;
+        font-size: 18px;
+    }
+
+    .label_box{
+        font-size: 18px;
+    }
+
+    .log_reg{
+        font-size: 10px;
+        margin: 3px;
+    }
+
+    .psw_dimenticata{
+        font-size: 10px;
+        margin: 1px;
     }
 }

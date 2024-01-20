@@ -5,7 +5,7 @@
     width: 49vw;
     border: 2px solid rgb(59, 59, 241);
     border-radius: 10px;
-    margin: 20px;
+    margin: 15px;
     margin-left: 5px;
     padding: 5px;
     box-shadow: 0 1px 5px 1px rgb(33, 33, 131);
@@ -23,7 +23,33 @@
     .item_gioco{
         border: 2px solid rgb(159, 59, 241);
         box-shadow: 0 1px 5px 1px rgb(159, 59, 241);
-        width: 600px;
+        width: 650px;
+        margin: 5px;
+        margin-left: 5px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .item_gioco{
+        border: 2px solid rgb(159, 59, 241);
+        box-shadow: 0 1px 5px 1px rgb(159, 59, 241);
+        width: 500px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .item_gioco{
+        border: 2px solid rgb(159, 59, 241);
+        box-shadow: 0 1px 5px 1px rgb(159, 59, 241);
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .item_gioco{
+        border: 2px solid rgb(159, 59, 241);
+        box-shadow: 0 1px 5px 1px rgb(159, 59, 241);
+        width: 300px;
     }
 }
 

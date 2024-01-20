@@ -136,8 +136,8 @@ function RegistrationForm(props){
 
                 <label className={styles.label_box}>Titolo</label>
                 <select onChange={titoloChangeHandler} className={styles.dropdown_box}>
-                    <option>Dottore</option>
-                    <option>Dottoressa</option>
+                    <option className={styles.dropdown_box}>Dottore</option>
+                    <option className={styles.dropdown_box}>Dottoressa</option>
                 </select>
 
                 <label className={`${styles.label_box} ${!validEmail ? styles.invalid : ''}`}>Email</label>

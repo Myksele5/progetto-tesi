@@ -23,7 +23,7 @@ function ListaGiochi(props){
                                 <h1 className={styles.game_title}>{lista.nomeGioco}</h1>
                                 <h3 className={styles.game_subtitle}>Tipologia gioco: <span className={styles.game_type}>{lista.tipoGioco}</span></h3>
                                 <h3 className={styles.game_subtitle}>Livello difficoltà: <span className={styles.game_type}>{lista.livelloGioco}</span></h3>
-                                <h3 className={styles.game_subtitle}>CODICE DEL GIOCO: <span className={styles.game_type}>{lista.codiceGioco}</span></h3>
+                                {/* <h3 className={styles.game_subtitle}>CODICE DEL GIOCO: <span className={styles.game_type}>{lista.codiceGioco}</span></h3> */}
                             </div>
                             
                             <div className={styles.buttons_wrap}>
