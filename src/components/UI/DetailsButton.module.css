@@ -46,3 +46,22 @@
         height: 17px;
     }
 }
+
+@media screen and (max-width: 650px) {
+
+    .details_button{
+        width: 30px;
+        height: 30px;
+        margin: 3px;
+    }
+
+    .details_button:hover .details_image{
+        width: 17px;
+        height: 17px;
+    }
+    
+    .details_image{
+        width: 16px;
+        height: 16px;
+    }
+}

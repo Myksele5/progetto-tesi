@@ -107,3 +107,31 @@
     width: 100%;
     border: 1px solid rgb(233, 33, 131);
 }
+
+@media screen and (max-width: 1400px) {
+    .input_style{
+        width: 250px;
+    }
+
+    .input_style_LARGE{
+        width: 250px;
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    .title_form{
+        font-size: 25px;
+    }
+
+    .subtitle_form{
+        font-size: 17px;
+    }
+
+    .label_style{
+        font-size: 15px;
+    }
+
+    .input_style{
+        width: 220px;
+    }
+}

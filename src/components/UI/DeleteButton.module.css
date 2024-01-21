@@ -46,3 +46,22 @@
         height: 17px;
     }
 }
+
+@media screen and (max-width: 650px) {
+
+    .delete_button{
+        width: 30px;
+        height: 30px;
+        margin: 3px;
+    }
+
+    .delete_button:hover .delete_image{
+        width: 17px;
+        height: 17px;
+    }
+    
+    .trash_image{
+        width: 16px;
+        height: 16px;
+    }
+}

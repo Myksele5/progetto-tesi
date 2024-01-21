@@ -161,7 +161,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     .intestazione_tabella, .dati_tabella{
         color: lightcoral;
         font-size: 15px;
-        height: 100px;
+        /* height: 100px; */
     }
 
     .intestazione_tabella.nome, .intestazione_tabella.cognome, .intestazione_tabella.città, .dati_tabella.nome, .dati_tabella.cognome, .dati_tabella.città{
@@ -178,6 +178,43 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 
     .intestazione_tabella.data, .dati_tabella.data{
         display: none;
+    }
+    
+}
+@media screen and (max-width: 650px) {
+    .table_wrapper{
+        width: 550px;
+    }
+
+    .intestazione_tabella{
+        font-size: 13px;
+    }
+
+    .intestazione_tabella.città, .dati_tabella.città{
+        display: none;
+    }
+
+    .intestazione_tabella.opzioni, .dati_tabella.opzioni{
+        width: 100px;
+    }
+    
+}
+
+@media screen and (max-width: 500px) {
+    .table_wrapper{
+        width: 450px;
+    }
+
+    .intestazione_tabella.nome, .intestazione_tabella.cognome, .dati_tabella.nome, .dati_tabella.cognome{
+        width: 70px;
+    }
+
+    .intestazione_tabella.codicefiscale, .dati_tabella.codicefiscale{
+        width: 90px;
+    }
+
+    .intestazione_tabella.opzioni, .dati_tabella.opzioni{
+        width: 50px;
     }
     
 }
