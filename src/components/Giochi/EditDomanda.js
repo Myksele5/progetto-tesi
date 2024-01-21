@@ -13,7 +13,7 @@ var file;
 
 function EditDomanda(props){
     const game_ctx = useContext(GameContext);
-    const websiteUrl = "http://myks.altervista.org/uploads/";
+    const websiteUrl = "https://myks.altervista.org/uploads/";
 
     const [totalAnswers_CORRECT, setTotalAnswers_CORRECT] = useState(1);
     const [totalAnswers_WRONG, setTotalAnswers_WRONG] = useState(1);
@@ -56,7 +56,7 @@ function EditDomanda(props){
         setFlagUpload((prevState) => (prevState + 1))
     }
     function uploadFile(){
-        const url="http://myks.altervista.org/provaScript.php"
+        const url="https://myks.altervista.org/provaScript.php"
         const data = new FormData();
         data.append("file", myFile);
         axios.post(url, data).then(response => setMsg(response.data)).catch(error => setMsg(error))

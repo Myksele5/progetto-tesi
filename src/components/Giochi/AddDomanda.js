@@ -64,7 +64,7 @@ function AddDomanda(props){
         setFlagUpload((prevState) => (prevState + 1))
     }
     function uploadFile(){
-        const url="http://myks.altervista.org/provaScript.php"
+        const url="https://myks.altervista.org/provaScript.php"
         const data = new FormData();
         data.append("file", myFile);
         axios.post(url, data).then(response => setMsg(response.data)).catch(error => setMsg(error))

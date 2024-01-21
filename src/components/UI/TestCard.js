@@ -7,6 +7,7 @@ function TestCard(props){
             <div className={styles.test_card_content}>
                 <h1>{props.cardText}</h1>
                 <GenericAlternativeButton
+                    onClick={props.nascondiLista}
                     buttonText={"Avvia Test"}
                 >
                 </GenericAlternativeButton>

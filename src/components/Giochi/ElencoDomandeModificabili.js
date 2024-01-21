@@ -20,7 +20,7 @@ function ElencoDomandeModificabili(props){
     var categorie = game_ctx.recuperaCategorieDomande(gameType);
     const [categoryFilter, setCategoryFilter] = useState(categorie[0]);
 
-    const websiteUrl = "http://myks.altervista.org/uploads/";
+    const websiteUrl = "https://myks.altervista.org/uploads/";
 
     function gameTypeChangeHandler(event){
         setGameType(event.target.value);

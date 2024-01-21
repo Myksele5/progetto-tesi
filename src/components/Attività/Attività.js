@@ -3,9 +3,19 @@ import CambioPsw from "../Accesso/CambioPsw";
 import SearchBox from "../UI/SearchBox";
 import GenericButton from "../UI/GenericButton";
 import TestCard from "../UI/TestCard";
+import { useContext, useState } from "react";
+import GenericAlternativeButton from "../UI/GenericAlternativeButton";
+import TestMMSE from "./TestMMSE";
+import TestsContext from "../../context/tests-context";
 
 
 function Attività(){
+    const tests_ctx = useContext(TestsContext);
+    const [showListaTest, setShowListaTest] = useState(true);
+
+    function nascondiListaTest(){
+        setShowListaTest((prevShowTest) => (!prevShowTest));
+    }
 
     return(
         <>
@@ -19,9 +29,22 @@ function Attività(){
                 </GenericButton>
             </div>
 
-            <div className={styles.wrapper_generico}>
-                {/* <h2>CIAO</h2> */}
-                <TestCard
+            <GenericAlternativeButton
+                onClick={nascondiListaTest}
+                buttonText={"ON/OFF"}
+            >
+            </GenericAlternativeButton>
+
+            {!showListaTest && 
+                <div className={styles.wrapper_test}>
+                    <TestMMSE></TestMMSE>
+                </div>
+            }
+
+            {showListaTest && <div className={styles.wrapper_generico}>
+                {tests_ctx.primaFunzione}
+                {/* <TestCard
+                    // nascondiLista={nascondiListaTest}
                     cardText={"Test MMSE"}
                 >
                 </TestCard>
@@ -48,9 +71,9 @@ function Attività(){
                     testEliminabile={true}
                     cardText={"Altro Test"}
                 >
-                </TestCard>
+                </TestCard> */}
 
-            </div>
+            </div>}
             {/* <CambioPsw></CambioPsw> */}
 
         </>

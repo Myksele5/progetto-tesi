@@ -38,6 +38,8 @@ function ExerciseGuessTheFace(props){
 
     const [gameStarted, setGameStarted] = useState(false);
     const [hasAnswered, setHasAnswered] = useState(false);
+
+    const [rispCorretteMultiple, setRispCorretteMultiple] = useState(false);
     
     const [disableButton, setDisableButton] = useState(false);
     const [coloraRispostaCorretta_N1, setColoraRispostaCorretta_N1] = useState(false);
@@ -60,7 +62,7 @@ function ExerciseGuessTheFace(props){
     const [timer, setTimer] = useState(undefined);
     const questions = props.domandeGioco;
 
-    const websiteUrl = "http://myks.altervista.org/uploads/";
+    const websiteUrl = "https://myks.altervista.org/uploads/";
 
     useEffect(() => {
         counter_question_number = 0;
@@ -135,6 +137,12 @@ function ExerciseGuessTheFace(props){
         // }
         console.log(arrayRisposteCorrette);
         console.log(arrayRisposteSbagliate);
+        if(arrayRisposteCorrette.length > 1){
+            setRispCorretteMultiple(true);
+        }
+        else{
+            setRispCorretteMultiple(false);
+        }
         shuffleAnswers();
     }, [counter_question_number]);
 
@@ -411,42 +419,10 @@ function ExerciseGuessTheFace(props){
 
         for(var i=0; i < numeroTotaleRisposte_CORRETTE; i++){
             arrayRisposte.push(arrayRisposteCorrette[i]);
-            // if(questions[counter_question_number].rispCorrettaN1.trim().length > 0){
-            //     arrayRisposte[i] = questions[counter_question_number].rispCorrettaN1;
-            // }
-            // if(questions[counter_question_number].rispCorrettaN2.trim().length > 0){
-            //     arrayRisposte[i] = questions[counter_question_number].rispCorrettaN2;
-            // }
-            // if(questions[counter_question_number].rispCorrettaN3.trim().length > 0){
-            //     arrayRisposte[i] = questions[counter_question_number].rispCorrettaN3;
-            // }
-            // if(questions[counter_question_number].rispCorrettaN4.trim().length > 0){
-            //     arrayRisposte[i] = questions[counter_question_number].rispCorrettaN4;
-            // }
         }
         for(var j=0; j < numeroTotaleRisposte_SBAGLIATE; j++){
             arrayRisposte.push(arrayRisposteSbagliate[j]);
-            // if(questions[counter_question_number].rispSbagliataN1.trim().length > 0){
-            //     arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliataN1;
-            // }
-            // if(questions[counter_question_number].rispSbagliataN2.trim().length > 0){
-            //     arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliataN2;
-            // }
-            // if(questions[counter_question_number].rispSbagliataN3.trim().length > 0){
-            //     arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliataN3;
-            // }
-            // if(questions[counter_question_number].rispSbagliataN4.trim().length > 0){
-            //     arrayRisposte[j+numeroTotaleRisposte_CORRETTE] = questions[counter_question_number].rispSbagliataN4;
-            // }
         }
-        
-        // arrayRisposte[0] = questions[counter_question_number].question.correct_answer;
-        // arrayRisposte[1] = questions[counter_question_number].question.wrong_answer_n1;
-        // arrayRisposte[2] = questions[counter_question_number].question.wrong_answer_n2;
-        // arrayRisposte[3] = questions[counter_question_number].question.wrong_answer_n3;
-        // arrayRisposte[4] = questions[counter_question_number].question.wrong_answer_n4;
-        // console.log(arrayRisposte[4]);
-        // console.log(Object.keys(questions[counter_question_number].question).length);
         
         for(let i = arrayRisposte.length-1; i >= 0; i--){
             const j = Math.floor(Math.random() * (i+1));
@@ -550,6 +526,8 @@ function ExerciseGuessTheFace(props){
                         </>
                     }
                     {tipoQuiz === "QUIZ" && <h1>{questions[counter_question_number].domanda}</h1>}
+
+                    {rispCorretteMultiple && <h3>!!!Questa domanda ha risposte corrette multiple!!!</h3>}
 
                     <div className={styles.wrapper_horizontal_flex}>
                         <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>
