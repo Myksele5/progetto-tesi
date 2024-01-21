@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import TestCard from "../components/UI/TestCard";
 
 const TestsContext = React.createContext({
-    primaFunzione: ()=>{},
     listaTest: null
 })
 
 export function TestsContextProvider(props){
-    const [elencoTest, setElencoTest] = useState(null);
 
-    const arrayTestProvvisorio = [
+    var arrayTestProvvisorio = [
         {
             nomeTest: "Test MMSE"
         },
@@ -27,27 +25,17 @@ export function TestsContextProvider(props){
         }
     ];
 
+    const [elencoTest, setElencoTest] = useState(arrayTestProvvisorio);
+
+
     useEffect(() => {
         setElencoTest(arrayTestProvvisorio);
+        console.log(arrayTestProvvisorio)
     }, []);
-
-    function fromArrayToListaTest(){
-        elencoTest.map(looppaSuiTest)
-    }
-
-    function looppaSuiTest(item){
-        return(
-            <TestCard
-                // nascondiLista={nascondiListaTest}
-                cardText={item.nomeTest}
-            ></TestCard>
-        );
-    }
 
     return(
         <TestsContext.Provider
         value={{
-            primaFunzione: fromArrayToListaTest,
             listaTest: elencoTest
         }}
         >

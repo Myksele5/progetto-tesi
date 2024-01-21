@@ -13,6 +13,7 @@ import { PatientContextProvider } from './context/patients-context';
 import Modal from './components/UI/Modal';
 import { GameContextProvider } from './context/game-context';
 import { getServerMgr } from './backend_conn/ServerMgr';
+import { TestsContextProvider } from './context/tests-context';
 
 function App() {
   const [singletonHasLoaded, setSingletonHasLoaded] = useState(false);
@@ -101,14 +102,20 @@ function App() {
         <PatientContextProvider>
           
           {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Pazienti' && <div className='wrap_schermata'><Pazienti/></div>}
-          {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Attività' && <div className='wrap_schermata'><Attività/></div>}
+          {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Attività' &&
+           <TestsContextProvider>
+            <div className='wrap_schermata'>
+              <Attività/>
+            </div>
+           </TestsContextProvider>
+          }
           {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Giochi' && 
             <GameContextProvider>
               <div className='wrap_schermata'>
                 <Giochi/>
               </div>
             </GameContextProvider>
-              }
+          }
           {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Dialoghi' && <div className='wrap_schermata'><Dialoghi/></div>}
         
         </PatientContextProvider>
