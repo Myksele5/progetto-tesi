@@ -47,8 +47,7 @@ function Attività(){
 
     return(
         <>
-
-            <h1 className={styles.page_title}>TESTING</h1>
+            <h1 className={styles.page_title}>TEST</h1>
             <div className={styles.wrap_boxes}>
                 <GenericButton
                     generic_button={true}
@@ -71,38 +70,7 @@ function Attività(){
 
             {showListaTest && <div className={styles.wrapper_generico}>
                 {testsList.map(fromArrayToListaTest)}
-                {/* <TestCard
-                    // nascondiLista={nascondiListaTest}
-                    cardText={"Test MMSE"}
-                >
-                </TestCard>
-                <TestCard
-                    cardText={"Test MOCA"}
-                >
-                </TestCard>
-                <TestCard
-                    testEliminabile={true}
-                    cardText={"Altro Test"}
-                >
-                </TestCard>
-                <TestCard
-                    testEliminabile={true}
-                    cardText={"Altro Test"}
-                >
-                </TestCard>
-                <TestCard
-                    testEliminabile={true}
-                    cardText={"Altro Test"}
-                >
-                </TestCard>
-                <TestCard
-                    testEliminabile={true}
-                    cardText={"Altro Test"}
-                >
-                </TestCard> */}
-
             </div>}
-            {/* <CambioPsw></CambioPsw> */}
 
         </>
     );

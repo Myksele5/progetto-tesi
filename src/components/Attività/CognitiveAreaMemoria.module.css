@@ -1,0 +1,13 @@
+.flex_horizontal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.parola_memorizzata{
+    font-size: 22px;
+    border: 2px solid red;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 5px;
+}

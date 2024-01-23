@@ -1,14 +1,28 @@
 import styles from "./TestMMSE.module.css";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import GenericButton from "../UI/GenericButton";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
+import PatientContext from "../../context/patients-context";
+import CognitiveAreaOrientamento from "./CognitiveAreaOrientamento";
+import CognitiveAreaMemoria from "./CognitiveAreaMemoria";
+import CognitiveAreaAttenzione from "./CognitiveAreaAttenzione";
+import CognitiveAreaLinguaggio from "./CognitiveAreaLinguaggio";
 
 function TestMMSE(){
+    const patients_ctx = useContext(PatientContext);
+    const [nomePazSelezionato, setNomePazSelezionato] = useState("");
+    const [cognomePazSelezionato, setCognomePazSelezionato] = useState("");
+
     const [testIniziato, setTestIniziato] = useState(false);
     const [sezioneCognitiva, setSezioneCognitiva] = useState(1);
 
     function iniziaTest(){
-        setTestIniziato(true);
+        // if(nomePazSelezionato && cognomePazSelezionato){
+            setTestIniziato(true);
+        // }
+        // else{
+        //     alert("Per iniziare il test devi selezionare un paziente!");
+        // }
     }
 
     function prossimaSezioneCognitiva(){
@@ -18,12 +32,49 @@ function TestMMSE(){
         setSezioneCognitiva((prevSezione) => (prevSezione - 1));
     }
 
+    useEffect(() => {
+        console.log(nomePazSelezionato);
+        console.log(cognomePazSelezionato);
+    }, [nomePazSelezionato, cognomePazSelezionato])
+    
+    function consoleLoggaFullNamePaziente(event){
+        console.log(event.target.value)
+
+        for(var i = 0; i < patients_ctx.listaPazienti.length; i++){
+            if(patients_ctx.listaPazienti[i].ID === parseInt(event.target.value)){
+                console.log("TROVATO");
+                setNomePazSelezionato(patients_ctx.listaPazienti[i].nome);
+                setCognomePazSelezionato(patients_ctx.listaPazienti[i].cognome);
+                // nome_paziente = patients_ctx.listaPazienti[i].nome;
+                // cognome_paziente = patients_ctx.listaPazienti[i].cognome;
+                // paziente = {
+                //     nome: nome_paziente,
+                //     cognome: cognome_paziente
+                // }
+                // console.log(paziente)
+                // paziente_nome_mostrato = patients_ctx.listaPazienti[i].nome + " " + patients_ctx.listaPazienti[i].cognome
+                // console.log(paziente_nome_mostrato);
+                // return paziente;
+            }
+            else{
+                console.log("NON TROVATO");
+                console.log(patients_ctx.listaPazienti[i].ID);
+            }
+        }
+        // return -1;
+    }
+
     return(
         <div className={styles.test_container}>
             {!testIniziato && 
             <>
                 <label>Ciao sono il test<br/></label>
                 <label>INFO PRIMA DI INIZIARE IL TEST</label>
+                <p>Seleziona il paziente che svolgerà il test.</p>
+                <select onChange={consoleLoggaFullNamePaziente}>
+                    <option hidden>-- select an option --</option>
+                    {patients_ctx.listaPazienti.map(patients_ctx.arrayToLista)}
+                </select>
                 <GenericButton
                     onClick={iniziaTest}
                     generic_button={true}
@@ -33,87 +84,38 @@ function TestMMSE(){
             </>
             }
 
+            {testIniziato && <h1>{"AREA COGNITIVA N." + sezioneCognitiva}</h1>}
+
             {testIniziato && sezioneCognitiva === 1 &&
-            <>
-                <h1>AREA COGNITIVA N.1</h1>
-                <h2>Come ti chiami?</h2>
-                <label>Nome</label>
-                <input placeholder="..."></input>
-                <label>Cognome</label>
-                <input placeholder="..."></input>
-                <h2>Che giorno è oggi?</h2>
-                <label>GIORNO</label>
-                <select>
-                    <option hidden>--</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-                <label>MESE</label>
-                <select>
-                    <option hidden>--</option>
-                    <option>01</option>
-                    <option>02</option>
-                    <option>03</option>
-                    <option>04</option>
-                    <option>05</option>
-                    <option>06</option>
-                    <option>07</option>
-                    <option>08</option>
-                    <option>09</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
-                </select>
-                <label>ANNO</label>
-                <select>
-                    <option hidden>--</option>
-                    <option>2022</option>
-                    <option>2023</option>
-                    <option>2024</option>
-                    <option>2025</option>
-                    <option>2026</option>
-                </select>
-                <h2>In quale città ci troviamo?</h2>
-                <input placeholder="inserisci luogo.."></input>
-                
-            </>
+                <CognitiveAreaOrientamento
+                    nomePaz={nomePazSelezionato}
+                    cognomePaz={cognomePazSelezionato}
+                >
+                </CognitiveAreaOrientamento>
             }
 
             {testIniziato && sezioneCognitiva === 2 &&
-            <>
-                <h1>AREA COGNITIVA N.2</h1>
-                <h2>In questo esericizio ti verranno mostrate tre parole che dovrai ricordare.</h2>
-                <h2>Avrai a disposizione 15 secondi per leggerle e memorizzarle, dopo di che scrivi le parole che ricordi come risposte</h2>
-
-                <h5>PAROLA 1</h5>
-                <h5>PAROLA 2</h5>
-                <h5>PAROLA 3</h5>
-            </>
+                <CognitiveAreaMemoria></CognitiveAreaMemoria>
             }
 
             {testIniziato && sezioneCognitiva === 3 &&
-            <>
-                <h1>AREA COGNITIVA N.3</h1>
-                <h1 style={{color: "red"}}>!!!!! In alternativa qui si possono mettere esercizi matematici semplici !!!!!</h1>
-                <h2>Adesso ti verrà mostrata una parola ed il tuo obiettivo è scriverla al contrario</h2>
-
-                <h5>PAROLAALCONTRARIO</h5>
-
-                <label>Riscrivi la parola al contrario</label>
-                <input></input>
-            </>
+                <CognitiveAreaAttenzione></CognitiveAreaAttenzione>
             }
             {testIniziato && sezioneCognitiva === 4 &&
+                <CognitiveAreaLinguaggio></CognitiveAreaLinguaggio>
+            }
+            {testIniziato && sezioneCognitiva === 5 &&
             <>
-                <h1>AREA COGNITIVA N.4</h1>
-                <h2>Mostra due immagini di oggetti al posto di questa frase</h2>
-                <label>Oggetto 1</label>
-                <input></input>
-                <label>Oggetto 2</label>
-                <input></input>
+                <h2>Adesso comparirà una frase a schermo, effettua l'azione richiesta</h2>
+                <h5>Frase esempio: 'Chiudi gli occhi' oppure 'Apri e chiudi la mano due volte'</h5>
+                <h2>Ottimo! Ora comparirà un'altra frase ed effettua l'azione richiesta</h2>
+                <h5>Esempio: Porgi un foglio di carta e dici: 'Piega questo foglio a metà e posalo per terra'</h5>
+            </>
+            }
+            {testIniziato && sezioneCognitiva === 6 &&
+            <>
+                <h2>Disegna la seguente immagine sul foglio che ti è stato fornito</h2>
+                <h2>DISEGNO PENTAGONI INTRECCIATI</h2>
             </>
             }
             {testIniziato &&
