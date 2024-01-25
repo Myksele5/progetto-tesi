@@ -7,6 +7,7 @@ import CognitiveAreaOrientamento from "./CognitiveAreaOrientamento";
 import CognitiveAreaMemoria from "./CognitiveAreaMemoria";
 import CognitiveAreaAttenzione from "./CognitiveAreaAttenzione";
 import CognitiveAreaLinguaggio from "./CognitiveAreaLinguaggio";
+import CognitiveAreaAbilità from "./CognitiveAreaAbilità";
 
 function TestMMSE(){
     const patients_ctx = useContext(PatientContext);
@@ -15,6 +16,22 @@ function TestMMSE(){
 
     const [testIniziato, setTestIniziato] = useState(false);
     const [sezioneCognitiva, setSezioneCognitiva] = useState(1);
+
+    //ELENCO DI STATI CHE RAPPRESENTANO LE RISPOSTE DEL PAZIENTE
+    const [nomeImmesso, setNomeImmesso] = useState("");
+    const [cognomeImmesso, setCognomeImmesso] = useState("");
+    const [dataImmessa, setDataImmessa] = useState("");
+    const [luogoImmesso, setLuogoImmesso] = useState("");
+
+    const [parolaInvertitaImmessa, setParolaInvertitaImmessa] = useState("");
+
+    const [parolaMemorizzataImmessa1, setParolaMemorizzataImmessa1] = useState("");
+    const [parolaMemorizzataImmessa2, setParolaMemorizzataImmessa2] = useState("");
+    const [parolaMemorizzataImmessa3, setParolaMemorizzataImmessa3] = useState("");
+
+    const [oggettoImmesso1, setOggettoImmesso1] = useState("");
+    const [oggettoImmesso2, setOggettoImmesso2] = useState("");
+    const [fraseImmessa, setFraseImmessa] = useState("");
 
     function iniziaTest(){
         // if(nomePazSelezionato && cognomePazSelezionato){
@@ -45,16 +62,6 @@ function TestMMSE(){
                 console.log("TROVATO");
                 setNomePazSelezionato(patients_ctx.listaPazienti[i].nome);
                 setCognomePazSelezionato(patients_ctx.listaPazienti[i].cognome);
-                // nome_paziente = patients_ctx.listaPazienti[i].nome;
-                // cognome_paziente = patients_ctx.listaPazienti[i].cognome;
-                // paziente = {
-                //     nome: nome_paziente,
-                //     cognome: cognome_paziente
-                // }
-                // console.log(paziente)
-                // paziente_nome_mostrato = patients_ctx.listaPazienti[i].nome + " " + patients_ctx.listaPazienti[i].cognome
-                // console.log(paziente_nome_mostrato);
-                // return paziente;
             }
             else{
                 console.log("NON TROVATO");
@@ -62,6 +69,48 @@ function TestMMSE(){
             }
         }
         // return -1;
+    }
+
+    function salvaRisposteAreaCognitiva1(nome, cognome, data, luogo){
+        console.log(nome);
+        console.log(cognome);
+        console.log(data);
+        console.log(luogo);
+        setNomeImmesso(nome);
+        setCognomeImmesso(cognome);
+        setDataImmessa(data);
+        setLuogoImmesso(luogo);
+
+        prossimaSezioneCognitiva();
+    }
+
+    function salvaRisposteAreaCognitiva2(parola_1, parola_2, parola_3){
+        console.log(parola_1);
+        console.log(parola_2);
+        console.log(parola_3);
+        setParolaMemorizzataImmessa1(parola_1);
+        setParolaMemorizzataImmessa2(parola_2);
+        setParolaMemorizzataImmessa3(parola_3);
+
+        prossimaSezioneCognitiva();
+    }
+
+    function salvaRisposteAreaCognitiva3(parolaInvertita){
+        console.log(parolaInvertita);
+        setParolaInvertitaImmessa(parolaInvertita);
+
+        prossimaSezioneCognitiva();
+    }
+
+    function salvaRisposteAreaCognitiva4(nomeOggetto1, nomeOggetto2, frasePaziente){
+        console.log(nomeOggetto1);
+        console.log(nomeOggetto2);
+        console.log(frasePaziente);
+        setOggettoImmesso1(nomeOggetto1);
+        setOggettoImmesso2(nomeOggetto2);
+        setFraseImmessa(frasePaziente);
+
+        prossimaSezioneCognitiva();
     }
 
     return(
@@ -88,43 +137,50 @@ function TestMMSE(){
 
             {testIniziato && sezioneCognitiva === 1 &&
                 <CognitiveAreaOrientamento
-                    nomePaz={nomePazSelezionato}
-                    cognomePaz={cognomePazSelezionato}
+                    risposteAreaCog1={salvaRisposteAreaCognitiva1}
                 >
                 </CognitiveAreaOrientamento>
             }
 
             {testIniziato && sezioneCognitiva === 2 &&
-                <CognitiveAreaMemoria></CognitiveAreaMemoria>
+                <CognitiveAreaMemoria
+                    step={1}
+                    proxSezione={prossimaSezioneCognitiva}
+                    // risposteAreaCog2={salvaRisposteAreaCognitiva2}
+                >
+                </CognitiveAreaMemoria>
             }
 
             {testIniziato && sezioneCognitiva === 3 &&
-                <CognitiveAreaAttenzione></CognitiveAreaAttenzione>
+                <CognitiveAreaAttenzione
+                    risposteAreaCog3={salvaRisposteAreaCognitiva3}
+                >
+                </CognitiveAreaAttenzione>
             }
+
             {testIniziato && sezioneCognitiva === 4 &&
-                <CognitiveAreaLinguaggio></CognitiveAreaLinguaggio>
+                <CognitiveAreaMemoria
+                    step={2}
+                    risposteAreaCog2={salvaRisposteAreaCognitiva2}
+                >
+                </CognitiveAreaMemoria>
             }
+
             {testIniziato && sezioneCognitiva === 5 &&
-            <>
-                <h2>Adesso comparirà una frase a schermo, effettua l'azione richiesta</h2>
-                <h5>Frase esempio: 'Chiudi gli occhi' oppure 'Apri e chiudi la mano due volte'</h5>
-                <h2>Ottimo! Ora comparirà un'altra frase ed effettua l'azione richiesta</h2>
-                <h5>Esempio: Porgi un foglio di carta e dici: 'Piega questo foglio a metà e posalo per terra'</h5>
-            </>
+                <CognitiveAreaLinguaggio
+                    risposteAreaCog4={salvaRisposteAreaCognitiva4}
+                >
+                </CognitiveAreaLinguaggio>
             }
+
             {testIniziato && sezioneCognitiva === 6 &&
             <>
-                <h2>Disegna la seguente immagine sul foglio che ti è stato fornito</h2>
-                <h2>DISEGNO PENTAGONI INTRECCIATI</h2>
+                <CognitiveAreaAbilità>
+                </CognitiveAreaAbilità>
             </>
             }
             {testIniziato &&
             <>
-                <GenericAlternativeButton
-                    onClick={prossimaSezioneCognitiva}
-                    buttonText={"Prossima domanda"}
-                >
-                </GenericAlternativeButton>
                 <GenericAlternativeButton
                     onClick={precedenteSezioneCognitiva}
                     buttonText={"Domanda precedente"}
