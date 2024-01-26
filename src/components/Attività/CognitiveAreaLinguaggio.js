@@ -32,16 +32,40 @@ function CognitiveAreaLinguaggio(props){
     }
 
     function salvaRisposte(){
+        let oggettoDomandeRisposte = [
+            {
+                domanda: "Scrivi i nomi di questi oggetti",
+                oggetto_1: oggetto1,
+                oggetto_2: oggetto2
+            },
+            {
+                domanda: "Ripeti la frase",
+                frase: "TIGRE CONTRO TIGRE"
+            },
+            {
+                domanda: "Esegui questa azione",
+                azione: "Prendi il foglio di carta, piegalo a metà e buttalo per terra."
+            },
+            {
+                domanda: "Scrivi una frase",
+                frase: fraseInserita
+            },
+            {
+                domanda: "Esegui questa azione",
+                azione: "Chiudi gli occhi"
+            }
+        ]
         console.log(oggetto1 === oggettoDaIdentificare1);
         console.log(oggetto2 === oggettoDaIdentificare2);
         console.log(fraseInserita);
-        props.risposteAreaCog4(oggetto1, oggetto2, fraseInserita);
+        props.risposteAreaCog5(oggettoDomandeRisposte);
     }
 
     return(
         <>
             {numeroDomanda === 1 &&
             <>
+                <h4>Scrivi i nomi di questi oggetti</h4>
                 <div className={styles.flex_horizontal}>
                     <div className={styles.flex_vertical}>
                         <img className={styles.image_style} src={image1}></img>
@@ -67,7 +91,7 @@ function CognitiveAreaLinguaggio(props){
             {numeroDomanda === 2 &&
                 <div className={styles.flex_vertical}>
                     <h2>Ripeti ad alta voce la frase che ti viene mostrata qui sotto.</h2>
-                    <h5>Tigre contro Tigre</h5>
+                    <h5>TIGRE CONTRO TIGRE</h5>
                     <GenericAlternativeButton
                         buttonText={"Prossima Domanda"}
                         onClick={prossimaDomanda}

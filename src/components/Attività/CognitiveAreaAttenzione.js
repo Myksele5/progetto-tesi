@@ -20,7 +20,12 @@ function CognitiveAreaAttenzione(props){
     }
 
     function salvaRisposte(){
-        props.risposteAreaCog3(parolaInseritaAlContrario);
+        let oggettoDomandeRisposte = {
+            domanda: "Scrivi questa parola al contrario",
+            parola: parolaDaInvertire,
+            risposta: parolaInseritaAlContrario
+        }
+        props.risposteAreaCog3(oggettoDomandeRisposte);
     }
 
     return(

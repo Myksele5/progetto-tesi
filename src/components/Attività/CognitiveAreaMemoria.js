@@ -11,14 +11,6 @@ function CognitiveAreaMemoria(props){
     const [parolaMemorizzata2, setParolaMemorizzata2] = useState("");
     const [parolaMemorizzata3, setParolaMemorizzata3] = useState("");
 
-    function prossimaSezione(){
-        props.proxSezione();
-    }
-
-    function salvaRisposte(){
-        props.risposteAreaCog2(parolaMemorizzata1, parolaMemorizzata2, parolaMemorizzata3);
-    }
-
     function parolaMemorizzata1Handler(event){
         setParolaMemorizzata1(event.target.value.toUpperCase());
     }
@@ -30,6 +22,42 @@ function CognitiveAreaMemoria(props){
     function parolaMemorizzata3Handler(event){
         setParolaMemorizzata3(event.target.value.toUpperCase());
     }
+    
+    function salvaRisposteAreaCognitiva2(){
+        let oggettoDomandeRisposte = [
+            {
+                domanda: "Ripeti questa parola",
+                parola: parolaDaMemorizzare_1
+            },
+            {
+                domanda: "Ripeti questa parola",
+                parola: parolaDaMemorizzare_2
+            },
+            {
+                domanda: "Ripeti questa parola",
+                parola: parolaDaMemorizzare_3
+            }
+        ];
+        props.risposteAreaCog2(oggettoDomandeRisposte);
+    }
+    function salvaRisposteAreaCognitiva4(){
+        let oggettoDomandeRisposte = [
+            {
+                parola: parolaDaMemorizzare_1,
+                risposta: parolaMemorizzata1
+            },
+            {
+                parola: parolaDaMemorizzare_2,
+                risposta: parolaMemorizzata2
+            },
+            {
+                parola: parolaDaMemorizzare_3,
+                risposta: parolaMemorizzata3
+            },
+        ];
+        props.risposteAreaCog4(oggettoDomandeRisposte);
+    }
+
 
     return (
         <>
@@ -45,7 +73,7 @@ function CognitiveAreaMemoria(props){
 
                 <GenericAlternativeButton
                     buttonText={"Prox Domand"}
-                    onClick={prossimaSezione}
+                    onClick={salvaRisposteAreaCognitiva2}
                 >
                 </GenericAlternativeButton>
             </>
@@ -64,7 +92,7 @@ function CognitiveAreaMemoria(props){
 
                 <GenericAlternativeButton
                     buttonText={"Prox Domand"}
-                    onClick={salvaRisposte}
+                    onClick={salvaRisposteAreaCognitiva4}
                 >
                 </GenericAlternativeButton>
             </>

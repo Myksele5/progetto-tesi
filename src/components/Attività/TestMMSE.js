@@ -8,6 +8,7 @@ import CognitiveAreaMemoria from "./CognitiveAreaMemoria";
 import CognitiveAreaAttenzione from "./CognitiveAreaAttenzione";
 import CognitiveAreaLinguaggio from "./CognitiveAreaLinguaggio";
 import CognitiveAreaAbilità from "./CognitiveAreaAbilità";
+import RisultatiTest from "./RisultatiTest";
 
 function TestMMSE(){
     const patients_ctx = useContext(PatientContext);
@@ -18,20 +19,12 @@ function TestMMSE(){
     const [sezioneCognitiva, setSezioneCognitiva] = useState(1);
 
     //ELENCO DI STATI CHE RAPPRESENTANO LE RISPOSTE DEL PAZIENTE
-    const [nomeImmesso, setNomeImmesso] = useState("");
-    const [cognomeImmesso, setCognomeImmesso] = useState("");
-    const [dataImmessa, setDataImmessa] = useState("");
-    const [luogoImmesso, setLuogoImmesso] = useState("");
-
-    const [parolaInvertitaImmessa, setParolaInvertitaImmessa] = useState("");
-
-    const [parolaMemorizzataImmessa1, setParolaMemorizzataImmessa1] = useState("");
-    const [parolaMemorizzataImmessa2, setParolaMemorizzataImmessa2] = useState("");
-    const [parolaMemorizzataImmessa3, setParolaMemorizzataImmessa3] = useState("");
-
-    const [oggettoImmesso1, setOggettoImmesso1] = useState("");
-    const [oggettoImmesso2, setOggettoImmesso2] = useState("");
-    const [fraseImmessa, setFraseImmessa] = useState("");
+    const [objRisposteAreaCognitiva1, setObjRisposteAreaCognitiva1] = useState([]);
+    const [objRisposteAreaCognitiva2, setObjRisposteAreaCognitiva2] = useState([]);
+    const [objRisposteAreaCognitiva3, setObjRisposteAreaCognitiva3] = useState([]);
+    const [objRisposteAreaCognitiva4, setObjRisposteAreaCognitiva4] = useState([]);
+    const [objRisposteAreaCognitiva5, setObjRisposteAreaCognitiva5] = useState([]);
+    const [objRisposteAreaCognitiva6, setObjRisposteAreaCognitiva6] = useState([]);
 
     function iniziaTest(){
         // if(nomePazSelezionato && cognomePazSelezionato){
@@ -71,44 +64,44 @@ function TestMMSE(){
         // return -1;
     }
 
-    function salvaRisposteAreaCognitiva1(nome, cognome, data, luogo){
-        console.log(nome);
-        console.log(cognome);
-        console.log(data);
-        console.log(luogo);
-        setNomeImmesso(nome);
-        setCognomeImmesso(cognome);
-        setDataImmessa(data);
-        setLuogoImmesso(luogo);
+    function salvaRisposteAreaCognitiva1(objRisposte){
+        console.log(objRisposte);
+        setObjRisposteAreaCognitiva1(objRisposte);
 
         prossimaSezioneCognitiva();
     }
 
-    function salvaRisposteAreaCognitiva2(parola_1, parola_2, parola_3){
-        console.log(parola_1);
-        console.log(parola_2);
-        console.log(parola_3);
-        setParolaMemorizzataImmessa1(parola_1);
-        setParolaMemorizzataImmessa2(parola_2);
-        setParolaMemorizzataImmessa3(parola_3);
+    function salvaRisposteAreaCognitiva2(objRisposte){
+        console.log(objRisposte);
+        setObjRisposteAreaCognitiva2(objRisposte);
+
+        prossimaSezioneCognitiva();
+    }
+    
+    function salvaRisposteAreaCognitiva3(objRisposte){
+        console.log(objRisposte);
+        setObjRisposteAreaCognitiva3(objRisposte);
+        
+        prossimaSezioneCognitiva();
+    }
+    
+    function salvaRisposteAreaCognitiva4(objRisposte){
+        console.log(objRisposte);
+        setObjRisposteAreaCognitiva4(objRisposte);
+        
+        prossimaSezioneCognitiva();
+    }
+
+    function salvaRisposteAreaCognitiva5(objRisposte){
+        console.log(objRisposte);
+        setObjRisposteAreaCognitiva5(objRisposte);
 
         prossimaSezioneCognitiva();
     }
 
-    function salvaRisposteAreaCognitiva3(parolaInvertita){
-        console.log(parolaInvertita);
-        setParolaInvertitaImmessa(parolaInvertita);
-
-        prossimaSezioneCognitiva();
-    }
-
-    function salvaRisposteAreaCognitiva4(nomeOggetto1, nomeOggetto2, frasePaziente){
-        console.log(nomeOggetto1);
-        console.log(nomeOggetto2);
-        console.log(frasePaziente);
-        setOggettoImmesso1(nomeOggetto1);
-        setOggettoImmesso2(nomeOggetto2);
-        setFraseImmessa(frasePaziente);
+    function salvaRisposteAreaCognitiva6(objRisposte){
+        console.log(objRisposte);
+        setObjRisposteAreaCognitiva6(objRisposte);
 
         prossimaSezioneCognitiva();
     }
@@ -145,8 +138,7 @@ function TestMMSE(){
             {testIniziato && sezioneCognitiva === 2 &&
                 <CognitiveAreaMemoria
                     step={1}
-                    proxSezione={prossimaSezioneCognitiva}
-                    // risposteAreaCog2={salvaRisposteAreaCognitiva2}
+                    risposteAreaCog2={salvaRisposteAreaCognitiva2}
                 >
                 </CognitiveAreaMemoria>
             }
@@ -161,23 +153,37 @@ function TestMMSE(){
             {testIniziato && sezioneCognitiva === 4 &&
                 <CognitiveAreaMemoria
                     step={2}
-                    risposteAreaCog2={salvaRisposteAreaCognitiva2}
+                    risposteAreaCog4={salvaRisposteAreaCognitiva4}
                 >
                 </CognitiveAreaMemoria>
             }
 
             {testIniziato && sezioneCognitiva === 5 &&
                 <CognitiveAreaLinguaggio
-                    risposteAreaCog4={salvaRisposteAreaCognitiva4}
+                    risposteAreaCog5={salvaRisposteAreaCognitiva5}
                 >
                 </CognitiveAreaLinguaggio>
             }
 
             {testIniziato && sezioneCognitiva === 6 &&
             <>
-                <CognitiveAreaAbilità>
+                <CognitiveAreaAbilità
+                    risposteAreaCog6={salvaRisposteAreaCognitiva6}
+                >
                 </CognitiveAreaAbilità>
+                
             </>
+            }
+            {testIniziato && sezioneCognitiva > 6  &&
+                <RisultatiTest
+                    areaCog_1={objRisposteAreaCognitiva1}
+                    areaCog_2={objRisposteAreaCognitiva2}
+                    areaCog_3={objRisposteAreaCognitiva3}
+                    areaCog_4={objRisposteAreaCognitiva4}
+                    areaCog_5={objRisposteAreaCognitiva5}
+                    areaCog_6={objRisposteAreaCognitiva6}
+                >
+                </RisultatiTest>
             }
             {testIniziato &&
             <>
