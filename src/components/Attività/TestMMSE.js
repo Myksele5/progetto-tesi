@@ -16,13 +16,14 @@ function TestMMSE(){
     const [cognomePazSelezionato, setCognomePazSelezionato] = useState("");
 
     const [testIniziato, setTestIniziato] = useState(false);
+    const [testConcluso, setTestConcluso] = useState(false);
     const [sezioneCognitiva, setSezioneCognitiva] = useState(1);
 
     //ELENCO DI STATI CHE RAPPRESENTANO LE RISPOSTE DEL PAZIENTE
     const [objRisposteAreaCognitiva1, setObjRisposteAreaCognitiva1] = useState([]);
-    const [objRisposteAreaCognitiva2, setObjRisposteAreaCognitiva2] = useState([]);
+    const [objRisposteAreaCognitiva2, setObjRisposteAreaCognitiva2] = useState();
     const [objRisposteAreaCognitiva3, setObjRisposteAreaCognitiva3] = useState([]);
-    const [objRisposteAreaCognitiva4, setObjRisposteAreaCognitiva4] = useState([]);
+    const [objRisposteAreaCognitiva4, setObjRisposteAreaCognitiva4] = useState();
     const [objRisposteAreaCognitiva5, setObjRisposteAreaCognitiva5] = useState([]);
     const [objRisposteAreaCognitiva6, setObjRisposteAreaCognitiva6] = useState([]);
 
@@ -102,13 +103,16 @@ function TestMMSE(){
     function salvaRisposteAreaCognitiva6(objRisposte){
         console.log(objRisposte);
         setObjRisposteAreaCognitiva6(objRisposte);
+        //TEST FINITO
+        setTestIniziato(false);
+        setTestConcluso(true);
 
         prossimaSezioneCognitiva();
     }
 
     return(
         <div className={styles.test_container}>
-            {!testIniziato && 
+            {!testIniziato && !testConcluso && 
             <>
                 <label>Ciao sono il test<br/></label>
                 <label>INFO PRIMA DI INIZIARE IL TEST</label>
@@ -174,8 +178,10 @@ function TestMMSE(){
                 
             </>
             }
-            {testIniziato && sezioneCognitiva > 6  &&
+            {testConcluso &&
                 <RisultatiTest
+                    nomePaziente={nomePazSelezionato}
+                    cognomePaziente={cognomePazSelezionato}
                     areaCog_1={objRisposteAreaCognitiva1}
                     areaCog_2={objRisposteAreaCognitiva2}
                     areaCog_3={objRisposteAreaCognitiva3}

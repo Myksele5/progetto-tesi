@@ -21,7 +21,7 @@ function CognitiveAreaAttenzione(props){
 
     function salvaRisposte(){
         let oggettoDomandeRisposte = {
-            domanda: "Scrivi questa parola al contrario",
+            domanda: `Scrivi ${parolaDaInvertire} al contrario`,
             parola: parolaDaInvertire,
             risposta: parolaInseritaAlContrario
         }

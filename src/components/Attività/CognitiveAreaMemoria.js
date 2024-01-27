@@ -24,37 +24,25 @@ function CognitiveAreaMemoria(props){
     }
     
     function salvaRisposteAreaCognitiva2(){
-        let oggettoDomandeRisposte = [
+        let oggettoDomandeRisposte = 
             {
-                domanda: "Ripeti questa parola",
-                parola: parolaDaMemorizzare_1
-            },
-            {
-                domanda: "Ripeti questa parola",
-                parola: parolaDaMemorizzare_2
-            },
-            {
-                domanda: "Ripeti questa parola",
-                parola: parolaDaMemorizzare_3
+                domanda: "Ripeti queste parole",
+                parole: [parolaDaMemorizzare_1, parolaDaMemorizzare_2, parolaDaMemorizzare_3]
             }
-        ];
+        ;
         props.risposteAreaCog2(oggettoDomandeRisposte);
     }
     function salvaRisposteAreaCognitiva4(){
-        let oggettoDomandeRisposte = [
+        let oggettoDomandeRisposte = 
             {
-                parola: parolaDaMemorizzare_1,
-                risposta: parolaMemorizzata1
-            },
-            {
-                parola: parolaDaMemorizzare_2,
-                risposta: parolaMemorizzata2
-            },
-            {
-                parola: parolaDaMemorizzare_3,
-                risposta: parolaMemorizzata3
-            },
-        ];
+                domanda: "Scrivi le parole mostrate in precedenza",
+                parole: [
+                    {parola: parolaDaMemorizzare_1, risposta: parolaMemorizzata1},
+                    {parola: parolaDaMemorizzare_2, risposta: parolaMemorizzata2},
+                    {parola: parolaDaMemorizzare_3, risposta: parolaMemorizzata3},
+                ],
+            }
+        ;
         props.risposteAreaCog4(oggettoDomandeRisposte);
     }
 

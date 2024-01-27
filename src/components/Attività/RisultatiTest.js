@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import styles from "./RisultatiTest.module.css";
 
 function RisultatiTest(props){
+    const nomePaziente = props.nomePaziente;
+    const cognomePaziente = props.cognomePaziente;
+
     const [risposteAreaCognitiva_1, setRisposteAreaCognitiva_1] = useState(props.areaCog_1);
     const risposteAreaCognitiva_2 = props.areaCog_2;
     const risposteAreaCognitiva_3 = props.areaCog_3;
@@ -19,67 +22,145 @@ function RisultatiTest(props){
     }, [])
 
     return(
-        <div style={{width: "100%"}}>
-            <h1>Risultati del paziente</h1>
-            <h2>AREA COGNITIVA 1 - Orientamento</h2>
-            {risposteAreaCognitiva_1.map(element => {
-                return (
-                    <div style={{display: "flex", alignItems: "center"}}>
-                        <label>{element.domanda}{"----->"}</label>
-                        <h3>{element.risposta}</h3>
-                    </div>
-                );
-            })}
+        <>
+            <h1 className={styles.title}>Risultati del paziente: {nomePaziente} {cognomePaziente}</h1>
 
-            <h2>AREA COGNITIVA 2 - Memoria</h2>
-            {risposteAreaCognitiva_2.map(element => {
-                return (
-                    <div style={{display: "flex", alignItems: "center"}}>
-                        <label>{element.domanda}{"----->"}</label>
-                        <h3>{element.parola}</h3>
+            <div>
+                <h2 className={styles.subtitle}>AREA COGNITIVA 1 - Orientamento</h2>
+                <section className={styles.area_cog_style}>
+                    
+                    <div className={styles.grid_container}>
+                        <label className={styles.label_style}>DOMANDE:</label>
+                        <label className={styles.label_style}>RISPOSTE:</label>
+                        {risposteAreaCognitiva_1.map(element => {
+                            return (
+                                <>
+                                    <div style={{display: "flex", alignItems: "center", marginBottom: "2px", borderBottom: "1px solid black"}}>
+                                        {/* <label>DOMANDA:</label> */}
+                                        <h3 className={styles.domanda_style}>{element.domanda}</h3>
+                                        
+                                    </div>
+                                    <div style={{display: "flex", alignItems: "center", marginBottom: "2px", borderBottom: "1px solid black"}}>
+                                        {/* <label>RISPOSTA:</label> */}
+                                        <h3 className={styles.risposta_style}>{element.risposta}</h3>
+                                    </div>
+                                </>
+                            );
+                        })}
                     </div>
-                );
-            })}
+                    
+                </section>
+                <label className={styles.label_style}>PUNTEGGIO AREA COGNITIVA 1: </label>
+                <input className={styles.input_style}></input>
+                <hr style={{border: "1px solid black"}}></hr>
 
-            <h2>AREA COGNITIVA 3 - Attenzione/Calcolo</h2>
-            <div style={{display: "flex", alignItems:"center"}}>
-                <label>{risposteAreaCognitiva_3.domanda}{"--"}{risposteAreaCognitiva_3.parola}{"----->"}</label>
-                <h3>{risposteAreaCognitiva_3.risposta}</h3>
-            </div>
-
-            <h2>AREA COGNITIVA 4 - Richiamo</h2>
-            {risposteAreaCognitiva_4.map(element => {
-                return (
-                    <div style={{display: "flex", alignItems: "center"}}>
-                        <label>{element.parola}{"----->"}</label>
-                        <h3>{element.risposta}</h3>
+                <h2 className={styles.subtitle}>AREA COGNITIVA 2 - Memoria</h2>
+                <section className={styles.area_cog_style}>
+                    <div style={{display: "flex", alignItems:"center"}}>
+                        <label style={{margin: "5px"}} className={styles.label_style}>{risposteAreaCognitiva_2.domanda}{":"}</label>
+                        <div style={{width: "70%" ,display: "flex", justifyContent: "space-evenly", alignItems:"center"}}>
+                            {risposteAreaCognitiva_2.parole.map(element => {
+                                return(
+                                    <h3 className={styles.risposta_style}>{element}</h3>
+                                );
+                            })
+                            }
+                        </div>
                     </div>
-                );
-            })}
-            <h2>AREA COGNITIVA 5 - Linguaggio</h2>
-            <div style={{display: "flex", alignItems: "center"}}>
-                <label>{risposteAreaCognitiva_5[0].domanda}{"----->"}</label>
-                <h3>{risposteAreaCognitiva_5[0].oggetto_1}</h3>
-                <h3>{risposteAreaCognitiva_5[0].oggetto_2}</h3>
+                </section>
+                <label className={styles.label_style}>PUNTEGGIO AREA COGNITIVA 2: </label>
+                <input className={styles.input_style}></input>
+                <hr style={{border: "1px solid black"}}></hr>
+
+                <h2 className={styles.subtitle}>AREA COGNITIVA 3 - Attenzione/Calcolo</h2>
+                <section className={styles.area_cog_style}>
+                    <div className={styles.grid_container}>
+                        <label className={styles.label_style}>DOMANDA:</label>
+                        <label className={styles.label_style}>RISPOSTA:</label>
+                        <div style={{display: "flex", alignItems:"center", marginBottom: "2px", borderBottom: "1px solid black"}}>
+                            <h3 className={styles.domanda_style}>{risposteAreaCognitiva_3.domanda}{":"}</h3>
+                        </div>
+                        <div style={{display: "flex", alignItems:"center", marginBottom: "2px", borderBottom: "1px solid black"}}>
+                            <h3 className={styles.risposta_style}>{risposteAreaCognitiva_3.risposta}</h3>
+                        </div>
+                    </div>
+                </section>
+                <label className={styles.label_style}>PUNTEGGIO AREA COGNITIVA 3: </label>
+                <input className={styles.input_style}></input>
+                <hr style={{border: "1px solid black"}}></hr>
+
+                <h2 className={styles.subtitle}>AREA COGNITIVA 4 - Richiamo</h2>
+                <section className={styles.area_cog_style}>
+                    <label className={styles.label_style}>{risposteAreaCognitiva_4.domanda}</label>
+                    <div className={styles.grid_container}>
+                        <label className={styles.label_style}>PAROLE:</label>
+                        <label className={styles.label_style}>RISPOSTE:</label>
+                        {risposteAreaCognitiva_4.parole.map(element => {
+                            return(
+                                <>
+                                    <div style={{display: "flex", alignItems:"center", marginBottom: "2px", borderBottom: "1px solid black"}}>
+                                        <h3 className={styles.domanda_style}>{element.parola}</h3>
+                                    </div>
+                                    <div style={{display: "flex", alignItems:"center", marginBottom: "2px", borderBottom: "1px solid black"}}>
+                                        <h3 className={styles.risposta_style}>{element.risposta}</h3>
+                                    </div>
+                                </>
+                            );
+                        })}
+                    </div>
+                </section>
+                <label className={styles.label_style}>PUNTEGGIO AREA COGNITIVA 4: </label>
+                <input className={styles.input_style}></input>
+                <hr style={{border: "1px solid black"}}></hr>
+
+                <h2 className={styles.subtitle}>AREA COGNITIVA 5 - Linguaggio</h2>
+                <section className={styles.area_cog_style}>
+                    <label className={styles.label_style}>{risposteAreaCognitiva_5[0].domanda}</label>
+                    <div className={styles.grid_container}>
+                        <label className={styles.label_style}>OGGETTI:</label>
+                        <label className={styles.label_style}>RISPOSTE:</label>
+                        {risposteAreaCognitiva_5[0].oggetti.map(element => {
+                            return(
+                                <>
+                                    <div style={{display: "flex", alignItems:"center", marginBottom: "2px", borderBottom: "1px solid black"}}>
+                                        <h3 className={styles.domanda_style}>{element.oggetto}</h3>
+                                    </div>
+                                    <div style={{display: "flex", alignItems:"center", marginBottom: "2px", borderBottom: "1px solid black"}}>
+                                        <h3 className={styles.risposta_style}>{element.risposta}</h3>
+                                    </div>
+                                </>
+                            );
+                        })}
+                    </div>
+
+                    {/* INSERIRE E/O AGGIUSTARE MARGINE */}
+                    <div style={{display: "flex", alignItems: "center"}}>
+                        <label className={styles.label_style}>{risposteAreaCognitiva_5[1].domanda}</label>
+                        <h3 className={styles.risposta_style}>{risposteAreaCognitiva_5[1].frase}</h3>
+                    </div>
+                    {/* INSERIRE E/O AGGIUSTARE MARGINE */}
+                    <div style={{display: "flex", alignItems: "center"}}>
+                        <label className={styles.label_style}>{risposteAreaCognitiva_5[2].domanda}</label>
+                        <h3 className={styles.risposta_style}>{risposteAreaCognitiva_5[2].azione}</h3>
+                    </div>
+                    {/* INSERIRE E/O AGGIUSTARE MARGINE */}
+                    <div style={{display: "flex", alignItems: "center"}}>
+                        <label className={styles.label_style}>{risposteAreaCognitiva_5[3].domanda}</label>
+                        <h3 className={styles.risposta_style}>{risposteAreaCognitiva_5[3].frase}</h3>
+                    </div>
+                    {/* INSERIRE E/O AGGIUSTARE MARGINE */}
+                    <div style={{display: "flex", alignItems: "center"}}>
+                        <label className={styles.label_style}>{risposteAreaCognitiva_5[4].domanda}</label>
+                        <h3 className={styles.risposta_style}>{risposteAreaCognitiva_5[4].azione}</h3>
+                    </div>
+                </section>
+                <label className={styles.label_style}>PUNTEGGIO AREA COGNITIVA 5: </label>
+                <input className={styles.input_style}></input>
+                <hr style={{border: "1px solid black"}}></hr>
+
+                <h2 className={styles.subtitle}>AREA COGNITIVA 6 - Abilità</h2>
             </div>
-            <div style={{display: "flex", alignItems: "center"}}>
-                <label>{risposteAreaCognitiva_5[1].domanda}</label>
-                <h3>{risposteAreaCognitiva_5[1].frase}</h3>
-            </div>
-            <div style={{display: "flex", alignItems: "center"}}>
-                <label>{risposteAreaCognitiva_5[2].domanda}</label>
-                <h3>{risposteAreaCognitiva_5[2].azione}</h3>
-            </div>
-            <div style={{display: "flex", alignItems: "center"}}>
-                <label>{risposteAreaCognitiva_5[3].domanda}</label>
-                <h3>{risposteAreaCognitiva_5[3].frase}</h3>
-            </div>
-            <div style={{display: "flex", alignItems: "center"}}>
-                <label>{risposteAreaCognitiva_5[4].domanda}</label>
-                <h3>{risposteAreaCognitiva_5[4].azione}</h3>
-            </div>
-            <h2>AREA COGNITIVA 6 - Abilità</h2>
-        </div>
+        </>
     );
 }
 

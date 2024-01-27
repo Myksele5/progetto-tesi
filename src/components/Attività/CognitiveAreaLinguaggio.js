@@ -35,8 +35,10 @@ function CognitiveAreaLinguaggio(props){
         let oggettoDomandeRisposte = [
             {
                 domanda: "Scrivi i nomi di questi oggetti",
-                oggetto_1: oggetto1,
-                oggetto_2: oggetto2
+                oggetti: [
+                    {oggetto: oggettoDaIdentificare1, risposta: oggetto1},
+                    {oggetto: oggettoDaIdentificare2, risposta: oggetto2},
+                ],
             },
             {
                 domanda: "Ripeti la frase",
