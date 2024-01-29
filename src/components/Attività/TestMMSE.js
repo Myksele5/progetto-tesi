@@ -136,6 +136,7 @@ function TestMMSE(props){
 
             {testIniziato && sezioneCognitiva === 1 &&
                 <CognitiveAreaOrientamento
+                    domandeAreaCog1={props.areaCog_1_domande}
                     risposteAreaCog1={salvaRisposteAreaCognitiva1}
                 >
                 </CognitiveAreaOrientamento>

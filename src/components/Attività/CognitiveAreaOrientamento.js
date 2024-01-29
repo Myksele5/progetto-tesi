@@ -3,8 +3,8 @@ import styles from "./CognitiveAreaOrientamento.module.css";
 import { useEffect, useState } from "react";
 
 function CognitiveAreaOrientamento(props){
-    // const [nomePaziente, setNomePaziente] = useState(props.nomePaz);
-    // const [cognomePaziente, setCognomePaziente] = useState(props.cognomePaz);
+    const elencoDomande = props.domandeAreaCog1;
+
     const [bloccoDomande, setBloccoDomande] = useState(1);
 
     const [annoInserito, setAnnoInserito] = useState("");
@@ -132,23 +132,23 @@ function CognitiveAreaOrientamento(props){
                 <h2>TEMPO</h2>
                 <section>
                     <div className={styles.flex_vertical}>
-                        <label>In che anno ci troviamo?</label>
+                        <label>{elencoDomande.domanda_1}</label>
                         <input value={annoInserito} onChange={annoInseritoChangeHandler} className={styles.input_style}></input>
                     </div>
                     <div className={styles.flex_vertical}>
-                        <label>In che mese ci troviamo?</label>
+                        <label>{elencoDomande.domanda_2}</label>
                         <input value={meseInserito} onChange={meseInseritoChangeHandler} className={styles.input_style}></input>
                     </div>
                     <div className={styles.flex_vertical}>
-                        <label>Che giorno è oggi?</label>
+                        <label>{elencoDomande.domanda_3}</label>
                         <input value={giornoInserito} onChange={giornoInseritoChangeHandler} className={styles.input_style}></input>
                     </div>
                     <div className={styles.flex_vertical}>
-                        <label>Quale giorno della settimana è oggi?</label>
+                        <label>{elencoDomande.domanda_4}</label>
                         <input value={giornoSettimanaInserito} onChange={giornoSettimanaInseritoChangeHandler} className={styles.input_style}></input>
                     </div>
                     <div className={styles.flex_vertical}>
-                        <label>In quale stagione ci troviamo?</label>
+                        <label>{elencoDomande.domanda_5}</label>
                         <input value={stagioneInserita} onChange={stagioneInseritaChangeHandler} className={styles.input_style}></input>
                     </div>
                 </section>
@@ -165,23 +165,23 @@ function CognitiveAreaOrientamento(props){
                 <h2>SPAZIO</h2>
                 <section>
                     <div className={styles.flex_vertical}>
-                        <label>In quale nazione siamo?</label>
+                        <label>{elencoDomande.domanda_6}</label>
                         <input value={nazioneInserita} onChange={nazioneInseritaChangeHandler} className={styles.input_style}></input>
                     </div>
                     <div className={styles.flex_vertical}>
-                        <label>In quale regione?</label>
+                        <label>{elencoDomande.domanda_7}</label>
                         <input value={regioneInserita} onChange={regioneInseritaChangeHandler} className={styles.input_style}></input>
                     </div>
                     <div className={styles.flex_vertical}>
-                        <label>In quale città ci troviamo?</label>
+                        <label>{elencoDomande.domanda_8}</label>
                         <input value={cittàInserita} onChange={cittàInseritaChangeHandler} className={styles.input_style}></input>
                     </div>
                     <div className={styles.flex_vertical}>
-                        <label>In che luogo ci troviamo?</label>
+                        <label>{elencoDomande.domanda_9}</label>
                         <input value={luogoInserito} onChange={luogoInseritoChangeHandler} className={styles.input_style}></input>
                     </div>
                     <div className={styles.flex_vertical}>
-                        <label>A quale piano siamo adesso?</label>
+                        <label>{elencoDomande.domanda_10}</label>
                         <input value={pianoInserito} onChange={pianoInseritoChangeHandler} className={styles.input_style}></input>
                     </div>
                 </section>

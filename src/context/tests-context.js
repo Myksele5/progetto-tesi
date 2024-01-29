@@ -11,7 +11,19 @@ export function TestsContextProvider(props){
 
     var arrayTestProvvisorio = [
         {
-            nomeTest: "Test MMSE"
+            nomeTest: "Test MMSE",
+            objAreaCog_1: {
+                domanda_1: "In che anno ci troviamo?",
+                domanda_2: "In che mese ci troviamo?",
+                domanda_3: "Che giorno è oggi?",
+                domanda_4: "Quale giorno della settimana è oggi?",
+                domanda_5: "In quale stagione ci troviamo?",
+                domanda_6: "In quale nazione siamo?",
+                domanda_7: "In quale regione?",
+                domanda_8: "In quale città ci troviamo?",
+                domanda_9: "In che luogo ci troviamo?",
+                domanda_10: "A quale piano siamo adesso?",
+            }
         },
         {
             nomeTest: "Test MOCA"

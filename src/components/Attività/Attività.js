@@ -1,6 +1,4 @@
 import styles from "./Attività.module.css";
-import CambioPsw from "../Accesso/CambioPsw";
-import SearchBox from "../UI/SearchBox";
 import GenericButton from "../UI/GenericButton";
 import TestCard from "../UI/TestCard";
 import { useContext, useEffect, useState } from "react";
@@ -12,6 +10,7 @@ import TestsContext from "../../context/tests-context";
 function Attività(){
     const tests_ctx = useContext(TestsContext);
     const [showListaTest, setShowListaTest] = useState(true);
+    const [testSelected, setTestSelected] = useState("");
 
     const testsList = tests_ctx.listaTest;
 
@@ -20,25 +19,28 @@ function Attività(){
     }
 
     function fromArrayToListaTest(item){
-        if(item.nomeTest === "Test MMSE" || item.nomeTest === "Test MOCA"){
-            return(
-                <TestCard
-                    nascondiLista={nascondiListaTest}
-                    cardText={item.nomeTest}
-                ></TestCard>
-            );
-        }
-        else{
-            return(
-                <TestCard
-                    testEliminabile={true}
-                    nascondiLista={nascondiListaTest}
-                    cardText={item.nomeTest}
-                ></TestCard>
-            );
-        }
-
-        
+        return(
+            <TestCard
+                children={
+                    <>
+                        <GenericAlternativeButton
+                            onClick={() => {
+                                nascondiListaTest();
+                                setTestSelected(item.nomeTest)
+                            }}
+                            buttonText={"Avvia Test"}
+                        >
+                        </GenericAlternativeButton>
+                        <GenericAlternativeButton
+                            buttonText={"Modifica Test"}
+                        >
+                        </GenericAlternativeButton>
+                    </>
+                }
+                // nascondiLista={nascondiListaTest}
+                cardText={item.nomeTest}
+            ></TestCard>
+        );   
     }
 
     useEffect(() => {
@@ -62,9 +64,11 @@ function Attività(){
             >
             </GenericAlternativeButton>
 
-            {!showListaTest && 
+            {!showListaTest && testSelected === "Test MMSE" &&
                 <div className={styles.wrapper_test}>
                     <TestMMSE
+                    //DA COMPLETARE CON LE ALTRE AREE COGNITIVE
+                        areaCog_1_domande={testsList[0].objAreaCog_1}
                         nascondiTest={nascondiListaTest}
                     >
                     </TestMMSE>

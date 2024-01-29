@@ -24,7 +24,7 @@
     justify-content: center;
     /* align-items: center; */
     margin-top: 15px;
-    grid-template-columns: 350px 350px 350px;
+    grid-template-columns: 350px 350px;
     column-gap: 20px;
     grid-template-rows: fit-content;
     row-gap: 10px;
