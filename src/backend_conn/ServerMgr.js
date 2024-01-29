@@ -415,5 +415,17 @@ function initServerMgr(cb) {
         }
     }
 
+    serverMgr.saveResultMMSE = async (resultMMSE, ID, cb) => {
+        let result = await serverMgr.requestFetchData("saveResultMMSE", {resultMMSE: resultMMSE, ID: ID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
     if (cb) cb();
 }

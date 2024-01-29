@@ -35,6 +35,13 @@
     /* pointer-events: none; */
 }
 
+.is_selected{
+    background-color: rgb(33, 33, 131);
+    border: 2px solid rgb(233, 33, 131);
+    color: rgb(233, 33, 131);
+    box-shadow: 1px 1px 5px 1px black;
+}
+
 .small_button{
     display: flex;
     align-items: center;

@@ -102,7 +102,7 @@ function StatistichePaziente(props){
 
     return(
         <>
-            <select value={filtroStatistiche} onChange={filtroStatisticheChangeHandler}>
+            <select value={filtroStatistiche} onChange={filtroStatisticheChangeHandler} className={styles.select_style}>
                 <option>Totali</option>
                 <option>ultime 48 ore</option>
                 <option>ultimo mese</option>

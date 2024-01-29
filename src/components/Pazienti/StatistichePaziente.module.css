@@ -8,6 +8,21 @@
     flex-direction: column;
 }
 
+.select_style{
+    margin: 5px;
+    width: 200px;
+    height: 25px;
+    border-radius: 5px;
+    border: 2px solid blue;
+    font-size: 17px;
+    text-align: center;
+}
+
+.select_style:focus{
+    border: 2px solid rgb(233, 33, 131);
+    outline: none;
+}
+
 .wrapper_barre{
     display: flex;
     flex-direction: row;

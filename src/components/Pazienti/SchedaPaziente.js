@@ -14,9 +14,15 @@ function SchedaPaziente(props){
         setSezioneScheda('DATI_PERSONALI');
     }
 
+    function showSchedaMedica(){
+        console.log('Mostra SCHEDA MEDICA');
+        setTitoloScheda('Scheda Medica');
+        setSezioneScheda('SCHEDA_MEDICA');
+    }
+
     function showAttività(){
-        setTitoloScheda('Attività');
-        setSezioneScheda('ATTIVITÀ');
+        setTitoloScheda('Esercizi/Test');
+        setSezioneScheda('ESERCIZI/TEST');
         console.log('Mostra ESERCIZI');
     }
 
@@ -34,19 +40,32 @@ function SchedaPaziente(props){
             <div className={styles.lista}>
                 <div className={styles.wrap_buttons}>
                     <GenericButton
-                    onClick={showDatiPersonali}
-                    generic_button={true}
-                    buttonText='Dati Personali'>
+                        onClick={showDatiPersonali}
+                        is_selected={sezioneScheda === "DATI_PERSONALI" ? true : false}
+                        generic_button={true}
+                        buttonText='Dati Personali'
+                    >
                     </GenericButton>
                     <GenericButton
-                    onClick={showAttività}
-                    generic_button={true}
-                    buttonText='Attività'>
+                        onClick={showSchedaMedica}
+                        is_selected={sezioneScheda === "SCHEDA_MEDICA" ? true : false}
+                        generic_button={true}
+                        buttonText='Scheda Medica'
+                    >
                     </GenericButton>
                     <GenericButton
-                    onClick={showStatistiche}
-                    generic_button={true}
-                    buttonText='Statistiche'>
+                        onClick={showAttività}
+                        is_selected={sezioneScheda === "ESERCIZI/TEST" ? true : false}
+                        generic_button={true}
+                        buttonText='Esercizi/Test'
+                    >
+                    </GenericButton>
+                    <GenericButton
+                        onClick={showStatistiche}
+                        is_selected={sezioneScheda === "STATISTICHE" ? true : false}
+                        generic_button={true}
+                        buttonText='Statistiche'
+                    >
                     </GenericButton>
                 </div>
                 
@@ -55,7 +74,8 @@ function SchedaPaziente(props){
                 <hr className={styles.horizontal_line}></hr>
 
                 {sezioneScheda === 'DATI_PERSONALI' &&
-                    <div className={styles.scrollable_div}>
+                <>
+                    {/* <div className={styles.scrollable_div}> */}
                         <label className={styles.label_style}>Nome completo</label>
                         <h3>{props.nome} {props.cognome}</h3>
                         {/* <hr className={styles.horizontal_line}/> */}
@@ -70,30 +90,69 @@ function SchedaPaziente(props){
 
                         <label className={styles.label_style}>Codice Fiscale</label>
                         <h3>{props.codicefiscale}</h3>
-                        {/* <hr className={styles.horizontal_line}/> */}
-            
-                        <label className={styles.label_style}>Note opzionali</label>
-                        <h3>Da decidere</h3>
-                        {/* <hr className={styles.horizontal_line}/> */}
+                        <hr className={styles.horizontal_line}/>
                         
-                    </div>
+                    {/* </div> */}
+                </>
                 }
-                {sezioneScheda === 'ATTIVITÀ' &&
+                {sezioneScheda === 'SCHEDA_MEDICA' &&
+                <>
+                    <label className={styles.label_style}>Patologia</label>
+                    <h3>{props.patologia}</h3>
+                    {/* <hr className={styles.horizontal_line}/> */}
+        
+                    <label className={styles.label_style}>Medicine</label>
+                    <h3>{props.medicine}</h3>
+                    {/* <hr className={styles.horizontal_line}/> */}
+        
+                    <label className={styles.label_style}>Terapia</label>
+                    <h3>{props.terapia}</h3>
+                    {/* <hr className={styles.horizontal_line}/> */}
+
+                    <label className={styles.label_style}>Note</label>
+                    <h3>{props.note}</h3>
+                    <hr className={styles.horizontal_line}/>
+                    
+                </>
+                }
+                {sezioneScheda === 'ESERCIZI/TEST' &&
+                <>
+                    {props.scoreMMSE &&
                     <>
-                    <h1>Nessuna attività trovata.</h1>
-                    <h1>Non ci sono attività!</h1>
-                    <h1>Aggiungi gioco/terapia</h1>
+                        <h1>PUNTEGGIO MMSE</h1>
+                        <h2>{props.scoreMMSE}/30</h2>
                     </>
+                    }
+                    {!props.scoreMMSE &&
+                    <>
+                        <h1>Test MMMSE non effettuato</h1>
+                    </>
+                    }
+
+                    {props.scoreMOCA &&
+                    <>
+                        <h1>PUNTEGGIO MOCA</h1>
+                        <h2>{props.scoreMOCA}/30</h2>
+                    </>
+                    }
+                    {!props.scoreMOCA &&
+                    <>
+                        <h1>Test MOCA non effettuato</h1>
+                    </>
+                    }
+                    
+                    <hr className={styles.horizontal_line}/>
+                </>
                 }
                 {sezioneScheda === 'STATISTICHE' &&
-                    // <>
-                    // <h1>Non ci sono statistiche!</h1>
-                    // </>
+                <>
                     <StatistichePaziente
                     pazienteID={props.id}
                     stats={props.stats_paziente}
                     >
                     </StatistichePaziente>
+                    <hr className={styles.horizontal_line}/>
+                </>
                 }
 
                 <GenericButton

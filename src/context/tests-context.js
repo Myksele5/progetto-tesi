@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import TestCard from "../components/UI/TestCard";
+import { getServerMgr } from "../backend_conn/ServerMgr";
 
 const TestsContext = React.createContext({
-    listaTest: null
+    listaTest: null,
+    salvaRisultatoMMSE: ()=>{}
 })
 
 export function TestsContextProvider(props){
@@ -33,10 +35,18 @@ export function TestsContextProvider(props){
         console.log(arrayTestProvvisorio)
     }, []);
 
+    async function salvaRisultatoTestMMSE(resultMMSE, pazienteID){
+        let result;
+
+        result = await getServerMgr().saveResultMMSE(resultMMSE, pazienteID)
+        .catch((err) => {console.error(err)})
+    }
+
     return(
         <TestsContext.Provider
         value={{
-            listaTest: elencoTest
+            listaTest: elencoTest,
+            salvaRisultatoMMSE: salvaRisultatoTestMMSE
         }}
         >
             {props.children}

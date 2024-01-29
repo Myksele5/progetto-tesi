@@ -268,7 +268,11 @@ export function PatientContextProvider(props){
                 città = {pazientee.city.toUpperCase()}
                 datanascita = {pazientee.dataNascita}
                 codicefiscale = {pazientee.codiceFiscale}
-                // attività = {pazientee.attività}
+                patologia = {pazientee.patologia}
+                medicine = {pazientee.medicine}
+                terapia = {pazientee.terapia}
+                note = {pazientee.note}
+                scoreMMSE = {pazientee.resultMMSE}
                 stats_paziente = {pazientee.statistiche}
                 goBackButton = {chiudiSchedaPaziente}
             >

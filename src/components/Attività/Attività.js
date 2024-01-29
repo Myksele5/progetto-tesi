@@ -64,7 +64,10 @@ function Attività(){
 
             {!showListaTest && 
                 <div className={styles.wrapper_test}>
-                    <TestMMSE></TestMMSE>
+                    <TestMMSE
+                        nascondiTest={nascondiListaTest}
+                    >
+                    </TestMMSE>
                 </div>
             }
 

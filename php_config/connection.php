@@ -94,6 +94,9 @@
     case "getPatientStatistics":
         $query_result = getPatientStatistics($conn);
         break;
+    case "saveResultMMSE":
+        $query_result = saveResultMMSE($conn);
+        break;
     default:
     	break;
 	}
@@ -666,4 +669,20 @@
         $result = $retrieveQuestionsList->get_result();
         return $result;
     }
+
+    function saveResultMMSE($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $resultMMSE = $dataJson["resultMMSE"];
+        $ID = $dataJson["ID"];
+        
+        $saveTestResult = $i_conn->prepare("UPDATE `patients` SET `resultMMSE` = ? WHERE `patients`.`ID` = ?");
+        $saveTestResult->bind_param("ii", $resultMMSE, $ID);
+        
+        $saveTestResult->execute();
+        $saveTestResult->bind_result($result);
+        return $result;
+    }
+    
 ?>

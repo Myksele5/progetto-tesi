@@ -4,7 +4,8 @@ function GenericButton(props){
     const disabledButton = props.is_disabled ? `${styles.is_disabled}` : '';
     const bottoneStilePiccolo = props.small_button ? `${styles.small_button}` : '';
     const bottoneStileNormale = props.generic_button ? `${styles.generic_button}` : '';
-    const classiStile = `${bottoneStileNormale} ${bottoneStilePiccolo}`;
+    const bottoneSelezionato = props.is_selected ? `${styles.is_selected}` : '';
+    const classiStile = `${bottoneStileNormale} ${bottoneStilePiccolo} ${bottoneSelezionato}`;
     var img;
 
     if(props.immagine != null){

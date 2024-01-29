@@ -10,8 +10,9 @@ import CognitiveAreaLinguaggio from "./CognitiveAreaLinguaggio";
 import CognitiveAreaAbilità from "./CognitiveAreaAbilità";
 import RisultatiTest from "./RisultatiTest";
 
-function TestMMSE(){
+function TestMMSE(props){
     const patients_ctx = useContext(PatientContext);
+    const [IDpazSelezionato, setIDPazSelezionato] = useState("")
     const [nomePazSelezionato, setNomePazSelezionato] = useState("");
     const [cognomePazSelezionato, setCognomePazSelezionato] = useState("");
 
@@ -25,7 +26,7 @@ function TestMMSE(){
     const [objRisposteAreaCognitiva3, setObjRisposteAreaCognitiva3] = useState([]);
     const [objRisposteAreaCognitiva4, setObjRisposteAreaCognitiva4] = useState();
     const [objRisposteAreaCognitiva5, setObjRisposteAreaCognitiva5] = useState([]);
-    const [objRisposteAreaCognitiva6, setObjRisposteAreaCognitiva6] = useState([]);
+    const [objRisposteAreaCognitiva6, setObjRisposteAreaCognitiva6] = useState();
 
     function iniziaTest(){
         // if(nomePazSelezionato && cognomePazSelezionato){
@@ -54,6 +55,7 @@ function TestMMSE(){
         for(var i = 0; i < patients_ctx.listaPazienti.length; i++){
             if(patients_ctx.listaPazienti[i].ID === parseInt(event.target.value)){
                 console.log("TROVATO");
+                setIDPazSelezionato(patients_ctx.listaPazienti[i].ID)
                 setNomePazSelezionato(patients_ctx.listaPazienti[i].nome);
                 setCognomePazSelezionato(patients_ctx.listaPazienti[i].cognome);
             }
@@ -180,6 +182,7 @@ function TestMMSE(){
             }
             {testConcluso &&
                 <RisultatiTest
+                    pazienteID={IDpazSelezionato}
                     nomePaziente={nomePazSelezionato}
                     cognomePaziente={cognomePazSelezionato}
                     areaCog_1={objRisposteAreaCognitiva1}
@@ -188,6 +191,7 @@ function TestMMSE(){
                     areaCog_4={objRisposteAreaCognitiva4}
                     areaCog_5={objRisposteAreaCognitiva5}
                     areaCog_6={objRisposteAreaCognitiva6}
+                    tornaAlMenuTest={props.nascondiTest}
                 >
                 </RisultatiTest>
             }

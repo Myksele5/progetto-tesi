@@ -4,7 +4,7 @@ import GenericButton from "../UI/GenericButton";
 
 function CognitiveAreaAbilità(props){
     function salvaRisposte(){
-        let oggettoDomandeRisposte = "Copia il seguente disegno";
+        let oggettoDomandeRisposte = "Copia il seguente disegno: (Pentagoni intrecciati)";
         props.risposteAreaCog6(oggettoDomandeRisposte);
     }
 
