@@ -6,16 +6,33 @@ import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import TestMMSE from "./TestMMSE";
 import TestsContext from "../../context/tests-context";
 
+let indiceTest = -1;
 
 function Attività(){
     const tests_ctx = useContext(TestsContext);
     const [showListaTest, setShowListaTest] = useState(true);
-    const [testSelected, setTestSelected] = useState("");
 
     const testsList = tests_ctx.listaTest;
 
     function nascondiListaTest(){
         setShowListaTest((prevShowTest) => (!prevShowTest));
+    }
+
+    function trovaTestTramiteID(testID){
+        for(var i=0; i < testsList.length; i++){
+            if(testsList[i].id === testID){
+                console.log("TROVATO")
+                // setIndiceTestSelezionato(i)
+                indiceTest = i;
+                break;
+            }
+            else{
+                console.log("NON TROVO IL TEST")
+                indiceTest = -1;
+                // setIndiceTestSelezionato(-1)
+            }
+        }
+        console.log(indiceTest)
     }
 
     function fromArrayToListaTest(item){
@@ -25,8 +42,16 @@ function Attività(){
                     <>
                         <GenericAlternativeButton
                             onClick={() => {
-                                nascondiListaTest();
-                                setTestSelected(item.nomeTest)
+                                console.log(item.id)
+                                trovaTestTramiteID(item.id)
+                                console.log(indiceTest)
+                                if(indiceTest === -1){
+                                    alert("ERRORE! Non trovo il test.")
+                                }
+                                else{
+                                    nascondiListaTest();
+                                }
+                                
                             }}
                             buttonText={"Avvia Test"}
                         >
@@ -64,11 +89,15 @@ function Attività(){
             >
             </GenericAlternativeButton>
 
-            {!showListaTest && testSelected === "Test MMSE" &&
+            {!showListaTest && indiceTest !== -1 &&
                 <div className={styles.wrapper_test}>
                     <TestMMSE
                     //DA COMPLETARE CON LE ALTRE AREE COGNITIVE
-                        areaCog_1_domande={testsList[0].objAreaCog_1}
+                        areaCog_1_domande={testsList[indiceTest].objAreaCog_1}
+                        areaCog_2_domande={testsList[indiceTest].objAreaCog_2}
+                        areaCog_3_domande={testsList[indiceTest].objAreaCog_3}
+                        areaCog_4_domande={testsList[indiceTest].objAreaCog_4}
+                        areaCog_5_domande={testsList[indiceTest].objAreaCog_5}
                         nascondiTest={nascondiListaTest}
                     >
                     </TestMMSE>

@@ -3,7 +3,8 @@ import styles from "./CognitiveAreaAttenzione.module.css";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 
 function CognitiveAreaAttenzione(props){
-    let parolaDaInvertire = "MONDO";
+    // let parolaDaInvertire = "MONDO";
+    const parolaDaInvertire = props.domandeAreaCog3.parola;
 
     const [parolaInseritaAlContrario, setParolaInseritaAlContrario] = useState("");
 

@@ -144,6 +144,7 @@ function TestMMSE(props){
 
             {testIniziato && sezioneCognitiva === 2 &&
                 <CognitiveAreaMemoria
+                    domandeAreaCog2={props.areaCog_2_domande}
                     step={1}
                     risposteAreaCog2={salvaRisposteAreaCognitiva2}
                 >
@@ -152,6 +153,7 @@ function TestMMSE(props){
 
             {testIniziato && sezioneCognitiva === 3 &&
                 <CognitiveAreaAttenzione
+                    domandeAreaCog3={props.areaCog_3_domande}
                     risposteAreaCog3={salvaRisposteAreaCognitiva3}
                 >
                 </CognitiveAreaAttenzione>
@@ -159,6 +161,7 @@ function TestMMSE(props){
 
             {testIniziato && sezioneCognitiva === 4 &&
                 <CognitiveAreaMemoria
+                    domandeAreaCog4={props.areaCog_4_domande}
                     step={2}
                     risposteAreaCog4={salvaRisposteAreaCognitiva4}
                 >
@@ -167,6 +170,7 @@ function TestMMSE(props){
 
             {testIniziato && sezioneCognitiva === 5 &&
                 <CognitiveAreaLinguaggio
+                    domandeAreaCog5={props.areaCog_5_domande}
                     risposteAreaCog5={salvaRisposteAreaCognitiva5}
                 >
                 </CognitiveAreaLinguaggio>

@@ -5,6 +5,7 @@ import { useState } from "react";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 
 function CognitiveAreaLinguaggio(props){
+    const elencoDomande = props.domandeAreaCog5;
     var oggettoDaIdentificare1 = "BANANA";
     var oggettoDaIdentificare2 = "FRAGOLA";
 
@@ -67,7 +68,7 @@ function CognitiveAreaLinguaggio(props){
         <>
             {numeroDomanda === 1 &&
             <>
-                <h4>Scrivi i nomi di questi oggetti</h4>
+                <h4>{elencoDomande.esercizio_1.domanda}</h4>
                 <div className={styles.flex_horizontal}>
                     <div className={styles.flex_vertical}>
                         <img className={styles.image_style} src={image1}></img>
@@ -92,8 +93,8 @@ function CognitiveAreaLinguaggio(props){
 
             {numeroDomanda === 2 &&
                 <div className={styles.flex_vertical}>
-                    <h2>Ripeti ad alta voce la frase che ti viene mostrata qui sotto.</h2>
-                    <h5>TIGRE CONTRO TIGRE</h5>
+                    <h2>Ad alta voce, {elencoDomande.esercizio_2.domanda} che ti viene mostrata qui sotto.</h2>
+                    <h5>{elencoDomande.esercizio_2.frase}</h5>
                     <GenericAlternativeButton
                         buttonText={"Prossima Domanda"}
                         onClick={prossimaDomanda}
@@ -104,7 +105,8 @@ function CognitiveAreaLinguaggio(props){
 
             {numeroDomanda === 3 &&
                 <div className={styles.flex_vertical}>
-                    <h2>Adesso prendi il foglio di carta vicino a te, piegalo a metà e buttalo per terra.</h2>
+                    <h2>{elencoDomande.esercizio_3.domanda}</h2>
+                    <h2>{elencoDomande.esercizio_3.azione}</h2>
                     <GenericAlternativeButton
                         buttonText={"Prossima Domanda"}
                         onClick={prossimaDomanda}
@@ -115,7 +117,7 @@ function CognitiveAreaLinguaggio(props){
 
             {numeroDomanda === 4 &&
                 <div className={styles.flex_vertical}>
-                    <h2>Scrivi una frase con un soggetto ed un verbo</h2>
+                    <h2>{elencoDomande.esercizio_4.domanda}</h2>
                     <input value={fraseInserita} onChange={fraseInseritaChangeHandler} className={styles.input_style}></input>
                     <GenericAlternativeButton
                         buttonText={"Prossima Domanda"}
@@ -127,7 +129,8 @@ function CognitiveAreaLinguaggio(props){
 
             {numeroDomanda === 5 &&
                 <div className={styles.flex_vertical}>
-                    <h2>Ora gentilmente chiudi gli occhi.</h2>
+                    <h2>{elencoDomande.esercizio_5.domanda}</h2>
+                    <h2>{elencoDomande.esercizio_5.azione}</h2>
                     <GenericAlternativeButton
                         buttonText={"Prox Domand"}
                         onClick={salvaRisposte}

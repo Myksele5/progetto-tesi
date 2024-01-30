@@ -3,9 +3,10 @@ import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import styles from "./CognitiveAreaMemoria.module.css";
 
 function CognitiveAreaMemoria(props){
-    var parolaDaMemorizzare_1 = "PIANTA";
-    var parolaDaMemorizzare_2 = "CANE";
-    var parolaDaMemorizzare_3 = "FIUME";
+    // var parolaDaMemorizzare_1 = "PIANTA";
+    // var parolaDaMemorizzare_2 = "CANE";
+    // var parolaDaMemorizzare_3 = "FIUME";
+    const elencoParole = props.step === 1 ? props.domandeAreaCog2 : props.domandeAreaCog4;
 
     const [parolaMemorizzata1, setParolaMemorizzata1] = useState("");
     const [parolaMemorizzata2, setParolaMemorizzata2] = useState("");
@@ -27,7 +28,7 @@ function CognitiveAreaMemoria(props){
         let oggettoDomandeRisposte = 
             {
                 domanda: "Ripeti queste parole",
-                parole: [parolaDaMemorizzare_1, parolaDaMemorizzare_2, parolaDaMemorizzare_3]
+                parole: [elencoParole.parolaDaMemorizzare_1, elencoParole.parolaDaMemorizzare_2, elencoParole.parolaDaMemorizzare_3]
             }
         ;
         props.risposteAreaCog2(oggettoDomandeRisposte);
@@ -37,15 +38,14 @@ function CognitiveAreaMemoria(props){
             {
                 domanda: "Scrivi le parole mostrate in precedenza",
                 parole: [
-                    {parola: parolaDaMemorizzare_1, risposta: parolaMemorizzata1},
-                    {parola: parolaDaMemorizzare_2, risposta: parolaMemorizzata2},
-                    {parola: parolaDaMemorizzare_3, risposta: parolaMemorizzata3},
+                    {parola: elencoParole.parolaDaMemorizzare_1, risposta: parolaMemorizzata1},
+                    {parola: elencoParole.parolaDaMemorizzare_2, risposta: parolaMemorizzata2},
+                    {parola: elencoParole.parolaDaMemorizzare_3, risposta: parolaMemorizzata3},
                 ],
             }
         ;
         props.risposteAreaCog4(oggettoDomandeRisposte);
     }
-
 
     return (
         <>
@@ -54,9 +54,9 @@ function CognitiveAreaMemoria(props){
                 <h2>Leggi le seguenti parole. Quando sei pronto, chiudi gli occhi e ripetile ad alta voce</h2>
 
                 <div className={styles.flex_vertical}>
-                    <h5 className={styles.parola_memorizzata}>{parolaDaMemorizzare_1}</h5>
-                    <h5 className={styles.parola_memorizzata}>{parolaDaMemorizzare_2}</h5>
-                    <h5 className={styles.parola_memorizzata}>{parolaDaMemorizzare_3}</h5>
+                    <h5 className={styles.parola_memorizzata}>{elencoParole.parolaDaMemorizzare_1}</h5>
+                    <h5 className={styles.parola_memorizzata}>{elencoParole.parolaDaMemorizzare_2}</h5>
+                    <h5 className={styles.parola_memorizzata}>{elencoParole.parolaDaMemorizzare_3}</h5>
                 </div>
 
                 <GenericAlternativeButton
