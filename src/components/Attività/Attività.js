@@ -8,19 +8,32 @@ import TestsContext from "../../context/tests-context";
 
 let indiceTest = -1;
 
+let domandeAreaCog1 = {};
+let domandeAreaCog2 = {};
+
 function Attività(){
     const tests_ctx = useContext(TestsContext);
     const [showListaTest, setShowListaTest] = useState(true);
 
-    const testsList = tests_ctx.listaTest;
+    const testsList = tests_ctx.listaTestDB;
+    const listQuestionsAreaCog_1 = tests_ctx.qstnsAreaCog1;
+    const listQuestionsAreaCog_2 = tests_ctx.qstnsAreaCog2;
+
+    // useEffect(() => {
+    //     console.log(tests_ctx.qstnsAreaCog1)
+    // }, [])
 
     function nascondiListaTest(){
         setShowListaTest((prevShowTest) => (!prevShowTest));
     }
 
     function trovaTestTramiteID(testID){
+        let indiceStrano = 1;
+        let stringaStrana = "domanda_";
+        console.log(testsList);
+        
         for(var i=0; i < testsList.length; i++){
-            if(testsList[i].id === testID){
+            if(testsList[i].testID === testID){
                 console.log("TROVATO")
                 // setIndiceTestSelezionato(i)
                 indiceTest = i;
@@ -33,6 +46,32 @@ function Attività(){
             }
         }
         console.log(indiceTest)
+        // console.log(listQuestionsAreaCog_1);
+
+        for(var i=0; i < listQuestionsAreaCog_1.length; i++){
+            
+            stringaStrana.concat(indiceStrano);
+            console.log(stringaStrana.concat(indiceStrano));
+
+            if(listQuestionsAreaCog_1[i].IDtest === testsList[indiceTest].testID){
+                domandeAreaCog1[stringaStrana.concat(indiceStrano)] = listQuestionsAreaCog_1[i].domanda
+                indiceStrano = indiceStrano + 1;
+            }
+        }
+        console.log(domandeAreaCog1);
+        indiceStrano = 1;
+        stringaStrana = "parolaDaMemorizzare_";
+
+        for(var i=0; i < listQuestionsAreaCog_2.length; i++){
+            
+            stringaStrana.concat(indiceStrano);
+            console.log(stringaStrana.concat(indiceStrano));
+
+            if(listQuestionsAreaCog_2[i].IDtest === testsList[indiceTest].testID){
+                domandeAreaCog2[stringaStrana.concat(indiceStrano)] = listQuestionsAreaCog_2[i].parolaDaMemorizzare
+                indiceStrano = indiceStrano + 1;
+            }
+        }
     }
 
     function fromArrayToListaTest(item){
@@ -42,8 +81,8 @@ function Attività(){
                     <>
                         <GenericAlternativeButton
                             onClick={() => {
-                                console.log(item.id)
-                                trovaTestTramiteID(item.id)
+                                console.log(item.testID)
+                                trovaTestTramiteID(item.testID)
                                 console.log(indiceTest)
                                 if(indiceTest === -1){
                                     alert("ERRORE! Non trovo il test.")
@@ -68,9 +107,10 @@ function Attività(){
         );   
     }
 
-    useEffect(() => {
-        console.log(testsList);
-    }, [])
+    // useEffect(() => {
+    //     console.log(testsList);
+    //     console.log(listQuestionsAreaCog_1);
+    // }, [])
 
     return(
         <>
@@ -93,8 +133,8 @@ function Attività(){
                 <div className={styles.wrapper_test}>
                     <TestMMSE
                     //DA COMPLETARE CON LE ALTRE AREE COGNITIVE
-                        areaCog_1_domande={testsList[indiceTest].objAreaCog_1}
-                        areaCog_2_domande={testsList[indiceTest].objAreaCog_2}
+                        areaCog_1_domande={domandeAreaCog1}
+                        areaCog_2_domande={domandeAreaCog2}
                         areaCog_3_domande={testsList[indiceTest].objAreaCog_3}
                         areaCog_4_domande={testsList[indiceTest].objAreaCog_4}
                         areaCog_5_domande={testsList[indiceTest].objAreaCog_5}

@@ -4,11 +4,13 @@ import { getServerMgr } from "../backend_conn/ServerMgr";
 
 const TestsContext = React.createContext({
     listaTest: null,
+    listaTestDB: null,
+    qstnsAreaCog1: null,
+    qstnsAreaCog2: null,
     salvaRisultatoMMSE: ()=>{}
 })
 
 export function TestsContextProvider(props){
-
     var arrayTestProvvisorio = [
         {
             id: "1",
@@ -82,12 +84,86 @@ export function TestsContextProvider(props){
     ];
 
     const [elencoTest, setElencoTest] = useState(arrayTestProvvisorio);
-
+    const [elencoTestDB, setElencoTestDB] = useState([]);
+    const [domandeTestAreaCog_1, setDomandeTestAreaCog_1] = useState([]);
+    const [domandeTestAreaCog_2, setDomandeTestAreaCog_2] = useState([]);
 
     useEffect(() => {
         setElencoTest(arrayTestProvvisorio);
-        console.log(arrayTestProvvisorio)
+        console.log(arrayTestProvvisorio);
+
+        getTestList();
+        getQuestionsAreaCog_1();
+        getQuestionsAreaCog_2();
     }, []);
+
+    async function getTestList(){
+        let resultTestList;
+
+        const parseResult = (resultsArray) => {
+            let markersList = {}
+            resultsArray.forEach((item) => {
+                let currentMarker = (({testID, nomeTest, tipoTest}) => ({testID, nomeTest, tipoTest, domandeID_AC1: []}))(item);
+                markersList[item.testID] ??= currentMarker
+                if(item.IDqstn_AC1 !== null) {
+                    markersList[item.testID].domandeID_AC1.push(item.IDqstn_AC1)
+                }
+            })
+
+            let arrayTests = []
+            Object.keys(markersList).forEach((item) => {
+                arrayTests.push(markersList[item])
+            })
+
+            return arrayTests;
+        }
+
+        resultTestList = await getServerMgr().getTestsList(1)
+        .catch((err) => {console.error(err)});
+
+        if(resultTestList !== null){
+            let rispostaParsata = parseResult(resultTestList)
+            setElencoTestDB(rispostaParsata);
+            console.log(resultTestList);
+            console.log(rispostaParsata);
+        }
+        else{
+            setElencoTestDB([]);
+        }
+        
+    }
+
+    //VERIFICA
+    async function getQuestionsAreaCog_1(){
+        let result;
+
+        result = await getServerMgr().getTestsQuestionsAreaCog_1()
+        .catch((err) => {console.error(err)})
+        console.log(result);
+
+        if(result !== null){
+            setDomandeTestAreaCog_1(result);
+        }
+        else{
+            setDomandeTestAreaCog_1([]);
+        }
+    }
+
+    async function getQuestionsAreaCog_2(){
+        let result;
+
+        result = await getServerMgr().getTestsQuestionsAreaCog_2()
+        .catch((err) => {console.error(err)})
+        console.log(result);
+
+        if(result !== null){
+            setDomandeTestAreaCog_2(result);
+        }
+        else{
+            setDomandeTestAreaCog_2([]);
+        }
+    }
+    //FUNCTION PER AREA COG2
 
     async function salvaRisultatoTestMMSE(resultMMSE, pazienteID){
         let result;
@@ -100,6 +176,9 @@ export function TestsContextProvider(props){
         <TestsContext.Provider
         value={{
             listaTest: elencoTest,
+            listaTestDB: elencoTestDB,
+            qstnsAreaCog1: domandeTestAreaCog_1,
+            qstnsAreaCog2: domandeTestAreaCog_2,
             salvaRisultatoMMSE: salvaRisultatoTestMMSE
         }}
         >

@@ -97,6 +97,15 @@
     case "saveResultMMSE":
         $query_result = saveResultMMSE($conn);
         break;
+    case "getTestsList":
+        $query_result = getTestsList($conn);
+        break;
+    case "getTestsQuestionsAreaCog_1":
+        $query_result = getTestsQuestionsAreaCog_1($conn);
+        break;
+    case "getTestsQuestionsAreaCog_2":
+        $query_result = getTestsQuestionsAreaCog_2($conn);
+        break;
     default:
     	break;
 	}
@@ -682,6 +691,53 @@
         
         $saveTestResult->execute();
         $saveTestResult->bind_result($result);
+        return $result;
+    }
+
+    function getTestsList($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $defaultTest = $dataJson["defaultTest"];
+        
+        $retrieveTestsList = $i_conn->prepare(
+            "SELECT * FROM `tests`");
+        $retrieveTestsList->bind_param("i", $defaultTest);
+        
+        $retrieveTestsList->execute();
+        $result = $retrieveTestsList->get_result();
+        return $result;
+    }
+    function getTestsQuestionsAreaCog_1($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        // $defaultTest = $dataJson["defaultTest"];
+        
+        $retrieveQuestionsList = $i_conn->prepare(
+            "SELECT * 
+            FROM `testQuestions_AreaCog_1` JOIN `bridgeTestToQuestionsAreaCog_1` ON `testQuestions_AreaCog_1`.`qstnID` = `bridgeTestToQuestionsAreaCog_1`.`IDqstn_AC1`;"
+        );
+        // $retrieveGamesList->bind_param("i", $defaultTest);
+        
+        $retrieveQuestionsList->execute();
+        $result = $retrieveQuestionsList->get_result();
+        return $result;
+    }
+    function getTestsQuestionsAreaCog_2($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        // $defaultTest = $dataJson["defaultTest"];
+        
+        $retrieveQuestionsList = $i_conn->prepare(
+            "SELECT * 
+            FROM `testQuestions_AreaCog_2` JOIN `bridgeTestToQuestionsAreaCog_2` ON `testQuestions_AreaCog_2`.`qstnID` = `bridgeTestToQuestionsAreaCog_2`.`IDqstn_AC2`;"
+        );
+        // $retrieveGamesList->bind_param("i", $defaultTest);
+        
+        $retrieveQuestionsList->execute();
+        $result = $retrieveQuestionsList->get_result();
         return $result;
     }
     

@@ -427,5 +427,41 @@ function initServerMgr(cb) {
         }
     }
 
+    serverMgr.getTestsList = async (defaultTest, cb) => {
+        let result = await serverMgr.requestFetchData("getTestsList", {defaultTest: defaultTest})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.getTestsQuestionsAreaCog_1 = async (cb) => {
+        let result = await serverMgr.requestFetchData("getTestsQuestionsAreaCog_1")
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.getTestsQuestionsAreaCog_2 = async (cb) => {
+        let result = await serverMgr.requestFetchData("getTestsQuestionsAreaCog_2")
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
     if (cb) cb();
 }
