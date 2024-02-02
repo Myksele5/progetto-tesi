@@ -106,6 +106,12 @@
     case "getTestsQuestionsAreaCog_2":
         $query_result = getTestsQuestionsAreaCog_2($conn);
         break;
+    case "getTestsQuestionsAreaCog_3":
+        $query_result = getTestsQuestionsAreaCog_3($conn);
+        break;
+    case "getTestsQuestionsAreaCog_5":
+        $query_result = getTestsQuestionsAreaCog_5($conn);
+        break;
     default:
     	break;
 	}
@@ -733,6 +739,40 @@
         $retrieveQuestionsList = $i_conn->prepare(
             "SELECT * 
             FROM `testQuestions_AreaCog_2` JOIN `bridgeTestToQuestionsAreaCog_2` ON `testQuestions_AreaCog_2`.`qstnID` = `bridgeTestToQuestionsAreaCog_2`.`IDqstn_AC2`;"
+        );
+        // $retrieveGamesList->bind_param("i", $defaultTest);
+        
+        $retrieveQuestionsList->execute();
+        $result = $retrieveQuestionsList->get_result();
+        return $result;
+    }
+
+    function getTestsQuestionsAreaCog_3($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        // $defaultTest = $dataJson["defaultTest"];
+        
+        $retrieveQuestionsList = $i_conn->prepare(
+            "SELECT * 
+            FROM `testQuestions_AreaCog_3` JOIN `bridgeTestToQuestionsAreaCog_3` ON `testQuestions_AreaCog_3`.`qstnID` = `bridgeTestToQuestionsAreaCog_3`.`IDqstn_AC3`;"
+        );
+        // $retrieveGamesList->bind_param("i", $defaultTest);
+        
+        $retrieveQuestionsList->execute();
+        $result = $retrieveQuestionsList->get_result();
+        return $result;
+    }
+
+    function getTestsQuestionsAreaCog_5($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        // $defaultTest = $dataJson["defaultTest"];
+        
+        $retrieveQuestionsList = $i_conn->prepare(
+            "SELECT * 
+            FROM `testQuestions_AreaCog_5` JOIN `bridgeTestToQuestionsAreaCog_5` ON `testQuestions_AreaCog_5`.`qstnID` = `bridgeTestToQuestionsAreaCog_5`.`IDqstn_AC5`;"
         );
         // $retrieveGamesList->bind_param("i", $defaultTest);
         

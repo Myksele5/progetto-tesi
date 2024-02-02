@@ -116,11 +116,11 @@ function TestMMSE(props){
         <div className={styles.test_container}>
             {!testIniziato && !testConcluso && 
             <>
-                <label>Ciao sono il test<br/></label>
-                <label>INFO PRIMA DI INIZIARE IL TEST</label>
+                {/* <label>Ciao sono il test<br/></label> */}
+                <h1>Test MMSE</h1>
                 <p>Seleziona il paziente che svolgerà il test.</p>
-                <select onChange={consoleLoggaFullNamePaziente}>
-                    <option hidden>-- select an option --</option>
+                <select className={styles.select_style} onChange={consoleLoggaFullNamePaziente}>
+                    <option hidden>----- select an option -----</option>
                     {patients_ctx.listaPazienti.map(patients_ctx.arrayToLista)}
                 </select>
                 <GenericButton

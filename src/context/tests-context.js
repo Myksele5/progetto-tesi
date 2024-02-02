@@ -7,6 +7,8 @@ const TestsContext = React.createContext({
     listaTestDB: null,
     qstnsAreaCog1: null,
     qstnsAreaCog2: null,
+    qstnsAreaCog3: null,
+    qstnsAreaCog5: null,
     salvaRisultatoMMSE: ()=>{}
 })
 
@@ -87,6 +89,8 @@ export function TestsContextProvider(props){
     const [elencoTestDB, setElencoTestDB] = useState([]);
     const [domandeTestAreaCog_1, setDomandeTestAreaCog_1] = useState([]);
     const [domandeTestAreaCog_2, setDomandeTestAreaCog_2] = useState([]);
+    const [domandeTestAreaCog_3, setDomandeTestAreaCog_3] = useState([]);
+    const [domandeTestAreaCog_5, setDomandeTestAreaCog_5] = useState([]);
 
     useEffect(() => {
         setElencoTest(arrayTestProvvisorio);
@@ -95,6 +99,8 @@ export function TestsContextProvider(props){
         getTestList();
         getQuestionsAreaCog_1();
         getQuestionsAreaCog_2();
+        getQuestionsAreaCog_3();
+        getQuestionsAreaCog_5();
     }, []);
 
     async function getTestList(){
@@ -163,7 +169,36 @@ export function TestsContextProvider(props){
             setDomandeTestAreaCog_2([]);
         }
     }
-    //FUNCTION PER AREA COG2
+
+    async function getQuestionsAreaCog_3(){
+        let result;
+
+        result = await getServerMgr().getTestsQuestionsAreaCog_3()
+        .catch((err) => {console.error(err)})
+        console.log(result);
+
+        if(result !== null){
+            setDomandeTestAreaCog_3(result);
+        }
+        else{
+            setDomandeTestAreaCog_3([]);
+        }
+    }
+
+    async function getQuestionsAreaCog_5(){
+        let result;
+
+        result = await getServerMgr().getTestsQuestionsAreaCog_5()
+        .catch((err) => {console.error(err)})
+        console.log(result);
+
+        if(result !== null){
+            setDomandeTestAreaCog_5(result);
+        }
+        else{
+            setDomandeTestAreaCog_5([]);
+        }
+    }
 
     async function salvaRisultatoTestMMSE(resultMMSE, pazienteID){
         let result;
@@ -179,6 +214,8 @@ export function TestsContextProvider(props){
             listaTestDB: elencoTestDB,
             qstnsAreaCog1: domandeTestAreaCog_1,
             qstnsAreaCog2: domandeTestAreaCog_2,
+            qstnsAreaCog3: domandeTestAreaCog_3,
+            qstnsAreaCog5: domandeTestAreaCog_5,
             salvaRisultatoMMSE: salvaRisultatoTestMMSE
         }}
         >

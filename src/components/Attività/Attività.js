@@ -5,19 +5,25 @@ import { useContext, useEffect, useState } from "react";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import TestMMSE from "./TestMMSE";
 import TestsContext from "../../context/tests-context";
+import TestMOCA from "./TestMOCA";
 
 let indiceTest = -1;
 
 let domandeAreaCog1 = {};
 let domandeAreaCog2 = {};
+let domandeAreaCog3 = {};
+let domandeAreaCog5 = {};
 
 function Attività(){
     const tests_ctx = useContext(TestsContext);
     const [showListaTest, setShowListaTest] = useState(true);
+    const [testType, setTestType] = useState("");
 
     const testsList = tests_ctx.listaTestDB;
     const listQuestionsAreaCog_1 = tests_ctx.qstnsAreaCog1;
     const listQuestionsAreaCog_2 = tests_ctx.qstnsAreaCog2;
+    const listQuestionsAreaCog_3 = tests_ctx.qstnsAreaCog3;
+    const listQuestionsAreaCog_5 = tests_ctx.qstnsAreaCog5;
 
     // useEffect(() => {
     //     console.log(tests_ctx.qstnsAreaCog1)
@@ -37,6 +43,7 @@ function Attività(){
                 console.log("TROVATO")
                 // setIndiceTestSelezionato(i)
                 indiceTest = i;
+                setTestType(testsList[i].tipoTest)
                 break;
             }
             else{
@@ -46,7 +53,6 @@ function Attività(){
             }
         }
         console.log(indiceTest)
-        // console.log(listQuestionsAreaCog_1);
 
         for(var i=0; i < listQuestionsAreaCog_1.length; i++){
             
@@ -72,6 +78,41 @@ function Attività(){
                 indiceStrano = indiceStrano + 1;
             }
         }
+        console.log(domandeAreaCog2);
+        indiceStrano = 1;
+        stringaStrana = "parola";
+
+        for(var i=0; i < listQuestionsAreaCog_3.length; i++){
+            
+            stringaStrana.concat(indiceStrano);
+            console.log(stringaStrana.concat(indiceStrano));
+
+            if(listQuestionsAreaCog_3[i].IDtest === testsList[indiceTest].testID){
+                domandeAreaCog3[stringaStrana] = listQuestionsAreaCog_3[i].parola
+                indiceStrano = indiceStrano + 1;
+            }
+        }
+        console.log(domandeAreaCog3);
+        indiceStrano = 1;
+        stringaStrana = "esercizio_";
+
+        for(var i=0; i < listQuestionsAreaCog_5.length; i++){
+            
+            stringaStrana.concat(indiceStrano);
+            console.log(stringaStrana.concat(indiceStrano));
+
+            if(listQuestionsAreaCog_5[i].IDtest === testsList[indiceTest].testID){
+                domandeAreaCog5[stringaStrana.concat(indiceStrano)] = {
+                    domanda: listQuestionsAreaCog_5[i].domanda,
+                    oggetto_1: listQuestionsAreaCog_5[i].oggetto_1,
+                    oggetto_2: listQuestionsAreaCog_5[i].oggetto_2,
+                    frase: listQuestionsAreaCog_5[i].frase,
+                    azione: listQuestionsAreaCog_5[i].azione
+                }
+                indiceStrano = indiceStrano + 1;
+            }
+        }
+        console.log(domandeAreaCog5);
     }
 
     function fromArrayToListaTest(item){
@@ -129,18 +170,28 @@ function Attività(){
             >
             </GenericAlternativeButton>
 
-            {!showListaTest && indiceTest !== -1 &&
+            {!showListaTest && indiceTest !== -1 && testType === "MMSE" &&
                 <div className={styles.wrapper_test}>
                     <TestMMSE
                     //DA COMPLETARE CON LE ALTRE AREE COGNITIVE
                         areaCog_1_domande={domandeAreaCog1}
                         areaCog_2_domande={domandeAreaCog2}
-                        areaCog_3_domande={testsList[indiceTest].objAreaCog_3}
-                        areaCog_4_domande={testsList[indiceTest].objAreaCog_4}
-                        areaCog_5_domande={testsList[indiceTest].objAreaCog_5}
+                        areaCog_3_domande={domandeAreaCog3}
+                        //AREA COG.4 HA LA STESSA STRUTTURA E CONTENUTO DI AREA COG.2
+                        areaCog_4_domande={domandeAreaCog2}
+                        //
+                        areaCog_5_domande={domandeAreaCog5}
                         nascondiTest={nascondiListaTest}
                     >
                     </TestMMSE>
+                </div>
+            }
+
+            {!showListaTest && indiceTest !== -1 && testType === "MOCA" &&
+                <div className={styles.wrapper_test}>
+                    <TestMOCA>
+                        
+                    </TestMOCA>
                 </div>
             }
 

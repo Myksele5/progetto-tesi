@@ -13,12 +13,12 @@ function CognitiveAreaAttenzione(props){
         console.log(event.target.value.toUpperCase());
     }
 
-    function reverseString() {
-        const strRev =  parolaDaInvertire.split('').reverse().join('');
-        console.log(strRev);
+    // function reverseString() {
+    //     const strRev =  parolaDaInvertire.split('').reverse().join('');
+    //     console.log(strRev);
 
-        console.log(strRev === parolaInseritaAlContrario)
-    }
+    //     console.log(strRev === parolaInseritaAlContrario)
+    // }
 
     function salvaRisposte(){
         let oggettoDomandeRisposte = {
@@ -34,7 +34,7 @@ function CognitiveAreaAttenzione(props){
             <h1 style={{fontSize: "15px", color: "red"}}>!!!!! In alternativa qui si possono mettere esercizi matematici semplici !!!!!</h1>
             <h2>Adesso ti verrà mostrata una parola ed il tuo obiettivo è scriverla al contrario</h2>
 
-            <button onClick={reverseString}>LOGGA PAROLA INVERTITA</button>
+            {/* <button onClick={reverseString}>LOGGA PAROLA INVERTITA</button> */}
 
             <h5 className={styles.parola_al_contrario}>{parolaDaInvertire}</h5>
 

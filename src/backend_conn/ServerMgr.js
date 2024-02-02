@@ -463,5 +463,29 @@ function initServerMgr(cb) {
         }
     }
 
+    serverMgr.getTestsQuestionsAreaCog_3 = async (cb) => {
+        let result = await serverMgr.requestFetchData("getTestsQuestionsAreaCog_3")
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.getTestsQuestionsAreaCog_5 = async (cb) => {
+        let result = await serverMgr.requestFetchData("getTestsQuestionsAreaCog_5")
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
     if (cb) cb();
 }

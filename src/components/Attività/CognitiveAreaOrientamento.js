@@ -82,43 +82,43 @@ function CognitiveAreaOrientamento(props){
     function salvaRisposte(){
         let oggettoDomandeRisposte = [
             {
-                domanda: "In che anno ci troviamo?",
+                domanda: elencoDomande.domanda_1,
                 risposta: annoInserito
             },
             {
-                domanda: "In che mese ci troviamo?",
+                domanda: elencoDomande.domanda_2,
                 risposta: meseInserito
             },
             {
-                domanda: "Che giorno è oggi?",
+                domanda: elencoDomande.domanda_3,
                 risposta: giornoInserito
             },
             {
-                domanda: "Quale giorno della settimana è oggi?",
+                domanda: elencoDomande.domanda_4,
                 risposta: giornoSettimanaInserito
             },
             {
-                domanda: "In quale stagione ci troviamo?",
+                domanda: elencoDomande.domanda_5,
                 risposta: stagioneInserita
             },
             {
-                domanda: "In quale nazione siamo?",
+                domanda: elencoDomande.domanda_6,
                 risposta: nazioneInserita
             },
             {
-                domanda: "In quale regione?",
+                domanda: elencoDomande.domanda_7,
                 risposta: regioneInserita
             },
             {
-                domanda: "In quale città ci troviamo?",
+                domanda: elencoDomande.domanda_8,
                 risposta: cittàInserita
             },
             {
-                domanda: "In che luogo ci troviamo?",
+                domanda: elencoDomande.domanda_9,
                 risposta: luogoInserito
             },
             {
-                domanda: "A quale piano siamo adesso?",
+                domanda: elencoDomande.domanda_10,
                 risposta: pianoInserito
             }
         ]

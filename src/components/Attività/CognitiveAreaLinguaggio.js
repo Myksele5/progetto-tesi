@@ -1,13 +1,13 @@
 import styles from "./CognitiveAreaLinguaggio.module.css";
-import image1 from "../Images-Giochi/BANANA.jpg";
-import image2 from "../Images-Giochi/FRAGOLA.jpg";
+import image1 from "../Images-Giochi/orologio.jpeg";
+import image2 from "../Images-Giochi/matita.jpg";
 import { useState } from "react";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 
 function CognitiveAreaLinguaggio(props){
     const elencoDomande = props.domandeAreaCog5;
-    var oggettoDaIdentificare1 = "BANANA";
-    var oggettoDaIdentificare2 = "FRAGOLA";
+    var oggettoDaIdentificare1 = elencoDomande.esercizio_1.oggetto_1;
+    var oggettoDaIdentificare2 = elencoDomande.esercizio_1.oggetto_2;
 
     const [numeroDomanda, setNumeroDomanda] = useState(1);
 
@@ -35,27 +35,27 @@ function CognitiveAreaLinguaggio(props){
     function salvaRisposte(){
         let oggettoDomandeRisposte = [
             {
-                domanda: "Scrivi i nomi di questi oggetti",
+                domanda: elencoDomande.esercizio_1.domanda,
                 oggetti: [
                     {oggetto: oggettoDaIdentificare1, risposta: oggetto1},
                     {oggetto: oggettoDaIdentificare2, risposta: oggetto2},
                 ],
             },
             {
-                domanda: "Ripeti la frase",
-                frase: "TIGRE CONTRO TIGRE"
+                domanda: elencoDomande.esercizio_2.domanda,
+                frase: elencoDomande.esercizio_2.frase
             },
             {
-                domanda: "Esegui questa azione",
-                azione: "Prendi il foglio di carta, piegalo a metà e buttalo per terra."
+                domanda: elencoDomande.esercizio_3.domanda,
+                azione: elencoDomande.esercizio_3.azione
             },
             {
-                domanda: "Scrivi una frase",
+                domanda: elencoDomande.esercizio_4.domanda,
                 frase: fraseInserita
             },
             {
-                domanda: "Esegui questa azione",
-                azione: "Chiudi gli occhi"
+                domanda: elencoDomande.esercizio_5.domanda,
+                azione: elencoDomande.esercizio_5.azione
             }
         ]
         console.log(oggetto1 === oggettoDaIdentificare1);
@@ -68,7 +68,7 @@ function CognitiveAreaLinguaggio(props){
         <>
             {numeroDomanda === 1 &&
             <>
-                <h4>{elencoDomande.esercizio_1.domanda}</h4>
+                <h2>{elencoDomande.esercizio_1.domanda}</h2>
                 <div className={styles.flex_horizontal}>
                     <div className={styles.flex_vertical}>
                         <img className={styles.image_style} src={image1}></img>
@@ -94,7 +94,7 @@ function CognitiveAreaLinguaggio(props){
             {numeroDomanda === 2 &&
                 <div className={styles.flex_vertical}>
                     <h2>Ad alta voce, {elencoDomande.esercizio_2.domanda} che ti viene mostrata qui sotto.</h2>
-                    <h5>{elencoDomande.esercizio_2.frase}</h5>
+                    <h2 style={{textDecoration: "underline"}}>{elencoDomande.esercizio_2.frase}</h2>
                     <GenericAlternativeButton
                         buttonText={"Prossima Domanda"}
                         onClick={prossimaDomanda}

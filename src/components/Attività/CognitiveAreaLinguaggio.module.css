@@ -16,12 +16,12 @@
     border: 1px solid red;
     border-radius: 5px;
     padding: 5px;
-    width: 200px;
-    height: 150px;
+    width: 250px;
+    height: 220px;
 }
 
 .input_style{
-    width: 250px;
+    width: 280px;
     height: 25px;
     margin: 5px 10px;
     border: 2px solid rgb(59, 59, 241);
