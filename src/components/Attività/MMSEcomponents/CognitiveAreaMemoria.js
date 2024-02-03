@@ -1,5 +1,5 @@
 import { useState } from "react";
-import GenericAlternativeButton from "../UI/GenericAlternativeButton";
+import GenericAlternativeButton from "../../UI/GenericAlternativeButton";
 import styles from "./CognitiveAreaMemoria.module.css";
 
 function CognitiveAreaMemoria(props){

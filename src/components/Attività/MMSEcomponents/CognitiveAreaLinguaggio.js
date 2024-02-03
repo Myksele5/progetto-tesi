@@ -1,8 +1,8 @@
 import styles from "./CognitiveAreaLinguaggio.module.css";
-import image1 from "../Images-Giochi/orologio.jpeg";
-import image2 from "../Images-Giochi/matita.jpg";
+import image1 from "../../Images-Giochi/orologio.jpeg";
+import image2 from "../../Images-Giochi/matita.jpg";
 import { useState } from "react";
-import GenericAlternativeButton from "../UI/GenericAlternativeButton";
+import GenericAlternativeButton from "../../UI/GenericAlternativeButton";
 
 function CognitiveAreaLinguaggio(props){
     const elencoDomande = props.domandeAreaCog5;

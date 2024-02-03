@@ -3,11 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import GenericButton from "../UI/GenericButton";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import PatientContext from "../../context/patients-context";
-import CognitiveAreaOrientamento from "./CognitiveAreaOrientamento";
-import CognitiveAreaMemoria from "./CognitiveAreaMemoria";
-import CognitiveAreaAttenzione from "./CognitiveAreaAttenzione";
-import CognitiveAreaLinguaggio from "./CognitiveAreaLinguaggio";
-import CognitiveAreaAbilità from "./CognitiveAreaAbilità";
+import CognitiveAreaOrientamento from "./MMSEcomponents/CognitiveAreaOrientamento";
+import CognitiveAreaMemoria from "./MMSEcomponents/CognitiveAreaMemoria";
+import CognitiveAreaAttenzione from "./MMSEcomponents/CognitiveAreaAttenzione";
+import CognitiveAreaLinguaggio from "./MMSEcomponents/CognitiveAreaLinguaggio";
+import CognitiveAreaAbilità from "./MMSEcomponents/CognitiveAreaAbilità";
 import RisultatiTest from "./RisultatiTest";
 
 function TestMMSE(props){

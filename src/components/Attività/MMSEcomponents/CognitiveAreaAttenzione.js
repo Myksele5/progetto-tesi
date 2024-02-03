@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./CognitiveAreaAttenzione.module.css";
-import GenericAlternativeButton from "../UI/GenericAlternativeButton";
+import GenericAlternativeButton from "../../UI/GenericAlternativeButton";
 
 function CognitiveAreaAttenzione(props){
     // let parolaDaInvertire = "MONDO";

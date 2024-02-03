@@ -1,0 +1,73 @@
+.flex_vertical{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex_horizontal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.numero_da_ripetere{
+    font-size: 36px;
+    border: 2px solid red;
+    border-radius: 5px;
+    margin: 15px;
+    padding: 10px;
+}
+
+.lettera_da_ripetere{
+    min-width: 38px;
+    max-width: 38px;
+    font-size: 24px;
+    border: 1px solid red;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 6px;
+    text-align: center;
+}
+
+.lettera_da_ripetere:hover{
+    background-color: rgb(235, 235, 235);
+    box-shadow: 1px 1px 5px black;
+    cursor: pointer;
+}
+
+.lettera_cliccata{
+    min-width: 38px;
+    max-width: 38px;
+    font-size: 24px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 6px;
+    text-align: center;
+    background-color: blue;
+    color: white;
+}
+
+.input_style{
+    width: 100px;
+    height: 25px;
+    margin: 5px 10px;
+    border: 2px solid rgb(59, 59, 241);
+    border-radius: 20px;
+    font-size: 20px;
+    color: black;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.input_style.invalid{
+    border: 2px solid red;
+}
+
+.input_style:focus{
+    border: 2px solid rgb(233, 33, 131);
+    transition: 0.3s;
+    box-shadow: 1px 1px 5px 1px black;
+    outline: none;
+}

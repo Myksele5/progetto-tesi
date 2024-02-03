@@ -173,7 +173,6 @@ function Attività(){
             {!showListaTest && indiceTest !== -1 && testType === "MMSE" &&
                 <div className={styles.wrapper_test}>
                     <TestMMSE
-                    //DA COMPLETARE CON LE ALTRE AREE COGNITIVE
                         areaCog_1_domande={domandeAreaCog1}
                         areaCog_2_domande={domandeAreaCog2}
                         areaCog_3_domande={domandeAreaCog3}
@@ -189,8 +188,10 @@ function Attività(){
 
             {!showListaTest && indiceTest !== -1 && testType === "MOCA" &&
                 <div className={styles.wrapper_test}>
-                    <TestMOCA>
-                        
+                    <TestMOCA
+                        areaCog_1_domande={domandeAreaCog1}
+                        areaCog_2_domande={domandeAreaCog2}
+                    >
                     </TestMOCA>
                 </div>
             }

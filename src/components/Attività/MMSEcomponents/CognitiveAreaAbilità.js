@@ -1,6 +1,6 @@
 import styles from "./CognitiveAreaAbilità.module.css";
-import Pentagoni from "../Images-Giochi/Pentagoni_Intrecciati.png";
-import GenericButton from "../UI/GenericButton";
+import Pentagoni from "../../Images-Giochi/Pentagoni_Intrecciati.png";
+import GenericButton from "../../UI/GenericButton";
 
 function CognitiveAreaAbilità(props){
     function salvaRisposte(){

@@ -1,4 +1,4 @@
-import GenericAlternativeButton from "../UI/GenericAlternativeButton";
+import GenericAlternativeButton from "../../UI/GenericAlternativeButton";
 import styles from "./CognitiveAreaOrientamento.module.css";
 import { useEffect, useState } from "react";
 
