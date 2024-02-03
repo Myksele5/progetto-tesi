@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import GameContext from "../../context/game-context";
 import styles from "./ElencoDomande.module.css";
-import { getDownloadURL, listAll, ref } from "firebase/storage";
-import { storage } from "../../config/firebase-config";
 import AuthContext from "../../context/auth-context";
 
 var COUNT_DOMANDE = 0;

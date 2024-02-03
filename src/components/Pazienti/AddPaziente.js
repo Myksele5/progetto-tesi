@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import GenericButton from "../UI/GenericButton";
 import styles from './AddPaziente.module.css';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../config/firebase-config";
 import AuthContext from "../../context/auth-context";
 import { getServerMgr } from "../../backend_conn/ServerMgr";
 

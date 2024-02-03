@@ -10,8 +10,6 @@ import Leonardo from '../Images-Giochi/LEONARDO_DA_VINCI.jpg';
 import Napoleone from '../Images-Giochi/NAPOLEONE_BONAPARTE.jpg';
 import PapaFrancesco from '../Images-Giochi/PAPA_FRANCESCO.jpg';
 import GameContext from '../../context/game-context';
-import { getDownloadURL, listAll, ref } from 'firebase/storage';
-import { storage } from '../../config/firebase-config';
 import AuthContext from '../../context/auth-context';
 
 let counter_question_number = 0;

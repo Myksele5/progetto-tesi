@@ -2,9 +2,7 @@ import styles from "./ElencoDomandeModificabili.module.css";
 import { useContext, useEffect, useState } from "react";
 import GameContext from "../../context/game-context";
 import GenericButton from "../UI/GenericButton";
-import { getBytes, getDownloadURL, listAll, ref } from "firebase/storage";
 import AuthContext from "../../context/auth-context";
-import { storage } from "../../config/firebase-config";
 
 function ElencoDomandeModificabili(props){
     const game_ctx = useContext(GameContext);

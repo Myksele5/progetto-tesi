@@ -2,9 +2,6 @@ import React, {useState, useContext, useEffect} from "react";
 import PatientContext from "./patients-context";
 import Modal from "../components/UI/Modal";
 
-import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
-import { db, storage } from "../config/firebase-config";
-import { deleteObject, ref, uploadBytes } from "firebase/storage";
 import AuthContext from "./auth-context";
 import { getServerMgr } from "../backend_conn/ServerMgr";
 

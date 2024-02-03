@@ -1,6 +1,3 @@
-import { auth } from "../../config/firebase-config";
-import { signInWithEmailAndPassword } from "firebase/auth";
-
 import { useContext, useEffect, useState } from "react";
 import styles from "./LoginForm.module.css";
 import GenericButton from "../UI/GenericButton";

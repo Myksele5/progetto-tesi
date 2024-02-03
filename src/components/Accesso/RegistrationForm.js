@@ -2,10 +2,6 @@ import GenericButton from "../UI/GenericButton";
 import styles from "./RegistrationForm.module.css";
 import Card from "../UI/Card";
 import { useEffect, useState } from "react";
-
-import { auth, db } from "../../config/firebase-config";
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
-import { setDoc, doc } from "firebase/firestore";
 import { getServerMgr } from "../../backend_conn/ServerMgr";
 
 function RegistrationForm(props){

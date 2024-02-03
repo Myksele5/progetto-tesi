@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import styles from './PswDimenticata.module.css';
 import Card from '../UI/Card';
 import GenericButton from '../UI/GenericButton';
-import { auth } from '../../config/firebase-config';
-import { sendPasswordResetEmail } from 'firebase/auth';
 import { getServerMgr } from '../../backend_conn/ServerMgr';
 
 function PswDimenticata(props){

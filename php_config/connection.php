@@ -549,7 +549,7 @@
         $codeRecovery->bind_result($result);
 
         $subject = 'Reset Password';
-        $message = 'https://localhost:3000/psw_recovery?code='.$variabile;
+        $message = 'https://myks.altervista.org/psw_recovery?code='.$variabile;
         $headers = array(
             'From' => 'webmaster@example.com',
             'X-Mailer' => 'PHP/' . phpversion()
@@ -574,7 +574,7 @@
         $codeRecovery->bind_result($result);
 
         $subject = 'Reset Password';
-        $message = 'https://localhost:3000/psw_recovery?code='.$variabile;
+        $message = 'https://myks.altervista.org/psw_recovery?code='.$variabile;
         $headers = array(
             'From' => 'webmaster@example.com',
             'X-Mailer' => 'PHP/' . phpversion()
@@ -599,7 +599,7 @@
         $codeRecovery->bind_result($result);
 
         $subject = 'Reset Password';
-        $message = 'https://localhost:3000/psw_recovery?code='.$variabile;
+        $message = 'https://myks.altervista.org/psw_recovery?code='.$variabile;
         $headers = array(
             'From' => 'webmaster@example.com',
             'X-Mailer' => 'PHP/' . phpversion()

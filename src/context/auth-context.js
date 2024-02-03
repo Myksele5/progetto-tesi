@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 // import Modal from "../components/UI/Modal";
-import { onAuthStateChanged, signOut, confirmPasswordReset } from "firebase/auth";
-import { auth, db } from "../config/firebase-config";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 
 const AuthContext = React.createContext({
     login: ()=>{},
@@ -68,17 +65,6 @@ export function AuthContextProvider(props){
       }
     }
 
-    async function resetPassword(oobCode, newPassword){
-      await confirmPasswordReset(auth, oobCode, newPassword)
-      .then((result) => {
-        console.log(result)
-      })
-      .catch((err) => {
-        console.error(err)
-      });
-      return ;
-    }
-
     function userClickedLoggedout(){
       setShowLogoutModal(true);
     }
@@ -107,7 +93,6 @@ export function AuthContextProvider(props){
           utenteLoggato: utenteLoggato,
           utenteLoggatoUID: utenteLoggatoUID,
           tipoAccount: tipoAccount,
-          confirmPasswordReset: resetPassword
       }}>
           {props.children}
       </AuthContext.Provider>

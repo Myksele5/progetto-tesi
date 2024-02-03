@@ -8,8 +8,6 @@ import Modal from "../components/UI/Modal";
 import EditPaziente from "../components/Pazienti/EditPaziente";
 import Card from "../components/UI/Card";
 
-import { auth, db } from "../config/firebase-config";
-import { collection, getDocs, addDoc, deleteDoc, updateDoc, doc } from "firebase/firestore";
 import AuthContext from "./auth-context";
 import { getServerMgr } from "../backend_conn/ServerMgr";
 
