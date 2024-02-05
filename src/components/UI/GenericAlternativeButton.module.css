@@ -10,19 +10,19 @@
     border-radius: 10px;
     color: whitesmoke;
     cursor: pointer;
-    background-color: rgb(50, 50, 192);
+    background-color: #163172;
     animation: animaz 1.2s forwards ease-in-out;
 }
 
 .alternative_button:hover{
-    background-color: rgb(33, 33, 131);
-    border: 2px solid rgb(233, 33, 131);
-    color: white;
+    background-color: #11275a;
+    border: 2px solid #D6E4F0;
+    color: #D6E4F0;
     transition: 0.3s;
 }
 
 .alternative_button:active{
-    color: rgb(233, 33, 131);
+    color: #D6E4F0;
     transition: 0.2s;
 }
 

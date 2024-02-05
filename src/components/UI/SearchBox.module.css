@@ -9,7 +9,7 @@
 .search_box{
     width: 200px;
     height: 30px;
-    border: 2px solid rgb(59, 59, 241);
+    border: 2px solid #1E56A0;
     border-radius: 20px;
     font-size: large;
 }

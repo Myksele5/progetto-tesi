@@ -12,18 +12,18 @@
     color: whitesmoke;
     cursor: pointer;
     transition: 0.3s;
-    background-color: rgb(59, 59, 241);
+    background-color: #1E56A0;
 }
 
 .generic_button:hover{
-    background-color: rgb(33, 33, 131);
-    border: 2px solid rgb(233, 33, 131);
+    background-color: #163172;
+    border: 2px solid #D6E4F0;
     box-shadow: 1px 1px 5px 1px black;
     transition: 0.3s;
 }
 
 .generic_button:active{
-    color: rgb(233, 33, 131);
+    color: #D6E4F0;
     transition: 0.1s;
 }
 
@@ -38,11 +38,14 @@
 .red_styling{
     background-color: rgb(185, 0, 0);
 }
+.red_styling:hover{
+    background-color: rgb(138, 0, 0);
+}
 
 .is_selected{
-    background-color: rgb(33, 33, 131);
-    border: 2px solid rgb(233, 33, 131);
-    color: rgb(233, 33, 131);
+    background-color: #163172;
+    border: 2px solid #D6E4F0;
+    color: #D6E4F0;
     box-shadow: 1px 1px 5px 1px black;
 }
 
@@ -65,13 +68,13 @@
 
 .small_button:hover{
     background-color: rgb(100, 0, 0);
-    border: 2px solid rgb(233, 33, 131);
+    border: 2px solid #D6E4F0;
     box-shadow: 1px 1px 5px 1px black;
     transition: 0.3s;
 }
 
 .small_button:active{
-    color: rgb(233, 33, 131);
+    color: #D6E4F0;
     transition: 0.1s;
 }
 

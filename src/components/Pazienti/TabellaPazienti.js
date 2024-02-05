@@ -29,11 +29,11 @@ function TabellaPazienti(props){
             <table className={styles.table_wrapper}>
                 <thead>
                     <tr>
-                        <th className={`${styles['intestazione_tabella']} ${styles['nome']}`}>NESSUN RISULTATO</th>
+                        <th className={`${styles['intestazione_tabella']} ${styles['nome']}`}>NESSUN PAZIENTE REGISTRATO</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style={{textAlign: "center", fontSize: "20px"}}><td style={{display: "block", padding: "10px"}}>Crea il primo paziente per visualizzare la tabella.</td></tr>
+                    <tr style={{textAlign: "center", fontSize: "20px"}}><td style={{display: "block", padding: "10px"}}>Aggiungi il primo paziente per visualizzare lo schedario dei pazienti.</td></tr>
                 </tbody>
             </table>
         );

@@ -254,17 +254,21 @@
         $city = $dataJson["city"];
         $codiceFiscale = $dataJson["codiceFiscale"];
         $dataNascita = $dataJson["dataNascita"];
-        $patologia = $dataJson["patologia"];
-        $medicine = $dataJson["medicine"];
+        $patologia_1 = $dataJson["patologia_1"];
+        $patologia_2 = $dataJson["patologia_2"];
+        $patologia_3 = $dataJson["patologia_3"];
+        $medicina_1 = $dataJson["medicina_1"];
+        $medicina_2 = $dataJson["medicina_2"];
+        $medicina_3 = $dataJson["medicina_3"];
         $terapia = $dataJson["terapia"];
         $note = $dataJson["note"];
         // $statistiche = $dataJson["statistiche"];
         
         $insertNewPatient = $i_conn->prepare(
-            "INSERT INTO `patients` (`doct_UID`, `nome`, `cognome`, `city`, `codiceFiscale`, `dataNascita`, `patologia`, `medicine`, `terapia`, `note`) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            "INSERT INTO `patients` (`doct_UID`, `nome`, `cognome`, `city`, `codiceFiscale`, `dataNascita`, `patologia_1`, `patologia_2`, `patologia_3`, `medicina_1`, `medicina_2`, `medicina_3`, `terapia`, `note`) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
-        $insertNewPatient->bind_param("isssssssss", $doct_UID, $nome, $cognome, $city, $codiceFiscale, $dataNascita, $patologia, $medicine, $terapia, $note);
+        $insertNewPatient->bind_param("isssssssssssss", $doct_UID, $nome, $cognome, $city, $codiceFiscale, $dataNascita, $patologia_1, $patologia_2, $patologia_3, $medicina_1, $medicina_2, $medicina_3, $terapia, $note);
         $insertNewPatient->execute();
         
         $insertNewPatient->bind_result($result);
@@ -280,18 +284,22 @@
         $city = $dataJson["city"];
         $codiceFiscale = $dataJson["codiceFiscale"];
         $dataNascita = $dataJson["dataNascita"];
-        $patologia = $dataJson["patologia"];
-        $medicine = $dataJson["medicine"];
+        $patologia_1 = $dataJson["patologia_1"];
+        $patologia_2 = $dataJson["patologia_2"];
+        $patologia_3 = $dataJson["patologia_3"];
+        $medicina_1 = $dataJson["medicina_1"];
+        $medicina_2 = $dataJson["medicina_2"];
+        $medicina_3 = $dataJson["medicina_3"];
         $terapia = $dataJson["terapia"];
         $note = $dataJson["note"];
         $ID = $dataJson["ID"];
         // $statistiche = $dataJson["statistiche"];
         
         $updatePatient = $i_conn->prepare(
-            "UPDATE `patients` SET `nome` = ?, `cognome` = ?, `city` = ?, `codiceFiscale` = ?, `dataNascita` = ?, `patologia` = ?, `medicine` = ?, `terapia` = ?, `note` = ?
+            "UPDATE `patients` SET `nome` = ?, `cognome` = ?, `city` = ?, `codiceFiscale` = ?, `dataNascita` = ?, `patologia_1` = ?, `patologia_2` = ?, `patologia_3` = ?, `medicina_1` = ?, `medicina_2` = ?, `medicina_3` = ?, `terapia` = ?, `note` = ?
             WHERE `patients`.`ID` = ?"
         );
-        $updatePatient->bind_param("sssssssssi", $nome, $cognome, $city, $codiceFiscale, $dataNascita, $patologia, $medicine, $terapia, $note, $ID);
+        $updatePatient->bind_param("sssssssssssssi", $nome, $cognome, $city, $codiceFiscale, $dataNascita, $patologia_1, $patologia_2, $patologia_3, $medicina_1, $medicina_2, $medicina_3, $terapia, $note, $ID);
         $updatePatient->execute();
         
         $updatePatient->bind_result($result);

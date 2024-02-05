@@ -129,11 +129,15 @@ function SchedaPaziente(props){
                 {sezioneScheda === 'SCHEDA_MEDICA' &&
                 <>
                     <label className={styles.label_style}>Patologia</label>
-                    <h3>{props.patologia}</h3>
+                    <h3>{props.patologia_1}</h3>
+                    {props.patologia_2 && <h3>{props.patologia_2}</h3>}
+                    {props.patologia_3 && <h3>{props.patologia_3}</h3>}
                     {/* <hr className={styles.horizontal_line}/> */}
         
                     <label className={styles.label_style}>Medicine</label>
-                    <h3>{props.medicine}</h3>
+                    <h3>{props.medicina_1}</h3>
+                    {props.medicina_2 && <h3>{props.medicina_2}</h3>}
+                    {props.medicina_3 && <h3>{props.medicina_3}</h3>}
                     {/* <hr className={styles.horizontal_line}/> */}
         
                     <label className={styles.label_style}>Terapia</label>

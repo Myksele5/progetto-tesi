@@ -1,6 +1,6 @@
 .wrapper_statistiche{
-    border: 2px solid rgb(233, 33, 131);
-    background-color: lightcyan;
+    border: 2px solid #1E56A0;
+    background-color: #D6E4F0;
     padding: 20px;
     width: 400px;
     margin: 15px;
@@ -13,13 +13,13 @@
     width: 200px;
     height: 25px;
     border-radius: 5px;
-    border: 2px solid blue;
+    border: 2px solid #1E56A0;
     font-size: 17px;
     text-align: center;
 }
 
 .select_style:focus{
-    border: 2px solid rgb(233, 33, 131);
+    border: 2px solid #163172;
     outline: none;
 }
 
@@ -32,7 +32,7 @@
 .barra{
     width: 20px;
     height: 200px;
-    border: 3px solid rgb(33, 33, 131) ;
+    border: 3px solid #163172;
     border-radius: 5px;
     margin: 20px;
     display: flex;
@@ -46,6 +46,10 @@
 .riempimento_barra_sbagliate{
     height: 0%;
     background-color: red;
+}
+
+.content_style{
+    color: #163172;
 }
 
 @media screen and (max-width: 599px) {

@@ -6,11 +6,9 @@ import { getServerMgr } from "../../backend_conn/ServerMgr";
 
 function AddPaziente(props){
     const auth_ctx = useContext(AuthContext);
-    // const [emailDottore, setEmailDottore] = useState('');
-    // const [passwordDottore, setPasswordDottore] = useState('');
-    // const [modaleCREAZIONEUTENTE, setModaleCREAZIONEUTENTE] = useState(false);
-    // const [accountCreato, setAccountCreato] = useState(false);
     var emailEsistente = null;
+
+    const [stepAggiuntaPaziente, setStepAggiuntaPaziente] = useState(1);
 
     const [validNome, setValidNome] = useState(true);
     const [enteredNome, setEnteredNome] = useState('');
@@ -27,23 +25,30 @@ function AddPaziente(props){
     const [validCF, setValidCF] = useState(true);
     const [enteredCF, setEnteredCF] = useState('');
 
-    const [enteredPatologia, setEnteredPatologia] = useState('');
+    const [counterPatologie, setCounterPatologie] = useState(1);
+    const [enteredPatologia_1, setEnteredPatologia_1] = useState('');
+    const [enteredPatologia_2, setEnteredPatologia_2] = useState('');
+    const [enteredPatologia_3, setEnteredPatologia_3] = useState('');
+
     const [enteredNoteParticolari, setEnteredNoteParticolari] = useState('');
-    const [enteredMedicine, setEnteredMedicine] = useState('');
+
+    const [counterMedicine, setCounterMedicine] = useState(1);
+    const [enteredMedicine_1, setEnteredMedicine_1] = useState('');
+    const [enteredMedicine_2, setEnteredMedicine_2] = useState('');
+    const [enteredMedicine_3, setEnteredMedicine_3] = useState('');
+
     const [enteredTerapia, setEnteredTerapia] = useState('');
 
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPsw, setEnteredPsw] = useState('');
 
-    // useEffect(() => {
-    //     setEmailDottore(auth_ctx.utenteLoggato);
-    //     // console.log(utente);
-    // }, [])
+    const stepSuccessivo = () => {
+        setStepAggiuntaPaziente((nextStep) => (nextStep + 1))
+    }
 
-    // const passwordDottoreChangeHandler = (event) => {
-    //     console.log(event.target.value);
-    //     setPasswordDottore(event.target.value);
-    // }
+    const stepPrecedente = () => {
+        setStepAggiuntaPaziente((prevStep) => (prevStep - 1))
+    }
 
     const nomeChangeHandler = (event) => {
         console.log(event.target.value);
@@ -75,9 +80,31 @@ function AddPaziente(props){
         setValidCF(true);
     }
 
-    const patologiaChangeHandler = (event) => {
+    const aumentaCounterPatologie = (event) => {
+        event.preventDefault();
+        if(counterPatologie < 3 && counterPatologie >= 1){
+            setCounterPatologie((count) => (count + 1))
+        }
+    }
+
+    const diminuisciCounterPatologie = (event) => {
+        event.preventDefault();
+        if(counterPatologie <= 3 && counterPatologie > 1){
+            setCounterPatologie((count) => (count - 1))
+        }
+    }
+
+    const patologiaChangeHandler_1 = (event) => {
         console.log(event.target.value);
-        setEnteredPatologia(event.target.value);
+        setEnteredPatologia_1(event.target.value);
+    }
+    const patologiaChangeHandler_2 = (event) => {
+        console.log(event.target.value);
+        setEnteredPatologia_2(event.target.value);
+    }
+    const patologiaChangeHandler_3 = (event) => {
+        console.log(event.target.value);
+        setEnteredPatologia_3(event.target.value);
     }
 
     const noteParticolariChangeHandler = (event) => {
@@ -85,9 +112,31 @@ function AddPaziente(props){
         setEnteredNoteParticolari(event.target.value);
     }
 
-    const medicineChangeHandler = (event) => {
+    const aumentaCounterMedicine = (event) => {
+        event.preventDefault();
+        if(counterMedicine < 3 && counterMedicine >= 1){
+            setCounterMedicine((count) => (count + 1))
+        }
+    }
+
+    const diminuisciCounterMedicine = (event) => {
+        event.preventDefault();
+        if(counterMedicine <= 3 && counterMedicine > 1){
+            setCounterMedicine((count) => (count - 1))
+        }
+    }
+
+    const medicineChangeHandler_1 = (event) => {
         console.log(event.target.value);
-        setEnteredMedicine(event.target.value);
+        setEnteredMedicine_1(event.target.value);
+    }
+    const medicineChangeHandler_2 = (event) => {
+        console.log(event.target.value);
+        setEnteredMedicine_2(event.target.value);
+    }
+    const medicineChangeHandler_3 = (event) => {
+        console.log(event.target.value);
+        setEnteredMedicine_3(event.target.value);
     }
 
     const terapiaChangeHandler = (event) => {
@@ -167,16 +216,14 @@ function AddPaziente(props){
             city: enteredCittà,
             codiceFiscale: enteredCF.toUpperCase(),
             dataNascita: dateString,
-            patologia: enteredPatologia,
-            medicine: enteredMedicine,
+            patologia_1: enteredPatologia_1,
+            patologia_2: enteredPatologia_2,
+            patologia_3: enteredPatologia_3,
+            medicina_1: enteredMedicine_1,
+            medicina_2: enteredMedicine_2,
+            medicina_3: enteredMedicine_3,
             terapia: enteredTerapia,
             note: enteredNoteParticolari
-            // statistiche: {
-            //     "risposteTotali": 0,
-            //     "risposteCorrette": 0,
-            //     "risposteSbagliate": 0
-            // }
-            // ACCOUNT_CREATO: accountCreato
         };
 
         props.onCreateNewPaziente(datiNuovoPaziente);
@@ -247,78 +294,171 @@ function AddPaziente(props){
         <form className={styles.center_form} onSubmit={formSubmitHandler}>
             <h1 className={styles.title_form}>Inserisci i dati del paziente</h1>
 
-            <div className={styles.wrapper_flex}>
-                <section className={styles.section_style}>
-                    <h3 className={styles.subtitle_form}>DATI PERSONALI</h3>
+                {stepAggiuntaPaziente === 1 && 
+                <>
+                    <div className={styles.wrapper_flex}>
+                        <section className={styles.section_style}>
+                            <h3 className={styles.subtitle_form}>DATI PERSONALI</h3>
 
-                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome:</label>
-                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNome} onChange={nomeChangeHandler}></input>
+                            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome:</label>
+                            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNome} onChange={nomeChangeHandler}></input>
 
-                    <label className={`${styles.label_style} ${!validCognome ? styles.invalid : ""}`}>Cognome:</label>
-                    <input className={`${styles.input_style} ${!validCognome ? styles.invalid : ""}`} type="text" value={enteredCognome} onChange={cognomeChangeHandler}></input>
+                            <label className={`${styles.label_style} ${!validCognome ? styles.invalid : ""}`}>Cognome:</label>
+                            <input className={`${styles.input_style} ${!validCognome ? styles.invalid : ""}`} type="text" value={enteredCognome} onChange={cognomeChangeHandler}></input>
 
-                    <label className={`${styles.label_style} ${!validCittà ? styles.invalid : ""}`}>Città di nascita:</label>
-                    <input className={`${styles.input_style} ${!validCittà ? styles.invalid : ""}`} type="text" value={enteredCittà} onChange={cittàChangeHandler}></input>
+                            <label className={`${styles.label_style} ${!validCittà ? styles.invalid : ""}`}>Città di nascita:</label>
+                            <input className={`${styles.input_style} ${!validCittà ? styles.invalid : ""}`} type="text" value={enteredCittà} onChange={cittàChangeHandler}></input>
 
-                    <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}>Data di nascita:</label>
-                    <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" min="01-01-1800" max="31-31-2400" value={enteredData} onChange={dataNascitaChangeHandler}></input>
+                            <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}>Data di nascita:</label>
+                            <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" min="01-01-1800" max="31-31-2400" value={enteredData} onChange={dataNascitaChangeHandler}></input>
 
-                    <label className={`${styles.label_style} ${!validCF ? styles.invalid : ""}`}>Codice Fiscale:</label>
-                    <input className={`${styles.input_style} ${!validCF ? styles.invalid : ""}`} type="text" value={enteredCF} onChange={CFChangeHandler}></input>
-                </section>
+                            <label className={`${styles.label_style} ${!validCF ? styles.invalid : ""}`}>Codice Fiscale:</label>
+                            <input className={`${styles.input_style} ${!validCF ? styles.invalid : ""}`} type="text" value={enteredCF} onChange={CFChangeHandler}></input>
+                        </section>
+                    </div>
+                    <GenericButton 
+                        onClick={stepSuccessivo}
+                        generic_button={true}
+                        buttonText='Avanti'>
+                    </GenericButton>
 
-                <section className={styles.section_style}>
-                    <h3 className={styles.subtitle_form}>SCHEDA MEDICA</h3>
+                    <GenericButton
+                        onClick={hideForm}
+                        small_button={true}
+                        buttonText='Torna indietro'>
+                    </GenericButton>
+                </>
+                }
 
-                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Patologia:</label>
-                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredPatologia} onChange={patologiaChangeHandler}></input>
+                {stepAggiuntaPaziente === 2 &&
+                <>
+                    <div className={styles.wrapper_flex}>
+                        <section className={styles.section_style}>
+                            <h3 className={styles.subtitle_form}>SCHEDA MEDICA</h3>
 
-                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Segni/Note particolari:</label>
-                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNoteParticolari} onChange={noteParticolariChangeHandler}></input>
+                            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Patologia:</label>
+                            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredPatologia_1} onChange={patologiaChangeHandler_1}></input>
+                            {counterPatologie >= 2 &&
+                            <>
+                                <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Patologia:</label>
+                                <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredPatologia_2} onChange={patologiaChangeHandler_2}></input>
+                            </>
+                            }
+                            {counterPatologie >= 3 &&
+                            <>
+                                <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Patologia:</label>
+                                <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredPatologia_3} onChange={patologiaChangeHandler_3}></input>
+                            </>
+                            }
+                            <div style={{display: "flex"}}>
+                                {counterPatologie < 3 && counterPatologie >= 1 &&
+                                    <GenericButton 
+                                        onClick={aumentaCounterPatologie}
+                                        generic_button={true}
+                                        buttonText='Aggiungi patologia'
+                                    >
+                                    </GenericButton>
+                                }
+                                {counterPatologie <= 3 && counterPatologie > 1 &&
+                                    <GenericButton 
+                                        onClick={diminuisciCounterPatologie}
+                                        small_button={true}
+                                        buttonText='Rimuovi patologia'
+                                    >
+                                    </GenericButton>
+                                }
+                            </div>
 
-                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Medicine:</label>
-                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredMedicine} onChange={medicineChangeHandler}></input>
+                            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Medicina:</label>
+                            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredMedicine_1} onChange={medicineChangeHandler_1}></input>
+                            {counterMedicine >= 2 &&
+                            <>
+                                <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Medicina:</label>
+                                <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredMedicine_2} onChange={medicineChangeHandler_2}></input>
+                            </>
+                            }
+                            {counterMedicine >= 3 &&
+                            <>
+                                <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Medicina:</label>
+                                <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredMedicine_3} onChange={medicineChangeHandler_3}></input>
+                            </>
+                            }
+                            <div style={{display: "flex"}}>
+                                {counterMedicine < 3 && counterMedicine >= 1 &&
+                                    <GenericButton 
+                                        onClick={aumentaCounterMedicine}
+                                        generic_button={true}
+                                        buttonText='Aggiungi medicina'
+                                    >
+                                    </GenericButton>
+                                }
+                                {counterMedicine <= 3 && counterMedicine > 1 &&
+                                    <GenericButton 
+                                        onClick={diminuisciCounterMedicine}
+                                        small_button={true}
+                                        buttonText='Rimuovi medicina'
+                                    >
+                                    </GenericButton>
+                                }
+                            </div>
 
-                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Terapia consigliata:</label>
-                    <textarea className={`${styles.input_style_LARGE} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredTerapia} onChange={terapiaChangeHandler}></textarea>
-                </section>
+                            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Segni/Note particolari:</label>
+                            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNoteParticolari} onChange={noteParticolariChangeHandler}></input>
 
-                <section className={styles.section_style}>
-                    <h3 className={styles.subtitle_form}>CREDENZIALI</h3>
+                            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Terapia consigliata:</label>
+                            <textarea className={`${styles.input_style_LARGE} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredTerapia} onChange={terapiaChangeHandler}></textarea>
+                        </section>
+                    </div>
+                    <GenericButton 
+                        onClick={stepSuccessivo}
+                        generic_button={true}
+                        buttonText='Avanti'>
+                    </GenericButton>
 
-                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Email:</label>
-                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="email" value={enteredEmail} onChange={emailChangeHandler}></input>
+                    <GenericButton
+                        onClick={stepPrecedente}
+                        small_button={true}
+                        buttonText='Torna ai dati personali'>
+                    </GenericButton>
+                </>
+                }
 
-                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Password:</label>
-                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredPsw} onChange={pswChangeHandler}></input>
-                    
-                    <p className={styles.paragraph_style}><b>Attenzione!</b> Queste credenziali serviranno al paziente </p>
-                    <p className={styles.paragraph_style}>per potersi collegare alla piattaforma e svolgere attività.</p>
-                    <p className={styles.paragraph_style}>Se inserite, verrà creato un profilo per il paziente</p>
+                {stepAggiuntaPaziente === 3 &&
+                <>
+                    <div className={styles.wrapper_flex}>
+                        <section className={styles.section_style}>
+                            <h3 className={styles.subtitle_form}>CREDENZIALI</h3>
 
-                    {/* {modaleCREAZIONEUTENTE &&
-                        <div>
-                            <label>Inserisci password</label>
-                            <input value={passwordDottore} onChange={passwordDottoreChangeHandler}></input>
-                            <button onClick={formSubmitHandler}>CONFERMA</button>
-                        </div>
-                    } */}
-                </section>
-            </div>
+                            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Email:</label>
+                            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="email" value={enteredEmail} onChange={emailChangeHandler}></input>
+
+                            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Password:</label>
+                            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredPsw} onChange={pswChangeHandler}></input>
+                            
+                            <p className={styles.paragraph_style}><b>Attenzione!</b> Queste credenziali serviranno al paziente </p>
+                            <p className={styles.paragraph_style}>per potersi collegare alla piattaforma e svolgere attività.</p>
+                            <p className={styles.paragraph_style}>Se inserite, verrà creato un profilo per il paziente</p>
+
+                        </section>
+                    </div>
+                    <GenericButton 
+                        type="submit" 
+                        generic_button={true}
+                        buttonText='Salva nuovo paziente'>
+                    </GenericButton>
+
+                    <GenericButton
+                        onClick={stepPrecedente}
+                        small_button={true}
+                        buttonText='Torna a scheda medica'>
+                     </GenericButton>
+                </>
+                }
+            
 
             {/* <hr className={styles.horizontal_line}></hr> */}
 
-            <GenericButton 
-            type="submit" 
-            generic_button={true}
-            buttonText='Salva nuovo paziente'>
-            </GenericButton>
-
-            <GenericButton
-            onClick={hideForm}
-            small_button={true}
-            buttonText='Go Back'>
-            </GenericButton>
+            
         </form>
     );
 }

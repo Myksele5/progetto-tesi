@@ -95,7 +95,7 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.addPaziente = async (doct_UID, nome, cognome, city, codiceFiscale, dataNascita, patologia, medicine, terapia, note, cb) => {
+    serverMgr.addPaziente = async (doct_UID, nome, cognome, city, codiceFiscale, dataNascita, patologia_1, patologia_2, patologia_3, medicina_1, medicina_2, medicina_3, terapia, note, cb) => {
         let result = await serverMgr.requestFetchData("addPaziente", {
             doct_UID: doct_UID,
             nome: nome,
@@ -103,8 +103,12 @@ function initServerMgr(cb) {
             city: city,
             codiceFiscale: codiceFiscale,
             dataNascita: dataNascita,
-            patologia: patologia,
-            medicine: medicine,
+            patologia_1: patologia_1,
+            patologia_2: patologia_2,
+            patologia_3: patologia_3,
+            medicina_1: medicina_1,
+            medicina_2: medicina_2,
+            medicina_3: medicina_3,
             terapia: terapia,
             note: note
             // statistiche: statistiche
@@ -119,15 +123,19 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.updatePaziente = async (nome, cognome, city, codiceFiscale, dataNascita, patologia, medicine, terapia, note, ID, cb) => {
+    serverMgr.updatePaziente = async (nome, cognome, city, codiceFiscale, dataNascita, patologia_1, patologia_2, patologia_3, medicina_1, medicina_2, medicina_3, terapia, note, ID, cb) => {
         let result = await serverMgr.requestFetchData("updatePaziente", {
             nome: nome,
             cognome: cognome,
             city: city,
             codiceFiscale: codiceFiscale,
             dataNascita: dataNascita,
-            patologia: patologia,
-            medicine: medicine,
+            patologia_1: patologia_1,
+            patologia_2: patologia_2,
+            patologia_3: patologia_3,
+            medicina_1: medicina_1,
+            medicina_2: medicina_2,
+            medicina_3: medicina_3,
             terapia: terapia,
             note: note,
             ID: ID

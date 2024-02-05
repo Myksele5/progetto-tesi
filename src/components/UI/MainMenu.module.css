@@ -19,7 +19,7 @@
     align-items: center;
     width: fit-content;
     margin: 50px 0px;
-    border: 1px solid rgb(233, 33, 131);
+    border: 1px solid #D6E4F0;
     border-radius: 10px;
     background-image: radial-gradient(ellipse at top, purple, transparent);
 }
@@ -31,7 +31,7 @@
     flex-direction: column;
     margin: 0;
     padding: 0;
-    background: rgb(59, 59, 241);
+    background: #1E56A0;
     box-shadow: 3px 0 10px 5px rgb(7, 7, 52);
     z-index: 2;
 }
@@ -51,9 +51,9 @@
 
 .menu_option{
     height: 120px;
-    background: rgb(59, 59, 241);
+    background: #1E56A0;
     color: white;
-    border: 1px solid rgb(233, 33, 131);
+    border: 1px solid #D6E4F0;
     border-left: none;
     border-right: none;
     display: flex;
@@ -61,33 +61,33 @@
     justify-content: space-between;
 }
 .menu_option_SELECTED{
-    background: rgb(33, 33, 131);
-    color: rgb(233, 33, 131);
+    background: #163172;
+    color: #D6E4F0;
     pointer-events: none;
 }
 
 .menu_option:nth-child(3){
     /* margin-top: 50px; */
-    border-top: 2px solid rgb(233, 33, 131);
+    border-top: 2px solid #D6E4F0;
 }
 
 .menu_option:nth-last-child(1){
-    border-bottom: 2px solid rgb(233, 33, 131);
+    border-bottom: 2px solid #D6E4F0;
     margin-bottom: 20px;
 }
 
 .menu_option:hover{
-    background-color: rgb(33, 33, 131);
+    background-color: #163172;
     cursor: pointer;
     transition: 0.3s;
 }
 
 .menu_option:active .text_option{
-    color: rgb(233, 33, 131);
+    color: #D6E4F0;
 }
 
 .menu_option:active .image_option{
-    filter: rgb(233, 33, 131);
+    filter: #D6E4F0;
 }
 
 .text_option{
@@ -97,7 +97,7 @@
 }
 
 .text_option_SELECTED{
-    color: rgb(233, 33, 131);
+    color: #D6E4F0;
 }
 
 .image_option{
@@ -143,19 +143,19 @@
         height: 100%;
         border-top: none;
         border-bottom: none;
-        border-left: 3px solid rgb(233, 33, 131);
+        border-left: 3px solid #D6E4F0;
     }
     
     .menu_option:nth-child(3){
         /* margin-top: 50px; */
         border-top: none;
         border-bottom: none;
-        border-left: 3px solid rgb(233, 33, 131);
+        border-left: 3px solid #D6E4F0;
     }
     
     .menu_option:nth-last-child(1){
         border-bottom: none;
-        border-right: 3px solid rgb(233, 33, 131);
+        border-right: 3px solid #D6E4F0;
         /* margin-bottom: 0; */
         margin-right: 15px;
     }

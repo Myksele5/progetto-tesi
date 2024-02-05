@@ -83,8 +83,8 @@ export function PatientContextProvider(props){
         let result;
         
         result = await getServerMgr().addPaziente(
-            datiPaziente.doct_UID, datiPaziente.nome, datiPaziente.cognome, datiPaziente.city, datiPaziente.codiceFiscale, datiPaziente.dataNascita, datiPaziente.patologia,
-            datiPaziente.medicine, datiPaziente.terapia, datiPaziente.note
+            datiPaziente.doct_UID, datiPaziente.nome, datiPaziente.cognome, datiPaziente.city, datiPaziente.codiceFiscale, datiPaziente.dataNascita, datiPaziente.patologia_1,
+            datiPaziente.patologia_2, datiPaziente.patologia_3, datiPaziente.medicina_1, datiPaziente.medicina_2, datiPaziente.medicina_3, datiPaziente.terapia, datiPaziente.note
         )
         .then(console.log(result))
         .catch((err) => {
@@ -153,8 +153,8 @@ export function PatientContextProvider(props){
         let result;
         
         result = await getServerMgr().updatePaziente(
-            pazienteOGGETTO.nome, pazienteOGGETTO.cognome, pazienteOGGETTO.city, pazienteOGGETTO.codiceFiscale, pazienteOGGETTO.dataNascita, pazienteOGGETTO.patologia,
-            pazienteOGGETTO.medicine, pazienteOGGETTO.terapia, pazienteOGGETTO.note, pazienteOGGETTO.ID
+            pazienteOGGETTO.nome, pazienteOGGETTO.cognome, pazienteOGGETTO.city, pazienteOGGETTO.codiceFiscale, pazienteOGGETTO.dataNascita, pazienteOGGETTO.patologia_1,
+            pazienteOGGETTO.patologia_2, pazienteOGGETTO.patologia_3, pazienteOGGETTO.medicina_1, pazienteOGGETTO.medicina_2, pazienteOGGETTO.medicina_3, pazienteOGGETTO.terapia, pazienteOGGETTO.note, pazienteOGGETTO.ID
         )
         .then(console.log(result))
         .catch((err) => {
@@ -181,9 +181,13 @@ export function PatientContextProvider(props){
                     attivitààà={pazienteee.attività}
                     statisticheee={pazienteee.statistiche}
                     cfff={pazienteee.codiceFiscale}
-                    patologiaaa={pazienteee.patologia}
+                    patologiaaa_1={pazienteee.patologia_1}
+                    patologiaaa_2={pazienteee.patologia_2}
+                    patologiaaa_3={pazienteee.patologia_3}
                     noteee={pazienteee.note}
-                    medicineee={pazienteee.medicine}
+                    medicinaaa_1={pazienteee.medicina_1}
+                    medicinaaa_2={pazienteee.medicina_2}
+                    medicinaaa_3={pazienteee.medicina_3}
                     terapiaaa={pazienteee.terapia}
                 >
                 </EditPaziente>
@@ -266,8 +270,12 @@ export function PatientContextProvider(props){
                 città = {pazientee.city.toUpperCase()}
                 datanascita = {pazientee.dataNascita}
                 codicefiscale = {pazientee.codiceFiscale}
-                patologia = {pazientee.patologia}
-                medicine = {pazientee.medicine}
+                patologia_1 = {pazientee.patologia_1}
+                patologia_2 = {pazientee.patologia_2}
+                patologia_3 = {pazientee.patologia_3}
+                medicina_1 = {pazientee.medicina_1}
+                medicina_2 = {pazientee.medicina_2}
+                medicina_3 = {pazientee.medicina_3}
                 terapia = {pazientee.terapia}
                 note = {pazientee.note}
                 scoreMMSE = {pazientee.resultMMSE}

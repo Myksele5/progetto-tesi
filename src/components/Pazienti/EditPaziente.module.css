@@ -10,21 +10,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 2px solid rgb(233, 33, 131);
+    border-bottom: 2px solid #163172;
 }
 
 .section_style{
     margin: 5px;
-    height: 450px;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    /* border-right: 2px solid rgb(233, 33, 131); */
-}
-
-.section_style:nth-child(1){
-    border-right: 2px solid rgb(233, 33, 131);
+    /* border-right: 2px solid #163172; */
 }
 
 .title_form{
@@ -40,7 +36,7 @@
 .subtitle_form{
     font-size: 20px;
     margin: 8px;
-    color: rgb(233, 33, 131);
+    color: #163172;
 }
 
 .label_style{
@@ -57,7 +53,7 @@
     height: 25px;
     margin: 5px;
     margin-bottom: 10px;
-    border: 2px solid rgb(59, 59, 241);
+    border: 2px solid #1E56A0;
     border-radius: 20px;
     font-size: 22px;
     color: black;
@@ -66,9 +62,10 @@
 }
 
 .input_style:focus{
-    border: 2px solid rgb(233, 33, 131);
+    border: 2px solid #163172;
     transition: 0.3s;
     box-shadow: 1px 1px 5px 1px black;
+    background-color: #D6E4F0;
     outline: none;
 }
 
@@ -81,7 +78,7 @@
     height: 100px;
     margin: 5px;
     margin-bottom: 10px;
-    border: 2px solid rgb(59, 59, 241);
+    border: 2px solid #1E56A0;
     border-radius: 20px;
     font-size: 20px;
     color: black;
@@ -92,9 +89,10 @@
 }
 
 .input_style_LARGE:focus{
-    border: 2px solid rgb(233, 33, 131);
+    border: 2px solid #163172;
     transition: 0.3s;
     box-shadow: 1px 1px 5px 1px black;
+    background-color: #D6E4F0;
     outline: none;
 }
 
@@ -124,11 +122,7 @@
         justify-content: start;
         align-items: center;
         border-right: none;
-        border-bottom: 2px solid rgb(233, 33, 131);
-    }
-
-    .section_style:nth-child(1){
-        border-right: none;
+        border-bottom: 2px solid #163172;
     }
 
     .title_form{

@@ -12,7 +12,7 @@
 .scrollable_div{
     background-color: rgb(230, 230, 230);
     padding-left: 15px;
-    border-bottom: 2px solid rgb(233, 33, 131);
+    border-bottom: 2px solid #163172;
     width: 99%;
     height: 500px;
     display: flex;
@@ -35,13 +35,14 @@
     width: 300px;
     height: 25px;
     border-radius: 5px;
-    border: 2px solid blue;
+    border: 2px solid #1E56A0;
     font-size: 15px;
     text-align: center;
 }
 
 .select_section:focus{
-    border: 2px solid rgb(233, 33, 131);
+    border: 2px solid #163172;
+    background-color: #D6E4F0;
     outline: none;
 }
 
@@ -55,7 +56,7 @@
 .horizontal_line{
     display: block;
     width: 100%;
-    border: 1px solid rgb(233, 33, 131);
+    border: 1px solid #163172;
     /* margin-bottom: 25px; */
 }
 
@@ -65,10 +66,10 @@
     font-size: 25px;
     text-align: center;
     background-color: white;
-    border: 2px solid rgb(233, 33, 131);
+    border: 2px solid #163172;
     border-radius: 20px;
-    color: rgb(233, 33, 131);
-    box-shadow: 3px 3px 5px rgb(233, 33, 131);
+    color: #163172;
+    box-shadow: 3px 3px 5px #163172;
     margin: 5px;
 }
 

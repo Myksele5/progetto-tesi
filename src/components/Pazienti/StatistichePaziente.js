@@ -117,9 +117,9 @@ function StatistichePaziente(props){
                         <div style={{height: fillWrong}} className={styles.riempimento_barra_sbagliate}></div>
                     </div>
                 </div>
-                <label>Risposte totali: {risposteTotali}</label>
-                <label>Risposte corrette: {risposteCorrette}</label>
-                <label>Risposte sbagliate: {risposteSbagliate}</label>
+                <label className={styles.content_style}>Risposte totali: {risposteTotali}</label>
+                <label className={styles.content_style}>Risposte corrette: {risposteCorrette}</label>
+                <label className={styles.content_style}>Risposte sbagliate: {risposteSbagliate}</label>
             </div>
         </>
     );

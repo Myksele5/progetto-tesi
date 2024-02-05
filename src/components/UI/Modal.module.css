@@ -22,9 +22,9 @@
     width: 600px;
     height: fit-content;
     padding: 5px;
-    background-color: rgba(236, 236, 236, 0.950);
-    border: 3px solid rgb(233, 33, 131);
-    box-shadow: 1px 1px 5px 3px rgb(233, 33, 131);
+    background-color: #f6f6f6ee;
+    border: 3px solid #1E56A0;
+    box-shadow: 1px 1px 5px 3px #1E56A0;
 }
 
 .modal_title_text{
@@ -33,12 +33,12 @@
 }
 
 .underline_text{
-    /* text-decoration: underline rgb(233, 33, 131) 3px; */
+    /* text-decoration: underline #1E56A0 3px; */
     /* padding: 1px;
     padding-left: 3px;
     padding-right: 3px; */
-    text-decoration: underline solid rgb(233, 33, 131) 4px;
-    /* border: 3px solid rgb(233, 33, 131); */
+    text-decoration: underline solid #1E56A0 4px;
+    /* border: 3px solid #1E56A0; */
 }
 
 @media screen and (max-width: 1200px) {

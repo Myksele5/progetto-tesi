@@ -4,13 +4,13 @@ th, td{
     text-align: center;
 }
 
-tbody tr{background-color: lightcyan;}
+tbody tr{background-color: #c2dbf0;}
 tbody tr:hover .dati_tabella{
     background-color: black;
     color: white;
 }
 
-tbody tr:nth-child(2n){background-color: lightgrey;}
+tbody tr:nth-child(2n){background-color: rgb(196, 196, 196);}
 tbody tr:nth-child(2n):hover .dati_tabella{
     background-color: black;
     color: white;
@@ -19,17 +19,17 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 .table_wrapper{
     width: 1000px;
     overflow: auto;
-    box-shadow: 1px 2px 8px 5px rgb(33, 33, 131);
+    box-shadow: 1px 2px 8px 3px #163172;
     table-layout: fixed;
     border-spacing: 0;
     margin: 30px;
 }
 
 .intestazione_tabella{
-    background-image: linear-gradient(360deg, rgb(59, 59, 241), rgb(33, 33, 131));
-    /* background-color: rgb(59, 59, 241); */
+    background-image: linear-gradient(360deg, #1E56A0, #163172);
+    /* background-color: #1E56A0; */
     color: whitesmoke;
-    border: 1px solid rgb(233, 33, 131);
+    border: 1px solid #F6F6F6;
     padding: 4px;
     padding-left: 3px;
     padding-right: 3px;
@@ -57,8 +57,8 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 .dati_tabella{
     /* width: 350px; */
     background-color: transparent;
-    color: rgb(59, 59, 241);
-    border: 1px solid rgb(233, 33, 131);
+    color: #1E56A0;
+    border: 1px solid #D6E4F0;
     font-size: 22px;
     text-overflow: ellipsis;
     overflow: hidden;
