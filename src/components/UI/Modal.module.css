@@ -18,7 +18,8 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: calc(35vw + 10px);
+    /* width: calc(35vw + 10px); */
+    width: 600px;
     height: fit-content;
     padding: 5px;
     background-color: rgba(236, 236, 236, 0.950);
@@ -27,7 +28,7 @@
 }
 
 .modal_title_text{
-    font-size: 1.35vw;
+    font-size: 28px;
     padding-top: 5px;
 }
 
@@ -38,4 +39,26 @@
     padding-right: 3px; */
     text-decoration: underline solid rgb(233, 33, 131) 4px;
     /* border: 3px solid rgb(233, 33, 131); */
+}
+
+@media screen and (max-width: 1200px) {
+    .modal_title_text{
+        font-size: 18px;
+        /* padding-top: 5px; */
+    }
+
+    .wrapper_modal{
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .modal_title_text{
+        font-size: 16px;
+        /* padding-top: 5px; */
+    }
+
+    .wrapper_modal{
+        width: 300px;
+    }
 }

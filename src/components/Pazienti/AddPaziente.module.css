@@ -119,8 +119,28 @@
 }
 
 @media screen and (max-width: 1050px) {
+    .wrapper_flex{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-bottom: none;
+    }
+
+    .section_style{
+        margin: 5px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        border-right: none;
+        border-bottom: 2px solid rgb(233, 33, 131);
+    }
+
     .title_form{
-        font-size: 25px;
+        font-size: 22px;
+        margin: 10px;
     }
 
     .subtitle_form{

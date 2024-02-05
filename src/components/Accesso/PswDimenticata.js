@@ -39,26 +39,27 @@ function PswDimenticata(props){
             .catch((err) => {
                 console.error(err)
             });
+            if(result2 !== null){
+                console.log(result2);
+                result3 = await getServerMgr().updateCode(email)
+                .catch((err) => {
+                    console.error(err)
+                });
+                alert("Email di reset password inviata!")
+            }
+            else{
+                console.log("PRIMO CODICE")
+                result3 = await getServerMgr().insertFirstCode(email)
+                .catch((err) => {
+                    console.error(err)
+                });
+                alert("Email di reset password inviata!")
+            }
         }
         else{
+            alert("Non è stata trovato un account corrispondente a questa email")
             console.log("NESSUNA EMAIL");
         }
-
-        if(result2 !== null){
-            console.log(result2);
-            result3 = await getServerMgr().updateCode(email)
-            .catch((err) => {
-                console.error(err)
-            });
-        }
-        else{
-            console.log("PRIMO CODICE")
-            result3 = await getServerMgr().insertFirstCode(email)
-            .catch((err) => {
-                console.error(err)
-            });
-        }
- 
     }
 
     return(

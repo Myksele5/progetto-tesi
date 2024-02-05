@@ -32,13 +32,44 @@ function SchedaPaziente(props){
         console.log('MOSTRA STATISTICHE');
     }
 
+    function selectShow(event){
+        console.log(event.target.value);
+        switch(event.target.value){
+            case "Dati Personali":
+                setTitoloScheda('Dati Personali');
+                setSezioneScheda('DATI_PERSONALI');
+                break;
+            case "Scheda Medica":
+                setTitoloScheda('Scheda Medica');
+                setSezioneScheda('SCHEDA_MEDICA');
+                break;
+            case "Esercizi/Test":
+                setTitoloScheda('Esercizi/Test');
+                setSezioneScheda('ESERCIZI/TEST');
+                break;
+            case "Statistiche":
+                setTitoloScheda('Statistiche');
+                setSezioneScheda('STATISTICHE');
+                break;
+            default:
+                break;
+        }
+    }
+
     return(
         <Card
         altroStile={true}
         animazione={true}
         children={
             <div className={styles.lista}>
+                <select className={styles.select_section} onChange={selectShow}>
+                    <option className={styles.option_style}>Dati Personali</option>
+                    <option>Scheda Medica</option>
+                    <option>Esercizi/Test</option>
+                    <option>Statistiche</option>
+                </select>
                 <div className={styles.wrap_buttons}>
+                    
                     <GenericButton
                         onClick={showDatiPersonali}
                         is_selected={sezioneScheda === "DATI_PERSONALI" ? true : false}

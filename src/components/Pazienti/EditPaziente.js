@@ -146,7 +146,7 @@ function EditPaziente(props){
     return(
         <form className={styles.center_form} onSubmit={formModifyHandler}>
             <h1 className={styles.title_form}>Modifica i dati del paziente</h1>
-            <h4>Stai modificando i dati di un paziente già esistente!<br/>Controlla con attenzione prima di salvare</h4>
+            <h4 className={styles.warning}>Stai modificando i dati di un paziente esistente!<br/>Controlla con attenzione prima di salvare</h4>
 
             <div className={styles.wrapper_flex}>
                 <section className={styles.section_style}>

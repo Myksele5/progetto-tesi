@@ -190,3 +190,135 @@
         font-size: 14px;
     }
 }
+
+@media screen and (max-width: 1000px) {
+    .LIST_ITEM_STYLE{
+        width: 720px;
+    }
+
+    .wrapper_lista_domande{
+        width: 800px;
+        height: 560px;
+    }
+
+    .correct_answ{
+        width: 50px;
+    }
+
+    .wrong_answ{
+        width: 50px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .flex_list_container{
+        flex-direction: column;
+    }
+
+    .wrapper_generico{
+        width: 500px;
+    }
+
+    .separa_corrette_sbagliate{
+        flex-direction: column;
+    }
+
+    .LIST_ITEM_STYLE{
+        width: 500px;
+    }
+
+    .select_style{
+        width: 180px;
+    }
+
+    .wrapper_lista_domande{
+        width: 600px;
+        height: 560px;
+    }
+
+    .correct_answ{
+        width: 50px;
+    }
+
+    .wrong_answ{
+        width: 50px;
+    }
+}
+@media screen and (max-width: 750px) {
+    .flex_list_container{
+        flex-direction: column;
+    }
+
+    .wrapper_generico{
+        width: 350px;
+    }
+
+    .domande_disponibili{
+        font-size: 12px;
+    }
+
+    .separa_corrette_sbagliate{
+        flex-direction: column;
+    }
+
+    .LIST_ITEM_STYLE{
+        width: 320px;
+    }
+
+    .select_style{
+        width: 180px;
+    }
+
+    .wrapper_lista_domande{
+        width: 350px;
+        height: 560px;
+    }
+
+    .correct_answ{
+        width: 50px;
+    }
+
+    .wrong_answ{
+        width: 50px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .flex_list_container{
+        flex-direction: column;
+    }
+
+    .wrapper_generico{
+        width: 340px;
+    }
+
+    .domande_disponibili{
+        font-size: 11px;
+    }
+
+    .separa_corrette_sbagliate{
+        flex-direction: column;
+    }
+
+    .LIST_ITEM_STYLE{
+        width: 290px;
+    }
+
+    .select_style{
+        width: 160px;
+        font-size: 12px;
+    }
+
+    .wrapper_lista_domande{
+        width: 340px;
+        height: 560px;
+    }
+
+    .correct_answ{
+        width: 50px;
+    }
+
+    .wrong_answ{
+        width: 50px;
+    }
+}

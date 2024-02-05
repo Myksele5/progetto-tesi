@@ -29,6 +29,22 @@
     /* border: 3px solid darkorange; */
 }
 
+.select_section{
+    display: none;
+    margin: 5px;
+    width: 300px;
+    height: 25px;
+    border-radius: 5px;
+    border: 2px solid blue;
+    font-size: 15px;
+    text-align: center;
+}
+
+.select_section:focus{
+    border: 2px solid rgb(233, 33, 131);
+    outline: none;
+}
+
 .scheda_title{
     display: block;
     font-size: 35px;
@@ -54,4 +70,25 @@
     color: rgb(233, 33, 131);
     box-shadow: 3px 3px 5px rgb(233, 33, 131);
     margin: 5px;
+}
+
+@media screen and (max-width: 599px) {
+    .wrap_buttons{
+        display: none;
+    }
+
+    .select_section{
+        display: block;
+        /* background-color: rgb(59, 59, 241); */
+        /* color: white; */
+        width: 250px;
+        height: 28px;
+        font-size: 18px;
+        /* border: 2px solid black; */
+        border-radius: 5px;
+    }
+
+    .scheda_title{
+        font-size: 30px;
+    }
 }

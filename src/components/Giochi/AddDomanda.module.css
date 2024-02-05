@@ -91,3 +91,30 @@
         font-size: 14px;
     }
 }
+
+@media screen and (max-width: 850px) {
+    .wrapper_impostazioni_gioco{
+        width: 500px;
+    }
+
+    .wrapper_label_and_box{
+        flex-direction: column;
+    }
+
+    .wrapper_generico{
+        flex-direction: column;
+    }
+}
+@media screen and (max-width: 599px) {
+    .wrapper_impostazioni_gioco{
+        width: 340px;
+    }
+
+    .wrapper_label_and_box{
+        flex-direction: column;
+    }
+
+    .wrapper_generico{
+        flex-direction: column;
+    }
+}

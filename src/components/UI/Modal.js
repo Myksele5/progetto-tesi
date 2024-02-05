@@ -14,7 +14,9 @@ function ModalToPort(props){
                 <GenericButton
                 onClick={props.CONFERMA}
                 generic_button={true}
-                buttonText='SI'>
+                buttonText='SI'
+                red_styling
+                >
                 </GenericButton>
 
                 <GenericButton

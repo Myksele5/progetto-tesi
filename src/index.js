@@ -4,12 +4,12 @@ import './index.css';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthContextProvider } from './context/auth-context';
-import Routing from './Routing';
+import RoutingNew from './Routing';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <AuthContextProvider>
-    <Routing />
+    <RoutingNew />
   </AuthContextProvider>
 );
 

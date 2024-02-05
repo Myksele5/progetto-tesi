@@ -114,7 +114,7 @@ function ElencoDomandeModificabili(props){
 
                     <div className={styles.flex_list_container}>
                         <h4 className={styles.subtitle_style}>Opzioni:</h4>
-                        <div className={styles.separa_corrette_sbagliate}>
+                        <div className={styles.option_buttons}>
                             <GenericButton
                                 onClick={() => {
                                     props.modificaSingolaDomanda(gameType, singleQuestion, singleQuestion.ID);

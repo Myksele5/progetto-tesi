@@ -1,16 +1,17 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import CambioPsw from "./components/Accesso/CambioPsw";
 
-const router = createBrowserRouter([
-    { path: '/', element: <App></App>},
-    { path: '/psw_recovery', element: <CambioPsw></CambioPsw>}
-  ]);
-
-function Routing(){
+function RoutingNew(){
+    
     return(
-        <RouterProvider router={router}></RouterProvider>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<App></App>}></Route>
+                <Route path="/psw_recovery" element={<CambioPsw></CambioPsw>}></Route>
+            </Routes>
+        </BrowserRouter>
     );
 }
 
-export default Routing;
+export default RoutingNew;

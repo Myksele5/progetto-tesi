@@ -122,7 +122,7 @@
 @media screen and (max-width: 1200px) {
     .wrap_profilo{
         flex-direction: column;
-        margin: 0 45px;
+        margin: 0 35px;
     }
     .wrap_menu{
         width: 100%;

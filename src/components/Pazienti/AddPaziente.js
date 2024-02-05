@@ -245,7 +245,7 @@ function AddPaziente(props){
 
     return(
         <form className={styles.center_form} onSubmit={formSubmitHandler}>
-            <h1 className={styles.title_form}>Inserisci i dati del nuovo paziente</h1>
+            <h1 className={styles.title_form}>Inserisci i dati del paziente</h1>
 
             <div className={styles.wrapper_flex}>
                 <section className={styles.section_style}>

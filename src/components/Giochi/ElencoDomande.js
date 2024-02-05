@@ -228,58 +228,7 @@ function ElencoDomande(props){
             <ul className={styles.wrapper_lista_domande}>
                 {categoryFilter !== "" && questionsList.map(recuperaTutteLeDomande)}
             </ul>
-            {/* {props.tipoGioco === "" && <p>Seleziona un tipo di gioco per visualizzare le domande</p>} */}
-            {/* {props.tipoGioco === "QUIZ CON IMMAGINI" && 
-                <>
-                    <div className={styles.wrapper_generico}>
-                        <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
-                        
-                        <select className={styles.select_style} onChange={categoryChangeHandler}>
-                            <option hidden>---SELEZIONA CATEGORIA---</option>
-                            {categorie.map(mappaCategorie)}
-                        </select>
-                    </div>
-                    
-                    <ul className={styles.wrapper_lista_domande}>
-                        {categoryFilter !== "" && imagesQuizQuestions.map(recuperaTutteLeDomande)}
-                    </ul>
-                    
-                </>
-            } */}
-            {/* {props.tipoGioco === "QUIZ" && 
-                <>
-                    <div className={styles.wrapper_generico}>
-                        <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
-
-                        <select className={styles.select_style} onChange={categoryChangeHandler}>
-                            <option hidden>---SELEZIONA CATEGORIA---</option>
-                            {categorie.map(mappaCategorie)}
-                        </select>
-                    </div>
-                    
-                    <ul className={styles.wrapper_lista_domande}>
-                        {categoryFilter !== "" && classicQuizQuestions.map(recuperaTutteLeDomande)}
-                    </ul>
-                    
-                </>
-            } */}
-            {/* {props.tipoGioco === "COMPLETA LA PAROLA" && 
-                <>
-                    <div className={styles.wrapper_generico}>
-                        <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
-                        
-                        <select className={styles.select_style} onChange={categoryChangeHandler}>
-                            <option hidden>---SELEZIONA CATEGORIA---</option>
-                            {categorie.map(mappaCategorie)}
-                        </select>
-                    </div>
-                    
-                    <ul className={styles.wrapper_lista_domande}>
-                        {categoryFilter !== "" && guessTheWordQuestions.map(recuperaTutteLeDomande)}
-                    </ul>
-                    
-                </>
-            } */}
+            
         </>
     );
 }

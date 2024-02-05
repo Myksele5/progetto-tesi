@@ -35,6 +35,10 @@
     /* pointer-events: none; */
 }
 
+.red_styling{
+    background-color: rgb(185, 0, 0);
+}
+
 .is_selected{
     background-color: rgb(33, 33, 131);
     border: 2px solid rgb(233, 33, 131);
