@@ -119,7 +119,7 @@
 }
 @media screen and (max-width: 750px) {
     .wrapper_impostazioni_gioco{
-        width: 350px;
+        width: 340px;
         display: flex;
         flex-direction: column;
         align-items: center;
