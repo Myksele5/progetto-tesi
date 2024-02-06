@@ -1,7 +1,7 @@
 .radio_button{
     width: 100px;
     height: 35px;
-    background-color: rgb(211, 211, 211);
+    background-color: rgb(196, 196, 196);
     border-radius: 5px;
     color: black;
     margin: 1px 3px;
@@ -15,9 +15,9 @@
 }
 
 .is_selected{
-    background-color: rgb(59, 59, 241);
-    border: 1px solid rgb(233, 33, 131);
-    color: white;
+    background-color: #163172;
+    border: 1px solid #D6E4F0;
+    color: #D6E4F0;
 }
 
 @media screen and (max-width: 1550px) {

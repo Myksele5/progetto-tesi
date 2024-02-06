@@ -16,6 +16,17 @@
   z-index: 1;
 }
 
+::-webkit-scrollbar {
+  width: 14px;
+  background-color: #163172;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #D6E4F0;
+  border: 1px solid #163172;
+  border-radius: 4px;
+}
+
 @media screen and (max-width: 1200px) {
   .App{
     flex-direction: column;

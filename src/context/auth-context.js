@@ -11,6 +11,8 @@ const AuthContext = React.createContext({
     utenteLoggato: null,
     utenteLoggatoUID: null,
     tipoAccount: null,
+    nomeUtenteLoggato: null,
+    cognomeUtenteLoggato: null,
     confirmPasswordReset: ()=>{}
 });
 // var email;
@@ -19,37 +21,15 @@ export function AuthContextProvider(props){
     const [utenteLoggato, setUtenteLoggato] = useState(null);
     const [utenteLoggatoUID, setUtenteLoggatoUID] = useState(null);
     const [tipoAccount, setTipoAccount] = useState('');
+    const [nomeUtente, setNomeUtente] = useState('');
+    const [cognomeUtente, setCognomeUtente] = useState('');
     const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-    // useEffect(() => {
-    //     const authentication = onAuthStateChanged(auth, (utente) => {
-    //       if(utente){
-    //         setUtenteLoggato(utente.email);
-    //         setUtenteLoggatoUID(utente.uid);
-    //         // email = utente.email;
-    //         // console.log(utente.uid);
-    //         console.log(auth.currentUser.email);
-    //         getAccountType();
-
-    //       }
-    //       else{
-    //         setUtenteLoggato(null);
-    //       }
-    //     })
-
-    //     return () => {
-    //       authentication();
-    //     }
-    // }, []);
-
-    // useEffect(() => {
-    //   // console.log(email);
-    //   console.log(tipoAccount);
-    // }, [tipoAccount])
-
-    function setAccountLogged(email, UID, tipoAccount){
+    function setAccountLogged(email, UID, tipoAccount, nome, cognome){
       setUtenteLoggato(email);
       setUtenteLoggatoUID(UID);
+      setNomeUtente(nome);
+      setCognomeUtente(cognome);
       switch(tipoAccount){
         case 1:
           setTipoAccount("Dottore");
@@ -93,6 +73,8 @@ export function AuthContextProvider(props){
           utenteLoggato: utenteLoggato,
           utenteLoggatoUID: utenteLoggatoUID,
           tipoAccount: tipoAccount,
+          nomeUtenteLoggato: nomeUtente,
+          cognomeUtenteLoggato: cognomeUtente,
       }}>
           {props.children}
       </AuthContext.Provider>

@@ -44,6 +44,11 @@ function TestMOCA(props){
         setAnswersMOCA_AC2(objRisposte);
         prossimaSezioneCognitiva();
     }
+    function setRisposteMOCA_AC3(objRisposte){
+        console.log(objRisposte);
+        setAnswersMOCA_AC2(objRisposte);
+        prossimaSezioneCognitiva();
+    }
 
     return(
         <div className={styles.test_container}>
@@ -77,6 +82,7 @@ function TestMOCA(props){
 
             {testIniziato && sezioneCognitiva === 2 &&
                 <MemoriaMOCA
+                    step={1}
                     domandeAreaCog2={props.areaCog_2_domande}
                     risposteAreaCog2={setRisposteMOCA_AC2}
                 >
@@ -85,8 +91,17 @@ function TestMOCA(props){
 
             {testIniziato && sezioneCognitiva === 3 &&
                 <AttenzioneMOCA
+                    risposteAreaCog3={setRisposteMOCA_AC3}
                 >
                 </AttenzioneMOCA>
+            }
+
+            {testIniziato && sezioneCognitiva === 4 &&
+                <MemoriaMOCA
+                    step={2}
+                    domandeAreaCog4={props.areaCog_4_domande}
+                >
+                </MemoriaMOCA>
             }
         </div>
     );

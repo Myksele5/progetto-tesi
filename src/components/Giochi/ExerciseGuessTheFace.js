@@ -506,7 +506,7 @@ function ExerciseGuessTheFace(props){
             
             {!gameStarted &&
                 <div className={styles.wrap_generico}>
-                    <h1 className={styles.frase_inizio_gioco}>Quando sei pronto, clicca sul bottone</h1>
+                    <h1 className={styles.pre_game}>Quando sei pronto, clicca sul bottone</h1>
                     <GenericAlternativeButton
                         onClick={iniziaGioco}
                         buttonText={"INIZIA"}
@@ -523,9 +523,9 @@ function ExerciseGuessTheFace(props){
                             <img className={styles.resize_image} src={websiteUrl.concat(questions[counter_question_number].immagine)} alt='Face'></img>
                         </>
                     }
-                    {tipoQuiz === "QUIZ" && <h1>{questions[counter_question_number].domanda}</h1>}
+                    {tipoQuiz === "QUIZ" && <h1 className={styles.domanda}>{questions[counter_question_number].domanda}</h1>}
 
-                    {rispCorretteMultiple && <h3>!!!Questa domanda ha risposte corrette multiple!!!</h3>}
+                    {rispCorretteMultiple && <h3 className={styles.risp_corr_multiple}>!!!Questa domanda ha risposte corrette multiple!!!</h3>}
 
                     <div className={styles.wrapper_horizontal_flex}>
                         <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>

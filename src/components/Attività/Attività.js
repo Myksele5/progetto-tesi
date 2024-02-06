@@ -191,14 +191,17 @@ function Attività(){
                     <TestMOCA
                         areaCog_1_domande={domandeAreaCog1}
                         areaCog_2_domande={domandeAreaCog2}
+                        areaCog_4_domande={domandeAreaCog2}
                     >
                     </TestMOCA>
                 </div>
             }
 
-            {showListaTest && <div className={styles.wrapper_generico}>
-                {testsList.map(fromArrayToListaTest)}
-            </div>}
+            {showListaTest && 
+                <div className={styles.wrapper_generico}>
+                    {testsList.map(fromArrayToListaTest)}
+                </div>
+            }
 
         </>
     );

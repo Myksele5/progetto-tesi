@@ -198,7 +198,7 @@
         $email = $dataJson["email"];
         $password = $dataJson["password"];
     
-    	$insertCommentQuery = $i_conn->prepare("SELECT accounts.UID, accounts.titolo FROM `accounts` WHERE email = ? AND password = ?"); 
+    	$insertCommentQuery = $i_conn->prepare("SELECT accounts.UID, accounts.titolo, accounts.nome, accounts.cognome FROM `accounts` WHERE email = ? AND password = ?"); 
       	$insertCommentQuery->bind_param("ss", $email, $password);
 
       	$insertCommentQuery->execute();

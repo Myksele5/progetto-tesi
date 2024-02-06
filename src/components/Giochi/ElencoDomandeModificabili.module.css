@@ -1,14 +1,16 @@
 .LIST_ITEM_STYLE{
     margin: 12px;
-    border: 2px solid rgb(233, 33, 131);
+    border: 2px solid #163172;
     border-radius: 5px;
     background-color: white;
     width: 1000px;
     height: fit-content;
+    transition: 0.5s;
 }
 .LIST_ITEM_STYLE:hover{
-    background-color: lightcyan;
+    background-color: #ececec;
     cursor: pointer;
+    box-shadow: 0 1px 10px 1px rgb(33, 33, 131);
 }
 
 .wrapper_generico{
@@ -26,8 +28,9 @@
     align-items: center;
     width: 1100px;
     height: 650px;
-    background-color: rgb(221, 221, 221);
-    border: 1px solid black;
+    background-color: #D6E4F0;
+    border: 1px solid #163172;
+    border-radius: 4px;
     padding: 0;
     margin: 3px;
     list-style-type: none;
@@ -37,7 +40,7 @@
     display: flex;
     align-items: center;
     height: auto;
-    border-bottom: 2px solid rgb(233, 33, 131);
+    border-bottom: 2px solid #163172;
     margin: 1px;
 }
 
@@ -124,13 +127,14 @@
     width: 300px;
     height: 25px;
     border-radius: 5px;
-    border: 2px solid blue;
+    border: 2px solid #1E56A0;
     font-size: 15px;
     text-align: center;
 }
 
 .select_style:focus{
-    border: 2px solid rgb(233, 33, 131);
+    border: 2px solid #163172;
+    background-color: #D6E4F0;
     outline: none;
 }
 

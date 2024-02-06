@@ -1,6 +1,6 @@
 .wrap_generico{
-    width: 650px;
-    height: 500px;
+    /* width: 650px; */
+    height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -8,6 +8,10 @@
     color: white;
     /* position: absolute; */
     /* top: 64%; */
+}
+
+.pre_game{
+    font-size: 30px;
 }
 
 .wrapper_horizontal_flex{
@@ -103,6 +107,12 @@
 @media screen and (max-height: 750px) {
     .spawn_area{
         height: 470px;
+    }
+}
+
+@media screen and (max-width: 699px) {
+    .pre_game{
+        font-size: 18px;
     }
 }
 

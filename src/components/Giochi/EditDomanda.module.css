@@ -46,7 +46,7 @@
     width: 300px;
     height: 20px;
     font-size: 16px;
-    border: 2px solid blue;
+    border: 2px solid #1E56A0;
     border-radius: 5px;
     margin-bottom: 8px;
     text-align: center;
@@ -56,11 +56,18 @@
     width: 300px;
     height: 20px;
     font-size: 16px;
-    border: 2px solid blue;
+    border: 2px solid #1E56A0;
     border-radius: 5px;
     margin-bottom: 8px;
     text-align: center;
     cursor: not-allowed;
+}
+
+.textbox_style:focus{
+    border: 2px solid #163172;
+    background-color: #D6E4F0;
+    border-radius: 5px;
+    outline: none;
 }
 
 .preview_image{

@@ -68,7 +68,7 @@ function ExerciseReflexes(props){
         <>
             {!gameStarted &&
                 <div className={styles.wrap_generico}>
-                    <h1>Quando sei pronto, clicca sul bottone</h1>
+                    <h1 className={styles.pre_game}>Quando sei pronto, clicca sul bottone</h1>
                     <GenericAlternativeButton
                         onClick={iniziaGioco}
                         buttonText={"INIZIA"}

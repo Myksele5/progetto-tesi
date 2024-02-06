@@ -1,11 +1,15 @@
 .wrap_generico{
-    width: 650px;
-    height: 500px;
+    /* width: 650px; */
+    height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     color: white;
+}
+
+.pre_game{
+    font-size: 30px;
 }
 
 .frase_inizio_gioco{
@@ -57,14 +61,19 @@
     justify-content: center;
     display: grid;
     margin: 1%;
-    grid-template-columns: 250px 250px 250px 250px;
-    grid-template-rows: 70px 70px 70px 70px;
+    grid-template-columns: 230px 230px 230px 230px;
+    grid-template-rows: 70px 70px;
     column-gap: 100px;
-    row-gap: 60px;
+    row-gap: 50px;
     /* border: 3px solid purple; */
 }
 
-@media screen and (max-width: 1550px) {
+.risp_corr_multiple{
+    font-size: 18px;
+    margin: 8px;
+}
+
+@media screen and (max-width: 1700px) {
     .resize_image{
         width: 420px;
         height: 270px;
@@ -72,9 +81,73 @@
 
     .wrapper_bottoni_risposte{
         grid-template-columns: 200px 200px 200px 200px;
-        grid-template-rows: 60px 60px 60px 60px;
-        column-gap: 80px;
+        grid-template-rows: 60px 60px;
+        column-gap: 60px;
         row-gap: 50px;
+        /* border: 3px solid purple; */
+    }
+}
+@media screen and (max-width: 1550px) {
+    .wrapper_bottoni_risposte{
+        grid-template-columns: 200px 200px 200px 200px;
+        grid-template-rows: 50px 50px;
+        column-gap: 40px;
+        row-gap: 24px;
+        /* border: 3px solid purple; */
+    }
+}
+
+@media screen and (max-width: 999px) {
+    .resize_image{
+        width: 350px;
+        height: 220px;
+    }
+
+    .wrapper_bottoni_risposte{
+        grid-template-columns: 200px 200px 200px;
+        grid-template-rows: 60px 60px 60px;
+        column-gap: 40px;
+        row-gap: 20px;
+        /* border: 3px solid purple; */
+    }
+}
+
+@media screen and (max-width: 599px) {
+    .pre_game{
+        font-size: 18px;
+    }
+
+    .explanation{
+        margin: 1px;
+    }
+
+    .domanda{
+        font-size: 16px;
+        margin: 5px;
+        color: rgb(59, 59, 241);
+    }
+    
+    .risp_corr_multiple{
+        font-size: 14px;
+    }
+
+    .risposte_corrette{
+        font-size: 12px;
+        margin: 8px;
+        padding: 2px;
+        color: rgb(59, 59, 241);
+    }
+
+    .resize_image{
+        width: 250px;
+        height: 160px;
+    }
+
+    .wrapper_bottoni_risposte{
+        grid-template-columns: 160px 160px;
+        grid-template-rows: 40px 40px;
+        column-gap: 10px;
+        row-gap: 10px;
         /* border: 3px solid purple; */
     }
 }

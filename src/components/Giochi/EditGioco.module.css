@@ -38,7 +38,7 @@
     width: 300px;
     height: 20px;
     font-size: 16px;
-    border: 2px solid blue;
+    border: 2px solid #1E56A0;
     border-radius: 5px;
     margin-bottom: 15px;
     text-align: center;
@@ -47,7 +47,7 @@
     width: 300px;
     height: 20px;
     font-size: 16px;
-    border: 2px solid blue;
+    border: 2px solid #1E56A0;
     border-radius: 5px;
     margin-bottom: 10px;
     text-align: center;
@@ -55,8 +55,8 @@
 }
 
 .textbox_style:focus{
-    border: 2px solid rgb(233, 33, 131);
-    border-radius: 5px;
+    border: 2px solid #163172;
+    background-color: #D6E4F0;
     outline: none;
 }
 

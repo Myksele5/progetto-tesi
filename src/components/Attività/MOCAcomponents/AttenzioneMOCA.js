@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import styles from "./AttenzioneMOCA.module.css";
 import GenericAlternativeButton from "../../UI/GenericAlternativeButton";
 
-function AttenzioneMOCA(){
+function AttenzioneMOCA(props){
     const [numeroEsercizio, setNumeroEsercizio] = useState(1);
+
+    const [lettereCorretteCliccate, setLettereCorretteCliccate] = useState(0);
     const [stileBottone_1, setStileBottone_1] = useState(`${styles.lettera_da_ripetere}`)
     const [stileBottone_2, setStileBottone_2] = useState(`${styles.lettera_da_ripetere}`)
     const [stileBottone_3, setStileBottone_3] = useState(`${styles.lettera_da_ripetere}`)
@@ -41,6 +43,31 @@ function AttenzioneMOCA(){
     const [numeroSottratto_5, setNumeroSottratto_5] = useState();
     // const stileBottone = `${styles.lettera_da_ripetere}`;
 
+    function salvaRisposteAreaCognitiva3(){
+        let oggettoDomandeRisposte = [
+            {
+                domanda: "Leggi i seguenti numeri e poi ad occhi chiusi ripetili nello stesso ordine",
+                listaNumeri: elencoNumeri_esercizio_1
+            },
+            {
+                domanda: "Leggi i seguenti numeri e poi ad occhi chiusi ripetili in ordine inverso",
+                listaNumeri: elencoNumeri_esercizio_2
+            },
+            {
+                domanda: "Clicca su ciascuna lettera 'A'",
+                listaLettere: elencoLettere_esercizio_3,
+                lettereDaCliccare: 11,
+                lettereCliccate: lettereCorretteCliccate
+            },
+            {
+                domanda: "Partendo dal numero 100, sottrai 7 per cinque volte",
+                listaNumeri: [numeroSottratto_1, numeroSottratto_2, numeroSottratto_3, numeroSottratto_4, numeroSottratto_5]
+            }
+        ];
+
+        props.risposteAreaCog3(oggettoDomandeRisposte);
+    }
+
     const elencoNumeri_esercizio_1 = [
         2, 1, 8, 5, 4
     ];
@@ -63,6 +90,7 @@ function AttenzioneMOCA(){
                 break;
             case "3":
                 setStileBottone_3(`${styles.lettera_cliccata}`);
+                setLettereCorretteCliccate((counter) => (counter + 1))
                 break;
             case "4":
                 setStileBottone_4(`${styles.lettera_cliccata}`);
@@ -75,9 +103,11 @@ function AttenzioneMOCA(){
                 break;
             case "7":
                 setStileBottone_7(`${styles.lettera_cliccata}`);
+                setLettereCorretteCliccate((counter) => (counter + 1))
                 break;
             case "8":
                 setStileBottone_8(`${styles.lettera_cliccata}`);
+                setLettereCorretteCliccate((counter) => (counter + 1))
                 break;
             case "9":
                 setStileBottone_9(`${styles.lettera_cliccata}`);
@@ -93,12 +123,14 @@ function AttenzioneMOCA(){
                 break;
             case "13":
                 setStileBottone_13(`${styles.lettera_cliccata}`);
+                setLettereCorretteCliccate((counter) => (counter + 1))
                 break;
             case "14":
                 setStileBottone_14(`${styles.lettera_cliccata}`);
                 break;
             case "15":
                 setStileBottone_15(`${styles.lettera_cliccata}`);
+                setLettereCorretteCliccate((counter) => (counter + 1))
                 break;
             case "16":
                 setStileBottone_16(`${styles.lettera_cliccata}`);
@@ -111,18 +143,22 @@ function AttenzioneMOCA(){
                 break;
             case "19":
                 setStileBottone_19(`${styles.lettera_cliccata}`);
+                setLettereCorretteCliccate((counter) => (counter + 1))
                 break;
             case "20":
                 setStileBottone_20(`${styles.lettera_cliccata}`);
+                setLettereCorretteCliccate((counter) => (counter + 1))
                 break;
             case "21":
                 setStileBottone_21(`${styles.lettera_cliccata}`);
+                setLettereCorretteCliccate((counter) => (counter + 1))
                 break;
             case "22":
                 setStileBottone_22(`${styles.lettera_cliccata}`);
                 break;
             case "23":
                 setStileBottone_23(`${styles.lettera_cliccata}`);
+                setLettereCorretteCliccate((counter) => (counter + 1))
                 break;
             case "24":
                 setStileBottone_24(`${styles.lettera_cliccata}`);
@@ -135,9 +171,11 @@ function AttenzioneMOCA(){
                 break;
             case "27":
                 setStileBottone_27(`${styles.lettera_cliccata}`);
+                setLettereCorretteCliccate((counter) => (counter + 1))
                 break;
             case "28":
                 setStileBottone_28(`${styles.lettera_cliccata}`);
+                setLettereCorretteCliccate((counter) => (counter + 1))
                 break;
             case "29":
                 setStileBottone_29(`${styles.lettera_cliccata}`);
@@ -261,7 +299,7 @@ function AttenzioneMOCA(){
 
                 <GenericAlternativeButton
                     buttonText={"Prossima Domanda"}
-                    onClick={prossimoEsercizio}
+                    onClick={salvaRisposteAreaCognitiva3}
                 >
                 </GenericAlternativeButton>
             </>

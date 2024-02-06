@@ -40,30 +40,6 @@ function LoginForm(props){
         setPassword(event.target.value);
     }
 
-    // const submitLogin = async (event) => {
-    //     event.preventDefault();
-    //     if(email.includes('@') && password.trim().length >= 6){
-    //         console.log("MANDO DATI PER LOGIN");
-    //         await signInWithEmailAndPassword(auth, email, password)
-    //         .catch((FirebaseAuthInvalidCredentialsException) =>{
-    //             setErroreLogin(true);
-    //             setValidEmail(false);
-    //             setValidPassword(false);
-    //         })
-    //         .catch((err) => {
-    //             console.error(err);
-    //         })
-    //     }
-    //     else{
-    //         if(!email.includes('@')){
-    //             setValidEmail(false);
-    //         }
-    //         if(password.trim().length < 6){
-    //             setValidPassword(false);
-    //         }
-    //     }
-    // }
-
     const submitLogin = async (event) => {
         event.preventDefault();
         let result;
@@ -77,7 +53,7 @@ function LoginForm(props){
 
         if(result !== undefined){
             console.log("PROVA", result[0]);
-            auth_ctx.login(email, result[0].UID, result[0].titolo)
+            auth_ctx.login(email, result[0].UID, result[0].titolo, result[0].nome, result[0].cognome)
             
         }
         else{

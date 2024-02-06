@@ -15,11 +15,23 @@
     transition: 0.2s;
 }
 
+.test_card_title{
+    margin: 20px;
+    margin-top: 15px;
+}
+
 .test_card_content{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+@media screen and (max-width: 799px) {
+    .test_card_title{
+        margin: 15px;
+        margin-top: 10px;
+    }
 }
 
 @keyframes animaz {

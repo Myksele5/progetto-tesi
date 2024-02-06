@@ -5,7 +5,7 @@ function TestCard(props){
     return(
         <div className={styles.test_card}>
             <div className={styles.test_card_content}>
-                <h1>{props.cardText}</h1>
+                <h1 className={styles.test_card_title}>{props.cardText}</h1>
                 {props.children}
                 {/* <GenericAlternativeButton
                     onClick={props.nascondiLista}

@@ -73,7 +73,7 @@ function StatistichePaziente(props){
                         
                         if(dataEsecuzioneGioco.getFullYear() === year && 
                             ((dataEsecuzioneGioco.getMonth() + 1) === month || 
-                             ((dataEsecuzioneGioco.getMonth() + 2) === month && (dataEsecuzioneGioco.getDate() - day) < 0) 
+                             ((dataEsecuzioneGioco.getMonth() + 2) === month && (day - dataEsecuzioneGioco.getDate()) < 0) 
                             )
                         ){
                             setRisposteTotali((prevRispTot) => (prevRispTot + item.rispTotali));

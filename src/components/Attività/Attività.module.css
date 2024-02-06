@@ -12,28 +12,34 @@
     background-color: #D6E4F0;
 }
 
-@media screen and (max-width: 760px) {
-    .wrap_boxes{
-        display: block;
-    }
-}
-
 .wrapper_generico{
-    /* background-color: cadetblue; */
     display: grid;
     justify-content: center;
-    /* align-items: center; */
     margin-top: 15px;
     grid-template-columns: 350px 350px;
-    column-gap: 20px;
+    column-gap: 50px;
     grid-template-rows: fit-content;
     row-gap: 10px;
-    /* background-color: red; */
-    /* margin-left: 30px; */
 }
 
 .wrapper_test{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media screen and (max-width: 799px) {
+    .wrapper_generico{
+        grid-template-columns: 350px;
+    }
+
+    .wrap_boxes{
+        display: block;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .wrapper_generico{
+        grid-template-columns: 300px;
+    }
 }

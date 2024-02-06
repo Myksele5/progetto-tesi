@@ -1,10 +1,11 @@
 .utente_loggato{
     /* margin: 1px; */
     color: white;
-    padding: 3px;
-    margin: 5px;
+    padding: 2px;
+    margin: 6px;
     margin-bottom: 0;
-    font-size: 14px;
+    font-size: 20px;
+    height: 30px;
 }
 
 .wrap_profilo{
@@ -18,10 +19,10 @@
     justify-content: center;
     align-items: center;
     width: fit-content;
-    margin: 50px 0px;
+    margin: 40px 0px;
     border: 1px solid #D6E4F0;
     border-radius: 10px;
-    background-image: radial-gradient(ellipse at top, purple, transparent);
+    background-image: radial-gradient(ellipse at top, rgb(17, 126, 199), transparent);
 }
 
 .wrap_menu{
@@ -109,6 +110,10 @@
 }
 
 @media screen and (max-width: 1550px) {
+    .utente_loggato{
+        font-size: 14px;
+    }
+    
     .wrap_menu{
         width: 290px;
     }
@@ -173,12 +178,22 @@
 }
 
 @media screen and (max-width: 850px) {
+    .utente_loggato{
+        font-size: 12px;
+    }
+    
     .text_option{
         display: none;
     }
 }
 
 @media screen and (max-height: 700px) and (max-width: 1200px){
+    .utente_loggato{
+        height: 20px;
+        margin: 1px;
+        padding: 2px;
+    }
+    
     .wrap_menu{
         height: 95px;
     }
@@ -213,12 +228,6 @@
 }
 
 @media screen and (max-height: 600px) and (max-width: 1200px){
-    .utente_loggato{
-        margin: 2px;
-        margin-bottom: 0;
-        font-size: 12px;
-    }
-
     .wrapper_generico{
         margin: 30px 0px;
     }
