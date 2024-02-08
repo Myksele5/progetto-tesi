@@ -116,17 +116,14 @@
     	break;
 	}
     
-    if($query_result){
+    // if($query_result){
+    //     echo parseResultToJson($query_result);
+    // }
+    if(is_string($query_result) || is_numeric($query_result) || is_null($query_result)){
+        echo $query_result;
+    } else {
         echo parseResultToJson($query_result);
     }
-    // echo parseResultToJson($query_result);
-    // $gigino = parseResultToJson($query_result);
-    // if($gigino == null){
-    //     echo $query_result;
-    // }
-    // else{
-    //     echo $gigino;
-    // }
     
     $conn->close();
     
@@ -254,24 +251,40 @@
         $city = $dataJson["city"];
         $codiceFiscale = $dataJson["codiceFiscale"];
         $dataNascita = $dataJson["dataNascita"];
-        $patologia_1 = $dataJson["patologia_1"];
-        $patologia_2 = $dataJson["patologia_2"];
-        $patologia_3 = $dataJson["patologia_3"];
-        $medicina_1 = $dataJson["medicina_1"];
-        $medicina_2 = $dataJson["medicina_2"];
-        $medicina_3 = $dataJson["medicina_3"];
+        $patologie = $dataJson["patologie"];
+        // $patologia_2 = $dataJson["patologia_2"];
+        // $patologia_3 = $dataJson["patologia_3"];
+        $medicine = $dataJson["medicine"];
+        // $medicina_2 = $dataJson["medicina_2"];
+        // $medicina_3 = $dataJson["medicina_3"];
         $terapia = $dataJson["terapia"];
         $note = $dataJson["note"];
         // $statistiche = $dataJson["statistiche"];
         
         $insertNewPatient = $i_conn->prepare(
-            "INSERT INTO `patients` (`doct_UID`, `nome`, `cognome`, `city`, `codiceFiscale`, `dataNascita`, `patologia_1`, `patologia_2`, `patologia_3`, `medicina_1`, `medicina_2`, `medicina_3`, `terapia`, `note`) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            "INSERT INTO `patients` (`doct_UID`, `nome`, `cognome`, `city`, `codiceFiscale`, `dataNascita`, `terapia`, `note`) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
         );
-        $insertNewPatient->bind_param("isssssssssssss", $doct_UID, $nome, $cognome, $city, $codiceFiscale, $dataNascita, $patologia_1, $patologia_2, $patologia_3, $medicina_1, $medicina_2, $medicina_3, $terapia, $note);
+        $insertNewPatient->bind_param("isssssss", $doct_UID, $nome, $cognome, $city, $codiceFiscale, $dataNascita, $terapia, $note);
         $insertNewPatient->execute();
-        
-        $insertNewPatient->bind_result($result);
+        // $insertNewPatient->bind_result($result);
+        $patientID = $insertNewPatient->insert_id;
+
+        $listPatologie = array_column($patologie, 'patologia');
+        $listMedicine = array_column($medicine, 'medicina');
+        foreach($listPatologie as $ptlg){
+            // print_r($ptlg);
+            $insertPatologiePatient = $i_conn->prepare("INSERT INTO `listaPatologie` (`pazienteID`, `patologia`) VALUES (?, ?)");
+            $insertPatologiePatient->bind_param("is", $patientID, $ptlg);
+            $insertPatologiePatient->execute();
+        }
+        foreach($listMedicine as $mdcn){
+            // print_r($ptlg);
+            $insertMedicinePatient = $i_conn->prepare("INSERT INTO `listaMedicine` (`pazienteID`, `medicina`) VALUES (?, ?)");
+            $insertMedicinePatient->bind_param("is", $patientID, $mdcn);
+            $insertMedicinePatient->execute();
+        }
+        // print_r($listPatologie[0]);
         return $result;
     }
 

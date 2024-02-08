@@ -95,7 +95,7 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.addPaziente = async (doct_UID, nome, cognome, city, codiceFiscale, dataNascita, patologia_1, patologia_2, patologia_3, medicina_1, medicina_2, medicina_3, terapia, note, cb) => {
+    serverMgr.addPaziente = async (doct_UID, nome, cognome, city, codiceFiscale, dataNascita, patologie, medicine, terapia, note, cb) => {
         let result = await serverMgr.requestFetchData("addPaziente", {
             doct_UID: doct_UID,
             nome: nome,
@@ -103,12 +103,8 @@ function initServerMgr(cb) {
             city: city,
             codiceFiscale: codiceFiscale,
             dataNascita: dataNascita,
-            patologia_1: patologia_1,
-            patologia_2: patologia_2,
-            patologia_3: patologia_3,
-            medicina_1: medicina_1,
-            medicina_2: medicina_2,
-            medicina_3: medicina_3,
+            patologie: patologie,
+            medicine: medicine,
             terapia: terapia,
             note: note
             // statistiche: statistiche

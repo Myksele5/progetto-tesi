@@ -4,12 +4,17 @@ import Card from '../UI/Card';
 import imageee from '../Images/add_person.png';
 import TabellaPazienti from './TabellaPazienti';
 import AddPaziente from './AddPaziente';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import styles from './Pazienti.module.css';
 import PatientContext from "../../context/patients-context";
 
 function Pazienti(){
     const patients_ctx = useContext(PatientContext);
+
+    useEffect(() => {
+        console.log("Lista dei pazienti");
+        console.log(patients_ctx.listaPazienti);
+    }, [])
 
     return(
         <>

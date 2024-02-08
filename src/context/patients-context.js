@@ -73,29 +73,32 @@ export function PatientContextProvider(props){
 
     //ESEGUO LA FUNZIONE PER AVERE SEMPRE LA LISTA AGGIORNATA DEI PAZIENTI
     useEffect(() => {
-        console.log("CARICO LISTA PAZIENTI....");
-        prendiListaPazienti();
+        if(auth_ctx.utenteLoggato !== null){
+            console.log("CARICO LISTA PAZIENTI....");
+            prendiListaPazienti();
+        }
     }, [isLoading, auth_ctx.utenteLoggato]);
     
 
     //------------- AGGIORNA db CON IL NUOVO PAZIENTE ---> VIENE ESEGUITA IN AddPaziente.js TRAMITE PROPS
-    async function aggiungiPaziente(datiPaziente){
-        let result;
+    function aggiungiPaziente(){
+        // let result;
         
-        result = await getServerMgr().addPaziente(
-            datiPaziente.doct_UID, datiPaziente.nome, datiPaziente.cognome, datiPaziente.city, datiPaziente.codiceFiscale, datiPaziente.dataNascita, datiPaziente.patologia_1,
-            datiPaziente.patologia_2, datiPaziente.patologia_3, datiPaziente.medicina_1, datiPaziente.medicina_2, datiPaziente.medicina_3, datiPaziente.terapia, datiPaziente.note
-        )
-        .then(console.log(result))
-        .catch((err) => {
-            console.error(err);
-        });
+        // result = await getServerMgr().addPaziente(
+        //     datiPaziente.doct_UID, datiPaziente.nome, datiPaziente.cognome, datiPaziente.city, datiPaziente.codiceFiscale, datiPaziente.dataNascita, datiPaziente.patologia_1,
+        //     datiPaziente.medicina_1, datiPaziente.terapia, datiPaziente.note
+        // )
+        // .then(console.log(result))
+        // .catch((err) => {
+        //     console.error(err);
+        // });
         
         setShowFormNewPaziente(false);
         setShowSearchBoxAndButton(true);
         setShowTabella(true);
 
         prendiListaPazienti();
+
     }
 
     //FUNZIONE PER VISUALIZZARE FORM AGGIUNTA PAZIENTE
@@ -168,7 +171,9 @@ export function PatientContextProvider(props){
     }
 
     //FUNZIONE PER MOSTRARE LA SCHEDA DI MODIFICA DEI DATI DEL PAZIENTE
-    function modificaDatiPaziente(pazienteee){
+    async function modificaDatiPaziente(pazienteee){
+        // let result = await getServerMgr().infoPatologie(pazienteee.ID)
+
         modifica_paziente = 
             <Card
             children={

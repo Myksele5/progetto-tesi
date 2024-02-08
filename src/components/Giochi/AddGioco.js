@@ -93,10 +93,12 @@ function AddGioco(props){
             categoriaGioco = "REFLEXES_GAME";
         }
 
-        await getServerMgr().addGame(auth_ctx.utenteLoggatoUID, titoloGioco, tipologiaGioco, livelloGioco, categoriaGioco, domandeSelected, numeroRound)
+        let resultID = await getServerMgr().addGame(auth_ctx.utenteLoggatoUID, titoloGioco, tipologiaGioco, livelloGioco, categoriaGioco, domandeSelected, numeroRound)
         .catch((err) => {
             console.error(err)
         });
+
+        console.log(resultID)
 
         props.chiudiFormNuovoGioco();
         game_ctx.prendiTuttiGiochiDomande();
