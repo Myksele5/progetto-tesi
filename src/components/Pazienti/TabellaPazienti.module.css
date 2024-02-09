@@ -71,11 +71,11 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     }
 
     .intestazione_tabella{
-        color: orange;
+        /* color: orange; */
         font-size: 18px;
     }
     .dati_tabella{
-        color: orange;
+        /* color: orange; */
         font-size: 18px;
     }
 
@@ -102,7 +102,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     }
 
     .intestazione_tabella, .dati_tabella{
-        color: red;
+        /* color: red; */
         font-size: 17px;
         height: 65px;
     }
@@ -130,7 +130,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     }
 
     .intestazione_tabella, .dati_tabella{
-        color: limegreen;
+        /* color: limegreen; */
         height: 60px;
         font-size: 17px;
     }
@@ -159,7 +159,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     }
 
     .intestazione_tabella, .dati_tabella{
-        color: lightcoral;
+        /* color: lightcoral; */
         font-size: 15px;
         /* height: 100px; */
     }
@@ -203,6 +203,10 @@ tbody tr:nth-child(2n):hover .dati_tabella{
 @media screen and (max-width: 500px) {
     .table_wrapper{
         width: 450px;
+    }
+
+    .intestazione_tabella{
+        font-size: 12px;
     }
 
     .intestazione_tabella.nome, .intestazione_tabella.cognome, .dati_tabella.nome, .dati_tabella.cognome{

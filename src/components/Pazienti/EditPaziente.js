@@ -2,8 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import GenericButton from "../UI/GenericButton";
 import styles from "./EditPaziente.module.css";
 import PatientContext from "../../context/patients-context";
+import { getServerMgr } from "../../backend_conn/ServerMgr";
 
 function EditPaziente(props){
+    const patients_ctx = useContext(PatientContext);
     const [visualizzaSchermata, setVisualizzaSchermata] = useState("DATI_PERSONALI");
 
     const [validNome, setValidNome] = useState(true);
@@ -23,34 +25,58 @@ function EditPaziente(props){
 
     const [counterPatologie, setCounterPatologie] = useState(1);
     const [patologiaModifica_1, setPatologiaModifica_1] = useState(props.patologiaaa_1);
-    const [patologiaModifica_2, setPatologiaModifica_2] = useState(props.patologiaaa_2);
-    const [patologiaModifica_3, setPatologiaModifica_3] = useState(props.patologiaaa_3);
-
+    const [patologieList, setPatologieList] = useState([]);
+    
     const [counterMedicine, setCounterMedicine] = useState(1);
     const [medicinaModifica_1, setMedicinaModifica_1] = useState(props.medicinaaa_1);
-    const [medicinaModifica_2, setMedicinaModifica_2] = useState(props.medicinaaa_2);
-    const [medicinaModifica_3, setMedicinaModifica_3] = useState(props.medicinaaa_3);
+    const [medicineList, setMedicineList] = useState([]);
+
+    useEffect(() => {
+        let prossimoIDpatolog = 1;
+        let arrayTemporaneo = [];
+        if(props.patologiaaa_1.length > 0){
+            for(var i=0; i < props.patologiaaa_1.length; i++){
+                console.log("INDICE--> "  + (i))
+                arrayTemporaneo.push({patID: i+1, patologia: props.patologiaaa_1[i]})
+                // setPatologieList((prevList) => ([...prevList, {patID: i, patologia: props.patologiaaa_1[i]}]))
+                prossimoIDpatolog = i+1;
+            }
+            console.log(arrayTemporaneo);
+            setPatologieList(arrayTemporaneo);
+            // props.patologiaaa_1.map((singolaPat) => {
+            //     console.log(prossimoIDpatolog + singolaPat)
+            //     setPatologieList((prevList) => ([...prevList, {patID: prossimoIDpatolog, patologia: singolaPat}]))
+            //     prossimoIDpatolog = prossimoIDpatolog + 1;
+            // })
+        }
+
+        setCounterPatologie(prossimoIDpatolog);        
+    }, [])
+
+    useEffect(() => {
+        let prossimoIDmdcn = 1;
+        let arrayTemporaneo = [];
+        if(props.medicinaaa_1.length > 0){
+            for(var i=0; i < props.medicinaaa_1.length; i++){
+                console.log("INDICE--> "  + (i))
+                arrayTemporaneo.push({medID: i+1, medicina: props.medicinaaa_1[i]})
+                // setPatologieList((prevList) => ([...prevList, {patID: i, patologia: props.patologiaaa_1[i]}]))
+                prossimoIDmdcn = i+1;
+            }
+            console.log(arrayTemporaneo);
+            setMedicineList(arrayTemporaneo);
+            // props.patologiaaa_1.map((singolaPat) => {
+            //     console.log(prossimoIDpatolog + singolaPat)
+            //     setPatologieList((prevList) => ([...prevList, {patID: prossimoIDpatolog, patologia: singolaPat}]))
+            //     prossimoIDpatolog = prossimoIDpatolog + 1;
+            // })
+        }
+        setCounterMedicine(prossimoIDmdcn);
+    }, [])
 
     const [noteParticolariModifica, setNoteParticolariModifica] = useState(props.noteee);
     const [terapiaModifica, setTerapiaModifica] = useState(props.terapiaaa);
 
-    const patients_ctx = useContext(PatientContext);
-
-    useEffect(() => {
-        {props.patologiaaa_2 && 
-            setCounterPatologie((count) => (count + 1))
-        }
-        {props.patologiaaa_3 && 
-            setCounterPatologie((count) => (count + 1))
-        }
-
-        {props.medicinaaa_2 &&
-            setCounterMedicine((count) => (count + 1))
-        }
-        {props.medicinaaa_3 &&
-            setCounterMedicine((count) => (count + 1))
-        }
-    }, [])
 
     const selezionaSchermataVisualizzata = (event, stringa) => {
         event.preventDefault();
@@ -64,6 +90,8 @@ function EditPaziente(props){
             default:
                 break;
         }
+        console.log(patologieList)
+        console.log(medicineList)
     }
 
     const nomeChangeHandler = (event) => {
@@ -96,31 +124,24 @@ function EditPaziente(props){
         setValidCF(true);
     }
 
-    const aumentaCounterPatologie = (event) => {
+    function aggiungiPatologia(event){
         event.preventDefault();
-        if(counterPatologie < 3 && counterPatologie >= 1){
-            setCounterPatologie((count) => (count + 1))
-        }
+        console.log(patologieList)
+
+        let prossimoIDpatolog = counterPatologie + 1;
+        setPatologieList((prevList) => ([...prevList, {patID: prossimoIDpatolog, patologia: ""}]));
+        setCounterPatologie(prossimoIDpatolog)
     }
 
-    const diminuisciCounterPatologie = (event) => {
-        event.preventDefault();
-        if(counterPatologie <= 3 && counterPatologie > 1){
-            setCounterPatologie((count) => (count - 1))
-        }
-    }
-
-    const patologiaChangeHandler_1 = (event) => {
+    const patologiaChangeHandler_1 = (event, id) => {
         console.log(event.target.value);
         setPatologiaModifica_1(event.target.value);
-    }
-    const patologiaChangeHandler_2 = (event) => {
-        console.log(event.target.value);
-        setPatologiaModifica_2(event.target.value);
-    }
-    const patologiaChangeHandler_3 = (event) => {
-        console.log(event.target.value);
-        setPatologiaModifica_3(event.target.value);
+        console.log(id);
+        patologieList.map((patolog) => {
+            if(patolog.patID === id){
+                patolog.patologia = event.target.value
+            }
+        })
     }
 
     const noteParticolariChangeHandler = (event) => {
@@ -128,31 +149,24 @@ function EditPaziente(props){
         setNoteParticolariModifica(event.target.value);
     }
 
-    const aumentaCounterMedicine = (event) => {
+    function aggiungiMedicina(event){
         event.preventDefault();
-        if(counterMedicine < 3 && counterMedicine >= 1){
-            setCounterMedicine((count) => (count + 1))
-        }
+
+        let prossimoIDmedicina = counterMedicine + 1;
+        setMedicineList((prevList) => ([...prevList, {medID: prossimoIDmedicina, medicina: ""}]));
+        setCounterMedicine(prossimoIDmedicina)
     }
 
-    const diminuisciCounterMedicine = (event) => {
-        event.preventDefault();
-        if(counterMedicine <= 3 && counterMedicine > 1){
-            setCounterMedicine((count) => (count - 1))
-        }
-    }
-
-    const medicinaChangeHandler_1 = (event) => {
+    const medicineChangeHandler_1 = (event, id) => {
         console.log(event.target.value);
         setMedicinaModifica_1(event.target.value);
-    }
-    const medicinaChangeHandler_2 = (event) => {
-        console.log(event.target.value);
-        setMedicinaModifica_2(event.target.value);
-    }
-    const medicinaChangeHandler_3 = (event) => {
-        console.log(event.target.value);
-        setMedicinaModifica_3(event.target.value);
+        console.log(id);
+        medicineList.map((med) => {
+            if(med.medID === id){
+                med.medicina = event.target.value
+            }
+        })
+        console.log(medicineList)
     }
 
     const terapiaChangeHandler = (event) => {
@@ -160,7 +174,7 @@ function EditPaziente(props){
         setTerapiaModifica(event.target.value);
     }
 
-    function formModifyHandler(event){
+    async function formModifyHandler(event){
         event.preventDefault();
 
         var dateee = new Date(dataModifica);
@@ -210,25 +224,41 @@ function EditPaziente(props){
 
         let dateString = `${year}-${month}-${day}`;
 
-        const datiPazienteModificati = {
+        let patologieListFiltered = [];
+        patologieList.map((pat) => {
+            if(pat.patologia.length >= 1){
+                patologieListFiltered.push(pat);
+            }
+        })
+
+        let medicineListFiltered = [];
+        medicineList.map((med) => {
+            if(med.medicina.length >= 1){
+                medicineListFiltered.push(med);
+            }
+        })
+
+        const datiPaziente = {
             nome: nomeModifica,
             cognome: cognomeModifica,
             city: cittàModifica,
             codiceFiscale: CFModifica.toUpperCase(),
             dataNascita: dateString,
-            patologia_1: patologiaModifica_1,
-            patologia_2: counterPatologie >= 2 ? patologiaModifica_2 : "",
-            patologia_3: counterPatologie >= 3 ? patologiaModifica_3 : "",
-            medicina_1: medicinaModifica_1,
-            medicina_2: counterMedicine >= 2 ? medicinaModifica_2 : "",
-            medicina_3: counterMedicine >= 3 ? medicinaModifica_3 : "",
+            patologie: patologieListFiltered,
+            medicine: medicineListFiltered,
             terapia: terapiaModifica,
             note: noteParticolariModifica,
             // statistiche: props.statisticheee,
             ID: props.iddd
         };
 
-        patients_ctx.modificaLista(datiPazienteModificati);
+        let pazienteSalvatoID;
+        pazienteSalvatoID = await getServerMgr().updatePaziente(
+            datiPaziente.nome, datiPaziente.cognome, datiPaziente.city, datiPaziente.codiceFiscale, datiPaziente.dataNascita, datiPaziente.patologie,
+            datiPaziente.medicine, datiPaziente.terapia, datiPaziente.note, datiPaziente.ID
+        );
+        // console.log("pazienteID--> " + pazienteSalvatoID)
+        patients_ctx.modificaLista();
     }
 
     return(
@@ -279,70 +309,32 @@ function EditPaziente(props){
                         <h3 className={styles.subtitle_form}>SCHEDA MEDICA</h3>
 
                         <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Patologia:</label>
-                        <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={patologiaModifica_1} onChange={patologiaChangeHandler_1}></input>
-                        {((patologiaModifica_2 && counterPatologie >=2) || counterPatologie >= 2) &&
-                        <>
-                            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Patologia:</label>
-                            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={patologiaModifica_2} onChange={patologiaChangeHandler_2}></input>
-                        </>
-                        }
-                        {((patologiaModifica_3 && counterPatologie >= 3) || counterPatologie >= 3) &&
-                        <>
-                            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Patologia:</label>
-                            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={patologiaModifica_3} onChange={patologiaChangeHandler_3}></input>
-                        </>
-                        }
-                        <div style={{display: "flex"}}>
-                            {counterPatologie < 3 && counterPatologie >= 1 &&
-                                <GenericButton 
-                                    onClick={aumentaCounterPatologie}
-                                    generic_button={true}
-                                    buttonText='Aggiungi patologia'
-                                >
-                                </GenericButton>
-                            }
-                            {counterPatologie <= 3 && counterPatologie > 1 &&
-                                <GenericButton 
-                                    onClick={diminuisciCounterPatologie}
-                                    small_button={true}
-                                    buttonText='Rimuovi patologia'
-                                >
-                                </GenericButton>
-                            }
-                        </div>
+                        {patologieList.map((patologia) => (
+                            <input key={patologia.patID} className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={patologia.patologia} onChange={(event) => {
+                                patologiaChangeHandler_1(event, patologia.patID)
+                            }}>
+                            </input>
+                        ))}
+                        <GenericButton 
+                            onClick={aggiungiPatologia}
+                            generic_button={true}
+                            buttonText='Aggiungi patologia'
+                        >
+                        </GenericButton>
 
                         <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Medicina:</label>
-                        <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={medicinaModifica_1} onChange={medicinaChangeHandler_1}></input>
-                        {((medicinaModifica_2 && counterMedicine >=2) || counterMedicine >= 2) &&
-                        <>
-                            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Medicina:</label>
-                            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={medicinaModifica_2} onChange={medicinaChangeHandler_2}></input>
-                        </>
-                        }
-                        {((medicinaModifica_3 && counterMedicine >=3) || counterMedicine >= 3) &&
-                        <>
-                            <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Medicina:</label>
-                            <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={medicinaModifica_3} onChange={medicinaChangeHandler_3}></input>
-                        </>
-                        }
-                        <div style={{display: "flex"}}>
-                            {counterMedicine < 3 && counterMedicine >= 1 &&
-                                <GenericButton 
-                                    onClick={aumentaCounterMedicine}
-                                    generic_button={true}
-                                    buttonText='Aggiungi medicina'
-                                >
-                                </GenericButton>
-                            }
-                            {counterMedicine <= 3 && counterMedicine > 1 &&
-                                <GenericButton 
-                                    onClick={diminuisciCounterMedicine}
-                                    small_button={true}
-                                    buttonText='Rimuovi medicina'
-                                >
-                                </GenericButton>
-                            }
-                        </div>
+                        {medicineList.map((medicina) => (
+                            <input key={medicina.medID} className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={medicina.medicina} onChange={(event) => {
+                                medicineChangeHandler_1(event, medicina.medID)
+                            }}>
+                            </input>
+                        ))}
+                        <GenericButton 
+                            onClick={aggiungiMedicina}
+                            generic_button={true}
+                            buttonText='Aggiungi medicina'
+                        >
+                        </GenericButton> 
 
                         <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Segni/Note particolari:</label>
                         <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={noteParticolariModifica} onChange={noteParticolariChangeHandler}></input>

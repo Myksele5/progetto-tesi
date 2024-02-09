@@ -107,9 +107,9 @@
         flex-direction: column;
     }
 
-    .wrapper_generico{
+    /* .wrapper_generico{
         flex-direction: column;
-    }
+    } */
 }
 @media screen and (max-width: 599px) {
     .wrapper_impostazioni_gioco{
@@ -120,7 +120,7 @@
         flex-direction: column;
     }
 
-    .wrapper_generico{
+    /* .wrapper_generico{
         flex-direction: column;
-    }
+    } */
 }

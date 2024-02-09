@@ -128,26 +128,39 @@ function SchedaPaziente(props){
                 }
                 {sezioneScheda === 'SCHEDA_MEDICA' &&
                 <>
-                    <label className={styles.label_style}>Patologia</label>
-                    <h3>{props.patologia_1}</h3>
-                    {props.patologia_2 && <h3>{props.patologia_2}</h3>}
-                    {props.patologia_3 && <h3>{props.patologia_3}</h3>}
-                    {/* <hr className={styles.horizontal_line}/> */}
-        
-                    <label className={styles.label_style}>Medicine</label>
-                    <h3>{props.medicina_1}</h3>
-                    {props.medicina_2 && <h3>{props.medicina_2}</h3>}
-                    {props.medicina_3 && <h3>{props.medicina_3}</h3>}
-                    {/* <hr className={styles.horizontal_line}/> */}
-        
-                    <label className={styles.label_style}>Terapia</label>
-                    <h3>{props.terapia}</h3>
-                    {/* <hr className={styles.horizontal_line}/> */}
-
-                    <label className={styles.label_style}>Note</label>
-                    <h3>{props.note}</h3>
-                    <hr className={styles.horizontal_line}/>
-                    
+                <div className={styles.grid_flex_container}>
+                    <div>
+                        <label className={styles.label_style}>Patologia</label>
+                        <div className={styles.containter_content_style}>
+                            {props.patologia_1.map((pat) => (
+                                <h3 className={styles.content_style}>{"-" + pat}</h3>
+                            ))}
+                        </div>
+                        {/* <hr className={styles.horizontal_line}/> */}
+                    </div>
+                    <div>
+                        <label className={styles.label_style}>Medicine</label>
+                        <div className={styles.containter_content_style}>
+                            {props.medicina_1.map((med) => (
+                                <h3 className={styles.content_style}>{"-" + med}</h3>
+                            ))}
+                        </div>
+                    </div>
+                    <div>
+                        <label className={styles.label_style}>Terapia</label>
+                        <div className={styles.containter_content_style}>
+                            <h3>{props.terapia}</h3>
+                        </div>
+                        {/* <hr className={styles.horizontal_line}/> */}
+                    </div>
+                    <div>
+                        <label className={styles.label_style}>Note</label>
+                        <div className={styles.containter_content_style}>
+                            <h3>{props.note}</h3>
+                        </div>
+                    </div>
+                </div>
+                <hr className={styles.horizontal_line}/>
                 </>
                 }
                 {sezioneScheda === 'ESERCIZI/TEST' &&

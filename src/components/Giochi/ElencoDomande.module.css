@@ -291,8 +291,16 @@
         flex-direction: column;
     }
 
+    .subtitle_style{
+        font-size: 12px;
+    }
+
+    .question_style{
+        font-size: 14px;
+    }
+
     .wrapper_generico{
-        width: 340px;
+        width: 300px;
     }
 
     .domande_disponibili{
@@ -304,16 +312,16 @@
     }
 
     .LIST_ITEM_STYLE{
-        width: 290px;
+        width: 240px;
     }
 
     .select_style{
-        width: 160px;
-        font-size: 12px;
+        width: 140px;
+        font-size: 11px;
     }
 
     .wrapper_lista_domande{
-        width: 340px;
+        width: 290px;
         height: 560px;
     }
 

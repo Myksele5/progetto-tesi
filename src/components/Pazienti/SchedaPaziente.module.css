@@ -1,3 +1,11 @@
+.grid_flex_container{
+    display: grid;
+    grid-template-columns: 300px 300px;
+    column-gap: 140px;
+    grid-template-rows: 160px 160px;
+    row-gap: 40px;
+}
+
 .lista{
     display: flex;
     flex-direction: column;
@@ -61,8 +69,8 @@
 }
 
 .label_style{
-    /* display: inline-block; */
-    width: 300px;
+    display: inline-block;
+    width: 260px;
     font-size: 25px;
     text-align: center;
     background-color: white;
@@ -71,6 +79,23 @@
     color: #163172;
     box-shadow: 3px 3px 5px #163172;
     margin: 5px;
+}
+
+.containter_content_style{
+    min-width: 350px;
+    max-width: 350px;
+}
+
+.content_style{
+    font-size: 18px;
+    margin: 5px;
+}
+
+@media screen and (max-width: 899px) {
+    .grid_flex_container{
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 @media screen and (max-width: 599px) {

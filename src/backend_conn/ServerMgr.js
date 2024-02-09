@@ -95,6 +95,30 @@ function initServerMgr(cb) {
         }
     }
 
+    serverMgr.infoPatologie = async (ID, cb) => {
+        let result = await serverMgr.requestFetchData("infoPatologie", {ID: ID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.infoMedicine = async (ID, cb) => {
+        let result = await serverMgr.requestFetchData("infoMedicine", {ID: ID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
     serverMgr.addPaziente = async (doct_UID, nome, cognome, city, codiceFiscale, dataNascita, patologie, medicine, terapia, note, cb) => {
         let result = await serverMgr.requestFetchData("addPaziente", {
             doct_UID: doct_UID,
@@ -119,19 +143,15 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.updatePaziente = async (nome, cognome, city, codiceFiscale, dataNascita, patologia_1, patologia_2, patologia_3, medicina_1, medicina_2, medicina_3, terapia, note, ID, cb) => {
+    serverMgr.updatePaziente = async (nome, cognome, city, codiceFiscale, dataNascita, patologie, medicine, terapia, note, ID, cb) => {
         let result = await serverMgr.requestFetchData("updatePaziente", {
             nome: nome,
             cognome: cognome,
             city: city,
             codiceFiscale: codiceFiscale,
             dataNascita: dataNascita,
-            patologia_1: patologia_1,
-            patologia_2: patologia_2,
-            patologia_3: patologia_3,
-            medicina_1: medicina_1,
-            medicina_2: medicina_2,
-            medicina_3: medicina_3,
+            patologie: patologie,
+            medicine: medicine,
             terapia: terapia,
             note: note,
             ID: ID

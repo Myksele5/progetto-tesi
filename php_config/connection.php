@@ -31,6 +31,12 @@
     case "getPatientsList":
         $query_result = getPatientsList($conn);
         break;
+    case "infoPatologie":
+        $query_result = infoPatologie($conn);
+        break;
+    case "infoMedicine":
+        $query_result = infoMedicine($conn);
+        break;
     case "addPaziente":
         $query_result = addPaziente($conn);
         break;
@@ -241,6 +247,34 @@
         return $result;
     }
 
+    function infoPatologie($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $ID = $dataJson["ID"];
+        
+        $retrievePatientsList = $i_conn->prepare("SELECT patologia FROM `listaPatologie` WHERE pazienteID = ?");
+        $retrievePatientsList->bind_param("i", $ID);
+        
+        $retrievePatientsList->execute();
+        $result = $retrievePatientsList->get_result();
+        return $result;
+    }
+
+    function infoMedicine($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $ID = $dataJson["ID"];
+        
+        $retrievePatientsList = $i_conn->prepare("SELECT medicina FROM `listaMedicine` WHERE pazienteID = ?");
+        $retrievePatientsList->bind_param("i", $ID);
+        
+        $retrievePatientsList->execute();
+        $result = $retrievePatientsList->get_result();
+        return $result;
+    }
+
     function addPaziente($i_conn){
     	$data = file_get_contents("php://input");
         $dataJson = json_decode($data, true);
@@ -252,14 +286,9 @@
         $codiceFiscale = $dataJson["codiceFiscale"];
         $dataNascita = $dataJson["dataNascita"];
         $patologie = $dataJson["patologie"];
-        // $patologia_2 = $dataJson["patologia_2"];
-        // $patologia_3 = $dataJson["patologia_3"];
         $medicine = $dataJson["medicine"];
-        // $medicina_2 = $dataJson["medicina_2"];
-        // $medicina_3 = $dataJson["medicina_3"];
         $terapia = $dataJson["terapia"];
         $note = $dataJson["note"];
-        // $statistiche = $dataJson["statistiche"];
         
         $insertNewPatient = $i_conn->prepare(
             "INSERT INTO `patients` (`doct_UID`, `nome`, `cognome`, `city`, `codiceFiscale`, `dataNascita`, `terapia`, `note`) 
@@ -297,25 +326,39 @@
         $city = $dataJson["city"];
         $codiceFiscale = $dataJson["codiceFiscale"];
         $dataNascita = $dataJson["dataNascita"];
-        $patologia_1 = $dataJson["patologia_1"];
-        $patologia_2 = $dataJson["patologia_2"];
-        $patologia_3 = $dataJson["patologia_3"];
-        $medicina_1 = $dataJson["medicina_1"];
-        $medicina_2 = $dataJson["medicina_2"];
-        $medicina_3 = $dataJson["medicina_3"];
+        $patologie = $dataJson["patologie"];
+        $medicine = $dataJson["medicine"];
         $terapia = $dataJson["terapia"];
         $note = $dataJson["note"];
         $ID = $dataJson["ID"];
-        // $statistiche = $dataJson["statistiche"];
         
         $updatePatient = $i_conn->prepare(
-            "UPDATE `patients` SET `nome` = ?, `cognome` = ?, `city` = ?, `codiceFiscale` = ?, `dataNascita` = ?, `patologia_1` = ?, `patologia_2` = ?, `patologia_3` = ?, `medicina_1` = ?, `medicina_2` = ?, `medicina_3` = ?, `terapia` = ?, `note` = ?
+            "UPDATE `patients` SET `nome` = ?, `cognome` = ?, `city` = ?, `codiceFiscale` = ?, `dataNascita` = ?, `terapia` = ?, `note` = ?
             WHERE `patients`.`ID` = ?"
         );
-        $updatePatient->bind_param("sssssssssssssi", $nome, $cognome, $city, $codiceFiscale, $dataNascita, $patologia_1, $patologia_2, $patologia_3, $medicina_1, $medicina_2, $medicina_3, $terapia, $note, $ID);
+        $updatePatient->bind_param("sssssssi", $nome, $cognome, $city, $codiceFiscale, $dataNascita, $terapia, $note, $ID);
         $updatePatient->execute();
-        
-        $updatePatient->bind_result($result);
+        // $updatePatient->bind_result($result);
+
+        $deletePatologiePatient = $i_conn->prepare("DELETE FROM `listaPatologie` WHERE `listaPatologie`.`pazienteID` = ?");
+        $deletePatologiePatient->bind_param("i", $ID);
+        $deletePatologiePatient->execute();
+        $listPatologie = array_column($patologie, 'patologia');
+        foreach($listPatologie as $ptlg){
+            $insertPatologiePatient = $i_conn->prepare("INSERT INTO `listaPatologie` (`pazienteID`, `patologia`) VALUES (?, ?)");
+            $insertPatologiePatient->bind_param("is", $ID, $ptlg);
+            $insertPatologiePatient->execute();
+        }
+
+        $deleteMedicinePatient = $i_conn->prepare("DELETE FROM `listaMedicine` WHERE `listaMedicine`.`pazienteID` = ?");
+        $deleteMedicinePatient->bind_param("i", $ID);
+        $deleteMedicinePatient->execute();
+        $listMedicine = array_column($medicine, 'medicina');
+        foreach($listMedicine as $mdcn){
+            $insertMedicinePatient = $i_conn->prepare("INSERT INTO `listaMedicine` (`pazienteID`, `medicina`) VALUES (?, ?)");
+            $insertMedicinePatient->bind_param("is", $ID, $mdcn);
+            $insertMedicinePatient->execute();
+        }
         return $result;
     }
 

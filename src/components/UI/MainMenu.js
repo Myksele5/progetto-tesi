@@ -48,7 +48,6 @@ function MainMenu(props){
 
             <div className={styles.wrap_profilo}>
                 <div className={styles.wrapper_generico}>
-                    {/* <p className={styles.utente_loggato}>{auth_ctx.tipoAccount} {auth_ctx.nomeUtenteLoggato} {auth_ctx.cognomeUtenteLoggato}</p> */}
                     <p className={styles.utente_loggato}>{auth_ctx.utenteLoggato}</p>
                     <GenericButton
                     onClick={auth_ctx.onLogoutClick}

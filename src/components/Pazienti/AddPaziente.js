@@ -127,14 +127,6 @@ function AddPaziente(props){
             }
         })
     }
-    // const medicineChangeHandler_2 = (event) => {
-    //     console.log(event.target.value);
-    //     setEnteredMedicine_2(event.target.value);
-    // }
-    // const medicineChangeHandler_3 = (event) => {
-    //     console.log(event.target.value);
-    //     setEnteredMedicine_3(event.target.value);
-    // }
 
     const terapiaChangeHandler = (event) => {
         console.log(event.target.value);
