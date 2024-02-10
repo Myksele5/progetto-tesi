@@ -187,6 +187,34 @@
     }
 }
 
+@media screen and (max-height: 650px){
+    .menu_image{
+        height: 180px;
+    }
+
+    .wrapper_generico{
+        margin: 10px 0px;
+    }
+
+    .menu_option{
+        height: 100px;
+    }
+}
+@media screen and (max-height: 559px){
+    .menu_option{
+        height: 80px;
+    }
+
+    .utente_loggato{
+        font-size: 14px;
+        height: 18px;
+    }
+
+    .wrapper_generico{
+        margin: 10px 0px;
+    }
+}
+
 @media screen and (max-height: 700px) and (max-width: 1200px){
     .utente_loggato{
         height: 20px;
@@ -253,11 +281,5 @@
     .image_option{
         width: 24px;
         height: 24px;
-    }
-}
-
-@media screen and (max-height: 600px){
-    .wrapper_generico{
-        margin: 10px 0px;
     }
 }

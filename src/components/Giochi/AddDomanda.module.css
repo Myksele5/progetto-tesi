@@ -92,6 +92,12 @@
     /* border: 1px solid rgb(233, 33, 131); */
 }
 
+.horizontal_line{
+    display: block;
+    width: 100%;
+    border: 1px solid #163172;
+}
+
 @media screen and (max-width: 1550px) {
     .label_style{
         font-size: 14px;
@@ -107,9 +113,9 @@
         flex-direction: column;
     }
 
-    /* .wrapper_generico{
+    .wrapper_generico{
         flex-direction: column;
-    } */
+    }
 }
 @media screen and (max-width: 599px) {
     .wrapper_impostazioni_gioco{

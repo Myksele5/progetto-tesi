@@ -4,17 +4,32 @@ import Card from '../UI/Card';
 import imageee from '../Images/add_person.png';
 import TabellaPazienti from './TabellaPazienti';
 import AddPaziente from './AddPaziente';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './Pazienti.module.css';
 import PatientContext from "../../context/patients-context";
 
 function Pazienti(){
     const patients_ctx = useContext(PatientContext);
+    const [stringaDaCercare, setStringaDaCercare] = useState("");
+
+    let tabella = 
+        <TabellaPazienti
+            elenco = {patients_ctx.listaPazienti.map(patients_ctx.arrayToTable)}>
+        </TabellaPazienti>;
 
     useEffect(() => {
         console.log("Lista dei pazienti");
         console.log(patients_ctx.listaPazienti);
     }, [])
+
+    useEffect(() => {
+        
+    }, [stringaDaCercare])
+
+    function cercaInfoPaziente(event){
+        patients_ctx.cercaPaziente(event.target.value);
+        setStringaDaCercare(event.target.value);
+    }
 
     return(
         <>
@@ -23,7 +38,10 @@ function Pazienti(){
 
             {patients_ctx.showBarraRicercaBottone && 
                 <div className={styles.wrap_boxes}>
-                <SearchBox></SearchBox>
+                <SearchBox
+                    onChange={cercaInfoPaziente}
+                >
+                </SearchBox>
 
                 <GenericButton
                 onClick={patients_ctx.formVisibile}
@@ -56,9 +74,7 @@ function Pazienti(){
                 }
 
                 {patients_ctx.showTabella && 
-                    <TabellaPazienti
-                    elenco = {patients_ctx.listaPazienti.map(patients_ctx.arrayToTable)}>
-                    </TabellaPazienti>
+                    tabella
                 }
                 
             </div>

@@ -451,7 +451,7 @@ function AddDomanda(props){
                                         </div>  
                                     </div>
                                 }
-
+                                <hr className={styles.horizontal_line}></hr>
                                 <GenericButton
                                     method={"post"}
                                     onClick={creaNuovaDomanda}

@@ -76,6 +76,12 @@
     margin: 10px;
 }
 
+.horizontal_line{
+    display: block;
+    width: 100%;
+    border: 1px solid #163172;
+}
+
 @media screen and (max-width: 1550px) {
     .label_style{
         font-size: 14px;

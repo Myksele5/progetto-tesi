@@ -8,9 +8,11 @@ import GenericButton from "./GenericButton";
 import ReactDOM from 'react-dom';
 import { useContext, useState } from "react";
 import AuthContext from "../../context/auth-context";
+import PatientContext from "../../context/patients-context";
 
 function MainMenu(props){
     const auth_ctx = useContext(AuthContext);
+    const patients_ctx = useContext(PatientContext);
 
     const [highlightMenuButton_PAZIENTI, setHighlightMenuButton_PAZIENTI] = useState(true);
     const [highlightMenuButton_TEST, setHighlightMenuButton_TEST] = useState(false);
@@ -21,6 +23,8 @@ function MainMenu(props){
         setHighlightMenuButton_PAZIENTI(true);
         setHighlightMenuButton_TEST(false);
         setHighlightMenuButton_GIOCHI(false);
+
+        patients_ctx.cercaPaziente("");
     }
 
     function goToAttività(){

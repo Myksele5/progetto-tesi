@@ -1,10 +1,11 @@
 .LIST_ITEM_STYLE{
-    margin: 10px;
+    margin: 12px;
     border: 2px solid #163172;
     border-radius: 5px;
     background-color: white;
-    width: 930px;
+    width: 1000px;
     height: fit-content;
+    transition: 0.5s;
 }
 .LIST_ITEM_STYLE:hover{
     background-color: #ececec;
@@ -142,11 +143,11 @@
 
 @media screen and (max-width: 1550px) {
     .LIST_ITEM_STYLE{
-        width: 850px;
+        width: 950px;
     }
 
     .wrapper_lista_domande{
-        width: 920px;
+        width: 1000px;
         max-height: 400px;
     }
 

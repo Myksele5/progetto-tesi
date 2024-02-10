@@ -90,16 +90,17 @@ function App() {
         }
           
         {auth_ctx.utenteLoggato === null && <Login></Login>}
-  
-        {auth_ctx.utenteLoggato !== null && 
-          
-          <MainMenu
-            showSchermata = {changeSchermata}>
-          </MainMenu>
-        
-        }
-  
+
         <PatientContextProvider>
+          {auth_ctx.utenteLoggato !== null && 
+            
+            <MainMenu
+              showSchermata = {changeSchermata}>
+            </MainMenu>
+          
+          }
+  
+        
           
           {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Pazienti' && <div className='wrap_schermata'><Pazienti/></div>}
           {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Attività' &&

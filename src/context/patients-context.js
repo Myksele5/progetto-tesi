@@ -33,7 +33,12 @@ const PatientContext = React.createContext({
     formNonVisibile: () => {},
     nuovoPazienteHandler: () => {},
     showFormNuovoPaziente: null,
-    showBarraRicercaBottone: null
+    showBarraRicercaBottone: null,
+    cercaPaziente: ()=>{},
+    stringSearched: null,
+    compareByName: ()=>{},
+    compareBySurname: ()=>{},
+    compareByCF: ()=>{}
 });
 
 export function PatientContextProvider(props){
@@ -41,6 +46,12 @@ export function PatientContextProvider(props){
     
     //QUESTO STATO SERVE PER DARE IL TEMPO A FIREBASE DI FETCHARE E A REACT DI AGGIORNARE L'ELENCO DEI PAZIENTI
     const [isLoading, setIsLoading] = useState(true);
+
+    const [stringaCercata, setStringaCercata] = useState("");
+
+    const [filtratoPerNome, setFiltratoPerNome] = useState(false);
+    const [filtratoPerCognome, setFiltratoPerCognome] = useState(false);
+    const [filtratoPerCodiceFiscale, setFiltratoPerCodiceFiscale] = useState(false);
 
     const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
     const [showTabella, setShowTabella] = useState(true);
@@ -50,6 +61,10 @@ export function PatientContextProvider(props){
     const [showSchedaPaziente, setShowSchedaPaziente] = useState(false);
     const [showModificaPaziente, setShowModificaPaziente] = useState(false);
     const [showModal, setShowModal] = useState(false);
+
+    useEffect(() => {
+        setElencoPazienti(elencoPazienti);
+    }, [filtratoPerNome, filtratoPerCognome, filtratoPerCodiceFiscale])
 
     const prendiListaPazienti = async () => {
         if(auth_ctx.utenteLoggato !== null){
@@ -87,12 +102,12 @@ export function PatientContextProvider(props){
         setShowTabella(true);
 
         prendiListaPazienti();
-
     }
 
     //FUNZIONE PER VISUALIZZARE FORM AGGIUNTA PAZIENTE
     function formVisibile(){
         setShowSearchBoxAndButton(false);
+        setStringaCercata("");
         setShowFormNewPaziente(true);
         setShowTabella(false);
         setShowSchedaPaziente(false);
@@ -103,50 +118,6 @@ export function PatientContextProvider(props){
         setShowFormNewPaziente(false);
         setShowSearchBoxAndButton(true);
         setShowTabella(true);
-    }
-
-    //---------------- FUNZIONE PER ELIMINARE UN PAZIENTE
-    async function eliminaPaziente(pazienteID){
-        let result;
-
-        result = await getServerMgr().deletePaziente(pazienteID)
-        .then(console.log(result))
-        .catch((err) => {
-            console.error(err);
-        });
-
-        prendiListaPazienti();
-    }
-
-    //FUNZIONE PER VISUALIZZARE IL MODALE DI ELIMINAZIONE
-    function confermaEliminazionePaziente(paziente_ID, paziente_Nome, paziente_Cognome){
-        console.log("ELIMINO PAZIENTE");
-        
-        modal_eliminazione = 
-            <Modal
-            testoModale={"Sei sicuro di voler eliminare il seguente paziente?"}
-            pazienteNome={paziente_Nome}
-            pazienteCognome={paziente_Cognome}
-            CONFERMA={() =>{
-                eliminaPaziente(paziente_ID);
-                setShowModal(false);
-                // setShowTabella(true);
-            }}
-            ANNULLA={() => {
-                setShowModal(false);
-                // setShowTabella(true);
-            }}>
-            </Modal>;
-        setShowModal(true);
-    }
-
-    //---------------- FUNZIONE PER MODIFICARE I DATI DI UN PAZIENTE
-    async function modificaPaziente(){
-        setShowModificaPaziente(false);
-        setShowSearchBoxAndButton(true);
-        setShowTabella(true);
-
-        prendiListaPazienti();
     }
 
     //FUNZIONE PER MOSTRARE LA SCHEDA DI MODIFICA DEI DATI DEL PAZIENTE
@@ -203,47 +174,98 @@ export function PatientContextProvider(props){
         setShowTabella(false);
     }
 
+    //---------------- FUNZIONE PER MODIFICARE I DATI DI UN PAZIENTE
+    function modificaPaziente(){
+        setShowModificaPaziente(false);
+        setShowSearchBoxAndButton(true);
+        setShowTabella(true);
+
+        prendiListaPazienti();
+    }
+
     //FUNZIONE PER CHIUDERE LA SCHEDA DI MODIFICA DEI DATI DEL PAZIENTE
     function chiudiFormModificaPaziente(event){
         event.preventDefault();
         setShowModificaPaziente(false);
         setShowSearchBoxAndButton(true);
+        setStringaCercata("");
         setShowTabella(true);
+    }
+
+    //---------------- FUNZIONE PER ELIMINARE UN PAZIENTE
+    async function eliminaPaziente(pazienteID){
+        let result;
+
+        result = await getServerMgr().deletePaziente(pazienteID)
+        .then(console.log(result))
+        .catch((err) => {
+            console.error(err);
+        });
+
+        prendiListaPazienti();
+    }
+
+    //FUNZIONE PER VISUALIZZARE IL MODALE DI ELIMINAZIONE
+    function confermaEliminazionePaziente(paziente_ID, paziente_Nome, paziente_Cognome){
+        console.log("ELIMINO PAZIENTE");
+        
+        modal_eliminazione = 
+            <Modal
+            testoModale={"Sei sicuro di voler eliminare il seguente paziente?"}
+            pazienteNome={paziente_Nome}
+            pazienteCognome={paziente_Cognome}
+            CONFERMA={() =>{
+                eliminaPaziente(paziente_ID);
+                setShowModal(false);
+                // setShowTabella(true);
+            }}
+            ANNULLA={() => {
+                setShowModal(false);
+                // setShowTabella(true);
+            }}>
+            </Modal>;
+        setShowModal(true);
     }
 
     //------------- FUNZIONE CHE RESTITUISCE LA SINGOLA RIGA DELLA TABELLA POPOLATA CON I DATI DEL PAZIENTE PRESI DAL db
     function fromArrayToTablePazienti(elencoPazienti){
         if(Object.keys(elencoPazienti).length > 0){
-            // console.log(elencoPazienti);
-            return(
-                <tr key={elencoPazienti.ID}>
-                    <td className={`${someStyles['dati_tabella']} ${someStyles['nome']}`}>{elencoPazienti.nome}</td>
-                    <td className={`${someStyles['dati_tabella']} ${someStyles['cognome']}`}>{elencoPazienti.cognome}</td>
-                    <td className={`${someStyles['dati_tabella']} ${someStyles['città']}`}>{elencoPazienti.city}</td>
-                    <td className={`${someStyles['dati_tabella']} ${someStyles['data']}`}>{elencoPazienti.dataNascita}</td>
-                    <td className={`${someStyles['dati_tabella']} ${someStyles['codicefiscale']}`}>{elencoPazienti.codiceFiscale}</td>
-                    {/* <td className={someStyles.dati_tabella}>{arrayDummyPazienti.attività}</td> */}
-                    <td className={`${someStyles['dati_tabella']} ${someStyles['opzioni']}`}>
-                        <DetailsButton
-                        onClick={() => {
-                            cliccaRiga(elencoPazienti);
-                        }}>
-                        </DetailsButton>
-    
-                        <EditButton
-                        onClick={() =>{
-                            modificaDatiPaziente(elencoPazienti);
-                        }}>
-                        </EditButton>
-                        
-                        <DeleteButton
-                        onClick={() => {
-                            confermaEliminazionePaziente(elencoPazienti.ID, elencoPazienti.nome, elencoPazienti.cognome);
-                        }}>
-                        </DeleteButton>
-                    </td>
-                </tr>
-            );
+            if(stringaCercata.length === 0 || 
+                (elencoPazienti.nome.toUpperCase().includes(stringaCercata.toUpperCase()) ||
+                 elencoPazienti.cognome.toUpperCase().includes(stringaCercata.toUpperCase()) ||
+                 elencoPazienti.codiceFiscale.toUpperCase().includes(stringaCercata.toUpperCase())
+                )){
+                return(
+                    <tr key={elencoPazienti.ID}>
+                        <td className={`${someStyles['dati_tabella']} ${someStyles['nome']}`}>{elencoPazienti.nome}</td>
+                        <td className={`${someStyles['dati_tabella']} ${someStyles['cognome']}`}>{elencoPazienti.cognome}</td>
+                        <td className={`${someStyles['dati_tabella']} ${someStyles['città']}`}>{elencoPazienti.city}</td>
+                        <td className={`${someStyles['dati_tabella']} ${someStyles['data']}`}>{elencoPazienti.dataNascita}</td>
+                        <td className={`${someStyles['dati_tabella']} ${someStyles['codicefiscale']}`}>{elencoPazienti.codiceFiscale}</td>
+                        {/* <td className={someStyles.dati_tabella}>{arrayDummyPazienti.attività}</td> */}
+                        <td className={`${someStyles['dati_tabella']} ${someStyles['opzioni']}`}>
+                            <DetailsButton
+                            onClick={() => {
+                                cliccaRiga(elencoPazienti);
+                            }}>
+                            </DetailsButton>
+        
+                            <EditButton
+                            onClick={() =>{
+                                modificaDatiPaziente(elencoPazienti);
+                            }}>
+                            </EditButton>
+                            
+                            <DeleteButton
+                            onClick={() => {
+                                confermaEliminazionePaziente(elencoPazienti.ID, elencoPazienti.nome, elencoPazienti.cognome);
+                            }}>
+                            </DeleteButton>
+                        </td>
+                    </tr>
+                );
+            }
+            
         }
         else{
             console.log(elencoPazienti);
@@ -314,6 +336,60 @@ export function PatientContextProvider(props){
         setShowSchedaPaziente(false);
         setShowTabella(true);
         setShowSearchBoxAndButton(true);
+        // ordinaPerNome();
+    }
+
+    function searchPatient(stringaDaCercare){
+        console.log(stringaDaCercare)
+        setStringaCercata(stringaDaCercare);
+    }
+
+    function ordinaPerNome(){
+        setElencoPazienti(elencoPazienti.sort(comparazionePerNome));
+        setFiltratoPerNome((prevState) => (!prevState))
+        console.log(elencoPazienti);
+    }
+
+    function comparazionePerNome(a, b){
+        if(a.nome.toUpperCase() < b.nome.toUpperCase()){
+            return -1;
+        }
+        if(a.nome.toUpperCase() > b.nome.toUpperCase()){
+            return 1;
+        }
+        return 0;
+    }
+
+    function ordinaPerCognome(){
+        setElencoPazienti(elencoPazienti.sort(comparazionePerCognome));
+        setFiltratoPerCognome((prevState) => (!prevState))
+        console.log(elencoPazienti);
+    }
+
+    function comparazionePerCognome(a, b){
+        if(a.cognome.toUpperCase() < b.cognome.toUpperCase()){
+            return -1;
+        }
+        if(a.cognome.toUpperCase() > b.cognome.toUpperCase()){
+            return 1;
+        }
+        return 0;
+    }
+
+    function ordinaPerCodiceFiscale(){
+        setElencoPazienti(elencoPazienti.sort(comparazionePerCodiceFiscale));
+        setFiltratoPerCodiceFiscale((prevState) => (!prevState))
+        console.log(elencoPazienti);
+    }
+
+    function comparazionePerCodiceFiscale(a, b){
+        if(a.codiceFiscale.toUpperCase() < b.codiceFiscale.toUpperCase()){
+            return -1;
+        }
+        if(a.codiceFiscale.toUpperCase() > b.codiceFiscale.toUpperCase()){
+            return 1;
+        }
+        return 0;
     }
 
     return(
@@ -336,7 +412,12 @@ export function PatientContextProvider(props){
             formNonVisibile: formNonVisibile,
             nuovoPazienteHandler: aggiungiPaziente,
             showFormNuovoPaziente: showFormNewPaziente,
-            showBarraRicercaBottone: showSearchBoxAndButton
+            showBarraRicercaBottone: showSearchBoxAndButton,
+            cercaPaziente: searchPatient,
+            stringSearched: stringaCercata,
+            compareByName: ordinaPerNome,
+            compareBySurname: ordinaPerCognome,
+            compareByCF: ordinaPerCodiceFiscale
         }}>
             {props.children}
         </PatientContext.Provider>

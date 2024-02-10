@@ -393,7 +393,7 @@ function EditDomanda(props){
                             </div>
                         </>
                     }
-
+                    <hr className={styles.horizontal_line}></hr>
                     <div className={styles.wrapper_generico}>
                         <GenericButton
                             onClick={salvaDomanda}
