@@ -7,7 +7,7 @@
 
 .wrap_boxes{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     background-color: #D6E4F0;
 }
@@ -31,10 +31,6 @@
 @media screen and (max-width: 799px) {
     .wrapper_generico{
         grid-template-columns: 350px;
-    }
-
-    .wrap_boxes{
-        display: block;
     }
 }
 

@@ -36,9 +36,7 @@ const PatientContext = React.createContext({
     showBarraRicercaBottone: null,
     cercaPaziente: ()=>{},
     stringSearched: null,
-    compareByName: ()=>{},
-    compareBySurname: ()=>{},
-    compareByCF: ()=>{}
+    selectOrder:()=>{},
 });
 
 export function PatientContextProvider(props){
@@ -49,9 +47,7 @@ export function PatientContextProvider(props){
 
     const [stringaCercata, setStringaCercata] = useState("");
 
-    const [filtratoPerNome, setFiltratoPerNome] = useState(false);
-    const [filtratoPerCognome, setFiltratoPerCognome] = useState(false);
-    const [filtratoPerCodiceFiscale, setFiltratoPerCodiceFiscale] = useState(false);
+    const [ordinamentoSelezionato, setOrdinamentoSelezionato] = useState("");
 
     const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
     const [showTabella, setShowTabella] = useState(true);
@@ -64,7 +60,7 @@ export function PatientContextProvider(props){
 
     useEffect(() => {
         setElencoPazienti(elencoPazienti);
-    }, [filtratoPerNome, filtratoPerCognome, filtratoPerCodiceFiscale])
+    }, [ordinamentoSelezionato])
 
     const prendiListaPazienti = async () => {
         if(auth_ctx.utenteLoggato !== null){
@@ -344,13 +340,43 @@ export function PatientContextProvider(props){
         setStringaCercata(stringaDaCercare);
     }
 
-    function ordinaPerNome(){
-        setElencoPazienti(elencoPazienti.sort(comparazionePerNome));
-        setFiltratoPerNome((prevState) => (!prevState))
+    function ordinamento(orderBy){
+        switch(orderBy){
+            case "NOME - Asc":
+                ordinaPerNome("ASC");
+                break;
+            case "NOME - Disc":
+                ordinaPerNome("DISC");
+                break;
+            case "COGNOME - Asc":
+                ordinaPerCognome("ASC");
+                break;
+            case "COGNOME - Disc":
+                ordinaPerCognome("DISC");
+                break;
+            case "CODICE FISC. - Asc":
+                ordinaPerCodiceFiscale("ASC");
+                break;
+            case "CODICE FISC. - Disc":
+                ordinaPerCodiceFiscale("DISC");
+                break;
+            default:
+                break;
+        }
+        setOrdinamentoSelezionato(orderBy);
+    }
+
+    function ordinaPerNome(verso){
+        if(verso === "ASC"){
+            setElencoPazienti(elencoPazienti.sort(comparazionePerNome_ASCENDENTE));
+        }
+        if(verso === "DISC"){
+            setElencoPazienti(elencoPazienti.sort(comparazionePerNome_DISCENDENTE));
+        }
         console.log(elencoPazienti);
     }
 
-    function comparazionePerNome(a, b){
+    function comparazionePerNome_ASCENDENTE(a, b){
         if(a.nome.toUpperCase() < b.nome.toUpperCase()){
             return -1;
         }
@@ -359,14 +385,27 @@ export function PatientContextProvider(props){
         }
         return 0;
     }
+    function comparazionePerNome_DISCENDENTE(a, b){
+        if(a.nome.toUpperCase() > b.nome.toUpperCase()){
+            return -1;
+        }
+        if(a.nome.toUpperCase() < b.nome.toUpperCase()){
+            return 1;
+        }
+        return 0;
+    }
 
-    function ordinaPerCognome(){
-        setElencoPazienti(elencoPazienti.sort(comparazionePerCognome));
-        setFiltratoPerCognome((prevState) => (!prevState))
+    function ordinaPerCognome(verso){
+        if(verso === "ASC"){
+            setElencoPazienti(elencoPazienti.sort(comparazionePerCognome_ASCENDENTE));
+        }
+        if(verso === "DISC"){
+            setElencoPazienti(elencoPazienti.sort(comparazionePerCognome_DISCENDENTE));
+        }
         console.log(elencoPazienti);
     }
 
-    function comparazionePerCognome(a, b){
+    function comparazionePerCognome_ASCENDENTE(a, b){
         if(a.cognome.toUpperCase() < b.cognome.toUpperCase()){
             return -1;
         }
@@ -375,18 +414,40 @@ export function PatientContextProvider(props){
         }
         return 0;
     }
+    function comparazionePerCognome_DISCENDENTE(a, b){
+        if(a.cognome.toUpperCase() > b.cognome.toUpperCase()){
+            return -1;
+        }
+        if(a.cognome.toUpperCase() < b.cognome.toUpperCase()){
+            return 1;
+        }
+        return 0;
+    }
 
-    function ordinaPerCodiceFiscale(){
-        setElencoPazienti(elencoPazienti.sort(comparazionePerCodiceFiscale));
-        setFiltratoPerCodiceFiscale((prevState) => (!prevState))
+    function ordinaPerCodiceFiscale(verso){
+        if(verso === "ASC"){
+            setElencoPazienti(elencoPazienti.sort(comparazionePerCodiceFiscale_ASCENDENTE));
+        }
+        if(verso === "DISC"){
+            setElencoPazienti(elencoPazienti.sort(comparazionePerCodiceFiscale_DISCENDENTE));
+        }
         console.log(elencoPazienti);
     }
 
-    function comparazionePerCodiceFiscale(a, b){
+    function comparazionePerCodiceFiscale_ASCENDENTE(a, b){
         if(a.codiceFiscale.toUpperCase() < b.codiceFiscale.toUpperCase()){
             return -1;
         }
         if(a.codiceFiscale.toUpperCase() > b.codiceFiscale.toUpperCase()){
+            return 1;
+        }
+        return 0;
+    }
+    function comparazionePerCodiceFiscale_DISCENDENTE(a, b){
+        if(a.codiceFiscale.toUpperCase() > b.codiceFiscale.toUpperCase()){
+            return -1;
+        }
+        if(a.codiceFiscale.toUpperCase() < b.codiceFiscale.toUpperCase()){
             return 1;
         }
         return 0;
@@ -415,9 +476,7 @@ export function PatientContextProvider(props){
             showBarraRicercaBottone: showSearchBoxAndButton,
             cercaPaziente: searchPatient,
             stringSearched: stringaCercata,
-            compareByName: ordinaPerNome,
-            compareBySurname: ordinaPerCognome,
-            compareByCF: ordinaPerCodiceFiscale
+            selectOrder: ordinamento,
         }}>
             {props.children}
         </PatientContext.Provider>

@@ -38,17 +38,31 @@ function Pazienti(){
 
             {patients_ctx.showBarraRicercaBottone && 
                 <div className={styles.wrap_boxes}>
-                <SearchBox
-                    onChange={cercaInfoPaziente}
-                >
-                </SearchBox>
+                    <select onChange={(event) => {
+                        patients_ctx.selectOrder(event.target.value)
+                    }} className={styles.select_style}>
+                        <option hidden>Ordina per...</option>
+                        <option>NOME - Asc</option>
+                        <option>NOME - Disc</option>
+                        <option>COGNOME - Asc</option>
+                        <option>COGNOME - Disc</option>
+                        <option>CODICE FISC. - Asc</option>
+                        <option>CODICE FISC. - Disc</option>
+                    </select>
 
-                <GenericButton
-                onClick={patients_ctx.formVisibile}
-                buttonText={"Aggiungi Paziente"}
-                generic_button={true}
-                immagine={imageee}>
-                </GenericButton>
+                    <GenericButton
+                        onClick={patients_ctx.formVisibile}
+                        buttonText={"Aggiungi Paziente"}
+                        generic_button={true}
+                        text_hideable={true}
+                        immagine={imageee}
+                    >
+                    </GenericButton>
+
+                    <SearchBox
+                        onChange={cercaInfoPaziente}
+                    >
+                    </SearchBox>
                 </div>
             }
 

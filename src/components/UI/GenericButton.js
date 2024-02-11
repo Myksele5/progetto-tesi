@@ -6,6 +6,7 @@ function GenericButton(props){
     const bottoneStileNormale = props.generic_button ? `${styles.generic_button}` : '';
     const bottoneSelezionato = props.is_selected ? `${styles.is_selected}` : '';
     const redStyling = props.red_styling ? `${styles.red_styling}` : '';
+    const textHideable = props.text_hideable ? `${styles.generic_button_HIDETEXT}` : `${styles.text_color}`;
     const classiStile = `${bottoneStileNormale} ${bottoneStilePiccolo} ${bottoneSelezionato} ${redStyling}`;
     var img;
 
@@ -18,7 +19,7 @@ function GenericButton(props){
 
     return(
         <button disabled={disabledButton} onClick={props.onClick} className={classiStile}>
-            {img}{props.buttonText}
+            {img}<span className={textHideable}>{props.buttonText}</span>
         </button>
     );
 }

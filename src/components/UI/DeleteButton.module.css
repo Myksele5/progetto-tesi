@@ -29,11 +29,11 @@
     /* transition: 0.3s; */
 }
 
-@media screen and ((max-width: 1605px) or (max-height: 700px)) {
+@media screen and (max-width: 1605px) {
 
     .delete_button{
-        width: 33px;
-        height: 33px;
+        width: 35px;
+        height: 35px;
     }
 
     .delete_button:hover .trash_image{
@@ -47,7 +47,7 @@
     }
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 700px) {
 
     .delete_button{
         width: 30px;

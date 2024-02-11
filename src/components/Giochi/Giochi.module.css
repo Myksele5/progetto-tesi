@@ -25,3 +25,13 @@
         font-size: 20px;
     }
 }
+
+@media screen and (max-width: 650px) {
+    .wrap_boxes{
+        justify-content: center;
+    }
+
+    .select_style{
+        width: 140px;
+    }
+}
