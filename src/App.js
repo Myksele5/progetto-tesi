@@ -26,10 +26,10 @@ function App() {
     .then(setSingletonHasLoaded(true))
   }, [])
 
-  useEffect(async () => {
-    let result = await getServerMgr().getAccount();
-    console.log(result);
-  }, [])
+  // useEffect(async () => {
+  //   let result = await getServerMgr().getAccount();
+  //   console.log(result);
+  // }, [])
 
   useEffect(() => {
     if(auth_ctx.tipoAccount === "Paziente"){

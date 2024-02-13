@@ -129,7 +129,7 @@ function SchedaPaziente(props){
                 {sezioneScheda === 'SCHEDA_MEDICA' &&
                 <>
                 <div className={styles.grid_flex_container}>
-                    <div>
+                    <div className={styles.grid_flex_content}>
                         <label className={styles.label_style}>Patologia</label>
                         <div className={styles.containter_content_style}>
                             {props.patologia_1.map((pat) => (
@@ -138,7 +138,7 @@ function SchedaPaziente(props){
                         </div>
                         {/* <hr className={styles.horizontal_line}/> */}
                     </div>
-                    <div>
+                    <div className={styles.grid_flex_content}>
                         <label className={styles.label_style}>Medicine</label>
                         <div className={styles.containter_content_style}>
                             {props.medicina_1.map((med) => (
@@ -146,14 +146,14 @@ function SchedaPaziente(props){
                             ))}
                         </div>
                     </div>
-                    <div>
+                    <div className={styles.grid_flex_content}>
                         <label className={styles.label_style}>Terapia</label>
                         <div className={styles.containter_content_style}>
                             <h3>{props.terapia}</h3>
                         </div>
                         {/* <hr className={styles.horizontal_line}/> */}
                     </div>
-                    <div>
+                    <div className={styles.grid_flex_content}>
                         <label className={styles.label_style}>Note</label>
                         <div className={styles.containter_content_style}>
                             <h3>{props.note}</h3>

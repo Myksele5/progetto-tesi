@@ -44,6 +44,7 @@ export function PatientContextProvider(props){
     
     //QUESTO STATO SERVE PER DARE IL TEMPO A FIREBASE DI FETCHARE E A REACT DI AGGIORNARE L'ELENCO DEI PAZIENTI
     const [isLoading, setIsLoading] = useState(true);
+    const [displayWidth, setDisplayWidth] = useState(window.innerWidth);
 
     const [stringaCercata, setStringaCercata] = useState("");
 
@@ -58,9 +59,39 @@ export function PatientContextProvider(props){
     const [showModificaPaziente, setShowModificaPaziente] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
+    const useScreenSize = () => {
+        const [screenSize, setScreenSize] = useState({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      
+        useEffect(() => {
+          const handleResize = () => {
+            setScreenSize({
+              width: window.innerWidth,
+              height: window.innerHeight,
+            });
+          };
+      
+          window.addEventListener('resize', handleResize);
+      
+          // Clean up the event listener when the component unmounts
+          return () => {
+            window.removeEventListener('resize', handleResize);
+          };
+        }, []);
+      
+        return screenSize;
+    };
+
     useEffect(() => {
         setElencoPazienti(elencoPazienti);
     }, [ordinamentoSelezionato])
+
+    useEffect(() => {
+        setDisplayWidth(window.innerWidth);
+        console.log(window.innerWidth);
+    }, [displayWidth])
 
     const prendiListaPazienti = async () => {
         if(auth_ctx.utenteLoggato !== null){
@@ -232,33 +263,61 @@ export function PatientContextProvider(props){
                  elencoPazienti.codiceFiscale.toUpperCase().includes(stringaCercata.toUpperCase())
                 )){
                 return(
-                    <tr key={elencoPazienti.ID}>
-                        <td className={`${someStyles['dati_tabella']} ${someStyles['nome']}`}>{elencoPazienti.nome}</td>
-                        <td className={`${someStyles['dati_tabella']} ${someStyles['cognome']}`}>{elencoPazienti.cognome}</td>
-                        <td className={`${someStyles['dati_tabella']} ${someStyles['città']}`}>{elencoPazienti.city}</td>
-                        <td className={`${someStyles['dati_tabella']} ${someStyles['data']}`}>{elencoPazienti.dataNascita}</td>
-                        <td className={`${someStyles['dati_tabella']} ${someStyles['codicefiscale']}`}>{elencoPazienti.codiceFiscale}</td>
-                        {/* <td className={someStyles.dati_tabella}>{arrayDummyPazienti.attività}</td> */}
-                        <td className={`${someStyles['dati_tabella']} ${someStyles['opzioni']}`}>
-                            <DetailsButton
-                            onClick={() => {
-                                cliccaRiga(elencoPazienti);
-                            }}>
-                            </DetailsButton>
-        
-                            <EditButton
-                            onClick={() =>{
-                                modificaDatiPaziente(elencoPazienti);
-                            }}>
-                            </EditButton>
+                    <>
+                        <tr key={elencoPazienti.ID}>
+                            <td className={`${someStyles['dati_tabella']} ${someStyles['nome']}`}>{elencoPazienti.nome}</td>
+                            <td className={`${someStyles['dati_tabella']} ${someStyles['cognome']}`}>{elencoPazienti.cognome}</td>
+                            <td className={`${someStyles['dati_tabella']} ${someStyles['città']}`}>{elencoPazienti.city}</td>
+                            <td className={`${someStyles['dati_tabella']} ${someStyles['data']}`}>{elencoPazienti.dataNascita}</td>
+                            <td className={`${someStyles['dati_tabella']} ${someStyles['codicefiscale']}`}>{elencoPazienti.codiceFiscale}</td>
+                            {/* <td className={someStyles.dati_tabella}>{arrayDummyPazienti.attività}</td> */}
+                            <td className={`${someStyles['dati_tabella']} ${someStyles['opzioni']}`}>
+                                <DetailsButton
+                                onClick={() => {
+                                    cliccaRiga(elencoPazienti);
+                                }}>
+                                </DetailsButton>
+            
+                                <EditButton
+                                onClick={() =>{
+                                    modificaDatiPaziente(elencoPazienti);
+                                }}>
+                                </EditButton>
+                                
+                                <DeleteButton
+                                onClick={() => {
+                                    confermaEliminazionePaziente(elencoPazienti.ID, elencoPazienti.nome, elencoPazienti.cognome);
+                                }}>
+                                </DeleteButton>
+                            </td>
                             
-                            <DeleteButton
-                            onClick={() => {
-                                confermaEliminazionePaziente(elencoPazienti.ID, elencoPazienti.nome, elencoPazienti.cognome);
-                            }}>
-                            </DeleteButton>
-                        </td>
-                    </tr>
+                        </tr>
+                        
+                        <tr className={someStyles.mobile_row}>
+                            <td style={{width: "200px", height: "30px", padding: "0" }}>
+                                {/* <button style={{width: "100%", height: "100%", margin: "0", padding: "0"}}>DETTAGLI</button> */}
+                                <DetailsButton
+                                onClick={() => {
+                                    cliccaRiga(elencoPazienti);
+                                }}></DetailsButton>
+                            </td>
+                            <td style={{width: "200px", height: "30px", padding: "0" }}>
+                                {/* <button style={{width: "100%", height: "100%", margin: "0", padding: "0"}}>MODIFICA</button> */}
+                                <EditButton
+                                onClick={() =>{
+                                    modificaDatiPaziente(elencoPazienti);
+                                }}></EditButton>
+                            </td>
+                            <td style={{width: "200px", height: "30px", padding: "0" }}>
+                                {/* <button style={{width: "100%", height: "100%", margin: "0", padding: "0"}}>ELIMINA</button> */}
+                                <DeleteButton
+                                onClick={() => {
+                                    confermaEliminazionePaziente(elencoPazienti.ID, elencoPazienti.nome, elencoPazienti.cognome);
+                                }}></DeleteButton>
+                            </td>
+                            
+                        </tr>
+                    </>
                 );
             }
             

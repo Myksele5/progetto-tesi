@@ -10,8 +10,8 @@ tbody tr:hover .dati_tabella{
     color: white;
 }
 
-tbody tr:nth-child(2n){background-color: rgb(196, 196, 196);}
-tbody tr:nth-child(2n):hover .dati_tabella{
+tbody tr:nth-child(4n+3){background-color: rgb(196, 196, 196);}
+tbody tr:nth-child(4n+3):hover .dati_tabella{
     background-color: #08193d;
     color: white;
 }
@@ -46,7 +46,7 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     width: 250px;
 }
 
-.intestazione_tabella.data, .intestazione_tabella.attività, .dati_tabella.data, .dati_tabella.attività{
+.intestazione_tabella.data, .dati_tabella.data{
     width: 170px;
 }
 
@@ -63,6 +63,13 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     text-overflow: ellipsis;
     overflow: hidden;
     height: 100px;
+}
+
+.mobile_row{
+    width: 600px;
+    border-bottom: 5px solid #D6E4F0;
+    display: none;
+    height: 35px;
 }
 
 @media screen and (max-width: 1750px){
@@ -144,11 +151,11 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     }
 
     .intestazione_tabella.codicefiscale, .dati_tabella.codicefiscale{
-        width: 150px;
+        display: none;
     }
 
     .intestazione_tabella.data, .dati_tabella.data{
-        display: none;
+        width: 140px;
     }
     
 }
@@ -177,17 +184,21 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     }
 
     .intestazione_tabella.data, .dati_tabella.data{
-        display: none;
+        width: 100px;
     }
     
 }
 @media screen and (max-width: 650px) {
     .table_wrapper{
-        width: 550px;
+        width: 500px;
     }
 
     .intestazione_tabella{
         font-size: 13px;
+    }
+
+    .intestazione_tabella.nome, .intestazione_tabella.cognome, .dati_tabella.nome, .dati_tabella.cognome{
+        width: 80px;
     }
 
     .intestazione_tabella.città, .dati_tabella.città{
@@ -195,22 +206,31 @@ tbody tr:nth-child(2n):hover .dati_tabella{
     }
 
     .intestazione_tabella.opzioni, .dati_tabella.opzioni{
-        width: 100px;
+        /* width: 100px; */
+        display: none;
+    }
+
+    .intestazione_tabella.data, .dati_tabella.data{
+        width: 80px;
+    }
+
+    .mobile_row{
+        display: table-row;
     }
     
 }
 
 @media screen and (max-width: 500px) {
     .table_wrapper{
-        width: 450px;
+        width: 400px;
     }
 
     .intestazione_tabella{
         font-size: 12px;
     }
 
-    .intestazione_tabella.nome, .intestazione_tabella.cognome, .dati_tabella.nome, .dati_tabella.cognome{
-        width: 70px;
+    .intestazione_tabella.nome, .intestazione_tabella.cognome, .dati_tabella.nome, .dati_tabella.cognome,.intestazione_tabella.data, .dati_tabella.data{
+        width: 60px;
     }
 
     .intestazione_tabella.codicefiscale, .dati_tabella.codicefiscale{
