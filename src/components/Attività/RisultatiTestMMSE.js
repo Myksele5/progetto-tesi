@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import styles from "./RisultatiTest.module.css";
+import styles from "./RisultatiTestMMSE.module.css";
 import GenericButton from "../UI/GenericButton";
 import TestsContext from "../../context/tests-context";
 
-function RisultatiTest(props){
+function RisultatiTestMMSE(props){
     const tests_ctx = useContext(TestsContext);
 
     const pazienteID = props.pazienteID;
@@ -101,9 +101,9 @@ function RisultatiTest(props){
 
     return(
         <>
-            <h1 className={styles.title}>Risultati del paziente: {nomePaziente} {cognomePaziente}</h1>
 
             <div style={{position: "sticky", top: "10px", backgroundColor: "lightblue", textAlign: "center"}}>
+                <h1 className={styles.title}>Risultati del paziente: {nomePaziente} {cognomePaziente}</h1>
                 <h4 className={styles.title}>Punteggio Totale</h4>
                 <h4 className={styles.title}>{punteggioTOT}/30</h4>
             </div>
@@ -261,4 +261,4 @@ function RisultatiTest(props){
     );
 }
 
-export default RisultatiTest;
+export default RisultatiTestMMSE;

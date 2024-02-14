@@ -167,27 +167,29 @@ function SchedaPaziente(props){
                 <>
                     {props.scoreMMSE &&
                     <>
-                        <h1>PUNTEGGIO MMSE</h1>
+                        <h1 className={styles.mmse_moca_style}>PUNTEGGIO MMSE</h1>
                         <h2>{props.scoreMMSE}/30</h2>
                     </>
                     }
                     {!props.scoreMMSE &&
                     <>
-                        <h1>Test MMMSE non effettuato</h1>
+                        <h1 className={styles.mmse_moca_style}>Test MMMSE non effettuato</h1>
                     </>
                     }
-
+                    <hr className={styles.horizontal_line}/>
                     {props.scoreMOCA &&
                     <>
-                        <h1>PUNTEGGIO MOCA</h1>
+                        <h1 className={styles.mmse_moca_style}>PUNTEGGIO MOCA</h1>
                         <h2>{props.scoreMOCA}/30</h2>
                     </>
                     }
                     {!props.scoreMOCA &&
                     <>
-                        <h1>Test MOCA non effettuato</h1>
+                        <h1 className={styles.mmse_moca_style}>Test MOCA non effettuato</h1>
                     </>
                     }
+                    <hr className={styles.horizontal_line}/>
+                    <h1 className={styles.mmse_moca_style}>Esercizi del paziente:</h1>
                     
                     <hr className={styles.horizontal_line}/>
                 </>

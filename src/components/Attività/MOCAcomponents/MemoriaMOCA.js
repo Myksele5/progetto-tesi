@@ -43,7 +43,7 @@ function MemoriaMOCA(props){
     }
 
     function salvaRisposteAreaCognitiva4(){
-        let oggettoDomandeRisposte = [
+        let oggettoDomandeRisposte = 
             {
                 domanda: "Scrivi le parole mostrate in precedenza",
                 parole: [
@@ -54,9 +54,10 @@ function MemoriaMOCA(props){
                     {parola: elencoParole.parolaDaMemorizzare_5, risposta: parolaMemorizzata5}
                 ],
             }
-        ];
+        ;
 
         console.log(oggettoDomandeRisposte);
+        props.risposteAreaCog4(oggettoDomandeRisposte);
     }
 
     return(

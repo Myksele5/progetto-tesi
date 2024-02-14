@@ -6,11 +6,16 @@
 }
 
 .wrap_boxes{
-    width: 100%;
+    top: 10px;
+    position: sticky;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    background-color: #D6E4F0;
+    background-color: #d6e4f0f6;
+    border-top: 1px solid #163172;
+    border-bottom: 1px solid #163172;
+    box-shadow: 5px 0 5px 5px #163172;
+    z-index: 1;
 }
 
 .wrapper_generico{

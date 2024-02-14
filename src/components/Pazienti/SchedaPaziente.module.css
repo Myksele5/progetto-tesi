@@ -1,9 +1,14 @@
 .grid_flex_container{
     display: grid;
     grid-template-columns: 300px 300px;
-    column-gap: 140px;
+    column-gap: 120px;
     grid-template-rows: 160px 160px;
     row-gap: 40px;
+}
+
+.mmse_moca_style{
+    font-size: 22px;
+    margin: 5px;
 }
 
 .grid_flex_content{

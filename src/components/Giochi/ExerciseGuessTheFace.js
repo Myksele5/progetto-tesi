@@ -3,15 +3,6 @@ import GameButton from '../UI/GameButton';
 import GenericAlternativeButton from '../UI/GenericAlternativeButton';
 import { useContext, useEffect, useState } from 'react';
 
-import Einstein from '../Images-Giochi/ALBERT_EINSTEIN.jpeg';
-import Dante from '../Images-Giochi/DANTE_ALIGHIERI.jpg';
-import Marilyn from '../Images-Giochi/MARILYN_MONROE.jpg';
-import Leonardo from '../Images-Giochi/LEONARDO_DA_VINCI.jpg';
-import Napoleone from '../Images-Giochi/NAPOLEONE_BONAPARTE.jpg';
-import PapaFrancesco from '../Images-Giochi/PAPA_FRANCESCO.jpg';
-import GameContext from '../../context/game-context';
-import AuthContext from '../../context/auth-context';
-
 let counter_question_number = 0;
 let counter_correct_answers = 0;
 var arrayRisposte = [];

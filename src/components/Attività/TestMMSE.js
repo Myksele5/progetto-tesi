@@ -8,7 +8,7 @@ import CognitiveAreaMemoria from "./MMSEcomponents/CognitiveAreaMemoria";
 import CognitiveAreaAttenzione from "./MMSEcomponents/CognitiveAreaAttenzione";
 import CognitiveAreaLinguaggio from "./MMSEcomponents/CognitiveAreaLinguaggio";
 import CognitiveAreaAbilità from "./MMSEcomponents/CognitiveAreaAbilità";
-import RisultatiTest from "./RisultatiTest";
+import RisultatiTest from "./RisultatiTestMMSE";
 
 function TestMMSE(props){
     const patients_ctx = useContext(PatientContext);

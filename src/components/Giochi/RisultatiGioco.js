@@ -64,9 +64,10 @@ function RisultatiGioco(props){
                     buttonText='Assegna risultati a...'>
                     </GenericButton>
                     
-                    <h2>PAZIENTE SELEZIONATO: {paz}</h2>
-                    <div className={styles.select_box}>
-                        <select onChange={(event) => {
+                    <h2 className={styles.paz_selezionato}>PAZIENTE SELEZIONATO:</h2>
+                    {/* <h2 className={styles.paz_selezionato}>{paz}</h2> */}
+                    {/* <div className={styles.select_box}> */}
+                        <select className={styles.select_box} onChange={(event) => {
                             // console.log(event.target.value);
                             console.log(patients_ctx.listaPazienti.map(ogg => ogg.ID).indexOf(event.target.value));
                             // indice = trovaIndice(event);
@@ -83,7 +84,7 @@ function RisultatiGioco(props){
                             <option hidden>-- select an option --</option>
                             {patients_ctx.listaPazienti.map(patients_ctx.arrayToLista)}
                         </select>
-                    </div>
+                    {/* </div> */}
                     
                     
                 </div>
