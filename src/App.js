@@ -7,13 +7,14 @@ import Pazienti from './components/Pazienti/Pazienti';
 import MainMenu from './components/UI/MainMenu';
 import Attività from './components/Attività/Attività';
 import Giochi from './components/Giochi/Giochi';
-import Dialoghi from './components/Dialoghi/Dialoghi';
 import AuthContext from './context/auth-context';
 import { PatientContextProvider } from './context/patients-context';
 import Modal from './components/UI/Modal';
 import { GameContextProvider } from './context/game-context';
 import { getServerMgr } from './backend_conn/ServerMgr';
 import { TestsContextProvider } from './context/tests-context';
+import Patologie from './components/Patologie/Patologie';
+import { PatologiesContextProvider } from './context/patologies-context';
 
 function App() {
   const [singletonHasLoaded, setSingletonHasLoaded] = useState(false);
@@ -63,7 +64,7 @@ function App() {
         break;
   
       case 3:
-        setSchermataMostrata('SCHERMATA_Dialoghi');
+        setSchermataMostrata('SCHERMATA_Patologie');
         break;
   
       default:
@@ -99,8 +100,6 @@ function App() {
             </MainMenu>
           
           }
-  
-        
           
           {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Pazienti' && <div className='wrap_schermata'><Pazienti/></div>}
           {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Attività' &&
@@ -117,7 +116,13 @@ function App() {
               </div>
             </GameContextProvider>
           }
-          {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Dialoghi' && <div className='wrap_schermata'><Dialoghi/></div>}
+          {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Patologie' && 
+            <PatologiesContextProvider>
+              <div className='wrap_schermata'>
+                <Patologie/>
+              </div>
+            </PatologiesContextProvider>
+          }
         
         </PatientContextProvider>
   

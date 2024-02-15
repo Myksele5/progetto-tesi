@@ -87,9 +87,7 @@ function Pazienti(){
                     </Card>
                 }
 
-                {patients_ctx.showTabella && 
-                    tabella
-                }
+                {patients_ctx.showTabella && tabella}
                 
             </div>
         </>

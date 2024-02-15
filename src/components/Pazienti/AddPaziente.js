@@ -4,6 +4,7 @@ import styles from './AddPaziente.module.css';
 import AuthContext from "../../context/auth-context";
 import { getServerMgr } from "../../backend_conn/ServerMgr";
 import PatientContext from "../../context/patients-context";
+import CardSmall from "../UI/CardSmall";
 
 function AddPaziente(props){
     const auth_ctx = useContext(AuthContext);
@@ -313,7 +314,7 @@ function AddPaziente(props){
                 <>
                     <div className={styles.wrapper_flex}>
                         <section className={styles.section_style}>
-                            <h3 className={styles.subtitle_form}>DATI PERSONALI</h3>
+                            {/* <h3 className={styles.subtitle_form}>DATI PERSONALI</h3> */}
 
                             <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome:</label>
                             <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNome} onChange={nomeChangeHandler}></input>
@@ -347,7 +348,36 @@ function AddPaziente(props){
 
                 {stepAggiuntaPaziente === 2 &&
                 <>
-                    <div className={styles.wrapper_flex}>
+                    <GenericButton 
+                        // onClick={aggiungiPatologia}
+                        generic_button={true}
+                        buttonText='Aggiungi patologia'
+                    >
+                    </GenericButton>
+                    <CardSmall
+                        children={
+                            <>
+                                <div style={{display: "flex"}}>
+                                    <div>
+                                        <h2 style={{margin: "5px"}}>patologia</h2>
+                                        <select style={{margin: "5px"}}>
+                                            <option>Alzheimer</option>
+                                            <option>Parkinson</option>
+                                            <option>Diabete</option>
+                                            <option>Cancro</option>
+                                        </select>
+                                    </div>
+                                    
+                                    {/* <h2 style={{margin: "5px"}}>dosaggio</h2> */}
+                                    <h2 style={{margin: "5px"}}>data inizio</h2>
+                                    <h2 style={{margin: "5px"}}>data fine</h2>
+                                </div>
+                            </>
+                        }
+                    >
+                    </CardSmall>
+                    
+                    {/* <div className={styles.wrapper_flex}>
                         <section className={styles.section_style}>
                             <h3 className={styles.subtitle_form}>SCHEDA MEDICA</h3>
 
@@ -393,6 +423,17 @@ function AddPaziente(props){
                         buttonText='Avanti'>
                     </GenericButton>
 
+                    <GenericButton
+                        onClick={stepPrecedente}
+                        small_button={true}
+                        buttonText='Torna ai dati personali'>
+                    </GenericButton> */}
+                    <GenericButton 
+                        onClick={stepSuccessivo}
+                        // onClick={provaDaCancellare}
+                        generic_button={true}
+                        buttonText='Avanti'>
+                    </GenericButton>
                     <GenericButton
                         onClick={stepPrecedente}
                         small_button={true}

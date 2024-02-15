@@ -17,12 +17,14 @@ function MainMenu(props){
     const [highlightMenuButton_PAZIENTI, setHighlightMenuButton_PAZIENTI] = useState(true);
     const [highlightMenuButton_TEST, setHighlightMenuButton_TEST] = useState(false);
     const [highlightMenuButton_GIOCHI, setHighlightMenuButton_GIOCHI] = useState(false);
+    const [highlightMenuButton_PATOLOGIE, setHighlightMenuButton_PATOLOGIE] = useState(false);
 
     function goToPazienti(){
         props.showSchermata(0);
         setHighlightMenuButton_PAZIENTI(true);
         setHighlightMenuButton_TEST(false);
         setHighlightMenuButton_GIOCHI(false);
+        setHighlightMenuButton_PATOLOGIE(false)
 
         patients_ctx.cercaPaziente("");
     }
@@ -32,6 +34,7 @@ function MainMenu(props){
         setHighlightMenuButton_PAZIENTI(false);
         setHighlightMenuButton_TEST(true);
         setHighlightMenuButton_GIOCHI(false);
+        setHighlightMenuButton_PATOLOGIE(false)
     }
 
     function goToGiochi(){
@@ -39,10 +42,16 @@ function MainMenu(props){
         setHighlightMenuButton_PAZIENTI(false);
         setHighlightMenuButton_TEST(false);
         setHighlightMenuButton_GIOCHI(true);
+        setHighlightMenuButton_PATOLOGIE(false)
     }
 
-    function goToDialoghi(){
+    function goToPatologie(){
         props.showSchermata(3);
+
+        setHighlightMenuButton_PAZIENTI(false);
+        setHighlightMenuButton_TEST(false);
+        setHighlightMenuButton_GIOCHI(false);
+        setHighlightMenuButton_PATOLOGIE(true)
     }
 
     return(
@@ -69,6 +78,10 @@ function MainMenu(props){
                 </button>
             }
             
+            <button onClick = {goToPatologie} className={`${styles.menu_option} ${highlightMenuButton_PATOLOGIE ? styles.menu_option_SELECTED : ''}`}>
+                <img className={styles.image_option} src={dialogue} alt="patologie"></img>
+                <p className={`${styles.text_option} ${highlightMenuButton_PATOLOGIE ? styles.text_option_SELECTED : ''}`}>Patologie</p>
+            </button>
 
             <button onClick = {goToAttività} className={`${styles.menu_option} ${highlightMenuButton_TEST ? styles.menu_option_SELECTED : ''}`}>
                 <img className={styles.image_option} src={activity} alt="tests"></img>
@@ -80,10 +93,6 @@ function MainMenu(props){
                 <p className={`${styles.text_option} ${highlightMenuButton_GIOCHI ? styles.text_option_SELECTED : ''}`}>Giochi</p>
             </button>
 
-            {/* <button onClick = {goToDialoghi} className={styles.menu_option}>
-                <img className={styles.image_option} src={dialogue} alt="dialoghi"></img>
-                <p className={styles.text_option}>Dialoghi</p>
-            </button> */}
 
         </div>
     );

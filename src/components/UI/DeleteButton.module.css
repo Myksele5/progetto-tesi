@@ -1,6 +1,6 @@
 .delete_button{
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
     background-color: red;
     color: white;
     margin: 5px;
@@ -24,8 +24,8 @@
 }
 
 .trash_image{
-    width: 20px;
-    height: 20px;
+    width: 21px;
+    height: 21px;
     /* transition: 0.3s; */
 }
 
@@ -37,8 +37,8 @@
     }
 
     .delete_button:hover .trash_image{
-        width: 18px;
-        height: 18px;
+        width: 17px;
+        height: 17px;
     }
     
     .trash_image{
@@ -56,8 +56,8 @@
     }
 
     .delete_button:hover .delete_image{
-        width: 17px;
-        height: 17px;
+        width: 16px;
+        height: 16px;
     }
     
     .trash_image{
@@ -69,18 +69,18 @@
 @media screen and (max-width: 650px) {
 
     .delete_button{
-        width: 100%;
+        width: 99%;
         height: 35px;
         margin: 0;
         padding: 0;
         border: 1px solid transparent;
-        border-bottom: 3px solid #163172;
+        /* border-bottom: 3px solid #163172; */
         border-radius: 0px;
     }
 
     .delete_button:hover{
         border: 1px solid #D6E4F0;
-        border-bottom: 3px solid #163172;
+        /* border-bottom: 3px solid #163172; */
     }
 
     .delete_button:hover .trash_image{

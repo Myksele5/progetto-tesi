@@ -19,7 +19,7 @@
     justify-content: center;
     align-items: center;
     width: fit-content;
-    margin: 40px 0px;
+    margin: 10px 0px;
     border: 1px solid #D6E4F0;
     border-radius: 10px;
     background-image: radial-gradient(ellipse at top, rgb(17, 126, 199), transparent);
@@ -187,7 +187,7 @@
     }
 }
 
-@media screen and (max-height: 650px){
+@media screen and (max-height: 690px){
     .menu_image{
         height: 180px;
     }
@@ -197,12 +197,26 @@
     }
 
     .menu_option{
-        height: 100px;
+        height: 80px;
     }
 }
+@media screen and (max-height: 620px){
+    .menu_image{
+        height: 160px;
+    }
+
+    .wrapper_generico{
+        margin: 10px 0px;
+    }
+
+    .menu_option{
+        height: 70px;
+    }
+}
+
 @media screen and (max-height: 559px){
     .menu_option{
-        height: 80px;
+        height: 70px;
     }
 
     .utente_loggato{

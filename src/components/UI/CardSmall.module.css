@@ -1,0 +1,11 @@
+.generic_wrapper{
+    width: fit-content;
+    height: fit-content;
+    margin: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 0;
+    background-color: #F6F6F6;
+    border: 3px solid #1E56A0;
+    border-radius: 10px;
+}

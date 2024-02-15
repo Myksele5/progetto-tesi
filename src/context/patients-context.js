@@ -294,21 +294,21 @@ export function PatientContextProvider(props){
                         </tr>
                         
                         <tr className={someStyles.mobile_row}>
-                            <td style={{width: "200px", height: "30px", padding: "0" }}>
+                            <td style={{width: "200px", height: "30px", padding: "0", borderBottom: "4px solid #D6E4F0"}}>
                                 {/* <button style={{width: "100%", height: "100%", margin: "0", padding: "0"}}>DETTAGLI</button> */}
                                 <DetailsButton
                                 onClick={() => {
                                     cliccaRiga(elencoPazienti);
                                 }}></DetailsButton>
                             </td>
-                            <td style={{width: "200px", height: "30px", padding: "0" }}>
+                            <td style={{width: "200px", height: "30px", padding: "0", borderBottom: "4px solid #D6E4F0"}}>
                                 {/* <button style={{width: "100%", height: "100%", margin: "0", padding: "0"}}>MODIFICA</button> */}
                                 <EditButton
                                 onClick={() =>{
                                     modificaDatiPaziente(elencoPazienti);
                                 }}></EditButton>
                             </td>
-                            <td style={{width: "200px", height: "30px", padding: "0" }}>
+                            <td style={{width: "200px", height: "30px", padding: "0", borderBottom: "4px solid #D6E4F0"}}>
                                 {/* <button style={{width: "100%", height: "100%", margin: "0", padding: "0"}}>ELIMINA</button> */}
                                 <DeleteButton
                                 onClick={() => {
