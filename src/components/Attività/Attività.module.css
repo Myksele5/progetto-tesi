@@ -1,8 +1,9 @@
 .page_title{
     margin: 0;
+    margin-bottom: 5px;
     text-align: center;
     font-size: 35px;
-    color: rgb(59, 59, 241);
+    color: #1E56A0;
 }
 
 .wrap_boxes{

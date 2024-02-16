@@ -33,16 +33,30 @@
 
 .wrap_content{
     text-align: center;
-    width: 180px;
-    /* border-right: 2px solid #163172; */
-    /* min-height: 100px; */
+    width: 300px;
 }
 
 .wrap_content_TERAPIA{
     text-align: center;
-    width: 420px;
+    width: 300px;
     /* border-right: 2px solid #163172; */
     /* min-height: 100px; */
+}
+
+.select_style{
+    margin: 5px;
+    width: 220px;
+    height: 35px;
+    border-radius: 15px;
+    border: 2px solid #1E56A0;
+    font-size: 16px;
+    text-align: center;
+}
+
+.select_style:focus{
+    border: 2px solid #163172;
+    /* background-color: #D6E4F0; */
+    outline: none;
 }
 
 .label_style{
@@ -54,7 +68,7 @@
     font-size: 22px;
     font-weight: normal;
     margin: 5px;
-    max-width: 180px;
+    max-width: 300px;
     word-wrap: break-word;
 }
 
@@ -62,6 +76,6 @@
     font-size: 22px;
     font-weight: normal;
     margin: 8px 22px;
-    max-width: 420px;
+    max-width: 300px;
     word-wrap: break-word;
 }

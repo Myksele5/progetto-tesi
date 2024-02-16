@@ -1,0 +1,42 @@
+.wrapper_horizontal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wrapper_vertical{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrap_content{
+    text-align: center;
+    width: 300px;
+}
+
+.wrap_content_TERAPIA{
+    text-align: center;
+    width: 300px;
+    word-wrap: break-word;
+    /* border-right: 2px solid #163172; */
+    /* min-height: 100px; */
+}
+
+.info_content{
+    font-size: 22px;
+    font-weight: normal;
+    margin: 5px 0;
+    width: 300px;
+    text-align: center;
+    align-self: flex-start;
+    word-wrap: break-word;
+}
+
+.info_content_TERAPIA{
+    font-size: 22px;
+    font-weight: normal;
+    margin: 8px 22px;
+    max-width: 300px;
+    word-wrap: break-word;
+}

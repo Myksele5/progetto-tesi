@@ -31,6 +31,12 @@ function Giochi(){
     const [showEditQuestion, setShowEditQuestion] = useState(false);
     const [showGameResults, setShowGameResults] = useState(false);
     const [gameObject, setGameObject] = useState(null);
+
+    const [tipoGiocoCercato, setTipoGiocoCercato] = useState("");
+
+    function tipoGiocoChangeHandler(event){
+        setTipoGiocoCercato(event.target.value);
+    }
     
     function formCreateNewQuestion(){
         setShowSearchBoxAndButton(false);
@@ -294,6 +300,14 @@ function Giochi(){
             <h1 className={styles.page_title}>Giochi</h1>
             {showSearchBoxAndButton && auth_ctx.tipoAccount !== "Paziente" &&
                 <div className={styles.wrap_boxes}>
+                    <select className={styles.select_style} onChange={tipoGiocoChangeHandler}>
+                        <option hidden>Tipo Gioco</option>
+                        <option>TUTTI</option>
+                        <option>QUIZ</option>
+                        <option>QUIZ CON IMMAGINI</option>
+                        <option>COMPLETA LA PAROLA</option>
+                        <option>RIFLESSI</option>
+                    </select>
                     <GenericButton
                         onClick={formCreateNewQuestion}
                         generic_button={true}
@@ -338,6 +352,7 @@ function Giochi(){
                 {showElencoGiochi && 
                     <ListaGiochi
                         iniziaGioco={startGame}
+                        tipoGioco={tipoGiocoCercato}
                         mostraFormModificaGioco={formEditGame}
                         avvioGiocoChiudoIlResto={avviaGiocoNascondiItems}
                     >

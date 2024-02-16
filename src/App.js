@@ -93,6 +93,7 @@ function App() {
         {auth_ctx.utenteLoggato === null && <Login></Login>}
 
         <PatientContextProvider>
+        <PatologiesContextProvider>
           {auth_ctx.utenteLoggato !== null && 
             
             <MainMenu
@@ -117,13 +118,11 @@ function App() {
             </GameContextProvider>
           }
           {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Patologie' && 
-            <PatologiesContextProvider>
               <div className='wrap_schermata'>
                 <Patologie/>
               </div>
-            </PatologiesContextProvider>
           }
-        
+        </PatologiesContextProvider>
         </PatientContextProvider>
   
       </div>

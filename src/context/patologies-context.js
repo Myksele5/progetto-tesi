@@ -8,38 +8,48 @@ const PatologiesContext = React.createContext({
     topBar: null,
     showTopBar: ()=>{},
     hideTopBar: ()=>{},
-    showFormAddPatology: ()=>{}
+    visibleFormAddPatology: null,
+    showFormAddPatology: ()=>{},
+    hideFormAddPatology: ()=>{},
+    visibleTherapiesList: null,
+    showTherapiesList: ()=>{},
+    hideTherapiesList: ()=>{}
 })
 
 export function PatologiesContextProvider(props){
     const arrayDummyPatologie = [
         {
+            id: 1,
             patologia: "Lago",
-            terapia: "Medicina 2 volte al giorno a giorni alterni",
+            terapie: ["Assunzione Augmentyn 2 volte al giorno", "Terapia per sociopatia", "Contenimento del problema"],
             dataInizio: "01-01-1990",
             dataFine: "31-12-1990"
         },
         {
+            id: 2,
             patologia: "Myks",
-            terapia: "Medicina 2 volte al giorno a giorni alterni",
+            terapie: ["Terapia contenimento", "Terapia per sociopatia", "Contenimento del problema"],
             dataInizio: "01-01-1990",
             dataFine: "31-12-1990"
         },
         {
+            id: 3,
             patologia: "Domenico",
-            terapia: "Medicina 2 volte al giorno a giorni alternidadad dadad ad d adadadaadad adadada adadadadadaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            terapie: ["Terapia contenimento", "Terapia per sociopatia", "Contenimento del problema"],
             dataInizio: "01-01-1990",
             dataFine: "31-12-1990"
         },
         {
+            id: 4,
             patologia: "Marquinhos",
-            terapia: "Medicina 2 volte al giorno a giorni alternidadad dadad ad d adadadaadad adadada adadadadadaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            terapie: ["Terapia contenimento", "Terapia per sociopatia", "Contenimento del problema"],
             dataInizio: "01-01-1990",
             dataFine: "31-12-1990"
         },
         {
+            id: 5,
             patologia: "Vito",
-            terapia: "Medicina 2 volte al giorno a giorni alternidadad dadad ad d adadadaadad adadada adadadadadaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            terapie: ["Terapia contenimento", "Terapia per sociopatia", "Contenimento del problema"],
             dataInizio: "01-01-1990",
             dataFine: "31-12-1990"
         }
@@ -47,6 +57,8 @@ export function PatologiesContextProvider(props){
 
     const [listaVisibile, setListaVisibile] = useState(true);
     const [showTopBar, setShowTopBar] = useState(true);
+    const [showFormAddPat, setShowFormAddPat] = useState(false);
+    const [showTherapies, setShowTherapies] = useState(false);
 
     function mostraListaPatologie(){
         setListaVisibile(true);
@@ -62,9 +74,44 @@ export function PatologiesContextProvider(props){
         setShowTopBar(false);
     }
 
+    function mostraFormNuovaPat(){
+        setShowFormAddPat(true);
+    }
+
+    function nascondiFormaNuovaPat(){
+        setShowFormAddPat(false);
+    }
+
+    function mostraElencoTerapie(){
+        setShowTherapies(true);
+    }
+
+    function nascondiElencoTerapie(){
+        setShowTherapies(false);
+    }
+
     function mostraFormAggiuntaPatologia(){
         nascondiListaPatologie();
         nascondiTopBar();
+        mostraFormNuovaPat();
+    }
+
+    function nascondiFormAggiuntaPatologia(){
+        mostraListaPatologie();
+        mostraTopBar();
+        nascondiFormaNuovaPat();
+    }
+
+    function mostraListaTerapie(){
+        nascondiListaPatologie();
+        nascondiTopBar();
+        mostraElencoTerapie();
+    }
+
+    function nascondiListaTerapie(){
+        mostraListaPatologie();
+        mostraTopBar();
+        nascondiElencoTerapie();
     }
 
     return(
@@ -77,7 +124,12 @@ export function PatologiesContextProvider(props){
                 topBar: showTopBar,
                 showTopBar: mostraTopBar,
                 hideTopBar: nascondiTopBar,
-                showFormAddPatology: mostraFormAggiuntaPatologia
+                visibleFormAddPatology: showFormAddPat,
+                showFormAddPatology: mostraFormAggiuntaPatologia,
+                hideFormAddPatology: nascondiFormAggiuntaPatologia,
+                visibleTherapiesList: showTherapies,
+                showTherapiesList: mostraListaTerapie,
+                hideTherapiesList: nascondiListaTerapie
             }}
         >
             {props.children}

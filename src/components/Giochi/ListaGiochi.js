@@ -14,6 +14,7 @@ function ListaGiochi(props){
     }, [lista]);
 
     function fromArrayToGameList(lista){
+        if((lista.tipoGioco === props.tipoGioco) || (props.tipoGioco === "TUTTI") || (props.tipoGioco === ""))
         return(
             <ul className={styles.lista_giochi} key={lista.gameID}>
                 <GameCard

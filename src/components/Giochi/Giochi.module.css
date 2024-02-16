@@ -1,8 +1,9 @@
 .page_title{
     margin: 0;
+    margin-bottom: 5px;
     text-align: center;
-    font-size: 30px;
-    color: rgb(59, 59, 241);
+    font-size: 35px;
+    color: #1E56A0;
 }
 
 .wrap_boxes{
@@ -23,6 +24,22 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.select_style{
+    margin: 5px;
+    width: 220px;
+    height: 35px;
+    border-radius: 15px;
+    border: 2px solid #1E56A0;
+    font-size: 16px;
+    text-align: center;
+}
+
+.select_style:focus{
+    border: 2px solid #163172;
+    /* background-color: #D6E4F0; */
+    outline: none;
 }
 
 @media screen and (max-width: 1100px) {

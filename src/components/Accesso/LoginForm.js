@@ -51,7 +51,7 @@ function LoginForm(props){
             });
         }
 
-        if(result !== undefined){
+        if(result !== undefined && result !== null){
             console.log("PROVA", result[0]);
             auth_ctx.login(email, result[0].UID, result[0].titolo, result[0].nome, result[0].cognome)
             
@@ -59,6 +59,7 @@ function LoginForm(props){
         else{
             setValidEmail(false);
             setValidPassword(false);
+            setErroreLogin(true);
         }
     }
 
@@ -74,7 +75,7 @@ function LoginForm(props){
                 <label className={`${styles.label_box} ${!validPassword ? styles.invalid : ''}`}>Password</label>
                 <input className={`${styles.input_box} ${!validPassword ? styles.invalid : ''}`}type="password" placeholder="Inserisci la tua password" value={password} onChange={passwordChangeHandler}></input>
                 
-                {erroreLogin && <h2 style={{color: "red"}}>Credenziali non corrette</h2>}
+                {erroreLogin && <h2 style={{fontSize: "18px" ,color: "red"}}>Credenziali non corrette</h2>}
 
                 <GenericButton
                     type = "submit"
