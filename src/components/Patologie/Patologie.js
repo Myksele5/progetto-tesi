@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CardSmall from "../UI/CardSmall";
 import GenericButton from "../UI/GenericButton";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
@@ -12,7 +12,18 @@ function Patologie(){
 
     const listaPatologie = patologies_ctx.listaPatologie;
 
-    const [patologiaVisualizzata, setPatologiaVisualizzata] = useState();
+    const [patologiaVisualizzata, setPatologiaVisualizzata] = useState([]);
+
+    function visualizzaPatologia(patologia){
+        setPatologiaVisualizzata((prevList) => ([...prevList, patologia]))
+    }
+
+    function nonMostrarePatologia(patologia){
+        let arrayTemporaneo = [...patologiaVisualizzata];
+        arrayTemporaneo.splice(patologiaVisualizzata.indexOf(patologia), 1)
+        setPatologiaVisualizzata(arrayTemporaneo)
+    }
+
 
     return(
         <>
@@ -20,7 +31,10 @@ function Patologie(){
             {patologies_ctx.topBar && 
                 <div className={styles.wrap_boxes}>
                     <GenericButton
-                        onClick={patologies_ctx.showFormAddPatology}
+                        onClick={() => {
+                            setPatologiaVisualizzata([]);
+                            patologies_ctx.showFormAddPatology();
+                        }}
                         buttonText={"Aggiungi Patologia"}
                         generic_button={true}
                         text_hideable={true}
@@ -52,9 +66,7 @@ function Patologie(){
                 }
 
                 {patologies_ctx.visibleTherapiesList &&
-                    <ElencoTerapie
-                        patology={patologiaVisualizzata}
-                    >
+                    <ElencoTerapie>
                     </ElencoTerapie>
                 }
 
@@ -64,7 +76,7 @@ function Patologie(){
                         <div className={styles.wrapper_generico_horizontal}>
                             <CardSmall
                                 children={
-                                    <>
+                                    <div key={pat.id}>
                                         <div className={styles.wrapper_generico_horizontal}>
                                             <div className={styles.wrap_content}>
                                                 <label className={styles.label_style}>Patologia</label>
@@ -76,7 +88,7 @@ function Patologie(){
                                         <hr style={{borderColor: "#163172", margin: "0"}}></hr>
                                         <div className={styles.wrapper_generico_horizontal}>
                                             <div className={styles.wrap_content}>
-                                                <h3 className={styles.info_content}>{pat.patologia}</h3>
+                                                <h3 style={{textDecoration: "underline", fontSize: "26px"}} className={styles.info_content}>{pat.patologia}</h3>
                                             </div>
                                             <div className={styles.wrap_content_TERAPIA}>
                                                 {/* <select className={styles.select_style}>
@@ -85,37 +97,42 @@ function Patologie(){
                                                 ))}
                                                 </select> */}
                                                 <div className={styles.wrapper_generico_horizontal}>
-                                                    <GenericAlternativeButton
-                                                        onClick={() => {
-                                                            patologies_ctx.showTherapiesList();
-                                                            setPatologiaVisualizzata(pat)
-                                                        }}
-                                                        buttonText={"Mostra elenco terapie"}
-                                                    >
-                                                    </GenericAlternativeButton>
+                                                    {!patologiaVisualizzata.includes(pat) &&
+                                                        <GenericAlternativeButton
+                                                            onClick={() => {
+                                                                // patologies_ctx.showTherapiesList();
+                                                                // patologies_ctx.showPatologia(pat)
+                                                                visualizzaPatologia(pat)
+                                                            }}
+                                                            buttonText={"Mostra terapie"}
+                                                        >
+                                                        </GenericAlternativeButton>
+                                                    }
+                                                    {patologiaVisualizzata.includes(pat) &&
+                                                        <GenericAlternativeButton
+                                                            onClick={() => {
+                                                                // patologies_ctx.showTherapiesList();
+                                                                // patologies_ctx.showPatologia(pat)
+                                                                nonMostrarePatologia(pat)
+                                                            }}
+                                                            colore_rosso
+                                                            buttonText={"Nascondi terapie"}
+                                                        >
+                                                        </GenericAlternativeButton>
+                                                    }
                                                 </div>
-                                                
                                             </div>
-                                            {/* <div className={styles.wrap_content}>
-                                                <h3 className={styles.info_content}>{pat.dataInizio}</h3>
-                                            </div>
-                                            <div className={styles.wrap_content}>
-                                                <h3 className={styles.info_content}>{pat.dataFine}</h3>
-                                            </div>
-                                            <div className={styles.wrap_content}>
-                                                <h3 className={styles.info_content}>Nota generica</h3>
-                                            </div> */}
                                         </div>
-                                        {/* <hr style={{borderColor: "#163172", margin: "0"}}></hr>
-                                        <div className={styles.wrapper_generico_horizontal}>
-                                            <GenericButton
-                                                buttonText={"Aggiungi Terapia"}
-                                                generic_button
-                                            >
-                                            </GenericButton>
-                                        </div>
-                                     */}
-                                    </>
+                                        {patologiaVisualizzata.map((singlePat) => {
+                                            if(singlePat.id === pat.id){
+                                                return (
+                                                    <ElencoTerapie
+                                                        patologiaSelezionata={singlePat}
+                                                    ></ElencoTerapie>
+                                                );
+                                            }
+                                        })}
+                                    </div>
                                 }
                             >
                             </CardSmall>

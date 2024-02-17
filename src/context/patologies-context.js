@@ -13,45 +13,53 @@ const PatologiesContext = React.createContext({
     hideFormAddPatology: ()=>{},
     visibleTherapiesList: null,
     showTherapiesList: ()=>{},
-    hideTherapiesList: ()=>{}
+    hideTherapiesList: ()=>{},
+    patologiaSelezionata: null,
+    showPatologia: ()=>{},
+    getTherapiesListSinglePat: ()=>{}
 })
 
 export function PatologiesContextProvider(props){
     const arrayDummyPatologie = [
         {
             id: 1,
-            patologia: "Lago",
-            terapie: ["Assunzione Augmentyn 2 volte al giorno", "Terapia per sociopatia", "Contenimento del problema"],
-            dataInizio: "01-01-1990",
-            dataFine: "31-12-1990"
+            patologia: "Alzheimer",
+            terapie: [
+                {terapia: "Assunzione Augmentyn 2 volte al giorno", note: "..."}, 
+                {terapia: "Esercizi cognitivi da svolgere quotidianamente; almeno due esercizi al giorno", note: "Consigliati quiz"}, 
+                {terapia: "Contenimento del problema", note: "Valutare stato psicofisico del paziente"}
+            ]
         },
         {
             id: 2,
-            patologia: "Myks",
-            terapie: ["Terapia contenimento", "Terapia per sociopatia", "Contenimento del problema"],
-            dataInizio: "01-01-1990",
-            dataFine: "31-12-1990"
+            patologia: "Frattura clavicola",
+            terapie: [
+                {terapia: "Tutore spalla per bloccaggio clavicola", note: "Lasciare liberi gomito e mano"},
+                {terapia: "Ebyndo antidolorifico una pillola al giorno fino ad un massimo di tre ogni 8 ore", note: "Chiedere di eventuali allergie"},
+            ]
         },
         {
             id: 3,
-            patologia: "Domenico",
-            terapie: ["Terapia contenimento", "Terapia per sociopatia", "Contenimento del problema"],
-            dataInizio: "01-01-1990",
-            dataFine: "31-12-1990"
+            patologia: "Parkinson",
+            terapie: [
+                {terapia: "Assunzione Augmentyn polvere in busta 2 volte al giorno", note: ""}, 
+                {terapia: "Terapia per sociopatia", note: ""}, 
+                {terapia: "Assunzione olio CBD, 0.5 mg al giorno massimo", note: ""}
+            ]
         },
         {
             id: 4,
-            patologia: "Marquinhos",
-            terapie: ["Terapia contenimento", "Terapia per sociopatia", "Contenimento del problema"],
-            dataInizio: "01-01-1990",
-            dataFine: "31-12-1990"
+            patologia: "Cancro",
+            terapie: [
+                
+            ]
         },
         {
             id: 5,
-            patologia: "Vito",
-            terapie: ["Terapia contenimento", "Terapia per sociopatia", "Contenimento del problema"],
-            dataInizio: "01-01-1990",
-            dataFine: "31-12-1990"
+            patologia: "Febbre",
+            terapie: [
+                {terapia: "Antibiotico per 2 settimane; una pillola al giorno fino ad un massimo di due a distanza di 8 ore l'una dall'altra", note: ""}
+            ]
         }
     ];
 
@@ -59,6 +67,7 @@ export function PatologiesContextProvider(props){
     const [showTopBar, setShowTopBar] = useState(true);
     const [showFormAddPat, setShowFormAddPat] = useState(false);
     const [showTherapies, setShowTherapies] = useState(false);
+    const [patologiaVisualizzata, setPatologiaVisualizzata] = useState({})
 
     function mostraListaPatologie(){
         setListaVisibile(true);
@@ -114,6 +123,16 @@ export function PatologiesContextProvider(props){
         nascondiElencoTerapie();
     }
 
+    function prendiListaTerapieDiPatologia(singlePat){
+        let patologia;
+        for(let i=0; i < arrayDummyPatologie.length; i++){
+            if(arrayDummyPatologie[i].patologia === singlePat){
+                patologia = arrayDummyPatologie[i]
+            }
+        }
+        return patologia;
+    }
+
     return(
         <PatologiesContext.Provider
             value={{
@@ -129,7 +148,10 @@ export function PatologiesContextProvider(props){
                 hideFormAddPatology: nascondiFormAggiuntaPatologia,
                 visibleTherapiesList: showTherapies,
                 showTherapiesList: mostraListaTerapie,
-                hideTherapiesList: nascondiListaTerapie
+                hideTherapiesList: nascondiListaTerapie,
+                patologiaSelezionata: patologiaVisualizzata,
+                showPatologia: setPatologiaVisualizzata,
+                getTherapiesListSinglePat: prendiListaTerapieDiPatologia
             }}
         >
             {props.children}

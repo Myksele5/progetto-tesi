@@ -33,12 +33,14 @@
 
 .wrap_content{
     text-align: center;
-    width: 300px;
+    width: 320px;
+    padding: 10px;
 }
 
 .wrap_content_TERAPIA{
     text-align: center;
-    width: 300px;
+    width: 320px;
+    padding: 10px;
     /* border-right: 2px solid #163172; */
     /* min-height: 100px; */
 }
@@ -68,7 +70,8 @@
     font-size: 22px;
     font-weight: normal;
     margin: 5px;
-    max-width: 300px;
+    padding: 10px;
+    max-width: 320px;
     word-wrap: break-word;
 }
 
@@ -76,6 +79,7 @@
     font-size: 22px;
     font-weight: normal;
     margin: 8px 22px;
-    max-width: 300px;
+    padding: 10px;
+    max-width: 320px;
     word-wrap: break-word;
 }

@@ -5,10 +5,14 @@ import AuthContext from "../../context/auth-context";
 import { getServerMgr } from "../../backend_conn/ServerMgr";
 import PatientContext from "../../context/patients-context";
 import CardSmall from "../UI/CardSmall";
+import PatologiesContext from "../../context/patologies-context";
 
 function AddPaziente(props){
     const auth_ctx = useContext(AuthContext);
     const patients_ctx = useContext(PatientContext);
+    const patologies_ctx = useContext(PatologiesContext);
+
+    const listaPatologie = patologies_ctx.listaPatologie;
     var emailEsistente = null;
 
     const [stepAggiuntaPaziente, setStepAggiuntaPaziente] = useState(1);
@@ -27,6 +31,9 @@ function AddPaziente(props){
 
     const [validCF, setValidCF] = useState(true);
     const [enteredCF, setEnteredCF] = useState('');
+
+    const [patologiaSelezionata, setPatologiaSelezionata] = useState("");
+    const [patologiaSelezionataOggetto, setPatologiaSelezionataOggetto] = useState({});
 
     const [counterPatologie, setCounterPatologie] = useState(1);
     const [enteredPatologia_1, setEnteredPatologia_1] = useState('');
@@ -49,7 +56,6 @@ function AddPaziente(props){
 
     const stepSuccessivo = () => {
         setStepAggiuntaPaziente((nextStep) => (nextStep + 1))
-        console.log(patologieList);
     }
 
     const stepPrecedente = () => {
@@ -84,6 +90,11 @@ function AddPaziente(props){
         console.log(event.target.value);
         setEnteredCF(event.target.value);
         setValidCF(true);
+    }
+
+    const patologiaSelezionataChangeHandler = (event) => {
+        setPatologiaSelezionata(event.target.value);
+        setPatologiaSelezionataOggetto(patologies_ctx.getTherapiesListSinglePat(event.target.value));
     }
 
     function aggiungiPatologia(event){
@@ -308,10 +319,11 @@ function AddPaziente(props){
 
     return(
         <form className={styles.center_form} onSubmit={formSubmitHandler}>
-            <h1 className={styles.title_form}>Inserisci i dati del paziente</h1>
+            
 
                 {stepAggiuntaPaziente === 1 && 
                 <>
+                    <h1 className={styles.title_form}>Inserisci i dati del paziente</h1>
                     <div className={styles.wrapper_flex}>
                         <section className={styles.section_style}>
                             {/* <h3 className={styles.subtitle_form}>DATI PERSONALI</h3> */}
@@ -348,34 +360,49 @@ function AddPaziente(props){
 
                 {stepAggiuntaPaziente === 2 &&
                 <>
+                    <h1 className={styles.title_form}>Inserisci dettagli medici</h1>
+                    
+                    <h2>Seleziona una patologia</h2>
+                    <select value={patologiaSelezionata} onChange={patologiaSelezionataChangeHandler} className={styles.select_style}>
+                        <option hidden>--seleziona--</option>
+                        {listaPatologie.map((singlePat) => (
+                            <option>{singlePat.patologia}</option>
+                        ))}
+                    </select>
+                    {patologiaSelezionata &&
+                        <>
+                            <h1>Terapie disponibili: {patologiaSelezionata}</h1>
+                            {patologiaSelezionataOggetto.terapie.map((terapia) => (
+                                <CardSmall
+                                    stileAggiuntivo
+                                    children={
+                                    <>
+                                        <div className={styles.wrapper_horizontal}>
+                                            <label className={styles.wrap_content}>TERAPIA</label>
+                                            <label className={styles.wrap_content}>NOTE</label>
+                                        </div>
+                                        <div className={styles.wrapper_horizontal}>
+                                            <h5 className={styles.info_content}>{terapia.terapia}</h5>
+                                            <h5 className={styles.info_content}>{terapia.note}</h5>
+                                        </div>
+                                    </>
+                                    }
+                                >
+                                </CardSmall>
+                                
+                            ))}
+                        </>
+                    }
+                    {/* <div className={styles.wrapper_horizontal}>
+                        <input type="checkbox"></input>
+                        <label>Aggiungi patologia</label>
+                    </div>
                     <GenericButton 
                         // onClick={aggiungiPatologia}
                         generic_button={true}
                         buttonText='Aggiungi patologia'
                     >
-                    </GenericButton>
-                    <CardSmall
-                        children={
-                            <>
-                                <div style={{display: "flex"}}>
-                                    <div>
-                                        <h2 style={{margin: "5px"}}>patologia</h2>
-                                        <select style={{margin: "5px"}}>
-                                            <option>Alzheimer</option>
-                                            <option>Parkinson</option>
-                                            <option>Diabete</option>
-                                            <option>Cancro</option>
-                                        </select>
-                                    </div>
-                                    
-                                    {/* <h2 style={{margin: "5px"}}>dosaggio</h2> */}
-                                    <h2 style={{margin: "5px"}}>data inizio</h2>
-                                    <h2 style={{margin: "5px"}}>data fine</h2>
-                                </div>
-                            </>
-                        }
-                    >
-                    </CardSmall>
+                    </GenericButton> */}
                     
                     {/* <div className={styles.wrapper_flex}>
                         <section className={styles.section_style}>
