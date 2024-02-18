@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getServerMgr } from "../backend_conn/ServerMgr";
 
 const PatologiesContext = React.createContext({
     listaPatologie: null,
+    listaTerapie: null,
     visibleLista: null,
     showListaPatologie: ()=>{},
     hideListaPatologie: ()=>{},
@@ -16,7 +18,9 @@ const PatologiesContext = React.createContext({
     hideTherapiesList: ()=>{},
     patologiaSelezionata: null,
     showPatologia: ()=>{},
-    getTherapiesListSinglePat: ()=>{}
+    getTherapiesListSinglePat: ()=>{},
+    uniqueList: null,
+    createUniqueObject: ()=>{}
 })
 
 export function PatologiesContextProvider(props){
@@ -58,16 +62,89 @@ export function PatologiesContextProvider(props){
             id: 5,
             patologia: "Febbre",
             terapie: [
-                {terapia: "Antibiotico per 2 settimane; una pillola al giorno fino ad un massimo di due a distanza di 8 ore l'una dall'altra", note: ""}
+                {terapia: "Antibiotico per 2 settimane; una pillola al giorno fino ad un massimo di due a distanza di 8 ore l'una dall'altra", note: "A necessità aggiungere sciroppo"}
             ]
         }
     ];
+
+    const [elencoPatologie, setElencoPatologie] = useState([]);
+    const [elencoTerapie, setElencoTerapie] = useState([]);
+    const [elencoUnico, setElencoUnico] = useState([]);
+
+    const [isLoading, setIsLoading] = useState(true);
 
     const [listaVisibile, setListaVisibile] = useState(true);
     const [showTopBar, setShowTopBar] = useState(true);
     const [showFormAddPat, setShowFormAddPat] = useState(false);
     const [showTherapies, setShowTherapies] = useState(false);
     const [patologiaVisualizzata, setPatologiaVisualizzata] = useState({})
+
+    async function recuperaPatologie(){
+        let result;
+
+        result = await getServerMgr().getPatologies()
+        .catch((err) => {
+            console.error(err)
+        });
+
+        console.log(result)
+
+        if(result !== null){
+            setElencoPatologie(result);
+        }
+        else{
+            setElencoPatologie([]);
+        }
+    }
+    async function recuperaTerapie(){
+        let result;
+
+        result = await getServerMgr().getTherapies()
+        .catch((err) => {
+            console.error(err)
+        });
+
+        console.log(result)
+
+        if(result !== null){
+            setElencoTerapie(result);
+        }
+        else{
+            setElencoTerapie([]);
+        }
+    }
+
+    function creaOggettoUnicoPatologieTerapie(){
+        let arrayProva = [];
+
+        elencoPatologie.map((pat) => {
+            let terapie = [];
+            elencoTerapie.map((terap) => {
+                if(pat.patologiaID === terap.patolog_ID){
+                    let oggetto = {
+                        terapiaID: terap.terapiaID,
+                        terapia: terap.terapia,
+                        note: terap.note
+                    }
+                    terapie.push(oggetto);
+                }
+            })
+            let oggUnico = {...pat, terapie}
+            console.log(oggUnico)
+            arrayProva = [...arrayProva, oggUnico]
+        })
+        setElencoUnico(arrayProva)
+        return arrayProva;
+        // console.log(elencoUnico)
+    }
+
+    useEffect(() => {
+        recuperaPatologie();
+        recuperaTerapie();
+        // creaOggettoUnicoPatologieTerapie();
+    }, [])
+
+    
 
     function mostraListaPatologie(){
         setListaVisibile(true);
@@ -125,9 +202,9 @@ export function PatologiesContextProvider(props){
 
     function prendiListaTerapieDiPatologia(singlePat){
         let patologia;
-        for(let i=0; i < arrayDummyPatologie.length; i++){
-            if(arrayDummyPatologie[i].patologia === singlePat){
-                patologia = arrayDummyPatologie[i]
+        for(let i=0; i < elencoUnico.length; i++){
+            if(elencoUnico[i].nomePatologia === singlePat){
+                patologia = elencoUnico[i]
             }
         }
         return patologia;
@@ -136,7 +213,8 @@ export function PatologiesContextProvider(props){
     return(
         <PatologiesContext.Provider
             value={{
-                listaPatologie: arrayDummyPatologie,
+                listaPatologie: elencoUnico,
+                listaTerapie: elencoTerapie,
                 visibleLista: listaVisibile,
                 showListaPatologie: mostraListaPatologie,
                 hideListaPatologie: nascondiListaPatologie,
@@ -151,7 +229,9 @@ export function PatologiesContextProvider(props){
                 hideTherapiesList: nascondiListaTerapie,
                 patologiaSelezionata: patologiaVisualizzata,
                 showPatologia: setPatologiaVisualizzata,
-                getTherapiesListSinglePat: prendiListaTerapieDiPatologia
+                getTherapiesListSinglePat: prendiListaTerapieDiPatologia,
+                uniqueList: elencoUnico,
+                createUniqueObject: creaOggettoUnicoPatologieTerapie
             }}
         >
             {props.children}

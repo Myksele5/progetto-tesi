@@ -119,7 +119,7 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.addPaziente = async (doct_UID, nome, cognome, city, codiceFiscale, dataNascita, patologie, medicine, terapia, note, cb) => {
+    serverMgr.addPaziente = async (doct_UID, nome, cognome, city, codiceFiscale, dataNascita, informazioniMediche, cb) => {
         let result = await serverMgr.requestFetchData("addPaziente", {
             doct_UID: doct_UID,
             nome: nome,
@@ -127,10 +127,7 @@ function initServerMgr(cb) {
             city: city,
             codiceFiscale: codiceFiscale,
             dataNascita: dataNascita,
-            patologie: patologie,
-            medicine: medicine,
-            terapia: terapia,
-            note: note
+            informazioniMediche: informazioniMediche
             // statistiche: statistiche
         })
         if(cb) {
@@ -501,6 +498,29 @@ function initServerMgr(cb) {
 
     serverMgr.getTestsQuestionsAreaCog_5 = async (cb) => {
         let result = await serverMgr.requestFetchData("getTestsQuestionsAreaCog_5")
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.getPatologies = async (cb) => {
+        let result = await serverMgr.requestFetchData("getPatologies")
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+    serverMgr.getTherapies = async (cb) => {
+        let result = await serverMgr.requestFetchData("getTherapies")
         if(cb) {
             // console.log("getInventory: " + result)
             cb(result)

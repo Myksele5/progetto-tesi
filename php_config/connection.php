@@ -118,6 +118,12 @@
     case "getTestsQuestionsAreaCog_5":
         $query_result = getTestsQuestionsAreaCog_5($conn);
         break;
+    case "getPatologies":
+        $query_result = getPatologies($conn);
+        break;
+    case "getTherapies":
+        $query_result = getTherapies($conn);
+        break;
     default:
     	break;
 	}
@@ -285,34 +291,27 @@
         $city = $dataJson["city"];
         $codiceFiscale = $dataJson["codiceFiscale"];
         $dataNascita = $dataJson["dataNascita"];
-        $patologie = $dataJson["patologie"];
-        $medicine = $dataJson["medicine"];
-        $terapia = $dataJson["terapia"];
-        $note = $dataJson["note"];
+        $informazioniMediche = $dataJson["informazioniMediche"];
         
         $insertNewPatient = $i_conn->prepare(
-            "INSERT INTO `patients` (`doct_UID`, `nome`, `cognome`, `city`, `codiceFiscale`, `dataNascita`, `terapia`, `note`) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            "INSERT INTO `patients` (`doct_UID`, `nome`, `cognome`, `city`, `codiceFiscale`, `dataNascita`) 
+            VALUES (?, ?, ?, ?, ?, ?)"
         );
-        $insertNewPatient->bind_param("isssssss", $doct_UID, $nome, $cognome, $city, $codiceFiscale, $dataNascita, $terapia, $note);
+        $insertNewPatient->bind_param("isssss", $doct_UID, $nome, $cognome, $city, $codiceFiscale, $dataNascita);
         $insertNewPatient->execute();
         // $insertNewPatient->bind_result($result);
         $patientID = $insertNewPatient->insert_id;
 
-        $listPatologie = array_column($patologie, 'patologia');
-        $listMedicine = array_column($medicine, 'medicina');
-        foreach($listPatologie as $ptlg){
-            // print_r($ptlg);
-            $insertPatologiePatient = $i_conn->prepare("INSERT INTO `listaPatologie` (`pazienteID`, `patologia`) VALUES (?, ?)");
-            $insertPatologiePatient->bind_param("is", $patientID, $ptlg);
-            $insertPatologiePatient->execute();
+        // echo $informazioniMediche[0];
+        foreach($informazioniMediche as $info){
+            echo "$info";
         }
-        foreach($listMedicine as $mdcn){
-            // print_r($ptlg);
-            $insertMedicinePatient = $i_conn->prepare("INSERT INTO `listaMedicine` (`pazienteID`, `medicina`) VALUES (?, ?)");
-            $insertMedicinePatient->bind_param("is", $patientID, $mdcn);
-            $insertMedicinePatient->execute();
-        }
+        // foreach($listMedicine as $mdcn){
+        //     // print_r($ptlg);
+        //     $insertMedicinePatient = $i_conn->prepare("INSERT INTO `listaMedicine` (`pazienteID`, `medicina`) VALUES (?, ?)");
+        //     $insertMedicinePatient->bind_param("is", $patientID, $mdcn);
+        //     $insertMedicinePatient->execute();
+        // }
         // print_r($listPatologie[0]);
         return $result;
     }
@@ -842,6 +841,16 @@
         
         $retrieveQuestionsList->execute();
         $result = $retrieveQuestionsList->get_result();
+        return $result;
+    }
+
+    function getPatologies($i_conn) {
+    	$result = $i_conn->query("SELECT * FROM elencoPatologie;");
+        return $result;
+    }
+
+    function getTherapies($i_conn) {
+    	$result = $i_conn->query("SELECT * FROM elencoTerapie;");
         return $result;
     }
     

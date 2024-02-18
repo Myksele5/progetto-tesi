@@ -1,16 +1,17 @@
 import styles from "./ElencoTerapie.module.css";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import GenericButton from "../UI/GenericButton";
 import PatologiesContext from "../../context/patologies-context";
 import Card from "../UI/Card";
 
 function ElencoTerapie(props){
-    // const patologies_ctx = useContext(PatologiesContext);
+    const patologies_ctx = useContext(PatologiesContext);
+    const listaTerapie = patologies_ctx.listaTerapie;
 
     const patologia = props.patologiaSelezionata;
 
     return(
-        <div className={styles.wrapper_vertical}>
+        <div key={patologia.patologiaID} className={styles.wrapper_vertical}>
             <hr style={{width: "100%", border: "2px solid #163172"}}></hr>
             {patologia.terapie.length > 0 && 
                 <div className={styles.wrapper_vertical}>  

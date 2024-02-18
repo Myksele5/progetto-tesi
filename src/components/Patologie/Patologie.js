@@ -10,11 +10,17 @@ import ElencoTerapie from "./ElencoTerapie";
 function Patologie(){
     const patologies_ctx = useContext(PatologiesContext);
 
-    const listaPatologie = patologies_ctx.listaPatologie;
+    const [listaPatologie, setListaPatologie] = useState([]);
 
     const [patologiaVisualizzata, setPatologiaVisualizzata] = useState([]);
 
+    useEffect(() => {
+        setListaPatologie(patologies_ctx.createUniqueObject());
+        console.log(listaPatologie)
+    }, [])
+
     function visualizzaPatologia(patologia){
+        console.log(patologia)
         setPatologiaVisualizzata((prevList) => ([...prevList, patologia]))
     }
 
@@ -65,11 +71,6 @@ function Patologie(){
                     </Card>
                 }
 
-                {patologies_ctx.visibleTherapiesList &&
-                    <ElencoTerapie>
-                    </ElencoTerapie>
-                }
-
                 {patologies_ctx.visibleLista &&
                 <>
                     {listaPatologie.map((pat) => (
@@ -88,7 +89,7 @@ function Patologie(){
                                         <hr style={{borderColor: "#163172", margin: "0"}}></hr>
                                         <div className={styles.wrapper_generico_horizontal}>
                                             <div className={styles.wrap_content}>
-                                                <h3 style={{textDecoration: "underline", fontSize: "26px"}} className={styles.info_content}>{pat.patologia}</h3>
+                                                <h3 style={{textDecoration: "underline", fontSize: "26px"}} className={styles.info_content}>{pat.nomePatologia}</h3>
                                             </div>
                                             <div className={styles.wrap_content_TERAPIA}>
                                                 {/* <select className={styles.select_style}>
@@ -124,7 +125,7 @@ function Patologie(){
                                             </div>
                                         </div>
                                         {patologiaVisualizzata.map((singlePat) => {
-                                            if(singlePat.id === pat.id){
+                                            if(singlePat.patologiaID === pat.patologiaID){
                                                 return (
                                                     <ElencoTerapie
                                                         patologiaSelezionata={singlePat}

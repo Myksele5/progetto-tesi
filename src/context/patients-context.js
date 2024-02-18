@@ -44,7 +44,6 @@ export function PatientContextProvider(props){
     
     //QUESTO STATO SERVE PER DARE IL TEMPO A FIREBASE DI FETCHARE E A REACT DI AGGIORNARE L'ELENCO DEI PAZIENTI
     const [isLoading, setIsLoading] = useState(true);
-    const [displayWidth, setDisplayWidth] = useState(window.innerWidth);
 
     const [stringaCercata, setStringaCercata] = useState("");
 
@@ -62,11 +61,6 @@ export function PatientContextProvider(props){
     useEffect(() => {
         setElencoPazienti(elencoPazienti);
     }, [ordinamentoSelezionato])
-
-    useEffect(() => {
-        setDisplayWidth(window.innerWidth);
-        console.log(window.innerWidth);
-    }, [displayWidth])
 
     const prendiListaPazienti = async () => {
         if(auth_ctx.utenteLoggato !== null){
