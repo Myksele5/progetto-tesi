@@ -123,6 +123,8 @@ export function PatientContextProvider(props){
 
         modifica_paziente = 
             <Card
+            altroStile
+            animazione
             children={
                 <EditPaziente
                     iddd={pazienteee.ID}

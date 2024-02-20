@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getServerMgr } from "../backend_conn/ServerMgr";
 
 const PatologiesContext = React.createContext({
-    listaPatologie: null,
+    uniqueList: null,
     listaTerapie: null,
     visibleLista: null,
     showListaPatologie: ()=>{},
@@ -19,54 +19,11 @@ const PatologiesContext = React.createContext({
     patologiaSelezionata: null,
     showPatologia: ()=>{},
     getTherapiesListSinglePat: ()=>{},
-    uniqueList: null,
-    createUniqueObject: ()=>{}
+    createUniqueObject: ()=>{},
+    saveNewPatologyWithTherapies: ()=>{}
 })
 
 export function PatologiesContextProvider(props){
-    const arrayDummyPatologie = [
-        {
-            id: 1,
-            patologia: "Alzheimer",
-            terapie: [
-                {terapia: "Assunzione Augmentyn 2 volte al giorno", note: "..."}, 
-                {terapia: "Esercizi cognitivi da svolgere quotidianamente; almeno due esercizi al giorno", note: "Consigliati quiz"}, 
-                {terapia: "Contenimento del problema", note: "Valutare stato psicofisico del paziente"}
-            ]
-        },
-        {
-            id: 2,
-            patologia: "Frattura clavicola",
-            terapie: [
-                {terapia: "Tutore spalla per bloccaggio clavicola", note: "Lasciare liberi gomito e mano"},
-                {terapia: "Ebyndo antidolorifico una pillola al giorno fino ad un massimo di tre ogni 8 ore", note: "Chiedere di eventuali allergie"},
-            ]
-        },
-        {
-            id: 3,
-            patologia: "Parkinson",
-            terapie: [
-                {terapia: "Assunzione Augmentyn polvere in busta 2 volte al giorno", note: ""}, 
-                {terapia: "Terapia per sociopatia", note: ""}, 
-                {terapia: "Assunzione olio CBD, 0.5 mg al giorno massimo", note: ""}
-            ]
-        },
-        {
-            id: 4,
-            patologia: "Cancro",
-            terapie: [
-                
-            ]
-        },
-        {
-            id: 5,
-            patologia: "Febbre",
-            terapie: [
-                {terapia: "Antibiotico per 2 settimane; una pillola al giorno fino ad un massimo di due a distanza di 8 ore l'una dall'altra", note: "A necessità aggiungere sciroppo"}
-            ]
-        }
-    ];
-
     const [elencoPatologie, setElencoPatologie] = useState([]);
     const [elencoTerapie, setElencoTerapie] = useState([]);
     const [elencoUnico, setElencoUnico] = useState([]);
@@ -130,7 +87,7 @@ export function PatologiesContextProvider(props){
                 }
             })
             let oggUnico = {...pat, terapie}
-            console.log(oggUnico)
+            // console.log(oggUnico)
             arrayProva = [...arrayProva, oggUnico]
         })
         setElencoUnico(arrayProva)
@@ -144,7 +101,25 @@ export function PatologiesContextProvider(props){
         // creaOggettoUnicoPatologieTerapie();
     }, [])
 
-    
+    async function salvaNuovaPatologiaConTerapie(nuovaPatologia, terapieAssociate){
+        let terapieFiltrate = [];
+
+        terapieAssociate.map((singleTerap) => {
+            if(singleTerap.terapia.length > 0){
+                terapieFiltrate.push(singleTerap)
+            }
+        })
+        
+        await getServerMgr().saveNewPatologyWithTherapies(nuovaPatologia, terapieFiltrate)
+        .catch((err) => {
+            console.error(err);
+        });
+
+        recuperaPatologie();
+        recuperaTerapie();
+        creaOggettoUnicoPatologieTerapie();
+        nascondiFormAggiuntaPatologia();
+    }
 
     function mostraListaPatologie(){
         setListaVisibile(true);
@@ -213,7 +188,7 @@ export function PatologiesContextProvider(props){
     return(
         <PatologiesContext.Provider
             value={{
-                listaPatologie: elencoUnico,
+                uniqueList: elencoUnico,
                 listaTerapie: elencoTerapie,
                 visibleLista: listaVisibile,
                 showListaPatologie: mostraListaPatologie,
@@ -230,8 +205,8 @@ export function PatologiesContextProvider(props){
                 patologiaSelezionata: patologiaVisualizzata,
                 showPatologia: setPatologiaVisualizzata,
                 getTherapiesListSinglePat: prendiListaTerapieDiPatologia,
-                uniqueList: elencoUnico,
-                createUniqueObject: creaOggettoUnicoPatologieTerapie
+                createUniqueObject: creaOggettoUnicoPatologieTerapie,
+                saveNewPatologyWithTherapies: salvaNuovaPatologiaConTerapie
             }}
         >
             {props.children}

@@ -142,31 +142,39 @@ function SchedaPaziente(props){
                 {sezioneScheda === 'SCHEDA_MEDICA' &&
                 <>
                     {informazioniMediche.length === 0 && <h3>Non ci sono informazioni mediche su questo paziente</h3>}
-                    {informazioniMediche.length > 0 && <h3>Patologie e terapie</h3>}
+                    {informazioniMediche.length > 0 && <h3 style={{margin: "10px 4px 2px 4px"}}>Patologie e terapie:</h3>}
                     {informazioniMediche?.map((objInfo) => (
                         <>
                             
                             <CardSmall
-                                children={
-                                    <div className={styles.wrapper_vertical}>
-                                        {/* <h5>{oggetto.patologiaID}</h5> */}
-                                        <div className={`${styles.wrapper_horizontal}`}>
-                                            <label className={`${styles.listaMedica_label} ${styles.border_right}`}>Patologia:</label>
-                                            <label className={`${styles.listaMedica_label} ${styles.border_right} ${styles.long_width}`}>Terapia:</label>
-                                            <label className={`${styles.listaMedica_label} ${styles.border_right}`}>Data inizio:</label>
-                                            <label className={`${styles.listaMedica_label} ${styles.border_right}`}>Data fine:</label>
-                                            <label className={`${styles.listaMedica_label} ${styles.med_width}`}>Note:</label>
+                                    children={
+                                        <div className={styles.container_flexible_GENERIC}>
+                                            {/* <h5>{oggetto.patologiaID}</h5> */}
+                                            <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                                <label className={`${styles.sintesiMedica_label_PATOLOGIA}`}>Patologia:</label>
+                                                <h5 className={`${styles.sintesiMedica_content_PATOLOGIA}`}>{objInfo.nomePatologia}</h5>
+                                            </div>
+                                            <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                                <label className={`${styles.sintesiMedica_label_TERAPIA}`}>Terapia:</label>
+                                                <h5 className={`${styles.sintesiMedica_content_TERAPIA}`}>{objInfo.terapia}</h5>
+                                            </div>
+                                            <div className={styles.wrapper_horizontal}>
+                                                <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                                    <label className={`${styles.sintesiMedica_label_DATA}`}>Data inizio:</label>
+                                                    <h5 className={`${styles.sintesiMedica_content_DATA}`}>{objInfo.dataInizio}</h5>
+                                                </div>
+                                                <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                                    <label className={`${styles.sintesiMedica_label_DATA}`}>Data fine:</label>
+                                                    <h5 className={`${styles.sintesiMedica_content_DATA}`}>{objInfo.dataFine}</h5>
+                                                </div>
+                                            </div>
+                                            <div style={{borderRight: "none"}} className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                                <label className={`${styles.sintesiMedica_label_NOTE}`}>Note:</label>
+                                                <h5 className={`${styles.sintesiMedica_content_NOTE}`}>{objInfo.note}</h5>
+                                            </div>
                                         </div>
-                                        <div className={`${styles.wrapper_horizontal}`}>
-                                            <h5 className={`${styles.listaMedica_content} ${styles.border_right}`}>{objInfo.nomePatologia}</h5>
-                                            <h5 className={`${styles.listaMedica_content} ${styles.border_right} ${styles.long_width} ${styles.long_height}`}>{objInfo.terapia}</h5>
-                                            <h5 className={`${styles.listaMedica_content} ${styles.border_right}`}>{objInfo.dataInizio}</h5>
-                                            <h5 className={`${styles.listaMedica_content} ${styles.border_right}`}>{objInfo.dataFine}</h5>
-                                            <h5 className={`${styles.listaMedica_content} ${styles.med_width} ${styles.long_height}`}>{objInfo.note}</h5>
-                                        </div>
-                                    </div>
-                                }
-                            ></CardSmall>
+                                    }
+                                ></CardSmall>
                         </>
                         ))
                     }
@@ -218,7 +226,7 @@ function SchedaPaziente(props){
 
                 <GenericButton
                 generic_button={true}
-                small_button={true}
+                red_styling
                 onClick={props.goBackButton}
                 buttonText='Go Back'>
                 </GenericButton>

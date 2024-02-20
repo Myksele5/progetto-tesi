@@ -6,6 +6,7 @@ import styles from "./Patologie.module.css";
 import PatologiesContext from "../../context/patologies-context";
 import Card from "../UI/Card";
 import ElencoTerapie from "./ElencoTerapie";
+import AddPatologia from "./AddPatologia";
 
 function Patologie(){
     const patologies_ctx = useContext(PatologiesContext);
@@ -15,7 +16,7 @@ function Patologie(){
     const [patologiaVisualizzata, setPatologiaVisualizzata] = useState([]);
 
     useEffect(() => {
-        setListaPatologie(patologies_ctx.createUniqueObject());
+        setListaPatologie(patologies_ctx.createUniqueObject);
         console.log(listaPatologie)
     }, [])
 
@@ -58,13 +59,8 @@ function Patologie(){
                         animazione
                         children={
                             <>
-                                <GenericButton
-                                    onClick={patologies_ctx.hideFormAddPatology}
-                                    buttonText={"Chiudi form"}
-                                    generic_button
-                                    red_styling
-                                >
-                                </GenericButton>
+                                <AddPatologia></AddPatologia>
+                                
                             </>
                         }
                     >

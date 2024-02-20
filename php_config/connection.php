@@ -124,6 +124,9 @@
     case "getTherapies":
         $query_result = getTherapies($conn);
         break;
+    case "saveNewPatologyWithTherapies":
+        $query_result = saveNewPatologyWithTherapies($conn);
+        break;
     default:
     	break;
 	}
@@ -853,6 +856,32 @@
 
     function getTherapies($i_conn) {
     	$result = $i_conn->query("SELECT * FROM elencoTerapie;");
+        return $result;
+    }
+
+    function saveNewPatologyWithTherapies($i_conn) {
+        $data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $patologia = $dataJson["patologia"];
+        $terapieAssociate = $dataJson["terapieAssociate"];
+        
+        // Insert a row into the table
+        $insertPatology = $i_conn->prepare(
+            "INSERT INTO `elencoPatologie` (`nomePatologia`) VALUES (?)"
+        );
+        $insertPatology->bind_param("s", $patologia);
+        $insertPatology->execute();
+        $patologyID = $insertPatology->insert_id;
+
+        foreach($terapieAssociate as $terapia){
+            $insertNewTerapie = $i_conn->prepare(
+                "INSERT INTO `elencoTerapie` (`terapia`, `note`, `patolog_ID`) VALUES (?, ?, ?)"
+            );
+            $insertNewTerapie->bind_param("ssi", $terapia['terapia'], $terapia['note'], $patologyID);
+            $insertNewTerapie->execute();
+        }
+        
         return $result;
     }
     

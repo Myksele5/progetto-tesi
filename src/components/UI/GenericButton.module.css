@@ -35,13 +35,6 @@
     /* pointer-events: none; */
 }
 
-.red_styling{
-    background-color: rgb(185, 0, 0);
-}
-.red_styling:hover{
-    background-color: rgb(138, 0, 0);
-}
-
 .is_selected{
     background-color: #163172;
     border: 2px solid #D6E4F0;
@@ -54,20 +47,20 @@
     align-items: center;
     justify-content: space-evenly;
     margin: 5px;
-    width: 190px;
-    height: 40px;
-    font-size: 18px;
+    width: 140px;
+    height: 25px;
+    font-size: 13px;
     font-weight: bold;
     border: 2px solid transparent;
     border-radius: 20px;
     color: whitesmoke;
     cursor: pointer;
-    background-color: rgb(175, 0, 0);
+    background-color: #1E56A0;
     /* animation: animaz 1.2s forwards ease-in-out; */
 }
 
 .small_button:hover{
-    background-color: rgb(100, 0, 0);
+    background-color: #163172;
     border: 2px solid #D6E4F0;
     box-shadow: 1px 1px 5px 1px black;
     transition: 0.3s;
@@ -93,16 +86,17 @@
     width: fit-content;
 }
 
-@media screen and (max-width: 1550px) {
+.red_styling{
+    background-color: rgb(185, 0, 0);
+}
+.red_styling:hover{
+    background-color: rgb(138, 0, 0);
+}
+
+@media screen and (max-width: 1200px) {
 
     .generic_button{
-        width: fit-content;
-        height: 35px;
-        font-size: 14px;
-    }
-
-    .small_button{
-        width: fit-content;
+        width: 160px;
         height: 35px;
         font-size: 14px;
     }
@@ -113,17 +107,22 @@
     }
 }
 
-@media screen and (max-width: 600px) {
-    .generic_button_HIDETEXT{
-        display: none;
+@media screen and (max-width:850px) {
+    .generic_button{
+        width: 140px;
+        height: 34px;
+        font-size: 12px;
+    }
+
+    .small_button{
+        width: 80px;
+        font-size: 10px;
     }
 }
 
-@media screen and (max-height: 620px) {
-    .small_button{
-        width: 160px;
-        height: 30px;
-        font-size: 16px;
+@media screen and (max-width: 600px) {
+    .generic_button_HIDETEXT{
+        display: none;
     }
 }
 

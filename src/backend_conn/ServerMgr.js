@@ -519,11 +519,19 @@ function initServerMgr(cb) {
     serverMgr.getTherapies = async (cb) => {
         let result = await serverMgr.requestFetchData("getTherapies")
         if(cb) {
-            // console.log("getInventory: " + result)
             cb(result)
         }
         else {
-            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.saveNewPatologyWithTherapies = async (patologia, terapieAssociate, cb) => {
+        let result = await serverMgr.requestFetchData("saveNewPatologyWithTherapies", {patologia: patologia, terapieAssociate: terapieAssociate})
+        if(cb) {
+            cb(result)
+        }
+        else {
             return result
         }
     }

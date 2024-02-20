@@ -392,7 +392,8 @@ function AddPaziente(props){
                     <div className={styles.wrapper_horizontal}>
                         <GenericButton
                             onClick={hideForm}
-                            small_button={true}
+                            generic_button={true}
+                            red_styling
                             buttonText='Torna indietro'>
                         </GenericButton>
                         <GenericButton 
@@ -419,21 +420,29 @@ function AddPaziente(props){
                             <div key={oggetto.terapiaID} className={styles.wrapper_horizontal}>
                                 <CardSmall
                                     children={
-                                        <div className={styles.wrapper_vertical}>
+                                        <div className={styles.container_flexible_GENERIC}>
                                             {/* <h5>{oggetto.patologiaID}</h5> */}
-                                            <div className={`${styles.wrapper_horizontal}`}>
-                                                <label className={`${styles.listaMedica_label} ${styles.border_right}`}>Patologia:</label>
-                                                <label className={`${styles.listaMedica_label} ${styles.border_right} ${styles.long_width}`}>Terapia:</label>
-                                                <label className={`${styles.listaMedica_label} ${styles.border_right}`}>Data inizio:</label>
-                                                <label className={`${styles.listaMedica_label} ${styles.border_right}`}>Data fine:</label>
-                                                <label className={`${styles.listaMedica_label} ${styles.long_width}`}>Note:</label>
+                                            <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                                <label className={`${styles.sintesiMedica_label_PATOLOGIA}`}>Patologia:</label>
+                                                <h5 className={`${styles.sintesiMedica_content_PATOLOGIA}`}>{oggetto.nomePatologia}</h5>
                                             </div>
-                                            <div className={`${styles.wrapper_horizontal}`}>
-                                                <h5 className={`${styles.listaMedica_content} ${styles.border_right}`}>{oggetto.nomePatologia}</h5>
-                                                <h5 className={`${styles.listaMedica_content} ${styles.border_right} ${styles.long_width}`}>{oggetto.terapia}</h5>
-                                                <h5 className={`${styles.listaMedica_content} ${styles.border_right}`}>{oggetto.dataInizio}</h5>
-                                                <h5 className={`${styles.listaMedica_content} ${styles.border_right}`}>{oggetto.dataFine}</h5>
-                                                <h5 className={`${styles.listaMedica_content} ${styles.long_width}`}>{oggetto.note}</h5>
+                                            <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                                <label className={`${styles.sintesiMedica_label_TERAPIA}`}>Terapia:</label>
+                                                <h5 className={`${styles.sintesiMedica_content_TERAPIA}`}>{oggetto.terapia}</h5>
+                                            </div>
+                                            <div className={styles.wrapper_horizontal}>
+                                                <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                                    <label className={`${styles.sintesiMedica_label_DATA}`}>Data inizio:</label>
+                                                    <h5 className={`${styles.sintesiMedica_content_DATA}`}>{oggetto.dataInizio}</h5>
+                                                </div>
+                                                <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                                    <label className={`${styles.sintesiMedica_label_DATA}`}>Data fine:</label>
+                                                    <h5 className={`${styles.sintesiMedica_content_DATA}`}>{oggetto.dataFine}</h5>
+                                                </div>
+                                            </div>
+                                            <div style={{borderRight: "none"}} className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                                <label className={`${styles.sintesiMedica_label_NOTE}`}>Note:</label>
+                                                <h5 className={`${styles.sintesiMedica_content_NOTE}`}>{oggetto.note}</h5>
                                             </div>
                                         </div>
                                     }
@@ -480,11 +489,11 @@ function AddPaziente(props){
                                 
                                 {Object.keys(patologiaSelezionataOggetto).length > 0 && 
                                 <div className={`${styles.wrapper_horizontal} ${styles.full_width}`}>
-                                    <h2 style={{marginTop: "8px"}} className={styles.text_subtitle}>Elenco terapie per: {patologiaSelezionata}</h2>
+                                    <h2 style={{marginTop: "8px"}} className={styles.text_subtitle}>Elenco terapie:</h2>
                                     <GenericButton
                                         onClick={(event) => event.preventDefault()}
                                         buttonText={"Aggiungi terapia"}
-                                        generic_button
+                                        small_button
                                     ></GenericButton>
                                 </div>
                                 }
@@ -583,7 +592,8 @@ function AddPaziente(props){
                     <div className={styles.wrapper_horizontal}>
                         <GenericButton
                             onClick={stepPrecedente}
-                            small_button={true}
+                            generic_button={true}
+                            red_styling
                             buttonText='Torna ai dati personali'>
                         </GenericButton>
                         <GenericButton 
@@ -617,7 +627,8 @@ function AddPaziente(props){
                     <div className={styles.wrapper_horizontal}>
                         <GenericButton
                             onClick={stepPrecedente}
-                            small_button={true}
+                            generic_button={true}
+                            red_styling
                             buttonText='Torna a scheda medica'>
                         </GenericButton>
                         <GenericButton 

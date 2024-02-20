@@ -18,8 +18,8 @@
 }
 
 .delete_button_alternative{
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     background-color: red;
     color: white;
     margin: 0;
@@ -28,6 +28,11 @@
     border: 1px solid black;
     border-radius: 10px;
     transition: 0.3s;
+}
+
+.delete_button_alternative .trash_image{
+    width: 16px;
+    height: 16px;
 }
 
 .delete_button_alternative:hover{

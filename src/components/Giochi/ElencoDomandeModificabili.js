@@ -127,7 +127,8 @@ function ElencoDomandeModificabili(props){
                                 onClick={() => {
                                     game_ctx.eliminaDomanda(singleQuestion.ID);
                                 }}
-                                small_button={true}
+                                generic_button={true}
+                                red_styling
                                 buttonText={"Elimina domanda"}
                             >
                             </GenericButton>

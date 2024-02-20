@@ -188,7 +188,8 @@ function AddGioco(props){
 
                     <GenericButton
                     onClick={props.chiudiFormNuovoGioco}
-                    small_button={true}
+                    generic_button={true}
+                    red_styling
                     buttonText={"Chiudi scheda"}
                     >
                     </GenericButton>

@@ -404,7 +404,8 @@ function EditDomanda(props){
 
                         <GenericButton
                             onClick={props.chiudiFormModificaDomanda}
-                            small_button={true}
+                            generic_button={true}
+                            red_styling
                             buttonText={"Chiudi scheda"}
                         >
                         </GenericButton>

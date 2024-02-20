@@ -53,7 +53,7 @@ function RisultatiGioco(props){
                     <GenericButton
                     onClick={props.chiudiSchedaRisultati}
                     generic_button={true}
-                    small_button={true}
+                    red_styling
                     buttonText='Chiudi Scheda'>
                     </GenericButton>
 

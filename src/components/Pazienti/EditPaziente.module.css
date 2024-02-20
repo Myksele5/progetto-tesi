@@ -16,6 +16,38 @@
     align-items: center;
 }
 
+.container_flexible_GENERIC{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+}
+
+.container_flexible_SEZIONE_SINTESI{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    max-height: 72px;
+    border-right: 1px solid #163172;
+}
+.container_flexible_SEZIONE_SINTESI:nth-last-child(0){
+    border-right: none;
+}
+
+.container_flexible_INFO{
+    width: 560px;
+}
+
+.container_flexible_DATE{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    width: 560px;
+}
+
 .text_clickable{
     cursor: pointer;
     font-size: 20px;
@@ -48,11 +80,16 @@
 }
 
 .scrollable_div{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     height: fit-content;
-    max-height: 260px;
+    max-height: 300px;
     overflow-y: scroll;
     border: 2px solid #163172;
     border-radius: 4px;
+    padding: 0px 6px;
     margin-bottom: 8px;
 }
 
@@ -70,7 +107,7 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    width: 600px;
+    width: 620px;
 }
 
 .title_form{
@@ -82,6 +119,12 @@
 .text_subtitle{
     font-size: 16px;
     margin: 4px;
+}
+
+.subtitle_form{
+    font-size: 20px;
+    margin: 8px;
+    color: #163172;
 }
 
 .warning{
@@ -202,31 +245,127 @@
     font-weight: bold;
 }
 
-.info_content{
-    font-size: 18px;
-    font-weight: normal;
-    margin: 5px 0;
-    /* padding: 10px; */
-    width: 280px;
-    text-align: center;
-    align-self: flex-start;
-    word-wrap: break-word;
-}
-
-.listaMedica_label{
-    width: 80px;
-    text-align: center;
-    padding: 4px 8px 4px 8px;
+.sintesiMedica_label_PATOLOGIA{
     font-weight: bold;
     font-size: 14px;
+    text-align: center;
+    width: 120px;
+    height: 40px;
 }
+
+.sintesiMedica_content_PATOLOGIA{
+    font-weight: normal;
+    text-align: center;
+    width: 120px;
+    height: 100px;
+    margin: 0;
+}
+
+.sintesiMedica_label_TERAPIA{
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    width: 200px;
+    height: 40px;
+}
+
+.sintesiMedica_content_TERAPIA{
+    font-weight: normal;
+    text-align: center;
+    width: 200px;
+    height: 100px;
+    margin: 0;
+    overflow-y: auto;
+}
+.sintesiMedica_content_TERAPIA::-webkit-scrollbar{
+    width: 6px;
+}
+
+.sintesiMedica_label_DATA{
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    width: 86px;
+    height: 40px;
+}
+
+.sintesiMedica_content_DATA{
+    font-weight: normal;
+    text-align: center;
+    width: 86px;
+    height: 100px;
+    margin: 0;
+}
+
+.sintesiMedica_label_NOTE{
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    width: 100px;
+    height: 40px;
+}
+
+.sintesiMedica_content_NOTE{
+    font-weight: normal;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    margin: 0;
+    overflow-y: auto;
+}
+.sintesiMedica_content_NOTE::-webkit-scrollbar{
+    width: 6px;
+}
+
+.listaMedica_label_TERAPIA{
+    font-weight: bold;
+    text-align: center;
+    /* border-right: 1px solid #163172; */
+    width: 100%;
+}
+.listaMedica_content_TERAPIA{
+    font-weight: normal;
+    text-align: center;
+    /* border-right: 1px solid #163172; */
+    width: 100%;
+    min-height: 30px;
+    height: fit-content;
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    overflow-y: auto;
+    font-size: 16px;
+}
+.listaMedica_label_NOTE{
+    font-weight: bold;
+    text-align: center;
+    /* border-right: 1px solid #163172; */
+    width: 100%;
+}
+.listaMedica_content_NOTE{
+    font-weight: normal;
+    text-align: center;
+    /* border-right: 1px solid #163172; */
+    width: 100%;
+    height: 30px;
+    margin: 0;
+    padding-top: 10px;
+    overflow-y: auto;
+    font-size: 16px;
+}
+.listaMedica_label_DATA{
+    font-weight: bold;
+    text-align: center;
+    /* border-right: 1px solid #163172; */
+    width: 50%;
+}
+
 .listaMedica_content{
     text-align: center;
     margin: 0px 0px 0px 0px;
     padding: 10px 8px 4px 8px;
     width: 80px;
     height: 50px;
-    /* max-height: 60px; */
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -234,23 +373,7 @@
     font-size: 12px;
 }
 
-.long_width{
-    width: 120px;
-    overflow-y: auto;
-}
-
-.long_width::-webkit-scrollbar {
-    width: 6px;
-    background-color: #163172;
-}
-  
-.long_width::-webkit-scrollbar-thumb {
-    background-color: #D6E4F0;
-    border: 1px solid #163172;
-    border-radius: 4px;
-}
-
-@media screen and (max-width: 1050px) {
+@media screen and (max-width: 1000px) {
     .wrapper_flex{
         display: flex;
         justify-content: center;
@@ -272,7 +395,7 @@
 
     .title_form{
         font-size: 22px;
-        margin: 10px;
+        margin: 4px;
     }
 
     .warning{
@@ -294,5 +417,140 @@
 
     .input_style_LARGE{
         width: 240px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .wrapper_flex{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-bottom: none;
+    }
+
+    .container_flexible_GENERIC{
+        flex-direction: column;
+        width: 360px;
+    }
+
+    .container_flexible_SEZIONE_SINTESI{
+        border-right: none;
+        border-bottom: 1px solid #163172;
+        width: 100%;
+        height: fit-content;
+        max-height: 50px;
+    }
+
+    .container_flexible_INFO{
+        width: 360px;
+    }
+    
+    .container_flexible_DATE{
+        flex-direction: column;
+        height: 140px;
+        width: 360px;
+    }
+
+    .border_right{
+        border-right: none;
+        border-bottom: 1px solid #163172;
+    }
+
+    .section_style{
+        width: 420px;
+    }
+
+    .title_form{
+        font-size: 18px;
+        margin: 2px;
+        margin-top: 0;
+    }
+
+    .subtitle_form{
+        font-size: 17px;
+    }
+
+    .label_style{
+        font-size: 15px;
+    }
+
+    .input_style{
+        width: 220px;
+    }
+    .input_style_SHORT{
+        height: 20px;
+        font-size: 18px;
+    }
+
+    .paragraph_style{
+        font-size: 12px;
+        margin: 0;
+    }
+
+    .sintesiMedica_label_PATOLOGIA, .sintesiMedica_content_PATOLOGIA, .sintesiMedica_label_NOTE,
+    .sintesiMedica_content_NOTE{
+        width: 100%;
+        height: 20px;
+    }
+
+    .sintesiMedica_label_TERAPIA{
+        width: 360px;
+        height: 40px;
+    }
+
+    .sintesiMedica_content_TERAPIA{
+        width: 360px;
+        height: 80px;
+    }
+
+    .sintesiMedica_label_DATA, .sintesiMedica_content_DATA{
+        width: 180px;
+        height: 20px;
+    }
+}
+
+@media screen and (max-width: 549px) {
+    .scrollable_div{
+        width: 280px;
+    }
+
+    .container_flexible_GENERIC{
+        width: 250px;
+    }
+
+    .section_style{
+        width: 280px;
+    }
+
+    .container_flexible_INFO{
+        width: 240px;
+    }
+
+    .container_flexible_DATE{
+        flex-direction: column;
+        height: 120px;
+        width: 240px;
+    }
+    
+    .input_style_SHORT{
+        width: 160px;
+        font-size: 16px;
+    }
+
+    .listaMedica_label_TERAPIA, .listaMedica_content_TERAPIA, .listaMedica_label_DATA, .listaMedica_label_NOTE, .listaMedica_content_NOTE{
+        font-size: 14px;
+    }
+
+    .sintesiMedica_label_TERAPIA{
+        width: 250px;
+    }
+
+    .sintesiMedica_content_TERAPIA{
+        width: 250px;
+    }
+
+    .sintesiMedica_label_DATA, .sintesiMedica_content_DATA{
+        width: 125px;
     }
 }

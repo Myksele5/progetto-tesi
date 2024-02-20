@@ -66,6 +66,7 @@ function MainMenu(props){
                     onClick={auth_ctx.onLogoutClick}
                     buttonText={'Log Out'}
                     small_button={true}
+                    red_styling
                     >
                     </GenericButton>
                 </div>

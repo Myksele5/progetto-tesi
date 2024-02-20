@@ -127,7 +127,7 @@
 @media screen and (max-width: 1200px) {
     .wrap_profilo{
         flex-direction: column;
-        margin: 0 35px;
+        margin: 0 30px;
     }
     .wrap_menu{
         width: 100%;
@@ -178,6 +178,15 @@
 }
 
 @media screen and (max-width: 850px) {
+    .wrap_profilo{
+        margin: 0 18px;
+    }
+
+    .wrapper_generico{
+        width: 120px;
+        margin: 10px 0px;
+    }
+
     .utente_loggato{
         font-size: 12px;
     }
