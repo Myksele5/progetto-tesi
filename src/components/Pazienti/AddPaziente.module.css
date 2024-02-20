@@ -4,11 +4,32 @@
     align-items: center;
 }
 
+.full_width{
+    width: 100%;
+    justify-content: space-between;
+}
+
 .wrapper_vertical{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.container_flexible_INFO{
+    width: 560px;
+}
+
+.container_flexible_DATE{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    width: 560px;
+}
+
+.border_right{
+    border-right: 1px solid #163172;
 }
 
 .center_form{
@@ -17,6 +38,16 @@
     justify-content: center;
     align-items: center;
     margin: 5px;
+}
+
+.scrollable_div{
+    height: fit-content;
+    max-height: 300px;
+    overflow-y: scroll;
+    border: 2px solid #163172;
+    border-radius: 4px;
+    padding: 0px 6px;
+    margin-bottom: 8px;
 }
 
 .wrapper_flex{
@@ -33,16 +64,17 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    width: 500px;
-}
-
-.section_style:nth-last-child(1){
-    border-right: none;
+    width: 620px;
 }
 
 .title_form{
-    font-size: 28px;
+    font-size: 24px;
     margin: 5px;
+}
+
+.text_subtitle{
+    font-size: 16px;
+    margin: 4px;
 }
 
 .subtitle_form{
@@ -165,18 +197,93 @@
 
 .wrap_content{
     text-align: center;
-    width: 300px;
+    font-weight: bold;
+    width: 280px;
+    height: 30px;
 }
 
 .info_content{
-    font-size: 22px;
+    font-size: 20px;
     font-weight: normal;
     margin: 5px 0;
     /* padding: 10px; */
-    width: 300px;
+    width: 280px;
+    height: 100px;
+    overflow-y: auto;
     text-align: center;
     align-self: flex-start;
     word-wrap: break-word;
+}
+
+.listaMedica_label_TERAPIA{
+    font-weight: bold;
+    text-align: center;
+    /* border-right: 1px solid #163172; */
+    width: 100%;
+}
+.listaMedica_content_TERAPIA{
+    font-weight: normal;
+    text-align: center;
+    /* border-right: 1px solid #163172; */
+    width: 100%;
+    min-height: 30px;
+    height: fit-content;
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    overflow-y: auto;
+    font-size: 16px;
+}
+.listaMedica_label_NOTE{
+    font-weight: bold;
+    text-align: center;
+    /* border-right: 1px solid #163172; */
+    width: 100%;
+}
+.listaMedica_content_NOTE{
+    font-weight: normal;
+    text-align: center;
+    /* border-right: 1px solid #163172; */
+    width: 100%;
+    height: 30px;
+    margin: 0;
+    padding-top: 10px;
+    overflow-y: auto;
+    font-size: 16px;
+}
+.listaMedica_label_DATA{
+    font-weight: bold;
+    text-align: center;
+    /* border-right: 1px solid #163172; */
+    width: 50%;
+}
+/* .listaMedica_content_DATA{
+    font-weight: normal;
+    text-align: center;
+    border-right: 1px solid #163172;
+    width: 280px;
+    height: 60px;
+    margin: 0;
+    padding-top: 10px;
+    overflow-y: auto;
+} */
+
+.listaMedica_content{
+    text-align: center;
+    margin: 0px 0px 0px 0px;
+    padding: 10px 8px 4px 8px;
+    width: 80px;
+    height: 50px;
+    /* max-height: 60px; */
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.long_width{
+    width: 120px;
 }
 
 @media screen and (max-width: 1400px) {
@@ -240,8 +347,26 @@
         border-bottom: none;
     }
 
-    .section_style{
+    .container_flexible_INFO{
         width: 300px;
+    }
+    
+    .container_flexible_DATE{
+        flex-direction: column;
+        height: 140px;
+        width: 300px;
+    }
+
+    .border_right{
+        border-bottom: 1px solid #163172;
+    }
+
+    .container_flexible{
+        flex-direction: column;
+    }
+
+    .section_style{
+        width: 360px;
     }
 
     .title_form{
@@ -260,9 +385,28 @@
     .input_style{
         width: 220px;
     }
+    .input_style_SHORT{
+        height: 20px;
+        font-size: 18px;
+    }
 
     .paragraph_style{
         font-size: 12px;
         margin: 0;
+    }
+
+    .wrap_content{
+        width: 240px;
+        height: 30px;
+    }
+    
+    .info_content{
+        font-size: 18px;
+        width: 240px;
+        height: 60px;
+        overflow-y: auto;
+        text-align: center;
+        align-self: flex-start;
+        word-wrap: break-word;
     }
 }

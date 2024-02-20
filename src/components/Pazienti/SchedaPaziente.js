@@ -1,12 +1,25 @@
 import GenericButton from '../UI/GenericButton';
 import Card from '../UI/Card';
 import styles from './SchedaPaziente.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import StatistichePaziente from './StatistichePaziente';
+import CardSmall from '../UI/CardSmall';
 
 function SchedaPaziente(props){
     const [titoloScheda, setTitoloScheda] = useState('Dati Personali');
     const [sezioneScheda, setSezioneScheda] = useState('DATI_PERSONALI');
+
+    const [informazioniMediche, setInformazioniMediche] = useState([]);
+
+    useEffect(() => {
+        console.log(props.informazioniMediche)
+        if(props.informazioniMediche?.length > 0){
+            setInformazioniMediche(props.informazioniMediche) 
+        }
+        else{
+            setInformazioniMediche([]) 
+        }   
+    }, [])
 
     function showDatiPersonali(){
         console.log('Mostra DATI PERSONALI');
@@ -128,39 +141,37 @@ function SchedaPaziente(props){
                 }
                 {sezioneScheda === 'SCHEDA_MEDICA' &&
                 <>
-                <div className={styles.grid_flex_container}>
-                    <div className={styles.grid_flex_content}>
-                        <label className={styles.label_style}>Patologia</label>
-                        <div className={styles.containter_content_style}>
-                            {props.patologia_1.map((pat) => (
-                                <h3 className={styles.content_style}>{"-" + pat}</h3>
-                            ))}
-                        </div>
-                        {/* <hr className={styles.horizontal_line}/> */}
-                    </div>
-                    <div className={styles.grid_flex_content}>
-                        <label className={styles.label_style}>Medicine</label>
-                        <div className={styles.containter_content_style}>
-                            {props.medicina_1.map((med) => (
-                                <h3 className={styles.content_style}>{"-" + med}</h3>
-                            ))}
-                        </div>
-                    </div>
-                    <div className={styles.grid_flex_content}>
-                        <label className={styles.label_style}>Terapia</label>
-                        <div className={styles.containter_content_style}>
-                            <h3>{props.terapia}</h3>
-                        </div>
-                        {/* <hr className={styles.horizontal_line}/> */}
-                    </div>
-                    <div className={styles.grid_flex_content}>
-                        <label className={styles.label_style}>Note</label>
-                        <div className={styles.containter_content_style}>
-                            <h3>{props.note}</h3>
-                        </div>
-                    </div>
-                </div>
-                <hr className={styles.horizontal_line}/>
+                    {informazioniMediche.length === 0 && <h3>Non ci sono informazioni mediche su questo paziente</h3>}
+                    {informazioniMediche.length > 0 && <h3>Patologie e terapie</h3>}
+                    {informazioniMediche?.map((objInfo) => (
+                        <>
+                            
+                            <CardSmall
+                                children={
+                                    <div className={styles.wrapper_vertical}>
+                                        {/* <h5>{oggetto.patologiaID}</h5> */}
+                                        <div className={`${styles.wrapper_horizontal}`}>
+                                            <label className={`${styles.listaMedica_label} ${styles.border_right}`}>Patologia:</label>
+                                            <label className={`${styles.listaMedica_label} ${styles.border_right} ${styles.long_width}`}>Terapia:</label>
+                                            <label className={`${styles.listaMedica_label} ${styles.border_right}`}>Data inizio:</label>
+                                            <label className={`${styles.listaMedica_label} ${styles.border_right}`}>Data fine:</label>
+                                            <label className={`${styles.listaMedica_label} ${styles.med_width}`}>Note:</label>
+                                        </div>
+                                        <div className={`${styles.wrapper_horizontal}`}>
+                                            <h5 className={`${styles.listaMedica_content} ${styles.border_right}`}>{objInfo.nomePatologia}</h5>
+                                            <h5 className={`${styles.listaMedica_content} ${styles.border_right} ${styles.long_width} ${styles.long_height}`}>{objInfo.terapia}</h5>
+                                            <h5 className={`${styles.listaMedica_content} ${styles.border_right}`}>{objInfo.dataInizio}</h5>
+                                            <h5 className={`${styles.listaMedica_content} ${styles.border_right}`}>{objInfo.dataFine}</h5>
+                                            <h5 className={`${styles.listaMedica_content} ${styles.med_width} ${styles.long_height}`}>{objInfo.note}</h5>
+                                        </div>
+                                    </div>
+                                }
+                            ></CardSmall>
+                        </>
+                        ))
+                    }
+                    
+                    <hr className={styles.horizontal_line}/>
                 </>
                 }
                 {sezioneScheda === 'ESERCIZI/TEST' &&

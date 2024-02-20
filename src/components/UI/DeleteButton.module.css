@@ -17,6 +17,26 @@
     transition: 0.3s;
 }
 
+.delete_button_alternative{
+    width: 40px;
+    height: 40px;
+    background-color: red;
+    color: white;
+    margin: 0;
+    margin-left: -6px;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.delete_button_alternative:hover{
+    background-color: darkred;
+    border: 1px solid #D6E4F0;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
 .delete_button:hover .trash_image{
     width: 21px;
     height: 21px;
