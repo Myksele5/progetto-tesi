@@ -26,7 +26,10 @@ const PatologiesContext = React.createContext({
     getTherapiesListSinglePat: ()=>{},
     createUniqueObject: ()=>{},
     saveNewPatologyWithTherapies: ()=>{},
-    confirmDeletePatology: ()=>{}
+    confirmDeletePatology: ()=>{},
+    confirmDeleteTherapy: ()=>{},
+    addNewTherapy: ()=>{},
+    editTherapy: ()=>{}
 })
 
 export function PatologiesContextProvider(props){
@@ -41,41 +44,6 @@ export function PatologiesContextProvider(props){
     const [showFormAddPat, setShowFormAddPat] = useState(false);
     const [showTherapies, setShowTherapies] = useState(false);
     const [patologiaVisualizzata, setPatologiaVisualizzata] = useState({})
-
-    async function recuperaPatologie(){
-        let resultPatologie;
-
-        resultPatologie = await getServerMgr().getPatologies()
-        .catch((err) => {
-            console.error(err)
-        });
-
-        console.log(resultPatologie)
-
-        if(resultPatologie !== null){
-            setElencoPatologie(resultPatologie);
-        }
-        else{
-            setElencoPatologie([]);
-        }
-    }
-    async function recuperaTerapie(){
-        let resultTerapie;
-
-        resultTerapie = await getServerMgr().getTherapies()
-        .catch((err) => {
-            console.error(err)
-        });
-
-        console.log(resultTerapie)
-
-        if(resultTerapie !== null){
-            setElencoTerapie(resultTerapie);
-        }
-        else{
-            setElencoTerapie([]);
-        }
-    }
 
     async function creaOggettoUnicoPatologieTerapie(){
         let resultPatologie;
@@ -129,8 +97,19 @@ export function PatologiesContextProvider(props){
             arrayProva = [...arrayProva, oggUnico]
         })
         setElencoUnico(arrayProva)
+
+        if(Object.keys(patologiaVisualizzata).length > 0){
+            arrayProva.map((patologia) => {
+                if(patologia.patologiaID === patologiaVisualizzata.patologiaID){
+                    console.log(patologia)
+                    console.log(patologiaVisualizzata)
+                    setPatologiaVisualizzata(patologia)
+                }
+            })
+        }
+        // console.log(patologiaVisualizzata)
+
         return arrayProva;
-        // console.log(elencoUnico)
     }
 
     useEffect(() => {
@@ -210,10 +189,10 @@ export function PatologiesContextProvider(props){
         return patologia;
     }
 
-    function confermaEliminazionePaziente(patologiaID, nomePatologia){
+    function confermaEliminazionePatologia(patologiaID, nomePatologia){
         modal = 
         <Modal
-        testoModale={"Sei sicuro di voler eliminare questa patologia?"}
+        testoModale={"Sei sicuro di voler eliminare questa patologia e tutte le terapie associate?"}
         patologia={nomePatologia}
         CONFERMA={() =>{
             eliminaPatologia(patologiaID);
@@ -230,6 +209,43 @@ export function PatologiesContextProvider(props){
 
     async function eliminaPatologia(patologiaID){
         await getServerMgr().deletePatology(patologiaID)
+        .catch((err) => {console.error(err)})
+
+        creaOggettoUnicoPatologieTerapie();
+    }
+
+    function confermaEliminazioneTerapia(terapiaID){
+        modal = 
+        <Modal
+        testoModale={"Vuoi eliminare definitivamente questa terapia?"}
+        CONFERMA={() =>{
+            eliminaTerapia(terapiaID);
+            setShowModal(false);
+            // setShowTabella(true);
+        }}
+        ANNULLA={() => {
+            setShowModal(false);
+            // setShowTabella(true);
+        }}>
+        </Modal>;
+        setShowModal(true);
+    }
+
+    async function salvaNuovaTerapia(patologiaID, terapia, note){
+        await getServerMgr().saveNewTherapy(patologiaID, terapia, note)
+        .catch((err) => {console.error(err)})
+
+        creaOggettoUnicoPatologieTerapie();
+    }
+    async function eliminaTerapia(terapiaID){
+        await getServerMgr().deleteTherapy(terapiaID)
+        .catch((err) => {console.error(err)})
+
+        creaOggettoUnicoPatologieTerapie();
+    }
+
+    async function modificaTerapia(terapiaID, terapia, note){
+        await getServerMgr().editTherapy(terapiaID, terapia, note)
         .catch((err) => {console.error(err)})
 
         creaOggettoUnicoPatologieTerapie();
@@ -259,7 +275,10 @@ export function PatologiesContextProvider(props){
                 getTherapiesListSinglePat: prendiListaTerapieDiPatologia,
                 createUniqueObject: creaOggettoUnicoPatologieTerapie,
                 saveNewPatologyWithTherapies: salvaNuovaPatologiaConTerapie,
-                confirmDeletePatology: confermaEliminazionePaziente
+                confirmDeletePatology: confermaEliminazionePatologia,
+                confirmDeleteTherapy: confermaEliminazioneTerapia,
+                addNewTherapy: salvaNuovaTerapia,
+                editTherapy: modificaTerapia
             }}
         >
             {props.children}

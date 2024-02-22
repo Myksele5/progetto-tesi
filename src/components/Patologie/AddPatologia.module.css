@@ -10,3 +10,77 @@
     justify-content: center;
     align-items: center;
 }
+
+.title_form{
+    font-size: 23px;
+    margin-top: 0;
+}
+
+.fieldset_style{
+    width: 680px;
+    border: 3px solid #163172;
+    border-radius: 10px;
+    margin: 2px 0px 6px 6px;
+}
+
+.legend_style{
+    margin-left: 40px;
+    font-size: 22px;
+    color: #2569c2;
+}
+
+.input_style{
+    width: 320px;
+    height: 25px;
+    margin: 5px;
+    margin-bottom: 10px;
+    border: 2px solid #1E56A0;
+    border-radius: 20px;
+    font-size: 22px;
+    color: black;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.input_style:focus{
+    border: 2px solid #163172;
+    background-color: #D6E4F0;
+    transition: 0.3s;
+    box-shadow: 1px 1px 5px 1px black;
+    outline: none;
+}
+
+.input_style.invalid{
+    border: 2px solid red;
+}
+
+.textarea_style{
+    min-width: 300px;
+    width: 500px;
+    max-width: 650px;
+    min-height: 50px;
+    height: 80px;
+    max-height: 200px;
+    border: 2px solid #1E56A0;
+    border-radius: 8px;
+    font-size: 20px;
+    color: black;
+    transition: 0.3s;
+    text-align: start;
+}
+
+.textarea_style::-webkit-scrollbar{
+    width: 8px;
+}
+
+.textarea_style:focus{
+    border: 2px solid #163172;
+    background-color: #D6E4F0;
+    transition: 0.3s;
+    box-shadow: 1px 1px 5px 1px black;
+    outline: none;
+}
+
+.textarea_style.invalid{
+    border: 2px solid red;
+}

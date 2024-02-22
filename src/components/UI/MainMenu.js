@@ -3,7 +3,7 @@ import brain from "../Images/dementia-hub.jpg";
 import patient from "../Images/disabled.png";
 import activity from "../Images/puzzle_piece.png";
 import game from "../Images/chess.png";
-import dialogue from "../Images/chat.png";
+import dialogue from "../Images/list.png";
 import GenericButton from "./GenericButton";
 import ReactDOM from 'react-dom';
 import { useContext, useState } from "react";

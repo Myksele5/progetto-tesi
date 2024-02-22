@@ -14,7 +14,7 @@ function Patologie(){
 
     const [IDperModificaNome, setIDperModificaNome] = useState();
     const [nomeDaModificare, setNomeDaModificare] = useState("");
-    const [patologiaVisualizzata, setPatologiaVisualizzata] = useState([]);
+    const [patologiaVisualizzata, setPatologiaVisualizzata] = useState({});
 
     useEffect(() => {
         console.log(patologies_ctx.uniqueList)
@@ -22,14 +22,15 @@ function Patologie(){
 
     function visualizzaPatologia(patologia){
         console.log(patologia)
-        setPatologiaVisualizzata((prevList) => ([...prevList, patologia]))
+        patologies_ctx.showPatologia(patologia)
+        patologies_ctx.showTherapiesList();
     }
 
-    function nonMostrarePatologia(patologia){
-        let arrayTemporaneo = [...patologiaVisualizzata];
-        arrayTemporaneo.splice(patologiaVisualizzata.indexOf(patologia), 1)
-        setPatologiaVisualizzata(arrayTemporaneo)
-    }
+    // function nonMostrarePatologia(patologia){
+    //     let arrayTemporaneo = [...patologiaVisualizzata];
+    //     arrayTemporaneo.splice(patologiaVisualizzata.indexOf(patologia), 1)
+    //     setPatologiaVisualizzata(arrayTemporaneo)
+    // }
 
     function modificaNomePatologia(ID, nome){
         setIDperModificaNome(ID);
@@ -72,8 +73,6 @@ function Patologie(){
                         }}
                         buttonText={"Aggiungi Patologia"}
                         generic_button={true}
-                        text_hideable={true}
-                        // immagine={imageee}
                     >
                     </GenericButton>
                 </div>
@@ -82,15 +81,17 @@ function Patologie(){
             <div className={styles.wrapper_generico_vertical}>
                 {patologies_ctx.visibleFormAddPatology &&
                     <Card
+                        altroStile
                         animazione
-                        children={
-                            <>
-                                <AddPatologia></AddPatologia>
-                                
-                            </>
-                        }
+                        children={<AddPatologia></AddPatologia>}
                     >
                     </Card>
+                }
+
+                {patologies_ctx.visibleTherapiesList && 
+                    <ElencoTerapie
+                        patologiaSelezionata={patologiaVisualizzata}
+                    ></ElencoTerapie>
                 }
 
                 {patologies_ctx.visibleLista &&
@@ -102,22 +103,24 @@ function Patologie(){
                                     <>
                                         <div key={pat.patologiaID} className={`${styles.wrapper_generico_horizontal} ${styles.width_for_wrapper}`}>
                                             <div className={styles.wrapper_generico_vertical}>
-                                                <label className={styles.label_style}>Patologia:</label>
                                                 {IDperModificaNome !== pat.patologiaID &&
-                                                <>
-                                                    <h3 className={styles.info_content}>{pat.nomePatologia}</h3>
+                                                    <div className={`${styles.wrapper_generico_vertical} ${styles.wrapper_direction}`}>
+                                                        <label className={styles.label_style}>Patologia:</label>
+                                                        <h3 className={styles.info_content}>{pat.nomePatologia}</h3>
                                                         <GenericAlternativeButton
                                                             onClick={() => {
                                                                 modificaNomePatologia(pat.patologiaID, pat.nomePatologia)
                                                             }}
-                                                            buttonText={"Modifica Nome"}
+                                                            buttonText={"Modifica"}
+                                                            bottone_piccolo
                                                         ></GenericAlternativeButton>
-                                                </>
+                                                    </div>
                                                 }
                                                 {IDperModificaNome === pat.patologiaID &&
-                                                <>
-                                                    <input onChange={nomePatologiaChangeHandler} value={nomeDaModificare} className={styles.input_style}></input>
-                                                        <div className={styles.wrapper_generico_horizontal}>
+                                                <div className={`${styles.wrapper_generico_vertical} ${styles.wrapper_direction}`}>
+                                                    <label className={styles.label_style}>Patologia:</label>
+                                                    <textarea onChange={nomePatologiaChangeHandler} value={nomeDaModificare} className={styles.input_style}></textarea>
+                                                    <div className={styles.wrapper_generico_horizontal}>
                                                         <GenericAlternativeButton
                                                             bottone_piccolo
                                                             onClick={() => {
@@ -135,48 +138,29 @@ function Patologie(){
                                                             colore_rosso
                                                         ></GenericAlternativeButton>
                                                     </div>
-                                                </>
+                                                </div>
                                                 }
                                                     
                                             </div>
-                                            <div className={styles.wrapper_generico_vertical}>
-                                                <label className={styles.label_style}>Opzioni:</label>
-                                                {!patologiaVisualizzata.includes(pat) &&
-                                                <>
-                                                    <GenericAlternativeButton
-                                                        onClick={() => {
-                                                            // patologies_ctx.showTherapiesList();
-                                                            // patologies_ctx.showPatologia(pat)
-                                                            visualizzaPatologia(pat)
-                                                        }}
-                                                        buttonText={"Mostra terapie"}
-                                                    >
-                                                    </GenericAlternativeButton>
-                                                    <GenericAlternativeButton
-                                                        onClick={() => {
-                                                            eliminaPatologia(pat.patologiaID, pat.nomePatologia)
-                                                        }}
-                                                        buttonText={"Elimina Patologia"}
-                                                        colore_rosso
-                                                    ></GenericAlternativeButton>
-                                                </>
-                                                }
-                                                {patologiaVisualizzata.includes(pat) &&
-                                                    <GenericAlternativeButton
-                                                        onClick={() => {
-                                                            // patologies_ctx.showTherapiesList();
-                                                            // patologies_ctx.showPatologia(pat)
-                                                            nonMostrarePatologia(pat)
-                                                        }}
-                                                        // colore_rosso
-                                                        buttonText={"Nascondi terapie"}
-                                                    >
-                                                    </GenericAlternativeButton>
-                                                }
+                                            <div className={`${styles.wrapper_generico_vertical} ${styles.full_height}`}>
+                                                <GenericAlternativeButton
+                                                    onClick={() => {
+                                                        visualizzaPatologia(pat)
+                                                    }}
+                                                    buttonText={"Mostra terapie"}
+                                                >
+                                                </GenericAlternativeButton>
                                                 
+                                                <GenericAlternativeButton
+                                                    onClick={() => {
+                                                        eliminaPatologia(pat.patologiaID, pat.nomePatologia)
+                                                    }}
+                                                    buttonText={"Elimina Patologia"}
+                                                    colore_rosso
+                                                ></GenericAlternativeButton>
                                             </div>
                                         </div>
-                                        {patologiaVisualizzata.map((singlePat) => {
+                                        {/* {patologiaVisualizzata.map((singlePat) => {
                                             if(singlePat.patologiaID === pat.patologiaID){
                                                 return (
                                                     <ElencoTerapie
@@ -184,7 +168,7 @@ function Patologie(){
                                                     ></ElencoTerapie>
                                                 );
                                             }
-                                        })}
+                                        })} */}
                                     </>
                                 }
                             >

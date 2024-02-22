@@ -121,6 +121,12 @@
 }
 
 @media screen and (max-width: 600px) {
+    .generic_button{
+        width: 100px;
+        height: 34px;
+        font-size: 11px;
+    }
+
     .generic_button_HIDETEXT{
         display: none;
     }

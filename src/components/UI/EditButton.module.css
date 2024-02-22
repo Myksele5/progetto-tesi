@@ -17,6 +17,30 @@
     transition: 0.3s;
 }
 
+.edit_button_alternative{
+    width: 30px;
+    height: 30px;
+    background-color: #1E56A0;
+    color: white;
+    margin: 4px;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.edit_button_alternative .edit_image{
+    width: 16px;
+    height: 16px;
+}
+
+.edit_button_alternative:hover{
+    background-color: #163172;
+    border: 1px solid #D6E4F0;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
 .edit_button:hover .edit_image{
     width: 21px;
     height: 21px;
@@ -63,6 +87,16 @@
     .edit_image{
         width: 16px;
         height: 16px;
+    }
+
+    .edit_button_alternative{
+        width: 26px;
+        height: 26px;
+    }
+    
+    .edit_button_alternative .edit_image{
+        width: 14px;
+        height: 14px;
     }
 }
 

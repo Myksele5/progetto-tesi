@@ -69,24 +69,24 @@ function AddPatologia(){
 
     return(
         <div className={styles.wrapper_vertical}>
-            <h2>Nuova Patologia</h2>
+            <h2 className={styles.title_form}>Nuova Patologia</h2>
             
             <label>Nome Patologia:</label>
-            <input onChange={patologiaChangeHandler} value={nomePatologia}></input>
+            <input className={styles.input_style} onChange={patologiaChangeHandler} value={nomePatologia}></input>
 
             {terapieAssociate.map((singleTerap) => (
                 <div key={singleTerap.newTerapID} className={styles.wrapper_horizontal}>
-                    <fieldset className={styles.wrapper_vertical}>
-                        <legend>{"TERAPIA N." + singleTerap.newTerapID}</legend>
+                    <fieldset className={`${styles.wrapper_vertical} ${styles.fieldset_style}`}>
+                        <legend className={styles.legend_style}>{"TERAPIA N." + singleTerap.newTerapID}</legend>
                         <label>Inserisci una terapia:</label>
-                        <textarea onChange={(event) => {
+                        <textarea className={styles.textarea_style} onChange={(event) => {
                             terapiaChangeHandler(event, singleTerap.newTerapID)
                         }}
                         >
                         </textarea>
 
                         <label>Note:</label>
-                        <textarea onChange={(event) => {
+                        <textarea className={styles.textarea_style} onChange={(event) => {
                             noteDellaTerapiaChangeHandler(event, singleTerap.newTerapID)
                         }}
                         >

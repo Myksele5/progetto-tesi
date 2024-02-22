@@ -22,8 +22,8 @@
     height: 30px;
     background-color: red;
     color: white;
-    margin: 0;
-    margin-left: -6px;
+    margin: 4px;
+    /* margin-left: -6px; */
     padding: 5px;
     border: 1px solid black;
     border-radius: 10px;
@@ -88,6 +88,16 @@
     .trash_image{
         width: 16px;
         height: 16px;
+    }
+
+    .delete_button_alternative{
+        width: 26px;
+        height: 26px;
+    }
+    
+    .delete_button_alternative .trash_image{
+        width: 14px;
+        height: 14px;
     }
 }
 

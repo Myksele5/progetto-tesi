@@ -133,6 +133,15 @@
     case "deletePatology":
         $query_result = deletePatology($conn);
         break;
+    case "saveNewTherapy":
+        $query_result = saveNewTherapy($conn);
+        break;
+    case "deleteTherapy":
+        $query_result = deleteTherapy($conn);
+        break;
+    case "editTherapy":
+        $query_result = editTherapy($conn);
+        break;
     default:
     	break;
 	}
@@ -916,6 +925,53 @@
         );
         $deletePatology->bind_param("i", $patologiaID);
         $deletePatology->execute();
+
+        return $result;
+    }
+
+    function saveNewTherapy($i_conn) {
+        $data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $terapia = $dataJson["terapia"];
+        $note = $dataJson["note"];
+        $patologiaID = $dataJson["patologiaID"];
+        
+        $saveNewTherapy = $i_conn->prepare(
+            "INSERT INTO `elencoTerapie` (`terapia`, `note`, `patolog_ID`) VALUES (?, ?, ?)"
+        );
+        $saveNewTherapy->bind_param("ssi", $terapia, $note, $patologiaID);
+        $saveNewTherapy->execute();
+
+        return $result;
+    }
+
+    function deleteTherapy($i_conn) {
+        $data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $terapiaID = $dataJson["terapiaID"];
+        
+        $deleteTherapy = $i_conn->prepare(
+            "DELETE FROM `elencoTerapie` WHERE terapiaID = ?"
+        );
+        $deleteTherapy->bind_param("i", $terapiaID);
+        $deleteTherapy->execute();
+
+        return $result;
+    }
+
+    function editTherapy($i_conn) {
+        $data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $terapiaID = $dataJson["terapiaID"];
+        $terapia = $dataJson["terapia"];
+        $note = $dataJson["note"];
+        
+        $editTherapy = $i_conn->prepare("UPDATE `elencoTerapie` SET `terapia` = ?, `note` = ? WHERE `elencoTerapie`.`terapiaID` = ?");
+        $editTherapy->bind_param("ssi", $terapia, $note, $terapiaID);
+        $editTherapy->execute();
 
         return $result;
     }

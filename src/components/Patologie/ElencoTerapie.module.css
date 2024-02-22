@@ -10,35 +10,225 @@
     align-items: center;
 }
 
+.subtitle{
+    margin-top: 12px;
+    margin-bottom: 0;
+}
+
+.scrollable_div{
+    justify-content: flex-start;
+    width: 1000px;
+    border: 2px solid #163172;
+    border-radius: 10px;
+    height: fit-content;
+    max-height: 650px;
+    margin-top: 10px;
+    padding: 10px;
+    box-shadow: 0px 2px 12px #163172;
+    overflow-y: auto;
+}
+
+.scrollable_div::-webkit-scrollbar, .scrollable_div::-webkit-scrollbar-thumb{
+    width: 10px;
+    border-radius: 10px;
+}
+
 .wrap_content{
     text-align: center;
-    width: 300px;
+    width: 840px;
     padding: 0 20px;
 }
 
 .wrap_content_TERAPIA{
     text-align: center;
-    width: 300px;
+    width: 840px;
+    margin: 10px;
     word-wrap: break-word;
     /* border-right: 2px solid #163172; */
     /* min-height: 100px; */
 }
 
-.info_content{
-    font-size: 22px;
-    font-weight: normal;
-    margin: 5px 0;
-    padding: 5px 20px;
-    width: 300px;
-    text-align: center;
-    align-self: flex-start;
-    word-wrap: break-word;
+.input_style_MODIFICA_TERAPIA{
+    min-width: 300px;
+    width: 500px;
+    max-width: 700px;
+    min-height: 50px;
+    height: 100px;
+    max-height: 200px;
+    border: 2px solid #1E56A0;
+    border-radius: 8px;
+    font-size: 20px;
+    color: black;
+    transition: 0.3s;
+    text-align: start;
 }
 
-.info_content_TERAPIA{
-    font-size: 22px;
-    font-weight: normal;
-    margin: 8px 22px;
-    max-width: 300px;
-    word-wrap: break-word;
+.input_style_MODIFICA_TERAPIA::-webkit-scrollbar{
+    width: 8px;
+}
+
+.input_style_MODIFICA_TERAPIA:focus{
+    border: 2px solid #163172;
+    /* background-color: #D6E4F0; */
+    transition: 0.3s;
+    box-shadow: 1px 1px 5px 1px black;
+    outline: none;
+}
+
+.input_style_MODIFICA_TERAPIA.invalid{
+    border: 2px solid red;
+}
+
+@media screen and (max-width: 1350px) {
+    .scrollable_div{
+        width: 900px;
+    }
+
+    .wrap_content, .wrap_content_TERAPIA{
+        width: 740px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .scrollable_div{
+        max-height: 500px;
+    }
+}
+
+@media screen and (max-width: 999px) {
+    .scrollable_div{
+        width: 800px;
+        /* max-height: 440px; */
+    }
+
+    .wrap_content, .wrap_content_TERAPIA{
+        width: 640px;
+    }
+}
+
+@media screen and (max-width: 899px) {
+    .scrollable_div{
+        width: 650px;
+    }
+
+    .wrap_content, .wrap_content_TERAPIA{
+        width: 500px;
+    }
+
+    .input_style_MODIFICA_TERAPIA{
+        min-width: 300px;
+        width: 450px;
+        max-width: 500px;
+        height: 100px;
+        max-height: 150px;
+    }
+}
+
+@media screen and (max-width: 749px) {
+    .scrollable_div{
+        width: 500px;
+        /* max-height: 400px; */
+    }
+
+    .wrap_content, .wrap_content_TERAPIA{
+        width: 360px;
+    }
+
+    .wrap_content_TERAPIA{
+        font-size: 16px;
+    }
+
+    .input_style_MODIFICA_TERAPIA{
+        min-width: 250px;
+        width: 300px;
+        max-width: 350px;
+        height: 100px;
+        max-height: 150px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .scrollable_div{
+        width: 450px;
+        /* max-height: 400px; */
+    }
+
+    .wrap_content, .wrap_content_TERAPIA{
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .scrollable_div{
+        width: 300px;
+        /* max-height: 400px; */
+    }
+
+    .wrap_content, .wrap_content_TERAPIA{
+        width: 180px;
+        max-height: 100px;
+        overflow-y: auto;
+        font-size: 15px;
+    }
+
+    .wrap_content::-webkit-scrollbar, .wrap_content_TERAPIA::-webkit-scrollbar{
+        width: 8px;
+    }
+
+    .input_style_MODIFICA_TERAPIA{
+        min-width: 150px;
+        width: 190px;
+        max-width: 210px;
+        height: 100px;
+        max-height: 150px;
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-height: 900px) {
+    .scrollable_div{
+        max-height: 500px;
+    }
+
+    .wrap_content{
+        font-size: 14px;
+    }
+    
+    .wrap_content_TERAPIA{
+        font-size: 16px;
+    }
+}
+@media screen and (max-height: 800px) {
+    .scrollable_div{
+        max-height: 450px;
+    }
+
+    /* .wrap_content{
+        font-size: 14px;
+    }
+    
+    .wrap_content_TERAPIA{
+        font-size: 18px;
+    } */
+}
+@media screen and (max-height: 750px) {
+    .scrollable_div{
+        max-height: 400px;
+    }
+}
+@media screen and (max-height: 700px) {
+    .scrollable_div{
+        max-height: 350px;
+    }
+}
+@media screen and (max-height: 640px) {
+    .scrollable_div{
+        max-height: 300px;
+    }
+}
+
+@media screen and (max-height: 599px) {
+    .scrollable_div{
+        max-height: 250px;
+    }
 }

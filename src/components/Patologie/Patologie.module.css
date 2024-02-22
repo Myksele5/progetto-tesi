@@ -7,6 +7,7 @@
 }
 
 .wrap_boxes{
+    z-index: 10;
     top: 10px;
     margin-bottom: 14px;
     position: sticky;
@@ -32,13 +33,20 @@
     align-items: center;
 }
 
-.width_for_wrapper{
-    width: 600px;
-    justify-content: space-around;
+.wrapper_direction{
+    margin-left: 5px;
+    align-items: flex-start;
 }
 
-.height_for_wrapper{
+.width_for_wrapper{
+    width: 680px;
+    justify-content: space-between;
+}
 
+.full_height{
+    margin-right: 5px;
+    height: 100px;
+    justify-content: space-evenly;
 }
 
 .wrap_content{
@@ -72,14 +80,19 @@
 }
 
 .label_style{
+    margin-left: 4px;
     font-size: 20px;
     font-weight: bold;
 }
 
 .info_content{
-    font-size: 22px;
+    max-width: 300px;
+    word-wrap: break-word;
+    display: block;
+    font-size: 26px;
     font-weight: normal;
     margin: 5px;
+    margin-left: 15px;
 }
 
 .info_content_TERAPIA{
@@ -92,16 +105,23 @@
 }
 
 .input_style{
-    width: 180px;
-    height: 30px;
+    min-width: 100px;
+    width: 250px;
+    max-width: 350px;
+    min-height: 50px;
+    max-height: 100px;
     margin: 5px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
     border: 2px solid #1E56A0;
-    border-radius: 20px;
-    font-size: 22px;
+    border-radius: 8px;
+    font-size: 20px;
     color: black;
     transition: 0.3s;
-    text-align: center;
+    text-align: start;
+}
+
+.input_style::-webkit-scrollbar{
+    width: 8px;
 }
 
 .input_style:focus{
@@ -114,4 +134,73 @@
 
 .input_style.invalid{
     border: 2px solid red;
+}
+
+@media screen and (max-width:1550px) {
+    .width_for_wrapper{
+        width: 620px;
+        justify-content: space-between;
+    }
+
+    .label_style{
+        font-size: 20px;
+    }
+
+    .info_content{
+        font-size: 22px;
+    }
+}
+@media screen and (max-width:850px) {
+    .page_title{
+        font-size: 30px;
+    }
+    
+    .width_for_wrapper{
+        width: 500px;
+        justify-content: space-between;
+    }
+
+    .full_height{
+        height: 80px;
+    }
+
+    .label_style{
+        font-size: 16px;
+    }
+
+    .info_content{
+        font-size: 18px;
+    }
+
+    .input_style{
+        width: 190px;
+        max-width: 200px;
+        min-height: 30px;
+        max-height: 100px;
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .width_for_wrapper{
+        width: 400px;
+        justify-content: space-between;
+    }
+
+    .input_style{
+        width: 140px;
+        max-width: 160px;
+        min-height: 30px;
+        max-height: 100px;
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .width_for_wrapper{
+        width: 300px;
+        justify-content: space-between;
+    }
+
+    
 }

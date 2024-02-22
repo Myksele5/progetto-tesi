@@ -554,5 +554,35 @@ function initServerMgr(cb) {
         }
     }
 
+    serverMgr.saveNewTherapy = async (patologiaID, terapia, note, cb) => {
+        let result = await serverMgr.requestFetchData("saveNewTherapy", {patologiaID: patologiaID, terapia: terapia, note: note})
+        if(cb) {
+            cb(result)
+        }
+        else {
+            return result
+        }
+    }
+
+    serverMgr.deleteTherapy = async (terapiaID, cb) => {
+        let result = await serverMgr.requestFetchData("deleteTherapy", {terapiaID: terapiaID})
+        if(cb) {
+            cb(result)
+        }
+        else {
+            return result
+        }
+    }
+
+    serverMgr.editTherapy = async (terapiaID, terapia, note, cb) => {
+        let result = await serverMgr.requestFetchData("editTherapy", {terapiaID: terapiaID, terapia: terapia, note: note})
+        if(cb) {
+            cb(result)
+        }
+        else {
+            return result
+        }
+    }
+
     if (cb) cb();
 }
