@@ -25,10 +25,20 @@
     justify-content: center;
     align-items: center;
 }
+
 .wrapper_generico_horizontal{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.width_for_wrapper{
+    width: 600px;
+    justify-content: space-around;
+}
+
+.height_for_wrapper{
+
 }
 
 .wrap_content{
@@ -70,9 +80,6 @@
     font-size: 22px;
     font-weight: normal;
     margin: 5px;
-    padding: 10px;
-    max-width: 320px;
-    word-wrap: break-word;
 }
 
 .info_content_TERAPIA{
@@ -82,4 +89,29 @@
     padding: 10px;
     max-width: 320px;
     word-wrap: break-word;
+}
+
+.input_style{
+    width: 180px;
+    height: 30px;
+    margin: 5px;
+    margin-bottom: 10px;
+    border: 2px solid #1E56A0;
+    border-radius: 20px;
+    font-size: 22px;
+    color: black;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.input_style:focus{
+    border: 2px solid #163172;
+    background-color: #D6E4F0;
+    transition: 0.3s;
+    box-shadow: 1px 1px 5px 1px black;
+    outline: none;
+}
+
+.input_style.invalid{
+    border: 2px solid red;
 }

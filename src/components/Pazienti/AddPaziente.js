@@ -13,7 +13,6 @@ function AddPaziente(props){
     const patients_ctx = useContext(PatientContext);
     const patologies_ctx = useContext(PatologiesContext);
 
-    const [listaPatologie, setListaPatologie] = useState(patologies_ctx.uniqueList);
     var emailEsistente = null;
 
     const [stepAggiuntaPaziente, setStepAggiuntaPaziente] = useState(1);
@@ -44,29 +43,8 @@ function AddPaziente(props){
 
     const [informazioniMediche, setInformazioniMediche] = useState([]);
 
-    const [counterPatologie, setCounterPatologie] = useState(1);
-    const [enteredPatologia_1, setEnteredPatologia_1] = useState('');
-    const [patologieList, setPatologieList] = useState([{patID: counterPatologie, patologia: ""}]);
-    // const [enteredPatologia_2, setEnteredPatologia_2] = useState('');
-    // const [enteredPatologia_3, setEnteredPatologia_3] = useState('');
-
-    const [counterMedicine, setCounterMedicine] = useState(1);
-    const [enteredMedicine_1, setEnteredMedicine_1] = useState('');
-    const [medicineList, setMedicineList] = useState([{medID: counterMedicine, medicina: ""}]);
-    // const [enteredMedicine_2, setEnteredMedicine_2] = useState('');
-    // const [enteredMedicine_3, setEnteredMedicine_3] = useState('');
-
-    const [enteredNoteParticolari, setEnteredNoteParticolari] = useState('');
-
-    const [enteredTerapia, setEnteredTerapia] = useState('');
-
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPsw, setEnteredPsw] = useState('');
-
-    useEffect(() => {
-        setListaPatologie(patologies_ctx.createUniqueObject());
-        console.log(listaPatologie)
-    }, [])
 
     useEffect(() => {
         setPatologiaSelezionata("--seleziona--");
@@ -148,54 +126,6 @@ function AddPaziente(props){
         setInformazioniMediche(arrayTemporaneo);
     }
 
-    function aggiungiPatologia(event){
-        event.preventDefault();
-
-        let prossimoIDpatolog = counterPatologie + 1;
-        setPatologieList((prevList) => ([...prevList, {patID: prossimoIDpatolog, patologia: ""}]));
-        setCounterPatologie(prossimoIDpatolog)
-    }
-
-    const patologiaChangeHandler_1 = (event, id) => {
-        console.log(event.target.value);
-        setEnteredPatologia_1(event.target.value);
-        console.log(id);
-        patologieList.map((patolog) => {
-            if(patolog.patID === id){
-                patolog.patologia = event.target.value
-            }
-        })
-    }
-
-    const noteParticolariChangeHandler = (event) => {
-        console.log(event.target.value);
-        setEnteredNoteParticolari(event.target.value);
-    }
-
-    function aggiungiMedicina(event){
-        event.preventDefault();
-
-        let prossimoIDmedicina = counterMedicine + 1;
-        setMedicineList((prevList) => ([...prevList, {medID: prossimoIDmedicina, medicina: ""}]));
-        setCounterMedicine(prossimoIDmedicina)
-    }
-
-    const medicineChangeHandler_1 = (event, id) => {
-        console.log(event.target.value);
-        setEnteredMedicine_1(event.target.value);
-        console.log(id);
-        medicineList.map((med) => {
-            if(med.medID === id){
-                med.medicina = event.target.value
-            }
-        })
-    }
-
-    const terapiaChangeHandler = (event) => {
-        console.log(event.target.value);
-        setEnteredTerapia(event.target.value);
-    }
-
     const emailChangeHandler = (event) => {
         console.log(event.target.value);
         setEnteredEmail(event.target.value);
@@ -260,20 +190,6 @@ function AddPaziente(props){
         var year = dateee.getFullYear();
 
         let dateString = `${year}-${month}-${day}`;
-
-        let patologieListFiltered = [];
-        patologieList.map((pat) => {
-            if(pat.patologia.length >= 1){
-                patologieListFiltered.push(pat);
-            }
-        })
-
-        let medicineListFiltered = [];
-        medicineList.map((med) => {
-            if(med.medicina.length >= 1){
-                medicineListFiltered.push(med);
-            }
-        })
 
         const datiPaziente = {
             doct_UID: auth_ctx.utenteLoggatoUID,
@@ -356,12 +272,6 @@ function AddPaziente(props){
     function hideForm(event){
         event.preventDefault();
         props.hideFormNewPaziente();
-    }
-
-    function provaDaCancellare(event){
-        event.preventDefault()
-        console.log(patologieList)
-        console.log(medicineList)
     }
 
     return(
@@ -460,7 +370,7 @@ function AddPaziente(props){
                         <h2 className={styles.text_subtitle}>Seleziona una patologia</h2>
                         <select value={patologiaSelezionata} onChange={patologiaSelezionataChangeHandler} className={styles.select_style}>
                             <option hidden>--seleziona--</option>
-                            {listaPatologie.map((singlePat) => (
+                            {patologies_ctx.uniqueList.map((singlePat) => (
                                 <option key={singlePat.patologiaID}>{singlePat.nomePatologia}</option>
                             ))}
                         </select>

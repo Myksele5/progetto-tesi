@@ -535,6 +535,24 @@ function initServerMgr(cb) {
             return result
         }
     }
+    serverMgr.updatePatologyName = async (nomePatologia, patologiaID, cb) => {
+        let result = await serverMgr.requestFetchData("updatePatologyName", {nomePatologia: nomePatologia, patologiaID: patologiaID})
+        if(cb) {
+            cb(result)
+        }
+        else {
+            return result
+        }
+    }
+    serverMgr.deletePatology = async (patologiaID, cb) => {
+        let result = await serverMgr.requestFetchData("deletePatology", {patologiaID: patologiaID})
+        if(cb) {
+            cb(result)
+        }
+        else {
+            return result
+        }
+    }
 
     if (cb) cb();
 }

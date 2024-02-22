@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getServerMgr } from "../backend_conn/ServerMgr";
+import Modal from "../components/UI/Modal";
+
+let modal;
 
 const PatologiesContext = React.createContext({
+    showModale: null,
+    modale: null,
     uniqueList: null,
     listaTerapie: null,
     visibleLista: null,
@@ -20,7 +25,8 @@ const PatologiesContext = React.createContext({
     showPatologia: ()=>{},
     getTherapiesListSinglePat: ()=>{},
     createUniqueObject: ()=>{},
-    saveNewPatologyWithTherapies: ()=>{}
+    saveNewPatologyWithTherapies: ()=>{},
+    confirmDeletePatology: ()=>{}
 })
 
 export function PatologiesContextProvider(props){
@@ -28,7 +34,7 @@ export function PatologiesContextProvider(props){
     const [elencoTerapie, setElencoTerapie] = useState([]);
     const [elencoUnico, setElencoUnico] = useState([]);
 
-    const [isLoading, setIsLoading] = useState(true);
+    const [showModal, setShowModal] = useState(false);
 
     const [listaVisibile, setListaVisibile] = useState(true);
     const [showTopBar, setShowTopBar] = useState(true);
@@ -37,46 +43,78 @@ export function PatologiesContextProvider(props){
     const [patologiaVisualizzata, setPatologiaVisualizzata] = useState({})
 
     async function recuperaPatologie(){
-        let result;
+        let resultPatologie;
 
-        result = await getServerMgr().getPatologies()
+        resultPatologie = await getServerMgr().getPatologies()
         .catch((err) => {
             console.error(err)
         });
 
-        console.log(result)
+        console.log(resultPatologie)
 
-        if(result !== null){
-            setElencoPatologie(result);
+        if(resultPatologie !== null){
+            setElencoPatologie(resultPatologie);
         }
         else{
             setElencoPatologie([]);
         }
     }
     async function recuperaTerapie(){
-        let result;
+        let resultTerapie;
 
-        result = await getServerMgr().getTherapies()
+        resultTerapie = await getServerMgr().getTherapies()
         .catch((err) => {
             console.error(err)
         });
 
-        console.log(result)
+        console.log(resultTerapie)
 
-        if(result !== null){
-            setElencoTerapie(result);
+        if(resultTerapie !== null){
+            setElencoTerapie(resultTerapie);
         }
         else{
             setElencoTerapie([]);
         }
     }
 
-    function creaOggettoUnicoPatologieTerapie(){
+    async function creaOggettoUnicoPatologieTerapie(){
+        let resultPatologie;
+        //PRENDO PATOLOGIE
+        resultPatologie = await getServerMgr().getPatologies()
+        .catch((err) => {
+            console.error(err)
+        });
+
+        console.log(resultPatologie)
+
+        if(resultPatologie !== null){
+            setElencoPatologie(resultPatologie);
+        }
+        else{
+            setElencoPatologie([]);
+        }
+
+        let resultTerapie;
+        //PRENDO TERAPIE
+        resultTerapie = await getServerMgr().getTherapies()
+        .catch((err) => {
+            console.error(err)
+        });
+
+        console.log(resultTerapie)
+
+        if(resultTerapie !== null){
+            setElencoTerapie(resultTerapie);
+        }
+        else{
+            setElencoTerapie([]);
+        }
+        //CREO ARRAY UNICO CON PATOLOGIE E TERAPIE ASSOCIATE
         let arrayProva = [];
 
-        elencoPatologie.map((pat) => {
+        resultPatologie.map((pat) => {
             let terapie = [];
-            elencoTerapie.map((terap) => {
+            resultTerapie.map((terap) => {
                 if(pat.patologiaID === terap.patolog_ID){
                     let oggetto = {
                         terapiaID: terap.terapiaID,
@@ -96,27 +134,14 @@ export function PatologiesContextProvider(props){
     }
 
     useEffect(() => {
-        recuperaPatologie();
-        recuperaTerapie();
-        // creaOggettoUnicoPatologieTerapie();
+        // recuperaPatologie();
+        // recuperaTerapie();
+        creaOggettoUnicoPatologieTerapie();
     }, [])
 
-    async function salvaNuovaPatologiaConTerapie(nuovaPatologia, terapieAssociate){
-        let terapieFiltrate = [];
-
-        terapieAssociate.map((singleTerap) => {
-            if(singleTerap.terapia.length > 0){
-                terapieFiltrate.push(singleTerap)
-            }
-        })
-        
-        await getServerMgr().saveNewPatologyWithTherapies(nuovaPatologia, terapieFiltrate)
-        .catch((err) => {
-            console.error(err);
-        });
-
-        recuperaPatologie();
-        recuperaTerapie();
+    function salvaNuovaPatologiaConTerapie(){
+        // recuperaPatologie();
+        // recuperaTerapie();
         creaOggettoUnicoPatologieTerapie();
         nascondiFormAggiuntaPatologia();
     }
@@ -185,9 +210,36 @@ export function PatologiesContextProvider(props){
         return patologia;
     }
 
+    function confermaEliminazionePaziente(patologiaID, nomePatologia){
+        modal = 
+        <Modal
+        testoModale={"Sei sicuro di voler eliminare questa patologia?"}
+        patologia={nomePatologia}
+        CONFERMA={() =>{
+            eliminaPatologia(patologiaID);
+            setShowModal(false);
+            // setShowTabella(true);
+        }}
+        ANNULLA={() => {
+            setShowModal(false);
+            // setShowTabella(true);
+        }}>
+        </Modal>;
+        setShowModal(true);
+    }
+
+    async function eliminaPatologia(patologiaID){
+        await getServerMgr().deletePatology(patologiaID)
+        .catch((err) => {console.error(err)})
+
+        creaOggettoUnicoPatologieTerapie();
+    }
+
     return(
         <PatologiesContext.Provider
             value={{
+                showModale: showModal,
+                modale: modal,
                 uniqueList: elencoUnico,
                 listaTerapie: elencoTerapie,
                 visibleLista: listaVisibile,
@@ -206,7 +258,8 @@ export function PatologiesContextProvider(props){
                 showPatologia: setPatologiaVisualizzata,
                 getTherapiesListSinglePat: prendiListaTerapieDiPatologia,
                 createUniqueObject: creaOggettoUnicoPatologieTerapie,
-                saveNewPatologyWithTherapies: salvaNuovaPatologiaConTerapie
+                saveNewPatologyWithTherapies: salvaNuovaPatologiaConTerapie,
+                confirmDeletePatology: confermaEliminazionePaziente
             }}
         >
             {props.children}

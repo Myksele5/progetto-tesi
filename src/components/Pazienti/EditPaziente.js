@@ -11,7 +11,6 @@ function EditPaziente(props){
     const patients_ctx = useContext(PatientContext);
     const patologies_ctx = useContext(PatologiesContext);
 
-    const [listaPatologie, setListaPatologie] = useState(patologies_ctx.uniqueList);
     const [visualizzaSchermata, setVisualizzaSchermata] = useState("DATI_PERSONALI");
 
     const [validNome, setValidNome] = useState(true);
@@ -40,14 +39,6 @@ function EditPaziente(props){
 
     const [informazioniMediche, setInformazioniMediche] = useState([]);
 
-    const [counterPatologie, setCounterPatologie] = useState(1);
-    const [patologiaModifica_1, setPatologiaModifica_1] = useState(props.patologiaaa_1);
-    const [patologieList, setPatologieList] = useState([]);
-    
-    const [counterMedicine, setCounterMedicine] = useState(1);
-    const [medicinaModifica_1, setMedicinaModifica_1] = useState(props.medicinaaa_1);
-    const [medicineList, setMedicineList] = useState([]);
-
     useEffect(() => {
         console.log(props.patologiaaa_1)
         if(props.patologiaaa_1?.length > 0){
@@ -56,11 +47,6 @@ function EditPaziente(props){
         else{
             setInformazioniMediche([]) 
         }   
-    }, [])
-
-    useEffect(() => {
-        setListaPatologie(patologies_ctx.createUniqueObject());
-        console.log(listaPatologie)
     }, [])
 
     useEffect(() => {
@@ -155,56 +141,6 @@ function EditPaziente(props){
         setInformazioniMediche(arrayTemporaneo);
     }
 
-    function aggiungiPatologia(event){
-        event.preventDefault();
-        console.log(patologieList)
-
-        let prossimoIDpatolog = counterPatologie + 1;
-        setPatologieList((prevList) => ([...prevList, {patID: prossimoIDpatolog, patologia: ""}]));
-        setCounterPatologie(prossimoIDpatolog)
-    }
-
-    const patologiaChangeHandler_1 = (event, id) => {
-        console.log(event.target.value);
-        setPatologiaModifica_1(event.target.value);
-        console.log(id);
-        patologieList.map((patolog) => {
-            if(patolog.patID === id){
-                patolog.patologia = event.target.value
-            }
-        })
-    }
-
-    const noteParticolariChangeHandler = (event) => {
-        console.log(event.target.value);
-        setNoteParticolariModifica(event.target.value);
-    }
-
-    function aggiungiMedicina(event){
-        event.preventDefault();
-
-        let prossimoIDmedicina = counterMedicine + 1;
-        setMedicineList((prevList) => ([...prevList, {medID: prossimoIDmedicina, medicina: ""}]));
-        setCounterMedicine(prossimoIDmedicina)
-    }
-
-    const medicineChangeHandler_1 = (event, id) => {
-        console.log(event.target.value);
-        setMedicinaModifica_1(event.target.value);
-        console.log(id);
-        medicineList.map((med) => {
-            if(med.medID === id){
-                med.medicina = event.target.value
-            }
-        })
-        console.log(medicineList)
-    }
-
-    const terapiaChangeHandler = (event) => {
-        console.log(event.target.value);
-        setTerapiaModifica(event.target.value);
-    }
-
     async function formModifyHandler(event){
         event.preventDefault();
 
@@ -254,20 +190,6 @@ function EditPaziente(props){
         var year = dateee.getFullYear();
 
         let dateString = `${year}-${month}-${day}`;
-
-        let patologieListFiltered = [];
-        patologieList.map((pat) => {
-            if(pat.patologia.length >= 1){
-                patologieListFiltered.push(pat);
-            }
-        })
-
-        let medicineListFiltered = [];
-        medicineList.map((med) => {
-            if(med.medicina.length >= 1){
-                medicineListFiltered.push(med);
-            }
-        })
 
         const datiPaziente = {
             nome: nomeModifica,
@@ -376,7 +298,7 @@ function EditPaziente(props){
                         <h2 className={styles.text_subtitle}>Seleziona patologia:</h2>
                         <select value={patologiaSelezionata} onChange={patologiaSelezionataChangeHandler} className={styles.select_style}>
                             <option hidden>--seleziona--</option>
-                            {listaPatologie.map((singlePat) => (
+                            {patologies_ctx.uniqueList.map((singlePat) => (
                                 <option key={singlePat.patologiaID}>{singlePat.nomePatologia}</option>
                             ))}
                         </select>

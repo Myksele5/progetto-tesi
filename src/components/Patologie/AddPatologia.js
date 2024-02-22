@@ -3,6 +3,7 @@ import GenericButton from "../UI/GenericButton";
 import styles from "./AddPatologia.module.css";
 import PatologiesContext from "../../context/patologies-context";
 import DeleteButton from "../UI/DeleteButton";
+import { getServerMgr } from "../../backend_conn/ServerMgr";
 
 function AddPatologia(){
     const patologies_ctx = useContext(PatologiesContext);
@@ -50,8 +51,20 @@ function AddPatologia(){
         })
     }
 
-    function salvaPatologiaConTerapie(){
-        patologies_ctx.saveNewPatologyWithTherapies(nomePatologia, terapieAssociate);
+    async function salvaPatologiaConTerapie(){
+        let terapieFiltrate = [];
+
+        terapieAssociate.map((singleTerap) => {
+            if(singleTerap.terapia.length > 0){
+                terapieFiltrate.push(singleTerap)
+            }
+        })
+        
+        await getServerMgr().saveNewPatologyWithTherapies(nomePatologia, terapieFiltrate)
+        .catch((err) => {
+            console.error(err);
+        });
+        patologies_ctx.saveNewPatologyWithTherapies();
     }
 
     return(

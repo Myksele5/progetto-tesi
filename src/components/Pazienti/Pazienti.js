@@ -80,8 +80,7 @@ function Pazienti(){
                     animazione={true}
                     children={
                         <AddPaziente
-                        hideFormNewPaziente = {patients_ctx.formNonVisibile}
-                        onCreateNewPaziente = {patients_ctx.nuovoPazienteHandler}>
+                        hideFormNewPaziente = {patients_ctx.formNonVisibile}>
                         </AddPaziente>
                     }>
                     </Card>

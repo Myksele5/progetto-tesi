@@ -127,6 +127,12 @@
     case "saveNewPatologyWithTherapies":
         $query_result = saveNewPatologyWithTherapies($conn);
         break;
+    case "updatePatologyName":
+        $query_result = updatePatologyName($conn);
+        break;
+    case "deletePatology":
+        $query_result = deletePatology($conn);
+        break;
     default:
     	break;
 	}
@@ -882,6 +888,35 @@
             $insertNewTerapie->execute();
         }
         
+        return $result;
+    }
+
+    function updatePatologyName($i_conn) {
+        $data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $nomePatologia = $dataJson["nomePatologia"];
+        $patologiaID = $dataJson["patologiaID"];
+        
+        $updatePatology = $i_conn->prepare("UPDATE `elencoPatologie` SET `nomePatologia` = ? WHERE `elencoPatologie`.`patologiaID` = ?");
+        $updatePatology->bind_param("si", $nomePatologia, $patologiaID);
+        $updatePatology->execute();
+
+        return $result;
+    }
+    
+    function deletePatology($i_conn) {
+        $data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $patologiaID = $dataJson["patologiaID"];
+        
+        $deletePatology = $i_conn->prepare(
+            "DELETE FROM `elencoPatologie` WHERE patologiaID = ?"
+        );
+        $deletePatology->bind_param("i", $patologiaID);
+        $deletePatology->execute();
+
         return $result;
     }
     

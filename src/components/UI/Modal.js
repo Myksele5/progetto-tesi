@@ -10,6 +10,9 @@ function ModalToPort(props){
                 {props.pazienteNome !== undefined && props.pazienteCognome !== undefined && 
                     <h2 className={styles.underline_text}>{props.pazienteNome} {props.pazienteCognome}</h2>
                 }
+                {props.patologia !== undefined &&
+                    <h2 className={styles.underline_text}>{props.patologia}</h2>
+                }
                 
                 <GenericButton
                 onClick={props.CONFERMA}
@@ -39,6 +42,7 @@ function Modal(props){
                 ANNULLA={props.ANNULLA}
                 pazienteNome={props.pazienteNome}
                 pazienteCognome={props.pazienteCognome}
+                patologia= {props.patologia}
             >
             </ModalToPort>, document.getElementById('modale'))}
         </>
