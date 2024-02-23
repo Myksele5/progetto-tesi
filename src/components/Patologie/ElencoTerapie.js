@@ -95,7 +95,7 @@ function ElencoTerapie(){
                         children={
                             <>
                                 <div className={styles.wrapper_vertical}>
-                                    <label style={{color: "#163172"}} className={styles.wrap_content}>Terapia consigliata:</label>
+                                    <label style={{color: "#163172"}} className={styles.wrap_content}>Inserisci terapia:</label>
                                     <textarea value={terapiaDaModificare} onChange={terapiaChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
                                 </div>
                                 <hr style={{width: "100%", border: "1px solid #163172"}}></hr>

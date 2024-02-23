@@ -77,16 +77,16 @@ function AddPatologia(){
             {terapieAssociate.map((singleTerap) => (
                 <div key={singleTerap.newTerapID} className={styles.wrapper_horizontal}>
                     <fieldset className={`${styles.wrapper_vertical} ${styles.fieldset_style}`}>
-                        <legend className={styles.legend_style}>{"TERAPIA N." + singleTerap.newTerapID}</legend>
-                        <label>Inserisci una terapia:</label>
-                        <textarea className={styles.textarea_style} onChange={(event) => {
+                        <legend className={styles.legend_style}>{"TERAPIA " + singleTerap.newTerapID}</legend>
+                        <label>Inserisci terapia:</label>
+                        <textarea className={styles.textarea_style_TERAPIA} onChange={(event) => {
                             terapiaChangeHandler(event, singleTerap.newTerapID)
                         }}
                         >
                         </textarea>
 
                         <label>Note:</label>
-                        <textarea className={styles.textarea_style} onChange={(event) => {
+                        <textarea className={styles.textarea_style_NOTE} onChange={(event) => {
                             noteDellaTerapiaChangeHandler(event, singleTerap.newTerapID)
                         }}
                         >

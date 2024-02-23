@@ -17,26 +17,34 @@
 }
 
 .fieldset_style{
-    width: 680px;
+    width: 780px;
     border: 3px solid #163172;
     border-radius: 10px;
-    margin: 2px 0px 6px 6px;
+    margin: 2px 0px 6px 40px;
+    box-shadow: 0px 2px 6px #163172;
 }
 
 .legend_style{
-    margin-left: 40px;
-    font-size: 22px;
-    color: #2569c2;
+    /* margin-left: 40px; */
+    background-color: white;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #163172;
+    border: 2px solid #163172;
+    border-radius: 10px;
+    padding: 3px;
+    box-shadow: 0px 0px 4px #163172;
 }
 
 .input_style{
-    width: 320px;
+    width: 400px;
     height: 25px;
     margin: 5px;
     margin-bottom: 10px;
     border: 2px solid #1E56A0;
     border-radius: 20px;
-    font-size: 22px;
+    font-size: 20px;
     color: black;
     transition: 0.3s;
     text-align: center;
@@ -54,10 +62,10 @@
     border: 2px solid red;
 }
 
-.textarea_style{
+.textarea_style_TERAPIA{
     min-width: 300px;
-    width: 500px;
-    max-width: 650px;
+    width: 700px;
+    max-width: 750px;
     min-height: 50px;
     height: 80px;
     max-height: 200px;
@@ -69,11 +77,27 @@
     text-align: start;
 }
 
-.textarea_style::-webkit-scrollbar{
-    width: 8px;
+.textarea_style_NOTE{
+    min-width: 300px;
+    width: 500px;
+    max-width: 550px;
+    min-height: 50px;
+    height: 60px;
+    max-height: 150px;
+    border: 2px solid #1E56A0;
+    border-radius: 8px;
+    font-size: 20px;
+    color: black;
+    transition: 0.3s;
+    text-align: start;
 }
 
-.textarea_style:focus{
+.textarea_style_TERAPIA::-webkit-scrollbar, .textarea_style_NOTE::-webkit-scrollbar{
+    width: 8px;
+    border-radius: 8px;
+}
+
+.textarea_style_TERAPIA:focus, .textarea_style_NOTE:focus{
     border: 2px solid #163172;
     background-color: #D6E4F0;
     transition: 0.3s;
@@ -81,6 +105,107 @@
     outline: none;
 }
 
-.textarea_style.invalid{
+.textarea_style_TERAPIA.invalid, .textarea_style_NOTE.invalid{
     border: 2px solid red;
+}
+
+@media screen and (max-width:999px) {
+    .fieldset_style{
+        width: 680px;
+    }
+}
+@media screen and (max-width:899px) {
+    .fieldset_style{
+        width: 580px;
+    }
+    .textarea_style_TERAPIA{
+        min-width: 300px;
+        width: 500px;
+        max-width: 550px;
+    }
+    
+    .textarea_style_NOTE{
+        min-width: 300px;
+        width: 400px;
+        max-width: 450px;
+    }
+}
+@media screen and (max-width: 790px) {
+    .fieldset_style{
+        width: 480px;
+    }
+
+    .textarea_style_TERAPIA{
+        min-width: 300px;
+        width: 350px;
+        max-width: 400px;
+    }
+    
+    .textarea_style_NOTE{
+        min-width: 200px;
+        width: 300px;
+        max-width: 350px;
+    }
+}
+
+@media screen and (max-width: 690px) {
+    .fieldset_style{
+        width: 400px;
+    }
+
+    .textarea_style_TERAPIA{
+        min-width: 200px;
+        width: 300px;
+        max-width: 350px;
+    }
+    
+    .textarea_style_NOTE{
+        min-width: 200px;
+        width: 250px;
+        max-width: 300px;
+    }
+}
+
+@media screen and (max-width: 599px) {
+    .fieldset_style{
+        width: 240px;
+    }
+
+    .input_style{
+        width: 240px;
+    }
+
+    .textarea_style_TERAPIA{
+        min-width: 150px;
+        width: 180px;
+        max-width: 200px;
+    }
+    
+    .textarea_style_NOTE{
+        min-width: 150px;
+        width: 180px;
+        max-width: 200px;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .fieldset_style{
+        width: 200px;
+    }
+
+    /* .input_style{
+        width: 240px;
+    } */
+
+    .textarea_style_TERAPIA{
+        min-width: 120px;
+        width: 150px;
+        max-width: 180px;
+    }
+    
+    .textarea_style_NOTE{
+        min-width: 120px;
+        width: 150px;
+        max-width: 170px;
+    }
 }
