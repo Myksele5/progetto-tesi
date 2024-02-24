@@ -230,7 +230,7 @@ function EditPaziente(props){
                 </h3>
             </div>
 
-            <div className={styles.wrapper_flex}>
+            <div className={styles.wrapper_vertical}>
                 {visualizzaSchermata === "DATI_PERSONALI" &&
                     <section className={styles.section_style}>
 
@@ -252,155 +252,101 @@ function EditPaziente(props){
                 }
                 
                 {visualizzaSchermata === "SCHEDA_MEDICA" &&
-                    <section className={styles.section_style}>
-                        {informazioniMediche.map((oggetto) => (
-                            informazioniMediche.length > 0 ?
-                            <div key={oggetto.terapiaID} className={styles.wrapper_horizontal}>
-                                <CardSmall
-                                    children={
-                                        <div className={styles.container_flexible_GENERIC}>
-                                            {/* <h5>{oggetto.patologiaID}</h5> */}
-                                            <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-                                                <label className={`${styles.sintesiMedica_label_PATOLOGIA}`}>Patologia:</label>
-                                                <h5 className={`${styles.sintesiMedica_content_PATOLOGIA}`}>{oggetto.nomePatologia}</h5>
-                                            </div>
-                                            <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-                                                <label className={`${styles.sintesiMedica_label_TERAPIA}`}>Terapia:</label>
-                                                <h5 className={`${styles.sintesiMedica_content_TERAPIA}`}>{oggetto.terapia}</h5>
-                                            </div>
-                                            <div className={styles.wrapper_horizontal}>
-                                                <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-                                                    <label className={`${styles.sintesiMedica_label_DATA}`}>Data inizio:</label>
-                                                    <h5 className={`${styles.sintesiMedica_content_DATA}`}>{oggetto.dataInizio}</h5>
-                                                </div>
-                                                <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-                                                    <label className={`${styles.sintesiMedica_label_DATA}`}>Data fine:</label>
-                                                    <h5 className={`${styles.sintesiMedica_content_DATA}`}>{oggetto.dataFine}</h5>
-                                                </div>
-                                            </div>
-                                            <div style={{borderRight: "none"}} className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-                                                <label className={`${styles.sintesiMedica_label_NOTE}`}>Note:</label>
-                                                <h5 className={`${styles.sintesiMedica_content_NOTE}`}>{oggetto.note}</h5>
-                                            </div>
-                                        </div>
-                                    }
-                                ></CardSmall>
-                                <DeleteButton
-                                    onClick={() => eliminaOggettoMedico(oggetto.terapiaID)}
-                                    stile_alternativo
-                                ></DeleteButton>
-                            </div>
-                            :
-                            <>
-                            </>
-                        ))}
-                    <div className={styles.wrapper_horizontal}>
-                        <h2 className={styles.text_subtitle}>Seleziona patologia:</h2>
-                        <select value={patologiaSelezionata} onChange={patologiaSelezionataChangeHandler} className={styles.select_style}>
-                            <option hidden>--seleziona--</option>
-                            {patologies_ctx.uniqueList.map((singlePat) => (
-                                <option key={singlePat.patologiaID}>{singlePat.nomePatologia}</option>
-                            ))}
-                        </select>
-                    </div>
+                <>
                     
-                    {patologiaSelezionata &&
+                    <h2 className={styles.text_subtitle}>Seleziona patologia:</h2>
+                    <select value={patologiaSelezionata} onChange={patologiaSelezionataChangeHandler} className={styles.select_style}>
+                        <option hidden>--seleziona--</option>
+                        {patologies_ctx.uniqueList.map((singlePat) => (
+                            <option key={singlePat.patologiaID}>{singlePat.nomePatologia}</option>
+                        ))}
+                    </select>
+                    {Object.keys(patologiaSelezionataOggetto).length > 0 &&
                         <>
-                            {/* {showFormAddTherapy && 
-                                <GenericButton
-                                    onClick={() => {setShowFormAddTherapy((prevState) => (!prevState))}}
-                                    buttonText={"Chiudi"}
-                                    red_styling
-                                    generic_button
-                                ></GenericButton>
-                            }
-                            {showFormAddTherapy && 
-                                <h2>form aggiunta terapia</h2>
-                            }
-                            {Object.keys(patologiaSelezionataOggetto).length > 0 && !showFormAddTherapy &&
-                                <>
-                                    <GenericButton
-                                        onClick={() => {setShowFormAddTherapy((prevState) => (!prevState))}}
-                                        buttonText={"Aggiungi terapia"}
-                                        generic_button
-                                    ></GenericButton>
-                                </>
-                            } */}
-                            {Object.keys(patologiaSelezionataOggetto).length > 0 && 
-                                <div className={`${styles.wrapper_horizontal} ${styles.full_width}`}>
-                                    <h2 style={{marginTop: "8px"}} className={styles.text_subtitle}>Elenco terapie:</h2>
-                                    <GenericButton
-                                        onClick={(event) => event.preventDefault()}
-                                        buttonText={"Aggiungi terapia"}
-                                        small_button
-                                    ></GenericButton>
-                                </div>
-                            }
-                                {patologiaSelezionataOggetto.terapie?.length === 0 && <h2>Non ci sono terapie!</h2>}
-                                {patologiaSelezionataOggetto.terapie?.length > 0 && 
-                                <div className={styles.scrollable_div}>
-                                    {patologiaSelezionataOggetto?.terapie?.map((terapia) => (
-                                        
-                                        terapiaSelezionata === terapia.terapiaID ?
-                                        
+                        <div className={styles.absolute_buttons_wrapper}>
+                            <GenericButton
+                                onClick={() => {
+                                    setPatologiaSelezionata("--seleziona--");
+                                    setPatologiaSelezionataOggetto({})
+                                    setDataInizioTerapia("");
+                                    setDataFineTerapia("");
+                                }}
+                                buttonText={"Annulla"}
+                                red_styling
+                                generic_button
+                            ></GenericButton>
+                            <GenericButton
+                                buttonText={"Crea Terapia"}
+                                generic_button
+                            ></GenericButton>
+                        </div>
+                        <div className={styles.absolute_div}>                   
+                            <h2 style={{marginTop: "8px"}} className={styles.text_subtitle}>Seleziona una terapia:</h2>
+                            {patologiaSelezionataOggetto.terapie?.length === 0 && <h2>Non ci sono terapie!</h2>}
+                            {patologiaSelezionataOggetto.terapie?.length > 0 && 
+                            <>
+                                {patologiaSelezionataOggetto?.terapie?.map((terapia) => (
+                                    
+                                    terapiaSelezionata === terapia.terapiaID ?
+                                    
                                         <CardSmall
-                                        stileAggiuntivo
-                                        children={
-                                            <>
-                                                <div className={styles.container_flexible_INFO} onClick={() => {
-                                                    selezionaTerapia(terapia.terapiaID)
-                                                    }} key={terapia.terapiaID}>
-                                                    <div className={styles.wrapper_vertical}>
-                                                        <label className={styles.listaMedica_label_TERAPIA}>TERAPIA:</label>
-                                                        <h5 className={styles.listaMedica_content_TERAPIA}>{terapia.terapia}</h5>
+                                            stileAggiuntivo
+                                            children={
+                                                <>
+                                                    <div className={styles.container_flexible_INFO} onClick={() => {
+                                                        selezionaTerapia(terapia.terapiaID)
+                                                        }} key={terapia.terapiaID}>
+                                                        <div className={styles.wrapper_vertical}>
+                                                            <label className={styles.listaMedica_label_TERAPIA}>TERAPIA:</label>
+                                                            <h5 className={styles.listaMedica_content_TERAPIA}>{terapia.terapia}</h5>
+                                                        </div>
+                                                        <div className={styles.wrapper_vertical}>
+                                                            <label className={styles.listaMedica_label_NOTE}>NOTE:</label>
+                                                            <h5 className={styles.listaMedica_content_NOTE}>{terapia.note}</h5>
+                                                        </div>
+                                                        {/* <h1>SELEZIONATO</h1> */}
+                                                        {/* <hr></hr> */}
                                                     </div>
-                                                    <div className={styles.wrapper_vertical}>
-                                                        <label className={styles.listaMedica_label_NOTE}>NOTE:</label>
-                                                        <h5 className={styles.listaMedica_content_NOTE}>{terapia.note}</h5>
+                                                    <hr style={{margin: "0", border: "1px solid #163172"}}></hr>
+                                                    <div className={styles.container_flexible_DATE}>
+                                                        <div className={styles.wrapper_vertical}>
+                                                            <label className={styles.listaMedica_label_DATA}>Data inizio</label>
+                                                            <input onChange={dataInizioTerapiaChangeHandler} className={styles.input_style_SHORT} type="date"></input>
+                                                        </div>
+                                                        <div className={styles.wrapper_vertical}>
+                                                            <label className={styles.listaMedica_label_DATA}>Data fine</label>
+                                                            <input onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
+                                                        </div>
                                                     </div>
-                                                    {/* <h1>SELEZIONATO</h1> */}
-                                                    {/* <hr></hr> */}
-                                                </div>
-                                                <hr style={{margin: "0", border: "1px solid #163172"}}></hr>
-                                                <div className={styles.container_flexible_DATE}>
-                                                    <div className={styles.wrapper_vertical}>
-                                                        <label className={styles.listaMedica_label_DATA}>Data inizio</label>
-                                                        <input onChange={dataInizioTerapiaChangeHandler} className={styles.input_style_SHORT} type="date"></input>
+                                                    <hr style={{margin: "0", border: "1px solid #163172"}}></hr>
+                                                    <div style={{display: "flex", justifyContent: "center"}}>
+                                                        <GenericButton
+                                                            onClick={(event) => {
+                                                                event.preventDefault()
+                                                                addInformazioniMediche(
+                                                                    {
+                                                                        patologiaID: patologiaSelezionataOggetto.patologiaID,
+                                                                        nomePatologia: patologiaSelezionataOggetto.nomePatologia,
+                                                                        terapiaID: terapia.terapiaID,
+                                                                        terapia: terapia.terapia,
+                                                                        note: terapia.note,
+                                                                        dataInizio: dataInizioTerapia,
+                                                                        dataFine: dataFineTerapia
+                                                                    }
+                                                                )
+                                                            }}
+                                                            buttonText={"Salva informazioni"}
+                                                            generic_button
+                                                        ></GenericButton>
                                                     </div>
-                                                    <div className={styles.wrapper_vertical}>
-                                                        <label className={styles.listaMedica_label_DATA}>Data fine</label>
-                                                        <input onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
-                                                    </div>
-                                                </div>
-                                                <hr style={{margin: "0", border: "1px solid #163172"}}></hr>
-                                                <div style={{display: "flex", justifyContent: "center"}}>
-                                                    <GenericButton
-                                                        onClick={(event) => {
-                                                            event.preventDefault()
-                                                            addInformazioniMediche(
-                                                                {
-                                                                    patologiaID: patologiaSelezionataOggetto.patologiaID,
-                                                                    nomePatologia: patologiaSelezionataOggetto.nomePatologia,
-                                                                    terapiaID: terapia.terapiaID,
-                                                                    terapia: terapia.terapia,
-                                                                    note: terapia.note,
-                                                                    dataInizio: dataInizioTerapia,
-                                                                    dataFine: dataFineTerapia
-                                                                }
-                                                            )
-                                                        }}
-                                                        buttonText={"Salva informazioni"}
-                                                        generic_button
-                                                    ></GenericButton>
-                                                </div>
-                                            </>
-                                        }
-                                    >
-                                    </CardSmall>
-                                        
-                                        :
+                                                </>
+                                            }
+                                        >
+                                        </CardSmall>
+                                    
+                                    :
                                         <CardSmall
-                                        // stileAggiuntivo
+                                            // stileAggiuntivo
                                             children={
                                             <div className={styles.container_flexible_INFO} onClick={() => {
                                                 selezionaTerapia(terapia.terapiaID)
@@ -420,13 +366,56 @@ function EditPaziente(props){
                                             }
                                         >
                                         </CardSmall>
-                                        ))
-                                    }
-                                </div>
+                                    ))
+                                }
+                                <hr className={styles.horizontal_line}></hr>
+                            </>
                             }
+                        </div>
                         </>
                     }
-                    </section>
+                    <div className={styles.wrapper_horizontal}>
+                        <section className={styles.section_style}>
+                        {informazioniMediche.map((oggetto) => (
+                            informazioniMediche.length > 0 ?
+                            <div key={oggetto.terapiaID} className={styles.wrapper_horizontal}>
+                                <CardSmall
+                                    children={
+                                        <div className={styles.container_flexible_GENERIC}>
+                                            {/* <h5>{oggetto.patologiaID}</h5> */}
+                                            <div className={`${styles.container_flexible_SEZIONE_SINTESI_LABELS}`}>
+                                                <label className={`${styles.sintesiMedica_label_PATOLOGIA}`}>Patologia:</label>
+                                                <label className={`${styles.sintesiMedica_label_TERAPIA}`}>Terapia:</label>
+                                                <label className={`${styles.sintesiMedica_label_DATA}`}>Data inizio:</label>
+                                                <label className={`${styles.sintesiMedica_label_DATA}`}>Data fine:</label>
+                                                <label className={`${styles.sintesiMedica_label_NOTE}`}>Note:</label>
+                                                
+                                            </div>
+                                            <div className={`${styles.container_flexible_SEZIONE_SINTESI_CONTENTS}`}>
+                                                <h5 className={`${styles.sintesiMedica_content_PATOLOGIA}`}>{oggetto.nomePatologia}</h5>
+                                                <h5 className={`${styles.sintesiMedica_content_TERAPIA}`}>{oggetto.terapia}</h5>
+                                                <h5 className={`${styles.sintesiMedica_content_DATA}`}>{oggetto.dataInizio ? oggetto.dataInizio : "N.D"}</h5>
+                                                <h5 className={`${styles.sintesiMedica_content_DATA}`}>{oggetto.dataFine ? oggetto.dataFine : "N.D"}</h5>
+                                                <h5 className={`${styles.sintesiMedica_content_NOTE}`}>{oggetto.note}</h5>
+                                            </div>
+                                        </div>
+                                    }
+                                ></CardSmall>
+                                <DeleteButton
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        eliminaOggettoMedico(oggetto.terapiaID)
+                                    }}
+                                    stile_alternativo
+                                ></DeleteButton>
+                            </div>
+                            :
+                            <>
+                            </>
+                        ))}
+                        </section>
+                    </div>
+                </>
                 }
             </div>
 
