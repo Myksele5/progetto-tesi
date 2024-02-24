@@ -30,6 +30,13 @@
     animation: 0.3s 1 normal slidein forwards;
 }
 
+@media screen and (max-width: 600px) {
+    .generic_wrapper{
+        margin: 5px;
+        margin-bottom: 16px;
+    }
+}
+
 @keyframes slidein {
     0%{
         transform: translateY(-5%);
