@@ -184,25 +184,25 @@ function SchedaPaziente(props){
                 }
                 {sezioneScheda === 'ESERCIZI/TEST' &&
                 <>
-                    {props.scoreMMSE &&
+                    {props.scoreMMSE !== null &&
                     <>
                         <h1 className={styles.mmse_moca_style}>PUNTEGGIO MMSE</h1>
                         <h2>{props.scoreMMSE}/30</h2>
                     </>
                     }
-                    {!props.scoreMMSE &&
+                    {props.scoreMMSE === null &&
                     <>
                         <h1 className={styles.mmse_moca_style}>Test MMMSE non effettuato</h1>
                     </>
                     }
                     <hr className={styles.horizontal_line}/>
-                    {props.scoreMOCA &&
+                    {props.scoreMOCA !== null &&
                     <>
                         <h1 className={styles.mmse_moca_style}>PUNTEGGIO MOCA</h1>
                         <h2>{props.scoreMOCA}/30</h2>
                     </>
                     }
-                    {!props.scoreMOCA &&
+                    {props.scoreMOCA === null &&
                     <>
                         <h1 className={styles.mmse_moca_style}>Test MOCA non effettuato</h1>
                     </>

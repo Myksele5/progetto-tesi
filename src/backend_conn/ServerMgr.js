@@ -433,8 +433,41 @@ function initServerMgr(cb) {
         }
     }
 
+    serverMgr.getTestResultList = async (cb) => {
+        let result = await serverMgr.requestFetchData("getTestResultList")
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+    serverMgr.updateTestResultList = async (pazienteID, tipoTest, scoreTest, dataSvolgimento, cb) => {
+        let result = await serverMgr.requestFetchData("updateTestResultList", {pazienteID: pazienteID, tipoTest: tipoTest, scoreTest: scoreTest, dataSvolgimento: dataSvolgimento})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
     serverMgr.saveResultMMSE = async (resultMMSE, ID, cb) => {
         let result = await serverMgr.requestFetchData("saveResultMMSE", {resultMMSE: resultMMSE, ID: ID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+    serverMgr.saveResultMoCA = async (resultMoCA, ID, cb) => {
+        let result = await serverMgr.requestFetchData("saveResultMoCA", {resultMoCA: resultMoCA, ID: ID})
         if(cb) {
             // console.log("getInventory: " + result)
             cb(result)

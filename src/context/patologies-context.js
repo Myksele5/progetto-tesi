@@ -22,6 +22,8 @@ const PatologiesContext = React.createContext({
     showTherapiesList: ()=>{},
     hideTherapiesList: ()=>{},
     patologiaSelezionata: null,
+    patologiaSelezionataFormPaziente: null,
+    cambiaPatologiaSelezionataFormPaziente: ()=>{},
     showPatologia: ()=>{},
     getTherapiesListSinglePat: ()=>{},
     createUniqueObject: ()=>{},
@@ -44,6 +46,7 @@ export function PatologiesContextProvider(props){
     const [showFormAddPat, setShowFormAddPat] = useState(false);
     const [showTherapies, setShowTherapies] = useState(false);
     const [patologiaVisualizzata, setPatologiaVisualizzata] = useState({})
+    const [patologiaSelezionataFormPaziente, setPatologiaSelezionataFormPaziente] = useState({})
 
     async function creaOggettoUnicoPatologieTerapie(){
         let resultPatologie;
@@ -104,6 +107,15 @@ export function PatologiesContextProvider(props){
                     console.log(patologia)
                     console.log(patologiaVisualizzata)
                     setPatologiaVisualizzata(patologia)
+                }
+            })
+        }
+        if(Object.keys(patologiaSelezionataFormPaziente).length > 0){
+            arrayProva.map((patologia) => {
+                if(patologia.patologiaID === patologiaSelezionataFormPaziente.patologiaID){
+                    console.log(patologia)
+                    console.log(patologiaSelezionataFormPaziente)
+                    setPatologiaSelezionataFormPaziente(patologia)
                 }
             })
         }
@@ -251,6 +263,10 @@ export function PatologiesContextProvider(props){
         creaOggettoUnicoPatologieTerapie();
     }
 
+    function aggiornaPatologiaSelezionataFormPaziente(pat){
+        setPatologiaSelezionataFormPaziente(pat);
+    }
+
     return(
         <PatologiesContext.Provider
             value={{
@@ -271,6 +287,8 @@ export function PatologiesContextProvider(props){
                 showTherapiesList: mostraListaTerapie,
                 hideTherapiesList: nascondiListaTerapie,
                 patologiaSelezionata: patologiaVisualizzata,
+                patologiaSelezionataFormPaziente: patologiaSelezionataFormPaziente,
+                cambiaPatologiaSelezionataFormPaziente: aggiornaPatologiaSelezionataFormPaziente,
                 showPatologia: setPatologiaVisualizzata,
                 getTherapiesListSinglePat: prendiListaTerapieDiPatologia,
                 createUniqueObject: creaOggettoUnicoPatologieTerapie,

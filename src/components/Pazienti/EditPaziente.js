@@ -28,6 +28,9 @@ function EditPaziente(props){
     const [validCF, setValidCF] = useState(true);
     const [CFModifica, setCFModifica] = useState(props.cfff);
 
+    const [terapiaDaModificare, setTerapiaDaModificare] = useState("");
+    const [noteDaModificare, setNoteDaModificare] = useState("")
+
     const [patologiaSelezionata, setPatologiaSelezionata] = useState("");
     const [patologiaSelezionataOggetto, setPatologiaSelezionataOggetto] = useState({});
 
@@ -51,14 +54,10 @@ function EditPaziente(props){
 
     useEffect(() => {
         setPatologiaSelezionata("--seleziona--");
-        setPatologiaSelezionataOggetto({})
+        patologies_ctx.cambiaPatologiaSelezionataFormPaziente({})
         setDataInizioTerapia("");
         setDataFineTerapia("");
     }, [informazioniMediche])
-
-    const [noteParticolariModifica, setNoteParticolariModifica] = useState(props.noteee);
-    const [terapiaModifica, setTerapiaModifica] = useState(props.terapiaaa);
-
 
     const selezionaSchermataVisualizzata = (event, stringa) => {
         event.preventDefault();
@@ -108,7 +107,7 @@ function EditPaziente(props){
 
     const patologiaSelezionataChangeHandler = (event) => {
         setPatologiaSelezionata(event.target.value);
-        setPatologiaSelezionataOggetto(patologies_ctx.getTherapiesListSinglePat(event.target.value));
+        patologies_ctx.cambiaPatologiaSelezionataFormPaziente(patologies_ctx.getTherapiesListSinglePat(event.target.value));
         setTerapiaSelezionata();
         setShowFormAddTherapy(false);
     }
@@ -125,9 +124,24 @@ function EditPaziente(props){
         setDataFineTerapia(event.target.value);
     }
 
+    function terapiaChangeHandler(event){
+        setTerapiaDaModificare(event.target.value);
+    }
+    function noteChangeHandler(event){
+        setNoteDaModificare(event.target.value);
+    }
+
+    function salvaNuovaTerapia(patologiaID){
+        patologies_ctx.addNewTherapy(patologiaID, terapiaDaModificare, noteDaModificare);
+
+        setTerapiaDaModificare("");
+        setNoteDaModificare("");
+        setShowFormAddTherapy(false)
+    }
+
     const addInformazioniMediche = (oggettoMedico) => {
         setInformazioniMediche((prevList) => ([...prevList, oggettoMedico]))
-        setPatologiaSelezionataOggetto({});
+        patologies_ctx.cambiaPatologiaSelezionataFormPaziente({})
     }
 
     const eliminaOggettoMedico = (id) => {
@@ -261,13 +275,13 @@ function EditPaziente(props){
                             <option key={singlePat.patologiaID}>{singlePat.nomePatologia}</option>
                         ))}
                     </select>
-                    {Object.keys(patologiaSelezionataOggetto).length > 0 &&
+                    {Object.keys(patologies_ctx.patologiaSelezionataFormPaziente).length > 0 &&
                         <>
                         <div className={styles.absolute_buttons_wrapper}>
                             <GenericButton
                                 onClick={() => {
                                     setPatologiaSelezionata("--seleziona--");
-                                    setPatologiaSelezionataOggetto({})
+                                    patologies_ctx.cambiaPatologiaSelezionataFormPaziente({})
                                     setDataInizioTerapia("");
                                     setDataFineTerapia("");
                                 }}
@@ -276,16 +290,20 @@ function EditPaziente(props){
                                 generic_button
                             ></GenericButton>
                             <GenericButton
-                                buttonText={"Crea Terapia"}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    setShowFormAddTherapy(true)
+                                }}
+                                buttonText={"Nuova Terapia"}
                                 generic_button
                             ></GenericButton>
                         </div>
                         <div className={styles.absolute_div}>                   
-                            <h2 style={{marginTop: "8px"}} className={styles.text_subtitle}>Seleziona una terapia:</h2>
-                            {patologiaSelezionataOggetto.terapie?.length === 0 && <h2>Non ci sono terapie!</h2>}
-                            {patologiaSelezionataOggetto.terapie?.length > 0 && 
+                            {patologies_ctx.patologiaSelezionataFormPaziente.terapie?.length === 0 && !showFormAddTherapy  && <h2>Non ci sono terapie!</h2>}
+                            {patologies_ctx.patologiaSelezionataFormPaziente.terapie?.length > 0 && !showFormAddTherapy && 
                             <>
-                                {patologiaSelezionataOggetto?.terapie?.map((terapia) => (
+                                <h2 style={{marginTop: "8px"}} className={styles.text_subtitle}>Seleziona una terapia:</h2>
+                                {patologies_ctx.patologiaSelezionataFormPaziente?.terapie?.map((terapia) => (
                                     
                                     terapiaSelezionata === terapia.terapiaID ?
                                     
@@ -325,8 +343,8 @@ function EditPaziente(props){
                                                                 event.preventDefault()
                                                                 addInformazioniMediche(
                                                                     {
-                                                                        patologiaID: patologiaSelezionataOggetto.patologiaID,
-                                                                        nomePatologia: patologiaSelezionataOggetto.nomePatologia,
+                                                                        patologiaID: patologies_ctx.patologiaSelezionataFormPaziente.patologiaID,
+                                                                        nomePatologia: patologies_ctx.patologiaSelezionataFormPaziente.nomePatologia,
                                                                         terapiaID: terapia.terapiaID,
                                                                         terapia: terapia.terapia,
                                                                         note: terapia.note,
@@ -370,6 +388,43 @@ function EditPaziente(props){
                                 }
                                 <hr className={styles.horizontal_line}></hr>
                             </>
+                            }
+                            {showFormAddTherapy &&
+                                <CardSmall
+                                    stileAggiuntivo
+                                    children={
+                                        <>
+                                            <div className={styles.wrapper_vertical}>
+                                                <label style={{color: "#163172"}} className={styles.wrap_content}>Inserisci terapia:</label>
+                                                <textarea value={terapiaDaModificare} onChange={terapiaChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
+                                            </div>
+                                            <hr style={{width: "100%", border: "1px solid #163172"}}></hr>
+                                            <div className={styles.wrapper_vertical}>
+                                                <label style={{color: "#163172"}} className={styles.wrap_content}>Note:</label>
+                                                <textarea value={noteDaModificare} onChange={noteChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
+                                            </div>
+                                            <hr style={{width: "100%", border: "1px solid #163172"}}></hr>
+                                            <div className={styles.wrapper_horizontal}>
+                                                <GenericButton
+                                                    onClick={() => {
+                                                        setShowFormAddTherapy(false)
+                                                    }}
+                                                    buttonText={"Annulla"}
+                                                    red_styling
+                                                    generic_button
+                                                ></GenericButton>
+                                                <GenericButton
+                                                    onClick={() => {
+                                                        salvaNuovaTerapia(patologies_ctx.patologiaSelezionataFormPaziente.patologiaID);
+                                                    }}
+                                                    buttonText={"Salva terapia"}
+                                                    generic_button
+                                                ></GenericButton>
+                                            </div>
+                                            
+                                        </>
+                                    }
+                                ></CardSmall>
                             }
                         </div>
                         </>

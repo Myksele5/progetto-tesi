@@ -27,7 +27,32 @@ function Attività(){
                 }
 
                 {tests_ctx.mainPage &&
-                    <h1>MAIN PAGE TEST</h1>
+                <>
+                    <h1>STORICO DEI TEST</h1>
+                    <div className={styles.wrapper_vertical}>
+                        <div className={styles.wrapper_horizontal_labels}>
+                            <label className={styles.label_nome}>Nome Paziente</label>
+                            <label className={styles.label_cognome}>Cognome Paziente</label>
+                            <label className={styles.label_tipoTest}>Tipo Test</label>
+                            <label className={styles.label_scoreTest}>Punteggio</label>
+                            <label className={styles.label_data}>Data svolgimento</label>
+                        </div>
+                        {tests_ctx.listaTest?.map((test) => (
+                            <div className={styles.wrapper_horizontal_content}>
+                                <div className={styles.label_nome}>{test.nome}</div>
+                                <div className={styles.label_cognome}>{test.cognome}</div>
+                                <div className={styles.label_tipoTest}>{test.tipoTest}</div>
+                                <div className={styles.label_scoreTest}>{test.punteggioTest}</div>
+                                <div className={styles.label_data}>{test.dataSvolgimento}</div>
+                            </div>
+                        ))
+
+                        }
+                        
+                        
+                        
+                    </div>
+                </>
                 }
             </div>
 

@@ -17,6 +17,7 @@ let modal_eliminazione;
 
 const PatientContext = React.createContext({
     listaPazienti: [],
+    updateListaPazienti: ()=>{},
     showTabella: null,
     arrayToTable: () => {},
     arrayToLista: () => {},
@@ -316,6 +317,7 @@ export function PatientContextProvider(props){
                 codicefiscale = {pazientee.codiceFiscale}
                 informazioniMediche = {resultPatologie}
                 scoreMMSE = {pazientee.resultMMSE}
+                scoreMOCA = {pazientee.resultMOCA}
                 stats_paziente = {pazientee.statistiche}
                 goBackButton = {chiudiSchedaPaziente}
             >
@@ -457,6 +459,7 @@ export function PatientContextProvider(props){
         <PatientContext.Provider
         value={{
             listaPazienti: elencoPazienti,
+            updateListaPazienti: prendiListaPazienti,
             showTabella: showTabella,
             arrayToTable: fromArrayToTablePazienti,
             arrayToLista: fromArrayToListaPazienti,

@@ -37,6 +37,13 @@
     align-items: center;
 }
 
+.wrap_content{
+    text-align: center;
+    width: 840px;
+    padding: 0 20px;
+    font-size: 18px;
+}
+
 .container_flexible_GENERIC{
     display: flex;
     flex-direction: column;
@@ -233,6 +240,37 @@
 }
 
 .input_style_SHORT.invalid{
+    border: 2px solid red;
+}
+
+.input_style_MODIFICA_TERAPIA{
+    min-width: 300px;
+    width: 500px;
+    max-width: 700px;
+    min-height: 50px;
+    height: 100px;
+    max-height: 200px;
+    border: 2px solid #1E56A0;
+    border-radius: 8px;
+    font-size: 20px;
+    color: black;
+    transition: 0.3s;
+    text-align: start;
+}
+
+.input_style_MODIFICA_TERAPIA::-webkit-scrollbar{
+    width: 8px;
+}
+
+.input_style_MODIFICA_TERAPIA:focus{
+    border: 2px solid #163172;
+    /* background-color: #D6E4F0; */
+    transition: 0.3s;
+    box-shadow: 1px 1px 5px 1px black;
+    outline: none;
+}
+
+.input_style_MODIFICA_TERAPIA.invalid{
     border: 2px solid red;
 }
 

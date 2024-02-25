@@ -6,6 +6,68 @@
     color: #1E56A0;
 }
 
+.wrapper_horizontal_labels{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid #163172;
+    width: 800px;
+}
+.wrapper_horizontal_content{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid #163172;
+    width: 800px;
+}
+
+.label_nome{
+    width: 100%;
+    max-width: 150px;
+}
+.content_nome{
+    width: 100%;
+    max-width: 150px;
+}
+.label_cognome{
+    width: 100%;
+    max-width: 150px;
+}
+.content_cognome{
+    width: 100%;
+    max-width: 150px;
+}
+.label_tipoTest{
+    width: 100%;
+    max-width: 100px;
+}
+.content_tipoTest{
+    width: 100%;
+    max-width: 100px;
+}
+.label_scoreTest{
+    width: 100%;
+    max-width: 100px;
+}
+.content_scoreTest{
+    width: 100%;
+    max-width: 100px;
+}
+.label_data{
+    width: 100%;
+    max-width: 100px;
+}
+.content_data{
+    width: 100%;
+    max-width: 100px;
+}
+.wrapper_vertical{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .wrap_boxes{
     top: 10px;
     position: sticky;

@@ -111,10 +111,10 @@ function StatistichePaziente(props){
             <div className={styles.wrapper_statistiche}>
                 <div className={styles.wrapper_barre}>
                     <div className={styles.barra}>
-                        <div style={{height: fillCorrect}} className={styles.riempimento_barra_corrette}></div>
+                        <div style={{width: fillCorrect}} className={styles.riempimento_barra_corrette}></div>
                     </div>
                     <div className={styles.barra}>
-                        <div style={{height: fillWrong}} className={styles.riempimento_barra_sbagliate}></div>
+                        <div style={{width: fillWrong}} className={styles.riempimento_barra_sbagliate}></div>
                     </div>
                 </div>
                 <label className={styles.content_style}>Risposte totali: {risposteTotali}</label>

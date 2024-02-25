@@ -4,6 +4,7 @@ import styles from "./AddValutazione.module.css";
 import TestsContext from "../../context/tests-context";
 import PatientContext from "../../context/patients-context";
 import RisultatiTestMMSE from "./RisultatiTestMMSE";
+import RisultatiTestMOCA from "./RisultatatiTestMOCA";
 
 function AddValutazione(){
     const tests_ctx = useContext(TestsContext)
@@ -23,7 +24,7 @@ function AddValutazione(){
         <div className={styles.form_wrapper}>
             <GenericButton
                 onClick={tests_ctx.hideFormAddValutazione}
-                buttonText={"Chiudi form"}
+                buttonText={"Annulla valutazione"}
                 red_styling
                 generic_button
             ></GenericButton>
@@ -55,8 +56,10 @@ function AddValutazione(){
                     paziente={pazienteSelezionato}
                 ></RisultatiTestMMSE>
             }
-            {tipoTestSelezionato === "Test MoCA"
-
+            {tipoTestSelezionato === "Test MoCA" &&
+                <RisultatiTestMOCA
+                    paziente={pazienteSelezionato}
+                ></RisultatiTestMOCA>
             }
         </div>
     );

@@ -100,8 +100,17 @@
     case "getPatientStatistics":
         $query_result = getPatientStatistics($conn);
         break;
+    case "getTestResultList":
+        $query_result = getTestResultList($conn);
+        break;
+    case "updateTestResultList":
+        $query_result = updateTestResultList($conn);
+        break;
     case "saveResultMMSE":
         $query_result = saveResultMMSE($conn);
+        break;
+    case "saveResultMoCA":
+        $query_result = saveResultMoCA($conn);
         break;
     case "getTestsList":
         $query_result = getTestsList($conn);
@@ -768,6 +777,36 @@
         return $result;
     }
 
+    function getTestResultList($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $getTestResult = $i_conn->prepare(
+            "SELECT storicoTest.tipoTest, storicoTest.punteggioTest, storicoTest.dataSvolgimento, patients.nome, patients.cognome 
+            FROM `storicoTest` JOIN `patients` ON storicoTest.pazienteID = patients.ID;"
+        );
+        
+        $getTestResult->execute();
+        $result = $getTestResult->get_result();
+        return $result;
+    }
+    function updateTestResultList($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $pazienteID = $dataJson["pazienteID"];
+        $tipoTest = $dataJson["tipoTest"];
+        $scoreTest = $dataJson["scoreTest"];
+        $date = $dataJson["dataSvolgimento"];
+        
+        $saveTestResult = $i_conn->prepare("INSERT INTO `storicoTest` (`pazienteID`, `tipoTest`, `punteggioTest`, `dataSvolgimento`) VALUES (?, ?, ?, ?)");
+        $saveTestResult->bind_param("isis", $pazienteID, $tipoTest, $scoreTest, $date);
+        
+        $saveTestResult->execute();
+        $saveTestResult->bind_result($result);
+        return $result;
+    }
+
     function saveResultMMSE($i_conn){
     	$data = file_get_contents("php://input");
         $dataJson = json_decode($data, true);
@@ -777,6 +816,21 @@
         
         $saveTestResult = $i_conn->prepare("UPDATE `patients` SET `resultMMSE` = ? WHERE `patients`.`ID` = ?");
         $saveTestResult->bind_param("ii", $resultMMSE, $ID);
+        
+        $saveTestResult->execute();
+        $saveTestResult->bind_result($result);
+        return $result;
+    }
+
+    function saveResultMoCA($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $resultMoCA = $dataJson["resultMoCA"];
+        $ID = $dataJson["ID"];
+        
+        $saveTestResult = $i_conn->prepare("UPDATE `patients` SET `resultMOCA` = ? WHERE `patients`.`ID` = ?");
+        $saveTestResult->bind_param("ii", $resultMoCA, $ID);
         
         $saveTestResult->execute();
         $saveTestResult->bind_result($result);
