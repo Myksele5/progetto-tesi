@@ -18,30 +18,12 @@
     box-shadow: 5px 0 5px 5px #163172;
 }
 
-.wrapper_generico{
-    display: grid;
-    justify-content: center;
-    margin-top: 15px;
-    grid-template-columns: 350px 350px;
-    column-gap: 50px;
-    grid-template-rows: fit-content;
-    row-gap: 10px;
-}
-
-.wrapper_test{
+.wrapper_page{
+    /* width: 100%; */
+    /* height: 100%; */
+    margin-top: 10px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-@media screen and (max-width: 799px) {
-    .wrapper_generico{
-        grid-template-columns: 350px;
-    }
-}
-
-@media screen and (max-width: 500px) {
-    .wrapper_generico{
-        grid-template-columns: 300px;
-    }
 }

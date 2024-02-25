@@ -238,6 +238,15 @@
     }
 }
 
+@media screen and (max-height: 525px) {
+    .wrap_menu{
+        overflow-y: auto;
+    }
+    .wrap_menu::-webkit-scrollbar{
+        width: 8px;
+    }
+}
+
 @media screen and (max-height: 700px) and (max-width: 1200px){
     .utente_loggato{
         height: 20px;
@@ -287,6 +296,30 @@
 @media screen and (max-height: 550px) and (max-width: 1200px){
     .wrap_menu{
         height: 70px;
+    }
+
+    .wrapper_generico{
+        margin: 20px 0px;
+    }
+
+    .menu_option{
+        height: 70px;
+    }
+
+    .text_option{
+        font-size: 20px;
+    }
+    
+    .image_option{
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media screen and ((max-height: 525px) and (max-width: 1200px)){
+    .wrap_menu{
+        height: 70px;
+        overflow-y: unset;
     }
 
     .wrapper_generico{

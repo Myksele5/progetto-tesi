@@ -1,23 +1,25 @@
 .title{
-    font-size: 30px;
-    margin: 5px;
+    font-size: 24px;
+    margin: 10px 5px;
 }
 
-.subtitle{
-    font-size: 26px;
-    color: rgb(233, 33, 131);
-    /* text-decoration: underline; */
+.wrapper_horizontal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.grid_container{
-    display: grid;
-    grid-template-columns: 550px 250px;
-    column-gap: 5vw;
+.area_cog_title{
+    text-align: center;
 }
 
 .area_cog_style{
-    width: 100%;
-    border: 2px solid rgb(233, 33, 131);
+    /* width: 100%; */
+    min-width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px solid red;
     border-radius: 10px;
     padding: 10px 12px;
 }
@@ -29,9 +31,7 @@
 }
 
 .domanda_style{
-    font-size: 21px;
-    margin: 5px;
-    font-weight: normal;
+    width: 100%;
 }
 
 .risposta_style{
@@ -46,7 +46,7 @@
     height: 25px;
     margin: 5px 10px;
     padding-left: 15px;
-    border: 2px solid rgb(59, 59, 241);
+    border: 2px solid #1E56A0;
     border-radius: 5px;
     font-size: 20px;
     color: black;
@@ -59,7 +59,8 @@
 }
 
 .input_style:focus{
-    border: 2px solid rgb(233, 33, 131);
+    border: 2px solid #163172;
+    background-color: #D6E4F0;
     transition: 0.3s;
     box-shadow: 1px 1px 5px 1px black;
     outline: none;

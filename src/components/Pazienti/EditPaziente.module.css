@@ -123,6 +123,18 @@
     border-radius: 10px;
 }
 
+.section_style_FORM{
+    margin: 5px;
+    height: fit-content;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    overflow-y: auto;
+    /* width: 620px; */
+}
+
 .title_form{
     font-size: 24px;
     margin: 5px;
@@ -453,7 +465,7 @@
     }
 
     .absolute_div{
-        top: 164px;
+        top: 210px;
     }
 
     .absolute_buttons_wrapper{
@@ -504,7 +516,7 @@
 
 @media screen and (max-width: 850px) {
     .absolute_div{
-        top: 164px;
+        top: 200px;
     }
 
     .absolute_buttons_wrapper{
@@ -553,7 +565,7 @@
 @media screen and (max-width: 799px) {
 
     .absolute_div{
-        top: 150px;
+        top: 196px;
     }
 
     .absolute_buttons_wrapper{
@@ -604,7 +616,7 @@
 
 @media screen and (max-width: 549px) {
     .absolute_div{
-        top: 150px;
+        top: 190px;
     }
 
     .absolute_buttons_wrapper{
@@ -705,5 +717,33 @@
 
     .section_style{
         height: 180px;
+    }
+}
+
+@media screen and ((max-width:1200px) and (max-height: 1080px)) {
+    .absolute_div{
+        height: 500px;
+    }
+
+    .section_style{
+        height: 420px;
+    }
+}
+@media screen and ((max-width:1200px) and (max-height: 950px)) {
+    .absolute_div{
+        height: 420px;
+    }
+
+    .section_style{
+        height: 340px;
+    }
+}
+@media screen and ((max-width:1200px) and (max-height: 800px)) {
+    .absolute_div{
+        height: 320px;
+    }
+
+    .section_style{
+        height: 240px;
     }
 }

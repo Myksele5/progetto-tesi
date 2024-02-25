@@ -4,11 +4,12 @@ import { getServerMgr } from "../backend_conn/ServerMgr";
 
 const TestsContext = React.createContext({
     listaTest: null,
-    listaTestDB: null,
-    qstnsAreaCog1: null,
-    qstnsAreaCog2: null,
-    qstnsAreaCog3: null,
-    qstnsAreaCog5: null,
+    mainPage: null,
+    showMainPage: ()=>{},
+    hideMainPage: ()=>{},
+    formAddValutazione: null,
+    showFormAddValutazione: ()=>{},
+    hideFormAddValutazione: ()=>{},
     salvaRisultatoMMSE: ()=>{}
 })
 
@@ -86,118 +87,28 @@ export function TestsContextProvider(props){
     ];
 
     const [elencoTest, setElencoTest] = useState(arrayTestProvvisorio);
-    const [elencoTestDB, setElencoTestDB] = useState([]);
-    const [domandeTestAreaCog_1, setDomandeTestAreaCog_1] = useState([]);
-    const [domandeTestAreaCog_2, setDomandeTestAreaCog_2] = useState([]);
-    const [domandeTestAreaCog_3, setDomandeTestAreaCog_3] = useState([]);
-    const [domandeTestAreaCog_5, setDomandeTestAreaCog_5] = useState([]);
+    const [mainPage, setMainPage] = useState(true);
+    const [formValutazione, setFormValutazione] = useState(false);
 
     useEffect(() => {
         setElencoTest(arrayTestProvvisorio);
         console.log(arrayTestProvvisorio);
-
-        getTestList();
-        getQuestionsAreaCog_1();
-        getQuestionsAreaCog_2();
-        getQuestionsAreaCog_3();
-        getQuestionsAreaCog_5();
     }, []);
 
-    async function getTestList(){
-        let resultTestList;
-
-        const parseResult = (resultsArray) => {
-            let markersList = {}
-            resultsArray.forEach((item) => {
-                let currentMarker = (({testID, nomeTest, tipoTest}) => ({testID, nomeTest, tipoTest, domandeID_AC1: []}))(item);
-                markersList[item.testID] ??= currentMarker
-                if(item.IDqstn_AC1 !== null) {
-                    markersList[item.testID].domandeID_AC1.push(item.IDqstn_AC1)
-                }
-            })
-
-            let arrayTests = []
-            Object.keys(markersList).forEach((item) => {
-                arrayTests.push(markersList[item])
-            })
-
-            return arrayTests;
-        }
-
-        resultTestList = await getServerMgr().getTestsList(1)
-        .catch((err) => {console.error(err)});
-
-        if(resultTestList !== null){
-            let rispostaParsata = parseResult(resultTestList)
-            setElencoTestDB(rispostaParsata);
-            console.log(resultTestList);
-            console.log(rispostaParsata);
-        }
-        else{
-            setElencoTestDB([]);
-        }
-        
+    function showMainPage(){
+        setMainPage(true);
+    }
+    function hideMainPage(){
+        setMainPage(false);
     }
 
-    //VERIFICA
-    async function getQuestionsAreaCog_1(){
-        let result;
-
-        result = await getServerMgr().getTestsQuestionsAreaCog_1()
-        .catch((err) => {console.error(err)})
-        console.log(result);
-
-        if(result !== null){
-            setDomandeTestAreaCog_1(result);
-        }
-        else{
-            setDomandeTestAreaCog_1([]);
-        }
+    function showFormAddValutazione(){
+        setFormValutazione(true);
+        hideMainPage();
     }
-
-    async function getQuestionsAreaCog_2(){
-        let result;
-
-        result = await getServerMgr().getTestsQuestionsAreaCog_2()
-        .catch((err) => {console.error(err)})
-        console.log(result);
-
-        if(result !== null){
-            setDomandeTestAreaCog_2(result);
-        }
-        else{
-            setDomandeTestAreaCog_2([]);
-        }
-    }
-
-    async function getQuestionsAreaCog_3(){
-        let result;
-
-        result = await getServerMgr().getTestsQuestionsAreaCog_3()
-        .catch((err) => {console.error(err)})
-        console.log(result);
-
-        if(result !== null){
-            setDomandeTestAreaCog_3(result);
-        }
-        else{
-            setDomandeTestAreaCog_3([]);
-        }
-    }
-
-    async function getQuestionsAreaCog_5(){
-        let result;
-
-        result = await getServerMgr().getTestsQuestionsAreaCog_5()
-        .catch((err) => {console.error(err)})
-        console.log(result);
-
-        if(result !== null){
-            setDomandeTestAreaCog_5(result);
-        }
-        else{
-            setDomandeTestAreaCog_5([]);
-        }
+    function hideFormAddValutazione(){
+        setFormValutazione(false);
+        showMainPage();
     }
 
     async function salvaRisultatoTestMMSE(resultMMSE, pazienteID){
@@ -211,11 +122,12 @@ export function TestsContextProvider(props){
         <TestsContext.Provider
         value={{
             listaTest: elencoTest,
-            listaTestDB: elencoTestDB,
-            qstnsAreaCog1: domandeTestAreaCog_1,
-            qstnsAreaCog2: domandeTestAreaCog_2,
-            qstnsAreaCog3: domandeTestAreaCog_3,
-            qstnsAreaCog5: domandeTestAreaCog_5,
+            mainPage: mainPage,
+            showMainPage: showMainPage,
+            hideMainPage: hideMainPage,
+            formAddValutazione: formValutazione,
+            showFormAddValutazione: showFormAddValutazione,
+            hideFormAddValutazione: hideFormAddValutazione,
             salvaRisultatoMMSE: salvaRisultatoTestMMSE
         }}
         >

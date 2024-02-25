@@ -232,7 +232,7 @@ function EditPaziente(props){
 
             <div className={styles.wrapper_vertical}>
                 {visualizzaSchermata === "DATI_PERSONALI" &&
-                    <section className={styles.section_style}>
+                    <section className={styles.section_style_FORM}>
 
                         <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome:</label>
                         <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={nomeModifica} onChange={nomeChangeHandler}></input>

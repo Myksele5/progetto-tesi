@@ -280,7 +280,7 @@ function AddPaziente(props){
                 <>
                     <h1 className={styles.title_form}>Inserisci i dati del paziente</h1>
                     <div className={styles.wrapper_horizontal}>
-                        <section className={styles.section_style}>
+                        <section className={styles.section_style_FORM}>
 
                             <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome:</label>
                             <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNome} onChange={nomeChangeHandler}></input>
@@ -502,7 +502,7 @@ function AddPaziente(props){
                 {stepAggiuntaPaziente === 3 &&
                 <>
                     <div className={styles.wrapper_horizontal}>
-                        <section className={styles.section_style}>
+                        <section className={styles.section_style_FORM}>
                             <h3 className={styles.text_subtitle}>CREDENZIALI</h3>
 
                             <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Email:</label>

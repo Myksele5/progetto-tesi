@@ -2,261 +2,307 @@ import { useContext, useEffect, useState } from "react";
 import styles from "./RisultatiTestMMSE.module.css";
 import GenericButton from "../UI/GenericButton";
 import TestsContext from "../../context/tests-context";
+import PatientContext from "../../context/patients-context";
 
 function RisultatiTestMMSE(props){
     const tests_ctx = useContext(TestsContext);
+    const patients_ctx = useContext(PatientContext)
 
-    const pazienteID = props.pazienteID;
-    const nomePaziente = props.nomePaziente;
-    const cognomePaziente = props.cognomePaziente;
+    const paziente = props.paziente;
+    const tipoTest = props.tipoTest;
 
-    const [risposteAreaCognitiva_1, setRisposteAreaCognitiva_1] = useState(props.areaCog_1);
-    const risposteAreaCognitiva_2 = props.areaCog_2;
-    const risposteAreaCognitiva_3 = props.areaCog_3;
-    const risposteAreaCognitiva_4 = props.areaCog_4;
-    const risposteAreaCognitiva_5 = props.areaCog_5;
-    const risposteAreaCognitiva_6 = props.areaCog_6;
+    const [infoPaziente, setInfoPaziente] = useState({});
 
-    const [punteggioAreaCogn_1, setPunteggioAreaCogn_1] = useState(0);
-    const [punteggioAreaCogn_2, setPunteggioAreaCogn_2] = useState(0);
-    const [punteggioAreaCogn_3, setPunteggioAreaCogn_3] = useState(0);
-    const [punteggioAreaCogn_4, setPunteggioAreaCogn_4] = useState(0);
-    const [punteggioAreaCogn_5, setPunteggioAreaCogn_5] = useState(0);
-    const [punteggioAreaCogn_6, setPunteggioAreaCogn_6] = useState(0);
-    const [punteggioTOT, setPunteggioTOT] = useState(0);
+    const [sezioneCognitiva, setSezioneCognitiva] = useState(1);
 
-    function salvaRisultato(){
-        tests_ctx.salvaRisultatoMMSE(punteggioTOT, pazienteID);
-        props.tornaAlMenuTest();
-    }
+    //PUNTEGGI SINGOLE AREE COGNITIVE
+    const [punteggioAreaCognitiva_1, setPunteggioAreaCognitiva_1] = useState(0);
+    const [punteggioAreaCognitiva_2, setPunteggioAreaCognitiva_2] = useState(0);
+    const [punteggioAreaCognitiva_3, setPunteggioAreaCognitiva_3] = useState(0);
+    const [punteggioAreaCognitiva_4, setPunteggioAreaCognitiva_4] = useState(0);
+    const [punteggioAreaCognitiva_5, setPunteggioAreaCognitiva_5] = useState(0);
+    const [punteggioAreaCognitiva_6, setPunteggioAreaCognitiva_6] = useState(0);
 
-    function puntiAreaCognitiva1Handler(event){
-        setPunteggioAreaCogn_1(event.target.value);
-        if(event.target.value > 10){
-            setPunteggioAreaCogn_1(10)
-        }
-        if(event.target.value < 0){
-            setPunteggioAreaCogn_1(0)
-        }
-    }
-    function puntiAreaCognitiva2Handler(event){
-        setPunteggioAreaCogn_2(event.target.value);
-        if(event.target.value > 3){
-            setPunteggioAreaCogn_2(3)
-        }
-        if(event.target.value < 0){
-            setPunteggioAreaCogn_2(0)
-        }
-    }
-    function puntiAreaCognitiva3Handler(event){
-        setPunteggioAreaCogn_3(event.target.value);
-        if(event.target.value > 5){
-            setPunteggioAreaCogn_3(5)
-        }
-        if(event.target.value < 0){
-            setPunteggioAreaCogn_3(0)
-        }
-    }
-    function puntiAreaCognitiva4Handler(event){
-        setPunteggioAreaCogn_4(event.target.value);
-        if(event.target.value > 3){
-            setPunteggioAreaCogn_4(3)
-        }
-        if(event.target.value < 0){
-            setPunteggioAreaCogn_4(0)
-        }
-    }
-    function puntiAreaCognitiva5Handler(event){
-        setPunteggioAreaCogn_5(event.target.value);
-        if(event.target.value > 8){
-            setPunteggioAreaCogn_5(8)
-        }
-        if(event.target.value < 0){
-            setPunteggioAreaCogn_5(0)
-        }
-    }
-    function puntiAreaCognitiva6Handler(event){
-        setPunteggioAreaCogn_6(event.target.value);
-        if(event.target.value > 1){
-            setPunteggioAreaCogn_6(1)
-        }
-        if(event.target.value < 0){
-            setPunteggioAreaCogn_6(0)
-        }
-    }
+    //DOMANDE AREA COGNITIVA 1
+    const [areaCog_1_domanda_1, set_areaCog_1_domanda_1] = useState(0);
+    const [areaCog_1_domanda_2, set_areaCog_1_domanda_2] = useState(0);
+    const [areaCog_1_domanda_3, set_areaCog_1_domanda_3] = useState(0);
+    const [areaCog_1_domanda_4, set_areaCog_1_domanda_4] = useState(0);
+    const [areaCog_1_domanda_5, set_areaCog_1_domanda_5] = useState(0);
+    const [areaCog_1_domanda_6, set_areaCog_1_domanda_6] = useState(0);
+    const [areaCog_1_domanda_7, set_areaCog_1_domanda_7] = useState(0);
+    const [areaCog_1_domanda_8, set_areaCog_1_domanda_8] = useState(0);
+    const [areaCog_1_domanda_9, set_areaCog_1_domanda_9] = useState(0);
+    const [areaCog_1_domanda_10, set_areaCog_1_domanda_10] = useState(0);
+
+    //DOMANDE AREA COGNITIVA 2
+    const [areaCog_2_domanda_1, set_areaCog_2_domanda_1] = useState(0);
+    const [areaCog_2_domanda_2, set_areaCog_2_domanda_2] = useState(0);
+    const [areaCog_2_domanda_3, set_areaCog_2_domanda_3] = useState(0);
 
     useEffect(() => {
-        console.log(typeof punteggioAreaCogn_1)
-        setPunteggioTOT(Number(punteggioAreaCogn_1) + Number(punteggioAreaCogn_2) + Number(punteggioAreaCogn_3) + Number(punteggioAreaCogn_4) + Number(punteggioAreaCogn_5) + Number(punteggioAreaCogn_6))
-    }, [punteggioAreaCogn_1, punteggioAreaCogn_2, punteggioAreaCogn_3, punteggioAreaCogn_4, punteggioAreaCogn_5, punteggioAreaCogn_6])
-
-    useEffect(() => {
-        console.log(risposteAreaCognitiva_1);
-        console.log(props.areaCog_2);
-        console.log(props.areaCog_3);
-        console.log(props.areaCog_4);
-        console.log(props.areaCog_5);
-        console.log(props.areaCog_6);
+        patients_ctx.listaPazienti.map((paz) => {
+            console.log(typeof paz.ID)
+            console.log(typeof paziente)
+            if(paz.ID === Number(paziente)){
+                setInfoPaziente(paz);
+                
+            }
+        })
     }, [])
+
+    useEffect(() => {
+        punteggio_AC1();
+    }, [areaCog_1_domanda_1, areaCog_1_domanda_2, areaCog_1_domanda_3, areaCog_1_domanda_4, areaCog_1_domanda_5, 
+        areaCog_1_domanda_6, areaCog_1_domanda_7, areaCog_1_domanda_8, areaCog_1_domanda_9, areaCog_1_domanda_10]
+    )
+
+    useEffect(() => {
+        punteggio_AC2();
+    }, [areaCog_2_domanda_1, areaCog_2_domanda_2, areaCog_2_domanda_3])
+
+    function nextAreaCogn(){
+        setSezioneCognitiva((prevArea) => (prevArea + 1))
+    }
+
+    function punteggio_AC1(){
+        setPunteggioAreaCognitiva_1(
+            areaCog_1_domanda_1 + areaCog_1_domanda_2 + areaCog_1_domanda_3 + areaCog_1_domanda_4 + areaCog_1_domanda_5 +
+            areaCog_1_domanda_6 + areaCog_1_domanda_7 + areaCog_1_domanda_8 + areaCog_1_domanda_9 + areaCog_1_domanda_10
+        )
+    }
+    function punteggio_AC2(){
+        setPunteggioAreaCognitiva_2(areaCog_2_domanda_1 + areaCog_2_domanda_2 + areaCog_2_domanda_3)
+    }
+
+    function ac_1_qstn1_changeHandler(event){
+        if(event.target.value > 1 ){
+            set_areaCog_1_domanda_1(1)
+        }
+        else if(event.target.value < 0){
+            set_areaCog_1_domanda_1(0);
+        }
+        else{
+            set_areaCog_1_domanda_1(Number(event.target.value));
+        }
+    }
+    function ac_1_qstn2_changeHandler(event){
+        if(event.target.value > 1 ){
+            set_areaCog_1_domanda_2(1)
+        }
+        else if(event.target.value < 0){
+            set_areaCog_1_domanda_2(0);
+        }
+        else{
+            set_areaCog_1_domanda_2(Number(event.target.value));
+        }
+    }
+    function ac_1_qstn3_changeHandler(event){
+        if(event.target.value > 1 ){
+            set_areaCog_1_domanda_3(1)
+        }
+        else if(event.target.value < 0){
+            set_areaCog_1_domanda_3(0);
+        }
+        else{
+            set_areaCog_1_domanda_3(Number(event.target.value));
+        }
+    }
+    function ac_1_qstn4_changeHandler(event){
+        if(event.target.value > 1 ){
+            set_areaCog_1_domanda_4(1)
+        }
+        else if(event.target.value < 0){
+            set_areaCog_1_domanda_4(0);
+        }
+        else{
+            set_areaCog_1_domanda_4(Number(event.target.value));
+        }
+    }
+    function ac_1_qstn5_changeHandler(event){
+        if(event.target.value > 1 ){
+            set_areaCog_1_domanda_5(1)
+        }
+        else if(event.target.value < 0){
+            set_areaCog_1_domanda_5(0);
+        }
+        else{
+            set_areaCog_1_domanda_5(Number(event.target.value));
+        }
+    }
+    function ac_1_qstn6_changeHandler(event){
+        if(event.target.value > 1 ){
+            set_areaCog_1_domanda_6(1)
+        }
+        else if(event.target.value < 0){
+            set_areaCog_1_domanda_6(0);
+        }
+        else{
+            set_areaCog_1_domanda_6(Number(event.target.value));
+        }
+    }
+    function ac_1_qstn7_changeHandler(event){
+        if(event.target.value > 1 ){
+            set_areaCog_1_domanda_7(1)
+        }
+        else if(event.target.value < 0){
+            set_areaCog_1_domanda_7(0);
+        }
+        else{
+            set_areaCog_1_domanda_7(Number(event.target.value));
+        }
+    }
+    function ac_1_qstn8_changeHandler(event){
+        if(event.target.value > 1 ){
+            set_areaCog_1_domanda_8(1)
+        }
+        else if(event.target.value < 0){
+            set_areaCog_1_domanda_8(0);
+        }
+        else{
+            set_areaCog_1_domanda_8(Number(event.target.value));
+        }
+    }
+    function ac_1_qstn9_changeHandler(event){
+        if(event.target.value > 1 ){
+            set_areaCog_1_domanda_9(1)
+        }
+        else if(event.target.value < 0){
+            set_areaCog_1_domanda_9(0);
+        }
+        else{
+            set_areaCog_1_domanda_9(Number(event.target.value));
+        }
+    }
+    function ac_1_qstn10_changeHandler(event){
+        if(event.target.value > 1 ){
+            set_areaCog_1_domanda_10(1)
+        }
+        else if(event.target.value < 0){
+            set_areaCog_1_domanda_10(0);
+        }
+        else{
+            set_areaCog_1_domanda_10(Number(event.target.value));
+        }
+    }
+
+    function ac_2_qstn1_changeHandler(event){
+        if(event.target.value > 1 ){
+            set_areaCog_2_domanda_1(1)
+        }
+        else if(event.target.value < 0){
+            set_areaCog_2_domanda_1(0);
+        }
+        else{
+            set_areaCog_2_domanda_1(Number(event.target.value));
+        }
+    }
+    function ac_2_qstn2_changeHandler(event){
+        if(event.target.value > 1 ){
+            set_areaCog_2_domanda_2(1)
+        }
+        else if(event.target.value < 0){
+            set_areaCog_2_domanda_2(0);
+        }
+        else{
+            set_areaCog_2_domanda_2(Number(event.target.value));
+        }
+    }
+    function ac_2_qstn3_changeHandler(event){
+        if(event.target.value > 1 ){
+            set_areaCog_2_domanda_3(1)
+        }
+        else if(event.target.value < 0){
+            set_areaCog_2_domanda_3(0);
+        }
+        else{
+            set_areaCog_2_domanda_3(Number(event.target.value));
+        }
+    }
 
     return(
         <>
+            <h1 className={styles.title}>Valutazione MMSE: {infoPaziente.nome} {infoPaziente.cognome}</h1>
+            <div className={styles.area_cog_style}>
+                {sezioneCognitiva === 1 &&
+                <>
+                    <h3 className={styles.area_cog_title}>Area Cognitiva 1 - Orientamento</h3>
 
-            <div style={{position: "sticky", top: "10px", backgroundColor: "lightblue", textAlign: "center"}}>
-                <h1 className={styles.title}>Risultati del paziente: {nomePaziente} {cognomePaziente}</h1>
-                <h4 className={styles.title}>Punteggio Totale</h4>
-                <h4 className={styles.title}>{punteggioTOT}/30</h4>
+                    <div className={styles.wrapper_horizontal}>
+                        <div className={styles.domanda_style}>In che anno ci troviamo?</div>
+                        <input onChange={ac_1_qstn1_changeHandler} value={areaCog_1_domanda_1} className={styles.input_style} type="number" min={0} max={1}></input>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <div className={styles.domanda_style}>Che giorno è oggi?</div>
+                        <input onChange={ac_1_qstn2_changeHandler} value={areaCog_1_domanda_2} className={styles.input_style} type="number" min={0} max={1}></input>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <div className={styles.domanda_style}>In che mese siamo?</div>
+                        <input onChange={ac_1_qstn3_changeHandler} value={areaCog_1_domanda_3} className={styles.input_style} type="number" min={0} max={1}></input>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <div className={styles.domanda_style}>In che stagione?</div>
+                        <input onChange={ac_1_qstn4_changeHandler} value={areaCog_1_domanda_4} className={styles.input_style} type="number" min={0} max={1}></input>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <div className={styles.domanda_style}>Quale giorno della settimana è oggi?</div>
+                        <input onChange={ac_1_qstn5_changeHandler} value={areaCog_1_domanda_5} className={styles.input_style} type="number" min={0} max={1}></input>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <div className={styles.domanda_style}>Dove ci troviamo?</div>
+                        <input onChange={ac_1_qstn6_changeHandler} value={areaCog_1_domanda_6} className={styles.input_style} type="number" min={0} max={1}></input>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <div className={styles.domanda_style}>A che piano?</div>
+                        <input onChange={ac_1_qstn7_changeHandler} value={areaCog_1_domanda_7} className={styles.input_style} type="number" min={0} max={1}></input>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <div className={styles.domanda_style}>In quale paese?</div>
+                        <input onChange={ac_1_qstn8_changeHandler} value={areaCog_1_domanda_8} className={styles.input_style} type="number" min={0} max={1}></input>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <div className={styles.domanda_style}>In che regione siamo?</div>
+                        <input onChange={ac_1_qstn9_changeHandler} value={areaCog_1_domanda_9} className={styles.input_style} type="number" min={0} max={1}></input>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <div className={styles.domanda_style}>In quale città siamo adesso?</div>
+                        <input onChange={ac_1_qstn10_changeHandler} value={areaCog_1_domanda_10} className={styles.input_style} type="number" min={0} max={1}></input>
+                    </div>
+                    <hr style={{width: "100%"}}></hr>
+                    <div className={styles.wrapper_horizontal}>
+                        <h3 className={styles.domanda_style}>Punteggio Area Cognitiva 1: </h3>
+                        <h3>{punteggioAreaCognitiva_1}/10</h3>
+                    </div>
+                </>
+                }
+                {sezioneCognitiva === 2 &&
+                <>
+                    <h3 className={styles.area_cog_title}>Area Cognitiva 2 - Memoria</h3>
+                    <div className={styles.wrapper_horizontal}>
+                        <div className={styles.domanda_style}>Ripeti "CASA"</div>
+                        <input onChange={ac_2_qstn1_changeHandler} value={areaCog_2_domanda_1} className={styles.input_style} type="number" min={0} max={1}></input>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <div className={styles.domanda_style}>Ripeti "PANE"</div>
+                        <input onChange={ac_2_qstn2_changeHandler} value={areaCog_2_domanda_2} className={styles.input_style} type="number" min={0} max={1}></input>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <div className={styles.domanda_style}>Ripeti "GATTO"</div>
+                        <input onChange={ac_2_qstn3_changeHandler} value={areaCog_2_domanda_3} className={styles.input_style} type="number" min={0} max={1}></input>
+                    </div>
+                    <hr style={{width: "100%"}}></hr>
+                    <div className={styles.wrapper_horizontal}>
+                        <h3 className={styles.domanda_style}>Punteggio Area Cognitiva 2: </h3>
+                        <h3>{punteggioAreaCognitiva_2}/3</h3>
+                    </div>
+                </>
+                }
             </div>
-
-            <div>
-                <h2 className={styles.subtitle}>AREA COGNITIVA 1 - Orientamento</h2>
-                <section className={styles.area_cog_style}>
-                    
-                    <div className={styles.grid_container}>
-                        <label className={styles.label_style}>DOMANDE:</label>
-                        <label className={styles.label_style}>RISPOSTE:</label>
-                        {risposteAreaCognitiva_1.map(element => {
-                            return (
-                                <>
-                                    <div style={{display: "flex", alignItems: "center", marginBottom: "2px", borderBottom: "1px solid black"}}>
-                                        {/* <label>DOMANDA:</label> */}
-                                        <h3 className={styles.domanda_style}>{element.domanda}</h3>
-                                        
-                                    </div>
-                                    <div style={{display: "flex", alignItems: "center", marginBottom: "2px", borderBottom: "1px solid black"}}>
-                                        {/* <label>RISPOSTA:</label> */}
-                                        <h3 className={styles.risposta_style}>{element.risposta}</h3>
-                                    </div>
-                                </>
-                            );
-                        })}
-                    </div>
-                    
-                </section>
-                <label className={styles.label_style}>PUNTEGGIO AREA COGNITIVA 1: </label>
-                <input value={punteggioAreaCogn_1} onChange={puntiAreaCognitiva1Handler} className={styles.input_style} type="number" min={0} max={10}></input>
-                <hr style={{border: "1px solid black"}}></hr>
-
-                <h2 className={styles.subtitle}>AREA COGNITIVA 2 - Memoria</h2>
-                <section className={styles.area_cog_style}>
-                    <div style={{display: "flex", alignItems:"center"}}>
-                        <label style={{margin: "5px"}} className={styles.label_style}>{risposteAreaCognitiva_2.domanda}{":"}</label>
-                        <div style={{width: "70%" ,display: "flex", justifyContent: "space-evenly", alignItems:"center"}}>
-                            {risposteAreaCognitiva_2.parole.map(element => {
-                                return(
-                                    <h3 className={styles.risposta_style}>{element}</h3>
-                                );
-                            })
-                            }
-                        </div>
-                    </div>
-                </section>
-                <label className={styles.label_style}>PUNTEGGIO AREA COGNITIVA 2: </label>
-                <input value={punteggioAreaCogn_2} onChange={puntiAreaCognitiva2Handler} className={styles.input_style} type="number" min={0} max={3}></input>
-                <hr style={{border: "1px solid black"}}></hr>
-
-                <h2 className={styles.subtitle}>AREA COGNITIVA 3 - Attenzione/Calcolo</h2>
-                <section className={styles.area_cog_style}>
-                    <div className={styles.grid_container}>
-                        <label className={styles.label_style}>DOMANDA:</label>
-                        <label className={styles.label_style}>RISPOSTA:</label>
-                        <div style={{display: "flex", alignItems:"center", marginBottom: "2px", borderBottom: "1px solid black"}}>
-                            <h3 className={styles.domanda_style}>{risposteAreaCognitiva_3.domanda}{":"}</h3>
-                        </div>
-                        <div style={{display: "flex", alignItems:"center", marginBottom: "2px", borderBottom: "1px solid black"}}>
-                            <h3 className={styles.risposta_style}>{risposteAreaCognitiva_3.risposta}</h3>
-                        </div>
-                    </div>
-                </section>
-                <label className={styles.label_style}>PUNTEGGIO AREA COGNITIVA 3: </label>
-                <input value={punteggioAreaCogn_3} onChange={puntiAreaCognitiva3Handler} className={styles.input_style} type="number" min={0} max={5}></input>
-                <hr style={{border: "1px solid black"}}></hr>
-
-                <h2 className={styles.subtitle}>AREA COGNITIVA 4 - Richiamo</h2>
-                <section className={styles.area_cog_style}>
-                    <label className={styles.label_style}>{risposteAreaCognitiva_4.domanda}</label>
-                    <div className={styles.grid_container}>
-                        <label className={styles.label_style}>PAROLE:</label>
-                        <label className={styles.label_style}>RISPOSTE:</label>
-                        {risposteAreaCognitiva_4.parole.map(element => {
-                            return(
-                                <>
-                                    <div style={{display: "flex", alignItems:"center", marginBottom: "2px", borderBottom: "1px solid black"}}>
-                                        <h3 className={styles.domanda_style}>{element.parola}</h3>
-                                    </div>
-                                    <div style={{display: "flex", alignItems:"center", marginBottom: "2px", borderBottom: "1px solid black"}}>
-                                        <h3 className={styles.risposta_style}>{element.risposta}</h3>
-                                    </div>
-                                </>
-                            );
-                        })}
-                    </div>
-                </section>
-                <label className={styles.label_style}>PUNTEGGIO AREA COGNITIVA 4: </label>
-                <input value={punteggioAreaCogn_4} onChange={puntiAreaCognitiva4Handler} className={styles.input_style} type="number" min={0} max={3}></input>
-                <hr style={{border: "1px solid black"}}></hr>
-
-                <h2 className={styles.subtitle}>AREA COGNITIVA 5 - Linguaggio</h2>
-                <section className={styles.area_cog_style}>
-                    <label className={styles.label_style}>{risposteAreaCognitiva_5[0].domanda}</label>
-                    <div className={styles.grid_container}>
-                        <label className={styles.label_style}>OGGETTI:</label>
-                        <label className={styles.label_style}>RISPOSTE:</label>
-                        {risposteAreaCognitiva_5[0].oggetti.map(element => {
-                            return(
-                                <>
-                                    <div style={{display: "flex", alignItems:"center", marginBottom: "2px", borderBottom: "1px solid black"}}>
-                                        <h3 className={styles.domanda_style}>{element.oggetto}</h3>
-                                    </div>
-                                    <div style={{display: "flex", alignItems:"center", marginBottom: "2px", borderBottom: "1px solid black"}}>
-                                        <h3 className={styles.risposta_style}>{element.risposta}</h3>
-                                    </div>
-                                </>
-                            );
-                        })}
-                    </div>
-
-                    {/* INSERIRE E/O AGGIUSTARE MARGINE */}
-                    <div style={{display: "flex", alignItems: "center"}}>
-                        <label className={styles.label_style}>{risposteAreaCognitiva_5[1].domanda}</label>
-                        <h3 className={styles.risposta_style}>{risposteAreaCognitiva_5[1].frase}</h3>
-                    </div>
-                    {/* INSERIRE E/O AGGIUSTARE MARGINE */}
-                    <div style={{display: "flex", alignItems: "center"}}>
-                        <label className={styles.label_style}>{risposteAreaCognitiva_5[2].domanda}</label>
-                        <h3 className={styles.risposta_style}>{risposteAreaCognitiva_5[2].azione}</h3>
-                    </div>
-                    {/* INSERIRE E/O AGGIUSTARE MARGINE */}
-                    <div style={{display: "flex", alignItems: "center"}}>
-                        <label className={styles.label_style}>{risposteAreaCognitiva_5[3].domanda}</label>
-                        <h3 className={styles.risposta_style}>{risposteAreaCognitiva_5[3].frase}</h3>
-                    </div>
-                    {/* INSERIRE E/O AGGIUSTARE MARGINE */}
-                    <div style={{display: "flex", alignItems: "center"}}>
-                        <label className={styles.label_style}>{risposteAreaCognitiva_5[4].domanda}</label>
-                        <h3 className={styles.risposta_style}>{risposteAreaCognitiva_5[4].azione}</h3>
-                    </div>
-                </section>
-                <label className={styles.label_style}>PUNTEGGIO AREA COGNITIVA 5: </label>
-                <input value={punteggioAreaCogn_5} onChange={puntiAreaCognitiva5Handler} className={styles.input_style} type="number" min={0} max={8}></input>
-                <hr style={{border: "1px solid black"}}></hr>
-
-                <h2 className={styles.subtitle}>AREA COGNITIVA 6 - Abilità</h2>
-                <section className={styles.area_cog_style}>
-                    <div style={{display: "flex", alignItems:"center"}}>
-                        <label style={{margin: "5px"}} className={styles.label_style}>{risposteAreaCognitiva_6}</label>
-                    </div>
-                </section>
-                <label className={styles.label_style}>PUNTEGGIO AREA COGNITIVA 6: </label>
-                <input value={punteggioAreaCogn_6} onChange={puntiAreaCognitiva6Handler} className={styles.input_style} type="number" min={0} max={1}></input>
-            </div>
-
             <GenericButton
-                onClick={salvaRisultato}
-                buttonText={"Salva risultati test"}
-                generic_button={true}
-            >
-            </GenericButton>
+                onClick={nextAreaCogn}
+                buttonText={"Prossima Area"}
+                generic_button
+            ></GenericButton>
         </>
     );
 }
