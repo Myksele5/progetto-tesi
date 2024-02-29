@@ -17,6 +17,7 @@ let modal_eliminazione;
 
 const PatientContext = React.createContext({
     listaPazienti: [],
+    listaGiochiDelPaziente: [],
     updateListaPazienti: ()=>{},
     showTabella: null,
     arrayToTable: () => {},
@@ -53,6 +54,7 @@ export function PatientContextProvider(props){
     const [showSearchBoxAndButton, setShowSearchBoxAndButton] = useState(true);
     const [showTabella, setShowTabella] = useState(true);
     const [elencoPazienti, setElencoPazienti] = useState([]);
+    const [listaGiochiDiUnPaziente, setListaGiochiDiUnPaziente] = useState([]);
 
     const [showFormNewPaziente, setShowFormNewPaziente] = useState(false);
     const [showSchedaPaziente, setShowSchedaPaziente] = useState(false);
@@ -122,6 +124,11 @@ export function PatientContextProvider(props){
         let resultPatologie = await getServerMgr().infoPatologie(pazienteee.ID)
         console.log(resultPatologie);
 
+        let resultGiochi =  await getServerMgr().listaGiochiPaziente(pazienteee.ID)
+        console.log(resultGiochi)
+
+        setListaGiochiDiUnPaziente(resultGiochi);
+
         modifica_paziente = 
             <Card
             altroStile
@@ -134,16 +141,9 @@ export function PatientContextProvider(props){
                     cittààà={pazienteee.city}
                     dataaa={pazienteee.dataNascita}
                     attivitààà={pazienteee.attività}
-                    // statisticheee={pazienteee.statistiche}
                     cfff={pazienteee.codiceFiscale}
                     patologiaaa_1={resultPatologie}
-                    // patologiaaa_2={pazienteee.patologia_2}
-                    // patologiaaa_3={pazienteee.patologia_3}
-                    noteee={pazienteee.note}
-                    // medicinaaa_1={medicineFiltrate}
-                    // medicinaaa_2={pazienteee.medicina_2}
-                    // medicinaaa_3={pazienteee.medicina_3}
-                    terapiaaa={pazienteee.terapia}
+                    giochiii={resultGiochi}
                 >
                 </EditPaziente>
             }>
@@ -297,6 +297,9 @@ export function PatientContextProvider(props){
         let resultPatologie = await getServerMgr().infoPatologie(pazientee.ID)
         console.log(resultPatologie);
 
+        let resultGiochi =  await getServerMgr().listaGiochiPaziente(pazientee.ID)
+        console.log(resultGiochi)
+
         // let resultMedicine = await getServerMgr().infoMedicine(pazientee.ID)
         // console.log(resultMedicine);
 
@@ -318,6 +321,7 @@ export function PatientContextProvider(props){
                 informazioniMediche = {resultPatologie}
                 scoreMMSE = {pazientee.resultMMSE}
                 scoreMOCA = {pazientee.resultMOCA}
+                listaGiochi = {resultGiochi}
                 stats_paziente = {pazientee.statistiche}
                 goBackButton = {chiudiSchedaPaziente}
             >
@@ -459,6 +463,7 @@ export function PatientContextProvider(props){
         <PatientContext.Provider
         value={{
             listaPazienti: elencoPazienti,
+            listaGiochiDelPaziente: listaGiochiDiUnPaziente,
             updateListaPazienti: prendiListaPazienti,
             showTabella: showTabella,
             arrayToTable: fromArrayToTablePazienti,

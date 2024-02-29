@@ -85,7 +85,7 @@
 .text_clickable{
     cursor: pointer;
     font-size: 20px;
-    margin: 6px 4px 2px 4px;
+    margin: 6px 8px 2px 8px;
     color: #163172;
 }
 .text_clickable:hover{
@@ -659,6 +659,10 @@
 
     .absolute_buttons_wrapper{
         width: 300px;
+    }
+
+    .text_clickable, .text_clickable_selected{
+        font-size: 18px;
     }
 
     .container_flexible_GENERIC{

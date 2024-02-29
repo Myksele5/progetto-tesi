@@ -70,6 +70,15 @@
     case "deleteGame":
         $query_result = deleteGame($conn);
         break;
+    case "listaGiochiPaziente":
+        $query_result = listaGiochiPaziente($conn);
+        break;
+    case "patientsListForSingleGame":
+        $query_result = patientsListForSingleGame($conn);
+        break;
+    case "saveGameToPatients":
+        $query_result = saveGameToPatients($conn);
+        break;
     case "pswRecovery_checkEmail":
         $query_result = pswRecovery_checkEmail($conn);
         break;
@@ -558,6 +567,61 @@
         $deleteGame->execute();
         
         $deleteGame->bind_result($result);
+        return $result;
+    }
+
+    function listaGiochiPaziente($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $patientID = $dataJson["patientID"];
+        
+        $listGamesPatient = $i_conn->prepare(
+            "SELECT games.gameID, games.nomeGioco, games.tipoGioco, games.livelloGioco FROM bridgeGamesPatients 
+            JOIN games ON bridgeGamesPatients.game_ID = games.gameID 
+            JOIN patients ON bridgeGamesPatients.patient_ID = patients.ID 
+            WHERE patients.ID = ?"
+        );
+        $listGamesPatient->bind_param("i", $patientID);
+        $listGamesPatient->execute();
+        
+        $result = $listGamesPatient->get_result();
+        return $result;
+    }
+    function patientsListForSingleGame($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $gameID = $dataJson["gameID"];
+        
+        $gamePatientsList = $i_conn->prepare("SELECT patient_ID FROM `bridgeGamesPatients` WHERE `game_ID` = ?");
+        $gamePatientsList->bind_param("i", $gameID);
+        $gamePatientsList->execute();
+        
+        $result = $gamePatientsList->get_result();
+        return $result;
+    }
+    
+    function saveGameToPatients($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $gameID = $dataJson["gameID"];
+        $patientsList  = $dataJson["patientsList"];
+        
+        // $gamePatientsList = $i_conn->prepare("SELECT patient_ID FROM `bridgeGamesPatients` WHERE `game_ID` = ?");
+        // $gamePatientsList->bind_param("i", $gameID);
+        // $gamePatientsList->execute();
+
+        foreach($patientsList as $pazGame){
+            $insertPatientGame = $i_conn->prepare(
+                "INSERT INTO `bridgeGamesPatients` (`game_ID`, `patient_ID`) VALUES (?, ?)"
+            );
+            $insertPatientGame->bind_param("ii", $gameID, $pazGame['patient_ID']);
+            $insertPatientGame->execute();
+        }
+        
+        // $result = $gamePatientsList->get_result();
         return $result;
     }
 

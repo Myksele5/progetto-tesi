@@ -10,14 +10,25 @@ function SchedaPaziente(props){
     const [sezioneScheda, setSezioneScheda] = useState('DATI_PERSONALI');
 
     const [informazioniMediche, setInformazioniMediche] = useState([]);
+    const [listaGiochi, setListaGiochi] = useState([]);
 
     useEffect(() => {
-        console.log(props.informazioniMediche)
+        // console.log(props.informazioniMediche)
         if(props.informazioniMediche?.length > 0){
             setInformazioniMediche(props.informazioniMediche) 
         }
         else{
             setInformazioniMediche([]) 
+        }   
+    }, [])
+
+    useEffect(() => {
+        // console.log(props.informazioniMediche)
+        if(props.listaGiochi?.length > 0){
+            setListaGiochi(props.listaGiochi) 
+        }
+        else{
+            setListaGiochi([]) 
         }   
     }, [])
 
@@ -33,10 +44,15 @@ function SchedaPaziente(props){
         setSezioneScheda('SCHEDA_MEDICA');
     }
 
-    function showAttività(){
-        setTitoloScheda('Esercizi/Test');
-        setSezioneScheda('ESERCIZI/TEST');
-        console.log('Mostra ESERCIZI');
+    function showTest(){
+        setTitoloScheda('Test');
+        setSezioneScheda('TEST');
+        console.log('Mostra TEST');
+    }
+    function showGiochi(){
+        setTitoloScheda('Giochi');
+        setSezioneScheda('GIOCHI');
+        console.log('Mostra GIOCHI');
     }
 
     function showStatistiche(){
@@ -56,9 +72,13 @@ function SchedaPaziente(props){
                 setTitoloScheda('Scheda Medica');
                 setSezioneScheda('SCHEDA_MEDICA');
                 break;
-            case "Esercizi/Test":
-                setTitoloScheda('Esercizi/Test');
-                setSezioneScheda('ESERCIZI/TEST');
+            case "Test":
+                setTitoloScheda('Test');
+                setSezioneScheda('TEST');
+                break;
+            case "Giochi":
+                setTitoloScheda('Giochi');
+                setSezioneScheda('GIOCHI');
                 break;
             case "Statistiche":
                 setTitoloScheda('Statistiche');
@@ -78,7 +98,8 @@ function SchedaPaziente(props){
                 <select className={styles.select_section} onChange={selectShow}>
                     <option className={styles.option_style}>Dati Personali</option>
                     <option>Scheda Medica</option>
-                    <option>Esercizi/Test</option>
+                    <option>Test</option>
+                    <option>Giochi</option>
                     <option>Statistiche</option>
                 </select>
                 <div className={styles.wrap_buttons}>
@@ -98,10 +119,17 @@ function SchedaPaziente(props){
                     >
                     </GenericButton>
                     <GenericButton
-                        onClick={showAttività}
-                        is_selected={sezioneScheda === "ESERCIZI/TEST" ? true : false}
+                        onClick={showTest}
+                        is_selected={sezioneScheda === "TEST" ? true : false}
                         generic_button={true}
-                        buttonText='Esercizi/Test'
+                        buttonText='Test'
+                    >
+                    </GenericButton>
+                    <GenericButton
+                        onClick={showGiochi}
+                        is_selected={sezioneScheda === "GIOCHI" ? true : false}
+                        generic_button={true}
+                        buttonText='Giochi'
                     >
                     </GenericButton>
                     <GenericButton
@@ -182,7 +210,7 @@ function SchedaPaziente(props){
                     <hr className={styles.horizontal_line}/>
                 </>
                 }
-                {sezioneScheda === 'ESERCIZI/TEST' &&
+                {sezioneScheda === 'TEST' &&
                 <>
                     {props.scoreMMSE !== null &&
                     <>
@@ -208,8 +236,27 @@ function SchedaPaziente(props){
                     </>
                     }
                     <hr className={styles.horizontal_line}/>
+                </>
+                }
+                {sezioneScheda === 'GIOCHI' &&
+                <>
                     <h1 className={styles.mmse_moca_style}>Esercizi del paziente:</h1>
-                    
+                    {listaGiochi.map((gioco) => (
+                        <div key={gioco.gameID} className={styles.wrapper_horizontal}>
+                            <div className={styles.wrapper_vertical}>
+                                <label style={{padding:"5px"}}>Nome gioco</label>
+                                <p>{gioco.nomeGioco}</p>
+                            </div>
+                            <div className={styles.wrapper_vertical}>
+                                <label style={{padding:"5px"}}>Tipo gioco</label>
+                                <p>{gioco.tipoGioco}</p>
+                            </div>
+                            <div className={styles.wrapper_vertical}>
+                                <label style={{padding:"5px"}}>Livello gioco</label>
+                                <p>{gioco.livelloGioco}</p>
+                            </div>
+                        </div>
+                    ))}
                     <hr className={styles.horizontal_line}/>
                 </>
                 }
@@ -228,7 +275,7 @@ function SchedaPaziente(props){
                 generic_button={true}
                 red_styling
                 onClick={props.goBackButton}
-                buttonText='Go Back'>
+                buttonText='Indietro'>
                 </GenericButton>
             </div>
         }>

@@ -24,8 +24,9 @@ const GameContext = React.createContext({
     salvaRisultatiGiocoPaziente: ()=>{},
     eliminaDomanda: ()=>{},
     salvaDomandaModificata: ()=>{},
-    prendiTuttiGiochiDomande:()=>{}
-
+    prendiTuttiGiochiDomande:()=>{},
+    listaPazientiPerGioco: null,
+    prendiPazientiPerUnSingoloGioco: ()=>{}
 });
 
 export function GameContextProvider(props){
@@ -34,6 +35,7 @@ export function GameContextProvider(props){
     const [elencoGiochi, setElencoGiochi] = useState([])
     const [elencoDomande, setElencoDomande] = useState([]);
     const [domandeModifica, setDomandeModifica] = useState([]);
+    const [patientsListForSingleGame, setPatientsListForSingleGame] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
     const auth_ctx = useContext(AuthContext);
@@ -42,6 +44,7 @@ export function GameContextProvider(props){
         getAllGamesQuestions();
     }, [])
 
+    //RECUPERA TUTTI I GIOCHI E TUTTE LE DOMANDE NEL DB
     async function getAllGamesQuestions(){
         let resultQuestions;
         let resultGames;
@@ -93,6 +96,18 @@ export function GameContextProvider(props){
         }
     }
 
+    //RECUPERA L'ELENCO DEI PAZIENTI CUI E' STATO ASSEGNATO UN DETERMINATO GIOCO
+    async function getPatientsListForSingleGame(gameID){
+        let result = await getServerMgr().patientsListForSingleGame(gameID)
+        console.log(result);
+        if(result){
+            setPatientsListForSingleGame(result);
+        }
+        else{
+            setPatientsListForSingleGame([]);
+        }
+    }
+
     async function salvaRisultati(pazienteID, giocoID, risposteTotali, risposteCorrette, risposteSbagliate){
         console.log("NUMERO DI DOMANDE ---->" + risposteTotali);
         console.log("RISPOSTE CORRETTE ---->" + risposteCorrette);
@@ -113,12 +128,6 @@ export function GameContextProvider(props){
         console.log(dateString);
 
         await getServerMgr().saveGameResults(pazienteID, giocoID, risposteTotali, risposteCorrette, risposteSbagliate, dateString);
-
-        // pazienteDaAggiornare.statistiche.risposteTotali += domandeTotali;
-        // pazienteDaAggiornare.statistiche.risposteCorrette += risposteUtente;
-        // pazienteDaAggiornare.statistiche.risposteSbagliate += (domandeTotali - risposteUtente);
-
-        // patients_ctx.modificaLista(pazienteDaAggiornare);
     }
 
     function formCreateNewGame(){
@@ -146,14 +155,6 @@ export function GameContextProvider(props){
             nuova_domanda.rispSbagliate.wrong_answer_n1, nuova_domanda.rispSbagliate.wrong_answer_n2, nuova_domanda.rispSbagliate.wrong_answer_n3, nuova_domanda.rispSbagliate.wrong_answer_n4,
             nuova_domanda.immagine
         )
-
-        // const listaDomandeGiochiReference = collection(db, `${auth_ctx.utenteLoggato}`, `info`, `domande-quiz`);
-
-        // try {
-        //     await addDoc(listaDomandeGiochiReference, nuova_domanda)
-        // } catch (err) {
-        //     console.error(err)
-        // }
         
         getAllGamesQuestions();
     }
@@ -293,7 +294,9 @@ export function GameContextProvider(props){
             salvaRisultatiGiocoPaziente: salvaRisultati,
             eliminaDomanda: modalDeleteQuestion,
             salvaDomandaModificata: addModifiedQuestionToList,
-            prendiTuttiGiochiDomande: getAllGamesQuestions
+            prendiTuttiGiochiDomande: getAllGamesQuestions,
+            listaPazientiPerGioco: patientsListForSingleGame,
+            prendiPazientiPerUnSingoloGioco: getPatientsListForSingleGame
         }}
         >
             {props.children}

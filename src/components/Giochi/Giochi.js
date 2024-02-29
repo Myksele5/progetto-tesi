@@ -12,9 +12,11 @@ import EditDomanda from "./EditDomanda";
 import GuessTheWord from "./GuessTheWord";
 import ExerciseReflexes from "./ExerciseReflexes";
 import AuthContext from "../../context/auth-context";
+import AssignGameToPatient from "./AssignGameToPatient";
 
 let modifica_gioco;
 let modifica_domanda;
+let assegnazione_gioco;
 let risultati_utente_gioco;
 
 var giocoSvoltoID;
@@ -29,6 +31,7 @@ function Giochi(){
     const [showAddNewGame, setShowAddNewGame] = useState(false);
     const [showEditGame, setShowEditGame] = useState(false);
     const [showEditQuestion, setShowEditQuestion] = useState(false);
+    const [showAssignGameTo, setShowAssignGameTo] = useState(false);
     const [showGameResults, setShowGameResults] = useState(false);
     const [gameObject, setGameObject] = useState(null);
 
@@ -295,6 +298,26 @@ function Giochi(){
         setShowAddNewQuestion(true);
     }
 
+    function formAssignGameTo(game_ID){
+        assegnazione_gioco = 
+            <AssignGameToPatient
+                chiudiSchedaAssegnazione={closeFormAssignGameTo}
+                gameID={game_ID}
+            ></AssignGameToPatient>
+        ;
+
+        setShowSearchBoxAndButton(false);
+        setShowElencoGiochi(false);
+        setShowAssignGameTo(true);
+
+    }
+
+    function closeFormAssignGameTo(){
+        setShowSearchBoxAndButton(true);
+        setShowElencoGiochi(true);
+        setShowAssignGameTo(false);
+    }
+
     return(
         <>
             <h1 className={styles.page_title}>Giochi</h1>
@@ -349,11 +372,14 @@ function Giochi(){
 
                 {showEditQuestion && modifica_domanda}
 
+                {showAssignGameTo && assegnazione_gioco}
+
                 {showElencoGiochi && 
                     <ListaGiochi
                         iniziaGioco={startGame}
                         tipoGioco={tipoGiocoCercato}
                         mostraFormModificaGioco={formEditGame}
+                        mostraSchedaAssegnazione={formAssignGameTo}
                         avvioGiocoChiudoIlResto={avviaGiocoNascondiItems}
                     >
                     </ListaGiochi>

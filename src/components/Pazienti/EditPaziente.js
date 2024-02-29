@@ -41,6 +41,7 @@ function EditPaziente(props){
     const [dataFineTerapia, setDataFineTerapia] = useState("");
 
     const [informazioniMediche, setInformazioniMediche] = useState([]);
+    const [giochiDelPaziente, setGiochiDelPaziente] = useState([]);
 
     useEffect(() => {
         console.log(props.patologiaaa_1)
@@ -49,6 +50,15 @@ function EditPaziente(props){
         }
         else{
             setInformazioniMediche([]) 
+        }   
+    }, [])
+    useEffect(() => {
+        console.log(props.giochiii)
+        if(props.giochiii?.length > 0){
+            setGiochiDelPaziente(props.giochiii) 
+        }
+        else{
+            setGiochiDelPaziente([]) 
         }   
     }, [])
 
@@ -67,6 +77,9 @@ function EditPaziente(props){
                 break;
             case "SCHEDA_MEDICA":
                 setVisualizzaSchermata("SCHEDA_MEDICA");
+                break;
+            case "GIOCHI":
+                setVisualizzaSchermata("GIOCHI");
                 break;
             default:
                 break;
@@ -241,6 +254,13 @@ function EditPaziente(props){
                     }}
                 >
                     SCHEDA MEDICA
+                </h3>
+                <h3 className={visualizzaSchermata === "GIOCHI" ? `${styles.text_clickable_selected}` : `${styles.text_clickable}`}
+                    onClick={(event) => {
+                        selezionaSchermataVisualizzata(event, "GIOCHI")
+                    }}
+                >
+                    GIOCHI
                 </h3>
             </div>
 
@@ -470,6 +490,33 @@ function EditPaziente(props){
                         ))}
                         </section>
                     </div>
+                </>
+                }
+                {visualizzaSchermata === "GIOCHI" &&
+                <>
+                    <h2>Lista giochi</h2>
+                    {patients_ctx.listaGiochiDelPaziente.map((gioco) => (
+                        <div key={gioco.gameID} className={styles.wrapper_horizontal}>
+                            <div className={styles.wrapper_vertical}>
+                                <label style={{padding:"5px"}}>Nome gioco</label>
+                                <p>{gioco.nomeGioco}</p>
+                            </div>
+                            <div className={styles.wrapper_vertical}>
+                                <label style={{padding:"5px"}}>Tipo gioco</label>
+                                <p>{gioco.tipoGioco}</p>
+                            </div>
+                            <div className={styles.wrapper_vertical}>
+                                <label style={{padding:"5px"}}>Livello gioco</label>
+                                <p>{gioco.livelloGioco}</p>
+                            </div>
+                            <DeleteButton
+                                onClick={(event) => {
+                                    event.preventDefault()
+                                }}
+                                stile_alternativo
+                            ></DeleteButton>
+                        </div>
+                    ))}
                 </>
                 }
             </div>

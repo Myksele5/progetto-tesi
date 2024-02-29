@@ -22,6 +22,13 @@ function ListaGiochi(props){
                         <>
                             <div>
                                 <h1 className={styles.game_title}>{lista.nomeGioco}</h1>
+                                <GenericAlternativeButton
+                                    onClick={()=> {
+                                        props.iniziaGioco(lista.tipoGioco, lista.gameID, lista.livelloGioco)
+                                    }}
+                                    buttonText={"Gioca"}
+                                    bottone_piccolo
+                                ></GenericAlternativeButton>
                                 <h3 className={styles.game_subtitle}>Tipologia gioco: <span className={styles.game_type}>{lista.tipoGioco}</span></h3>
                                 <h3 className={styles.game_subtitle}>Livello difficoltà: <span className={styles.game_type}>{lista.livelloGioco}</span></h3>
                                 {/* <h3 className={styles.game_subtitle}>CODICE DEL GIOCO: <span className={styles.game_type}>{lista.codiceGioco}</span></h3> */}
@@ -30,10 +37,11 @@ function ListaGiochi(props){
                             <div className={styles.buttons_wrap}>
                                 <GenericAlternativeButton
                                 onClick={()=> {
-                                    props.iniziaGioco(lista.tipoGioco, lista.gameID, lista.livelloGioco)
+                                    props.mostraSchedaAssegnazione(lista.gameID);
+                                    game_ctx.prendiPazientiPerUnSingoloGioco(lista.gameID)
                                 }}
                                 // alternative_button={true}
-                                buttonText='Avvia Gioco'>
+                                buttonText='Assegna a...'>
                                 </GenericAlternativeButton>
 
                                 <GenericAlternativeButton
@@ -42,7 +50,7 @@ function ListaGiochi(props){
                                     props.mostraFormModificaGioco(lista);
                                 }}
                                 // alternative_button={true}
-                                buttonText='Gestione Gioco'>
+                                buttonText='Modifica gioco'>
                                 </GenericAlternativeButton>
 
                                 <GenericAlternativeButton
@@ -51,7 +59,7 @@ function ListaGiochi(props){
                                 }}
                                 // alternative_button={true}
                                 colore_rosso={true}
-                                buttonText='Elimina Gioco'>
+                                buttonText='Elimina'>
                                 </GenericAlternativeButton>
                             </div>
                         </>

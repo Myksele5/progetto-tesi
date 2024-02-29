@@ -318,6 +318,41 @@ function initServerMgr(cb) {
         }
     }
 
+    serverMgr.listaGiochiPaziente = async (patientID, cb) => {
+        let result = await serverMgr.requestFetchData("listaGiochiPaziente", {patientID: patientID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+    serverMgr.patientsListForSingleGame = async (gameID, cb) => {
+        let result = await serverMgr.requestFetchData("patientsListForSingleGame", {gameID: gameID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
+    serverMgr.saveGameToPatients = async (gameID, patientsList, cb) => {
+        let result = await serverMgr.requestFetchData("saveGameToPatients", {gameID: gameID, patientsList: patientsList})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
     serverMgr.pswRecovery_checkEmail = async (email, cb) => {
         let result = await serverMgr.requestFetchData("pswRecovery_checkEmail", {email: email})
         if(cb) {
