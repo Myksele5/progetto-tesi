@@ -57,28 +57,26 @@ function MainMenu(props){
 
     return(
         <Navbar className={`${styles.wrap_menu}`}>
-            {/* <Container> */}
-                <Navbar.Brand className={`${styles.wrap_image}`}>
-                    <img className={styles.menu_image} src={brain} alt="blue_brain"></img>
-                </Navbar.Brand>
-                <Navbar.Brand className={`${styles.wrap_website_name}`}>
-                    CogniCare
-                </Navbar.Brand>
-            {/* </Container> */}
+            <div className={`${styles.wrap_website_name}`}>
+                CogniCare
+            </div>
+            <div className={`${styles.wrap_image}`}>
+                <img className={styles.menu_image} src={brain} alt="blue_brain"></img>
+            </div>
             <Nav className={`flex-column ${styles.wrap_buttons}`}>
                 <Nav.Item className={`${styles.menu_option} ${highlightMenuButton_PAZIENTI ? styles.menu_option_SELECTED : ''}`} onClick={goToPazienti}>
                     <img className={styles.image_option} src={patient} alt="pazienti"></img>
                     Pazienti
                 </Nav.Item>
-                <Nav.Item className={`${styles.menu_option}`} onClick={goToPatologie}>
+                <Nav.Item className={`${styles.menu_option} ${highlightMenuButton_PATOLOGIE ? styles.menu_option_SELECTED : ''}`} onClick={goToPatologie}>
                     <img className={styles.image_option} src={dialogue} alt="patologie"></img>
                     Patologie
                 </Nav.Item>
-                <Nav.Item className={`${styles.menu_option}`} onClick={goToAttività}>
+                <Nav.Item className={`${styles.menu_option} ${highlightMenuButton_TEST ? styles.menu_option_SELECTED : ''}`} onClick={goToAttività}>
                     <img className={styles.image_option} src={activity} alt="tests"></img>
                     MMSE/MoCA
                 </Nav.Item>
-                <Nav.Item className={`${styles.menu_option}`} onClick={goToGiochi}>
+                <Nav.Item className={`${styles.menu_option} ${highlightMenuButton_GIOCHI ? styles.menu_option_SELECTED : ''}`} onClick={goToGiochi}>
                     <img className={styles.image_option} src={game} alt="giochi"></img>
                     Giochi
                 </Nav.Item>
