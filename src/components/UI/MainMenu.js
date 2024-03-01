@@ -63,7 +63,7 @@ function MainMenu(props){
             <div className={`${styles.wrap_image}`}>
                 <img className={styles.menu_image} src={brain} alt="blue_brain"></img>
             </div>
-            <Nav className={`flex-column ${styles.wrap_buttons}`}>
+            <Nav className={`${styles.wrap_buttons}`}>
                 <Nav.Item className={`${styles.menu_option} ${highlightMenuButton_PAZIENTI ? styles.menu_option_SELECTED : ''}`} onClick={goToPazienti}>
                     <img className={styles.image_option} src={patient} alt="pazienti"></img>
                     Pazienti

@@ -39,6 +39,7 @@
 
 .wrap_buttons{
     width: 100%;
+    flex-direction: column !important;
     /* margin-top: 20px; */
     /* align-items: flex-end; */
 }
@@ -54,7 +55,7 @@
 
 .menu_option{
     width: 100%;
-    min-height: 80px;
+    min-height: 10vh;
     font-size: 22px;
     color: white;
     display: flex;
@@ -155,6 +156,13 @@
         height: 100px;
         flex-direction: row;
     }
+
+    .wrap_buttons{
+        width: 100%;
+        flex-direction: row !important;
+        /* margin-top: 20px; */
+        /* align-items: flex-end; */
+    }
     .menu_image{
         display: none;
     }
@@ -226,9 +234,9 @@
         margin: 10px 0px;
     }
 
-    .menu_option{
+    /* .menu_option{
         height: 80px;
-    }
+    } */
 }
 @media screen and (max-height: 620px){
     .menu_image{
@@ -239,15 +247,15 @@
         margin: 10px 0px;
     }
 
-    .menu_option{
+    /* .menu_option{
         height: 70px;
-    }
+    } */
 }
 
 @media screen and (max-height: 559px){
-    .menu_option{
+    /* .menu_option{
         height: 70px;
-    }
+    } */
 
     .utente_loggato{
         font-size: 14px;
