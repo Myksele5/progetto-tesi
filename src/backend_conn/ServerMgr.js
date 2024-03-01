@@ -140,7 +140,7 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.updatePaziente = async (nome, cognome, city, codiceFiscale, dataNascita, informazioniMediche, ID, cb) => {
+    serverMgr.updatePaziente = async (nome, cognome, city, codiceFiscale, dataNascita, informazioniMediche, listaGiochi, ID, cb) => {
         let result = await serverMgr.requestFetchData("updatePaziente", {
             nome: nome,
             cognome: cognome,
@@ -148,6 +148,7 @@ function initServerMgr(cb) {
             codiceFiscale: codiceFiscale,
             dataNascita: dataNascita,
             informazioniMediche: informazioniMediche,
+            listaGiochi: listaGiochi,
             ID: ID
             // statistiche: statistiche
         })

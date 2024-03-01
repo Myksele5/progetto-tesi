@@ -167,6 +167,16 @@ function EditPaziente(props){
         })
         setInformazioniMediche(arrayTemporaneo);
     }
+    const eliminaGioco = (id) => {
+        let arrayTemporaneo = [];
+
+        giochiDelPaziente.map((gioco) => {
+            if(gioco.gameID !== id){
+                arrayTemporaneo.push(gioco)
+            }
+        })
+        setGiochiDelPaziente(arrayTemporaneo);
+    }
 
     async function formModifyHandler(event){
         event.preventDefault();
@@ -225,12 +235,14 @@ function EditPaziente(props){
             codiceFiscale: CFModifica.toUpperCase(),
             dataNascita: dateString,
             informazioniMediche: informazioniMediche,
+            listaGiochi: giochiDelPaziente,
             ID: props.iddd
         };
 
         let pazienteSalvatoID;
         pazienteSalvatoID = await getServerMgr().updatePaziente(
-            datiPaziente.nome, datiPaziente.cognome, datiPaziente.city, datiPaziente.codiceFiscale, datiPaziente.dataNascita, datiPaziente.informazioniMediche, datiPaziente.ID
+            datiPaziente.nome, datiPaziente.cognome, datiPaziente.city, datiPaziente.codiceFiscale, datiPaziente.dataNascita, 
+            datiPaziente.informazioniMediche, datiPaziente.listaGiochi, datiPaziente.ID
         );
         // console.log("pazienteID--> " + pazienteSalvatoID)
         patients_ctx.modificaLista();
@@ -495,23 +507,31 @@ function EditPaziente(props){
                 {visualizzaSchermata === "GIOCHI" &&
                 <>
                     <h2>Lista giochi</h2>
-                    {patients_ctx.listaGiochiDelPaziente.map((gioco) => (
+                    {giochiDelPaziente.map((gioco) => (
                         <div key={gioco.gameID} className={styles.wrapper_horizontal}>
-                            <div className={styles.wrapper_vertical}>
-                                <label style={{padding:"5px"}}>Nome gioco</label>
-                                <p>{gioco.nomeGioco}</p>
-                            </div>
-                            <div className={styles.wrapper_vertical}>
-                                <label style={{padding:"5px"}}>Tipo gioco</label>
-                                <p>{gioco.tipoGioco}</p>
-                            </div>
-                            <div className={styles.wrapper_vertical}>
-                                <label style={{padding:"5px"}}>Livello gioco</label>
-                                <p>{gioco.livelloGioco}</p>
-                            </div>
+                            <CardSmall
+                                children={
+                                    <div className={styles.wrapper_horizontal}>
+                                        <div className={styles.wrapper_vertical}>
+                                            <label style={{padding:"5px"}}>Nome gioco</label>
+                                            <p style={{padding:"5px"}}>{gioco.nomeGioco}</p>
+                                        </div>
+                                        <div className={styles.wrapper_vertical}>
+                                            <label style={{padding:"5px"}}>Tipo gioco</label>
+                                            <p style={{padding:"5px"}}>{gioco.tipoGioco}</p>
+                                        </div>
+                                        <div className={styles.wrapper_vertical}>
+                                            <label style={{padding:"5px"}}>Livello gioco</label>
+                                            <p style={{padding:"5px"}}>{gioco.livelloGioco}</p>
+                                        </div>
+                                    </div>
+                                }
+                            ></CardSmall>
+                            
                             <DeleteButton
                                 onClick={(event) => {
                                     event.preventDefault()
+                                    eliminaGioco(gioco.gameID)
                                 }}
                                 stile_alternativo
                             ></DeleteButton>

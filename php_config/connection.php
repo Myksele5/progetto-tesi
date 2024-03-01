@@ -365,6 +365,7 @@
         $codiceFiscale = $dataJson["codiceFiscale"];
         $dataNascita = $dataJson["dataNascita"];
         $informazioniMediche = $dataJson["informazioniMediche"];
+        $listaGiochi = $dataJson["listaGiochi"];
         $ID = $dataJson["ID"];
         
         $updatePatient = $i_conn->prepare(
@@ -387,15 +388,19 @@
             $insertNewInfoMediche->execute();
         }
 
-        // $deleteMedicinePatient = $i_conn->prepare("DELETE FROM `listaMedicine` WHERE `listaMedicine`.`pazienteID` = ?");
-        // $deleteMedicinePatient->bind_param("i", $ID);
-        // $deleteMedicinePatient->execute();
-        // $listMedicine = array_column($medicine, 'medicina');
-        // foreach($listMedicine as $mdcn){
-        //     $insertMedicinePatient = $i_conn->prepare("INSERT INTO `listaMedicine` (`pazienteID`, `medicina`) VALUES (?, ?)");
-        //     $insertMedicinePatient->bind_param("is", $ID, $mdcn);
-        //     $insertMedicinePatient->execute();
-        // }
+        $deleteGamePatient = $i_conn->prepare("DELETE FROM `bridgeGamesPatients` WHERE `bridgeGamesPatients`.`patient_ID` = ?");
+        $deleteGamePatient->bind_param("i", $ID);
+        $deleteGamePatient->execute();
+
+        foreach($listaGiochi as $gioco){
+            $insertNewGame = $i_conn->prepare(
+                "INSERT INTO `bridgeGamesPatients` (`game_ID`, `patient_ID`) 
+                VALUES (?, ?)"
+            );
+            $insertNewGame->bind_param("ii", $gioco['gameID'], $ID);
+            $insertNewGame->execute();
+        }
+
         return $result;
     }
 

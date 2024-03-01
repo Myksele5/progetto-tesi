@@ -175,34 +175,34 @@ function SchedaPaziente(props){
                         <>
                             
                             <CardSmall
-                                    children={
-                                        <div className={styles.container_flexible_GENERIC}>
-                                            {/* <h5>{oggetto.patologiaID}</h5> */}
+                                children={
+                                    <div className={styles.container_flexible_GENERIC}>
+                                        {/* <h5>{oggetto.patologiaID}</h5> */}
+                                        <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                            <label className={`${styles.sintesiMedica_label_PATOLOGIA}`}>Patologia:</label>
+                                            <h5 className={`${styles.sintesiMedica_content_PATOLOGIA}`}>{objInfo.nomePatologia}</h5>
+                                        </div>
+                                        <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                            <label className={`${styles.sintesiMedica_label_TERAPIA}`}>Terapia:</label>
+                                            <h5 className={`${styles.sintesiMedica_content_TERAPIA}`}>{objInfo.terapia}</h5>
+                                        </div>
+                                        <div className={styles.wrapper_horizontal}>
                                             <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-                                                <label className={`${styles.sintesiMedica_label_PATOLOGIA}`}>Patologia:</label>
-                                                <h5 className={`${styles.sintesiMedica_content_PATOLOGIA}`}>{objInfo.nomePatologia}</h5>
+                                                <label className={`${styles.sintesiMedica_label_DATA}`}>Data inizio:</label>
+                                                <h5 className={`${styles.sintesiMedica_content_DATA}`}>{objInfo.dataInizio}</h5>
                                             </div>
                                             <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-                                                <label className={`${styles.sintesiMedica_label_TERAPIA}`}>Terapia:</label>
-                                                <h5 className={`${styles.sintesiMedica_content_TERAPIA}`}>{objInfo.terapia}</h5>
-                                            </div>
-                                            <div className={styles.wrapper_horizontal}>
-                                                <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-                                                    <label className={`${styles.sintesiMedica_label_DATA}`}>Data inizio:</label>
-                                                    <h5 className={`${styles.sintesiMedica_content_DATA}`}>{objInfo.dataInizio}</h5>
-                                                </div>
-                                                <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-                                                    <label className={`${styles.sintesiMedica_label_DATA}`}>Data fine:</label>
-                                                    <h5 className={`${styles.sintesiMedica_content_DATA}`}>{objInfo.dataFine}</h5>
-                                                </div>
-                                            </div>
-                                            <div style={{borderRight: "none"}} className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-                                                <label className={`${styles.sintesiMedica_label_NOTE}`}>Note:</label>
-                                                <h5 className={`${styles.sintesiMedica_content_NOTE}`}>{objInfo.note}</h5>
+                                                <label className={`${styles.sintesiMedica_label_DATA}`}>Data fine:</label>
+                                                <h5 className={`${styles.sintesiMedica_content_DATA}`}>{objInfo.dataFine}</h5>
                                             </div>
                                         </div>
-                                    }
-                                ></CardSmall>
+                                        <div style={{borderRight: "none"}} className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                            <label className={`${styles.sintesiMedica_label_NOTE}`}>Note:</label>
+                                            <h5 className={`${styles.sintesiMedica_content_NOTE}`}>{objInfo.note}</h5>
+                                        </div>
+                                    </div>
+                                }
+                            ></CardSmall>
                         </>
                         ))
                     }
@@ -242,7 +242,8 @@ function SchedaPaziente(props){
                 <>
                     <h1 className={styles.mmse_moca_style}>Esercizi del paziente:</h1>
                     {listaGiochi.map((gioco) => (
-                        <div key={gioco.gameID} className={styles.wrapper_horizontal}>
+                    <>
+                        {/* <div key={gioco.gameID} className={styles.wrapper_horizontal}>
                             <div className={styles.wrapper_vertical}>
                                 <label style={{padding:"5px"}}>Nome gioco</label>
                                 <p>{gioco.nomeGioco}</p>
@@ -255,7 +256,28 @@ function SchedaPaziente(props){
                                 <label style={{padding:"5px"}}>Livello gioco</label>
                                 <p>{gioco.livelloGioco}</p>
                             </div>
-                        </div>
+                        </div> */}
+                        <CardSmall
+                            children={
+                                <div className={styles.container_flexible_GENERIC}>
+                                    {/* <h5>{oggetto.patologiaID}</h5> */}
+                                    <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                        <label style={{padding:"5px"}}>Nome gioco</label>
+                                        <p>{gioco.nomeGioco}</p>
+                                    </div>
+                                    <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                        <label style={{padding:"5px"}}>Tipo gioco</label>
+                                        <p>{gioco.tipoGioco}</p>
+                                    </div>
+                                    
+                                    <div style={{borderRight: "none"}} className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
+                                        <label style={{padding:"5px"}}>Livello gioco</label>
+                                        <p>{gioco.livelloGioco}</p>
+                                    </div>
+                                </div>
+                            }
+                        ></CardSmall>
+                    </>
                     ))}
                     <hr className={styles.horizontal_line}/>
                 </>
