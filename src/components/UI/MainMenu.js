@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom';
 import { useContext, useState } from "react";
 import AuthContext from "../../context/auth-context";
 import PatientContext from "../../context/patients-context";
+import { Container, Nav, Navbar } from "react-bootstrap";
 
 function MainMenu(props){
     const auth_ctx = useContext(AuthContext);
@@ -55,55 +56,76 @@ function MainMenu(props){
     }
 
     return(
-        <div className={styles.wrap_menu}>
-
-            <img className={styles.menu_image} src={brain} alt="blue_brain"></img>
-
-            <div className={styles.wrap_profilo}>
-                <div className={styles.wrapper_generico}>
-                    <p className={styles.utente_loggato}>{auth_ctx.utenteLoggato}</p>
-                    <GenericButton
-                    onClick={auth_ctx.onLogoutClick}
-                    buttonText={'Log Out'}
-                    small_button={true}
-                    red_styling
-                    >
-                    </GenericButton>
-                </div>
-            </div>
-
-            {(auth_ctx.tipoAccount === "Dottore" || auth_ctx.tipoAccount === "Dottoressa") && 
-                <button onClick = {goToPazienti} className={`${styles.menu_option} ${highlightMenuButton_PAZIENTI ? styles.menu_option_SELECTED : ''}`}>
+        <Navbar className={`${styles.wrap_menu}`}>
+            {/* <Container> */}
+                <Navbar.Brand className={`${styles.wrap_image}`}>
+                    <img className={styles.menu_image} src={brain} alt="blue_brain"></img>
+                </Navbar.Brand>
+                <Navbar.Brand className={`${styles.wrap_website_name}`}>
+                    CogniCare
+                </Navbar.Brand>
+            {/* </Container> */}
+            <Nav className={`flex-column ${styles.wrap_buttons}`}>
+                <Nav.Item className={`${styles.menu_option} ${highlightMenuButton_PAZIENTI ? styles.menu_option_SELECTED : ''}`} onClick={goToPazienti}>
                     <img className={styles.image_option} src={patient} alt="pazienti"></img>
-                    <p className={`${styles.text_option} ${highlightMenuButton_PAZIENTI ? styles.text_option_SELECTED : ''}`}>Pazienti</p>
-                </button>
-            }
+                    Pazienti
+                </Nav.Item>
+                <Nav.Item className={`${styles.menu_option}`} onClick={goToPatologie}>
+                    <img className={styles.image_option} src={dialogue} alt="patologie"></img>
+                    Patologie
+                </Nav.Item>
+                <Nav.Item className={`${styles.menu_option}`} onClick={goToAttività}>
+                    <img className={styles.image_option} src={activity} alt="tests"></img>
+                    MMSE/MoCA
+                </Nav.Item>
+                <Nav.Item className={`${styles.menu_option}`} onClick={goToGiochi}>
+                    <img className={styles.image_option} src={game} alt="giochi"></img>
+                    Giochi
+                </Nav.Item>
+            </Nav>
+        </Navbar>
+        // <div className={styles.wrap_menu}>
+
+        //     <img className={styles.menu_image} src={brain} alt="blue_brain"></img>
+
+        //     <div className={styles.wrap_profilo}>
+        //         <div className={styles.wrapper_generico}>
+        //             <p className={styles.utente_loggato}>{auth_ctx.utenteLoggato}</p>
+        //             <GenericButton
+        //             onClick={auth_ctx.onLogoutClick}
+        //             buttonText={'Log Out'}
+        //             small_button={true}
+        //             red_styling
+        //             >
+        //             </GenericButton>
+        //         </div>
+        //     </div>
+
+        //     {(auth_ctx.tipoAccount === "Dottore" || auth_ctx.tipoAccount === "Dottoressa") && 
+        //         <button onClick = {goToPazienti} className={`${styles.menu_option} ${highlightMenuButton_PAZIENTI ? styles.menu_option_SELECTED : ''}`}>
+        //             <img className={styles.image_option} src={patient} alt="pazienti"></img>
+        //             <p className={`${styles.text_option} ${highlightMenuButton_PAZIENTI ? styles.text_option_SELECTED : ''}`}>Pazienti</p>
+        //         </button>
+        //     }
             
-            <button onClick = {goToPatologie} className={`${styles.menu_option} ${highlightMenuButton_PATOLOGIE ? styles.menu_option_SELECTED : ''}`}>
-                <img className={styles.image_option} src={dialogue} alt="patologie"></img>
-                <p className={`${styles.text_option} ${highlightMenuButton_PATOLOGIE ? styles.text_option_SELECTED : ''}`}>Patologie</p>
-            </button>
+        //     <button onClick = {goToPatologie} className={`${styles.menu_option} ${highlightMenuButton_PATOLOGIE ? styles.menu_option_SELECTED : ''}`}>
+        //         <img className={styles.image_option} src={dialogue} alt="patologie"></img>
+        //         <p className={`${styles.text_option} ${highlightMenuButton_PATOLOGIE ? styles.text_option_SELECTED : ''}`}>Patologie</p>
+        //     </button>
 
-            <button onClick = {goToAttività} className={`${styles.menu_option} ${highlightMenuButton_TEST ? styles.menu_option_SELECTED : ''}`}>
-                <img className={styles.image_option} src={activity} alt="tests"></img>
-                <p className={`${styles.text_option} ${highlightMenuButton_TEST ? styles.text_option_SELECTED : ''}`}>MMSE/MOCA</p>
-            </button>
+        //     <button onClick = {goToAttività} className={`${styles.menu_option} ${highlightMenuButton_TEST ? styles.menu_option_SELECTED : ''}`}>
+        //         <img className={styles.image_option} src={activity} alt="tests"></img>
+        //         <p className={`${styles.text_option} ${highlightMenuButton_TEST ? styles.text_option_SELECTED : ''}`}>MMSE/MOCA</p>
+        //     </button>
 
-            <button onClick = {goToGiochi} className={`${styles.menu_option} ${highlightMenuButton_GIOCHI ? styles.menu_option_SELECTED : ''}`}>
-                <img className={styles.image_option} src={game} alt="giochi"></img>
-                <p className={`${styles.text_option} ${highlightMenuButton_GIOCHI ? styles.text_option_SELECTED : ''}`}>Giochi</p>
-            </button>
+        //     <button onClick = {goToGiochi} className={`${styles.menu_option} ${highlightMenuButton_GIOCHI ? styles.menu_option_SELECTED : ''}`}>
+        //         <img className={styles.image_option} src={game} alt="giochi"></img>
+        //         <p className={`${styles.text_option} ${highlightMenuButton_GIOCHI ? styles.text_option_SELECTED : ''}`}>Giochi</p>
+        //     </button>
 
 
-        </div>
+        // </div>
     );
 }
-
-// function MainMenu(props){
-
-//     return(
-//         ReactDOM.createPortal(<MainMenuToPort showSchermata={props.showSchermata} makeUserLogout={props.makeUserLogout}></MainMenuToPort>, document.getElementById('main_menu'))
-//     );
-// }
 
 export default MainMenu;

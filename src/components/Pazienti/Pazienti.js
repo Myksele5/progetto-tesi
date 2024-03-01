@@ -33,9 +33,6 @@ function Pazienti(){
 
     return(
         <>
-
-            <h1 className={styles.page_title}>Lista Pazienti</h1>
-
             {patients_ctx.showBarraRicercaBottone && 
                 <div className={styles.wrap_boxes}>
                     <select onChange={(event) => {
@@ -65,6 +62,8 @@ function Pazienti(){
                     </SearchBox>
                 </div>
             }
+
+            <h1 className={styles.page_title}>Lista Pazienti</h1>
 
             <div className={styles.wrapper_generico}>
 

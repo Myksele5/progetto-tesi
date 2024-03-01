@@ -15,6 +15,7 @@ import { getServerMgr } from './backend_conn/ServerMgr';
 import { TestsContextProvider } from './context/tests-context';
 import Patologie from './components/Patologie/Patologie';
 import { PatologiesContextProvider } from './context/patologies-context';
+import { Nav } from 'react-bootstrap';
 
 function App() {
   const [singletonHasLoaded, setSingletonHasLoaded] = useState(false);

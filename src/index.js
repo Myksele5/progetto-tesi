@@ -5,6 +5,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { AuthContextProvider } from './context/auth-context';
 import RoutingNew from './Routing';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
