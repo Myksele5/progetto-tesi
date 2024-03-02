@@ -56,6 +56,8 @@ export function PatientContextProvider(props){
     const [elencoPazienti, setElencoPazienti] = useState([]);
     const [listaGiochiDiUnPaziente, setListaGiochiDiUnPaziente] = useState([]);
 
+    const [patientButtons, setPatientButtons] = useState();
+
     const [showFormNewPaziente, setShowFormNewPaziente] = useState(false);
     const [showSchedaPaziente, setShowSchedaPaziente] = useState(false);
     const [showModificaPaziente, setShowModificaPaziente] = useState(false);
@@ -217,14 +219,16 @@ export function PatientContextProvider(props){
                 )){
                 return(
                     <>
-                        <tr key={elencoPazienti.ID}>
+                        <tr onClick={() => {
+                            showButtonsForPatient(elencoPazienti.ID)
+                        }} key={elencoPazienti.ID}>
                             <td className={`${someStyles['dati_tabella']} ${someStyles['nome']}`}>{elencoPazienti.nome}</td>
                             <td className={`${someStyles['dati_tabella']} ${someStyles['cognome']}`}>{elencoPazienti.cognome}</td>
                             <td className={`${someStyles['dati_tabella']} ${someStyles['città']}`}>{elencoPazienti.city}</td>
                             <td className={`${someStyles['dati_tabella']} ${someStyles['data']}`}>{elencoPazienti.dataNascita}</td>
                             <td className={`${someStyles['dati_tabella']} ${someStyles['codicefiscale']}`}>{elencoPazienti.codiceFiscale}</td>
                             {/* <td className={someStyles.dati_tabella}>{arrayDummyPazienti.attività}</td> */}
-                            <td className={`${someStyles['dati_tabella']} ${someStyles['opzioni']}`}>
+                            {/* <td className={`${someStyles['dati_tabella']} ${someStyles['opzioni']}`}>
                                 <DetailsButton
                                 onClick={() => {
                                     cliccaRiga(elencoPazienti);
@@ -242,34 +246,55 @@ export function PatientContextProvider(props){
                                     confermaEliminazionePaziente(elencoPazienti.ID, elencoPazienti.nome, elencoPazienti.cognome);
                                 }}>
                                 </DeleteButton>
-                            </td>
+                            </td> */}
                             
                         </tr>
+
+                        {patientButtons === elencoPazienti.ID &&
+                            <tr>
+                                <td className={someStyles.buttons_row} colSpan={5}>
+                                    <DetailsButton
+                                    onClick={() => {
+                                        cliccaRiga(elencoPazienti);
+                                    }}>
+                                    </DetailsButton>
+                
+                                    {/* <EditButton
+                                    onClick={() =>{
+                                        modificaDatiPaziente(elencoPazienti);
+                                    }}>
+                                    </EditButton>
+                                    
+                                    <DeleteButton
+                                    onClick={() => {
+                                        confermaEliminazionePaziente(elencoPazienti.ID, elencoPazienti.nome, elencoPazienti.cognome);
+                                    }}>
+                                    </DeleteButton> */}
+                                </td>
+                            </tr>
+                        }
                         
-                        <tr className={someStyles.mobile_row}>
+                        {/* <tr className={someStyles.mobile_row}>
                             <td style={{width: "200px", height: "30px", padding: "0", borderBottom: "4px solid #D6E4F0"}}>
-                                {/* <button style={{width: "100%", height: "100%", margin: "0", padding: "0"}}>DETTAGLI</button> */}
                                 <DetailsButton
                                 onClick={() => {
                                     cliccaRiga(elencoPazienti);
                                 }}></DetailsButton>
                             </td>
                             <td style={{width: "200px", height: "30px", padding: "0", borderBottom: "4px solid #D6E4F0"}}>
-                                {/* <button style={{width: "100%", height: "100%", margin: "0", padding: "0"}}>MODIFICA</button> */}
                                 <EditButton
                                 onClick={() =>{
                                     modificaDatiPaziente(elencoPazienti);
                                 }}></EditButton>
                             </td>
                             <td style={{width: "200px", height: "30px", padding: "0", borderBottom: "4px solid #D6E4F0"}}>
-                                {/* <button style={{width: "100%", height: "100%", margin: "0", padding: "0"}}>ELIMINA</button> */}
                                 <DeleteButton
                                 onClick={() => {
                                     confermaEliminazionePaziente(elencoPazienti.ID, elencoPazienti.nome, elencoPazienti.cognome);
                                 }}></DeleteButton>
                             </td>
                             
-                        </tr>
+                        </tr> */}
                     </>
                 );
             }
@@ -280,6 +305,15 @@ export function PatientContextProvider(props){
             return(
                 <p>Non ci sono pazienti da mostrare. Creane uno</p>
             );
+        }
+    }
+
+    function showButtonsForPatient(pazienteID){
+        if(pazienteID === patientButtons){
+            setPatientButtons();
+        }
+        else{
+            setPatientButtons(pazienteID)
         }
     }
 

@@ -11,13 +11,13 @@ function TabellaPazienti(props){
             <table className={styles.table_wrapper}>
                 <thead>
                     <tr>
-                        <th onClick={patients_ctx.compareByName} className={`${styles['intestazione_tabella']} ${styles['nome']}`}>NOME</th>
-                        <th onClick={patients_ctx.compareBySurname} className={`${styles['intestazione_tabella']} ${styles['cognome']}`}>COGNOME</th>
+                        <th className={`${styles['intestazione_tabella']} ${styles['nome']}`}>NOME</th>
+                        <th className={`${styles['intestazione_tabella']} ${styles['cognome']}`}>COGNOME</th>
                         <th className={`${styles['intestazione_tabella']} ${styles['città']}`}>CITTA' DI NASCITA</th>
                         <th className={`${styles['intestazione_tabella']} ${styles['data']}`}>DATA DI NASCITA</th>
-                        <th onClick={patients_ctx.compareByCF} className={`${styles['intestazione_tabella']} ${styles['codicefiscale']}`}>CODICE FISCALE</th>
+                        <th className={`${styles['intestazione_tabella']} ${styles['codicefiscale']}`}>CODICE FISCALE</th>
                         {/* <th className={styles.intestazione_tabella}>ATTIVITÀ</th> */}
-                        <th className={`${styles['intestazione_tabella']} ${styles['opzioni']}`}>OPZIONI</th>
+                        {/* <th className={`${styles['intestazione_tabella']} ${styles['opzioni']}`}>OPZIONI</th> */}
                     </tr>
                 </thead>
                 <tbody>

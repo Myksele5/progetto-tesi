@@ -4,7 +4,8 @@ import detailsForm from '../Images/details.png';
 function DetailsButton(props){
     return(
         <button onClick={props.onClick} className={styles.details_button}>
-            <img src={detailsForm} alt='editPencil' className={styles.details_image}></img>
+            {/* <img src={detailsForm} alt='editPencil' className={styles.details_image}></img> */}
+            Scheda Paziente
         </button>
     );
 }

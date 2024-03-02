@@ -6,7 +6,8 @@ function DeleteButton(props){
 
     return(
         <button onClick={props.onClick} className={classiStile}>
-            <img src={trashCan} alt='trash-can' className={styles.trash_image}></img>
+            {/* <img src={trashCan} alt='trash-can' className={styles.trash_image}></img> */}
+            Elimina
         </button>
     );
 }
