@@ -7,6 +7,7 @@ import PatientContext from "../../context/patients-context";
 import CardSmall from "../UI/CardSmall";
 import PatologiesContext from "../../context/patologies-context";
 import DeleteButton from "../UI/DeleteButton";
+import { Collapse } from "react-bootstrap";
 
 function AddPaziente(props){
     const auth_ctx = useContext(AuthContext);
@@ -57,7 +58,58 @@ function AddPaziente(props){
     }, [informazioniMediche])
 
     const stepSuccessivo = () => {
-        setStepAggiuntaPaziente((nextStep) => (nextStep + 1))
+        var dateee = new Date(enteredData);
+
+        if(stepAggiuntaPaziente === 1){
+            if(enteredNome.trim().length < 1 
+            || enteredCognome.trim().length < 1 
+            || enteredCittà.trim().length < 1 
+            || isNaN(dateee)
+            || enteredCF.trim().length < 16 || enteredCF.trim().length > 16){
+                if(enteredNome.trim().length < 1){
+                    setValidNome(false);
+                    // console.log(validNome);
+                }
+                else{
+                    setValidNome(true);
+                }
+                if(enteredCognome.trim().length < 1){
+                    setValidCognome(false);
+                }
+                else{
+                    setValidCognome(true);
+                }
+                if(enteredCittà.trim().length < 1){
+                    setValidCittà(false);
+                }
+                else{
+                    setValidCittà(true);
+                }
+                if(isNaN(dateee)){
+                    setValidData(false);
+                }
+                else{
+                    setValidData(true);
+                }
+                if(enteredCF.trim().length < 16 || enteredCF.trim().length > 16){
+                    setValidCF(false);
+                }
+                else{
+                    setValidCF(true);
+                }
+                return;
+            }
+            else{
+                var day = dateee.toLocaleString('it-IT', {day: '2-digit'})
+                var month = dateee.toLocaleString('it-IT', {month: '2-digit'})
+                var year = dateee.getFullYear();
+        
+                let dateString = `${year}-${month}-${day}`;
+                setEnteredData(dateString);
+                setStepAggiuntaPaziente((nextStep) => (nextStep + 1))
+            }
+        }
+        
     }
 
     const stepPrecedente = () => {
@@ -296,24 +348,30 @@ function AddPaziente(props){
                 {stepAggiuntaPaziente === 1 && 
                 <>
                     <h1 className={styles.title_form}>Inserisci i dati del paziente</h1>
-                    <div className={styles.wrapper_horizontal}>
-                        <section className={styles.section_style_FORM}>
+                    <div className={styles.wrapper_vertical}>
+                        {/* <section className={styles.section_style_FORM}> */}
 
                             <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome:</label>
                             <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNome} onChange={nomeChangeHandler}></input>
+                            {!validNome && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un nome valido</div>}
 
                             <label className={`${styles.label_style} ${!validCognome ? styles.invalid : ""}`}>Cognome:</label>
                             <input className={`${styles.input_style} ${!validCognome ? styles.invalid : ""}`} type="text" value={enteredCognome} onChange={cognomeChangeHandler}></input>
+                            {!validCognome && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un cognome valido</div>}
 
                             <label className={`${styles.label_style} ${!validCittà ? styles.invalid : ""}`}>Città di nascita:</label>
                             <input className={`${styles.input_style} ${!validCittà ? styles.invalid : ""}`} type="text" value={enteredCittà} onChange={cittàChangeHandler}></input>
+                            {!validCittà && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una città esistente</div>}
 
                             <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}>Data di nascita:</label>
                             <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" min="01-01-1800" max="31-31-2400" value={enteredData} onChange={dataNascitaChangeHandler}></input>
+                            {!validData && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una data valida</div>}
 
                             <label className={`${styles.label_style} ${!validCF ? styles.invalid : ""}`}>Codice Fiscale:</label>
                             <input className={`${styles.input_style} ${!validCF ? styles.invalid : ""}`} type="text" value={enteredCF} onChange={CFChangeHandler}></input>
-                        </section>
+                            {!validCF && <div style={{width: "100%", color: "red", textAlign: "center"}}>Il codice fiscale deve contenere 16 caratteri</div>}
+
+                        {/* </section> */}
                     </div>
                     <hr className={styles.horizontal_line}></hr>
                     <div className={styles.wrapper_horizontal}>
@@ -321,7 +379,7 @@ function AddPaziente(props){
                             onClick={hideForm}
                             generic_button={true}
                             red_styling
-                            buttonText='Torna indietro'>
+                            buttonText='Indietro'>
                         </GenericButton>
                         <GenericButton 
                             onClick={(event) => {
@@ -340,6 +398,7 @@ function AddPaziente(props){
                 {stepAggiuntaPaziente === 2 &&
                 <>
                     <h1 className={styles.title_form}>Scheda Medica</h1>
+                    <div className={styles.wrapper_vertical}>
                     <h2 className={styles.text_subtitle}>Seleziona una patologia</h2>
                     <select value={patologiaSelezionata} onChange={patologiaSelezionataChangeHandler} className={styles.select_style}>
                         <option hidden>--seleziona--</option>
@@ -349,7 +408,7 @@ function AddPaziente(props){
                     </select>
                     {Object.keys(patologies_ctx.patologiaSelezionataFormPaziente).length > 0 &&
                         <>
-                        <div className={styles.absolute_buttons_wrapper}>
+                        <div className={styles.buttons_wrapper}>
                             <GenericButton
                                 onClick={() => {
                                     setPatologiaSelezionata("--seleziona--");
@@ -369,92 +428,79 @@ function AddPaziente(props){
                                 generic_button
                             ></GenericButton>
                         </div>
-                        <div className={styles.absolute_div}>                   
+                        <div className={styles.wrapper_vertical}>                   
                             {patologies_ctx.patologiaSelezionataFormPaziente.terapie?.length === 0 && !showFormAddTherapy  && <h2>Non ci sono terapie!</h2>}
                             {patologies_ctx.patologiaSelezionataFormPaziente.terapie?.length > 0 && !showFormAddTherapy &&
                             <>
                                 <h2 style={{marginTop: "8px"}} className={styles.text_subtitle}>Seleziona una terapia:</h2>
                                 {patologies_ctx.patologiaSelezionataFormPaziente?.terapie?.map((terapia) => (
                                     
-                                    terapiaSelezionata === terapia.terapiaID ?
-                                    
-                                        <CardSmall
-                                            stileAggiuntivo
-                                            children={
-                                                <>
-                                                    <div className={styles.container_flexible_INFO} onClick={() => {
-                                                        selezionaTerapia(terapia.terapiaID)
-                                                        }} key={terapia.terapiaID}>
-                                                        <div className={styles.wrapper_vertical}>
-                                                            <label className={styles.listaMedica_label_TERAPIA}>TERAPIA:</label>
-                                                            <h5 className={styles.listaMedica_content_TERAPIA}>{terapia.terapia}</h5>
-                                                        </div>
-                                                        <div className={styles.wrapper_vertical}>
-                                                            <label className={styles.listaMedica_label_NOTE}>NOTE:</label>
-                                                            <h5 className={styles.listaMedica_content_NOTE}>{terapia.note}</h5>
-                                                        </div>
-                                                        {/* <h1>SELEZIONATO</h1> */}
-                                                        {/* <hr></hr> */}
-                                                    </div>
-                                                    <hr style={{margin: "0", border: "1px solid #163172"}}></hr>
-                                                    <div className={styles.container_flexible_DATE}>
-                                                        <div className={styles.wrapper_vertical}>
+                                      
+                                        <div className={styles.container_flexible_INFO} onClick={() => {
+                                            setTerapiaSelezionata(terapia.terapiaID)
+                                            }} key={terapia.terapiaID}>
+                                                <label className={styles.listaMedica_label_TERAPIA}>TERAPIA:</label>
+                                                <h5 className={styles.listaMedica_content_TERAPIA}>{terapia.terapia}</h5>
+
+                                                <label className={styles.listaMedica_label_NOTE}>NOTE:</label>
+                                                <h5 className={styles.listaMedica_content_NOTE}>{terapia.note}</h5>
+
+                                                
+
+                                                <div style={{height: "0"}}>
+                                                    <Collapse in={terapiaSelezionata === terapia.terapiaID}>
+                                                        <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
                                                             <label className={styles.listaMedica_label_DATA}>Data inizio</label>
                                                             <input onChange={dataInizioTerapiaChangeHandler} className={styles.input_style_SHORT} type="date"></input>
-                                                        </div>
-                                                        <div className={styles.wrapper_vertical}>
+
                                                             <label className={styles.listaMedica_label_DATA}>Data fine</label>
                                                             <input onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
+                                                            <GenericButton
+                                                                onClick={(event) => {
+                                                                    event.preventDefault()
+                                                                    addInformazioniMediche(
+                                                                        {
+                                                                            patologiaID: patologies_ctx.patologiaSelezionataFormPaziente.patologiaID,
+                                                                            nomePatologia: patologies_ctx.patologiaSelezionataFormPaziente.nomePatologia,
+                                                                            terapiaID: terapia.terapiaID,
+                                                                            terapia: terapia.terapia,
+                                                                            note: terapia.note,
+                                                                            dataInizio: dataInizioTerapia,
+                                                                            dataFine: dataFineTerapia
+                                                                        }
+                                                                    )
+                                                                }}
+                                                                buttonText={"Salva informazioni"}
+                                                                generic_button
+                                                            ></GenericButton>
                                                         </div>
-                                                    </div>
-                                                    <hr style={{margin: "0", border: "1px solid #163172"}}></hr>
-                                                    <div style={{display: "flex", justifyContent: "center"}}>
-                                                        <GenericButton
-                                                            onClick={(event) => {
-                                                                event.preventDefault()
-                                                                addInformazioniMediche(
-                                                                    {
-                                                                        patologiaID: patologies_ctx.patologiaSelezionataFormPaziente.patologiaID,
-                                                                        nomePatologia: patologies_ctx.patologiaSelezionataFormPaziente.nomePatologia,
-                                                                        terapiaID: terapia.terapiaID,
-                                                                        terapia: terapia.terapia,
-                                                                        note: terapia.note,
-                                                                        dataInizio: dataInizioTerapia,
-                                                                        dataFine: dataFineTerapia
-                                                                    }
-                                                                )
-                                                            }}
-                                                            buttonText={"Salva informazioni"}
-                                                            generic_button
-                                                        ></GenericButton>
-                                                    </div>
-                                                </>
-                                            }
-                                        >
-                                        </CardSmall>
+                                                    </Collapse>
+                                                </div>
+                                                
+                                                
+                                                
+                                        </div>
+                                        
+                                            
                                     
-                                    :
-                                        <CardSmall
-                                            // stileAggiuntivo
-                                            children={
-                                            <div className={styles.container_flexible_INFO} onClick={() => {
-                                                selezionaTerapia(terapia.terapiaID)
-                                            }} key={terapia.terapiaID}>
-                                                
-                                                <div className={styles.wrapper_vertical}>
-                                                    <label className={styles.listaMedica_label_TERAPIA}>TERAPIA:</label>
-                                                    <h5 className={styles.listaMedica_content_TERAPIA}>{terapia.terapia}</h5>
-                                                </div>
+                                    // :
+                                    // <></>
+                                        // <div className={styles.container_flexible_INFO} onClick={() => {
+                                        //     selezionaTerapia(terapia.terapiaID)
+                                        // }} key={terapia.terapiaID}>
+                                            
+                                        //     {/* <div className={styles.wrapper_vertical}> */}
+                                        //         <label className={styles.listaMedica_label_TERAPIA}>TERAPIA:</label>
+                                        //         <h5 className={styles.listaMedica_content_TERAPIA}>{terapia.terapia}</h5>
+                                        //     {/* </div> */}
 
-                                                <div className={styles.wrapper_vertical}>    
-                                                    <label className={styles.listaMedica_label_NOTE}>NOTE:</label>
-                                                    <h5 className={styles.listaMedica_content_NOTE}>{terapia.note}</h5>
-                                                </div>
-                                                
-                                            </div>
-                                            }
-                                        >
-                                        </CardSmall>
+                                        //     {/* <div className={styles.wrapper_vertical}>     */}
+                                        //         <label className={styles.listaMedica_label_NOTE}>NOTE:</label>
+                                        //         <h5 className={styles.listaMedica_content_NOTE}>{terapia.note}</h5>
+                                        //     {/* </div> */}
+                                            
+                                        // </div>
+
                                     ))
                                 }
                                 <hr className={styles.horizontal_line}></hr>
@@ -501,7 +547,7 @@ function AddPaziente(props){
                         </>
                     }
                     <div className={styles.wrapper_horizontal}>
-                        <section className={styles.section_style}>
+                        {/* <section className={styles.section_style}> */}
                         {informazioniMediche.map((oggetto) => (
                             informazioniMediche.length > 0 ?
                             <div key={oggetto.terapiaID} className={styles.wrapper_horizontal}>
@@ -536,8 +582,10 @@ function AddPaziente(props){
                             <>
                             </>
                         ))}
-                        </section>
+                        {/* </section> */}
                     </div>
+                    </div>
+                    
                     <hr className={styles.horizontal_line}></hr>
                     <div className={styles.wrapper_horizontal}>
                         <GenericButton

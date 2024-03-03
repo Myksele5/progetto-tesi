@@ -74,15 +74,9 @@ function Pazienti(){
                 {patients_ctx.showModifica && patients_ctx.modificaPaziente}
 
                 {patients_ctx.showFormNuovoPaziente && 
-                    <Card
-                    altroStile={true}
-                    animazione={true}
-                    children={
-                        <AddPaziente
-                        hideFormNewPaziente = {patients_ctx.formNonVisibile}>
-                        </AddPaziente>
-                    }>
-                    </Card>
+                    <AddPaziente
+                    hideFormNewPaziente = {patients_ctx.formNonVisibile}>
+                    </AddPaziente>
                 }
 
                 {patients_ctx.showTabella && tabella}

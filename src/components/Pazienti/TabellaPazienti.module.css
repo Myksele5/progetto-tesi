@@ -3,13 +3,13 @@
     width: 90%;
     max-height: 760px;
     overflow-y: scroll;
+    box-shadow: 1px 2px 8px 3px #163172;
 }
 
 .table_wrapper{
     /* border-radius: 12px; */
     width: 100%;
     overflow: auto;
-    box-shadow: 1px 2px 8px 3px #163172;
     border-spacing: 0;
     border-collapse: separate;
     /* height: 800px; */
