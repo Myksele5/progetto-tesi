@@ -43,6 +43,10 @@
 }
 
 @media screen and (max-width: 650px) {
+    .page_title{
+        font-size: 25px;
+    }
+
     .wrap_boxes{
         /* position: unset; */
         justify-content: center;

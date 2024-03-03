@@ -10,6 +10,7 @@ import Card from "../components/UI/Card";
 
 import AuthContext from "./auth-context";
 import { getServerMgr } from "../backend_conn/ServerMgr";
+import { Collapse } from "react-bootstrap";
 
 let scheda_paziente;
 let modifica_paziente;
@@ -209,6 +210,15 @@ export function PatientContextProvider(props){
         setShowModal(true);
     }
 
+    function showButtonsForPatient(pazienteID){
+        if(pazienteID === patientButtons){
+            setPatientButtons();
+        }
+        else{
+            setPatientButtons(pazienteID)
+        }
+    }
+
     //------------- FUNZIONE CHE RESTITUISCE LA SINGOLA RIGA DELLA TABELLA POPOLATA CON I DATI DEL PAZIENTE PRESI DAL db
     function fromArrayToTablePazienti(elencoPazienti){
         if(Object.keys(elencoPazienti).length > 0){
@@ -250,29 +260,36 @@ export function PatientContextProvider(props){
                             
                         </tr>
 
-                        {patientButtons === elencoPazienti.ID &&
-                            <tr>
-                                <td className={someStyles.buttons_row} colSpan={5}>
-                                    <DetailsButton
-                                    onClick={() => {
-                                        cliccaRiga(elencoPazienti);
-                                    }}>
-                                    </DetailsButton>
-                
-                                    {/* <EditButton
-                                    onClick={() =>{
-                                        modificaDatiPaziente(elencoPazienti);
-                                    }}>
-                                    </EditButton>
-                                    
-                                    <DeleteButton
-                                    onClick={() => {
-                                        confermaEliminazionePaziente(elencoPazienti.ID, elencoPazienti.nome, elencoPazienti.cognome);
-                                    }}>
-                                    </DeleteButton> */}
-                                </td>
-                            </tr>
-                        }
+                        <tr>
+                        <td style={{height: "0"}} className={someStyles.buttons_row} colSpan={5}>
+
+                        <Collapse in={patientButtons === elencoPazienti.ID}>
+                            <div>
+                                {/* <tr> */}
+                                    {/* <td className={someStyles.buttons_row} colSpan={5}> */}
+                                        <DetailsButton
+                                        onClick={() => {
+                                            cliccaRiga(elencoPazienti);
+                                        }}>
+                                        </DetailsButton>
+                    
+                                        <EditButton
+                                        onClick={() =>{
+                                            modificaDatiPaziente(elencoPazienti);
+                                        }}>
+                                        </EditButton>
+                                        
+                                        <DeleteButton
+                                        onClick={() => {
+                                            confermaEliminazionePaziente(elencoPazienti.ID, elencoPazienti.nome, elencoPazienti.cognome);
+                                        }}>
+                                        </DeleteButton>
+                                    {/* </td> */}
+                                {/* </tr> */}
+                            </div>
+                        </Collapse>
+                        </td>
+                        </tr>
                         
                         {/* <tr className={someStyles.mobile_row}>
                             <td style={{width: "200px", height: "30px", padding: "0", borderBottom: "4px solid #D6E4F0"}}>
@@ -305,15 +322,6 @@ export function PatientContextProvider(props){
             return(
                 <p>Non ci sono pazienti da mostrare. Creane uno</p>
             );
-        }
-    }
-
-    function showButtonsForPatient(pazienteID){
-        if(pazienteID === patientButtons){
-            setPatientButtons();
-        }
-        else{
-            setPatientButtons(pazienteID)
         }
     }
 

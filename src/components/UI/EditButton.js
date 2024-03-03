@@ -6,8 +6,8 @@ function EditButton(props){
 
     return(
         <button onClick={props.onClick} className={classiStile}>
-            {/* <img src={editPencil} alt='editPencil' className={styles.edit_image}></img> */}
-            Modifica dati
+            <img src={editPencil} alt='editPencil' className={styles.edit_image}></img>
+            <div className={styles.edit_text}>Modifica dati</div>
         </button>
     );
 }

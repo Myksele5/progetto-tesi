@@ -1,5 +1,6 @@
 import styles from "./MainMenu.module.css";
-import brain from "../Images/dementia-hub.jpg";
+import logo from "../Images/CogniCareLogo.png";
+import logo_MOBILE from "../Images/CogniCareLogo_Mobile.png";
 import patient from "../Images/disabled.png";
 import activity from "../Images/puzzle_piece.png";
 import game from "../Images/chess.png";
@@ -58,27 +59,40 @@ function MainMenu(props){
     return(
         <Navbar className={`${styles.wrap_menu}`}>
             <div className={`${styles.wrap_website_name}`}>
-                CogniCare
+                <img className={styles.menu_image} src={logo} alt="CogniCare"></img>
             </div>
-            <div className={`${styles.wrap_image}`}>
-                <img className={styles.menu_image} src={brain} alt="blue_brain"></img>
+            <div className={`${styles.wrap_website_name_MOBILE}`}>
+                <img className={styles.menu_image} src={logo_MOBILE} alt="CogniCare"></img>
+            </div>
+            <div className={styles.wrap_profilo}>
+                <div className={styles.wrapper_generico}>
+                    <p className={styles.utente_loggato}>{auth_ctx.utenteLoggato}</p>
+                    <p className={styles.utente_loggato_FULLNAME}>{auth_ctx.nomeUtenteLoggato} {auth_ctx.cognomeUtenteLoggato}</p>
+                    <GenericButton
+                    onClick={auth_ctx.onLogoutClick}
+                    buttonText={'Log Out'}
+                    small_button={true}
+                    red_styling
+                    >
+                    </GenericButton>
+                </div>
             </div>
             <Nav className={`${styles.wrap_buttons}`}>
                 <Nav.Item className={`${styles.menu_option} ${highlightMenuButton_PAZIENTI ? styles.menu_option_SELECTED : ''}`} onClick={goToPazienti}>
                     <img className={styles.image_option} src={patient} alt="pazienti"></img>
-                    Pazienti
+                    <div className={styles.menu_text_option}>Pazienti</div>
                 </Nav.Item>
                 <Nav.Item className={`${styles.menu_option} ${highlightMenuButton_PATOLOGIE ? styles.menu_option_SELECTED : ''}`} onClick={goToPatologie}>
                     <img className={styles.image_option} src={dialogue} alt="patologie"></img>
-                    Patologie
+                    <div className={styles.menu_text_option}>Patologie</div>
                 </Nav.Item>
                 <Nav.Item className={`${styles.menu_option} ${highlightMenuButton_TEST ? styles.menu_option_SELECTED : ''}`} onClick={goToAttività}>
                     <img className={styles.image_option} src={activity} alt="tests"></img>
-                    MMSE/MoCA
+                    <div className={styles.menu_text_option}>Test</div>
                 </Nav.Item>
                 <Nav.Item className={`${styles.menu_option} ${highlightMenuButton_GIOCHI ? styles.menu_option_SELECTED : ''}`} onClick={goToGiochi}>
                     <img className={styles.image_option} src={game} alt="giochi"></img>
-                    Giochi
+                    <div className={styles.menu_text_option}>Giochi</div>
                 </Nav.Item>
             </Nav>
         </Navbar>

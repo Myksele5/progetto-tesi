@@ -19,6 +19,7 @@
 ::-webkit-scrollbar {
   width: 12px;
   background-color: #163172;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {

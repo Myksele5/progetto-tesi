@@ -3,12 +3,12 @@
     height: 40px;
     background-color: #1E56A0;
     color: white;
-    /* margin: 5px 20px; */
+    margin: 5px 20px;
     padding: 0;
     border: 2px solid transparent;
     border-radius: 15px;
     transition: 0.3s;
-    animation: 0.4s normal buttons_animation forwards ease-in;
+    /* animation: 0.4s normal buttons_animation forwards ease-in; */
 
 }
 
@@ -25,33 +25,42 @@
     transition: 0.3s;
 }
 
+.details_text{
+    color: white;
+}
+
 .details_image{
+    display: none;
     width: 21px;
     height: 21px;
+    /* margin-bottom: 4px; */
     /* transition: 0.3s; */
 }
 
-@media screen and (max-width: 1605px) {
-
+@media screen and (max-width: 800px) {
     .details_button{
-        width: 35px;
-        height: 35px;
+        width: 50px;
+        height: 40px;
     }
 
-    .details_button:hover .details_image{
-        width: 17px;
-        height: 17px;
+    .details_text{
+        /* color: white; */
+        display: none;
     }
     
     .details_image{
-        width: 17px;
-        height: 17px;
+        display: inline;
+        width: 21px;
+        height: 21px;
+        margin-bottom: 2px;
+        margin-left: 2px;
+        /* transition: 0.3s; */
     }
 }
 
 @media screen and (max-width: 700px) {
 
-    .details_button{
+    /* .details_button{
         width: 30px;
         height: 30px;
         margin: 3px;
@@ -65,24 +74,22 @@
     .details_image{
         width: 16px;
         height: 16px;
-    }
+    } */
 }
 
 @media screen and (max-width: 650px) {
 
-    .details_button{
+    /* .details_button{
         width: 99%;
         height: 35px;
         margin: 0;
         padding: 0;
         border: 1px solid transparent;
-        /* border-bottom: 3px solid #163172; */
         border-radius: 0px;
     }
 
     .details_button:hover{
         border: 1px solid #D6E4F0;
-        /* border-bottom: 3px solid #163172; */
     }
 
     .details_button:hover .details_image{
@@ -93,16 +100,20 @@
     .details_image{
         width: 15px;
         height: 15px;
-    }
+    } */
 }
 
 @keyframes buttons_animation {
     0%{
-        height: 0px;
-        transform: scaleY(0);
+        display: none;
+        /* height: 40px; */
+        /* transform: scaleY(0); */
+        transition: 1s;
     }
     100%{
+        display: inline;
         height: 40px;
-        transform: scaleY(1);
+        /* transform: scaleY(1); */
+        transition: 1s;
     }
 }
