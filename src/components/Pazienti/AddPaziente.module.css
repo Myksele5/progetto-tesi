@@ -1,8 +1,12 @@
-.buttons_wrapper{
+.center_form{
+    width: 100%;
+    height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    margin: 5px;
+    margin-top: 4px;
 }
 
 .horizontal{
@@ -36,6 +40,13 @@
     width: 100%;
 }
 
+.buttons_wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
 .wrapper_date{
     display: flex;
     justify-content: center;
@@ -43,11 +54,8 @@
     width: 100%;
 }
 
-.wrap_content{
-    text-align: center;
-    width: 840px;
-    padding: 0 20px;
-    font-size: 18px;
+.accordion_item{
+    border: 1px solid #1E56A0;
 }
 
 .scrollable_wrapper_terapie{
@@ -58,34 +66,9 @@
     width: 100%;
 }
 
-.container_flexible_GENERIC{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: fit-content;
-}
-
-.container_flexible_SEZIONE_SINTESI_LABELS{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: fit-content;
-}
-.container_flexible_SEZIONE_SINTESI_LABELS:nth-last-child(0){
-    border-right: none;
-}
-
-.container_flexible_SEZIONE_SINTESI_CONTENTS{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-}
-
 .container_flexible_INFO{
     width: 95%;
-    border: 1px solid blue;
+    border: 1px solid #1E56A0;
     border-radius: 4px;
     margin: 5px;
     margin-bottom: 10px;
@@ -99,25 +82,6 @@
     transition: 0.2s;
 }
 
-.container_flexible_DATE{
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    height: 80px;
-    /* width: 560px; */
-}
-
-.center_form{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 5px;
-    margin-top: 20px;
-}
-
 .wrapper_step1{
     width: 30%;
     margin: 10px;
@@ -125,35 +89,6 @@
 .wrapper_step2{
     width: 80%;
     margin: 10px;
-}
-
-.section_style{
-    margin: 5px;
-    height: fit-content;
-    max-height: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    overflow-y: auto;
-    /* width: 620px; */
-}
-
-.section_style::-webkit-scrollbar{
-    width: 10px;
-    border-radius: 10px;
-}
-
-.section_style_FORM{
-    margin: 5px;
-    height: fit-content;
-    max-height: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    overflow-y: auto;
-    /* width: 620px; */
 }
 
 .title_form{
@@ -164,13 +99,23 @@
 }
 
 .text_subtitle{
-    font-size: 18px;
+    width: 100%;
+    font-size: 22px;
     margin: 4px;
+    text-align: start;
+}
+
+.already_assigned{
+    width: 100%;
+    margin: 4px;
+    font-size: 18px;
     text-align: center;
+    text-decoration: underline;
 }
 
 .label_style{
     margin: 1px;
+    margin-top: 5px;
     font-size: 20px;
 }
 
@@ -181,8 +126,7 @@
 .input_style{
     width: 100%;
     height: 30px;
-    margin: 5px;
-    margin-bottom: 10px;
+    margin: 2px;
     border: 2px solid #1E56A0;
     border-radius: 20px;
     font-size: 22px;
@@ -255,12 +199,10 @@
 }
 
 .input_style_MODIFICA_TERAPIA{
-    min-width: 300px;
-    width: 500px;
-    max-width: 700px;
+    width: 100%;
     min-height: 50px;
     height: 100px;
-    max-height: 200px;
+    max-height: 150px;
     border: 2px solid #1E56A0;
     border-radius: 8px;
     font-size: 20px;
@@ -287,7 +229,7 @@
 
 .select_style{
     margin: 5px;
-    width: 60%;
+    width: 70%;
     height: 35px;
     border-radius: 15px;
     border: 2px solid #1E56A0;
@@ -581,10 +523,10 @@
         width: 240px;
     }
 
-    .select_style{
+    /* .select_style{
         width: 280px;
         font-size: 16px;
-    }
+    } */
 
     .option_style{
         width: 280px;

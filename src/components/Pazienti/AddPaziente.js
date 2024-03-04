@@ -159,12 +159,106 @@ function AddPaziente(props){
         setShowFormAddTherapy(false);
     }
 
-    const selezionaTerapia = (id) => {
-        if(terapiaSelezionata === id){
-            setTerapiaSelezionata();
-        }else{
-            setTerapiaSelezionata(id)
+    const verificaTerapiaGiàAssegnata = (terapia) => {
+        let footerItem;
+
+        if(informazioniMediche.length > 0){
+            for(var i=0; i < informazioniMediche.length; i++){
+                if(terapia.terapiaID !== informazioniMediche[i].terapiaID){
+                    footerItem =
+                    <Collapse in={terapiaSelezionata === terapia.terapiaID}>
+                        <div>
+                            <div className={styles.wrapper_date}>
+                                <div className={styles.wrapper_vertical}>
+                                    <label className={styles.listaMedica_label_DATA}>Data inizio</label>
+                                    <input onChange={dataInizioTerapiaChangeHandler} className={styles.input_style_SHORT} type="date"></input>
+                                </div>
+                                <div className={styles.wrapper_vertical}>
+                                    <label className={styles.listaMedica_label_DATA}>Data fine</label>
+                                    <input onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
+                                </div>   
+                            </div>
+                            <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                <GenericButton
+                                    onClick={(event) => {
+                                        event.preventDefault()
+                                        addInformazioniMediche(
+                                            {
+                                                patologiaID: patologies_ctx.patologiaSelezionataFormPaziente.patologiaID,
+                                                nomePatologia: patologies_ctx.patologiaSelezionataFormPaziente.nomePatologia,
+                                                terapiaID: terapia.terapiaID,
+                                                terapia: terapia.terapia,
+                                                note: terapia.note,
+                                                dataInizio: dataInizioTerapia,
+                                                dataFine: dataFineTerapia
+                                            }
+                                        )
+                                    }}
+                                    buttonText={"Aggiungi"}
+                                    generic_button
+                                ></GenericButton>
+                            </div>
+                        </div>
+                    </Collapse>
+                }
+                else{
+                    footerItem = <h2 className={styles.already_assigned}>Hai già assegnato questa terapia!</h2>
+                    break;
+                }
+            }
         }
+        else{
+            footerItem =
+            <Collapse in={terapiaSelezionata === terapia.terapiaID}>
+                <div>
+                    <div className={styles.wrapper_date}>
+                        <div className={styles.wrapper_vertical}>
+                            <label className={styles.listaMedica_label_DATA}>Data inizio</label>
+                            <input onChange={dataInizioTerapiaChangeHandler} className={styles.input_style_SHORT} type="date"></input>
+                        </div>
+                        <div className={styles.wrapper_vertical}>
+                            <label className={styles.listaMedica_label_DATA}>Data fine</label>
+                            <input onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
+                        </div>   
+                    </div>
+                    <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                        <GenericButton
+                            onClick={(event) => {
+                                event.preventDefault()
+                                addInformazioniMediche(
+                                    {
+                                        patologiaID: patologies_ctx.patologiaSelezionataFormPaziente.patologiaID,
+                                        nomePatologia: patologies_ctx.patologiaSelezionataFormPaziente.nomePatologia,
+                                        terapiaID: terapia.terapiaID,
+                                        terapia: terapia.terapia,
+                                        note: terapia.note,
+                                        dataInizio: dataInizioTerapia,
+                                        dataFine: dataFineTerapia
+                                    }
+                                )
+                            }}
+                            buttonText={"Aggiungi"}
+                            generic_button
+                        ></GenericButton>
+                    </div>
+                </div>
+            </Collapse>
+        }
+        return (
+            <div className={styles.container_flexible_INFO} onClick={() => {selezionaTerapia(terapia.terapiaID)}} key={terapia.terapiaID}>
+                <label className={styles.listaMedica_label_TERAPIA}>TERAPIA:</label>
+                <h5 className={styles.listaMedica_content_TERAPIA}>{terapia.terapia}</h5>
+
+                <label className={styles.listaMedica_label_NOTE}>NOTE:</label>
+                <h5 className={styles.listaMedica_content_NOTE}>{terapia.note}</h5>
+
+                {footerItem}                            
+            </div>
+        );
+    }
+
+    const selezionaTerapia = (id) => {
+        setTerapiaSelezionata(id)
     }
 
     const dataInizioTerapiaChangeHandler = (event) => {
@@ -408,144 +502,12 @@ function AddPaziente(props){
             {stepAggiuntaPaziente === 2 &&
             <div className={styles.wrapper_step2}>
                 <h1 className={styles.title_form}>Scheda Medica</h1>
-                <div className={styles.wrapper_vertical}>
-                    <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
-                        <h2 style={{width: "60%", textAlign: "start"}} className={styles.text_subtitle}>Seleziona patologia:</h2>
-
-                    </div>
-
-                    <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
-                        <select value={patologiaSelezionata} onChange={patologiaSelezionataChangeHandler} className={styles.select_style}>
-                            <option hidden>--seleziona--</option>
-                            {patologies_ctx.uniqueList.map((singlePat) => (
-                                <option className={styles.option_style} key={singlePat.patologiaID}>{singlePat.nomePatologia}</option>
-                            ))}
-                        </select>
-                    </div>
-                
-                    {Object.keys(patologies_ctx.patologiaSelezionataFormPaziente).length > 0 &&
-                        <>
-                            <div className={styles.buttons_wrapper}>
-                                <GenericButton
-                                    onClick={() => {
-                                        setPatologiaSelezionata("--seleziona--");
-                                        patologies_ctx.cambiaPatologiaSelezionataFormPaziente({})
-                                        setDataInizioTerapia("");
-                                        setDataFineTerapia("");
-                                    }}
-                                    buttonText={"Annulla"}
-                                    red_styling
-                                    generic_button
-                                ></GenericButton>
-                                <GenericButton
-                                    onClick={() => {
-                                        setShowFormAddTherapy(true)
-                                    }}
-                                    buttonText={"Nuova Terapia"}
-                                    generic_button
-                                ></GenericButton>
-                            </div>
-                            <div className={styles.wrapper_vertical}>                   
-                                {patologies_ctx.patologiaSelezionataFormPaziente.terapie?.length === 0 && !showFormAddTherapy  && <h2>Non ci sono terapie!</h2>}
-                                {patologies_ctx.patologiaSelezionataFormPaziente.terapie?.length > 0 && !showFormAddTherapy &&
-                                    <>
-                                        <h2 style={{marginTop: "8px"}} className={styles.text_subtitle}>Seleziona una terapia:</h2>
-                                        <div className={styles.scrollable_wrapper_terapie}>
-                                            {patologies_ctx.patologiaSelezionataFormPaziente?.terapie?.map((terapia) => (
-                                                <div className={styles.container_flexible_INFO} onClick={() => {selezionaTerapia(terapia.terapiaID)}} key={terapia.terapiaID}>
-                                                    <label className={styles.listaMedica_label_TERAPIA}>TERAPIA:</label>
-                                                    <h5 className={styles.listaMedica_content_TERAPIA}>{terapia.terapia}</h5>
-
-                                                    <label className={styles.listaMedica_label_NOTE}>NOTE:</label>
-                                                    <h5 className={styles.listaMedica_content_NOTE}>{terapia.note}</h5>
-
-                                                    <Collapse in={terapiaSelezionata === terapia.terapiaID}>
-                                                        <div>
-                                                            <div className={styles.wrapper_date}>
-                                                                <div className={styles.wrapper_vertical}>
-                                                                    <label className={styles.listaMedica_label_DATA}>Data inizio</label>
-                                                                    <input onChange={dataInizioTerapiaChangeHandler} className={styles.input_style_SHORT} type="date"></input>
-                                                                </div>
-                                                                <div className={styles.wrapper_vertical}>
-                                                                    <label className={styles.listaMedica_label_DATA}>Data fine</label>
-                                                                    <input onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
-                                                                </div>   
-                                                            </div>
-                                                            <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
-                                                                <GenericButton
-                                                                    onClick={(event) => {
-                                                                        event.preventDefault()
-                                                                        addInformazioniMediche(
-                                                                            {
-                                                                                patologiaID: patologies_ctx.patologiaSelezionataFormPaziente.patologiaID,
-                                                                                nomePatologia: patologies_ctx.patologiaSelezionataFormPaziente.nomePatologia,
-                                                                                terapiaID: terapia.terapiaID,
-                                                                                terapia: terapia.terapia,
-                                                                                note: terapia.note,
-                                                                                dataInizio: dataInizioTerapia,
-                                                                                dataFine: dataFineTerapia
-                                                                            }
-                                                                        )
-                                                                    }}
-                                                                    buttonText={"Aggiungi"}
-                                                                    generic_button
-                                                                ></GenericButton>
-                                                            </div>
-                                                        </div>
-                                                    </Collapse>
-                                                        
-                                                </div>
-
-                                                ))
-                                            }
-                                        </div>
-                                    </>
-                                }
-                                {showFormAddTherapy &&
-                                    <CardSmall
-                                        stileAggiuntivo
-                                        children={
-                                            <>
-                                                <div className={styles.wrapper_vertical}>
-                                                    <label style={{color: "#163172"}} className={styles.wrap_content}>Inserisci terapia:</label>
-                                                    <textarea value={terapiaDaModificare} onChange={terapiaChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
-                                                </div>
-                                                <hr style={{width: "100%", border: "1px solid #163172"}}></hr>
-                                                <div className={styles.wrapper_vertical}>
-                                                    <label style={{color: "#163172"}} className={styles.wrap_content}>Note:</label>
-                                                    <textarea value={noteDaModificare} onChange={noteChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
-                                                </div>
-                                                <hr style={{width: "100%", border: "1px solid #163172"}}></hr>
-                                                <div className={styles.horizontal}>
-                                                    <GenericButton
-                                                        onClick={() => {
-                                                            setShowFormAddTherapy(false)
-                                                        }}
-                                                        buttonText={"Annulla"}
-                                                        red_styling
-                                                        generic_button
-                                                    ></GenericButton>
-                                                    <GenericButton
-                                                        onClick={() => {
-                                                            salvaNuovaTerapia(patologies_ctx.patologiaSelezionataFormPaziente.patologiaID);
-                                                        }}
-                                                        buttonText={"Salva terapia"}
-                                                        generic_button
-                                                    ></GenericButton>
-                                                </div>
-                                                
-                                            </>
-                                        }
-                                    ></CardSmall>
-                                }
-                            </div>
-                        </>
-                    }
-                    {informazioniMediche.length > 0 &&
+                {informazioniMediche.length > 0 &&
                     <div style={{width: "100%"}}>
                         <Accordion>
+                            <h2 className={styles.text_subtitle}>Terapie assegnate:</h2>
                             {informazioniMediche.map((oggetto) => (
-                                <Accordion.Item eventKey={oggetto.terapiaID}>
+                                <Accordion.Item className={`${styles.accordion_item}`} eventKey={oggetto.terapiaID}>
                                     <Accordion.Header>Terapia per {oggetto.nomePatologia}</Accordion.Header>
                                     <Accordion.Body>
                                         <div className={styles.wrapper_vertical}>
@@ -583,24 +545,105 @@ function AddPaziente(props){
                             ))}
                         </Accordion>
                     </div>
+                }
+                <div className={styles.wrapper_vertical}>
+                    <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                        <h2 className={styles.text_subtitle}>Seleziona patologia:</h2>
+
+                    </div>
+
+                    <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                        <select value={patologiaSelezionata} onChange={patologiaSelezionataChangeHandler} className={styles.select_style}>
+                            <option hidden>--seleziona--</option>
+                            {patologies_ctx.uniqueList.map((singlePat) => (
+                                <option className={styles.option_style} key={singlePat.patologiaID}>{singlePat.nomePatologia}</option>
+                            ))}
+                        </select>
+                    </div>
+                
+                    {showFormAddTherapy &&
+                        <>
+                            <div className={styles.wrapper_vertical}>
+                                <label className={styles.label_style}>Inserisci terapia:</label>
+                                <textarea value={terapiaDaModificare} onChange={terapiaChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
+                            </div>
+                            {/* <hr style={{width: "100%", border: "1px solid #163172"}}></hr> */}
+                            <div className={styles.wrapper_vertical}>
+                                <label className={styles.label_style}>Note:</label>
+                                <textarea value={noteDaModificare} onChange={noteChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
+                            </div>
+                            {/* <hr style={{width: "100%", border: "1px solid #163172"}}></hr> */}
+                            <div style={{width: "100%"}} className={styles.horizontal}>
+                                <GenericButton
+                                    onClick={() => {
+                                        setShowFormAddTherapy(false)
+                                    }}
+                                    buttonText={"Annulla"}
+                                    red_styling
+                                    generic_button
+                                ></GenericButton>
+                                <GenericButton
+                                    onClick={() => {
+                                        salvaNuovaTerapia(patologies_ctx.patologiaSelezionataFormPaziente.patologiaID);
+                                    }}
+                                    buttonText={"Salva nuova terapia"}
+                                    generic_button
+                                ></GenericButton>
+                            </div>
+                        </>
                     }
+                    {patologies_ctx.patologiaSelezionataFormPaziente.terapie?.length === 0 && !showFormAddTherapy && <h2>Non ci sono terapie salvate.</h2>}
+                    {patologies_ctx.patologiaSelezionataFormPaziente.terapie?.length > 0 && !showFormAddTherapy && 
+                        <>
+                            <div className={styles.buttons_wrapper}>
+                                <GenericButton
+                                    onClick={() => {
+                                        setPatologiaSelezionata("--seleziona--");
+                                        patologies_ctx.cambiaPatologiaSelezionataFormPaziente({})
+                                        setDataInizioTerapia("");
+                                        setDataFineTerapia("");
+                                    }}
+                                    buttonText={"Annulla"}
+                                    red_styling
+                                    generic_button
+                                ></GenericButton>
+                                <GenericButton
+                                    onClick={() => {
+                                        setShowFormAddTherapy(true)
+                                    }}
+                                    buttonText={"Nuova Terapia"}
+                                    generic_button
+                                ></GenericButton>
+                            </div>
+                            <h2 className={styles.text_subtitle}>Seleziona una terapia:</h2>
+                            <div className={styles.scrollable_wrapper_terapie}>
+                                {patologies_ctx.patologiaSelezionataFormPaziente.terapie?.map(verificaTerapiaGiàAssegnata)}
+                            </div>
+                        </>
+                    }
+                    
                 </div>
                 
-                <hr className={styles.horizontal_line}></hr>
-                <div className={styles.horizontal}>
-                    <GenericButton
-                        onClick={stepPrecedente}
-                        generic_button={true}
-                        red_styling
-                        buttonText='Indietro'>
-                    </GenericButton>
-                    <GenericButton 
-                        onClick={stepSuccessivo}
-                        // onClick={provaDaCancellare}
-                        generic_button={true}
-                        buttonText='Avanti'>
-                    </GenericButton>
-                </div>
+                {!showFormAddTherapy && patologiaSelezionata === "--seleziona--" &&
+                <>
+                    <hr className={styles.horizontal_line}></hr>
+                    <div className={styles.horizontal}>
+                        <GenericButton
+                            onClick={stepPrecedente}
+                            generic_button={true}
+                            red_styling
+                            buttonText='Indietro'>
+                        </GenericButton>
+                        <GenericButton 
+                            onClick={stepSuccessivo}
+                            // onClick={provaDaCancellare}
+                            generic_button={true}
+                            buttonText='Avanti'>
+                        </GenericButton>
+                    </div>
+                </>
+                    
+                }
             </div>
             }
 
