@@ -133,24 +133,20 @@ export function PatientContextProvider(props){
         setListaGiochiDiUnPaziente(resultGiochi);
 
         modifica_paziente = 
-            <Card
-            altroStile
-            animazione
-            children={
-                <EditPaziente
-                    iddd={pazienteee.ID}
-                    nomeee={pazienteee.nome}
-                    cognomeee={pazienteee.cognome}
-                    cittààà={pazienteee.city}
-                    dataaa={pazienteee.dataNascita}
-                    attivitààà={pazienteee.attività}
-                    cfff={pazienteee.codiceFiscale}
-                    patologiaaa_1={resultPatologie}
-                    giochiii={resultGiochi}
-                >
-                </EditPaziente>
-            }>
-            </Card>
+
+            <EditPaziente
+                iddd={pazienteee.ID}
+                nomeee={pazienteee.nome}
+                cognomeee={pazienteee.cognome}
+                cittààà={pazienteee.city}
+                dataaa={pazienteee.dataNascita}
+                attivitààà={pazienteee.attività}
+                cfff={pazienteee.codiceFiscale}
+                patologiaaa_1={resultPatologie}
+                giochiii={resultGiochi}
+            >
+            </EditPaziente>
+
 
         setShowModificaPaziente(true);
         setShowSearchBoxAndButton(false);
@@ -237,26 +233,6 @@ export function PatientContextProvider(props){
                             <td className={`${someStyles['dati_tabella']} ${someStyles['città']}`}>{elencoPazienti.city}</td>
                             <td className={`${someStyles['dati_tabella']} ${someStyles['data']}`}>{elencoPazienti.dataNascita}</td>
                             <td className={`${someStyles['dati_tabella']} ${someStyles['codicefiscale']}`}>{elencoPazienti.codiceFiscale}</td>
-                            {/* <td className={someStyles.dati_tabella}>{arrayDummyPazienti.attività}</td> */}
-                            {/* <td className={`${someStyles['dati_tabella']} ${someStyles['opzioni']}`}>
-                                <DetailsButton
-                                onClick={() => {
-                                    cliccaRiga(elencoPazienti);
-                                }}>
-                                </DetailsButton>
-            
-                                <EditButton
-                                onClick={() =>{
-                                    modificaDatiPaziente(elencoPazienti);
-                                }}>
-                                </EditButton>
-                                
-                                <DeleteButton
-                                onClick={() => {
-                                    confermaEliminazionePaziente(elencoPazienti.ID, elencoPazienti.nome, elencoPazienti.cognome);
-                                }}>
-                                </DeleteButton>
-                            </td> */}
                             
                         </tr>
 
@@ -289,28 +265,6 @@ export function PatientContextProvider(props){
                                 </Collapse>
                             </td>
                         </tr>
-                        
-                        {/* <tr className={someStyles.mobile_row}>
-                            <td style={{width: "200px", height: "30px", padding: "0", borderBottom: "4px solid #D6E4F0"}}>
-                                <DetailsButton
-                                onClick={() => {
-                                    cliccaRiga(elencoPazienti);
-                                }}></DetailsButton>
-                            </td>
-                            <td style={{width: "200px", height: "30px", padding: "0", borderBottom: "4px solid #D6E4F0"}}>
-                                <EditButton
-                                onClick={() =>{
-                                    modificaDatiPaziente(elencoPazienti);
-                                }}></EditButton>
-                            </td>
-                            <td style={{width: "200px", height: "30px", padding: "0", borderBottom: "4px solid #D6E4F0"}}>
-                                <DeleteButton
-                                onClick={() => {
-                                    confermaEliminazionePaziente(elencoPazienti.ID, elencoPazienti.nome, elencoPazienti.cognome);
-                                }}></DeleteButton>
-                            </td>
-                            
-                        </tr> */}
                     </>
                 );
             }

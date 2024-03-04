@@ -55,7 +55,7 @@
 }
 
 .accordion_item{
-    border: 1px solid #1E56A0;
+    border: 1px solid #1E56A0 !important;
 }
 
 .scrollable_wrapper_terapie{

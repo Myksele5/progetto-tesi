@@ -161,6 +161,8 @@ function AddPaziente(props){
 
     const verificaTerapiaGiàAssegnata = (terapia) => {
         let footerItem;
+        console.log(informazioniMediche)
+        console.log(terapia)
 
         if(informazioniMediche.length > 0){
             for(var i=0; i < informazioniMediche.length; i++){
@@ -311,58 +313,11 @@ function AddPaziente(props){
 
     async function formSubmitHandler(event){
         event.preventDefault();
-        var account_creato = false;
+
         if(enteredEmail.includes('@') && enteredPsw.trim().length > 5){
             // setModaleCREAZIONEUTENTE(true);
             creaAccountPaziente();
         }
-
-        var dateee = new Date(enteredData);
-
-        if(enteredNome.trim().length < 1 
-        || enteredCognome.trim().length < 1 
-        || enteredCittà.trim().length < 1 
-        || isNaN(dateee)
-        || enteredCF.trim().length < 16 || enteredCF.trim().length > 16){
-            if(enteredNome.trim().length < 1){
-                setValidNome(false);
-                // console.log(validNome);
-            }
-            else{
-                setValidNome(true);
-            }
-            if(enteredCognome.trim().length < 1){
-                setValidCognome(false);
-            }
-            else{
-                setValidCognome(true);
-            }
-            if(enteredCittà.trim().length < 1){
-                setValidCittà(false);
-            }
-            else{
-                setValidCittà(true);
-            }
-            if(isNaN(dateee)){
-                setValidData(false);
-            }
-            else{
-                setValidData(true);
-            }
-            if(enteredCF.trim().length < 16 || enteredCF.trim().length > 16){
-                setValidCF(false);
-            }
-            else{
-                setValidCF(true);
-            }
-            return;
-        }
-
-        var day = dateee.toLocaleString('it-IT', {day: '2-digit'})
-        var month = dateee.toLocaleString('it-IT', {month: '2-digit'})
-        var year = dateee.getFullYear();
-
-        let dateString = `${year}-${month}-${day}`;
 
         const datiPaziente = {
             doct_UID: auth_ctx.utenteLoggatoUID,
@@ -370,7 +325,7 @@ function AddPaziente(props){
             cognome: enteredCognome,
             city: enteredCittà,
             codiceFiscale: enteredCF.toUpperCase(),
-            dataNascita: dateString,
+            dataNascita: enteredData,
             informazioniMediche: informazioniMediche
         };
 
@@ -381,9 +336,6 @@ function AddPaziente(props){
         );
         console.log("pazienteID--> " + pazienteSalvatoID)
         patients_ctx.nuovoPazienteHandler();
-        
-        // console.log(pazienteSalvatoID);
-        // props.onCreateNewPaziente(datiNuovoPaziente);
         
         setEnteredNome('');
         // setValidNome(true);
@@ -406,11 +358,6 @@ function AddPaziente(props){
         if(result !== undefined){
             for(var i=0; i < result.length; i++){
                 if(result[i].email === enteredEmail){
-                    // setValidNome(false);
-                    // setValidCognome(false);
-                    // setValidEmail(false);
-                    // setValidPassword(false);
-                    // // setABuonFine(false);
                     emailEsistente = true;
                     alert("Email già associata ad un account!");
                     break;
