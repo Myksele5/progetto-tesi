@@ -261,34 +261,33 @@ export function PatientContextProvider(props){
                         </tr>
 
                         <tr>
-                        <td style={{height: "0"}} className={someStyles.buttons_row} colSpan={5}>
-
-                        <Collapse in={patientButtons === elencoPazienti.ID}>
-                            <div>
-                                {/* <tr> */}
-                                    {/* <td className={someStyles.buttons_row} colSpan={5}> */}
-                                        <DetailsButton
-                                        onClick={() => {
-                                            cliccaRiga(elencoPazienti);
-                                        }}>
-                                        </DetailsButton>
-                    
-                                        <EditButton
-                                        onClick={() =>{
-                                            modificaDatiPaziente(elencoPazienti);
-                                        }}>
-                                        </EditButton>
-                                        
-                                        <DeleteButton
-                                        onClick={() => {
-                                            confermaEliminazionePaziente(elencoPazienti.ID, elencoPazienti.nome, elencoPazienti.cognome);
-                                        }}>
-                                        </DeleteButton>
-                                    {/* </td> */}
-                                {/* </tr> */}
-                            </div>
-                        </Collapse>
-                        </td>
+                            <td style={{height: "0"}} className={someStyles.buttons_row} colSpan={5}>
+                                <Collapse in={patientButtons === elencoPazienti.ID}>
+                                    <div>
+                                        {/* <tr> */}
+                                            {/* <td className={someStyles.buttons_row} colSpan={5}> */}
+                                                <DetailsButton
+                                                onClick={() => {
+                                                    cliccaRiga(elencoPazienti);
+                                                }}>
+                                                </DetailsButton>
+                            
+                                                <EditButton
+                                                onClick={() =>{
+                                                    modificaDatiPaziente(elencoPazienti);
+                                                }}>
+                                                </EditButton>
+                                                
+                                                <DeleteButton
+                                                onClick={() => {
+                                                    confermaEliminazionePaziente(elencoPazienti.ID, elencoPazienti.nome, elencoPazienti.cognome);
+                                                }}>
+                                                </DeleteButton>
+                                            {/* </td> */}
+                                        {/* </tr> */}
+                                    </div>
+                                </Collapse>
+                            </td>
                         </tr>
                         
                         {/* <tr className={someStyles.mobile_row}>
