@@ -3,14 +3,17 @@ import styles from "./StatistichePaziente.module.css";
 import { getServerMgr } from "../../backend_conn/ServerMgr";
 import { ProgressBar } from "react-bootstrap";
 
-let risultatiTotali = [];
-
 function StatistichePaziente(props){
     // let fillCorrect = "0%";
     // let fillWrong = "0%";
+    const [day, setDay] = useState();
+    const [month, setMonth] = useState();
+    const [year, setYear] = useState();
 
     const [fillCorrect, setFillCorrect] = useState(0);
     const [fillWrong, setFillWrong] = useState(0);
+
+    const [risultatiTotali, setRisultatiTotali] = useState(props.stats);
 
     const [risposteTotali, setRisposteTotali] = useState(0);
     const [risposteCorrette, setRisposteCorrette] = useState(0);
@@ -21,45 +24,56 @@ function StatistichePaziente(props){
     const patientID = props.pazienteID;
 
     useEffect(() => {
-        risultatiTotali = [];
-        getPatientLifetimeStatistics();
-        
-    }, [])
-
-    useEffect(() => {
-        setRisposteTotali(0);
-        setRisposteCorrette(0);
-        setRisposteSbagliate(0);
-        salvaRisultatiTotali();
-        calculatePercentage();
-    }, [filtroStatistiche])
-
-    async function getPatientLifetimeStatistics(){
-        let result;
-
-        result = await getServerMgr().getPatientStatistics(patientID);
-
-        risultatiTotali = result;
-        
-    }
-
-    function salvaRisultatiTotali(){
         var today = new Date();
         var day = parseInt(today.toLocaleString('it-IT', {day: '2-digit'}))
         var month = parseInt(today.toLocaleString('it-IT', {month: '2-digit'}))
         var year = parseInt(today.getFullYear());
 
-        console.log(day);
+        setDay(day);
+        setMonth(month);
+        setYear(year);
+        
+    }, [])
 
-        // console.log(result[0].rispTotali);
+    useEffect(() => {
+        // setRisposteTotali(0);
+        // setRisposteCorrette(0);
+        // setRisposteSbagliate(0);
+        filtraRisultatiTotali();
+        // calculatePercentage();
+    }, [filtroStatistiche])
+
+    // async function getPatientLifetimeStatistics(){
+    //     let result;
+
+    //     result = await getServerMgr().getPatientStatistics(patientID);
+
+    //     risultatiTotali = result;
+        
+    // }
+
+    function filtraRisultatiTotali(){
+        let risposte_TOT = 0;
+        let risposte_CORR = 0;
+        let risposte_SBAG = 0;
+
         if(risultatiTotali){
             switch(filtroStatistiche){
                 case "Totali":
                     risultatiTotali.forEach((item) => {
-                        setRisposteTotali((prevRispTot) => (prevRispTot + item.rispTotali));
-                        setRisposteCorrette((prevRispCorr) => (prevRispCorr + item.rispCorrette));
-                        setRisposteSbagliate((prevRispSbag) => (prevRispSbag + item.rispSbagliate));
+                        risposte_TOT += item.rispTotali;
+                        risposte_CORR += item.rispCorrette;
+                        risposte_SBAG += item.rispSbagliate;
+                        // setRisposteTotali((prevRispTot) => (prevRispTot + item.rispTotali));
+                        // setRisposteCorrette((prevRispCorr) => (prevRispCorr + item.rispCorrette));
+                        // setRisposteSbagliate((prevRispSbag) => (prevRispSbag + item.rispSbagliate));
                     });
+                    // setFillCorrect((risposte_CORR / risposte_TOT) * 100)
+                    // setFillWrong((risposte_SBAG / risposte_TOT) * 100)
+                    setRisposteTotali(risposte_TOT);
+                    setRisposteCorrette(risposte_CORR);
+                    setRisposteSbagliate(risposte_SBAG);
+                    // console.log(risposte_TOT)
                     break;
                 case "ultime 48 ore":
                     risultatiTotali.forEach((item) => {
@@ -72,12 +86,15 @@ function StatistichePaziente(props){
                         
                         if(dataEsecuzioneGioco.getFullYear() === year && (dataEsecuzioneGioco.getMonth() + 1) === month && 
                             ((dataEsecuzioneGioco.getDate() + 1) === day || dataEsecuzioneGioco.getDate() === day)){
-                            setRisposteTotali((prevRispTot) => (prevRispTot + item.rispTotali));
-                            setRisposteCorrette((prevRispCorr) => (prevRispCorr + item.rispCorrette));
-                            setRisposteSbagliate((prevRispSbag) => (prevRispSbag + item.rispSbagliate));
+                            risposte_TOT += item.rispTotali;
+                            risposte_CORR += item.rispCorrette;
+                            risposte_SBAG += item.rispSbagliate;
                         }
                         
                     });
+                    setRisposteTotali(risposte_TOT);
+                    setRisposteCorrette(risposte_CORR);
+                    setRisposteSbagliate(risposte_SBAG);
                     break;
                 case "ultimo mese":
                     risultatiTotali.forEach((item) => {
@@ -93,12 +110,15 @@ function StatistichePaziente(props){
                              ((dataEsecuzioneGioco.getMonth() + 2) === month && (day - dataEsecuzioneGioco.getDate()) < 0) 
                             )
                         ){
-                            setRisposteTotali((prevRispTot) => (prevRispTot + item.rispTotali));
-                            setRisposteCorrette((prevRispCorr) => (prevRispCorr + item.rispCorrette));
-                            setRisposteSbagliate((prevRispSbag) => (prevRispSbag + item.rispSbagliate));
+                            risposte_TOT += item.rispTotali;
+                            risposte_CORR += item.rispCorrette;
+                            risposte_SBAG += item.rispSbagliate;
                         }
                         
                     });
+                    setRisposteTotali(risposte_TOT);
+                    setRisposteCorrette(risposte_CORR);
+                    setRisposteSbagliate(risposte_SBAG);
                     break;
                 default:
                     break;
@@ -127,34 +147,41 @@ function StatistichePaziente(props){
 
     return(
         <>
-            <h3>Filtro</h3>
-            <select value={filtroStatistiche} onChange={filtroStatisticheChangeHandler} className={styles.select_style}>
-                <option>Totali</option>
-                <option>ultime 48 ore</option>
-                <option>ultimo mese</option>
-            </select>
+            <div className={styles.vertical}>
+                <h4 className={styles.subtitle}>Periodo temporale:</h4>
+                <select value={filtroStatistiche} onChange={filtroStatisticheChangeHandler} className={styles.select_style}>
+                    <option>Totali</option>
+                    <option>ultime 48 ore</option>
+                    <option>ultimo mese</option>
+                </select>
+            </div>
+            
             {/* <h1>CIAOO</h1> */}
             <div className={styles.wrapper_statistiche}>
                 <div className={styles.wrapper_barre}>
-                    {/* <div className={styles.barra}>
-                        <div style={{width: fillCorrect}} className={styles.riempimento_barra_corrette}></div>
-                    </div> */}
-                    <div style={{width: "60%", margin: "5px"}}>
-                        <ProgressBar now={fillCorrect} variant="success"
+                    <h3 style={{width: "90%", textAlign: "left", color: "#163172"}}>Percentuali</h3>
+                    <div style={{width: "90%", margin: "5px"}}>
+                        <ProgressBar animated now={(risposteCorrette/risposteTotali) * 100} variant="success"
                         ></ProgressBar>
+                        <div style={{color: "darkgreen"}}>Percentuale risposte corrette: {`${((risposteCorrette/risposteTotali) * 100).toFixed(2)}%`}</div>
                     </div>
-                    <div style={{width: "60%", margin: "5px"}}>
-                        <ProgressBar now={fillWrong} variant="danger"
+                    <div style={{width: "90%", margin: "5px"}}>
+                        <ProgressBar animated now={(risposteSbagliate/risposteTotali) * 100} variant="danger"
                         ></ProgressBar>
+                        <div style={{color: "darkred"}}>Percentuale risposte sbagliate: {`${((risposteSbagliate/risposteTotali) * 100).toFixed(2)}%`}</div>
                     </div>
 
                     {/* <div className={styles.barra}>
                         <div style={{width: fillWrong}} className={styles.riempimento_barra_sbagliate}></div>
                     </div> */}
                 </div>
-                <label className={styles.content_style}>Risposte totali: {risposteTotali}</label>
-                <label className={styles.content_style}>Risposte corrette: {risposteCorrette}</label>
-                <label className={styles.content_style}>Risposte sbagliate: {risposteSbagliate}</label>
+                <div className={styles.wrapper_numeri}>
+                    <h3 style={{width: "90%", textAlign: "left", color: "#163172"}}>Numeri</h3>
+                    <label className={styles.content_style}>Numero totale di domande svolte: {risposteTotali}</label>
+                    <label className={styles.content_style}>Totale risposte corrette: {risposteCorrette}</label>
+                    <label className={styles.content_style}>Totale risposte sbagliate: {risposteSbagliate}</label>
+                </div>
+                
             </div>
         </>
     );

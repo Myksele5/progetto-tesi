@@ -213,7 +213,7 @@ function SchedaPaziente(props){
                     <div className={styles.wrapper_vertical}>
                         <StatistichePaziente
                             pazienteID={props.id}
-                            stats={props.stats_paziente}
+                            stats={props.statsPaziente}
                         ></StatistichePaziente>
                     </div>
                     
