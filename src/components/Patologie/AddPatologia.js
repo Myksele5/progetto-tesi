@@ -4,12 +4,15 @@ import styles from "./AddPatologia.module.css";
 import PatologiesContext from "../../context/patologies-context";
 import DeleteButton from "../UI/DeleteButton";
 import { getServerMgr } from "../../backend_conn/ServerMgr";
+import { Tab, Tabs } from "react-bootstrap";
+import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 
 function AddPatologia(){
     const patologies_ctx = useContext(PatologiesContext);
 
     const [nomePatologia, setNomePatologia] = useState("");
     const [counterTerapie, setCounterTerapie] = useState(1);
+    const [tabSelezionata, setTabSelezionata] = useState(1);
     const [terapieAssociate, setTerapieAssociate] = useState([{newTerapID: counterTerapie, terapia: "", note: ""}]);
 
     useEffect(() => {
@@ -20,16 +23,25 @@ function AddPatologia(){
         let prossimoIDterapia = counterTerapie + 1;
         setTerapieAssociate((prevList) => ([...prevList, {newTerapID: prossimoIDterapia, terapia: "", note: ""}]));
         setCounterTerapie(prossimoIDterapia);
+        setTabSelezionata(prossimoIDterapia)
     }
 
     function eliminaTerapia(id){
-        let arrayTemporaneo = [];
-        terapieAssociate.map((terapia) => {
-            if(terapia.newTerapID !== id){
-                arrayTemporaneo.push(terapia)
-            }
-        })
-        setTerapieAssociate(arrayTemporaneo);
+        if(terapieAssociate.length > 1){
+            let arrayTemporaneo = [];
+            terapieAssociate.map((terapia) => {
+                if(terapia.newTerapID !== id){
+                    console.log(terapia)
+                    arrayTemporaneo.push(terapia)
+                }
+            })
+            setTerapieAssociate(arrayTemporaneo);
+            setTabSelezionata(arrayTemporaneo[0].newTerapID);
+        }
+        else{
+            alert("Devi inserire almeno una terapia!")
+        }
+        
     }
 
     function patologiaChangeHandler(event){
@@ -69,47 +81,55 @@ function AddPatologia(){
 
     return(
         <div className={styles.wrapper_vertical}>
-            <h2 className={styles.title_form}>Nuova Patologia</h2>
+            <h2 className={styles.title_form}>Inserisci nuova Patologia</h2>
             
-            <label>Nome Patologia:</label>
-            <input className={styles.input_style} onChange={patologiaChangeHandler} value={nomePatologia}></input>
+            <div className={styles.wrapper_form}>
+                <label className={styles.label_style_PATOLOGIA}>Nome Patologia:</label>
+                <input className={styles.input_style} onChange={patologiaChangeHandler} value={nomePatologia}></input>
 
-            {terapieAssociate.map((singleTerap) => (
-                <div key={singleTerap.newTerapID} className={styles.wrapper_horizontal}>
-                    <fieldset className={`${styles.wrapper_vertical} ${styles.fieldset_style}`}>
-                        <legend className={styles.legend_style}>{"TERAPIA " + singleTerap.newTerapID}</legend>
-                        <label>Inserisci terapia:</label>
-                        <textarea className={styles.textarea_style_TERAPIA} onChange={(event) => {
-                            terapiaChangeHandler(event, singleTerap.newTerapID)
-                        }}
-                        >
-                        </textarea>
+                <div style={{width: "100%"}}>
+                    <Tabs id="controlled-tab-example" activeKey={tabSelezionata} onSelect={(key) => {setTabSelezionata(key)}}>
+                        {terapieAssociate.map((singleTerap) => (
+                            <Tab eventKey={singleTerap.newTerapID} title={"TERAPIA " + singleTerap.newTerapID}>
 
-                        <label>Note:</label>
-                        <textarea className={styles.textarea_style_NOTE} onChange={(event) => {
-                            noteDellaTerapiaChangeHandler(event, singleTerap.newTerapID)
-                        }}
-                        >
-                        </textarea>
+                                <div className={styles.wrapper_terapia_form}>
+                                    <label className={styles.label_style_TERAPIA}>Inserisci terapia:</label>
+                                    <textarea className={styles.textarea_style_TERAPIA} onChange={(event) => {
+                                        terapiaChangeHandler(event, singleTerap.newTerapID)
+                                    }}
+                                    >
+                                    </textarea>
 
-                    </fieldset>
-                    <div style={{marginLeft: "10px"}}>
-                        <DeleteButton
-                            onClick={() => {
-                                eliminaTerapia(singleTerap.newTerapID)
-                            }}
-                            stile_alternativo
-                        ></DeleteButton>
-                    </div>
+                                    <label className={styles.label_style_TERAPIA}>Note:</label>
+                                    <textarea className={styles.textarea_style_TERAPIA} onChange={(event) => {
+                                        noteDellaTerapiaChangeHandler(event, singleTerap.newTerapID)
+                                    }}
+                                    >
+                                    </textarea>
+
+                                    {/* <div style={{marginLeft: "10px"}}> */}
+                                        <DeleteButton
+                                            onClick={() => {
+                                                eliminaTerapia(singleTerap.newTerapID)
+                                            }}
+                                            // stile_alternativo
+                                        ></DeleteButton>
+                                    {/* </div> */}
+                                </div>
+                            </Tab>
+                            
+                        ))}
+                        <Tab title={<button className={styles.bottone_add_terapia} onClick={aggiungiNuovaTerapia}>Aggiungi</button>}></Tab>
+                    </Tabs>
                 </div>
-            ))}
-            
-            <GenericButton
+            </div>
+            {/* <GenericButton
                 onClick={aggiungiNuovaTerapia}
                 buttonText={"Aggiungi una terapia"}
                 generic_button
-            ></GenericButton>
+            ></GenericButton> */}
 
+            <hr style={{width: "80%"}}></hr>
 
             <div className={styles.wrapper_horizontal}>
                 <GenericButton

@@ -4,10 +4,11 @@ import GenericButton from "../UI/GenericButton";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import styles from "./Patologie.module.css";
 import PatologiesContext from "../../context/patologies-context";
-import Card from "../UI/Card";
+// import Card from "../UI/Card";
 import ElencoTerapie from "./ElencoTerapie";
 import AddPatologia from "./AddPatologia";
 import { getServerMgr } from "../../backend_conn/ServerMgr";
+import { Card } from "react-bootstrap";
 
 function Patologie(){
     const patologies_ctx = useContext(PatologiesContext);
@@ -63,7 +64,6 @@ function Patologie(){
         <>
             {patologies_ctx.showModale && patologies_ctx.modale}
 
-            <h1 className={styles.page_title}>Patologie</h1>
             {patologies_ctx.topBar && 
                 <div className={styles.wrap_boxes}>
                     <GenericButton
@@ -77,15 +77,11 @@ function Patologie(){
                     </GenericButton>
                 </div>
             }
+            <h1 className={styles.page_title}>Patologie</h1>
 
-            <div className={styles.wrapper_generico_vertical}>
+            <div className={styles.wrapper_generico}>
                 {patologies_ctx.visibleFormAddPatology &&
-                    <Card
-                        altroStile
-                        animazione
-                        children={<AddPatologia></AddPatologia>}
-                    >
-                    </Card>
+                    <AddPatologia></AddPatologia>
                 }
 
                 {patologies_ctx.visibleTherapiesList && 
@@ -95,88 +91,39 @@ function Patologie(){
                 }
 
                 {patologies_ctx.visibleLista &&
-                <>
+                <div className={styles.wrapper_vertical}>
                     {patologies_ctx.uniqueList.map((pat) => (
-                        <div className={`${styles.wrapper_generico_horizontal}`}>
-                            <CardSmall
-                                children={
-                                    <>
-                                        <div key={pat.patologiaID} className={`${styles.wrapper_generico_horizontal} ${styles.width_for_wrapper}`}>
-                                            <div className={styles.wrapper_generico_vertical}>
-                                                {IDperModificaNome !== pat.patologiaID &&
-                                                    <div className={`${styles.wrapper_generico_vertical} ${styles.wrapper_direction}`}>
-                                                        <label className={styles.label_style}>Patologia:</label>
-                                                        <h3 className={styles.info_content}>{pat.nomePatologia}</h3>
-                                                        <GenericAlternativeButton
-                                                            onClick={() => {
-                                                                modificaNomePatologia(pat.patologiaID, pat.nomePatologia)
-                                                            }}
-                                                            buttonText={"Modifica"}
-                                                            bottone_piccolo
-                                                        ></GenericAlternativeButton>
-                                                    </div>
-                                                }
-                                                {IDperModificaNome === pat.patologiaID &&
-                                                <div className={`${styles.wrapper_generico_vertical} ${styles.wrapper_direction}`}>
-                                                    <label className={styles.label_style}>Patologia:</label>
-                                                    <textarea onChange={nomePatologiaChangeHandler} value={nomeDaModificare} className={styles.input_style}></textarea>
-                                                    <div className={styles.wrapper_generico_horizontal}>
-                                                        <GenericAlternativeButton
-                                                            bottone_piccolo
-                                                            onClick={() => {
-                                                                aggiornaNomePatologia();
-                                                            }}
-                                                            buttonText={"Salva"}
-                                                        ></GenericAlternativeButton>
-                                                        <GenericAlternativeButton
-                                                            bottone_piccolo
-                                                            onClick={() => {
-                                                                setIDperModificaNome()
-                                                                setNomeDaModificare("")
-                                                            }}
-                                                            buttonText={"Annulla"}
-                                                            colore_rosso
-                                                        ></GenericAlternativeButton>
-                                                    </div>
-                                                </div>
-                                                }
-                                                    
-                                            </div>
-                                            <div className={`${styles.wrapper_generico_vertical} ${styles.full_height}`}>
-                                                <GenericAlternativeButton
-                                                    onClick={() => {
-                                                        visualizzaPatologia(pat)
-                                                    }}
-                                                    buttonText={"Mostra terapie"}
-                                                >
-                                                </GenericAlternativeButton>
-                                                
-                                                <GenericAlternativeButton
-                                                    onClick={() => {
-                                                        eliminaPatologia(pat.patologiaID, pat.nomePatologia)
-                                                    }}
-                                                    buttonText={"Elimina Patologia"}
-                                                    colore_rosso
-                                                ></GenericAlternativeButton>
-                                            </div>
-                                        </div>
-                                        {/* {patologiaVisualizzata.map((singlePat) => {
-                                            if(singlePat.patologiaID === pat.patologiaID){
-                                                return (
-                                                    <ElencoTerapie
-                                                        patologiaSelezionata={singlePat}
-                                                    ></ElencoTerapie>
-                                                );
-                                            }
-                                        })} */}
-                                    </>
-                                }
-                            >
-                            </CardSmall>
-                            
-                        </div>
+                        <Card className={styles.card_style}>
+                            <Card.Body>
+                                <div className={styles.wrapper_horizontal}>
+                                    <div className={styles.wrapper_vertical}>
+                                        <label className={styles.label_style}>Patologia:</label>
+                                        <h3 className={styles.info_content}>{pat.nomePatologia}</h3>
+                                    </div>
+                                    <div style={{width: "fit-content"}} className={styles.wrapper_vertical}>
+                                        <GenericAlternativeButton
+                                            onClick={() => {
+                                                visualizzaPatologia(pat)
+                                            }}
+                                            buttonText={"Mostra terapie"}
+                                        >
+                                        </GenericAlternativeButton>
+                                        
+                                        <GenericAlternativeButton
+                                            onClick={() => {
+                                                eliminaPatologia(pat.patologiaID, pat.nomePatologia)
+                                            }}
+                                            buttonText={"Elimina"}
+                                            colore_rosso
+                                        ></GenericAlternativeButton>
+                                    </div>
+                                </div>
+                                
+                                
+                            </Card.Body>
+                        </Card>
                     ))}
-                </>
+                </div>
                 }
             </div>
         </>

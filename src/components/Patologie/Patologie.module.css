@@ -1,36 +1,58 @@
 .page_title{
     margin: 0;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    /* margin-bottom: 5px; */
     text-align: center;
     font-size: 35px;
     color: #1E56A0;
 }
 
+.wrapper_generico{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-left: 30px; */
+}
+
 .wrap_boxes{
-    z-index: 10;
-    top: 10px;
-    margin-bottom: 14px;
+    top: 0px;
     position: sticky;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     background-color: #d6e4f0f6;
-    border-top: 1px solid #163172;
-    border-bottom: 1px solid #163172;
+    /* border-top: 1px solid #163172; */
+    /* border-bottom: 1px solid #163172; */
     box-shadow: 5px 0 5px 5px #163172;
+    z-index: 50;
 }
 
-.wrapper_generico_vertical{
+.wrapper_vertical{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
-.wrapper_generico_horizontal{
+.wrapper_horizontal{
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+}
+
+.card_style{
+    width: 65%;
+    min-width: 300px;
+    margin: 10px;
+    border: 1px solid #163172;
+    transition: 0.3s;
+}
+.card_style:hover{
+    background-color: #D6E4F0;
+    transition: 0.3s;
+    box-shadow: 4px 4px 10px 2px #163172;
 }
 
 .wrapper_direction{
@@ -80,19 +102,28 @@
 }
 
 .label_style{
-    margin-left: 4px;
+    /* margin-left: 4px; */
+    width: 100%;
+    /* min-width: 200px; */
+    text-align: start;
     font-size: 20px;
     font-weight: bold;
+    padding: 2px;
 }
 
 .info_content{
-    max-width: 300px;
-    word-wrap: break-word;
+    width: 100%;
+    min-width: 150px;
+    text-align: start;
+    /* word-wrap: break-word; */
+    /* word-break: break-all; */
+    overflow-wrap: break-word;
     display: block;
     font-size: 26px;
     font-weight: normal;
     margin: 5px;
-    margin-left: 15px;
+    padding: 2px;
+    /* margin-left: 15px; */
 }
 
 .info_content_TERAPIA{
@@ -182,6 +213,14 @@
 }
 
 @media screen and (max-width:600px) {
+    .wrapper_horizontal{
+        flex-direction: column;
+    }
+
+    .label_style, .info_content{
+        text-align: center;
+    }
+
     .width_for_wrapper{
         width: 400px;
         justify-content: space-between;
