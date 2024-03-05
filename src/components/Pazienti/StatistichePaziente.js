@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import styles from "./StatistichePaziente.module.css";
 import { getServerMgr } from "../../backend_conn/ServerMgr";
+import { ProgressBar } from "react-bootstrap";
+
+let risultatiTotali = [];
 
 function StatistichePaziente(props){
-    let fillCorrect = "0%";
-    let fillWrong = "0%";
+    // let fillCorrect = "0%";
+    // let fillWrong = "0%";
+
+    const [fillCorrect, setFillCorrect] = useState(0);
+    const [fillWrong, setFillWrong] = useState(0);
 
     const [risposteTotali, setRisposteTotali] = useState(0);
     const [risposteCorrette, setRisposteCorrette] = useState(0);
@@ -15,10 +21,17 @@ function StatistichePaziente(props){
     const patientID = props.pazienteID;
 
     useEffect(() => {
+        risultatiTotali = [];
+        getPatientLifetimeStatistics();
+        
+    }, [])
+
+    useEffect(() => {
         setRisposteTotali(0);
         setRisposteCorrette(0);
         setRisposteSbagliate(0);
-        getPatientLifetimeStatistics();
+        salvaRisultatiTotali();
+        calculatePercentage();
     }, [filtroStatistiche])
 
     async function getPatientLifetimeStatistics(){
@@ -26,6 +39,11 @@ function StatistichePaziente(props){
 
         result = await getServerMgr().getPatientStatistics(patientID);
 
+        risultatiTotali = result;
+        
+    }
+
+    function salvaRisultatiTotali(){
         var today = new Date();
         var day = parseInt(today.toLocaleString('it-IT', {day: '2-digit'}))
         var month = parseInt(today.toLocaleString('it-IT', {month: '2-digit'}))
@@ -33,19 +51,18 @@ function StatistichePaziente(props){
 
         console.log(day);
 
-
         // console.log(result[0].rispTotali);
-        if(result){
+        if(risultatiTotali){
             switch(filtroStatistiche){
                 case "Totali":
-                    result.forEach((item) => {
+                    risultatiTotali.forEach((item) => {
                         setRisposteTotali((prevRispTot) => (prevRispTot + item.rispTotali));
                         setRisposteCorrette((prevRispCorr) => (prevRispCorr + item.rispCorrette));
                         setRisposteSbagliate((prevRispSbag) => (prevRispSbag + item.rispSbagliate));
                     });
                     break;
                 case "ultime 48 ore":
-                    result.forEach((item) => {
+                    risultatiTotali.forEach((item) => {
                         var dataEsecuzioneGioco = new Date(item.dataSvolgimento);
 
                         // console.log(dataEsecuzioneGioco.getFullYear() === year);
@@ -63,7 +80,7 @@ function StatistichePaziente(props){
                     });
                     break;
                 case "ultimo mese":
-                    result.forEach((item) => {
+                    risultatiTotali.forEach((item) => {
                         var dataEsecuzioneGioco = new Date(item.dataSvolgimento);
 
                         // console.log(dataEsecuzioneGioco.getFullYear() === year);
@@ -88,6 +105,7 @@ function StatistichePaziente(props){
             }
             
         }
+        // calculatePercentage();
     }
 
     function filtroStatisticheChangeHandler(event){
@@ -95,13 +113,21 @@ function StatistichePaziente(props){
         console.log(event.target.value)
     }
 
-    if(risposteTotali > 0){
-        fillCorrect = Math.round((risposteCorrette / risposteTotali) * 100) + "%";
-        fillWrong = Math.round((risposteSbagliate / risposteTotali) * 100) + "%";
+    function calculatePercentage(){
+        if(risposteTotali > 0){
+            setFillCorrect(Math.round((risposteCorrette / risposteTotali) * 100));
+            setFillWrong(Math.round((risposteSbagliate / risposteTotali) * 100));
+        }
+        else{
+            setFillCorrect(0)
+            setFillWrong(0)
+        }
     }
+    
 
     return(
         <>
+            <h3>Filtro</h3>
             <select value={filtroStatistiche} onChange={filtroStatisticheChangeHandler} className={styles.select_style}>
                 <option>Totali</option>
                 <option>ultime 48 ore</option>
@@ -110,12 +136,21 @@ function StatistichePaziente(props){
             {/* <h1>CIAOO</h1> */}
             <div className={styles.wrapper_statistiche}>
                 <div className={styles.wrapper_barre}>
-                    <div className={styles.barra}>
+                    {/* <div className={styles.barra}>
                         <div style={{width: fillCorrect}} className={styles.riempimento_barra_corrette}></div>
+                    </div> */}
+                    <div style={{width: "60%", margin: "5px"}}>
+                        <ProgressBar now={fillCorrect} variant="success"
+                        ></ProgressBar>
                     </div>
-                    <div className={styles.barra}>
+                    <div style={{width: "60%", margin: "5px"}}>
+                        <ProgressBar now={fillWrong} variant="danger"
+                        ></ProgressBar>
+                    </div>
+
+                    {/* <div className={styles.barra}>
                         <div style={{width: fillWrong}} className={styles.riempimento_barra_sbagliate}></div>
-                    </div>
+                    </div> */}
                 </div>
                 <label className={styles.content_style}>Risposte totali: {risposteTotali}</label>
                 <label className={styles.content_style}>Risposte corrette: {risposteCorrette}</label>

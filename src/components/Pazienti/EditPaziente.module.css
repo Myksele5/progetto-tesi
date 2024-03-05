@@ -72,38 +72,6 @@
     width: 100%;
 }
 
-.wrap_content{
-    text-align: center;
-    width: 840px;
-    padding: 0 20px;
-    font-size: 18px;
-}
-
-.container_flexible_GENERIC{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: fit-content;
-}
-
-.container_flexible_SEZIONE_SINTESI_LABELS{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: fit-content;
-}
-.container_flexible_SEZIONE_SINTESI_LABELS:nth-last-child(0){
-    border-right: none;
-}
-
-.container_flexible_SEZIONE_SINTESI_CONTENTS{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-}
-
 .container_flexible_INFO{
     width: 95%;
     border: 1px solid #1E56A0;
@@ -126,39 +94,6 @@
     font-size: 18px;
     text-align: center;
     text-decoration: underline;
-}
-
-.border_right{
-    border-right: 1px solid #163172;
-}
-
-.section_style{
-    margin: 5px;
-    height: fit-content;
-    max-height: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    overflow-y: auto;
-    /* width: 620px; */
-}
-
-.section_style::-webkit-scrollbar{
-    width: 10px;
-    border-radius: 10px;
-}
-
-.section_style_FORM{
-    margin: 5px;
-    height: fit-content;
-    max-height: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    overflow-y: auto;
-    /* width: 620px; */
 }
 
 .title_form{
@@ -505,37 +440,9 @@
     .container_flexible_INFO{
         width: 540px;
     }
-
-    .container_flexible_GENERIC{
-        width: 460px;
-        flex-direction: row;
-    }
-
-    .container_flexible_SEZIONE_SINTESI_LABELS, .container_flexible_SEZIONE_SINTESI_CONTENTS{
-        flex-direction: column;
-        height: fit-content;
-    }
-
-    .container_flexible_SEZIONE_SINTESI_CONTENTS{
-        width: 100%;
-    }
 }
 
 @media screen and (max-width: 799px) {
-    .container_flexible_GENERIC{
-        width: 420px;
-    }
-
-    .container_flexible_INFO{
-        width: 360px;
-    }
-    
-    .container_flexible_DATE{
-        flex-direction: column;
-        height: 140px;
-        width: 360px;
-    }
-
     .title_form{
         font-size: 18px;
         margin: 2px;
@@ -561,20 +468,6 @@
 }
 
 @media screen and (max-width: 549px) {
-    .container_flexible_GENERIC{
-        width: 320px;
-    }
-
-    .container_flexible_INFO{
-        width: 240px;
-    }
-
-    .container_flexible_DATE{
-        flex-direction: column;
-        height: 120px;
-        width: 240px;
-    }
-
     .option_style{
         width: 280px;
         font-size: 16px;
@@ -587,11 +480,5 @@
 
     .listaMedica_label_TERAPIA, .listaMedica_content_TERAPIA, .listaMedica_label_DATA, .listaMedica_label_NOTE, .listaMedica_content_NOTE{
         font-size: 14px;
-    }
-}
-
-@media screen and (max-width:500px) {
-    .container_flexible_GENERIC{
-        width: 200px;
     }
 }

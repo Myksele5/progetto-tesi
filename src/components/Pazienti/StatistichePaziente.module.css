@@ -3,7 +3,7 @@
     border-radius: 10px;
     background-color: #D6E4F0;
     padding: 20px;
-    width: 400px;
+    width: 60%;
     margin: 15px;
     display: flex;
     flex-direction: column;
@@ -11,11 +11,11 @@
 
 .select_style{
     margin: 5px;
-    width: 200px;
-    height: 25px;
+    width: 50%;
+    height: 30px;
     border-radius: 5px;
     border: 2px solid #1E56A0;
-    font-size: 17px;
+    font-size: 18px;
     text-align: center;
 }
 

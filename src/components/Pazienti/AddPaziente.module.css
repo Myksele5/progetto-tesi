@@ -405,10 +405,6 @@
 }
 
 @media screen and (max-width: 1000px) {
-    .container_flexible_INFO{
-        /* width: 640px; */
-    }
-
     .title_form{
         font-size: 22px;
         margin: 4px;
@@ -432,50 +428,9 @@
     .wrapper_date{
         flex-direction: column;
     }
-
-    .container_flexible_INFO{
-        /* width: 540px; */
-    }
-
-    .container_flexible_GENERIC{
-        width: 460px;
-        flex-direction: row;
-    }
-
-    .container_flexible_SEZIONE_SINTESI_LABELS, .container_flexible_SEZIONE_SINTESI_CONTENTS{
-        flex-direction: column;
-        height: fit-content;
-    }
-
-    .container_flexible_SEZIONE_SINTESI_CONTENTS{
-        width: 100%;
-    }
 }
 
 @media screen and (max-width: 799px) {
-
-    .absolute_div{
-        top: 160px;
-    }
-
-    .absolute_buttons_wrapper{
-        width: 480px;
-    }
-
-    .container_flexible_GENERIC{
-        width: 420px;
-    }
-
-    .container_flexible_INFO{
-        /* width: 360px; */
-    }
-    
-    .container_flexible_DATE{
-        flex-direction: column;
-        height: 140px;
-        width: 360px;
-    }
-
     .title_form{
         font-size: 18px;
         margin: 2px;
@@ -497,37 +452,6 @@
 }
 
 @media screen and (max-width: 549px) {
-    .absolute_div{
-        top: 155px;
-    }
-
-    .absolute_buttons_wrapper{
-        width: 300px;
-    }
-
-    .container_flexible_GENERIC{
-        width: 320px;
-    }
-
-    .section_style{
-        width: 400px;
-    }
-
-    .container_flexible_INFO{
-        /* width: 240px; */
-    }
-
-    .container_flexible_DATE{
-        flex-direction: column;
-        height: 120px;
-        width: 240px;
-    }
-
-    /* .select_style{
-        width: 280px;
-        font-size: 16px;
-    } */
-
     .option_style{
         width: 280px;
         font-size: 16px;
@@ -535,15 +459,5 @@
 
     .listaMedica_label_TERAPIA, .listaMedica_content_TERAPIA, .listaMedica_label_DATA, .listaMedica_label_NOTE, .listaMedica_content_NOTE{
         font-size: 14px;
-    }
-}
-
-@media screen and (max-width:500px) {
-    .container_flexible_GENERIC{
-        width: 200px;
-    }
-
-    .section_style{
-        width: 280px;
     }
 }
