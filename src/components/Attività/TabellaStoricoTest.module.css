@@ -1,0 +1,116 @@
+.wrapper_horizontal_labels{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid #163172;
+    width: 80%;
+    padding: 5px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.wrapper_horizontal_content{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid #163172;
+    width: 80%;
+    padding: 5px;
+    text-align: center;
+    font-size: 20px;
+}
+/* .wrapper_horizontal_content:hover{
+    color: white;
+    background-color: #08193d;
+} */
+
+.wrapper_horizontal_content:last-child{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.label_nome{
+    width: 25%;
+    /* max-width: 150px; */
+}
+.content_nome{
+    width: 25%;
+    /* max-width: 150px; */
+}
+
+.label_cognome{
+    width: 25%;
+    /* max-width: 150px; */
+}
+.content_cognome{
+    width: 25%;
+    /* max-width: 150px; */
+}
+.label_tipoTest{
+    width: 15%;
+    /* max-width: 60px; */
+}
+.content_tipoTest{
+    width: 15%;
+    /* max-width: 60px; */
+}
+.label_scoreTest{
+    width: 15%;
+    /* max-width: 100px; */
+}
+.content_scoreTest{
+    width: 15%;
+    /* max-width: 100px; */
+}
+.label_data{
+    width: 20%;
+    /* max-width: 100px; */
+}
+.content_data{
+    width: 20%;
+    /* max-width: 100px; */
+}
+
+@media screen and (max-width: 1000px) {
+    .wrapper_horizontal_labels{
+        font-size: 18px;
+    }
+    
+    .wrapper_horizontal_content{
+        font-size: 18px;
+    }
+    .label_nome, .label_cognome, .label_tipoTest, .label_scoreTest, .label_data, .content_nome, .content_cognome, .content_tipoTest, .content_scoreTest, .content_data{
+        width: 20%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .wrapper_horizontal_labels{
+        font-size: 16px;
+        width: 95%;
+    }
+    
+    .wrapper_horizontal_content{
+        font-size: 16px;
+        width: 95%;
+    }
+    .label_nome, .label_cognome, .label_tipoTest, .label_scoreTest, .label_data, .content_nome, .content_cognome, .content_tipoTest, .content_scoreTest, .content_data{
+        width: 20%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .wrapper_horizontal_labels{
+        font-size: 13px;
+    }
+    
+    .wrapper_horizontal_content{
+        font-size: 12px;
+    }
+    .label_nome, .label_cognome, .label_tipoTest, .label_scoreTest, .label_data, .content_nome, .content_cognome, .content_tipoTest, .content_scoreTest, .content_data{
+        width: 20%;
+    }
+}

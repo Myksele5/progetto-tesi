@@ -5,3 +5,20 @@
     justify-content: center;
     align-items: center;
 }
+
+.label_style{
+    width: 60%;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: start;
+}
+
+.select_style{
+    margin: 5px;
+    width: 60%;
+    height: 35px;
+    border-radius: 15px;
+    border: 2px solid #1E56A0;
+    font-size: 18px;
+    text-align: center;
+}

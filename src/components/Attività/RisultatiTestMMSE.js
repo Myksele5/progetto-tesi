@@ -403,46 +403,77 @@ function RisultatiTestMMSE(props){
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 1 - Orientamento</h3>
 
-                    <div className={styles.wrapper_horizontal}>
+                    <div className={styles.wrapper_vertical}>
                         <div className={styles.domanda_style}>In che anno ci troviamo?</div>
-                        <input onChange={ac_1_qstn1_changeHandler} value={areaCog_1_domanda_1} className={styles.input_style} type="number" min={0} max={1}></input>
+                        <div className={styles.wrapper_horizontal}>
+                            <input className={styles.risposta_style}></input>
+                            <input onChange={ac_1_qstn1_changeHandler} value={areaCog_1_domanda_1} className={styles.input_style} type="number" min={0} max={1}></input>
+                        </div>
                     </div>
-                    <div className={styles.wrapper_horizontal}>
+                    <div className={styles.wrapper_vertical}>
                         <div className={styles.domanda_style}>Che giorno è oggi?</div>
-                        <input onChange={ac_1_qstn2_changeHandler} value={areaCog_1_domanda_2} className={styles.input_style} type="number" min={0} max={1}></input>
+                        <div className={styles.wrapper_horizontal}>
+                            <input className={styles.risposta_style}></input>
+                            <input onChange={ac_1_qstn2_changeHandler} value={areaCog_1_domanda_2} className={styles.input_style} type="number" min={0} max={1}></input>
+                        </div>
                     </div>
-                    <div className={styles.wrapper_horizontal}>
+                    <div className={styles.wrapper_vertical}>
                         <div className={styles.domanda_style}>In che mese siamo?</div>
-                        <input onChange={ac_1_qstn3_changeHandler} value={areaCog_1_domanda_3} className={styles.input_style} type="number" min={0} max={1}></input>
+                        <div className={styles.wrapper_horizontal}>
+                            <input className={styles.risposta_style}></input>
+                            <input onChange={ac_1_qstn3_changeHandler} value={areaCog_1_domanda_3} className={styles.input_style} type="number" min={0} max={1}></input>
+                        </div>
                     </div>
-                    <div className={styles.wrapper_horizontal}>
+                    <div className={styles.wrapper_vertical}>
                         <div className={styles.domanda_style}>In che stagione?</div>
-                        <input onChange={ac_1_qstn4_changeHandler} value={areaCog_1_domanda_4} className={styles.input_style} type="number" min={0} max={1}></input>
+                        <div className={styles.wrapper_horizontal}>
+                            <input className={styles.risposta_style}></input>
+                            <input onChange={ac_1_qstn4_changeHandler} value={areaCog_1_domanda_4} className={styles.input_style} type="number" min={0} max={1}></input>
+                        </div>
                     </div>
-                    <div className={styles.wrapper_horizontal}>
+                    <div className={styles.wrapper_vertical}>
                         <div className={styles.domanda_style}>Quale giorno della settimana è oggi?</div>
-                        <input onChange={ac_1_qstn5_changeHandler} value={areaCog_1_domanda_5} className={styles.input_style} type="number" min={0} max={1}></input>
+                        <div className={styles.wrapper_horizontal}>
+                            <input className={styles.risposta_style}></input>
+                            <input onChange={ac_1_qstn5_changeHandler} value={areaCog_1_domanda_5} className={styles.input_style} type="number" min={0} max={1}></input>
+                        </div>
                     </div>
-                    <div className={styles.wrapper_horizontal}>
+                    <div className={styles.wrapper_vertical}>
                         <div className={styles.domanda_style}>Dove ci troviamo?</div>
-                        <input onChange={ac_1_qstn6_changeHandler} value={areaCog_1_domanda_6} className={styles.input_style} type="number" min={0} max={1}></input>
+                        <div className={styles.wrapper_horizontal}>
+                            <input className={styles.risposta_style}></input>
+                            <input onChange={ac_1_qstn6_changeHandler} value={areaCog_1_domanda_6} className={styles.input_style} type="number" min={0} max={1}></input>
+                        </div>
                     </div>
-                    <div className={styles.wrapper_horizontal}>
+                    <div className={styles.wrapper_vertical}>
                         <div className={styles.domanda_style}>A che piano?</div>
-                        <input onChange={ac_1_qstn7_changeHandler} value={areaCog_1_domanda_7} className={styles.input_style} type="number" min={0} max={1}></input>
+                        <div className={styles.wrapper_horizontal}>
+                            <input className={styles.risposta_style}></input>
+                            <input onChange={ac_1_qstn7_changeHandler} value={areaCog_1_domanda_7} className={styles.input_style} type="number" min={0} max={1}></input>
+                        </div>
                     </div>
-                    <div className={styles.wrapper_horizontal}>
+                    <div className={styles.wrapper_vertical}>
                         <div className={styles.domanda_style}>In quale paese?</div>
-                        <input onChange={ac_1_qstn8_changeHandler} value={areaCog_1_domanda_8} className={styles.input_style} type="number" min={0} max={1}></input>
+                        <div className={styles.wrapper_horizontal}>
+                            <input className={styles.risposta_style}></input>
+                            <input onChange={ac_1_qstn8_changeHandler} value={areaCog_1_domanda_8} className={styles.input_style} type="number" min={0} max={1}></input>
+                        </div>
                     </div>
-                    <div className={styles.wrapper_horizontal}>
+                    <div className={styles.wrapper_vertical}>
                         <div className={styles.domanda_style}>In che regione siamo?</div>
-                        <input onChange={ac_1_qstn9_changeHandler} value={areaCog_1_domanda_9} className={styles.input_style} type="number" min={0} max={1}></input>
+                        <div className={styles.wrapper_horizontal}>
+                            <input className={styles.risposta_style}></input>
+                            <input onChange={ac_1_qstn9_changeHandler} value={areaCog_1_domanda_9} className={styles.input_style} type="number" min={0} max={1}></input>
+                        </div>
                     </div>
-                    <div className={styles.wrapper_horizontal}>
+                    <div className={styles.wrapper_vertical}>
                         <div className={styles.domanda_style}>In quale città siamo adesso?</div>
-                        <input onChange={ac_1_qstn10_changeHandler} value={areaCog_1_domanda_10} className={styles.input_style} type="number" min={0} max={1}></input>
+                        <div className={styles.wrapper_horizontal}>
+                            <input className={styles.risposta_style}></input>
+                            <input onChange={ac_1_qstn10_changeHandler} value={areaCog_1_domanda_10} className={styles.input_style} type="number" min={0} max={1}></input>
+                        </div>
                     </div>
+
                     <hr style={{width: "100%"}}></hr>
                     <div className={styles.wrapper_horizontal}>
                         <h3 style={{width: "80%"}} className={styles.domanda_style}>Punteggio Area Cognitiva 1: </h3>

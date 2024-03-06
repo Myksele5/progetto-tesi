@@ -5,21 +5,32 @@ import { useContext, useEffect, useState } from "react";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import TestsContext from "../../context/tests-context";
 import AddValutazione from "./AddValutazione";
+import TabellaStoricoTest from "./TabellaStoricoTest";
 
 function Attività(){
     const tests_ctx = useContext(TestsContext);
 
     return(
         <>
-            <h1 className={styles.page_title}>TEST</h1>
             <div className={styles.wrap_boxes}>
-                <GenericButton
-                    onClick={tests_ctx.showFormAddValutazione}
-                    generic_button={true}
-                    buttonText={"Nuova valutazione"}
-                >
-                </GenericButton>
+                {!tests_ctx.formAddValutazione &&
+                    <GenericButton
+                        onClick={tests_ctx.showFormAddValutazione}
+                        generic_button={true}
+                        buttonText={"Nuova valutazione"}
+                    >
+                    </GenericButton>
+                }
+                {tests_ctx.formAddValutazione &&
+                    <GenericButton
+                        onClick={tests_ctx.hideFormAddValutazione}
+                        buttonText={"Annulla valutazione"}
+                        red_styling
+                        generic_button
+                    ></GenericButton>
+                }
             </div>
+            {!tests_ctx.formAddValutazione && <h1 className={styles.page_title}>TEST</h1>}
 
             <div className={styles.wrapper_page}>
                 {tests_ctx.formAddValutazione &&
@@ -29,29 +40,7 @@ function Attività(){
                 {tests_ctx.mainPage &&
                 <>
                     <h1>STORICO DEI TEST</h1>
-                    <div className={styles.wrapper_vertical}>
-                        <div className={styles.wrapper_horizontal_labels}>
-                            <label className={styles.label_nome}>Nome Paziente</label>
-                            <label className={styles.label_cognome}>Cognome Paziente</label>
-                            <label className={styles.label_tipoTest}>Tipo Test</label>
-                            <label className={styles.label_scoreTest}>Punteggio</label>
-                            <label className={styles.label_data}>Data svolgimento</label>
-                        </div>
-                        {tests_ctx.listaTest?.map((test) => (
-                            <div className={styles.wrapper_horizontal_content}>
-                                <div className={styles.label_nome}>{test.nome}</div>
-                                <div className={styles.label_cognome}>{test.cognome}</div>
-                                <div className={styles.label_tipoTest}>{test.tipoTest}</div>
-                                <div className={styles.label_scoreTest}>{test.punteggioTest}</div>
-                                <div className={styles.label_data}>{test.dataSvolgimento}</div>
-                            </div>
-                        ))
-
-                        }
-                        
-                        
-                        
-                    </div>
+                    <TabellaStoricoTest></TabellaStoricoTest>
                 </>
                 }
             </div>

@@ -22,18 +22,11 @@ function AddValutazione(){
 
     return(
         <div className={styles.form_wrapper}>
-            <GenericButton
-                onClick={tests_ctx.hideFormAddValutazione}
-                buttonText={"Annulla valutazione"}
-                red_styling
-                generic_button
-            ></GenericButton>
-
             {tipoTestSelezionato.length === 0 &&
                 <>
-                    <label>Seleziona paziente</label>
+                    <label className={styles.label_style}>Seleziona paziente</label>
 
-                    <select onChange={pazienteSelezionatoChangeHandler}>
+                    <select className={styles.select_style} onChange={pazienteSelezionatoChangeHandler}>
                         <option hidden>--seleziona--</option>
                         {patients_ctx.listaPazienti.map(patients_ctx.arrayToLista)}
                     </select>
@@ -41,9 +34,9 @@ function AddValutazione(){
             }
             {Object.keys(pazienteSelezionato).length > 0 && tipoTestSelezionato.length === 0 &&
                 <>
-                    <label>Seleziona il tipo di test</label>
+                    <label className={styles.label_style}>Seleziona il tipo di test</label>
 
-                    <select onChange={tipoTestSelezionatoChangeHandler}>
+                    <select className={styles.select_style} onChange={tipoTestSelezionatoChangeHandler}>
                         <option hidden>--seleziona--</option>
                         <option>Test MMSE</option>
                         <option>Test MoCA</option>
