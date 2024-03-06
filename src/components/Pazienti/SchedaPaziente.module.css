@@ -276,6 +276,7 @@
     }
 
     .sintesiMedica_label_PATOLOGIA, .sintesiMedica_label_TERAPIA, .sintesiMedica_label_DATA, .sintesiMedica_label_NOTE{
+        width: 100%;
         text-align: center;
     }
     .sintesiMedica_content_PATOLOGIA, .sintesiMedica_content_TERAPIA, .sintesiMedica_content_DATA, .sintesiMedica_content_NOTE{

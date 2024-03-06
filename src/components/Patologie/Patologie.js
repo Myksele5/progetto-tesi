@@ -9,6 +9,7 @@ import ElencoTerapie from "./ElencoTerapie";
 import AddPatologia from "./AddPatologia";
 import { getServerMgr } from "../../backend_conn/ServerMgr";
 import { Card } from "react-bootstrap";
+import SearchBox from "../UI/SearchBox";
 
 function Patologie(){
     const patologies_ctx = useContext(PatologiesContext);
@@ -60,12 +61,24 @@ function Patologie(){
         // });
     }
 
+    function cercaPatologia(event){
+        patologies_ctx.searchPatology(event.target.value)
+    }
+
     return(
         <>
             {patologies_ctx.showModale && patologies_ctx.modale}
 
             {patologies_ctx.topBar && 
                 <div className={styles.wrap_boxes}>
+                    <select onChange={(event) => {
+                        patologies_ctx.selectOrder(event.target.value)
+                    }} className={styles.select_style}>
+                        <option hidden>Ordina per...</option>
+                        <option>NOME - Asc</option>
+                        <option>NOME - Disc</option>
+                    </select>
+
                     <GenericButton
                         onClick={() => {
                             setPatologiaVisualizzata([]);
@@ -75,6 +88,11 @@ function Patologie(){
                         generic_button={true}
                     >
                     </GenericButton>
+
+                    <SearchBox
+                        onChange={cercaPatologia}
+                    >
+                    </SearchBox>
                 </div>
             }
             <h1 className={styles.page_title}>Patologie</h1>
@@ -93,6 +111,8 @@ function Patologie(){
                 {patologies_ctx.visibleLista &&
                 <div className={styles.wrapper_vertical}>
                     {patologies_ctx.uniqueList.map((pat) => (
+                        <>
+                        {(patologies_ctx.patologySearched.length === 0 || pat.nomePatologia.toUpperCase().includes(patologies_ctx.patologySearched.toUpperCase())) &&
                         <Card className={styles.card_style}>
                             <Card.Body>
                                 <div className={styles.wrapper_horizontal}>
@@ -122,6 +142,9 @@ function Patologie(){
                                 
                             </Card.Body>
                         </Card>
+                        }
+                        </>
+                        
                     ))}
                 </div>
                 }

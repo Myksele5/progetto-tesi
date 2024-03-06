@@ -33,29 +33,46 @@
     border-radius: 10px;
 }
 
+.card_style{
+    margin: 10px;
+    width: 100%;
+}
+
+.card_style:hover{
+    background-color: #D6E4F0;
+    transition: 0.3s;
+    box-shadow: 4px 4px 10px 2px #163172;
+}
+
 .wrap_content{
-    text-align: center;
-    width: 840px;
-    padding: 0 20px;
-    font-size: 18px;
+    text-align: start;
+    width: 100%;
+    padding: 15px;
+    padding-bottom: 2px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .wrap_content_TERAPIA{
-    text-align: center;
-    width: 840px;
-    margin: 10px;
+    text-align: start;
+    width: 100%;
+    margin: 0px;
+    padding: 15px;
+    padding-top: 2px;
     word-wrap: break-word;
+    font-size: 22px;
+    font-weight: normal;
     /* border-right: 2px solid #163172; */
     /* min-height: 100px; */
 }
 
 .input_style_MODIFICA_TERAPIA{
-    min-width: 300px;
-    width: 500px;
-    max-width: 700px;
+    width: 95%;
     min-height: 50px;
     height: 100px;
     max-height: 200px;
+    margin: 10px;
+    padding: 10px;
     border: 2px solid #1E56A0;
     border-radius: 8px;
     font-size: 20px;
@@ -80,137 +97,15 @@
     border: 2px solid red;
 }
 
-@media screen and (max-width: 1350px) {
-    .scrollable_div{
-        width: 900px;
-    }
-
-    .wrap_content, .wrap_content_TERAPIA{
-        width: 740px;
-    }
-}
-
-@media screen and (max-width: 1200px) {
-    .scrollable_div{
-        max-height: 500px;
-    }
-}
-
-@media screen and (max-width: 999px) {
-    .scrollable_div{
-        width: 800px;
-        /* max-height: 440px; */
-    }
-
-    .wrap_content, .wrap_content_TERAPIA{
-        width: 640px;
-    }
-}
-
-@media screen and (max-width: 899px) {
-    .scrollable_div{
-        width: 650px;
-    }
-
-    .wrap_content, .wrap_content_TERAPIA{
-        width: 500px;
-    }
-
-    .input_style_MODIFICA_TERAPIA{
-        min-width: 300px;
-        width: 450px;
-        max-width: 500px;
-        height: 100px;
-        max-height: 150px;
-    }
-}
-
-@media screen and (max-width: 749px) {
-    .scrollable_div{
-        width: 500px;
-        /* max-height: 400px; */
-    }
-
-    .wrap_content, .wrap_content_TERAPIA{
-        width: 360px;
-    }
-
-    .wrap_content_TERAPIA{
-        font-size: 16px;
-    }
-
-    .input_style_MODIFICA_TERAPIA{
-        min-width: 250px;
-        width: 300px;
-        max-width: 350px;
-        height: 100px;
-        max-height: 150px;
-    }
-}
-
-@media screen and (max-width: 650px) {
-    .scrollable_div{
-        width: 450px;
-        /* max-height: 400px; */
-    }
-
-    .wrap_content, .wrap_content_TERAPIA{
-        width: 300px;
-    }
-}
-
-@media screen and (max-width: 540px) {
-    .scrollable_div{
-        width: 300px;
-        /* max-height: 400px; */
-    }
-
-    .wrap_content, .wrap_content_TERAPIA{
-        width: 180px;
-        max-height: 100px;
-        overflow-y: auto;
-        font-size: 15px;
-    }
-
-    .wrap_content::-webkit-scrollbar, .wrap_content_TERAPIA::-webkit-scrollbar{
-        width: 8px;
-    }
-
-    .input_style_MODIFICA_TERAPIA{
-        min-width: 150px;
-        width: 190px;
-        max-width: 210px;
-        height: 100px;
-        max-height: 150px;
-        font-size: 16px;
-    }
-}
-
 @media screen and (max-height: 900px) {
     .scrollable_div{
         max-height: 500px;
-    }
-
-    .wrap_content{
-        font-size: 14px;
-    }
-    
-    .wrap_content_TERAPIA{
-        font-size: 16px;
     }
 }
 @media screen and (max-height: 800px) {
     .scrollable_div{
         max-height: 450px;
     }
-
-    /* .wrap_content{
-        font-size: 14px;
-    }
-    
-    .wrap_content_TERAPIA{
-        font-size: 18px;
-    } */
 }
 @media screen and (max-height: 750px) {
     .scrollable_div{

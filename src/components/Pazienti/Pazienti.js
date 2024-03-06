@@ -10,7 +10,7 @@ import PatientContext from "../../context/patients-context";
 
 function Pazienti(){
     const patients_ctx = useContext(PatientContext);
-    const [stringaDaCercare, setStringaDaCercare] = useState("");
+    // const [stringaDaCercare, setStringaDaCercare] = useState("");
 
     let tabella = 
         <TabellaPazienti
@@ -22,13 +22,9 @@ function Pazienti(){
         console.log(patients_ctx.listaPazienti);
     }, [])
 
-    useEffect(() => {
-        
-    }, [stringaDaCercare])
-
     function cercaInfoPaziente(event){
         patients_ctx.cercaPaziente(event.target.value);
-        setStringaDaCercare(event.target.value);
+        // setStringaDaCercare(event.target.value);
     }
 
     return(

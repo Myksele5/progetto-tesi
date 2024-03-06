@@ -15,9 +15,12 @@ function AddPatologia(){
     const [tabSelezionata, setTabSelezionata] = useState(1);
     const [terapieAssociate, setTerapieAssociate] = useState([{newTerapID: counterTerapie, terapia: "", note: ""}]);
 
-    useEffect(() => {
-        console.log(terapieAssociate)
-    }, [terapieAssociate])
+    const [currentTerapia, setCurrentTerapia] = useState(terapieAssociate[0].terapia);
+    const [currentNote, setCurrentNote] = useState(terapieAssociate[0].note);
+
+    // useEffect(() => {
+    //     console.log(terapieAssociate)
+    // }, [terapieAssociate])
 
     function aggiungiNuovaTerapia(){
         let prossimoIDterapia = counterTerapie + 1;
@@ -51,6 +54,7 @@ function AddPatologia(){
     function terapiaChangeHandler(event, id){
         terapieAssociate.map((terapia) => {
             if(terapia.newTerapID === id){
+                setCurrentTerapia(event.target.value)
                 terapia.terapia = event.target.value
             }
         })
@@ -58,6 +62,7 @@ function AddPatologia(){
     function noteDellaTerapiaChangeHandler(event, id){
         terapieAssociate.map((terapia) => {
             if(terapia.newTerapID === id){
+                setCurrentNote(event.target.value)
                 terapia.note = event.target.value
             }
         })
@@ -88,20 +93,23 @@ function AddPatologia(){
                 <input className={styles.input_style} onChange={patologiaChangeHandler} value={nomePatologia}></input>
 
                 <div style={{width: "100%"}}>
-                    <Tabs id="controlled-tab-example" activeKey={tabSelezionata} onSelect={(key) => {setTabSelezionata(key)}}>
+                    <Tabs id="controlled-tab-example" activeKey={tabSelezionata} onSelect={(key) => {
+                        setTabSelezionata(key);
+                    }}
+                    >
                         {terapieAssociate.map((singleTerap) => (
                             <Tab eventKey={singleTerap.newTerapID} title={"TERAPIA " + singleTerap.newTerapID}>
 
                                 <div className={styles.wrapper_terapia_form}>
                                     <label className={styles.label_style_TERAPIA}>Inserisci terapia:</label>
-                                    <textarea className={styles.textarea_style_TERAPIA} onChange={(event) => {
+                                    <textarea className={styles.textarea_style_TERAPIA} value={singleTerap.terapia} onChange={(event) => {
                                         terapiaChangeHandler(event, singleTerap.newTerapID)
                                     }}
                                     >
                                     </textarea>
 
                                     <label className={styles.label_style_TERAPIA}>Note:</label>
-                                    <textarea className={styles.textarea_style_TERAPIA} onChange={(event) => {
+                                    <textarea className={styles.textarea_style_TERAPIA} value={singleTerap.note} onChange={(event) => {
                                         noteDellaTerapiaChangeHandler(event, singleTerap.newTerapID)
                                     }}
                                     >

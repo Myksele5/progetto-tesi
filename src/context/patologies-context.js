@@ -31,10 +31,16 @@ const PatologiesContext = React.createContext({
     confirmDeletePatology: ()=>{},
     confirmDeleteTherapy: ()=>{},
     addNewTherapy: ()=>{},
-    editTherapy: ()=>{}
+    editTherapy: ()=>{},
+    patologySearched: null,
+    searchPatology: ()=>{},
+    selectOrder: ()=>{}
 })
 
 export function PatologiesContextProvider(props){
+    const [stringaCercata, setStringaCercata] = useState("");
+    const [ordinamentoSelezionato, setOrdinamentoSelezionato] = useState("");
+
     const [elencoPatologie, setElencoPatologie] = useState([]);
     const [elencoTerapie, setElencoTerapie] = useState([]);
     const [elencoUnico, setElencoUnico] = useState([]);
@@ -161,6 +167,7 @@ export function PatologiesContextProvider(props){
 
     function mostraElencoTerapie(){
         setShowTherapies(true);
+        setStringaCercata("")
     }
 
     function nascondiElencoTerapie(){
@@ -170,6 +177,7 @@ export function PatologiesContextProvider(props){
     function mostraFormAggiuntaPatologia(){
         nascondiListaPatologie();
         nascondiTopBar();
+        setStringaCercata("")
         mostraFormNuovaPat();
     }
 
@@ -267,6 +275,54 @@ export function PatologiesContextProvider(props){
         setPatologiaSelezionataFormPaziente(pat);
     }
 
+    function searchPatology(stringaDaCercare){
+        console.log(stringaDaCercare)
+        setStringaCercata(stringaDaCercare);
+    }
+
+    function ordinamento(orderBy){
+        switch(orderBy){
+            case "NOME - Asc":
+                ordinaPerNome("ASC");
+                break;
+            case "NOME - Disc":
+                ordinaPerNome("DISC");
+                break;
+            default:
+                break;
+        }
+        setOrdinamentoSelezionato(orderBy);
+    }
+
+    function ordinaPerNome(verso){
+        if(verso === "ASC"){
+            setElencoUnico(elencoUnico.sort(comparazionePerNome_ASCENDENTE));
+        }
+        if(verso === "DISC"){
+            setElencoUnico(elencoUnico.sort(comparazionePerNome_DISCENDENTE));
+        }
+        // console.log(elencoPazienti);
+    }
+
+    function comparazionePerNome_ASCENDENTE(a, b){
+        if(a.nomePatologia.toUpperCase() < b.nomePatologia.toUpperCase()){
+            return -1;
+        }
+        if(a.nomePatologia.toUpperCase() > b.nomePatologia.toUpperCase()){
+            return 1;
+        }
+        return 0;
+    }
+    function comparazionePerNome_DISCENDENTE(a, b){
+        if(a.nomePatologia.toUpperCase() > b.nomePatologia.toUpperCase()){
+            return -1;
+        }
+        if(a.nomePatologia.toUpperCase() < b.nomePatologia.toUpperCase()){
+            return 1;
+        }
+        return 0;
+    }
+
     return(
         <PatologiesContext.Provider
             value={{
@@ -296,7 +352,10 @@ export function PatologiesContextProvider(props){
                 confirmDeletePatology: confermaEliminazionePatologia,
                 confirmDeleteTherapy: confermaEliminazioneTerapia,
                 addNewTherapy: salvaNuovaTerapia,
-                editTherapy: modificaTerapia
+                editTherapy: modificaTerapia,
+                patologySearched: stringaCercata,
+                searchPatology: searchPatology,
+                selectOrder: ordinamento
             }}
         >
             {props.children}
