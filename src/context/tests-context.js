@@ -2,12 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 import TestCard from "../components/UI/TestCard";
 import { getServerMgr } from "../backend_conn/ServerMgr";
 import PatientContext from "./patients-context";
+import SchedaSingoloTest from "../components/Attività/SchedaSingoloTest";
+
+let scheda_test_paziente;
 
 const TestsContext = React.createContext({
     listaTest: null,
     mainPage: null,
     showMainPage: ()=>{},
     hideMainPage: ()=>{},
+    testPaziente: null,
+    prendiTestPaziente:()=>{},
+    schedaSingoloTest: null,
+    showSchedaTest:()=>{},
+    hideSchedaTest:()=>{},
     formAddValutazione: null,
     showFormAddValutazione: ()=>{},
     hideFormAddValutazione: ()=>{},
@@ -20,6 +28,7 @@ export function TestsContextProvider(props){
 
     const [elencoTest, setElencoTest] = useState([]);
     const [mainPage, setMainPage] = useState(true);
+    const [schedaTest, setSchedaTest] = useState(false);
     const [formValutazione, setFormValutazione] = useState(false);
 
     useEffect(() => {
@@ -33,11 +42,29 @@ export function TestsContextProvider(props){
         setElencoTest(result);
     }
 
+    function getPatientTest(testID){
+        showSchedaTest();
+
+        scheda_test_paziente = 
+        <SchedaSingoloTest
+            id={testID}
+        ></SchedaSingoloTest>
+    }
+
     function showMainPage(){
         setMainPage(true);
     }
     function hideMainPage(){
         setMainPage(false);
+    }
+
+    function showSchedaTest(){
+        setSchedaTest(true);
+        hideMainPage();
+    }
+    function hideSchedaTest(){
+        setSchedaTest(false);
+        showMainPage();
     }
 
     function showFormAddValutazione(){
@@ -68,7 +95,7 @@ export function TestsContextProvider(props){
         patients_ctx.updateListaPazienti();
     }
 
-    async function salvaRisultatoTestMoCA(resultMoCA, pazienteID){
+    async function salvaRisultatoTestMoCA(resultMoCA, pazienteID, arrayRisposte){
         var dateee = new Date();
         var day = dateee.toLocaleString('it-IT', {day: '2-digit'})
         var month = dateee.toLocaleString('it-IT', {month: '2-digit'})
@@ -79,7 +106,7 @@ export function TestsContextProvider(props){
         result = await getServerMgr().saveResultMoCA(resultMoCA, pazienteID)
         .catch((err) => {console.error(err)})
 
-        await getServerMgr().updateTestResultList(pazienteID, "MoCA", resultMoCA, dateString)
+        await getServerMgr().updateTestResultList(pazienteID, "MoCA", resultMoCA, dateString, arrayRisposte)
         .catch((err) => {console.error(err)})
 
         getTestsList();
@@ -93,6 +120,11 @@ export function TestsContextProvider(props){
             mainPage: mainPage,
             showMainPage: showMainPage,
             hideMainPage: hideMainPage,
+            testPaziente: scheda_test_paziente,
+            prendiTestPaziente: getPatientTest,
+            schedaSingoloTest: schedaTest,
+            showSchedaTest:showSchedaTest,
+            hideSchedaTest:hideSchedaTest,
             formAddValutazione: formValutazione,
             showFormAddValutazione: showFormAddValutazione,
             hideFormAddValutazione: hideFormAddValutazione,

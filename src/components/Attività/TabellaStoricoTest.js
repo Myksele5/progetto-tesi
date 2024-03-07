@@ -8,6 +8,7 @@ function TabellaStoricoTest(){
     return(
         <>
             <div className={styles.wrapper_horizontal_labels}>
+                <label className={styles.label_nome}>ID</label>
                 <label className={styles.label_nome}>Nome</label>
                 <label className={styles.label_cognome}>Cognome</label>
                 <label className={styles.label_tipoTest}>Tipo</label>
@@ -16,7 +17,8 @@ function TabellaStoricoTest(){
             </div>
             {tests_ctx.listaTest?.map((test) => (
                 <>
-                    <div className={styles.wrapper_horizontal_content}>
+                    <div className={styles.wrapper_horizontal_content} onClick={() => {tests_ctx.prendiTestPaziente(test.ID)}}>
+                        <div className={styles.label_nome}>{test.ID}</div>
                         <div className={styles.label_nome}>{test.nome}</div>
                         <div className={styles.label_cognome}>{test.cognome}</div>
                         <div className={styles.label_tipoTest}>{test.tipoTest}</div>

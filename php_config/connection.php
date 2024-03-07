@@ -851,7 +851,7 @@
         $dataJson = json_decode($data, true);
         
         $getTestResult = $i_conn->prepare(
-            "SELECT storicoTest.tipoTest, storicoTest.punteggioTest, storicoTest.dataSvolgimento, patients.nome, patients.cognome 
+            "SELECT storicoTest.ID, storicoTest.tipoTest, storicoTest.punteggioTest, storicoTest.dataSvolgimento, patients.nome, patients.cognome 
             FROM `storicoTest` JOIN `patients` ON storicoTest.pazienteID = patients.ID;"
         );
         
@@ -867,11 +867,22 @@
         $tipoTest = $dataJson["tipoTest"];
         $scoreTest = $dataJson["scoreTest"];
         $date = $dataJson["dataSvolgimento"];
+        $arrayRisposte = $dataJson["arrayRisposte"];
         
         $saveTestResult = $i_conn->prepare("INSERT INTO `storicoTest` (`pazienteID`, `tipoTest`, `punteggioTest`, `dataSvolgimento`) VALUES (?, ?, ?, ?)");
         $saveTestResult->bind_param("isis", $pazienteID, $tipoTest, $scoreTest, $date);
         
         $saveTestResult->execute();
+        $lastInsertedID = $saveTestResult->insert_id;
+
+        foreach($arrayRisposte as $risposta){
+            $insertRisposta = $i_conn->prepare(
+                "INSERT INTO `resultsTest` (`sessionID`, `domandaID`, `risposta`) VALUES (?, ?, ?)"
+            );
+            $insertRisposta->bind_param("iii", $lastInsertedID, $risposta['domanda'], $risposta['risposta']);
+            $insertRisposta->execute();
+        }
+
         $saveTestResult->bind_result($result);
         return $result;
     }

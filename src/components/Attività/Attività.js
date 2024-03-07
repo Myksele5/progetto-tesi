@@ -6,31 +6,34 @@ import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import TestsContext from "../../context/tests-context";
 import AddValutazione from "./AddValutazione";
 import TabellaStoricoTest from "./TabellaStoricoTest";
+import SchedaSingoloTest from "./SchedaSingoloTest";
 
 function Attività(){
     const tests_ctx = useContext(TestsContext);
 
     return(
         <>
-            <div className={styles.wrap_boxes}>
-                {!tests_ctx.formAddValutazione &&
-                    <GenericButton
-                        onClick={tests_ctx.showFormAddValutazione}
-                        generic_button={true}
-                        buttonText={"Nuova valutazione"}
-                    >
-                    </GenericButton>
-                }
-                {tests_ctx.formAddValutazione &&
-                    <GenericButton
-                        onClick={tests_ctx.hideFormAddValutazione}
-                        buttonText={"Annulla valutazione"}
-                        red_styling
-                        generic_button
-                    ></GenericButton>
-                }
-            </div>
-            {!tests_ctx.formAddValutazione && <h1 className={styles.page_title}>TEST</h1>}
+            {tests_ctx.mainPage &&
+                <div className={styles.wrap_boxes}>
+                    {!tests_ctx.formAddValutazione &&
+                        <GenericButton
+                            onClick={tests_ctx.showFormAddValutazione}
+                            generic_button={true}
+                            buttonText={"Nuova valutazione"}
+                        >
+                        </GenericButton>
+                    }
+                    {tests_ctx.formAddValutazione &&
+                        <GenericButton
+                            onClick={tests_ctx.hideFormAddValutazione}
+                            buttonText={"Annulla valutazione"}
+                            red_styling
+                            generic_button
+                        ></GenericButton>
+                    }
+                </div>
+            }
+            {!tests_ctx.formAddValutazione && <h1 className={styles.page_title}>Test</h1>}
 
             <div className={styles.wrapper_page}>
                 {tests_ctx.formAddValutazione &&
@@ -38,11 +41,10 @@ function Attività(){
                 }
 
                 {tests_ctx.mainPage &&
-                <>
-                    <h1>STORICO DEI TEST</h1>
                     <TabellaStoricoTest></TabellaStoricoTest>
-                </>
                 }
+
+                {tests_ctx.schedaSingoloTest && tests_ctx.testPaziente}
             </div>
 
         </>

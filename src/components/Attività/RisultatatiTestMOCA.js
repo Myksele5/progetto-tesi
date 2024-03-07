@@ -47,6 +47,10 @@ function RisultatiTestMOCA(props){
     const [areaCog_4_domanda_2, set_areaCog_4_domanda_2] = useState(0);
     const [areaCog_4_domanda_3, set_areaCog_4_domanda_3] = useState(0);
     const [areaCog_4_domanda_4, set_areaCog_4_domanda_4] = useState(0);
+    const [a4d4_option_1, set_a4d4_option_1] = useState(false)
+    const [a4d4_option_2, set_a4d4_option_2] = useState(false)
+    const [a4d4_option_3, set_a4d4_option_3] = useState(false)
+    const [a4d4_option_4, set_a4d4_option_4] = useState(false)
 
     //DOMANDE AREA COGNITIVA 5
     const [areaCog_5_domanda_1, set_areaCog_5_domanda_1] = useState(0);
@@ -72,6 +76,125 @@ function RisultatiTestMOCA(props){
     const [areaCog_8_domanda_5, set_areaCog_8_domanda_5] = useState(0);
     const [areaCog_8_domanda_6, set_areaCog_8_domanda_6] = useState(0);
 
+    let arrayRiassuntivoRisposte = [
+        {
+            domanda: 1,
+            risposta: areaCog_1_domanda_1
+        },
+        {
+            domanda: 2,
+            risposta: areaCog_1_domanda_2
+        },
+        {
+            domanda: 3,
+            risposta: areaCog_1_domanda_3
+        },
+        {
+            domanda: 4,
+            risposta: areaCog_1_domanda_4
+        },
+        {
+            domanda: 5,
+            risposta: areaCog_1_domanda_5
+        },
+        {
+            domanda: 6,
+            risposta: areaCog_2_domanda_1
+        },
+        {
+            domanda: 7,
+            risposta: areaCog_2_domanda_2
+        },
+        {
+            domanda: 8,
+            risposta: areaCog_2_domanda_3
+        },
+        {
+            domanda: 9,
+            risposta: numeroTentativi
+        },
+        {
+            domanda: 10,
+            risposta: areaCog_4_domanda_1
+        },
+        {
+            domanda: 11,
+            risposta: areaCog_4_domanda_2
+        },
+        {
+            domanda: 12,
+            risposta: areaCog_4_domanda_3
+        },
+        {
+            domanda: 13,
+            risposta: areaCog_4_domanda_4
+        },
+        {
+            domanda: 14,
+            risposta: areaCog_5_domanda_1
+        },
+        {
+            domanda: 15,
+            risposta: areaCog_5_domanda_2
+        },
+        {
+            domanda: 16,
+            risposta: areaCog_5_domanda_3
+        },
+        {
+            domanda: 17,
+            risposta: areaCog_6_domanda_1
+        },
+        {
+            domanda: 18,
+            risposta: areaCog_6_domanda_2
+        },
+        {
+            domanda: 19,
+            risposta: areaCog_7_domanda_1
+        },
+        {
+            domanda: 20,
+            risposta: areaCog_7_domanda_2
+        },
+        {
+            domanda: 21,
+            risposta: areaCog_7_domanda_3
+        },
+        {
+            domanda: 22,
+            risposta: areaCog_7_domanda_4
+        },
+        {
+            domanda: 23,
+            risposta: areaCog_7_domanda_5
+        },
+        {
+            domanda: 24,
+            risposta: areaCog_8_domanda_1
+        },
+        {
+            domanda: 25,
+            risposta: areaCog_8_domanda_2
+        },
+        {
+            domanda: 26,
+            risposta: areaCog_8_domanda_3
+        },
+        {
+            domanda: 27,
+            risposta: areaCog_8_domanda_4
+        },
+        {
+            domanda: 28,
+            risposta: areaCog_8_domanda_5
+        },
+        {
+            domanda: 29,
+            risposta: areaCog_8_domanda_6
+        },
+    ];
+
     useEffect(() => {
         patients_ctx.listaPazienti.map((paz) => {
             console.log(typeof paz.ID)
@@ -85,6 +208,7 @@ function RisultatiTestMOCA(props){
     
     useEffect(() => {
         punteggio_AC1();
+        console.log(arrayRiassuntivoRisposte)
     }, [areaCog_1_domanda_1, areaCog_1_domanda_2, areaCog_1_domanda_3, areaCog_1_domanda_4, areaCog_1_domanda_5])
     useEffect(() => {
         punteggio_AC2();
@@ -252,15 +376,31 @@ function RisultatiTestMOCA(props){
         switch(stringa){
             case "4-5_corrette":
                 set_areaCog_4_domanda_4(3);
+                set_a4d4_option_1(true)
+                set_a4d4_option_2(false)
+                set_a4d4_option_3(false)
+                set_a4d4_option_4(false)
                 break;
             case "2-3_corrette":
                 set_areaCog_4_domanda_4(2);
+                set_a4d4_option_1(false)
+                set_a4d4_option_2(true)
+                set_a4d4_option_3(false)
+                set_a4d4_option_4(false)
                 break;
             case "1_corretta":
                 set_areaCog_4_domanda_4(1);
+                set_a4d4_option_1(false)
+                set_a4d4_option_2(false)
+                set_a4d4_option_3(true)
+                set_a4d4_option_4(false)
                 break;
             case "0_corrette":
                 set_areaCog_4_domanda_4(0);
+                set_a4d4_option_1(false)
+                set_a4d4_option_2(false)
+                set_a4d4_option_3(false)
+                set_a4d4_option_4(true)
                 break;
         }
     }
@@ -514,19 +654,27 @@ function RisultatiTestMOCA(props){
                         <div className={styles.domanda_style}>Far sottrarre per sette all'indietro, partendo da 100. Fermarsi dopo 5 risposte. {`(93-86-79-72-65)`}</div>
                         <div style={{width: "100%"}} className={styles.wrapper_vertical}>
                             <div style={{width: "100%"}} className={styles.wrapper_horizontal}>
-                                <input id="4-5_corrette" name={'CORRETTE'} onChange={() => {ac_4_qstn4_changeHandler("4-5_corrette")}} value={"4-5_corrette"} className={styles.input_style} type="radio"></input>
+                                <input id="4-5_corrette" name={'CORRETTE'} onChange={() => {ac_4_qstn4_changeHandler("4-5_corrette")}}
+                                 checked={a4d4_option_1} value={"4-5_corrette"} className={styles.input_style} type="radio">
+                                </input>
                                 <label htmlFor="4-5_corrette" className={styles.domanda_style}> 4-5 Corrette</label>
                             </div>
                             <div style={{width: "100%"}} className={styles.wrapper_horizontal}>
-                                <input id="2-3_corrette" name={'CORRETTE'} onChange={() => {ac_4_qstn4_changeHandler("2-3_corrette")}} value={"2-3_corrette"} className={styles.input_style} type="radio"></input>
+                                <input id="2-3_corrette" name={'CORRETTE'} onChange={() => {ac_4_qstn4_changeHandler("2-3_corrette")}}
+                                 checked={a4d4_option_2} value={"2-3_corrette"} className={styles.input_style} type="radio">
+                                </input>
                                 <label htmlFor="2-3_corrette" className={styles.domanda_style}> 2-3 Corrette</label>
                             </div>
                             <div style={{width: "100%"}} className={styles.wrapper_horizontal}>
-                                <input id="1_corretta" name={'CORRETTE'} onChange={() => {ac_4_qstn4_changeHandler("1_corretta")}} value={"1_corretta"} className={styles.input_style} type="radio"></input>
+                                <input id="1_corretta" name={'CORRETTE'} onChange={() => {ac_4_qstn4_changeHandler("1_corretta")}}
+                                 checked={a4d4_option_3} value={"1_corretta"} className={styles.input_style} type="radio">
+                                </input>
                                 <label htmlFor="1_corretta" className={styles.domanda_style}> 1 Corretta</label>
                             </div>
                             <div style={{width: "100%"}} className={styles.wrapper_horizontal}>
-                                <input id="0_corrette" name={'CORRETTE'} onChange={() => {ac_4_qstn4_changeHandler("0_corrette")}} value={"0_corrette"} className={styles.input_style} type="radio"></input>
+                                <input id="0_corrette" name={'CORRETTE'} onChange={() => {ac_4_qstn4_changeHandler("0_corrette")}}
+                                 checked={a4d4_option_4} value={"0_corrette"} className={styles.input_style} type="radio">
+                                </input>
                                 <label htmlFor="0_corrette" className={styles.domanda_style}> 0 Corrette</label>
                             </div>
                         </div>
@@ -723,7 +871,7 @@ function RisultatiTestMOCA(props){
                 {showSintesiRisultati &&
                     <GenericButton
                         onClick={() => {
-                            tests_ctx.salvaRisultatoMoCA(punteggioTOT, paziente)
+                            tests_ctx.salvaRisultatoMoCA(punteggioTOT, paziente, arrayRiassuntivoRisposte)
                             tests_ctx.hideFormAddValutazione()
                         }}
                         buttonText={"Salva risultati"}

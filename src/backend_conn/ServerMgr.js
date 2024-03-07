@@ -480,8 +480,8 @@ function initServerMgr(cb) {
             return result
         }
     }
-    serverMgr.updateTestResultList = async (pazienteID, tipoTest, scoreTest, dataSvolgimento, cb) => {
-        let result = await serverMgr.requestFetchData("updateTestResultList", {pazienteID: pazienteID, tipoTest: tipoTest, scoreTest: scoreTest, dataSvolgimento: dataSvolgimento})
+    serverMgr.updateTestResultList = async (pazienteID, tipoTest, scoreTest, dataSvolgimento, arrayRisposte, cb) => {
+        let result = await serverMgr.requestFetchData("updateTestResultList", {pazienteID: pazienteID, tipoTest: tipoTest, scoreTest: scoreTest, dataSvolgimento: dataSvolgimento, arrayRisposte: arrayRisposte})
         if(cb) {
             // console.log("getInventory: " + result)
             cb(result)
