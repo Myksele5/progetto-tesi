@@ -9,20 +9,30 @@
     align-items: center;
 }
 
+.wrapper_vertical{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .area_cog_title{
     text-align: center;
     margin-top: 5px;
 }
 
 .area_cog_style{
-    /* width: 100%; */
-    min-width: 500px;
+    width: 70%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border: 2px solid red;
+    border: 2px solid #1E56A0;
     border-radius: 10px;
     padding: 10px 12px;
+}
+
+.explanation{
+    font-size: 22px;
 }
 
 .label_style{
@@ -44,26 +54,46 @@
 }
 
 .input_style{
-    width: 50px;
+    width: 25px;
     height: 25px;
     margin: 5px 10px;
     padding-left: 15px;
+}
+
+.text_input{
+    width: 60px;
+    height: 30px;
+    margin: 5px;
+    margin-top: 0;
+    padding-left: 15px;
     border: 2px solid #1E56A0;
-    border-radius: 5px;
-    font-size: 20px;
+    border-radius: 20px;
+    font-size: 18px;
     color: black;
     transition: 0.3s;
     text-align: center;
 }
 
-.input_style.invalid{
-    border: 2px solid red;
+.score_area_cog{
+    font-size: 18px;
+    margin-bottom: 4px;
 }
 
-.input_style:focus{
-    border: 2px solid #163172;
-    background-color: #D6E4F0;
-    transition: 0.3s;
-    box-shadow: 1px 1px 5px 1px black;
-    outline: none;
+.score{
+    margin-left: 8px;
+}
+
+@media screen and (max-width: 800px) {
+    .explanation{
+        font-size: 18px;
+    }
+}
+@media screen and (max-width: 600px) {
+    .explanation{
+        font-size: 16px;
+    }
+
+    .domanda_style{
+        font-size: 15px;
+    }
 }

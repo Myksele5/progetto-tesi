@@ -44,6 +44,10 @@ function RisultatiTestMMSE(props){
 
     //DOMANDE AREA COGNITIVA 3
     const [areaCog_3_domanda_1, set_areaCog_3_domanda_1] = useState(0);
+    const [areaCog_3_domanda_2, set_areaCog_3_domanda_2] = useState(0);
+    const [areaCog_3_domanda_3, set_areaCog_3_domanda_3] = useState(0);
+    const [areaCog_3_domanda_4, set_areaCog_3_domanda_4] = useState(0);
+    const [areaCog_3_domanda_5, set_areaCog_3_domanda_5] = useState(0);
 
     //DOMANDE AREA COGNITIVA 4
     const [areaCog_4_domanda_1, set_areaCog_4_domanda_1] = useState(0);
@@ -56,6 +60,9 @@ function RisultatiTestMMSE(props){
     const [areaCog_5_domanda_3, set_areaCog_5_domanda_3] = useState(0);
     const [areaCog_5_domanda_4, set_areaCog_5_domanda_4] = useState(0);
     const [areaCog_5_domanda_5, set_areaCog_5_domanda_5] = useState(0);
+    const [areaCog_5_domanda_6, set_areaCog_5_domanda_6] = useState(0);
+    const [areaCog_5_domanda_7, set_areaCog_5_domanda_7] = useState(0);
+    const [areaCog_5_domanda_8, set_areaCog_5_domanda_8] = useState(0);
 
     //DOMANDE AREA COGNITIVA 6
     const [areaCog_6_domanda_1, set_areaCog_6_domanda_1] = useState(0);
@@ -82,13 +89,14 @@ function RisultatiTestMMSE(props){
     }, [areaCog_2_domanda_1, areaCog_2_domanda_2, areaCog_2_domanda_3])
     useEffect(() => {
         punteggio_AC3();
-    }, [areaCog_3_domanda_1])
+    }, [areaCog_3_domanda_1, areaCog_3_domanda_2, areaCog_3_domanda_3, areaCog_3_domanda_4, areaCog_3_domanda_5])
     useEffect(() => {
         punteggio_AC4();
     }, [areaCog_4_domanda_1, areaCog_4_domanda_2, areaCog_4_domanda_3])
     useEffect(() => {
         punteggio_AC5();
-    }, [areaCog_5_domanda_1, areaCog_5_domanda_2, areaCog_5_domanda_3, areaCog_5_domanda_4, areaCog_5_domanda_5])
+    }, [areaCog_5_domanda_1, areaCog_5_domanda_2, areaCog_5_domanda_3, areaCog_5_domanda_4, areaCog_5_domanda_5,
+        areaCog_5_domanda_6, areaCog_5_domanda_7, areaCog_5_domanda_8])
     useEffect(() => {
         punteggio_AC6();
     }, [areaCog_6_domanda_1])
@@ -122,276 +130,266 @@ function RisultatiTestMMSE(props){
         setPunteggioAreaCognitiva_2(areaCog_2_domanda_1 + areaCog_2_domanda_2 + areaCog_2_domanda_3)
     }
     function punteggio_AC3(){
-        setPunteggioAreaCognitiva_3(areaCog_3_domanda_1)
+        setPunteggioAreaCognitiva_3(areaCog_3_domanda_1 + areaCog_3_domanda_2 + areaCog_3_domanda_3 + areaCog_3_domanda_4 + areaCog_3_domanda_5)
     }
     function punteggio_AC4(){
         setPunteggioAreaCognitiva_4(areaCog_4_domanda_1 + areaCog_4_domanda_2 + areaCog_4_domanda_3)
     }
     function punteggio_AC5(){
-        setPunteggioAreaCognitiva_5(areaCog_5_domanda_1 + areaCog_5_domanda_2 + areaCog_5_domanda_3 + areaCog_5_domanda_4 + areaCog_5_domanda_5)
+        setPunteggioAreaCognitiva_5(
+            areaCog_5_domanda_1 + areaCog_5_domanda_2 + areaCog_5_domanda_3 + areaCog_5_domanda_4 + areaCog_5_domanda_5 + 
+            areaCog_5_domanda_6 + areaCog_5_domanda_7 + areaCog_5_domanda_8
+        )
     }
     function punteggio_AC6(){
         setPunteggioAreaCognitiva_6(areaCog_6_domanda_1)
     }
 
     function ac_1_qstn1_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_1_domanda_1(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_1_domanda_1(0);
-        }
         else{
-            set_areaCog_1_domanda_1(Number(event.target.value));
+            set_areaCog_1_domanda_1(0);
         }
     }
     function ac_1_qstn2_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_1_domanda_2(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_1_domanda_2(0);
-        }
         else{
-            set_areaCog_1_domanda_2(Number(event.target.value));
+            set_areaCog_1_domanda_2(0);
         }
     }
     function ac_1_qstn3_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_1_domanda_3(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_1_domanda_3(0);
-        }
         else{
-            set_areaCog_1_domanda_3(Number(event.target.value));
+            set_areaCog_1_domanda_3(0);
         }
     }
     function ac_1_qstn4_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_1_domanda_4(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_1_domanda_4(0);
-        }
         else{
-            set_areaCog_1_domanda_4(Number(event.target.value));
+            set_areaCog_1_domanda_4(0);
         }
     }
     function ac_1_qstn5_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_1_domanda_5(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_1_domanda_5(0);
-        }
         else{
-            set_areaCog_1_domanda_5(Number(event.target.value));
+            set_areaCog_1_domanda_5(0);
         }
     }
     function ac_1_qstn6_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_1_domanda_6(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_1_domanda_6(0);
-        }
         else{
-            set_areaCog_1_domanda_6(Number(event.target.value));
+            set_areaCog_1_domanda_6(0);
         }
     }
     function ac_1_qstn7_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_1_domanda_7(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_1_domanda_7(0);
-        }
         else{
-            set_areaCog_1_domanda_7(Number(event.target.value));
+            set_areaCog_1_domanda_7(0);
         }
     }
     function ac_1_qstn8_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_1_domanda_8(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_1_domanda_8(0);
-        }
         else{
-            set_areaCog_1_domanda_8(Number(event.target.value));
+            set_areaCog_1_domanda_8(0);
         }
     }
     function ac_1_qstn9_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_1_domanda_9(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_1_domanda_9(0);
-        }
         else{
-            set_areaCog_1_domanda_9(Number(event.target.value));
+            set_areaCog_1_domanda_9(0);
         }
     }
     function ac_1_qstn10_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_1_domanda_10(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_1_domanda_10(0);
-        }
         else{
-            set_areaCog_1_domanda_10(Number(event.target.value));
+            set_areaCog_1_domanda_10(0);
         }
     }
 
 
     function ac_2_qstn1_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_2_domanda_1(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_2_domanda_1(0);
-        }
         else{
-            set_areaCog_2_domanda_1(Number(event.target.value));
+            set_areaCog_2_domanda_1(0);
         }
     }
     function ac_2_qstn2_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_2_domanda_2(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_2_domanda_2(0);
-        }
         else{
-            set_areaCog_2_domanda_2(Number(event.target.value));
+            set_areaCog_2_domanda_2(0);
         }
     }
     function ac_2_qstn3_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_2_domanda_3(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_2_domanda_3(0);
-        }
         else{
-            set_areaCog_2_domanda_3(Number(event.target.value));
+            set_areaCog_2_domanda_3(0);
         }
     }
 
 
     function ac_3_qstn1_changeHandler(event){
-        if(event.target.value > 5 ){
-            set_areaCog_3_domanda_1(5)
-        }
-        else if(event.target.value < 0){
-            set_areaCog_3_domanda_1(0);
+        if(event.target.checked){
+            set_areaCog_3_domanda_1(1)
         }
         else{
-            set_areaCog_3_domanda_1(Number(event.target.value));
+            set_areaCog_3_domanda_1(0);
+        }
+    }
+    function ac_3_qstn2_changeHandler(event){
+        if(event.target.checked){
+            set_areaCog_3_domanda_2(1)
+        }
+        else{
+            set_areaCog_3_domanda_2(0);
+        }
+    }
+    function ac_3_qstn3_changeHandler(event){
+        if(event.target.checked){
+            set_areaCog_3_domanda_3(1)
+        }
+        else{
+            set_areaCog_3_domanda_3(0);
+        }
+    }
+    function ac_3_qstn4_changeHandler(event){
+        if(event.target.checked){
+            set_areaCog_3_domanda_4(1)
+        }
+        else{
+            set_areaCog_3_domanda_4(0);
+        }
+    }
+    function ac_3_qstn5_changeHandler(event){
+        if(event.target.checked){
+            set_areaCog_3_domanda_5(1)
+        }
+        else{
+            set_areaCog_3_domanda_5(0);
         }
     }
 
     function ac_4_qstn1_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_4_domanda_1(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_4_domanda_1(0);
-        }
         else{
-            set_areaCog_4_domanda_1(Number(event.target.value));
+            set_areaCog_4_domanda_1(0);
         }
     }
     function ac_4_qstn2_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_4_domanda_2(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_4_domanda_2(0);
-        }
         else{
-            set_areaCog_4_domanda_2(Number(event.target.value));
+            set_areaCog_4_domanda_2(0);
         }
     }
     function ac_4_qstn3_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_4_domanda_3(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_4_domanda_3(0);
-        }
         else{
-            set_areaCog_4_domanda_3(Number(event.target.value));
+            set_areaCog_4_domanda_3(0);
         }
     }
 
     function ac_5_qstn1_changeHandler(event){
-        if(event.target.value > 2 ){
-            set_areaCog_5_domanda_1(2)
-        }
-        else if(event.target.value < 0){
-            set_areaCog_5_domanda_1(0);
+        if(event.target.checked){
+            set_areaCog_5_domanda_1(1)
         }
         else{
-            set_areaCog_5_domanda_1(Number(event.target.value));
+            set_areaCog_5_domanda_1(0);
         }
     }
     function ac_5_qstn2_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_5_domanda_2(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_5_domanda_2(0);
-        }
         else{
-            set_areaCog_5_domanda_2(Number(event.target.value));
+            set_areaCog_5_domanda_2(0);
         }
     }
     function ac_5_qstn3_changeHandler(event){
-        if(event.target.value > 3 ){
-            set_areaCog_5_domanda_3(3)
-        }
-        else if(event.target.value < 0){
-            set_areaCog_5_domanda_3(0);
+        if(event.target.checked){
+            set_areaCog_5_domanda_3(1)
         }
         else{
-            set_areaCog_5_domanda_3(Number(event.target.value));
+            set_areaCog_5_domanda_3(0);
         }
     }
     function ac_5_qstn4_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_5_domanda_4(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_5_domanda_4(0);
-        }
         else{
-            set_areaCog_5_domanda_4(Number(event.target.value));
+            set_areaCog_5_domanda_4(0);
         }
     }
     function ac_5_qstn5_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_5_domanda_5(1)
         }
-        else if(event.target.value < 0){
+        else{
             set_areaCog_5_domanda_5(0);
         }
+    }
+    function ac_5_qstn6_changeHandler(event){
+        if(event.target.checked){
+            set_areaCog_5_domanda_6(1)
+        }
         else{
-            set_areaCog_5_domanda_5(Number(event.target.value));
+            set_areaCog_5_domanda_6(0);
+        }
+    }
+    function ac_5_qstn7_changeHandler(event){
+        if(event.target.checked){
+            set_areaCog_5_domanda_7(1)
+        }
+        else{
+            set_areaCog_5_domanda_7(0);
+        }
+    }
+    function ac_5_qstn8_changeHandler(event){
+        if(event.target.checked){
+            set_areaCog_5_domanda_8(1)
+        }
+        else{
+            set_areaCog_5_domanda_8(0);
         }
     }
 
     function ac_6_qstn1_changeHandler(event){
-        if(event.target.value > 1 ){
+        if(event.target.checked){
             set_areaCog_6_domanda_1(1)
         }
-        else if(event.target.value < 0){
-            set_areaCog_6_domanda_1(0);
-        }
         else{
-            set_areaCog_6_domanda_1(Number(event.target.value));
+            set_areaCog_6_domanda_1(0);
         }
     }
 
@@ -402,247 +400,263 @@ function RisultatiTestMMSE(props){
                 {sezioneCognitiva === 1 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 1 - Orientamento</h3>
+                    <hr style={{width: "100%"}}></hr>
 
-                    <div className={styles.wrapper_vertical}>
+                    <h4 className={styles.explanation}>Temporale</h4>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_1_qstn1_changeHandler} checked={areaCog_1_domanda_1} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>In che anno ci troviamo?</div>
-                        <div className={styles.wrapper_horizontal}>
-                            <input className={styles.risposta_style}></input>
-                            <input onChange={ac_1_qstn1_changeHandler} value={areaCog_1_domanda_1} className={styles.input_style} type="number" min={0} max={1}></input>
-                        </div>
                     </div>
-                    <div className={styles.wrapper_vertical}>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_1_qstn2_changeHandler} checked={areaCog_1_domanda_2} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Che giorno è oggi?</div>
-                        <div className={styles.wrapper_horizontal}>
-                            <input className={styles.risposta_style}></input>
-                            <input onChange={ac_1_qstn2_changeHandler} value={areaCog_1_domanda_2} className={styles.input_style} type="number" min={0} max={1}></input>
-                        </div>
                     </div>
-                    <div className={styles.wrapper_vertical}>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_1_qstn3_changeHandler} checked={areaCog_1_domanda_3} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>In che mese siamo?</div>
-                        <div className={styles.wrapper_horizontal}>
-                            <input className={styles.risposta_style}></input>
-                            <input onChange={ac_1_qstn3_changeHandler} value={areaCog_1_domanda_3} className={styles.input_style} type="number" min={0} max={1}></input>
-                        </div>
                     </div>
-                    <div className={styles.wrapper_vertical}>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_1_qstn4_changeHandler} checked={areaCog_1_domanda_4} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>In che stagione?</div>
-                        <div className={styles.wrapper_horizontal}>
-                            <input className={styles.risposta_style}></input>
-                            <input onChange={ac_1_qstn4_changeHandler} value={areaCog_1_domanda_4} className={styles.input_style} type="number" min={0} max={1}></input>
-                        </div>
                     </div>
-                    <div className={styles.wrapper_vertical}>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_1_qstn5_changeHandler} checked={areaCog_1_domanda_5} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Quale giorno della settimana è oggi?</div>
-                        <div className={styles.wrapper_horizontal}>
-                            <input className={styles.risposta_style}></input>
-                            <input onChange={ac_1_qstn5_changeHandler} value={areaCog_1_domanda_5} className={styles.input_style} type="number" min={0} max={1}></input>
-                        </div>
-                    </div>
-                    <div className={styles.wrapper_vertical}>
-                        <div className={styles.domanda_style}>Dove ci troviamo?</div>
-                        <div className={styles.wrapper_horizontal}>
-                            <input className={styles.risposta_style}></input>
-                            <input onChange={ac_1_qstn6_changeHandler} value={areaCog_1_domanda_6} className={styles.input_style} type="number" min={0} max={1}></input>
-                        </div>
-                    </div>
-                    <div className={styles.wrapper_vertical}>
-                        <div className={styles.domanda_style}>A che piano?</div>
-                        <div className={styles.wrapper_horizontal}>
-                            <input className={styles.risposta_style}></input>
-                            <input onChange={ac_1_qstn7_changeHandler} value={areaCog_1_domanda_7} className={styles.input_style} type="number" min={0} max={1}></input>
-                        </div>
-                    </div>
-                    <div className={styles.wrapper_vertical}>
-                        <div className={styles.domanda_style}>In quale paese?</div>
-                        <div className={styles.wrapper_horizontal}>
-                            <input className={styles.risposta_style}></input>
-                            <input onChange={ac_1_qstn8_changeHandler} value={areaCog_1_domanda_8} className={styles.input_style} type="number" min={0} max={1}></input>
-                        </div>
-                    </div>
-                    <div className={styles.wrapper_vertical}>
-                        <div className={styles.domanda_style}>In che regione siamo?</div>
-                        <div className={styles.wrapper_horizontal}>
-                            <input className={styles.risposta_style}></input>
-                            <input onChange={ac_1_qstn9_changeHandler} value={areaCog_1_domanda_9} className={styles.input_style} type="number" min={0} max={1}></input>
-                        </div>
-                    </div>
-                    <div className={styles.wrapper_vertical}>
-                        <div className={styles.domanda_style}>In quale città siamo adesso?</div>
-                        <div className={styles.wrapper_horizontal}>
-                            <input className={styles.risposta_style}></input>
-                            <input onChange={ac_1_qstn10_changeHandler} value={areaCog_1_domanda_10} className={styles.input_style} type="number" min={0} max={1}></input>
-                        </div>
                     </div>
 
+                    <h4 className={styles.explanation}>Spaziale</h4>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_1_qstn6_changeHandler} checked={areaCog_1_domanda_6} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>Dove ci troviamo?</div>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_1_qstn7_changeHandler} checked={areaCog_1_domanda_7} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>A che piano?</div>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_1_qstn8_changeHandler} checked={areaCog_1_domanda_8} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>In quale paese?</div>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_1_qstn9_changeHandler} checked={areaCog_1_domanda_9} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>In che regione siamo?</div>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_1_qstn10_changeHandler} checked={areaCog_1_domanda_10} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>In quale città siamo adesso?</div>
+                    </div>
                     <hr style={{width: "100%"}}></hr>
                     <div className={styles.wrapper_horizontal}>
-                        <h3 style={{width: "80%"}} className={styles.domanda_style}>Punteggio Area Cognitiva 1: </h3>
-                        <h3>{punteggioAreaCognitiva_1}/10</h3>
+                        <h3 className={styles.score_area_cog}>Punteggio Area Cognitiva 1: </h3>
+                        <h3 className={styles.score}>{punteggioAreaCognitiva_1}/10</h3>
                     </div>
                 </>
                 }
                 {sezioneCognitiva === 2 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 2 - Memoria</h3>
+                    <hr style={{width: "100%"}}></hr>
+
+                    <h4 className={styles.explanation}>Ripetizione di parole</h4>
                     <div className={styles.wrapper_horizontal}>
-                        <div className={styles.domanda_style}>Ripeti "CASA"</div>
-                        <input onChange={ac_2_qstn1_changeHandler} value={areaCog_2_domanda_1} className={styles.input_style} type="number" min={0} max={1}></input>
+                        <input onChange={ac_2_qstn1_changeHandler} checked={areaCog_2_domanda_1} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>Ripetere "CASA"</div>
                     </div>
                     <div className={styles.wrapper_horizontal}>
-                        <div className={styles.domanda_style}>Ripeti "PANE"</div>
-                        <input onChange={ac_2_qstn2_changeHandler} value={areaCog_2_domanda_2} className={styles.input_style} type="number" min={0} max={1}></input>
+                        <input onChange={ac_2_qstn2_changeHandler} checked={areaCog_2_domanda_2} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>Ripetere "PANE"</div>
                     </div>
                     <div className={styles.wrapper_horizontal}>
-                        <div className={styles.domanda_style}>Ripeti "GATTO"</div>
-                        <input onChange={ac_2_qstn3_changeHandler} value={areaCog_2_domanda_3} className={styles.input_style} type="number" min={0} max={1}></input>
+                        <input onChange={ac_2_qstn3_changeHandler} checked={areaCog_2_domanda_3} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>Ripetere "GATTO"</div>
                     </div>
                     <hr style={{width: "100%"}}></hr>
                     <div className={styles.wrapper_horizontal}>
-                        <h3 style={{width: "80%"}}  className={styles.domanda_style}>Punteggio Area Cognitiva 2: </h3>
-                        <h3>{punteggioAreaCognitiva_2}/3</h3>
+                        <h3 className={styles.score_area_cog}>Punteggio Area Cognitiva 2: </h3>
+                        <h3 className={styles.score}>{punteggioAreaCognitiva_2}/3</h3>
                     </div>
                 </>
                 }
                 {sezioneCognitiva === 3 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 3 - Attenzione e calcolo</h3>
+                    <hr style={{width: "100%"}}></hr>
+
+                    <h4 className={styles.explanation}>
+                        Far contare per sette all'indietro, partendo da 100. Fermarsi dopo 5 risposte
+                        {" (In alternativa far scandire la parola 'MONDO' al contrario una lettera per volta)"}
+                    </h4>
+                    
                     <div className={styles.wrapper_horizontal}>
-                        <div className={styles.wrapper_vertical}>
-                            <div className={styles.domanda_style}>Far contare per sette all'indietro, partendo da 100. Fermarsi dopo 5 risposte</div>
-                            <div className={styles.domanda_style}>{"(In alternativa far scandire la parola 'MONDO' al contrario una lettera per volta)"}</div>
-                        </div>
-                        
-                        <input onChange={ac_3_qstn1_changeHandler} value={areaCog_3_domanda_1} className={styles.input_style} type="number" min={0} max={5}></input>
+                        <input onChange={ac_3_qstn1_changeHandler} checked={areaCog_3_domanda_1} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>Prima sottrazione: 93 / Prima lettera: 'O'</div>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_3_qstn2_changeHandler} checked={areaCog_3_domanda_2} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>Seconda sottrazione: 86 / Seconda lettera: 'D'</div>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_3_qstn3_changeHandler} checked={areaCog_3_domanda_3} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>Terza sottrazione: 79 / Terza lettera: 'N'</div>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_3_qstn4_changeHandler} checked={areaCog_3_domanda_4} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>Quarta sottrazione: 72 / Quarta lettera: 'O'</div>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_3_qstn5_changeHandler} checked={areaCog_3_domanda_5} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>Quinta sottrazione: 65 / Quinta lettera: 'M'</div>
                     </div>
 
                     <hr style={{width: "100%"}}></hr>
                     <div className={styles.wrapper_horizontal}>
-                        <h3 style={{width: "80%"}}  className={styles.domanda_style}>Punteggio Area Cognitiva 3: </h3>
-                        <h3>{punteggioAreaCognitiva_3}/5</h3>
+                        <h3 className={styles.score_area_cog}>Punteggio Area Cognitiva 3: </h3>
+                        <h3 className={styles.score}>{punteggioAreaCognitiva_3}/5</h3>
                     </div>
                 </>
                 }
                 {sezioneCognitiva === 4 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 4 - Richiamo</h3>
+                    <hr style={{width: "100%"}}></hr>
+
                     <h4>Richiama i tre termini precedentemente imparati</h4>
                     <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_4_qstn1_changeHandler} checked={areaCog_4_domanda_1} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Richiamo parola "CASA"</div>
-                        <input onChange={ac_4_qstn1_changeHandler} value={areaCog_4_domanda_1} className={styles.input_style} type="number" min={0} max={1}></input>
                     </div>
                     <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_4_qstn2_changeHandler} checked={areaCog_4_domanda_2} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Richiamo parola "PANE"</div>
-                        <input onChange={ac_4_qstn2_changeHandler} value={areaCog_4_domanda_2} className={styles.input_style} type="number" min={0} max={1}></input>
                     </div>
                     <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_4_qstn3_changeHandler} checked={areaCog_4_domanda_3} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Richiamo parola "GATTO"</div>
-                        <input onChange={ac_4_qstn3_changeHandler} value={areaCog_4_domanda_3} className={styles.input_style} type="number" min={0} max={1}></input>
                     </div>
                     <hr style={{width: "100%"}}></hr>
                     <div className={styles.wrapper_horizontal}>
-                        <h3 style={{width: "80%"}}  className={styles.domanda_style}>Punteggio Area Cognitiva 4: </h3>
-                        <h3>{punteggioAreaCognitiva_4}/3</h3>
+                        <h3 className={styles.score_area_cog}>Punteggio Area Cognitiva 4: </h3>
+                        <h3 className={styles.score}>{punteggioAreaCognitiva_4}/3</h3>
                     </div>
                 </>
                 }
                 {sezioneCognitiva === 5 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 5 - Linguaggio</h3>
+                    <hr style={{width: "100%"}}></hr>
 
+                    <h4>Denominazione oggetti</h4>
                     <div className={styles.wrapper_horizontal}>
-                        <div className={styles.domanda_style}>
-                            <div className={styles.domanda_style}>Come si chiama questo? {"(Indicare una matita)."}</div>
-                            <div className={styles.domanda_style}>Come si chiama questo? {"(Indicare un orologio)."}</div>
-                            
-                        </div>
-                        <input onChange={ac_5_qstn1_changeHandler} value={areaCog_5_domanda_1} className={styles.input_style} type="number" min={0} max={2}></input>
+                        <input onChange={ac_5_qstn1_changeHandler} checked={areaCog_5_domanda_1} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>Come si chiama questo? {"(Indicare una matita)."}</div>
                     </div>
                     <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_5_qstn2_changeHandler} checked={areaCog_5_domanda_2} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>Come si chiama questo? {"(Indicare un orologio)."}</div>
+                    </div>
+                    <h4>Ripetizione frase</h4>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_5_qstn3_changeHandler} checked={areaCog_5_domanda_3} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Ripetere la frase: {"TIGRE CONTRO TIGRE"}</div>
-                        <input onChange={ac_5_qstn2_changeHandler} value={areaCog_5_domanda_2} className={styles.input_style} type="number" min={0} max={1}></input>
                     </div>
-                    <h4 style={{marginTop: "10px", marginBottom: "0"}}>Invitare il paziente a: </h4>
-                    <h4 style={{marginTop: "0"}}>{"(1 punto per ogni azione corretta)"}</h4>
+                    <h4>Esecuzione comandi</h4>
                     <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_5_qstn4_changeHandler} checked={areaCog_5_domanda_4} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Prendi il foglio con la mano destra.</div>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_5_qstn5_changeHandler} checked={areaCog_5_domanda_5} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Piegalo a metà.</div>
+                    </div>
+                    <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_5_qstn6_changeHandler} checked={areaCog_5_domanda_6} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Butta il foglio per terra.</div>
-                        <input onChange={ac_5_qstn3_changeHandler} value={areaCog_5_domanda_3} className={styles.input_style} type="number" min={0} max={3}></input>
                     </div>
-
                     <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_5_qstn7_changeHandler} checked={areaCog_5_domanda_7} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Invitare il paziente a seguire il comando indicato sul foglio: {"(Chiuda gli occhi)."}</div>
-                        <input onChange={ac_5_qstn4_changeHandler} value={areaCog_5_domanda_4} className={styles.input_style} type="number" min={0} max={1}></input>
                     </div>
+                    <h4>Scrittura</h4>
                     <div className={styles.wrapper_horizontal}>
+                        <input onChange={ac_5_qstn8_changeHandler} checked={areaCog_5_domanda_8} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Far scrivere una frase formata da almeno un soggetto e un verbo</div>
-                        <input onChange={ac_5_qstn5_changeHandler} value={areaCog_5_domanda_5} className={styles.input_style} type="number" min={0} max={1}></input>
                     </div>
                     <hr style={{width: "100%"}}></hr>
                     <div className={styles.wrapper_horizontal}>
-                        <h3 style={{width: "80%"}}  className={styles.domanda_style}>Punteggio Area Cognitiva 5: </h3>
-                        <h3>{punteggioAreaCognitiva_5}/8</h3>
+                        <h3 className={styles.score_area_cog}>Punteggio Area Cognitiva 5: </h3>
+                        <h3 className={styles.score}>{punteggioAreaCognitiva_5}/8</h3>
                     </div>
                 </>
                 }
                 {sezioneCognitiva === 6 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 6 - Abilità</h3>
+                    <hr style={{width: "100%"}}></hr>
+
+                    <h4>Disegnare</h4>
                     <div className={styles.wrapper_horizontal}>
-                        <div className={styles.domanda_style}>Far copiare al paziente il disegno indicato.</div>    
-                        <input onChange={ac_6_qstn1_changeHandler} value={areaCog_6_domanda_1} className={styles.input_style} type="number" min={0} max={1}></input>
+                        <input onChange={ac_6_qstn1_changeHandler} checked={areaCog_6_domanda_1} className={styles.input_style} type="checkbox"></input>
+                        <div className={styles.domanda_style}>Far copiare al paziente il disegno indicato. {`(Pentagoni intrecciati)`}</div>    
                     </div>
 
                     <hr style={{width: "100%"}}></hr>
                     <div className={styles.wrapper_horizontal}>
-                        <h3 style={{width: "80%"}}  className={styles.domanda_style}>Punteggio Area Cognitiva 6: </h3>
-                        <h3>{punteggioAreaCognitiva_6}/1</h3>
+                        <h3 className={styles.score_area_cog}>Punteggio Area Cognitiva 6: </h3>
+                        <h3 className={styles.score}>{punteggioAreaCognitiva_6}/1</h3>
                     </div>
                 </>
                 }
                 {showSintesiRisultati && sezioneCognitiva === 6 &&
                 <>
                     <h3 className={styles.area_cog_title}>Riepilogo risultati</h3>
-                    <div style={{margin: "5px 0"}} className={styles.wrapper_horizontal}>
-                        <div className={styles.domanda_style}>Punteggio Area Cognitiva 1:</div>
-                        <div>{punteggioAreaCognitiva_1}/10</div>
+                    <div className={styles.wrapper_vertical}>
+                        <div style={{width: "60%"}}>
+                            <div style={{margin: "5px 0"}} className={styles.wrapper_horizontal}>
+                                <div className={styles.domanda_style}>Punteggio Area Cognitiva 1:</div>
+                                <div>{punteggioAreaCognitiva_1}/10</div>
+                            </div>
+                            <div style={{margin: "5px 0"}} className={styles.wrapper_horizontal}>
+                                <div className={styles.domanda_style}>Punteggio Area Cognitiva 2:</div>
+                                <div>{punteggioAreaCognitiva_2}/3</div>
+                            </div>
+                            <div style={{margin: "5px 0"}} className={styles.wrapper_horizontal}>
+                                <div className={styles.domanda_style}>Punteggio Area Cognitiva 3:</div>
+                                <div>{punteggioAreaCognitiva_3}/5</div>
+                            </div>
+                            <div style={{margin: "5px 0"}} className={styles.wrapper_horizontal}>
+                                <div className={styles.domanda_style}>Punteggio Area Cognitiva 4:</div>
+                                <div>{punteggioAreaCognitiva_4}/3</div>
+                            </div>
+                            <div style={{margin: "5px 0"}} className={styles.wrapper_horizontal}>
+                                <div className={styles.domanda_style}>Punteggio Area Cognitiva 5:</div>
+                                <div>{punteggioAreaCognitiva_5}/8</div>
+                            </div>
+                            <div style={{margin: "5px 0"}} className={styles.wrapper_horizontal}>
+                                <div className={styles.domanda_style}>Punteggio Area Cognitiva 6:</div>
+                                <div>{punteggioAreaCognitiva_6}/1</div>
+                            </div>
+                            <hr style={{width: "100%"}}></hr>
+                            <div className={styles.wrapper_horizontal}>
+                                <div className={styles.domanda_style}>PUNTEGGIO TOTALE:</div>
+                                <div>{punteggioTOT}/30</div>
+                            </div>
+                        </div>
                     </div>
-                    <div style={{margin: "5px 0"}} className={styles.wrapper_horizontal}>
-                        <div className={styles.domanda_style}>Punteggio Area Cognitiva 2:</div>
-                        <div>{punteggioAreaCognitiva_2}/3</div>
-                    </div>
-                    <div style={{margin: "5px 0"}} className={styles.wrapper_horizontal}>
-                        <div className={styles.domanda_style}>Punteggio Area Cognitiva 3:</div>
-                        <div>{punteggioAreaCognitiva_3}/5</div>
-                    </div>
-                    <div style={{margin: "5px 0"}} className={styles.wrapper_horizontal}>
-                        <div className={styles.domanda_style}>Punteggio Area Cognitiva 4:</div>
-                        <div>{punteggioAreaCognitiva_4}/3</div>
-                    </div>
-                    <div style={{margin: "5px 0"}} className={styles.wrapper_horizontal}>
-                        <div className={styles.domanda_style}>Punteggio Area Cognitiva 5:</div>
-                        <div>{punteggioAreaCognitiva_5}/8</div>
-                    </div>
-                    <div style={{margin: "5px 0"}} className={styles.wrapper_horizontal}>
-                        <div className={styles.domanda_style}>Punteggio Area Cognitiva 6:</div>
-                        <div>{punteggioAreaCognitiva_6}/1</div>
-                    </div>
-                    <hr style={{width: "100%"}}></hr>
-                    <div className={styles.wrapper_horizontal}>
-                        <div className={styles.domanda_style}>PUNTEGGIO TOTALE:</div>
-                        <div>{punteggioTOT}/30</div>
-                    </div>
+                    
+                    
                 </>
                 }
             </div>
             
             <div className={styles.wrapper_horizontal}>
-                <GenericButton
-                    onClick={previousAreaCogn}
-                    buttonText={showSintesiRisultati ? "Indietro" : "Area precedente"}
-                    generic_button
-                    red_styling
-                ></GenericButton>
+                {sezioneCognitiva > 1 &&
+                    <GenericButton
+                        onClick={previousAreaCogn}
+                        buttonText={showSintesiRisultati ? "Indietro" : "Area precedente"}
+                        generic_button
+                        red_styling
+                    ></GenericButton>
+                }
 
                 {sezioneCognitiva < 6 &&
                     <GenericButton
