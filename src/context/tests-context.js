@@ -42,12 +42,30 @@ export function TestsContextProvider(props){
         setElencoTest(result);
     }
 
-    function getPatientTest(testID){
+    async function getPatientTest(testID, nome, cognome, tipoTest, punteggioTest, dataSvolgimento){
+        let risultatiTest;
+
+        if(tipoTest === "MMSE"){
+            risultatiTest = await getServerMgr().getSingleTestMMSE(testID).catch((err) => {console.error(err)})
+        }
+
+        if(tipoTest === "MoCA"){
+            risultatiTest = await getServerMgr().getSingleTestMoCA(testID).catch((err) => {console.error(err)})
+        }
+
+        console.log(risultatiTest)
+
         showSchedaTest();
 
         scheda_test_paziente = 
         <SchedaSingoloTest
             id={testID}
+            nome={nome}
+            cognome={cognome}
+            tipoTest={tipoTest}
+            punteggioTest={punteggioTest}
+            dataSvolgimento={dataSvolgimento}
+            risultatiTest={risultatiTest}
         ></SchedaSingoloTest>
     }
 
@@ -76,7 +94,7 @@ export function TestsContextProvider(props){
         showMainPage();
     }
 
-    async function salvaRisultatoTestMMSE(resultMMSE, pazienteID){
+    async function salvaRisultatoTestMMSE(resultMMSE, pazienteID, arrayRisposte){
         var dateee = new Date();
         var day = dateee.toLocaleString('it-IT', {day: '2-digit'})
         var month = dateee.toLocaleString('it-IT', {month: '2-digit'})
@@ -88,7 +106,7 @@ export function TestsContextProvider(props){
         result = await getServerMgr().saveResultMMSE(resultMMSE, pazienteID)
         .catch((err) => {console.error(err)})
 
-        await getServerMgr().updateTestResultList(pazienteID, "MMSE", resultMMSE, dateString)
+        await getServerMgr().updateTestResultList(pazienteID, "MMSE", resultMMSE, dateString, arrayRisposte)
         .catch((err) => {console.error(err)})
 
         getTestsList();

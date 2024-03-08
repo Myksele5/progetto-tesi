@@ -1,0 +1,62 @@
+.wrapper_horizontal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wrapper_vertical{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.label_style{
+    font-weight: bold;
+}
+
+.dettagli_test{
+    margin: 0px 10px 0px 5px;
+}
+
+.wrapper_risposte{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55%;
+    margin: 4px 0px;
+}
+
+.area_cog_title{
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.domanda_style{
+    font-weight: bold;
+    text-align: start;
+    width: 70%;
+    margin-right: 10px;
+    padding-left: 5px;
+}
+
+.risposta_style{
+    width: 30%;
+    padding-right: 5px;
+    text-align: end;
+}
+
+.horizontal_line{
+    width: 55%;
+    margin: 2px 0px 5px 0px;
+}
+
+@media screen and (max-width: 1200px) {
+    .wrapper_risposte{
+        width: 90%;
+    }
+
+    .horizontal_line{
+        width: 90%;
+    }
+}

@@ -112,6 +112,12 @@
     case "getTestResultList":
         $query_result = getTestResultList($conn);
         break;
+    case "getSingleTestMMSE":
+        $query_result = getSingleTestMMSE($conn);
+        break;
+    case "getSingleTestMoCA":
+        $query_result = getSingleTestMoCA($conn);
+        break;
     case "updateTestResultList":
         $query_result = updateTestResultList($conn);
         break;
@@ -859,6 +865,36 @@
         $result = $getTestResult->get_result();
         return $result;
     }
+    function getSingleTestMMSE($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+
+        $testID = $dataJson["testID"];
+        
+        $getSingleTest = $i_conn->prepare(
+            "SELECT domandeTestMMSE.ID, domandeTestMMSE.domanda, resultsTestMMSE.risposta FROM domandeTestMMSE JOIN resultsTestMMSE ON resultsTestMMSE.domandaID = domandeTestMMSE.ID WHERE resultsTestMMSE.sessionID = ?"
+        );
+
+        $getSingleTest->bind_param("i", $testID);
+        $getSingleTest->execute();
+        $result = $getSingleTest->get_result();
+        return $result;
+    }
+    function getSingleTestMoCA($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+
+        $testID = $dataJson["testID"];
+        
+        $getSingleTest = $i_conn->prepare(
+            "SELECT domandeTestMoCA.ID, domandeTestMoCA.domanda, resultsTestMoCA.risposta FROM domandeTestMoCA JOIN resultsTestMoCA ON resultsTestMoCA.domandaID = domandeTestMoCA.ID WHERE resultsTestMoCA.sessionID = ?"
+        );
+
+        $getSingleTest->bind_param("i", $testID);
+        $getSingleTest->execute();
+        $result = $getSingleTest->get_result();
+        return $result;
+    }
     function updateTestResultList($i_conn){
     	$data = file_get_contents("php://input");
         $dataJson = json_decode($data, true);
@@ -875,12 +911,23 @@
         $saveTestResult->execute();
         $lastInsertedID = $saveTestResult->insert_id;
 
-        foreach($arrayRisposte as $risposta){
-            $insertRisposta = $i_conn->prepare(
-                "INSERT INTO `resultsTest` (`sessionID`, `domandaID`, `risposta`) VALUES (?, ?, ?)"
-            );
-            $insertRisposta->bind_param("iii", $lastInsertedID, $risposta['domanda'], $risposta['risposta']);
-            $insertRisposta->execute();
+        if($tipoTest == 'MoCA'){
+            foreach($arrayRisposte as $risposta){
+                $insertRisposta = $i_conn->prepare(
+                    "INSERT INTO `resultsTestMoCA` (`sessionID`, `domandaID`, `risposta`) VALUES (?, ?, ?)"
+                );
+                $insertRisposta->bind_param("iii", $lastInsertedID, $risposta['domanda'], $risposta['risposta']);
+                $insertRisposta->execute();
+            }
+        }
+        else{
+            foreach($arrayRisposte as $risposta){
+                $insertRisposta = $i_conn->prepare(
+                    "INSERT INTO `resultsTestMMSE` (`sessionID`, `domandaID`, `risposta`) VALUES (?, ?, ?)"
+                );
+                $insertRisposta->bind_param("iii", $lastInsertedID, $risposta['domanda'], $risposta['risposta']);
+                $insertRisposta->execute();
+            }
         }
 
         $saveTestResult->bind_result($result);

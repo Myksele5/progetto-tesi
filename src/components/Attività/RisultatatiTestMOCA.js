@@ -549,7 +549,7 @@ function RisultatiTestMOCA(props){
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 1 - Abilità Esecutiva/Visuospaziale</h3>
                     
-                    <h4 style={{marginTop: "10px", marginBottom: "10px"}}>Disegna un OROLOGIO alle undici e dieci: </h4>
+                    <h4 className={styles.explanation}>Disegna un OROLOGIO alle undici e dieci: </h4>
                     <div className={styles.wrapper_horizontal}>
                         <input onChange={ac_1_qstn1_changeHandler} checked={areaCog_1_domanda_1} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Quadrante</div>    
@@ -562,12 +562,12 @@ function RisultatiTestMOCA(props){
                         <input onChange={ac_1_qstn3_changeHandler} checked={areaCog_1_domanda_3} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Lancette</div>    
                     </div>
-                    <h4 style={{marginTop: "10px", marginBottom: "10px"}}>Copia il disegno: </h4>
+                    <h4 className={styles.explanation}>Copia il disegno: </h4>
                     <div className={styles.wrapper_horizontal}>
                         <input onChange={ac_1_qstn4_changeHandler} checked={areaCog_1_domanda_4} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Cubo di Necker</div>    
                     </div>
-                    <h4 style={{marginTop: "10px", marginBottom: "10px"}}>Svolgi esercizio: </h4>
+                    <h4 className={styles.explanation}>Svolgi esercizio: </h4>
                     <div className={styles.wrapper_horizontal}>
                         <input onChange={ac_1_qstn5_changeHandler} checked={areaCog_1_domanda_5} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Trail-making</div>    
@@ -584,7 +584,7 @@ function RisultatiTestMOCA(props){
                 {sezioneCognitiva === 2 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 2 - Denominazione</h3>
-                    <h4 style={{marginTop: "10px", marginBottom: "10px"}}>Scrivi i nomi di questi animali: </h4>
+                    <h4 className={styles.explanation}>Scrivi i nomi di questi animali: </h4>
                     <div className={styles.wrapper_horizontal}>
                         <input onChange={ac_2_qstn1_changeHandler} checked={areaCog_2_domanda_1} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Leone</div>    
@@ -690,7 +690,7 @@ function RisultatiTestMOCA(props){
                 {sezioneCognitiva === 5 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 5 - Linguaggio</h3>
-                    <h4 style={{marginTop: "10px", marginBottom: "10px"}}>Far ripetere le frasi: </h4>
+                    <h4 className={styles.explanation}>Far ripetere le frasi: </h4>
                     <div className={styles.wrapper_horizontal}>
                         <input onChange={ac_5_qstn1_changeHandler} checked={areaCog_5_domanda_1} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>{"So solo che Giovanni è l'unico da aiutare oggi."}</div>
@@ -699,7 +699,7 @@ function RisultatiTestMOCA(props){
                         <input onChange={ac_5_qstn2_changeHandler} checked={areaCog_5_domanda_2} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>{"Il gatto si nascondeva sempre sotto la poltrona quando i cani erano nella stanza."}</div>
                     </div>
-                    <h4 style={{marginTop: "10px", marginBottom: "10px"}}>Elenca: </h4>
+                    <h4 className={styles.explanation}>Elenca: </h4>
                     <div className={styles.wrapper_horizontal}>
                         <input onChange={ac_5_qstn3_changeHandler} checked={areaCog_5_domanda_3} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Il massimo numero di parole che cominciano con la lettera 'F'</div>
@@ -714,7 +714,7 @@ function RisultatiTestMOCA(props){
                 {sezioneCognitiva === 6 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 6 - Astrazione</h3>
-                    <h4 style={{marginTop: "10px", marginBottom: "10px"}}>Quali sono le similarità fra: </h4>
+                    <h4 className={styles.explanation}>Quali sono le similarità fra: </h4>
                     <div className={styles.wrapper_horizontal}>
                         <input onChange={ac_6_qstn1_changeHandler} checked={areaCog_6_domanda_1} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>{"Treno e Bicicletta"}</div>
@@ -733,7 +733,7 @@ function RisultatiTestMOCA(props){
                 {sezioneCognitiva === 7 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 7 - Richiamo</h3>
-                    <h4>Richiama le cinque parole dette in precedenza</h4>
+                    <h4 className={styles.explanation}>Richiama le cinque parole dette in precedenza</h4>
                     <div className={styles.wrapper_horizontal}>
                         <input onChange={ac_7_qstn1_changeHandler} checked={areaCog_7_domanda_1} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Richiamo parola "FACCIA"</div>

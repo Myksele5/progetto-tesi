@@ -480,6 +480,28 @@ function initServerMgr(cb) {
             return result
         }
     }
+    serverMgr.getSingleTestMMSE = async (testID, cb) => {
+        let result = await serverMgr.requestFetchData("getSingleTestMMSE", {testID: testID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+    serverMgr.getSingleTestMoCA = async (testID, cb) => {
+        let result = await serverMgr.requestFetchData("getSingleTestMoCA", {testID: testID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
     serverMgr.updateTestResultList = async (pazienteID, tipoTest, scoreTest, dataSvolgimento, arrayRisposte, cb) => {
         let result = await serverMgr.requestFetchData("updateTestResultList", {pazienteID: pazienteID, tipoTest: tipoTest, scoreTest: scoreTest, dataSvolgimento: dataSvolgimento, arrayRisposte: arrayRisposte})
         if(cb) {

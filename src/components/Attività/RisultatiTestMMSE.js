@@ -67,6 +67,129 @@ function RisultatiTestMMSE(props){
     //DOMANDE AREA COGNITIVA 6
     const [areaCog_6_domanda_1, set_areaCog_6_domanda_1] = useState(0);
 
+    let arrayRiassuntivoRisposte = [
+        {
+            domanda: 1,
+            risposta: areaCog_1_domanda_1
+        },
+        {
+            domanda: 2,
+            risposta: areaCog_1_domanda_2
+        },
+        {
+            domanda: 3,
+            risposta: areaCog_1_domanda_3
+        },
+        {
+            domanda: 4,
+            risposta: areaCog_1_domanda_4
+        },
+        {
+            domanda: 5,
+            risposta: areaCog_1_domanda_5
+        },
+        {
+            domanda: 6,
+            risposta: areaCog_1_domanda_6
+        },
+        {
+            domanda: 7,
+            risposta: areaCog_1_domanda_7
+        },
+        {
+            domanda: 8,
+            risposta: areaCog_1_domanda_8
+        },
+        {
+            domanda: 9,
+            risposta: areaCog_1_domanda_9
+        },
+        {
+            domanda: 10,
+            risposta: areaCog_1_domanda_10
+        },
+        {
+            domanda: 11,
+            risposta: areaCog_2_domanda_1
+        },
+        {
+            domanda: 12,
+            risposta: areaCog_2_domanda_2
+        },
+        {
+            domanda: 13,
+            risposta: areaCog_2_domanda_3
+        },
+        {
+            domanda: 14,
+            risposta: areaCog_3_domanda_1
+        },
+        {
+            domanda: 15,
+            risposta: areaCog_3_domanda_2
+        },
+        {
+            domanda: 16,
+            risposta: areaCog_3_domanda_3
+        },
+        {
+            domanda: 17,
+            risposta: areaCog_3_domanda_4
+        },
+        {
+            domanda: 18,
+            risposta: areaCog_3_domanda_5
+        },
+        {
+            domanda: 19,
+            risposta: areaCog_4_domanda_1
+        },
+        {
+            domanda: 20,
+            risposta: areaCog_4_domanda_2
+        },
+        {
+            domanda: 21,
+            risposta: areaCog_4_domanda_3
+        },
+        {
+            domanda: 22,
+            risposta: areaCog_5_domanda_1
+        },
+        {
+            domanda: 23,
+            risposta: areaCog_5_domanda_2
+        },
+        {
+            domanda: 24,
+            risposta: areaCog_5_domanda_3
+        },
+        {
+            domanda: 25,
+            risposta: areaCog_5_domanda_4
+        },
+        {
+            domanda: 26,
+            risposta: areaCog_5_domanda_5
+        },
+        {
+            domanda: 27,
+            risposta: areaCog_5_domanda_6
+        },
+        {
+            domanda: 28,
+            risposta: areaCog_5_domanda_7
+        },
+        {
+            domanda: 29,
+            risposta: areaCog_5_domanda_8
+        },
+        {
+            domanda: 30,
+            risposta: areaCog_6_domanda_1
+        }
+    ];
+
     useEffect(() => {
         patients_ctx.listaPazienti.map((paz) => {
             console.log(typeof paz.ID)
@@ -400,7 +523,7 @@ function RisultatiTestMMSE(props){
                 {sezioneCognitiva === 1 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 1 - Orientamento</h3>
-                    <hr style={{width: "100%"}}></hr>
+                    {/* <hr style={{width: "100%"}}></hr> */}
 
                     <h4 className={styles.explanation}>Temporale</h4>
                     <div className={styles.wrapper_horizontal}>
@@ -455,7 +578,7 @@ function RisultatiTestMMSE(props){
                 {sezioneCognitiva === 2 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 2 - Memoria</h3>
-                    <hr style={{width: "100%"}}></hr>
+                    {/* <hr style={{width: "100%"}}></hr> */}
 
                     <h4 className={styles.explanation}>Ripetizione di parole</h4>
                     <div className={styles.wrapper_horizontal}>
@@ -480,7 +603,7 @@ function RisultatiTestMMSE(props){
                 {sezioneCognitiva === 3 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 3 - Attenzione e calcolo</h3>
-                    <hr style={{width: "100%"}}></hr>
+                    {/* <hr style={{width: "100%"}}></hr> */}
 
                     <h4 className={styles.explanation}>
                         Far contare per sette all'indietro, partendo da 100. Fermarsi dopo 5 risposte
@@ -518,9 +641,9 @@ function RisultatiTestMMSE(props){
                 {sezioneCognitiva === 4 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 4 - Richiamo</h3>
-                    <hr style={{width: "100%"}}></hr>
+                    {/* <hr style={{width: "100%"}}></hr> */}
 
-                    <h4>Richiama i tre termini precedentemente imparati</h4>
+                    <h4 className={styles.explanation}>Richiama i tre termini precedentemente imparati</h4>
                     <div className={styles.wrapper_horizontal}>
                         <input onChange={ac_4_qstn1_changeHandler} checked={areaCog_4_domanda_1} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Richiamo parola "CASA"</div>
@@ -543,9 +666,9 @@ function RisultatiTestMMSE(props){
                 {sezioneCognitiva === 5 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 5 - Linguaggio</h3>
-                    <hr style={{width: "100%"}}></hr>
+                    {/* <hr style={{width: "100%"}}></hr> */}
 
-                    <h4>Denominazione oggetti</h4>
+                    <h4 className={styles.explanation}>Denominazione oggetti</h4>
                     <div className={styles.wrapper_horizontal}>
                         <input onChange={ac_5_qstn1_changeHandler} checked={areaCog_5_domanda_1} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Come si chiama questo? {"(Indicare una matita)."}</div>
@@ -554,12 +677,12 @@ function RisultatiTestMMSE(props){
                         <input onChange={ac_5_qstn2_changeHandler} checked={areaCog_5_domanda_2} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Come si chiama questo? {"(Indicare un orologio)."}</div>
                     </div>
-                    <h4>Ripetizione frase</h4>
+                    <h4 className={styles.explanation}>Ripetizione frase</h4>
                     <div className={styles.wrapper_horizontal}>
                         <input onChange={ac_5_qstn3_changeHandler} checked={areaCog_5_domanda_3} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Ripetere la frase: {"TIGRE CONTRO TIGRE"}</div>
                     </div>
-                    <h4>Esecuzione comandi</h4>
+                    <h4 className={styles.explanation}>Esecuzione comandi</h4>
                     <div className={styles.wrapper_horizontal}>
                         <input onChange={ac_5_qstn4_changeHandler} checked={areaCog_5_domanda_4} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Prendi il foglio con la mano destra.</div>
@@ -576,7 +699,7 @@ function RisultatiTestMMSE(props){
                         <input onChange={ac_5_qstn7_changeHandler} checked={areaCog_5_domanda_7} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Invitare il paziente a seguire il comando indicato sul foglio: {"(Chiuda gli occhi)."}</div>
                     </div>
-                    <h4>Scrittura</h4>
+                    <h4 className={styles.explanation}>Scrittura</h4>
                     <div className={styles.wrapper_horizontal}>
                         <input onChange={ac_5_qstn8_changeHandler} checked={areaCog_5_domanda_8} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Far scrivere una frase formata da almeno un soggetto e un verbo</div>
@@ -591,9 +714,9 @@ function RisultatiTestMMSE(props){
                 {sezioneCognitiva === 6 && !showSintesiRisultati &&
                 <>
                     <h3 className={styles.area_cog_title}>Area Cognitiva 6 - Abilità</h3>
-                    <hr style={{width: "100%"}}></hr>
+                    {/* <hr style={{width: "100%"}}></hr> */}
 
-                    <h4>Disegnare</h4>
+                    <h4 className={styles.explanation}>Disegnare</h4>
                     <div className={styles.wrapper_horizontal}>
                         <input onChange={ac_6_qstn1_changeHandler} checked={areaCog_6_domanda_1} className={styles.input_style} type="checkbox"></input>
                         <div className={styles.domanda_style}>Far copiare al paziente il disegno indicato. {`(Pentagoni intrecciati)`}</div>    
@@ -675,7 +798,7 @@ function RisultatiTestMMSE(props){
                 {showSintesiRisultati &&
                     <GenericButton
                         onClick={() => {
-                            tests_ctx.salvaRisultatoMMSE(punteggioTOT, paziente)
+                            tests_ctx.salvaRisultatoMMSE(punteggioTOT, paziente, arrayRiassuntivoRisposte)
                             tests_ctx.hideFormAddValutazione()
                         }}
                         buttonText={"Salva risultati"}

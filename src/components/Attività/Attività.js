@@ -13,7 +13,7 @@ function Attività(){
 
     return(
         <>
-            {tests_ctx.mainPage &&
+            {(tests_ctx.mainPage || tests_ctx.formAddValutazione) &&
                 <div className={styles.wrap_boxes}>
                     {!tests_ctx.formAddValutazione &&
                         <GenericButton
@@ -33,7 +33,7 @@ function Attività(){
                     }
                 </div>
             }
-            {!tests_ctx.formAddValutazione && <h1 className={styles.page_title}>Test</h1>}
+            {!tests_ctx.formAddValutazione && !tests_ctx.schedaSingoloTest && <h1 className={styles.page_title}>Test</h1>}
 
             <div className={styles.wrapper_page}>
                 {tests_ctx.formAddValutazione &&
