@@ -320,7 +320,6 @@ function Giochi(){
 
     return(
         <>
-            <h1 className={styles.page_title}>Giochi</h1>
             {showSearchBoxAndButton && auth_ctx.tipoAccount !== "Paziente" &&
                 <div className={styles.wrap_boxes}>
                     <select className={styles.select_style} onChange={tipoGiocoChangeHandler}>
@@ -350,6 +349,7 @@ function Giochi(){
                     </GenericButton>
                 </div>
             }
+            <h1 className={styles.page_title}>Giochi</h1>
 
             <div className={styles.wrapper_generico}>
                 {showAddNewGame && 

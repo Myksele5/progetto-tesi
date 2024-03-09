@@ -138,14 +138,18 @@
 
 @media screen and (max-width: 500px) {
     .wrapper_horizontal_labels{
-        font-size: 13px;
+        font-size: 12px;
     }
     
     .wrapper_horizontal_content{
         font-size: 12px;
     }
-    .label_nome, .label_cognome, .label_tipoTest, .label_scoreTest, .label_data, .content_nome, .content_cognome, .content_tipoTest, .content_scoreTest, .content_data{
+    .label_nome, .label_cognome, .label_tipoTest, .label_scoreTest, .content_nome, .content_cognome, .content_tipoTest, .content_scoreTest{
         width: 20%;
+    }
+
+    .label_data, .content_data{
+        display: none;
     }
 }
 

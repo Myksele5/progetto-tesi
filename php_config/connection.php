@@ -28,6 +28,9 @@
     case "addAccount":
         $query_result = addAccount($conn);
         break;
+    case "updatePatientWithProfileID":
+        $query_result = updatePatientWithProfileID($conn);
+        break;
     case "getPatientsList":
         $query_result = getPatientsList($conn);
         break;
@@ -272,13 +275,29 @@
         $nome = $dataJson["nome"];
         $cognome = $dataJson["cognome"];
         $titolo = $dataJson["titolo"];
+        $patientID = $dataJson["patientID"];
         
-        $insertNewAccount = $i_conn->prepare("INSERT INTO `accounts` (`nome`, `cognome`, `titolo`, `email`, `password`) VALUES (?, ?, ?, ?, ?)");
-        $insertNewAccount->bind_param("sssss", $nome, $cognome, $titolo, $email, $password);
+        $insertNewAccount = $i_conn->prepare("INSERT INTO `accounts` (`nome`, `cognome`, `titolo`, `email`, `password`, `patientID`) VALUES (?, ?, ?, ?, ?, ?)");
+        $insertNewAccount->bind_param("sssssi", $nome, $cognome, $titolo, $email, $password, $patientID);
         $insertNewAccount->execute();
+
+        $patientAccountID = $insertNewAccount->insert_id;
         
-        $insertNewAccount->bind_result($result);
-        return $result;
+        // $insertNewAccount->bind_result($result);
+        return $patientAccountID;
+    }
+    function updatePatientWithProfileID($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $accountID = $dataJson["accountID"];
+        $patientID = $dataJson["patientID"];
+        
+        $updatePatientWithProfileID = $i_conn->prepare("UPDATE `patients` SET `accountID` = ? WHERE patients.ID = ?");
+        $updatePatientWithProfileID->bind_param("ii", $accountID, $patientID);
+        $updatePatientWithProfileID->execute();
+
+        return $patientAccountID;
     }
 
     function getPatientsList($i_conn){
@@ -358,7 +377,7 @@
             $insertNewInfoMediche->bind_param("iiisss", $patientID, $info['patologiaID'], $info['terapiaID'], $info['dataInizio'], $info['dataFine'], $info['note']);
             $insertNewInfoMediche->execute();
         }
-        return $result;
+        return $patientID;
     }
 
     function updatePaziente($i_conn){

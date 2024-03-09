@@ -212,7 +212,7 @@
     }
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width:650px) {
     .wrapper_horizontal{
         flex-direction: column;
     }
@@ -224,6 +224,10 @@
     .width_for_wrapper{
         width: 400px;
         justify-content: space-between;
+    }
+
+    .select_style{
+        width: 140px;
     }
 
     .input_style{
@@ -241,5 +245,8 @@
         justify-content: space-between;
     }
 
-    
+    .select_style{
+        width: 100px;
+        font-size: 12px;
+    }
 }

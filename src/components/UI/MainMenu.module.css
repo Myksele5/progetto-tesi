@@ -211,7 +211,7 @@
 
     .wrap_website_name_MOBILE{
         /* width: 9%; */
-        width: 100px;
+        width: 80px;
         height: 100%;
         padding-bottom: 0;
         display: block;
@@ -222,7 +222,7 @@
     }
 
     .menu_image{
-        width: 90px;
+        width: 80px;
         height: 100%;
     }
 
@@ -293,7 +293,25 @@
     }
 }
 @media screen and (max-width: 500px) {
+    .wrap_menu{
+        height: 70px;
+    }
+
+    .wrap_website_name_MOBILE, .menu_image{
+        width: 75px;
+    }
+
+    .profile_button{
+        width: 40px;
+        height: 40px;
+    }
+
+    .profile_image{
+        width: 25px;
+        height: 25px;
+    }
+
     .menu_option{
-        /* max-width: 80px; */
+        height: 70px;
     }
 }

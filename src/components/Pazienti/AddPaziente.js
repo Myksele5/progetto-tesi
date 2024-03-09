@@ -314,11 +314,6 @@ function AddPaziente(props){
     async function formSubmitHandler(event){
         event.preventDefault();
 
-        if(enteredEmail.includes('@') && enteredPsw.trim().length > 5){
-            // setModaleCREAZIONEUTENTE(true);
-            creaAccountPaziente();
-        }
-
         const datiPaziente = {
             doct_UID: auth_ctx.utenteLoggatoUID,
             nome: enteredNome,
@@ -335,6 +330,12 @@ function AddPaziente(props){
             datiPaziente.doct_UID, datiPaziente.nome, datiPaziente.cognome, datiPaziente.city, datiPaziente.codiceFiscale, datiPaziente.dataNascita, datiPaziente.informazioniMediche
         );
         console.log("pazienteID--> " + pazienteSalvatoID)
+
+        if(enteredEmail.includes('@') && enteredPsw.trim().length > 5 && pazienteSalvatoID){
+            // setModaleCREAZIONEUTENTE(true);
+            creaAccountPaziente(pazienteSalvatoID);
+        }
+
         patients_ctx.nuovoPazienteHandler();
         
         setEnteredNome('');
@@ -347,7 +348,7 @@ function AddPaziente(props){
         // setValidData(true);
     }
 
-    async function creaAccountPaziente(){
+    async function creaAccountPaziente(pazienteID){
         let result;
         result = await getServerMgr().getAccount()
         .then(console.log(result))
@@ -368,22 +369,32 @@ function AddPaziente(props){
             }
             if(!emailEsistente){
                 let result2;
-                result2 = await getServerMgr().addAccount(enteredNome, enteredCognome, 3, enteredEmail, enteredPsw)
+                result2 = await getServerMgr().addAccount(enteredNome, enteredCognome, 3, enteredEmail, enteredPsw, pazienteID)
                 .then(alert("ACCOUNT CREATO!"))
                 .catch((err) => {
                     console.error(err);
-                    // setRegistrEffettuata(false);
+                });
+
+                console.log(result2)
+                await getServerMgr().updatePatientWithProfileID(result2, pazienteID)
+                .catch((err) => {
+                    console.error(err);
                 });
             }
         }
         else{
             let result2;
-            result2 = await getServerMgr().addAccount(enteredNome, enteredCognome, 3, enteredEmail, enteredPsw)
+            result2 = await getServerMgr().addAccount(enteredNome, enteredCognome, 3, enteredEmail, enteredPsw, pazienteID)
             .then(alert("ACCOUNT CREATO!"))
             .catch((err) => {
                 console.error(err);
             })
-            // alert("NESSUN ACCOUNT TROVATO");
+
+            console.log(result2)
+            await getServerMgr().updatePatientWithProfileID(result2, pazienteID)
+            .catch((err) => {
+                console.error(err);
+            });
         }  
 
         return

@@ -8,7 +8,7 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.555);
     text-align: center;
-    z-index: 100;
+    z-index: 3000;
 }
 
 .wrapper_modal{
@@ -25,6 +25,7 @@
     background-color: #f6f6f6ee;
     border: 3px solid #1E56A0;
     box-shadow: 1px 1px 5px 3px #1E56A0;
+    z-index: 3000;
 }
 
 .modal_title_text{

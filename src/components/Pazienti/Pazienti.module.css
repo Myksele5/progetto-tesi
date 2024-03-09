@@ -60,7 +60,7 @@
 @media screen and (max-width: 500px) {
     .wrap_boxes{
         /* position: unset; */
-        justify-content: center;
+        justify-content: space-evenly;
     }
 
     .select_style{

@@ -71,8 +71,19 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.addAccount = async (nome, cognome, titolo, email, password, cb) => {
-        let result = await serverMgr.requestFetchData("addAccount", {nome: nome, cognome: cognome, titolo: titolo, email: email, password: password})
+    serverMgr.addAccount = async (nome, cognome, titolo, email, password, patientID, cb) => {
+        let result = await serverMgr.requestFetchData("addAccount", {nome: nome, cognome: cognome, titolo: titolo, email: email, password: password, patientID: patientID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+    serverMgr.updatePatientWithProfileID = async (accountID, patientID, cb) => {
+        let result = await serverMgr.requestFetchData("updatePatientWithProfileID", {accountID: accountID, patientID: patientID})
         if(cb) {
             // console.log("getInventory: " + result)
             cb(result)
@@ -130,6 +141,17 @@ function initServerMgr(cb) {
             informazioniMediche: informazioniMediche
             // statistiche: statistiche
         })
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+    serverMgr.insertCredentialsPatient = async (patientID, cb) => {
+        let result = await serverMgr.requestFetchData("insertCredentialsPatient", {patientID: patientID})
         if(cb) {
             // console.log("getInventory: " + result)
             cb(result)
