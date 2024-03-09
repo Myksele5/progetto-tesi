@@ -74,7 +74,9 @@ function ListaGiochi(props){
         
         <>
             {game_ctx.showModale && game_ctx.modale}
-            {lista.map(fromArrayToGameList)}
+            {lista.length === 0 && <h2>Non hai ancora creato nessun gioco</h2>}
+            {lista.length > 0 && lista.map(fromArrayToGameList)}
+            {/* {lista.map(fromArrayToGameList)} */}
         </>
     
     );

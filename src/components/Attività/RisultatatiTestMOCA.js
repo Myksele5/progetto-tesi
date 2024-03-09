@@ -3,8 +3,10 @@ import styles from "./RisultatiTestMOCA.module.css";
 import GenericButton from "../UI/GenericButton";
 import TestsContext from "../../context/tests-context";
 import PatientContext from "../../context/patients-context";
+import AuthContext from "../../context/auth-context";
 
 function RisultatiTestMOCA(props){
+    const auth_ctx = useContext(AuthContext);
     const tests_ctx = useContext(TestsContext);
     const patients_ctx = useContext(PatientContext)
 
@@ -871,7 +873,7 @@ function RisultatiTestMOCA(props){
                 {showSintesiRisultati &&
                     <GenericButton
                         onClick={() => {
-                            tests_ctx.salvaRisultatoMoCA(punteggioTOT, paziente, arrayRiassuntivoRisposte)
+                            tests_ctx.salvaRisultatoMoCA(punteggioTOT, paziente, arrayRiassuntivoRisposte, auth_ctx.utenteLoggatoUID)
                             tests_ctx.hideFormAddValutazione()
                         }}
                         buttonText={"Salva risultati"}

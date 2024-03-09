@@ -1,6 +1,7 @@
 import styles from "./MainMenu.module.css";
 import logo from "../Images/CogniCareLogo.png";
 import logo_MOBILE from "../Images/CogniCareLogo_Mobile.png";
+import user from "../Images/user.png";
 import patient from "../Images/disabled.png";
 import activity from "../Images/puzzle_piece.png";
 import game from "../Images/chess.png";
@@ -10,7 +11,7 @@ import ReactDOM from 'react-dom';
 import { useContext, useState } from "react";
 import AuthContext from "../../context/auth-context";
 import PatientContext from "../../context/patients-context";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Button, Container, Dropdown, Nav, Navbar, OverlayTrigger, Popover } from "react-bootstrap";
 
 function MainMenu(props){
     const auth_ctx = useContext(AuthContext);
@@ -64,7 +65,7 @@ function MainMenu(props){
             <div className={`${styles.wrap_website_name_MOBILE}`}>
                 <img className={styles.menu_image} src={logo_MOBILE} alt="CogniCare"></img>
             </div>
-            <div className={styles.wrap_profilo}>
+            {/* <div className={styles.wrap_profilo}>
                 <div className={styles.wrapper_generico}>
                     <p className={styles.utente_loggato}>{auth_ctx.utenteLoggato}</p>
                     <p className={styles.utente_loggato_FULLNAME}>{auth_ctx.nomeUtenteLoggato} {auth_ctx.cognomeUtenteLoggato}</p>
@@ -76,8 +77,56 @@ function MainMenu(props){
                     >
                     </GenericButton>
                 </div>
-            </div>
+            </div> */}
             <Nav className={`${styles.wrap_buttons}`}>
+            {/* <button>Profilo</button> */}
+                {/* <Dropdown className={styles.dropdown_button_centering} data-bs-theme="dark">
+                    <Dropdown.Toggle style={{width: "60px"}}>
+                        <img className={styles.profile_image} src={user}></img>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu style={{width: "fit-content"}}>
+                        <Dropdown.Item style={{padding: "4px"}} disabled>
+                            <p className={styles.utente_loggato_FULLNAME}>{auth_ctx.nomeUtenteLoggato} {auth_ctx.cognomeUtenteLoggato}</p>
+                        </Dropdown.Item>
+                        <Dropdown.Item style={{padding: "4px"}} disabled>
+                            <p className={styles.utente_loggato}>{auth_ctx.utenteLoggato}</p>
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            <button
+                                className={styles.logout_button}
+                                onClick={auth_ctx.onLogoutClick}
+                                style={{width: "100%"}}
+                                // buttonText={'Log Out'}
+                                // small_button={true}
+                                // red_styling
+                            >Log Out
+                            </button>
+                        </Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown> */}
+                <OverlayTrigger rootClose rootCloseEvent="click" trigger="click" placement="bottom" overlay={
+                    <Popover>
+                        <Popover.Body style={{maxWidth: "250px"}}>
+                            <p className={styles.utente_loggato_FULLNAME}>{auth_ctx.nomeUtenteLoggato} {auth_ctx.cognomeUtenteLoggato}</p>
+                            <p className={styles.utente_loggato}>{auth_ctx.utenteLoggato}</p>
+                            <button
+                                className={styles.logout_button}
+                                onClick={auth_ctx.onLogoutClick}
+                                style={{width: "100%"}}
+                                // buttonText={'Log Out'}
+                                // small_button={true}
+                                // red_styling
+                            >Log Out
+                            </button>
+                        </Popover.Body>
+                    </Popover>
+                }>
+                    <div className={styles.wrapper_flex}>
+                        <Button className={styles.profile_button}>
+                            <img className={styles.profile_image} src={user}></img>
+                        </Button>
+                    </div>
+                </OverlayTrigger>
                 <Nav.Item className={`${styles.menu_option} ${highlightMenuButton_PAZIENTI ? styles.menu_option_SELECTED : ''}`} onClick={goToPazienti}>
                     <img className={styles.image_option} src={patient} alt="pazienti"></img>
                     <div className={styles.menu_text_option}>Pazienti</div>

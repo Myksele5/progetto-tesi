@@ -855,12 +855,14 @@
     function getTestResultList($i_conn){
     	$data = file_get_contents("php://input");
         $dataJson = json_decode($data, true);
+
+        $doctorID = $dataJson["doctorID"];
         
         $getTestResult = $i_conn->prepare(
             "SELECT storicoTest.ID, storicoTest.tipoTest, storicoTest.punteggioTest, storicoTest.dataSvolgimento, patients.nome, patients.cognome 
-            FROM `storicoTest` JOIN `patients` ON storicoTest.pazienteID = patients.ID;"
+            FROM `storicoTest` JOIN `patients` ON storicoTest.pazienteID = patients.ID WHERE storicoTest.doctorID = ?"
         );
-        
+        $getTestResult->bind_param("i", $doctorID);
         $getTestResult->execute();
         $result = $getTestResult->get_result();
         return $result;
@@ -904,9 +906,10 @@
         $scoreTest = $dataJson["scoreTest"];
         $date = $dataJson["dataSvolgimento"];
         $arrayRisposte = $dataJson["arrayRisposte"];
+        $doctorID = $dataJson["doctorID"];
         
-        $saveTestResult = $i_conn->prepare("INSERT INTO `storicoTest` (`pazienteID`, `tipoTest`, `punteggioTest`, `dataSvolgimento`) VALUES (?, ?, ?, ?)");
-        $saveTestResult->bind_param("isis", $pazienteID, $tipoTest, $scoreTest, $date);
+        $saveTestResult = $i_conn->prepare("INSERT INTO `storicoTest` (`pazienteID`, `doctorID`, `tipoTest`, `punteggioTest`, `dataSvolgimento`) VALUES (?, ?, ?, ?, ?)");
+        $saveTestResult->bind_param("iisis", $pazienteID, $doctorID, $tipoTest, $scoreTest, $date);
         
         $saveTestResult->execute();
         $lastInsertedID = $saveTestResult->insert_id;
