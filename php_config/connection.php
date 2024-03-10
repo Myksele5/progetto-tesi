@@ -31,6 +31,9 @@
     case "updatePatientWithProfileID":
         $query_result = updatePatientWithProfileID($conn);
         break;
+    case "getPatientCredentials":
+        $query_result = getPatientCredentials($conn);
+        break;
     case "getPatientsList":
         $query_result = getPatientsList($conn);
         break;
@@ -298,6 +301,20 @@
         $updatePatientWithProfileID->execute();
 
         return $patientAccountID;
+    }
+
+    function getPatientCredentials($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $patientID = $dataJson["patientID"];
+        
+        $getPatientCredentials = $i_conn->prepare("SELECT accounts.email, accounts.password FROM `accounts` WHERE accounts.patientID = ?");
+        $getPatientCredentials->bind_param("i", $patientID);
+        $getPatientCredentials->execute();
+        $result = $getPatientCredentials->get_result();
+
+        return $result;
     }
 
     function getPatientsList($i_conn){

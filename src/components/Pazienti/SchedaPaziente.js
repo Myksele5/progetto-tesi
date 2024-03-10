@@ -4,17 +4,27 @@ import styles from './SchedaPaziente.module.css';
 import { useEffect, useState } from 'react';
 import StatistichePaziente from './StatistichePaziente';
 import CardSmall from '../UI/CardSmall';
-import { Accordion, ProgressBar, Tab, Tabs } from 'react-bootstrap';
+import { Accordion, Modal, ProgressBar, Tab, Tabs } from 'react-bootstrap';
+import { getServerMgr } from '../../backend_conn/ServerMgr';
 
 function SchedaPaziente(props){
+    let emailEsistente = null;
+
     // const [titoloScheda, setTitoloScheda] = useState('Dati Personali');
     const [sezioneScheda, setSezioneScheda] = useState('DATI_PERSONALI');
 
     const [informazioniMediche, setInformazioniMediche] = useState([]);
     const [listaGiochi, setListaGiochi] = useState([]);
 
-    // let scoreMMSE_percentage;
-    // let scoreMoCA_percentage;
+    const [showCredentials, setShowCredentials] = useState(false);
+    const [createCredentials, setCreateCredentials] = useState(false);
+    const [credentials, setCredentials] = useState([]);
+
+    const [enteredEmail, setEnteredEmail] = useState("");
+    const [validEmail, setValidEmail] = useState(true)
+    const [enteredPassword, setEnteredPassword] = useState("");
+    const [validPassword, setValidPassword] = useState(true)
+
 
     useEffect(() => {
         // console.log(props.informazioniMediche)
@@ -35,6 +45,16 @@ function SchedaPaziente(props){
             setListaGiochi([]) 
         }   
     }, [])
+    useEffect(() => {
+        // console.log(props.informazioniMediche)
+        if(props.credentialsAccount?.length > 0){
+            setCredentials(props.credentialsAccount) 
+        }
+        else{
+            setCredentials([]) 
+        }
+        // console.log(props.id)
+    }, [createCredentials])
 
     function selectShow(stringa){
         // console.log(event.target.value);
@@ -64,6 +84,85 @@ function SchedaPaziente(props){
         }
     }
 
+    function emailChangeHandler(event){
+        setEnteredEmail(event.target.value)
+        setValidEmail(true);
+    }
+    function passwordChangeHandler(event){
+        setEnteredPassword(event.target.value)
+        setValidPassword(true);
+    }
+
+    async function creaAccountPaziente(){
+        if(enteredEmail.includes('@') && enteredPassword.trim().length >= 6){
+            let result;
+            result = await getServerMgr().getAccount()
+            .then(console.log(result))
+            .catch((err) => {
+                console.error(err);
+            });
+
+            if(result !== undefined){
+                for(var i=0; i < result.length; i++){
+                    if(result[i].email === enteredEmail){
+                        emailEsistente = true;
+                        alert("Email già associata ad un account!");
+                        break;
+                    }
+                    else{
+                        emailEsistente = false;
+                    }
+                }
+                if(!emailEsistente){
+                    let result2;
+                    result2 = await getServerMgr().addAccount(props.nome, props.cognome, 3, enteredEmail, enteredPassword, props.id)
+                    .then(alert("ACCOUNT CREATO!"))
+                    .catch((err) => {
+                        console.error(err);
+                    });
+
+                    console.log(result2)
+                    await getServerMgr().updatePatientWithProfileID(result2, props.id)
+                    .catch((err) => {
+                        console.error(err);
+                    });
+
+                    setCreateCredentials(false);
+                    let resultCredentialsPatients = await getServerMgr().getPatientCredentials(props.id);
+                    setCredentials(resultCredentialsPatients);
+                }
+            }
+            else{
+                let result2;
+                result2 = await getServerMgr().addAccount(props.nome, props.cognome, 3, enteredEmail, enteredPassword, props.id)
+                .then(alert("ACCOUNT CREATO!"))
+                .catch((err) => {
+                    console.error(err);
+                })
+
+                console.log(result2)
+                await getServerMgr().updatePatientWithProfileID(result2, props.id)
+                .catch((err) => {
+                    console.error(err);
+                });
+
+                setCreateCredentials(false);
+                let resultCredentialsPatients = await getServerMgr().getPatientCredentials(props.id);
+                setCredentials(resultCredentialsPatients);
+            }
+        }
+        else{
+            if(!enteredEmail.includes('@')){
+                setValidEmail(false);
+            }
+            if(enteredPassword.trim().length < 6){
+                setValidPassword(false);
+            }
+        }
+
+        
+    }
+
     return(
         <div style={{width: "100%"}}>
             <Tabs variant='underline' fill justify id="controlled-tab-example" activeKey={sezioneScheda} onSelect={(key) => {selectShow(key)}}>
@@ -86,10 +185,72 @@ function SchedaPaziente(props){
                     </div>
                     <div className={styles.wrapper_vertical}>
                         <label className={styles.label_style}>Credenziali</label>
-                        <GenericButton
-                            buttonText={"Visualizza"}
-                            generic_button
-                        ></GenericButton>
+                        {credentials.length === 0 && 
+                        <>
+                            <GenericButton
+                                onClick={() => {setCreateCredentials((prevBool) => (!prevBool))}}
+                                buttonText={"Crea credenziali"}
+                                generic_button
+                            >
+                            </GenericButton>
+                            {createCredentials &&
+                                <Modal centered show={createCredentials}>
+                                    <Modal.Header style={{fontWeight: "bold", fontSize: "18px"}}>Crea credenziali paziente</Modal.Header>
+                                    <Modal.Body>
+                                        <label className={`${styles.tag_style} ${!validEmail ? styles.invalid : ''}`}>Email:</label>
+                                        <input autoFocus value={enteredEmail} onChange={emailChangeHandler} className={`${styles.input_style} ${!validEmail ? styles.invalid : ''}`}></input>
+                                        {!validEmail && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una email valida</div>}
+                                        <label className={`${styles.tag_style} ${!validPassword ? styles.invalid : ''}`}>Password:</label>
+                                        <input value={enteredPassword} onChange={passwordChangeHandler} className={`${styles.input_style} ${!validPassword ? styles.invalid : ''}`}></input>
+                                        {!validPassword && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una password con almeno 6 caratteri</div>}
+                                        <div style={{marginTop: "10px"}} className={styles.horizontal}>
+                                            <GenericButton
+                                                onClick={() => setCreateCredentials((prevBool) => (!prevBool))}
+                                                buttonText={"Chiudi"}
+                                                generic_button
+                                                red_styling
+                                            ></GenericButton>
+                                            <GenericButton
+                                                onClick={() => creaAccountPaziente()}
+                                                buttonText={"Crea account"}
+                                                generic_button
+                                            ></GenericButton>
+                                        </div>
+                                    </Modal.Body>
+                                </Modal>
+                            }
+                        </>
+                        }
+                        {credentials.length > 0 && 
+                        <>
+                            <GenericButton
+                                onClick={() => {setShowCredentials((prevBool) => (!prevBool))}}
+                                buttonText={!showCredentials ? "Visualizza" : "Nascondi"}
+                                generic_button
+                            ></GenericButton>
+                            {showCredentials &&
+                            <>
+                                <Modal centered show={showCredentials}>
+                                    <Modal.Header style={{fontWeight: "bold", fontSize: "18px"}}>Credenziali paziente</Modal.Header>
+                                    <Modal.Body>
+                                        <label className={styles.tag_style}>Email:</label>
+                                        <div style={{textAlign: "start"}} className={styles.content_text_style}>{credentials[0].email}</div>
+                                        <label className={styles.tag_style}>Password:</label>
+                                        <div style={{textAlign: "start"}} className={styles.content_text_style}>{credentials[0].password}</div>
+                                        <div style={{marginTop: "10px"}} className={styles.horizontal}>
+                                            <GenericButton
+                                                onClick={() => setShowCredentials((prevBool) => (!prevBool))}
+                                                buttonText={"Chiudi"}
+                                                generic_button
+                                                red_styling
+                                            ></GenericButton>
+                                        </div>
+                                    </Modal.Body>
+                                </Modal>
+                            </>
+                            }
+                        </>
+                        }
                     </div>
                     <hr className={styles.horizontal_line}/>
                 </Tab>
@@ -229,191 +390,6 @@ function SchedaPaziente(props){
             </div>
             
         </div>
-        // <div className={styles.lista}>
-        //     <select className={styles.select_section} onChange={selectShow}>
-        //         <option className={styles.option_style}>Dati Personali</option>
-        //         <option>Scheda Medica</option>
-        //         <option>Test</option>
-        //         <option>Giochi</option>
-        //         <option>Statistiche</option>
-        //     </select>
-        //     <div className={styles.wrap_buttons}>
-                
-        //         <GenericButton
-        //             onClick={showDatiPersonali}
-        //             is_selected={sezioneScheda === "DATI_PERSONALI" ? true : false}
-        //             generic_button={true}
-        //             buttonText='Dati Personali'
-        //         >
-        //         </GenericButton>
-        //         <GenericButton
-        //             onClick={showSchedaMedica}
-        //             is_selected={sezioneScheda === "SCHEDA_MEDICA" ? true : false}
-        //             generic_button={true}
-        //             buttonText='Scheda Medica'
-        //         >
-        //         </GenericButton>
-        //         <GenericButton
-        //             onClick={showTest}
-        //             is_selected={sezioneScheda === "TEST" ? true : false}
-        //             generic_button={true}
-        //             buttonText='Test'
-        //         >
-        //         </GenericButton>
-        //         <GenericButton
-        //             onClick={showGiochi}
-        //             is_selected={sezioneScheda === "GIOCHI" ? true : false}
-        //             generic_button={true}
-        //             buttonText='Giochi'
-        //         >
-        //         </GenericButton>
-        //         <GenericButton
-        //             onClick={showStatistiche}
-        //             is_selected={sezioneScheda === "STATISTICHE" ? true : false}
-        //             generic_button={true}
-        //             buttonText='Statistiche'
-        //         >
-        //         </GenericButton>
-        //     </div>
-            
-        //     <hr className={styles.horizontal_line}></hr>
-        //     <h1 className={styles.scheda_title}>{titoloScheda}</h1>
-        //     <hr className={styles.horizontal_line}></hr>
-
-        //     {sezioneScheda === 'DATI_PERSONALI' &&
-        //     <>
-        //         <label className={styles.label_style}>Nome completo</label>
-        //         <h3>{props.nome} {props.cognome}</h3>
-    
-        //         <label className={styles.label_style}>Città di nascita</label>
-        //         <h3>{props.città}</h3>
-    
-        //         <label className={styles.label_style}>Data di nascita</label>
-        //         <h3>{props.datanascita}</h3>
-
-        //         <label className={styles.label_style}>Codice Fiscale</label>
-        //         <h3>{props.codicefiscale}</h3>
-        //         <hr className={styles.horizontal_line}/>
-        //     </>
-        //     }
-        //     {sezioneScheda === 'SCHEDA_MEDICA' &&
-        //     <>
-        //         {informazioniMediche.length === 0 && <h3>Non ci sono informazioni mediche su questo paziente</h3>}
-        //         {informazioniMediche.length > 0 && <h3 style={{margin: "10px 4px 2px 4px"}}>Patologie e terapie:</h3>}
-        //         {informazioniMediche?.map((objInfo) => (
-        //             <>
-                        
-        //                 <CardSmall
-        //                     children={
-        //                         <div className={styles.container_flexible_GENERIC}>
-        //                             <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-        //                                 <label className={`${styles.sintesiMedica_label_PATOLOGIA}`}>Patologia:</label>
-        //                                 <h5 className={`${styles.sintesiMedica_content_PATOLOGIA}`}>{objInfo.nomePatologia}</h5>
-        //                             </div>
-        //                             <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-        //                                 <label className={`${styles.sintesiMedica_label_TERAPIA}`}>Terapia:</label>
-        //                                 <h5 className={`${styles.sintesiMedica_content_TERAPIA}`}>{objInfo.terapia}</h5>
-        //                             </div>
-        //                             <div className={styles.wrapper_horizontal}>
-        //                                 <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-        //                                     <label className={`${styles.sintesiMedica_label_DATA}`}>Data inizio:</label>
-        //                                     <h5 className={`${styles.sintesiMedica_content_DATA}`}>{objInfo.dataInizio}</h5>
-        //                                 </div>
-        //                                 <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-        //                                     <label className={`${styles.sintesiMedica_label_DATA}`}>Data fine:</label>
-        //                                     <h5 className={`${styles.sintesiMedica_content_DATA}`}>{objInfo.dataFine}</h5>
-        //                                 </div>
-        //                             </div>
-        //                             <div style={{borderRight: "none"}} className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-        //                                 <label className={`${styles.sintesiMedica_label_NOTE}`}>Note:</label>
-        //                                 <h5 className={`${styles.sintesiMedica_content_NOTE}`}>{objInfo.note}</h5>
-        //                             </div>
-        //                         </div>
-        //                     }
-        //                 ></CardSmall>
-        //             </>
-        //             ))
-        //         }
-                
-        //         <hr className={styles.horizontal_line}/>
-        //     </>
-        //     }
-        //     {sezioneScheda === 'TEST' &&
-        //     <>
-        //         {props.scoreMMSE !== null &&
-        //         <>
-        //             <h1 className={styles.mmse_moca_style}>PUNTEGGIO MMSE</h1>
-        //             <h2>{props.scoreMMSE}/30</h2>
-        //         </>
-        //         }
-        //         {props.scoreMMSE === null &&
-        //         <>
-        //             <h1 className={styles.mmse_moca_style}>Test MMMSE non effettuato</h1>
-        //         </>
-        //         }
-        //         <hr className={styles.horizontal_line}/>
-        //         {props.scoreMOCA !== null &&
-        //         <>
-        //             <h1 className={styles.mmse_moca_style}>PUNTEGGIO MOCA</h1>
-        //             <h2>{props.scoreMOCA}/30</h2>
-        //         </>
-        //         }
-        //         {props.scoreMOCA === null &&
-        //         <>
-        //             <h1 className={styles.mmse_moca_style}>Test MOCA non effettuato</h1>
-        //         </>
-        //         }
-        //         <hr className={styles.horizontal_line}/>
-        //     </>
-        //     }
-        //     {sezioneScheda === 'GIOCHI' &&
-        //     <>
-        //         <h1 className={styles.mmse_moca_style}>Esercizi del paziente:</h1>
-        //         {listaGiochi.map((gioco) => (
-        //         <>
-        //             <CardSmall
-        //                 children={
-        //                     <div className={styles.container_flexible_GENERIC}>
-        //                         <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-        //                             <label style={{padding:"5px"}}>Nome gioco</label>
-        //                             <p>{gioco.nomeGioco}</p>
-        //                         </div>
-        //                         <div className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-        //                             <label style={{padding:"5px"}}>Tipo gioco</label>
-        //                             <p>{gioco.tipoGioco}</p>
-        //                         </div>
-                                
-        //                         <div style={{borderRight: "none"}} className={`${styles.container_flexible_SEZIONE_SINTESI}`}>
-        //                             <label style={{padding:"5px"}}>Livello gioco</label>
-        //                             <p>{gioco.livelloGioco}</p>
-        //                         </div>
-        //                     </div>
-        //                 }
-        //             ></CardSmall>
-        //         </>
-        //         ))}
-        //         <hr className={styles.horizontal_line}/>
-        //     </>
-        //     }
-        //     {sezioneScheda === 'STATISTICHE' &&
-        //     <>
-        //         <StatistichePaziente
-        //         pazienteID={props.id}
-        //         stats={props.stats_paziente}
-        //         >
-        //         </StatistichePaziente>
-        //         <hr className={styles.horizontal_line}/>
-        //     </>
-        //     }
-
-        //     <GenericButton
-        //     generic_button={true}
-        //     red_styling
-        //     onClick={props.goBackButton}
-        //     buttonText='Indietro'>
-        //     </GenericButton>
-        // </div>
-
     );
 }
 

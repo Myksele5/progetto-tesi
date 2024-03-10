@@ -19,7 +19,7 @@ function SchedaSingoloTest(props){
                 ></GenericButton>
             </div>
             
-            <h3>Scheda Test di: {props.nome} {props.cognome}</h3>
+            <h3 className={styles.scheda_test_di}>Scheda Test di: {props.nome} {props.cognome}</h3>
             <div className={styles.wrapper_horizontal}>
                 <label className={styles.label_style}>Tipo test svolto: </label>
                 <div className={styles.dettagli_test}>{props.tipoTest}</div>
@@ -32,6 +32,8 @@ function SchedaSingoloTest(props){
                 <label className={styles.label_style}>Svolto il: </label>
                 <div className={styles.dettagli_test}>{props.dataSvolgimento}</div>
             </div>
+
+            <hr className={styles.horizontal_line}></hr>
 
             {props.tipoTest === "MMSE" && 
             <>

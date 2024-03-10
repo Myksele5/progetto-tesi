@@ -79,31 +79,6 @@ function MainMenu(props){
                 </div>
             </div> */}
             <Nav className={`${styles.wrap_buttons}`}>
-            {/* <button>Profilo</button> */}
-                {/* <Dropdown className={styles.dropdown_button_centering} data-bs-theme="dark">
-                    <Dropdown.Toggle style={{width: "60px"}}>
-                        <img className={styles.profile_image} src={user}></img>
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu style={{width: "fit-content"}}>
-                        <Dropdown.Item style={{padding: "4px"}} disabled>
-                            <p className={styles.utente_loggato_FULLNAME}>{auth_ctx.nomeUtenteLoggato} {auth_ctx.cognomeUtenteLoggato}</p>
-                        </Dropdown.Item>
-                        <Dropdown.Item style={{padding: "4px"}} disabled>
-                            <p className={styles.utente_loggato}>{auth_ctx.utenteLoggato}</p>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            <button
-                                className={styles.logout_button}
-                                onClick={auth_ctx.onLogoutClick}
-                                style={{width: "100%"}}
-                                // buttonText={'Log Out'}
-                                // small_button={true}
-                                // red_styling
-                            >Log Out
-                            </button>
-                        </Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown> */}
                 <OverlayTrigger rootClose rootCloseEvent="click" trigger="click" placement="bottom" overlay={
                     <Popover>
                         <Popover.Body style={{maxWidth: "250px"}}>
@@ -113,9 +88,6 @@ function MainMenu(props){
                                 className={styles.logout_button}
                                 onClick={auth_ctx.onLogoutClick}
                                 style={{width: "100%"}}
-                                // buttonText={'Log Out'}
-                                // small_button={true}
-                                // red_styling
                             >Log Out
                             </button>
                         </Popover.Body>

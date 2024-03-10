@@ -8,13 +8,13 @@ import PatologiesContext from "../../context/patologies-context";
 import ElencoTerapie from "./ElencoTerapie";
 import AddPatologia from "./AddPatologia";
 import { getServerMgr } from "../../backend_conn/ServerMgr";
-import { Card } from "react-bootstrap";
+import { Card, Modal } from "react-bootstrap";
 import SearchBox from "../UI/SearchBox";
 
 function Patologie(){
     const patologies_ctx = useContext(PatologiesContext);
 
-    const [IDperModificaNome, setIDperModificaNome] = useState();
+    const [IDperModificaNome, setIDperModificaNome] = useState(-1);
     const [nomeDaModificare, setNomeDaModificare] = useState("");
     const [patologiaVisualizzata, setPatologiaVisualizzata] = useState({});
 
@@ -118,7 +118,52 @@ function Patologie(){
                                 <div className={styles.wrapper_horizontal}>
                                     <div className={styles.wrapper_vertical}>
                                         <label className={styles.label_style}>Patologia:</label>
-                                        <h3 className={styles.info_content}>{pat.nomePatologia}</h3>
+                                        {IDperModificaNome !== pat.patologiaID && <h3 className={styles.info_content}>{pat.nomePatologia}</h3>}
+                                        {IDperModificaNome === pat.patologiaID && 
+                                            <Modal centered show={IDperModificaNome === pat.patologiaID}>
+                                                <Modal.Header style={{fontWeight: "bold", fontSize: "18px"}}>Cambia nome patologia</Modal.Header>
+                                                <Modal.Body>
+                                                    <label className={styles.label_style}>Nome patologia:</label>
+                                                    <input onChange={nomePatologiaChangeHandler} value={nomeDaModificare} className={styles.input_style}></input>
+                                                    <div className={styles.wrapper_horizontal}>
+                                                        <GenericButton
+                                                            onClick={() => {aggiornaNomePatologia()}}
+                                                            buttonText={"Salva"}
+                                                            generic_button
+                                                            // small_button
+                                                        ></GenericButton>
+                                                        <GenericButton
+                                                            onClick={() => {setIDperModificaNome(-1)}}
+                                                            buttonText={"Annulla"}
+                                                            generic_button
+                                                            // small_button
+                                                            red_styling
+                                                        ></GenericButton>
+                                                    </div>
+                                                </Modal.Body>
+                                            </Modal>
+
+                                        }
+                                        <div style={{justifyContent: "start"}} className={styles.wrapper_horizontal}>
+                                            {IDperModificaNome !== pat.patologiaID &&
+                                                <GenericButton
+                                                    onClick={() => {modificaNomePatologia(pat.patologiaID, pat.nomePatologia)}}
+                                                    buttonText={"Modifica nome"}
+                                                    generic_button
+                                                    small_button
+                                                ></GenericButton>
+                                            }
+                                            {IDperModificaNome === pat.patologiaID &&
+                                            <>
+                                                <GenericButton
+                                                    onClick={() => {aggiornaNomePatologia()}}
+                                                    buttonText={"Salva"}
+                                                    generic_button
+                                                    small_button
+                                                ></GenericButton>
+                                            </>
+                                            }
+                                        </div>
                                     </div>
                                     <div style={{width: "fit-content"}} className={styles.wrapper_vertical}>
                                         <GenericAlternativeButton

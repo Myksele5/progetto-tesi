@@ -40,6 +40,7 @@ function AddPaziente(props){
     const [showFormAddTherapy, setShowFormAddTherapy] = useState(false);
 
     const [terapiaDaModificare, setTerapiaDaModificare] = useState("");
+    const [validTerapia, setValidTerapia] = useState(true);
     const [noteDaModificare, setNoteDaModificare] = useState("")
 
     const [dataInizioTerapia, setDataInizioTerapia] = useState("");
@@ -271,17 +272,23 @@ function AddPaziente(props){
     }
     function terapiaChangeHandler(event){
         setTerapiaDaModificare(event.target.value);
+        setValidTerapia(true);
     }
     function noteChangeHandler(event){
         setNoteDaModificare(event.target.value);
     }
 
     function salvaNuovaTerapia(patologiaID){
-        patologies_ctx.addNewTherapy(patologiaID, terapiaDaModificare, noteDaModificare);
+        if(terapiaDaModificare.length > 3){
+            patologies_ctx.addNewTherapy(patologiaID, terapiaDaModificare, noteDaModificare);
 
-        setTerapiaDaModificare("");
-        setNoteDaModificare("");
-        setShowFormAddTherapy(false)
+            setTerapiaDaModificare("");
+            setNoteDaModificare("");
+            setShowFormAddTherapy(false)
+        }
+        else{
+            setValidTerapia(false)
+        }
     }
     
     const addInformazioniMediche = (oggettoMedico) => {
@@ -522,8 +529,9 @@ function AddPaziente(props){
                     {showFormAddTherapy &&
                         <>
                             <div className={styles.wrapper_vertical}>
-                                <label className={styles.label_style}>Inserisci terapia:</label>
-                                <textarea value={terapiaDaModificare} onChange={terapiaChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
+                                <label className={`${styles.label_style} ${!validTerapia ? styles.invalid : ""}`}>Inserisci terapia:</label>
+                                <textarea value={terapiaDaModificare} onChange={terapiaChangeHandler} className={`${styles.input_style_MODIFICA_TERAPIA} ${!validTerapia ? styles.invalid : ""}`}></textarea>
+                                {!validTerapia && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una terapia valida. {"(min. 4 caratteri)"}</div>}
                             </div>
                             {/* <hr style={{width: "100%", border: "1px solid #163172"}}></hr> */}
                             <div className={styles.wrapper_vertical}>

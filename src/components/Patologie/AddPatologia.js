@@ -11,6 +11,7 @@ function AddPatologia(){
     const patologies_ctx = useContext(PatologiesContext);
 
     const [nomePatologia, setNomePatologia] = useState("");
+    const [validPatologia, setValidPatologia] = useState(true);
     const [counterTerapie, setCounterTerapie] = useState(1);
     const [tabSelezionata, setTabSelezionata] = useState(1);
     const [terapieAssociate, setTerapieAssociate] = useState([{newTerapID: counterTerapie, terapia: "", note: ""}]);
@@ -49,6 +50,7 @@ function AddPatologia(){
 
     function patologiaChangeHandler(event){
         setNomePatologia(event.target.value);
+        setValidPatologia(true);
     }
 
     function terapiaChangeHandler(event, id){
@@ -77,11 +79,17 @@ function AddPatologia(){
             }
         })
         
-        await getServerMgr().saveNewPatologyWithTherapies(nomePatologia, terapieFiltrate)
-        .catch((err) => {
-            console.error(err);
-        });
-        patologies_ctx.saveNewPatologyWithTherapies();
+        if(nomePatologia.length > 1){
+            await getServerMgr().saveNewPatologyWithTherapies(nomePatologia, terapieFiltrate)
+            .catch((err) => {
+                console.error(err);
+            });
+            patologies_ctx.saveNewPatologyWithTherapies();
+        }
+        else{
+            setValidPatologia(false);
+        }
+        
     }
 
     return(
@@ -90,7 +98,8 @@ function AddPatologia(){
             
             <div className={styles.wrapper_form}>
                 <label className={styles.label_style_PATOLOGIA}>Nome Patologia:</label>
-                <input className={styles.input_style} onChange={patologiaChangeHandler} value={nomePatologia}></input>
+                <input className={`${styles.input_style} ${!validPatologia ? styles.invalid : ""}`} onChange={patologiaChangeHandler} value={nomePatologia}></input>
+                {!validPatologia && <div style={{width: "100%", color: "red", textAlign: "center"}}>La patologia non può essere vuota</div>}
 
                 <div style={{width: "100%"}}>
                     <Tabs id="controlled-tab-example" activeKey={tabSelezionata} onSelect={(key) => {

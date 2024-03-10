@@ -39,7 +39,7 @@ function RegistrationForm(props){
                 break;
         }
 
-        if(email.includes('@') && password.trim().length >= 6){
+        if(email.includes('@') && password.trim().length >= 6 && nome.trim().length > 1 && cognome.trim().length > 1){
             console.log("MANDO DATI PER LOGIN");
 
             result = await getServerMgr().getAccount()
@@ -50,10 +50,10 @@ function RegistrationForm(props){
             if(result !== undefined){
                 for(var i=0; i < result.length; i++){
                     if(result[i].email === email){
-                        setValidNome(false);
-                        setValidCognome(false);
+                        // setValidNome(false);
+                        // setValidCognome(false);
                         setValidEmail(false);
-                        setValidPassword(false);
+                        // setValidPassword(false);
                         // setABuonFine(false);
                         emailEsistente = true;
                         alert("Email già associata ad un account!");
@@ -82,6 +82,20 @@ function RegistrationForm(props){
                 })
                 // alert("NESSUN ACCOUNT TROVATO");
             }        
+        }
+        else{
+            if(!email.includes('@')){
+                setValidEmail(false);
+            }
+            if(password.trim().length < 6){
+                setValidPassword(false);
+            }
+            if(nome.trim().length <= 1){
+                setValidNome(false);
+            }
+            if(cognome.trim().length <= 1){
+                setValidCognome(false);
+            }
         }
     }
 
@@ -138,15 +152,19 @@ function RegistrationForm(props){
 
                 <label className={`${styles.label_box} ${!validEmail ? styles.invalid : ''}`}>Email</label>
                 <input className={`${styles.input_box} ${!validEmail ? styles.invalid : ''}`} type="email" placeholder="Inserisci la tua email" value={email} onChange={emailChangeHandler}></input>
+                {!validEmail && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una email valida</div>}
                 
                 <label className={`${styles.label_box} ${!validPassword ? styles.invalid : ''}`}>Password</label>
                 <input className={`${styles.input_box} ${!validPassword ? styles.invalid : ''}`}type="password" placeholder="Inserisci la tua password" value={password} onChange={passwordChangeHandler}></input>
+                {!validPassword && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una password con almeno 6 caratteri</div>}
 
                 <label className={`${styles.label_box} ${!validNome ? styles.invalid : ''}`}>Nome</label>
                 <input className={`${styles.input_box} ${!validNome ? styles.invalid : ''}`} type="text" placeholder="Inserisci nome" value={nome} onChange={nomeChangeHandler}></input>
+                {!validNome && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un nome valido</div>}
 
                 <label className={`${styles.label_box} ${!validCognome ? styles.invalid : ''}`}>Cognome</label>
                 <input className={`${styles.input_box} ${!validCognome ? styles.invalid : ''}`} type="text" placeholder="Inserisci cognome" value={cognome} onChange={cognomeChangeHandler}></input>
+                {!validCognome && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un cognome valido</div>}
                 
                 {emailEsistente !== null && !emailEsistente && <h2>Registrazione effettuata!</h2>}
                 {/* {emailEsistente !== null && emailEsistente && <h2>Email già registrata al sito. Prova con un'altra</h2>} */}

@@ -93,6 +93,17 @@ function initServerMgr(cb) {
             return result
         }
     }
+    serverMgr.getPatientCredentials = async (patientID, cb) => {
+        let result = await serverMgr.requestFetchData("getPatientCredentials", {patientID: patientID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
 
     serverMgr.getPatientsList = async (UID, cb) => {
         let result = await serverMgr.requestFetchData("getPatientsList", {doct_UID: UID})

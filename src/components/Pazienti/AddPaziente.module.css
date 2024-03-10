@@ -68,7 +68,7 @@
 }
 
 .container_flexible_INFO{
-    width: 99%;
+    width: 97%;
     border: 1px solid #1E56A0;
     border-radius: 4px;
     margin: 5px;
@@ -438,6 +438,10 @@
         margin-top: 0;
     }
 
+    .text_subtitle{
+        font-size: 18px;
+    }
+
     .subtitle_form{
         font-size: 17px;
     }
@@ -455,6 +459,10 @@
 @media screen and (max-width: 549px) {
     .option_style{
         width: 280px;
+        font-size: 16px;
+    }
+
+    .text_subtitle{
         font-size: 16px;
     }
 

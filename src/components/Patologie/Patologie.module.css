@@ -137,8 +137,8 @@
 
 .input_style{
     min-width: 100px;
-    width: 250px;
-    max-width: 350px;
+    width: 100%;
+    /* max-width: 350px; */
     min-height: 50px;
     max-height: 100px;
     margin: 5px;
@@ -204,8 +204,8 @@
     }
 
     .input_style{
-        width: 190px;
-        max-width: 200px;
+        /* width: 190px; */
+        /* max-width: 200px; */
         min-height: 30px;
         max-height: 100px;
         font-size: 18px;
@@ -231,8 +231,8 @@
     }
 
     .input_style{
-        width: 140px;
-        max-width: 160px;
+        /* width: 140px; */
+        /* max-width: 160px; */
         min-height: 30px;
         max-height: 100px;
         font-size: 16px;

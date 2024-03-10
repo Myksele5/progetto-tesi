@@ -10,6 +10,11 @@
     align-items: center;
 }
 
+.scheda_test_di{
+    font-size: 32px;
+    text-align: center;
+}
+
 .label_style{
     font-weight: bold;
 }
@@ -58,5 +63,37 @@
 
     .horizontal_line{
         width: 90%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .scheda_test_di{
+        font-size: 28px;
+    }
+
+    .area_cog_title{
+        font-size: 22px;
+    }
+}
+@media screen and (max-width: 800px) {
+    .scheda_test_di{
+        font-size: 20px;
+    }
+
+    .area_cog_title{
+        font-size: 19px;
+    }
+}
+@media screen and (max-width: 500px) {
+    .scheda_test_di{
+        font-size: 18px;
+    }
+
+    .area_cog_title{
+        font-size: 16px;
+    }
+
+    .domanda_style{
+        font-size: 14px;
     }
 }

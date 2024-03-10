@@ -13,6 +13,7 @@ function ElencoTerapie(){
 
     const [IDterapiaDaModificare, setIDterapiaDaModificare] = useState();
     const [terapiaDaModificare, setTerapiaDaModificare] = useState("");
+    const [validTerapia, setValidTerapia] = useState(true);
     const [noteDaModificare, setNoteDaModificare] = useState("");
 
     const [formNuovaTerapia, setFormNuovaTerapia] = useState(false);
@@ -29,24 +30,35 @@ function ElencoTerapie(){
 
     function terapiaChangeHandler(event){
         setTerapiaDaModificare(event.target.value);
+        setValidTerapia(true)
     }
     function noteChangeHandler(event){
         setNoteDaModificare(event.target.value);
     }
 
     function salvaNuovaTerapia(){
-        patologies_ctx.addNewTherapy(patologia.patologiaID, terapiaDaModificare, noteDaModificare);
+        if(terapiaDaModificare.length > 3){
+            patologies_ctx.addNewTherapy(patologia.patologiaID, terapiaDaModificare, noteDaModificare);
 
-        setTerapiaDaModificare("");
-        setNoteDaModificare("");
-        setFormNuovaTerapia(false)
+            setTerapiaDaModificare("");
+            setNoteDaModificare("");
+            setFormNuovaTerapia(false)
+        }
+        else{
+            setValidTerapia(false);
+        }
     }
 
     function salvaModifica(){
-        patologies_ctx.editTherapy(IDterapiaDaModificare, terapiaDaModificare, noteDaModificare);
-        setIDterapiaDaModificare();
-        setTerapiaDaModificare("");
-        setNoteDaModificare("");
+        if(terapiaDaModificare.length > 3){
+            patologies_ctx.editTherapy(IDterapiaDaModificare, terapiaDaModificare, noteDaModificare);
+            setIDterapiaDaModificare();
+            setTerapiaDaModificare("");
+            setNoteDaModificare("");
+        }
+        else{
+            setValidTerapia(false);
+        }
     }
 
     function annullaModifica(){
@@ -96,8 +108,9 @@ function ElencoTerapie(){
  
                             <>
                                 <div className={styles.wrapper_vertical}>
-                                    <label style={{color: "#163172"}} className={styles.wrap_content}>Inserisci terapia:</label>
-                                    <textarea value={terapiaDaModificare} onChange={terapiaChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
+                                    <label className={`${styles.wrap_content} ${!validTerapia ? styles.invalid : ""}`}>Inserisci terapia:</label>
+                                    <textarea value={terapiaDaModificare} onChange={terapiaChangeHandler} className={`${styles.input_style_MODIFICA_TERAPIA} ${!validTerapia ? styles.invalid : ""}`}></textarea>
+                                    {!validTerapia && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una terapia valida. {"(min. 4 caratteri)"}</div>}
                                 </div>
                                 {/* <hr style={{width: "100%", border: "1px solid #163172"}}></hr> */}
                                 <div className={styles.wrapper_vertical}>
@@ -141,8 +154,9 @@ function ElencoTerapie(){
                                     }
                                     {IDterapiaDaModificare === therapy.terapiaID &&
                                     <>
-                                        <label style={{color: "#163172"}} className={styles.wrap_content}>Terapia consigliata:</label>
-                                        <textarea onChange={terapiaChangeHandler} className={styles.input_style_MODIFICA_TERAPIA} value={terapiaDaModificare}></textarea>
+                                        <label className={`${styles.wrap_content} ${!validTerapia ? styles.invalid : ""}`}>Terapia consigliata:</label>
+                                        <textarea onChange={terapiaChangeHandler} className={`${styles.input_style_MODIFICA_TERAPIA} ${!validTerapia ? styles.invalid : ""}`} value={terapiaDaModificare}></textarea>
+                                        {!validTerapia && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una terapia valida. {"(min. 4 caratteri)"}</div>}
                                     </>
                                     }
                                     </div>

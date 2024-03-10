@@ -48,9 +48,16 @@
     width: 60%;
     text-align: start;
 }
+.label_style_PATOLOGIA.invalid{
+    color: red;
+}
+
 .label_style_TERAPIA{
     width: 80%;
     text-align: start;
+}
+.label_style_TERAPIA.invalid{
+    color: red;
 }
 
 .input_style{

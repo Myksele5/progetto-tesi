@@ -298,16 +298,10 @@ export function PatientContextProvider(props){
         let resultStatistiche = await getServerMgr().getPatientStatistics(pazientee.ID);
         console.log(resultStatistiche);
 
-        // let resultMedicine = await getServerMgr().infoMedicine(pazientee.ID)
-        // console.log(resultMedicine);
+        //Crea query per prendere le credenziali del paziente
+        let resultCredentialsPatients = await getServerMgr().getPatientCredentials(pazientee.ID);
+        // console.log(resultCredentialsPatients);
 
-        // let medicineFiltrate = [];
-        // if(resultMedicine){
-        //     resultMedicine.map((med) => {
-        //         medicineFiltrate.push(med.medicina)
-        //     })
-        //     console.log(medicineFiltrate);
-        // }
         scheda_paziente = 
             <SchedaPaziente
                 id = {pazientee.ID}
@@ -321,6 +315,7 @@ export function PatientContextProvider(props){
                 scoreMOCA = {pazientee.resultMOCA}
                 listaGiochi = {resultGiochi}
                 statsPaziente = {resultStatistiche}
+                credentialsAccount= {resultCredentialsPatients}
                 goBackButton = {chiudiSchedaPaziente}
             >
             </SchedaPaziente>
