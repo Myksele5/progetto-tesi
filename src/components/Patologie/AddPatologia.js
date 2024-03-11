@@ -97,9 +97,9 @@ function AddPatologia(){
             <h2 className={styles.title_form}>Inserisci nuova Patologia</h2>
             
             <div className={styles.wrapper_form}>
-                <label className={styles.label_style_PATOLOGIA}>Nome Patologia:</label>
+                <label className={`${styles.label_style_PATOLOGIA} ${!validPatologia ? styles.invalid : ""}`}>Nome Patologia:</label>
                 <input className={`${styles.input_style} ${!validPatologia ? styles.invalid : ""}`} onChange={patologiaChangeHandler} value={nomePatologia}></input>
-                {!validPatologia && <div style={{width: "100%", color: "red", textAlign: "center"}}>La patologia non può essere vuota</div>}
+                {!validPatologia && <div style={{width: "100%", color: "red", textAlign: "center", marginBottom: "5px"}}>La patologia non può essere vuota</div>}
 
                 <div style={{width: "100%"}}>
                     <Tabs id="controlled-tab-example" activeKey={tabSelezionata} onSelect={(key) => {
@@ -118,7 +118,7 @@ function AddPatologia(){
                                     </textarea>
 
                                     <label className={styles.label_style_TERAPIA}>Note:</label>
-                                    <textarea className={styles.textarea_style_TERAPIA} value={singleTerap.note} onChange={(event) => {
+                                    <textarea className={styles.textarea_style_NOTE} value={singleTerap.note} onChange={(event) => {
                                         noteDellaTerapiaChangeHandler(event, singleTerap.newTerapID)
                                     }}
                                     >

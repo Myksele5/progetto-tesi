@@ -95,7 +95,7 @@ function Patologie(){
                     </SearchBox>
                 </div>
             }
-            <h1 className={styles.page_title}>Patologie</h1>
+            {patologies_ctx.visibleLista && <h1 className={styles.page_title}>Patologie</h1>}
 
             <div className={styles.wrapper_generico}>
                 {patologies_ctx.visibleFormAddPatology &&

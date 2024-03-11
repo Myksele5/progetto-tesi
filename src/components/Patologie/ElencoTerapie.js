@@ -148,7 +148,7 @@ function ElencoTerapie(){
                                     <div className={styles.wrapper_vertical}>
                                     {IDterapiaDaModificare !== therapy.terapiaID && 
                                     <>
-                                        <label className={styles.wrap_content}>Terapia consigliata:</label>
+                                        <label className={styles.wrap_content}>Terapia disponibile:</label>
                                         <h3 className={styles.wrap_content_TERAPIA}>{therapy.terapia}</h3>
                                     </>
                                     }
