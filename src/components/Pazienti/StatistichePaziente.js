@@ -6,6 +6,7 @@ import { ProgressBar } from "react-bootstrap";
 function StatistichePaziente(props){
     // let fillCorrect = "0%";
     // let fillWrong = "0%";
+    const [today, setToday] = useState();
     const [day, setDay] = useState();
     const [month, setMonth] = useState();
     const [year, setYear] = useState();
@@ -29,9 +30,12 @@ function StatistichePaziente(props){
         var month = parseInt(today.toLocaleString('it-IT', {month: '2-digit'}))
         var year = parseInt(today.getFullYear());
 
+        setToday(Date.parse(today));
         setDay(day);
         setMonth(month);
         setYear(year);
+
+        console.log(Date.parse(today))
         
     }, [])
 
@@ -78,14 +82,14 @@ function StatistichePaziente(props){
                 case "ultime 48 ore":
                     risultatiTotali.forEach((item) => {
                         var dataEsecuzioneGioco = new Date(item.dataSvolgimento);
+                        // console.log(today - Date.parse(dataEsecuzioneGioco))
 
                         // console.log(dataEsecuzioneGioco.getFullYear() === year);
                         // console.log((dataEsecuzioneGioco.getMonth() + 1) === month);
                         // console.log((dataEsecuzioneGioco.getDate() + 1) === day);
                         // console.log(dataEsecuzioneGioco.getDate() === day);
                         
-                        if(dataEsecuzioneGioco.getFullYear() === year && (dataEsecuzioneGioco.getMonth() + 1) === month && 
-                            ((dataEsecuzioneGioco.getDate() + 1) === day || dataEsecuzioneGioco.getDate() === day)){
+                        if(today - Date.parse(dataEsecuzioneGioco) < 172800000){
                             risposte_TOT += item.rispTotali;
                             risposte_CORR += item.rispCorrette;
                             risposte_SBAG += item.rispSbagliate;
@@ -96,20 +100,36 @@ function StatistichePaziente(props){
                     setRisposteCorrette(risposte_CORR);
                     setRisposteSbagliate(risposte_SBAG);
                     break;
-                case "ultimo mese":
+                case "ultima settimana":
                     risultatiTotali.forEach((item) => {
                         var dataEsecuzioneGioco = new Date(item.dataSvolgimento);
+
+                        // console.log((dataEsecuzioneGioco.getMonth() + 1) === month);
+                        // console.log((dataEsecuzioneGioco.getDate() + 1) === day);
+                        // console.log(dataEsecuzioneGioco.getDate() === day);
+                        
+                        if(today - Date.parse(dataEsecuzioneGioco) < 604800000){
+                            risposte_TOT += item.rispTotali;
+                            risposte_CORR += item.rispCorrette;
+                            risposte_SBAG += item.rispSbagliate;
+                        }
+                        
+                    });
+                    setRisposteTotali(risposte_TOT);
+                    setRisposteCorrette(risposte_CORR);
+                    setRisposteSbagliate(risposte_SBAG);
+                    break;
+                case "ultimi 30 giorni":
+                    risultatiTotali.forEach((item) => {
+                        var dataEsecuzioneGioco = new Date(item.dataSvolgimento);
+                        console.log(today - Date.parse(dataEsecuzioneGioco) < 604800000);
 
                         // console.log(dataEsecuzioneGioco.getFullYear() === year);
                         // console.log((dataEsecuzioneGioco.getMonth() + 1) === month);
                         // console.log((dataEsecuzioneGioco.getDate() + 1) === day);
                         // console.log(dataEsecuzioneGioco.getDate() === day);
                         
-                        if(dataEsecuzioneGioco.getFullYear() === year && 
-                            ((dataEsecuzioneGioco.getMonth() + 1) === month || 
-                             ((dataEsecuzioneGioco.getMonth() + 2) === month && (day - dataEsecuzioneGioco.getDate()) < 0) 
-                            )
-                        ){
+                        if(today - Date.parse(dataEsecuzioneGioco) < 2600640000){
                             risposte_TOT += item.rispTotali;
                             risposte_CORR += item.rispCorrette;
                             risposte_SBAG += item.rispSbagliate;
@@ -152,7 +172,8 @@ function StatistichePaziente(props){
                 <select value={filtroStatistiche} onChange={filtroStatisticheChangeHandler} className={styles.select_style}>
                     <option>Totali</option>
                     <option>ultime 48 ore</option>
-                    <option>ultimo mese</option>
+                    <option>ultima settimana</option>
+                    <option>ultimi 30 giorni</option>
                 </select>
             </div>
             
@@ -161,14 +182,14 @@ function StatistichePaziente(props){
                 <div className={styles.wrapper_barre}>
                     <h3 style={{width: "90%", textAlign: "left", color: "#163172"}}>Percentuali</h3>
                     <div style={{width: "90%", margin: "5px"}}>
-                        <ProgressBar animated now={(risposteCorrette/risposteTotali) * 100} variant="success"
+                        <ProgressBar animated now={risposteTotali === 0 ? 0 : (risposteCorrette/risposteTotali) * 100} variant="success"
                         ></ProgressBar>
-                        <div style={{color: "darkgreen"}}>Percentuale risposte corrette: {`${((risposteCorrette/risposteTotali) * 100).toFixed(2)}%`}</div>
+                        <div style={{color: "darkgreen"}}>Percentuale risposte corrette: {risposteTotali === 0 ? '0%' : `${((risposteCorrette/risposteTotali) * 100).toFixed(2)}%`}</div>
                     </div>
                     <div style={{width: "90%", margin: "5px"}}>
-                        <ProgressBar animated now={(risposteSbagliate/risposteTotali) * 100} variant="danger"
+                        <ProgressBar animated now={risposteTotali === 0 ? 0 : (risposteSbagliate/risposteTotali) * 100} variant="danger"
                         ></ProgressBar>
-                        <div style={{color: "darkred"}}>Percentuale risposte sbagliate: {`${((risposteSbagliate/risposteTotali) * 100).toFixed(2)}%`}</div>
+                        <div style={{color: "darkred"}}>Percentuale risposte sbagliate: {risposteTotali === 0 ? '0%' : `${((risposteSbagliate/risposteTotali) * 100).toFixed(2)}%`}</div>
                     </div>
 
                     {/* <div className={styles.barra}>

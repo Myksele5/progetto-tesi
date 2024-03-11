@@ -581,7 +581,7 @@ function AddPaziente(props){
                                     generic_button
                                 ></GenericButton>
                             </div>
-                            <h2 className={styles.text_subtitle}>Seleziona una terapia:</h2>
+                            <h2 className={styles.text_subtitle}>Elenco terapie:</h2>
                             <div className={styles.scrollable_wrapper_terapie}>
                                 {patologies_ctx.patologiaSelezionataFormPaziente.terapie?.map(verificaTerapiaGiàAssegnata)}
                             </div>

@@ -94,6 +94,7 @@ function App() {
         {auth_ctx.utenteLoggato === null && <Login></Login>}
 
         <PatientContextProvider>
+        <GameContextProvider>
         <PatologiesContextProvider>
           {auth_ctx.utenteLoggato !== null && 
             
@@ -112,11 +113,11 @@ function App() {
            </TestsContextProvider>
           }
           {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Giochi' && 
-            <GameContextProvider>
-              <div className='wrap_schermata'>
-                <Giochi/>
-              </div>
-            </GameContextProvider>
+            
+            <div className='wrap_schermata'>
+              <Giochi/>
+            </div>
+            
           }
           {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Patologie' && 
               <div className='wrap_schermata'>
@@ -124,6 +125,7 @@ function App() {
               </div>
           }
         </PatologiesContextProvider>
+        </GameContextProvider>
         </PatientContextProvider>
   
       </div>
@@ -131,7 +133,7 @@ function App() {
   }
   else{
     return(
-      <div>LOADING</div>
+      <div>LOADINGG</div>
     );
   }
 

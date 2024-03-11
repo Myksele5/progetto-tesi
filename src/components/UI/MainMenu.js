@@ -1,5 +1,5 @@
 import styles from "./MainMenu.module.css";
-import logo from "../Images/CogniCareLogo.png";
+import logo from "../Images/NEW_COGNICARE_LOGO.png";
 import logo_MOBILE from "../Images/CogniCareLogo_Mobile.png";
 import user from "../Images/user.png";
 import patient from "../Images/disabled.png";

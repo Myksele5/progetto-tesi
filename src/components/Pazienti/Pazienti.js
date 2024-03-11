@@ -59,7 +59,8 @@ function Pazienti(){
                 </div>
             }
 
-            <h1 className={styles.page_title}>Lista Pazienti</h1>
+            {patients_ctx.showTabella && <h1 className={styles.page_title}>Lista Pazienti</h1>}
+            {patients_ctx.showFormNuovoPaziente && <h1 className={styles.page_title}>Aggiunta paziente</h1>}
 
             <div className={styles.wrapper_generico}>
 

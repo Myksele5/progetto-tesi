@@ -165,26 +165,27 @@ function SchedaPaziente(props){
 
     return(
         <div style={{width: "100%"}}>
-            <Tabs variant='underline' fill justify id="controlled-tab-example" activeKey={sezioneScheda} onSelect={(key) => {selectShow(key)}}>
+            <h1 className={styles.page_title}>Scheda del paziente: {props.nome} {props.cognome}</h1>
+            <Tabs variant='underline' fill id="controlled-tab-example" activeKey={sezioneScheda} onSelect={(key) => {selectShow(key)}}>
                 <Tab eventKey={"DATI_PERSONALI"} title={"Dati Personali"}>
                     <div className={styles.wrapper_vertical}>
-                        <label className={styles.label_style}>Nome completo</label>
+                        <label className={styles.label_style}>NOME COMPLETO:</label>
                         <div className={styles.content_text_style}>{props.nome} {props.cognome}</div>
                     </div>
                     <div className={styles.wrapper_vertical}>
-                        <label className={styles.label_style}>Città di nascita</label>
+                        <label className={styles.label_style}>CITTÀ DI NASCITA:</label>
                         <div className={styles.content_text_style}>{props.città}</div>
                     </div>
                     <div className={styles.wrapper_vertical}>
-                        <label className={styles.label_style}>Data di nascita</label>
+                        <label className={styles.label_style}>DATA DI NASCITA:</label>
                         <div className={styles.content_text_style}>{props.datanascita}</div>
                     </div>
                     <div className={styles.wrapper_vertical}>
-                        <label className={styles.label_style}>Codice Fiscale</label>
+                        <label className={styles.label_style}>CODICE FISCALE:</label>
                         <div className={styles.content_text_style}>{props.codicefiscale}</div>
                     </div>
                     <div className={styles.wrapper_vertical}>
-                        <label className={styles.label_style}>Credenziali</label>
+                        <label className={styles.label_style}>CREDENZIALI</label>
                         {credentials.length === 0 && 
                         <>
                             <GenericButton
@@ -259,7 +260,7 @@ function SchedaPaziente(props){
                     {informazioniMediche.length === 0 && <h4 style={{textAlign: "center", marginTop: "20px"}}>Non ci sono informazioni mediche su questo paziente</h4>}
                     {informazioniMediche.length > 0 && 
                     <div className={styles.wrapper_vertical}>
-                        <h3 style={{textAlign:"center"}}>Elenco delle terapie:</h3>
+                        <h3 className={styles.subtitle_text}>Elenco terapie assegnate:</h3>
                         <div style={{width: "80%"}}>
                             <Accordion>
                             {informazioniMediche?.map((objInfo) => (
@@ -340,7 +341,7 @@ function SchedaPaziente(props){
                     {listaGiochi.length === 0 && <h4 style={{textAlign: "center", marginTop: "20px"}}>Nessun gioco assegnato al paziente</h4>}
                     {listaGiochi.length > 0 && 
                     <div className={styles.wrapper_vertical}>
-                        <h3 style={{textAlign:"center"}}>Elenco dei giochi:</h3>
+                        <h3 className={styles.subtitle_text}>Elenco giochi assegnati:</h3>
                         <div style={{width: "80%"}}>
                             <Accordion>
                             {listaGiochi?.map((objInfo) => (
@@ -371,6 +372,7 @@ function SchedaPaziente(props){
                 </>
                 </Tab>
                 <Tab eventKey={"STATISTICHE"} title={"Statistiche"}>
+                    <h3 className={styles.subtitle_text}>Statistiche dei giochi:</h3>
                     <div className={styles.wrapper_vertical}>
                         <StatistichePaziente
                             pazienteID={props.id}

@@ -11,6 +11,7 @@ function ListaGiochi(props){
 
     useEffect(() => {
         lista = game_ctx.listaGiochi;
+        console.log(lista)
     }, [lista]);
 
     function fromArrayToGameList(lista){

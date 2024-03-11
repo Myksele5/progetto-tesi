@@ -305,9 +305,9 @@ export function PatientContextProvider(props){
         scheda_paziente = 
             <SchedaPaziente
                 id = {pazientee.ID}
-                nome = {pazientee.nome.toUpperCase()}
-                cognome = {pazientee.cognome.toUpperCase()}
-                città = {pazientee.city.toUpperCase()}
+                nome = {pazientee.nome}
+                cognome = {pazientee.cognome}
+                città = {pazientee.city}
                 datanascita = {pazientee.dataNascita}
                 codicefiscale = {pazientee.codiceFiscale}
                 informazioniMediche = {resultPatologie}

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getServerMgr } from "../backend_conn/ServerMgr";
 import Modal from "../components/UI/Modal";
+import AuthContext from "./auth-context";
 
 let modal;
 
@@ -38,6 +39,8 @@ const PatologiesContext = React.createContext({
 })
 
 export function PatologiesContextProvider(props){
+    const auth_ctx = useContext(AuthContext);
+
     const [stringaCercata, setStringaCercata] = useState("");
     const [ordinamentoSelezionato, setOrdinamentoSelezionato] = useState("");
 
@@ -131,10 +134,11 @@ export function PatologiesContextProvider(props){
     }
 
     useEffect(() => {
-        // recuperaPatologie();
-        // recuperaTerapie();
-        creaOggettoUnicoPatologieTerapie();
-    }, [])
+        if(auth_ctx.utenteLoggato !== null){
+            console.log("CARICO LISTA PATOLOGIE E TERAPIE");
+            creaOggettoUnicoPatologieTerapie();
+        }
+    }, [auth_ctx.utenteLoggato])
 
     function salvaNuovaPatologiaConTerapie(){
         // recuperaPatologie();

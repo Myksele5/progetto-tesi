@@ -7,10 +7,12 @@ import PatologiesContext from "../../context/patologies-context";
 import CardSmall from "../UI/CardSmall";
 import DeleteButton from "../UI/DeleteButton";
 import { Accordion, Collapse, Tab, Tabs } from "react-bootstrap";
+import GameContext from "../../context/game-context";
 
 function EditPaziente(props){
     const patients_ctx = useContext(PatientContext);
     const patologies_ctx = useContext(PatologiesContext);
+    const game_ctx = useContext(GameContext);
 
     const [visualizzaSchermata, setVisualizzaSchermata] = useState("DATI_PERSONALI");
 
@@ -358,7 +360,7 @@ function EditPaziente(props){
 
     return(
         <div className={styles.center_form} onSubmit={formModifyHandler}>
-            <h1 className={styles.title_form}>Modifica i dati del paziente</h1>
+            <h1 className={styles.title_form}>Modifica i dati del paziente: {props.nomeee} {props.cognomeee}</h1>
             <div style={{width:"80%"}}>
                 <Tabs variant="underline" fill justify id="controlled-tab-example" activeKey={visualizzaSchermata} onSelect={(key) => {
                     if(key !== "SCHEDA_MEDICA"){
@@ -513,7 +515,7 @@ function EditPaziente(props){
                                                 generic_button
                                             ></GenericButton>
                                         </div>
-                                        <h2 className={styles.text_subtitle}>Seleziona una terapia:</h2>
+                                        <h2 className={styles.text_subtitle}>Elenco terapie:</h2>
                                         <div className={styles.scrollable_wrapper_terapie}>
                                             {patologies_ctx.patologiaSelezionataFormPaziente.terapie?.map(verificaTerapiaGiàAssegnata)}
                                         </div>
@@ -560,6 +562,11 @@ function EditPaziente(props){
                                     ))}
                                 </Accordion>
                             </div>
+
+                            <div>visualiuzza liusta giuochi</div>
+                            {game_ctx.listaGiochi.map((gioco) => (
+                                <h2>{gioco.nomeGioco}</h2>
+                            ))}
                         </>
                     </Tab>
                 </Tabs>

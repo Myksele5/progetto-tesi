@@ -40,10 +40,6 @@ export function GameContextProvider(props){
 
     const auth_ctx = useContext(AuthContext);
 
-    useEffect(() => {
-        getAllGamesQuestions();
-    }, [])
-
     //RECUPERA TUTTI I GIOCHI E TUTTE LE DOMANDE NEL DB
     async function getAllGamesQuestions(){
         let resultQuestions;
@@ -95,6 +91,13 @@ export function GameContextProvider(props){
             setElencoGiochi([]);
         }
     }
+
+    useEffect(() => {
+        if(auth_ctx.utenteLoggato !== null){
+            console.log("CARICO LISTA GIOCHI..");
+            getAllGamesQuestions();
+        }
+    }, [auth_ctx.utenteLoggato])
 
     //RECUPERA L'ELENCO DEI PAZIENTI CUI E' STATO ASSEGNATO UN DETERMINATO GIOCO
     async function getPatientsListForSingleGame(gameID){

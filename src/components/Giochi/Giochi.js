@@ -333,7 +333,7 @@ function Giochi(){
                     <GenericButton
                         onClick={formCreateNewQuestion}
                         generic_button={true}
-                        buttonText={"Crea nuove domande"}
+                        buttonText={"Lista domande"}
                     >
                     </GenericButton>
         
