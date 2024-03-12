@@ -238,15 +238,16 @@ function SchedaPaziente(props){
                                         <div style={{textAlign: "start"}} className={styles.content_text_style}>{credentials[0].email}</div>
                                         <label className={styles.tag_style}>Password:</label>
                                         <div style={{textAlign: "start"}} className={styles.content_text_style}>{credentials[0].password}</div>
-                                        <div style={{marginTop: "10px"}} className={styles.horizontal}>
-                                            <GenericButton
-                                                onClick={() => setShowCredentials((prevBool) => (!prevBool))}
-                                                buttonText={"Chiudi"}
-                                                generic_button
-                                                red_styling
-                                            ></GenericButton>
-                                        </div>
+                                        
                                     </Modal.Body>
+                                    <Modal.Footer style={{justifyContent: "center"}}>
+                                        <GenericButton
+                                            onClick={() => setShowCredentials((prevBool) => (!prevBool))}
+                                            buttonText={"Chiudi"}
+                                            generic_button
+                                            red_styling
+                                        ></GenericButton>
+                                    </Modal.Footer>
                                 </Modal>
                             </>
                             }

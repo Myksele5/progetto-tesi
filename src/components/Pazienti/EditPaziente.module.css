@@ -261,6 +261,28 @@
     border-bottom: 2px solid #163172;
 }
 
+.modal_custom_width{
+    width: 90vw !important;
+    max-width: 90vw !important;
+}
+
+.modal_wrap_GIOCHI{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 10px;
+}
+
+.modal_NOMEGIOCO{
+    width: 60%;
+}
+.modal_TIPOGIOCO{
+    width: 20%;
+}
+.modal_LIVELLOGIOCO{
+    width: 20%;
+}
+
 .sintesiMedica_label_PATOLOGIA{
     font-weight: bold;
     font-size: 16px;

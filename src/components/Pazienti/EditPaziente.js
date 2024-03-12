@@ -6,13 +6,15 @@ import { getServerMgr } from "../../backend_conn/ServerMgr";
 import PatologiesContext from "../../context/patologies-context";
 import CardSmall from "../UI/CardSmall";
 import DeleteButton from "../UI/DeleteButton";
-import { Accordion, Collapse, Tab, Tabs } from "react-bootstrap";
+import { Accordion, Collapse, Modal, Row, Tab, Tabs } from "react-bootstrap";
 import GameContext from "../../context/game-context";
 
 function EditPaziente(props){
     const patients_ctx = useContext(PatientContext);
     const patologies_ctx = useContext(PatologiesContext);
     const game_ctx = useContext(GameContext);
+
+    const [listaGiochi, setListaGiochi] = useState(game_ctx.listaGiochi);
 
     const [visualizzaSchermata, setVisualizzaSchermata] = useState("DATI_PERSONALI");
 
@@ -46,9 +48,61 @@ function EditPaziente(props){
 
     const [informazioniMediche, setInformazioniMediche] = useState([]);
     const [giochiDelPaziente, setGiochiDelPaziente] = useState([]);
+    const [giochiTemporanei, setGiochiTemporanei] = useState([]);
+    const [modaleListaGiochi, setModaleListaGiochi] = useState(false);
 
     useEffect(() => {
-        console.log(props.patologiaaa_1)
+        let arrayTemporaneo = [];
+        let assegnatoBool = false;
+
+        listaGiochi.map((gioco) => {
+            for(var i=0; i < props.giochiii?.length; i++){
+                if(gioco.gameID === props.giochiii[i].gameID){
+                    assegnatoBool = true;
+                    break;
+                }
+                else{
+                    assegnatoBool = false;
+                }
+            }
+            arrayTemporaneo.push({...gioco, assegnato: assegnatoBool})
+        })
+        console.log(arrayTemporaneo)
+        setListaGiochi(arrayTemporaneo);
+    }, [])
+    // useEffect(() => {
+    //     let arrayTemporaneo = [];
+    //     let assegnatoBool = false;
+
+    //     listaGiochi.map((gioco) => {
+    //         for(var i=0; i < giochiDelPaziente.length; i++){
+    //             if(gioco.gameID === giochiDelPaziente[i].gameID){
+    //                 assegnatoBool = true;
+    //                 break;
+    //             }
+    //             else{
+    //                 assegnatoBool = false;
+    //             }
+    //         }
+    //         arrayTemporaneo.push({...gioco, assegnato: assegnatoBool})
+    //     })
+    //     console.log(arrayTemporaneo)
+    //     setListaGiochi(arrayTemporaneo);
+    // }, [giochiDelPaziente])
+
+    useEffect(() => {
+        let arrayTemporaneo = [];
+        console.log("TEST")
+        listaGiochi.map((gioco) => {
+            if(gioco.assegnato){
+                arrayTemporaneo.push(gioco)
+            }
+        })
+        setGiochiDelPaziente(arrayTemporaneo)
+    }, [listaGiochi])
+
+    useEffect(() => {
+        // console.log(props.patologiaaa_1)
         if(props.patologiaaa_1?.length > 0){
             setInformazioniMediche(props.patologiaaa_1) 
         }
@@ -57,7 +111,7 @@ function EditPaziente(props){
         }   
     }, [])
     useEffect(() => {
-        console.log(props.giochiii)
+        // console.log(props.giochiii)
         if(props.giochiii?.length > 0){
             setGiochiDelPaziente(props.giochiii) 
         }
@@ -277,6 +331,32 @@ function EditPaziente(props){
         })
         setInformazioniMediche(arrayTemporaneo);
     }
+
+    const verificaGiochiDelPaziente = (gioco) => {
+        return(
+            <div className={styles.modal_wrap_GIOCHI}>
+                <div className={styles.modal_NOMEGIOCO}>{gioco.nomeGioco}</div>
+                <div className={styles.modal_TIPOGIOCO}>{gioco.tipoGioco}</div>
+                <div className={styles.modal_LIVELLOGIOCO}>{gioco.livelloGioco} </div>
+                <input onChange={(event) => {assegnaGioco(gioco, event)}} checked={gioco.assegnato} type="checkbox"></input>
+            </div>
+        );
+    }
+
+    const assegnaGioco = (gioco, event) => {
+        // console.log(gioco.assegnato)
+        let arrayTemporaneo = []
+        setListaGiochi(listaGiochi.map((giocoTemp) => (gioco.gameID === giocoTemp.gameID ? {...giocoTemp, assegnato: !giocoTemp.assegnato} : giocoTemp)))
+
+        // listaGiochi.map((game) => {
+        //     if(game.assegnato){
+        //         arrayTemporaneo.push(game)
+        //     }
+        // })
+        // console.log(arrayTemporaneo)
+        // setGiochiDelPaziente(arrayTemporaneo)
+    }
+
     const eliminaGioco = (id) => {
         let arrayTemporaneo = [];
 
@@ -532,6 +612,9 @@ function EditPaziente(props){
                             <div style={{width: "100%"}}>
                                 <Accordion>
                                     <h2 className={styles.text_subtitle}>Giochi assegnati:</h2>
+                                    {giochiDelPaziente.length === 0 &&
+                                        <h2 className={styles.text_subtitle}>Nessun gioco assegnato.</h2>
+                                    }
                                     {giochiDelPaziente.map((gioco) => (
                                         <Accordion.Item className={`${styles.accordion_item}`} eventKey={gioco.gameID}>
                                             <Accordion.Header>{gioco.nomeGioco}</Accordion.Header>
@@ -561,12 +644,36 @@ function EditPaziente(props){
                                         </Accordion.Item>
                                     ))}
                                 </Accordion>
+                                <div className={styles.horizontal}>
+                                    <GenericButton
+                                        onClick={() => {setModaleListaGiochi(true)}}
+                                        buttonText={"Seleziona giochi"}
+                                        generic_button
+                                    ></GenericButton>
+                                </div>
                             </div>
-
-                            <div>visualiuzza liusta giuochi</div>
-                            {game_ctx.listaGiochi.map((gioco) => (
-                                <h2>{gioco.nomeGioco}</h2>
-                            ))}
+                            
+                            <Modal dialogClassName={styles.modal_custom_width} scrollable centered show={modaleListaGiochi}>
+                                <Modal.Header style={{fontWeight: "bold", fontSize: "22px"}}>Lista giochi</Modal.Header>
+                                <Modal.Body>
+                                    <div className={styles.modal_wrap_GIOCHI}>
+                                        <div style={{fontWeight: "bold"}} className={styles.modal_NOMEGIOCO}>Nome</div>
+                                        <div style={{fontWeight: "bold"}} className={styles.modal_TIPOGIOCO}>Tipo</div>
+                                        <div style={{fontWeight: "bold"}} className={styles.modal_LIVELLOGIOCO}>Difficoltà</div>
+                                        <input type="checkbox"></input>
+                                    </div>
+                                    {listaGiochi.map(verificaGiochiDelPaziente)}
+                                </Modal.Body>
+                                <Modal.Footer style={{justifyContent: "center"}}>
+                                    <GenericButton
+                                        onClick={() => setModaleListaGiochi(false)}
+                                        buttonText={"Chiudi"}
+                                        generic_button
+                                        red_styling
+                                    ></GenericButton>
+                                </Modal.Footer>
+                            </Modal>
+                            
                         </>
                     </Tab>
                 </Tabs>
