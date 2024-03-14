@@ -9,23 +9,18 @@ function ElencoDomandeModificabili(props){
     const auth_ctx = useContext(AuthContext);
 
     const [questionsList, setQuestionsList] = useState(game_ctx.domande);
-    const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
     const [imagesList, setImagesList] = useState([]);
-    const [classicQuizQuestions, setClassicQuizQuestions] = useState(game_ctx.domandeDeiQuiz);
-    const [guessTheWordQuestions, setGuessTheWordQuestions] = useState(game_ctx.elencoParole);
     const [gameType, setGameType] = useState("QUIZ");
     
     var categorie = game_ctx.recuperaCategorieDomande(gameType);
-    const [categoryFilter, setCategoryFilter] = useState(categorie[0]);
+    const [categoryFilter, setCategoryFilter] = useState("Tutte");
 
     const websiteUrl = "https://myks.altervista.org/uploads/";
 
     function gameTypeChangeHandler(event){
+        setCategoryFilter("Tutte")
         setGameType(event.target.value);
         categorie = game_ctx.recuperaCategorieDomande(event.target.value);
-        {event.target.value === "QUIZ" && setCategoryFilter(categorie[0])}
-        {event.target.value === "QUIZ CON IMMAGINI" && setCategoryFilter(categorie[0])}
-        {event.target.value === "COMPLETA LA PAROLA" && setCategoryFilter(categorie[0])}
     }
 
     function categoryFilterChangeHandler(event){
@@ -44,7 +39,7 @@ function ElencoDomandeModificabili(props){
     function recuperaTutteLeDomande(singleQuestion){
 
         // console.log(Object.keys(singleQuestion.rispCorrette).length);
-        if(singleQuestion.tipoGioco === gameType && singleQuestion.categoria === categoryFilter){
+        if(singleQuestion.tipoGioco === gameType && (singleQuestion.categoria === categoryFilter || categoryFilter === "Tutte")){
             // console.log(singleQuestion.categoria);
             return(
                 <li className={styles.LIST_ITEM_STYLE}>
@@ -79,9 +74,12 @@ function ElencoDomandeModificabili(props){
 
                             <div className={styles.separa_corrette_sbagliate}>
                                 <span className={styles.buttons_space}>
-                                    <p className={styles.subtitle_style}>CORRETTA</p>
-                                    <p className={styles.correct_answ}>{singleQuestion.rispCorrettaN1}</p>
+                                    <p style={{margin: "0"}}>CORRETTE</p>
+                                    {/* <p className={styles.correct_answ}>{singleQuestion.rispCorrettaN1}</p> */}
 
+                                    {singleQuestion.rispCorrettaN1.trim().length > 0 &&
+                                        <p className={styles.correct_answ}>{singleQuestion.rispCorrettaN1.toString()}</p>
+                                    }
                                     {singleQuestion.rispCorrettaN2.trim().length > 0 &&
                                         <p className={styles.correct_answ}>{singleQuestion.rispCorrettaN2.toString()}</p>
                                     }
@@ -94,9 +92,12 @@ function ElencoDomandeModificabili(props){
                                 </span>
                                 
                                 <span className={styles.buttons_space}>
-                                    <p className={styles.subtitle_style}>SBAGLIATE</p>
-                                    <p className={styles.wrong_answ}>{singleQuestion.rispSbagliataN1}</p>
+                                    <p style={{margin: "0"}}>SBAGLIATE</p>
+                                    {/* <p className={styles.wrong_answ}>{singleQuestion.rispSbagliataN1}</p> */}
                                     
+                                    {singleQuestion.rispSbagliataN1.trim().length > 0 &&
+                                        <p className={styles.wrong_answ}>{singleQuestion.rispSbagliataN1.toString()}</p>
+                                    }
                                     {singleQuestion.rispSbagliataN2.trim().length > 0 &&
                                         <p className={styles.wrong_answ}>{singleQuestion.rispSbagliataN2.toString()}</p>
                                     }
@@ -146,45 +147,37 @@ function ElencoDomandeModificabili(props){
     }
 
     return(
-        <div>
+        <>
             {game_ctx.showModale && game_ctx.modale}
             
             <div className={styles.wrap_flex_generico}>
-                <select className={styles.select_style} defaultValue={gameType} onChange={gameTypeChangeHandler}>
-                    <option>QUIZ</option>
-                    <option>QUIZ CON IMMAGINI</option>
-                    <option>COMPLETA LA PAROLA</option>
-                    {/* <option>RIFLESSI</option> */}
-                </select>
-
-                <select className={styles.select_style} onChange={categoryFilterChangeHandler}>
-                    {categorie.map(mappaCategorie)}
-                </select>
+                <div className={styles.vertical}>
+                    <label className={styles.label_style}>Tipo gioco</label>
+                    <select className={styles.select_style} defaultValue={gameType} onChange={gameTypeChangeHandler}>
+                        <option>QUIZ</option>
+                        <option>QUIZ CON IMMAGINI</option>
+                        <option>COMPLETA LA PAROLA</option>
+                        {/* <option>RIFLESSI</option> */}
+                    </select>
+                </div>
+                
+                <div className={styles.vertical}>
+                    <label className={styles.label_style}>Categoria</label>
+                    <select className={styles.select_style} value={categoryFilter} onChange={categoryFilterChangeHandler}>
+                        <option>{"Tutte"}</option>
+                        {categorie.map(mappaCategorie)}
+                    </select>
+                </div>
+                
             </div>
 
+            <hr style={{width: "100%"}}></hr>
+
             <ul className={styles.wrapper_lista_domande}>
-                    {categoryFilter !== "" && questionsList.map(recuperaTutteLeDomande)}
+                {categoryFilter !== "" && game_ctx.domande.map(recuperaTutteLeDomande)}
             </ul>
-
-            {/* {gameType === "QUIZ" &&
-                <ul className={styles.wrapper_lista_domande}>
-                    {categoryFilter !== "" && classicQuizQuestions.map(recuperaTutteLeDomande)}
-                </ul>
-            }
-
-            {gameType === "QUIZ CON IMMAGINI" &&
-                <ul className={styles.wrapper_lista_domande}>
-                    {categoryFilter !== "" && imagesQuizQuestions.map(recuperaTutteLeDomande)}
-                </ul>
-            }
-
-            {gameType === "COMPLETA LA PAROLA" &&
-                <ul className={styles.wrapper_lista_domande}>
-                    {categoryFilter !== "" && guessTheWordQuestions.map(recuperaTutteLeDomande)}
-                </ul>
-            } */}
             
-        </div>
+        </>
     );
 }
 

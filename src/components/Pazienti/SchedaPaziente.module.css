@@ -37,6 +37,13 @@
     width: fit-content;
 }
 
+.wrap_lista_test{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+}
+
 .accordion_item{
     border: 1px solid #1E56A0 !important;
 }
@@ -48,17 +55,6 @@
 
 .grid_flex_content{
     text-align: start;
-}
-
-.lista{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    /* list-style-type: none; */
 }
 
 .scrollable_div{
@@ -323,8 +319,16 @@
 }
 
 @media screen and (max-width: 599px) {
+    .page_title{
+        font-size: 22px;
+    }
+
     .wrapper_horizontal{
         flex-direction: column;
+    }
+
+    .wrap_lista_test{
+        width: 100%;
     }
 
     .sintesiMedica_label_PATOLOGIA, .sintesiMedica_label_TERAPIA, .sintesiMedica_label_DATA, .sintesiMedica_label_NOTE{

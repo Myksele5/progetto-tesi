@@ -84,3 +84,9 @@
     width: 90%;
     color: #163172;
 }
+
+@media screen and (max-width: 500px) {
+    .wrapper_statistiche{
+        width: 95%;
+    }
+}

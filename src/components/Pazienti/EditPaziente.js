@@ -440,9 +440,9 @@ function EditPaziente(props){
 
     return(
         <div className={styles.center_form} onSubmit={formModifyHandler}>
-            <h1 className={styles.title_form}>Modifica i dati del paziente: {props.nomeee} {props.cognomeee}</h1>
-            <div style={{width:"80%"}}>
-                <Tabs variant="underline" fill justify id="controlled-tab-example" activeKey={visualizzaSchermata} onSelect={(key) => {
+            <h1 className={styles.title_form}>Modifica dati del paziente: {props.nomeee} {props.cognomeee}</h1>
+            <div style={{width:"100%"}}>
+                <Tabs variant="underline" fill id="controlled-tab-example" activeKey={visualizzaSchermata} onSelect={(key) => {
                     if(key !== "SCHEDA_MEDICA"){
                         setShowFormAddTherapy(false)
                         setPatologiaSelezionata("--seleziona--")
@@ -480,9 +480,9 @@ function EditPaziente(props){
                     </Tab>
 
                     <Tab eventKey={"SCHEDA_MEDICA"}title={"Scheda medica"}>
-                        <div>
+                        <div className={styles.vertical}>
                             {informazioniMediche.length > 0 &&
-                                <div style={{width: "100%"}}>
+                                <div style={{width: "80%"}}>
                                     <Accordion>
                                         <h2 className={styles.text_subtitle}>Terapie assegnate:</h2>
                                         {informazioniMediche.map((oggetto) => (
@@ -525,8 +525,8 @@ function EditPaziente(props){
                                     </Accordion>
                                 </div>
                             }
-                            <div className={styles.wrapper_vertical}>
-                                <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                            {/* <div className={styles.vertical}> */}
+                                <div style={{width: "80%", display: "flex", justifyContent: "center", alignItems: "center"}}>
                                     <h2 className={styles.text_subtitle}>Seleziona patologia:</h2>
 
                                 </div>
@@ -542,13 +542,13 @@ function EditPaziente(props){
                             
                                 {showFormAddTherapy &&
                                     <>
-                                        <div className={styles.wrapper_vertical}>
+                                        <div style={{width: "80%"}} className={styles.wrapper_vertical}>
                                             <label className={`${styles.label_style} ${!validTerapia ? styles.invalid : ""}`}>Inserisci terapia:</label>
                                             <textarea value={terapiaDaModificare} onChange={terapiaChangeHandler} className={`${styles.input_style_MODIFICA_TERAPIA} ${!validTerapia ? styles.invalid : ""}`}></textarea>
                                             {!validTerapia && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una terapia valida. {"(min. 4 caratteri)"}</div>}
                                         </div>
                                         {/* <hr style={{width: "100%", border: "1px solid #163172"}}></hr> */}
-                                        <div className={styles.wrapper_vertical}>
+                                        <div style={{width: "80%"}}  className={styles.wrapper_vertical}>
                                             <label className={styles.label_style}>Note:</label>
                                             <textarea value={noteDaModificare} onChange={noteChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
                                         </div>
@@ -595,21 +595,23 @@ function EditPaziente(props){
                                                 generic_button
                                             ></GenericButton>
                                         </div>
-                                        <h2 className={styles.text_subtitle}>Elenco terapie:</h2>
+                                        <div style={{width: "80%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                            <h2 className={styles.text_subtitle}>Elenco terapie:</h2>
+                                        </div>
                                         <div className={styles.scrollable_wrapper_terapie}>
                                             {patologies_ctx.patologiaSelezionataFormPaziente.terapie?.map(verificaTerapiaGiàAssegnata)}
                                         </div>
                                     </>
                                 }
                                 
-                            </div>
+                            {/* </div> */}
                         </div>
                     </Tab>
 
                     <Tab eventKey={"GIOCHI"} title={"Giochi"}>
-                        <>
+                        <div className={styles.vertical}>
                             {/* <h2>Lista giochi</h2> */}
-                            <div style={{width: "100%"}}>
+                            <div style={{width: "80%"}}>
                                 <Accordion>
                                     <h2 className={styles.text_subtitle}>Giochi assegnati:</h2>
                                     {giochiDelPaziente.length === 0 &&
@@ -674,7 +676,7 @@ function EditPaziente(props){
                                 </Modal.Footer>
                             </Modal>
                             
-                        </>
+                        </div>
                     </Tab>
                 </Tabs>
             </div>

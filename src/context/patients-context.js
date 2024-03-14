@@ -292,6 +292,9 @@ export function PatientContextProvider(props){
         let resultPatologie = await getServerMgr().infoPatologie(pazientee.ID)
         console.log(resultPatologie);
 
+        let resultTest = await getServerMgr().listaTestPaziente(pazientee.ID)
+        console.log(resultTest);
+
         let resultGiochi =  await getServerMgr().listaGiochiPaziente(pazientee.ID)
         console.log(resultGiochi)
 
@@ -313,6 +316,7 @@ export function PatientContextProvider(props){
                 informazioniMediche = {resultPatologie}
                 scoreMMSE = {pazientee.resultMMSE}
                 scoreMOCA = {pazientee.resultMOCA}
+                listaTest = {resultTest}
                 listaGiochi = {resultGiochi}
                 statsPaziente = {resultStatistiche}
                 credentialsAccount= {resultCredentialsPatients}

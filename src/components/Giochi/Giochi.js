@@ -349,7 +349,7 @@ function Giochi(){
                     </GenericButton>
                 </div>
             }
-            <h1 className={styles.page_title}>Giochi</h1>
+            {showElencoGiochi && <h1 className={styles.page_title}>Giochi</h1>}
 
             <div className={styles.wrapper_generico}>
                 {showAddNewGame && 

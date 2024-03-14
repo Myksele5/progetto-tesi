@@ -6,6 +6,14 @@
     border-radius: 5px;
 }
 
+.wrapper_impostazioni_gioco{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+}
+
 .wrapper_label_and_box{
     display: flex;
     /* flex-direction: column; */
@@ -13,7 +21,15 @@
     align-items: baseline;
 }
 
+.wrapper_flexible{
+    width: 100%;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+}
 .wrapper_generico{
+    width: 100%;
     display: flex;
     /* flex-direction: column; */
     justify-content: center;
@@ -21,6 +37,7 @@
 }
 
 .wrapper_items{
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,20 +48,21 @@
 }
 
 .title_scheda{
-    font-size: 20px;
+    font-size: 32px;
     text-align: center;
     margin: 4px;
     margin-bottom: 8px;
 }
 
 .label_style{
+    font-weight: bold;
     font-size: 16px;
     margin: 2px;
 }
 
 .textbox_style{
-    width: 300px;
-    height: 20px;
+    width: 40%;
+    height: 25px;
     font-size: 16px;
     border: 2px solid #1E56A0;
     border-radius: 5px;
@@ -53,8 +71,8 @@
 }
 
 .textbox_style_NOT_ALLOWED{
-    width: 300px;
-    height: 20px;
+    width: 40%;
+    height: 25px;
     font-size: 16px;
     border: 2px solid #1E56A0;
     border-radius: 5px;
@@ -64,6 +82,23 @@
 }
 
 .textbox_style:focus{
+    border: 2px solid #163172;
+    background-color: #D6E4F0;
+    border-radius: 5px;
+    outline: none;
+}
+
+.textbox_style_RISPOSTE{
+    width: 80%;
+    height: 25px;
+    font-size: 16px;
+    border: 2px solid #1E56A0;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.textbox_style_RISPOSTE:focus{
     border: 2px solid #163172;
     background-color: #D6E4F0;
     border-radius: 5px;
@@ -95,12 +130,16 @@
 }
 
 @media screen and (max-width: 850px) {
+    .title_scheda{
+        font-size: 24px;
+    }
+
     .wrapper_flex{
         width: 550px;
     }
 
     .wrapper_impostazioni_gioco{
-        width: 500px;
+        /* width: 500px; */
     }
 
     .wrapper_label_and_box{
@@ -108,15 +147,34 @@
     }
 
     .wrapper_generico{
+        /* flex-direction: column; */
+    }
+}
+
+@media screen and (max-width:799px) {
+    .select_style{
+        width: 80%;
+    }
+
+    .textbox_style{
+        width: 80%;
+    }
+
+    .textbox_style_NOT_ALLOWED{
+        width: 80%;
+    }
+    
+    .wrapper_generico{
         flex-direction: column;
     }
 }
+
 @media screen and (max-width: 599px) {
     .wrapper_flex{
-        width: 340px;
+        /* width: 340px; */
     }
     .wrapper_impostazioni_gioco{
-        width: 340px;
+        /* width: 340px; */
     }
 
     .wrapper_label_and_box{

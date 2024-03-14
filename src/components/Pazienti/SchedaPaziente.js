@@ -4,7 +4,7 @@ import styles from './SchedaPaziente.module.css';
 import { useEffect, useState } from 'react';
 import StatistichePaziente from './StatistichePaziente';
 import CardSmall from '../UI/CardSmall';
-import { Accordion, Modal, ProgressBar, Tab, Tabs } from 'react-bootstrap';
+import { Accordion, Col, Modal, ProgressBar, Tab, Tabs } from 'react-bootstrap';
 import { getServerMgr } from '../../backend_conn/ServerMgr';
 
 function SchedaPaziente(props){
@@ -14,6 +14,7 @@ function SchedaPaziente(props){
     const [sezioneScheda, setSezioneScheda] = useState('DATI_PERSONALI');
 
     const [informazioniMediche, setInformazioniMediche] = useState([]);
+    const [listaTest, setListaTest] = useState([]);
     const [listaGiochi, setListaGiochi] = useState([]);
 
     const [showCredentials, setShowCredentials] = useState(false);
@@ -37,6 +38,16 @@ function SchedaPaziente(props){
     }, [])
 
     useEffect(() => {
+        console.log(props.listaTest)
+        if(props.listaTest?.length > 0){
+            setListaTest(props.listaTest) 
+        }
+        else{
+            setListaTest([]) 
+        }   
+    }, [])
+
+    useEffect(() => {
         // console.log(props.informazioniMediche)
         if(props.listaGiochi?.length > 0){
             setListaGiochi(props.listaGiochi) 
@@ -45,6 +56,7 @@ function SchedaPaziente(props){
             setListaGiochi([]) 
         }   
     }, [])
+
     useEffect(() => {
         // console.log(props.informazioniMediche)
         if(props.credentialsAccount?.length > 0){
@@ -256,7 +268,7 @@ function SchedaPaziente(props){
                     </div>
                     <hr className={styles.horizontal_line}/>
                 </Tab>
-                <Tab eventKey={"SCHEDA_MEDICA"} title={"Scheda Medica"}>
+                <Tab eventKey={"SCHEDA_MEDICA"} title={"Terapie"}>
                 <>
                     {informazioniMediche.length === 0 && <h4 style={{textAlign: "center", marginTop: "20px"}}>Non ci sono informazioni mediche su questo paziente</h4>}
                     {informazioniMediche.length > 0 && 
@@ -335,6 +347,23 @@ function SchedaPaziente(props){
                             </div>
                         }
                         <hr className={styles.horizontal_line}/>
+                        <h3 className={styles.subtitle_text}>Elenco test eseguiti:</h3>
+                        <div className={styles.horizontal}>
+                            <div className={styles.wrap_lista_test}>
+                                <Col style={{textAlign: "center", fontWeight: "bold"}}>Tipo</Col>
+                                <Col style={{textAlign: "center", fontWeight: "bold"}}>Punteggio</Col>
+                                <Col style={{textAlign: "center", fontWeight: "bold"}}>Svolto il</Col>
+                            </div>
+                        </div>
+                        {props.listaTest.map((test) => (
+                            <div className={styles.horizontal}>
+                                <div className={styles.wrap_lista_test}>
+                                    <Col style={{textAlign: "center"}}>{test.tipoTest}</Col>
+                                    <Col style={{textAlign: "center"}}>{test.punteggioTest}</Col>
+                                    <Col style={{textAlign: "center"}}>{test.dataSvolgimento}</Col>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </Tab>
                 <Tab eventKey={"GIOCHI"} title={"Giochi"}>

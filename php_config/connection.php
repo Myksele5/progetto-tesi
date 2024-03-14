@@ -118,6 +118,9 @@
     case "getTestResultList":
         $query_result = getTestResultList($conn);
         break;
+    case "listaTestPaziente":
+        $query_result = listaTestPaziente($conn);
+        break;
     case "getSingleTestMMSE":
         $query_result = getSingleTestMMSE($conn);
         break;
@@ -899,6 +902,20 @@
             FROM `storicoTest` JOIN `patients` ON storicoTest.pazienteID = patients.ID WHERE storicoTest.doctorID = ?"
         );
         $getTestResult->bind_param("i", $doctorID);
+        $getTestResult->execute();
+        $result = $getTestResult->get_result();
+        return $result;
+    }
+    function listaTestPaziente($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+
+        $patientID = $dataJson["patientID"];
+        
+        $getTestResult = $i_conn->prepare(
+            "SELECT ID, tipoTest, punteggioTest, dataSvolgimento FROM `storicoTest` WHERE pazienteID = ?"
+        );
+        $getTestResult->bind_param("i", $patientID);
         $getTestResult->execute();
         $result = $getTestResult->get_result();
         return $result;

@@ -513,6 +513,17 @@ function initServerMgr(cb) {
             return result
         }
     }
+    serverMgr.listaTestPaziente = async (patientID, cb) => {
+        let result = await serverMgr.requestFetchData("listaTestPaziente", {patientID: patientID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
     serverMgr.getSingleTestMMSE = async (testID, cb) => {
         let result = await serverMgr.requestFetchData("getSingleTestMMSE", {testID: testID})
         if(cb) {

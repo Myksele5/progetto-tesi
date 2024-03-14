@@ -263,157 +263,151 @@ function EditDomanda(props){
     }
 
     return(
-        <Card
-            animazione={true}
-            altroStile={true}
-            children={
-                <div className={styles.wrapper_flex}>
-                    <h1 className={styles.title_scheda}>Modifica domanda</h1>
+        <>
+            <h1 className={styles.title_scheda}>Modifica domanda</h1>
 
-                    <div className={styles.wrapper_label_and_box}>
-                        <div className={styles.wrapper_items}>
-                            <label className={styles.label_style}>Tipo di gioco</label>
-                            <input className={styles.textbox_style_NOT_ALLOWED} type="text" value={tipoGiocoModifica} readOnly></input>
-                        </div>
-                        <div className={styles.wrapper_items}>
-                            <label className={styles.label_style}>Categoria domanda</label>
-                            <input className={styles.textbox_style_NOT_ALLOWED} type="text" value={categoriaDomandaModifica} readOnly></input>
-                        </div>
-                        
-                    </div>
+            <div className={styles.wrapper_flexible}>
+                <GenericButton
+                    onClick={salvaDomanda}
+                    generic_button={true}
+                    buttonText={"Salva domanda"}
+                >
+                </GenericButton>
 
-                    {tipoGiocoModifica === "QUIZ" && 
-                        <>
-                            <label className={styles.label_style}>Domanda: </label>
-                            <input className={styles.textbox_style} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
-                        </>
-                    }
+                <GenericButton
+                    onClick={props.chiudiFormModificaDomanda}
+                    generic_button={true}
+                    red_styling
+                    buttonText={"Chiudi scheda"}
+                >
+                </GenericButton>
+            </div>
 
-                    {tipoGiocoModifica === "QUIZ CON IMMAGINI" && 
-                        <>
-                            <input type="file" name="mfile" id="mfile" onChange={setFile} style={{display: 'none'}}></input>
-                            <button onClick={selectFile}>{"Select file"}</button>
-                            <img className={styles.preview_image} src={imageFile}></img>
-                            <label className={styles.label_style}>Domanda: </label>
-                            <input className={styles.textbox_style} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
-                        </>
-                    }
+            <div className={styles.wrapper_impostazioni_gioco}>
+                {/* <div className={styles.wrapper_items}> */}
+                    <label className={styles.label_style}>Tipo di gioco</label>
+                    <input className={styles.textbox_style_NOT_ALLOWED} type="text" value={tipoGiocoModifica} readOnly></input>
+                {/* </div> */}
+                {/* <div className={styles.wrapper_items}> */}
+                    <label className={styles.label_style}>Categoria domanda</label>
+                    <input className={styles.textbox_style_NOT_ALLOWED} type="text" value={categoriaDomandaModifica} readOnly></input>
+                {/* </div> */}
+                
+            
 
-                    {tipoGiocoModifica === "COMPLETA LA PAROLA" && 
-                        <>
-                            <label className={styles.label_style}>Parola da indovinare: </label>
-                            <input className={styles.textbox_style} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
-                        </>
-                    }
+                {tipoGiocoModifica === "QUIZ" && 
+                    <>
+                        <label className={styles.label_style}>Domanda: </label>
+                        <input className={styles.textbox_style} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
+                    </>
+                }
 
-                    {(tipoGiocoModifica === "QUIZ" || tipoGiocoModifica === "QUIZ CON IMMAGINI") &&
-                        <>
-                            <div className={styles.wrapper_generico}>
-                                <div className={styles.wrapper_items}>
-                                    <label className={styles.label_style}>Risposta Corretta: </label>
-                                    <input className={styles.textbox_style} type="text" value={rispCorretta_1Modifica} onChange={rispostaCorretta_1_ChangeHandler}></input>
+                {tipoGiocoModifica === "QUIZ CON IMMAGINI" && 
+                    <>
+                        <input type="file" name="mfile" id="mfile" onChange={setFile} style={{display: 'none'}}></input>
+                        <button onClick={selectFile}>{"Select file"}</button>
+                        <img className={styles.preview_image} src={imageFile}></img>
+                        <label className={styles.label_style}>Domanda: </label>
+                        <input className={styles.textbox_style} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
+                    </>
+                }
 
-                                    {totalAnswers_CORRECT > 1 &&
-                                        <>
-                                            <label className={styles.label_style}>Risposta Corretta: </label>
-                                            <input className={styles.textbox_style} type="text" value={rispCorretta_2Modifica} onChange={rispostaCorretta_2_ChangeHandler}></input>
-                                        </>
-                                    }
+                {tipoGiocoModifica === "COMPLETA LA PAROLA" && 
+                    <>
+                        <label className={styles.label_style}>Parola da indovinare: </label>
+                        <input className={styles.textbox_style} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
+                    </>
+                }
 
-                                    {totalAnswers_CORRECT > 2 &&
-                                        <>
-                                            <label className={styles.label_style}>Risposta Corretta: </label>
-                                            <input className={styles.textbox_style} type="text" value={rispCorretta_3Modifica} onChange={rispostaCorretta_3_ChangeHandler}></input>
-                                        </>
-                                    }
+                {(tipoGiocoModifica === "QUIZ" || tipoGiocoModifica === "QUIZ CON IMMAGINI") &&
+                    <>
+                        <div className={styles.wrapper_generico}>
+                            <div className={styles.wrapper_items}>
+                                <label className={styles.label_style}>Risposta Corretta: </label>
+                                <input className={styles.textbox_style_RISPOSTE} type="text" value={rispCorretta_1Modifica} onChange={rispostaCorretta_1_ChangeHandler}></input>
 
-                                    {totalAnswers_CORRECT > 3 &&
-                                        <>
-                                            <label className={styles.label_style}>Risposta Corretta: </label>
-                                            <input className={styles.textbox_style} type="text" value={rispCorretta_4Modifica} onChange={rispostaCorretta_4_ChangeHandler}></input>
-                                        </>
-                                    }
+                                {totalAnswers_CORRECT > 1 &&
+                                    <>
+                                        <label className={styles.label_style}>Risposta Corretta: </label>
+                                        <input className={styles.textbox_style_RISPOSTE} type="text" value={rispCorretta_2Modifica} onChange={rispostaCorretta_2_ChangeHandler}></input>
+                                    </>
+                                }
 
-                                    <div className={styles.wrapper_generico}>
-                                        <GenericAlternativeButton
-                                            onClick={aggiungiAlternativaCorretta}
-                                            buttonText={"Aggiungi corretta"}
-                                        >
-                                        </GenericAlternativeButton>
-                                        <GenericAlternativeButton
-                                            onClick={rimuoviAlternativaCorretta}
-                                            colore_rosso={true}
-                                            buttonText={"Rimuovi corretta"}
-                                        >
-                                        </GenericAlternativeButton>
-                                    </div>
-                                    
+                                {totalAnswers_CORRECT > 2 &&
+                                    <>
+                                        <label className={styles.label_style}>Risposta Corretta: </label>
+                                        <input className={styles.textbox_style_RISPOSTE} type="text" value={rispCorretta_3Modifica} onChange={rispostaCorretta_3_ChangeHandler}></input>
+                                    </>
+                                }
+
+                                {totalAnswers_CORRECT > 3 &&
+                                    <>
+                                        <label className={styles.label_style}>Risposta Corretta: </label>
+                                        <input className={styles.textbox_style_RISPOSTE} type="text" value={rispCorretta_4Modifica} onChange={rispostaCorretta_4_ChangeHandler}></input>
+                                    </>
+                                }
+
+                                <div className={styles.wrapper_flexible}>
+                                    <GenericAlternativeButton
+                                        onClick={aggiungiAlternativaCorretta}
+                                        buttonText={"Aggiungi corretta"}
+                                    >
+                                    </GenericAlternativeButton>
+                                    <GenericAlternativeButton
+                                        onClick={rimuoviAlternativaCorretta}
+                                        colore_rosso={true}
+                                        buttonText={"Rimuovi corretta"}
+                                    >
+                                    </GenericAlternativeButton>
                                 </div>
-
-                                <div className={styles.wrapper_items}>
-                                    <label className={styles.label_style}>Risposta Sbagliata 1: </label>
-                                    <input className={styles.textbox_style} type="text" value={rispSbagliata_1Modifica} onChange={rispostaSbagliata_1_ChangeHandler}></input>
-
-                                    {totalAnswers_WRONG > 1 &&
-                                        <>
-                                            <label className={styles.label_style}>Risposta Sbagliata 2: </label>
-                                            <input className={styles.textbox_style} type="text" value={rispSbagliata_2Modifica} onChange={rispostaSbagliata_2_ChangeHandler}></input>
-                                        </>
-                                    }
-
-                                    {totalAnswers_WRONG > 2 &&
-                                        <>
-                                            <label className={styles.label_style}>Risposta Sbagliata 3: </label>
-                                            <input className={styles.textbox_style} type="text" value={rispSbagliata_3Modifica} onChange={rispostaSbagliata_3_ChangeHandler}></input>
-                                        </>
-                                    }
-
-                                    {totalAnswers_WRONG > 3 &&
-                                        <>
-                                            <label className={styles.label_style}>Risposta Sbagliata 4: </label>
-                                            <input className={styles.textbox_style} type="text" value={rispSbagliata_4Modifica} onChange={rispostaSbagliata_4_ChangeHandler}></input>
-                                        </>
-                                    }
-
-                                    <div className={styles.wrapper_generico}>
-                                        <GenericAlternativeButton
-                                            onClick={aggiungiAlternativaSbagliata}
-                                            buttonText={"Aggiungi sbagliata"}
-                                        >
-                                        </GenericAlternativeButton>
-                                        <GenericAlternativeButton
-                                            onClick={rimuoviAlternativaSbagliata}
-                                            colore_rosso={true}
-                                            buttonText={"Rimuovi sbagliata"}
-                                        >
-                                        </GenericAlternativeButton>
-                                    </div>
-                                    
-                                </div>  
+                                
                             </div>
-                        </>
-                    }
-                    <hr className={styles.horizontal_line}></hr>
-                    <div className={styles.wrapper_generico}>
-                        <GenericButton
-                            onClick={salvaDomanda}
-                            generic_button={true}
-                            buttonText={"Salva domanda"}
-                        >
-                        </GenericButton>
 
-                        <GenericButton
-                            onClick={props.chiudiFormModificaDomanda}
-                            generic_button={true}
-                            red_styling
-                            buttonText={"Chiudi scheda"}
-                        >
-                        </GenericButton>
-                    </div>
-                </div>
-            }
-        >
-        </Card>
+                            <div className={styles.wrapper_items}>
+                                <label className={styles.label_style}>Risposta Sbagliata 1: </label>
+                                <input className={styles.textbox_style_RISPOSTE} type="text" value={rispSbagliata_1Modifica} onChange={rispostaSbagliata_1_ChangeHandler}></input>
+
+                                {totalAnswers_WRONG > 1 &&
+                                    <>
+                                        <label className={styles.label_style}>Risposta Sbagliata 2: </label>
+                                        <input className={styles.textbox_style_RISPOSTE} type="text" value={rispSbagliata_2Modifica} onChange={rispostaSbagliata_2_ChangeHandler}></input>
+                                    </>
+                                }
+
+                                {totalAnswers_WRONG > 2 &&
+                                    <>
+                                        <label className={styles.label_style}>Risposta Sbagliata 3: </label>
+                                        <input className={styles.textbox_style_RISPOSTE} type="text" value={rispSbagliata_3Modifica} onChange={rispostaSbagliata_3_ChangeHandler}></input>
+                                    </>
+                                }
+
+                                {totalAnswers_WRONG > 3 &&
+                                    <>
+                                        <label className={styles.label_style}>Risposta Sbagliata 4: </label>
+                                        <input className={styles.textbox_style_RISPOSTE} type="text" value={rispSbagliata_4Modifica} onChange={rispostaSbagliata_4_ChangeHandler}></input>
+                                    </>
+                                }
+
+                                <div className={styles.wrapper_flexible}>
+                                    <GenericAlternativeButton
+                                        onClick={aggiungiAlternativaSbagliata}
+                                        buttonText={"Aggiungi sbagliata"}
+                                    >
+                                    </GenericAlternativeButton>
+                                    <GenericAlternativeButton
+                                        onClick={rimuoviAlternativaSbagliata}
+                                        colore_rosso={true}
+                                        buttonText={"Rimuovi sbagliata"}
+                                    >
+                                    </GenericAlternativeButton>
+                                </div>
+                                
+                            </div>  
+                        </div>
+                    </>
+                }
+            </div>
+        </>
         
     );
 }
