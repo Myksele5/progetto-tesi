@@ -7,7 +7,7 @@ function GenericButton(props){
     const bottoneSelezionato = props.is_selected ? `${styles.is_selected}` : '';
     const redStyling = props.red_styling ? `${styles.red_styling}` : '';
     const textHideable = props.text_hideable ? `${styles.generic_button_HIDETEXT}` : `${styles.text_color}`;
-    const classiStile = `${bottoneStileNormale} ${bottoneStilePiccolo} ${bottoneSelezionato} ${redStyling}`;
+    const classiStile = `${bottoneStileNormale} ${bottoneStilePiccolo} ${bottoneSelezionato} ${redStyling} ${disabledButton}`;
     var img;
 
     if(props.immagine != null){

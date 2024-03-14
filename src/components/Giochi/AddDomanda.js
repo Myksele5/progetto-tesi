@@ -49,6 +49,7 @@ function AddDomanda(props){
     const [myFile, setMyFile] = useState(null);
     const [msg, setMsg] = useState("");
     const [flagUpload, setFlagUpload] = useState(1);
+    const [validImage, setValidImage] = useState(true);
 
     // useEffect(() => {
     //     if(flagUpload != 1){
@@ -65,6 +66,7 @@ function AddDomanda(props){
         console.log(e.target.files[0].name);
         if(e.target.files.length > 0){
             setImageFile(URL.createObjectURL(e.target.files[0]));
+            setValidImage(true)
         }
         // setImageFile(URL.createObjectURL(e.target.files[0]));
         setFlagUpload((prevState) => (prevState + 1))
@@ -160,10 +162,11 @@ function AddDomanda(props){
     }
 
     function verificaInput(){
-        let valore_DOMANDA;
-        let valore_CATEGORIA;
-        let valore_CORRETTE;
-        let valore_SBAGLIATE;
+        let valore_DOMANDA = true;
+        let valore_CATEGORIA = true;
+        let valore_CORRETTE = true;
+        let valore_SBAGLIATE = true;
+        let valore_FILE = true;
 
         if(domanda.trim().length === 0){
             setValidDomanda(false);
@@ -183,28 +186,48 @@ function AddDomanda(props){
             valore_CATEGORIA = true;
         }
 
-        if(rispCorretta_1.trim().length === 0 && rispCorretta_2.trim().length === 0 && rispCorretta_3.trim().length === 0 && rispCorretta_4.trim().length === 0){
-            setValidCorrette(false);
-            valore_CORRETTE = false;
-        }
-        else{
-            setValidCorrette(true);
-            valore_CORRETTE = true
-        }
-        if(rispSbagliata_1.trim().length === 0 && rispSbagliata_2.trim().length === 0 && rispSbagliata_3.trim().length === 0 && rispSbagliata_4.trim().length === 0){
-            setValidSbagliate(false);
-            valore_SBAGLIATE = false;
-        }
-        else{
-            setValidSbagliate(true)
-            valore_SBAGLIATE = true;
+        if(gameType === "QUIZ" || gameType === "QUIZ CON IMMAGINI"){
+            if(rispCorretta_1.trim().length === 0 && rispCorretta_2.trim().length === 0 && rispCorretta_3.trim().length === 0 && rispCorretta_4.trim().length === 0){
+                setValidCorrette(false);
+                valore_CORRETTE = false;
+            }
+            else{
+                setValidCorrette(true);
+                valore_CORRETTE = true
+            }
+            if(rispSbagliata_1.trim().length === 0 && rispSbagliata_2.trim().length === 0 && rispSbagliata_3.trim().length === 0 && rispSbagliata_4.trim().length === 0){
+                setValidSbagliate(false);
+                valore_SBAGLIATE = false;
+            }
+            else{
+                setValidSbagliate(true)
+                valore_SBAGLIATE = true;
+            }
         }
 
-        if(!valore_DOMANDA || !valore_CATEGORIA || !valore_CORRETTE || !valore_SBAGLIATE){
+        if(gameType === "QUIZ CON IMMAGINI"){
+            if(myFile){
+                setValidImage(true)
+                valore_FILE = true
+            }
+            else{
+                setValidImage(false)
+                valore_FILE = false
+            }
+        }
+
+        if(gameType === "COMPLETA LA PAROLA"){
+            valore_CORRETTE = true;
+            valore_SBAGLIATE = true;
+            valore_FILE = true;
+        }
+
+        if(!valore_DOMANDA || !valore_CATEGORIA || !valore_CORRETTE || !valore_SBAGLIATE || !valore_FILE){
             console.log("DOMANDA = " + valore_DOMANDA)
             console.log("CATEGORIA = " + valore_CATEGORIA)
             console.log("CORRETTE = " + valore_CORRETTE)
             console.log("SBAGLIATE = " + valore_SBAGLIATE)
+            console.log("FILE = " + valore_FILE)
             return false
         }
         else{
@@ -460,7 +483,8 @@ function AddDomanda(props){
                             <>
                                 <input type="file" name="mfile" id="mfile" onChange={setFile} style={{display: 'none'}}></input>
                                 <button onClick={selectFile}>{"Select file"}</button>
-                                <img className={styles.preview_image} src={imageFile}></img>
+                                <img className={`${styles.preview_image} ${!validImage ? styles.invalid : ""}`} src={imageFile}></img>
+                                {!validImage && <div style={{width: "100%", color: "red", textAlign: "center"}}>Immagine obbligatoria per questo gioco</div>}
                                 <label className={styles.label_style}>Inserisci domanda: </label>
                                 <input className={`${styles.textbox_style} ${!validDomanda ? styles.invalid : ""}`} type="text" onChange={domandaChangeHandler}></input>
                             </>

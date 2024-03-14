@@ -10,7 +10,7 @@ function ElencoDomande(props){
     const auth_ctx = useContext(AuthContext);
 
     const [questionsList, setQuestionsList] = useState(game_ctx.domande);
-    const [categoryFilter, setCategoryFilter] = useState(props.categoria);
+    const [categoryFilter, setCategoryFilter] = useState("Tutte");
     // const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
     const [imagesList, setImagesList] = useState([]);
     // const [classicQuizQuestions, setClassicQuizQuestions] = useState(game_ctx.domandeDeiQuiz);
@@ -33,8 +33,15 @@ function ElencoDomande(props){
 
     }, [game_ctx.domandeDaModificare.length]);
 
+    useEffect(() => {
+        llll.splice(0);
+        COUNT_DOMANDE = 0;
+        setNumeroDomandeSelezionate(COUNT_DOMANDE);
+        props.domandeNuovoGioco(llll);
+    }, [props.tipoGioco])
+
     function categoryChangeHandler(event){
-        changingCategoryMakesQuestionsReset();
+        // changingCategoryMakesQuestionsReset();
         setCategoryFilter(event.target.value);
     }
 
@@ -42,7 +49,6 @@ function ElencoDomande(props){
         llll.splice(0);
         COUNT_DOMANDE = 0;
         setNumeroDomandeSelezionate(COUNT_DOMANDE);
-        // console.log(llll);
         props.domandeNuovoGioco(llll);
     }
 
@@ -105,7 +111,7 @@ function ElencoDomande(props){
         
         // console.log(game_ctx.domandeDaModificare === llll);
 
-        if(singleQuestion.tipoGioco === props.tipoGioco && singleQuestion.categoria === categoryFilter){
+        if(singleQuestion.tipoGioco === props.tipoGioco && (singleQuestion.categoria === categoryFilter || categoryFilter === "Tutte")){
             if(llll.length <= 0){
                 checkboxInputChecked =
                     <input className={styles.checkbox_style} type="checkbox" onChange={(event)=>{
@@ -216,11 +222,12 @@ function ElencoDomande(props){
 
     return (
         <>
+            <h5>Scegli le domande per il gioco:</h5>
             <div className={styles.wrapper_generico}>
                 <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
                 
                 <select className={styles.select_style} onChange={categoryChangeHandler}>
-                    <option hidden>---SELEZIONA CATEGORIA---</option>
+                    <option>{"Tutte"}</option>
                     {categorie.map(mappaCategorie)}
                 </select>
             </div>

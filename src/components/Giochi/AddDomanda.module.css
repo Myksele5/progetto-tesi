@@ -123,6 +123,10 @@
     margin: 8px;
 }
 
+.preview_image.invalid{
+    border: 2px solid red;
+}
+
 .horizontal_flex_content{
     font-size: 14px;
     /* margin: 1px; */
@@ -152,10 +156,6 @@
         font-size: 24px;
     }
 
-    .wrapper_impostazioni_gioco{
-        /* width: 500px; */
-    }
-
     .wrapper_label_and_box{
         flex-direction: column;
     }
@@ -175,10 +175,6 @@
     }
 }
 @media screen and (max-width: 599px) {
-    .wrapper_impostazioni_gioco{
-        /* width: 340px; */
-    }
-
     .wrapper_label_and_box{
         flex-direction: column;
     }

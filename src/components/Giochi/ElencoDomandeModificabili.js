@@ -173,9 +173,13 @@ function ElencoDomandeModificabili(props){
 
             <hr style={{width: "100%"}}></hr>
 
-            <ul className={styles.wrapper_lista_domande}>
-                {categoryFilter !== "" && game_ctx.domande.map(recuperaTutteLeDomande)}
-            </ul>
+            {categoryFilter !== "" && game_ctx.domande?.length === 0 && <h2>Non hai ancora creato una domanda</h2>}
+            
+            {categoryFilter !== "" && game_ctx.domande?.length > 0 && 
+                <ul className={styles.wrapper_lista_domande}>
+                    {game_ctx.domande.map(recuperaTutteLeDomande)}
+                </ul>
+            }
             
         </>
     );

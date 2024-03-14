@@ -20,17 +20,22 @@ function EditDomanda(props){
 
     const [tipoGiocoModifica, setTipoGiocoModifica] = useState(props.tipoGioco);
     const [categoriaDomandaModifica, setCategoriaDomandaModifica] = useState(props.categoriaDomanda);
+    const [validCategory, setValidCategory] = useState(true)
     const [domandaModifica, setDomandaModifica] = useState(props.domanda);
+    const [validDomanda, setValidDomanda] = useState(true);
     const [ID, setID] = useState(props.ID);
 
     const [rispCorretta_1Modifica, setRispCorretta_1Modifica] = useState(props.correttaN1);
     const [rispCorretta_2Modifica, setRispCorretta_2Modifica] = useState(props.correttaN2);
     const [rispCorretta_3Modifica, setRispCorretta_3Modifica] = useState(props.correttaN3);
     const [rispCorretta_4Modifica, setRispCorretta_4Modifica] = useState(props.correttaN4);
+    const [validCorrette, setValidCorrette] = useState(true);
+
     const [rispSbagliata_1Modifica, setRispSbagliata_1Modifica] = useState(props.sbagliataN1);
     const [rispSbagliata_2Modifica, setRispSbagliata_2Modifica] = useState(props.sbagliataN2);
     const [rispSbagliata_3Modifica, setRispSbagliata_3Modifica] = useState(props.sbagliataN3);
     const [rispSbagliata_4Modifica, setRispSbagliata_4Modifica] = useState(props.sbagliataN4);
+    const [validSbagliate, setValidSbagliate] = useState(true);
 
     const [imageFile, setImageFile] = useState(websiteUrl.concat(props.immagine));
     const [myFile, setMyFile] = useState(null);
@@ -171,95 +176,162 @@ function EditDomanda(props){
         console.log(counter_SBAGLIATE);
     }
 
+    function verificaInput(){
+        let valore_DOMANDA;
+        let valore_CATEGORIA;
+        let valore_CORRETTE;
+        let valore_SBAGLIATE;
+
+        if(domandaModifica.trim().length === 0){
+            setValidDomanda(false);
+            valore_DOMANDA = false;
+        }
+        else{
+            setValidDomanda(true)
+            valore_DOMANDA = true
+        }
+
+        if(categoriaDomandaModifica.trim().length === 0){
+            setValidCategory(false);
+            valore_CATEGORIA = false;
+        }
+        else{
+            setValidCategory(true);
+            valore_CATEGORIA = true;
+        }
+
+        if(rispCorretta_1Modifica.trim().length === 0 && rispCorretta_2Modifica.trim().length === 0 && rispCorretta_3Modifica.trim().length === 0 && rispCorretta_4Modifica.trim().length === 0){
+            setValidCorrette(false);
+            valore_CORRETTE = false;
+        }
+        else{
+            setValidCorrette(true);
+            valore_CORRETTE = true
+        }
+        if(rispSbagliata_1Modifica.trim().length === 0 && rispSbagliata_2Modifica.trim().length === 0 && rispSbagliata_3Modifica.trim().length === 0 && rispSbagliata_4Modifica.trim().length === 0){
+            setValidSbagliate(false);
+            valore_SBAGLIATE = false;
+        }
+        else{
+            setValidSbagliate(true)
+            valore_SBAGLIATE = true;
+        }
+
+        if(!valore_DOMANDA || !valore_CATEGORIA || !valore_CORRETTE || !valore_SBAGLIATE){
+            console.log("DOMANDA = " + valore_DOMANDA)
+            console.log("CATEGORIA = " + valore_CATEGORIA)
+            console.log("CORRETTE = " + valore_CORRETTE)
+            console.log("SBAGLIATE = " + valore_SBAGLIATE)
+            return false
+        }
+        else{
+            return true
+        }
+    }
+
     function salvaDomanda(){
-        var modified_question;
-        var correct_answers = {
-            correct_answer_n1: rispCorretta_1Modifica,
-        };
+        let risultato = verificaInput();
 
-        var wrong_answers = {
-            wrong_answer_n1: rispSbagliata_1Modifica,
-        };
+        if(risultato){
+            var modified_question;
+            var correct_answers = {};
+            var wrong_answers = {};
 
-        if(rispCorretta_2Modifica.trim().length > 0){
-            correct_answers["correct_answer_n2"] = rispCorretta_2Modifica;
-        }
-        else{
-            correct_answers["correct_answer_n2"] = "";
-        }
-        if(rispCorretta_3Modifica.trim().length > 0){
-            correct_answers["correct_answer_n3"] = rispCorretta_3Modifica;
-        }
-        else{
-            correct_answers["correct_answer_n3"] = "";
-        }
-        if(rispCorretta_4Modifica.trim().length > 0){
-            correct_answers["correct_answer_n4"] = rispCorretta_4Modifica;
-        }
-        else{
-            correct_answers["correct_answer_n4"] = "";
-        }
-
-        if(rispSbagliata_2Modifica.trim().length > 0){
-            wrong_answers["wrong_answer_n2"] = rispSbagliata_2Modifica;
-        }
-        else{
-            wrong_answers["wrong_answer_n2"] = "";
-        }
-        if(rispSbagliata_3Modifica.trim().length > 0){
-            wrong_answers["wrong_answer_n3"] = rispSbagliata_3Modifica;
-        }
-        else{
-            wrong_answers["wrong_answer_n3"] = "";
-        }
-        if(rispSbagliata_4Modifica.trim().length > 0){
-            wrong_answers["wrong_answer_n4"] = rispSbagliata_4Modifica;
-        }
-        else{
-            wrong_answers["wrong_answer_n4"] = "";
-        }
-
-        if(tipoGiocoModifica === "QUIZ"){
-            modified_question = {
-                domanda: domandaModifica,
-                rispCorrette: correct_answers,
-                rispSbagliate: wrong_answers,
-                ID: ID
-            }
-        }
-
-        if(tipoGiocoModifica === "QUIZ CON IMMAGINI"){
-            var qualeImg;
-
-            if(!myFile){
-                qualeImg = props.immagine;
+            if(rispCorretta_1Modifica.trim().length > 0){
+                correct_answers["correct_answer_n1"] = rispCorretta_1Modifica;
             }
             else{
-                qualeImg = myFile.name;
+                correct_answers["correct_answer_n1"] = "";
             }
-            modified_question = {
-                domanda: domandaModifica,
-                rispCorrette: correct_answers,
-                rispSbagliate: wrong_answers,
-                immagine: qualeImg,
-                ID: ID
+            if(rispCorretta_2Modifica.trim().length > 0){
+                correct_answers["correct_answer_n2"] = rispCorretta_2Modifica;
             }
-
-            uploadImage();
-
+            else{
+                correct_answers["correct_answer_n2"] = "";
+            }
+            if(rispCorretta_3Modifica.trim().length > 0){
+                correct_answers["correct_answer_n3"] = rispCorretta_3Modifica;
+            }
+            else{
+                correct_answers["correct_answer_n3"] = "";
+            }
+            if(rispCorretta_4Modifica.trim().length > 0){
+                correct_answers["correct_answer_n4"] = rispCorretta_4Modifica;
+            }
+            else{
+                correct_answers["correct_answer_n4"] = "";
+            }
+    
+            if(rispSbagliata_1Modifica.trim().length > 0){
+                wrong_answers["wrong_answer_n1"] = rispSbagliata_1Modifica;
+            }
+            else{
+                wrong_answers["wrong_answer_n1"] = "";
+            }
+            if(rispSbagliata_2Modifica.trim().length > 0){
+                wrong_answers["wrong_answer_n2"] = rispSbagliata_2Modifica;
+            }
+            else{
+                wrong_answers["wrong_answer_n2"] = "";
+            }
+            if(rispSbagliata_3Modifica.trim().length > 0){
+                wrong_answers["wrong_answer_n3"] = rispSbagliata_3Modifica;
+            }
+            else{
+                wrong_answers["wrong_answer_n3"] = "";
+            }
+            if(rispSbagliata_4Modifica.trim().length > 0){
+                wrong_answers["wrong_answer_n4"] = rispSbagliata_4Modifica;
+            }
+            else{
+                wrong_answers["wrong_answer_n4"] = "";
+            }
+    
+            if(tipoGiocoModifica === "QUIZ"){
+                modified_question = {
+                    domanda: domandaModifica,
+                    rispCorrette: correct_answers,
+                    rispSbagliate: wrong_answers,
+                    ID: ID
+                }
+            }
+    
+            if(tipoGiocoModifica === "QUIZ CON IMMAGINI"){
+                var qualeImg;
+    
+                if(!myFile){
+                    qualeImg = props.immagine;
+                }
+                else{
+                    qualeImg = myFile.name;
+                }
+                modified_question = {
+                    domanda: domandaModifica,
+                    rispCorrette: correct_answers,
+                    rispSbagliate: wrong_answers,
+                    immagine: qualeImg,
+                    ID: ID
+                }
+    
+                uploadImage();
+    
+            }
+    
+            if(tipoGiocoModifica === "COMPLETA LA PAROLA"){
+                modified_question = {
+                    domanda: domandaModifica.toUpperCase(),
+                    rispCorrette: correct_answers,
+                    rispSbagliate: wrong_answers,
+                    ID: ID
+                }
+            }
+    
+            game_ctx.salvaDomandaModificata(modified_question, ID);
+            props.chiudiFormModificaDomanda();
         }
-
-        if(tipoGiocoModifica === "COMPLETA LA PAROLA"){
-            modified_question = {
-                domanda: domandaModifica.toUpperCase(),
-                rispCorrette: correct_answers,
-                rispSbagliate: wrong_answers,
-                ID: ID
-            }
-        }
-
-        game_ctx.salvaDomandaModificata(modified_question, ID);
-        props.chiudiFormModificaDomanda();
+        else{
+            console.log("ERRORE")
+        }        
     }
 
     return(
@@ -290,7 +362,8 @@ function EditDomanda(props){
                 {/* </div> */}
                 {/* <div className={styles.wrapper_items}> */}
                     <label className={styles.label_style}>Categoria domanda</label>
-                    <input className={styles.textbox_style_NOT_ALLOWED} type="text" value={categoriaDomandaModifica} readOnly></input>
+                    <input className={`${styles.textbox_style_NOT_ALLOWED} ${!validCategory ? styles.invalid : ""}`} type="text" value={categoriaDomandaModifica} readOnly></input>
+                    {!validCategory && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci la categoria della domanda</div>}
                 {/* </div> */}
                 
             
@@ -298,7 +371,7 @@ function EditDomanda(props){
                 {tipoGiocoModifica === "QUIZ" && 
                     <>
                         <label className={styles.label_style}>Domanda: </label>
-                        <input className={styles.textbox_style} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
+                        <input className={`${styles.textbox_style} ${!validDomanda ? styles.invalid : ""}`} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
                     </>
                 }
 
@@ -308,98 +381,109 @@ function EditDomanda(props){
                         <button onClick={selectFile}>{"Select file"}</button>
                         <img className={styles.preview_image} src={imageFile}></img>
                         <label className={styles.label_style}>Domanda: </label>
-                        <input className={styles.textbox_style} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
+                        <input className={`${styles.textbox_style} ${!validDomanda ? styles.invalid : ""}`} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
                     </>
                 }
 
                 {tipoGiocoModifica === "COMPLETA LA PAROLA" && 
                     <>
                         <label className={styles.label_style}>Parola da indovinare: </label>
-                        <input className={styles.textbox_style} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
+                        <input className={`${styles.textbox_style} ${!validDomanda ? styles.invalid : ""}`} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
                     </>
                 }
+                {!validDomanda && <div style={{width: "100%", color: "red", textAlign: "center"}}>La domanda non può essere vuota</div>}
 
                 {(tipoGiocoModifica === "QUIZ" || tipoGiocoModifica === "QUIZ CON IMMAGINI") &&
                     <>
                         <div className={styles.wrapper_generico}>
                             <div className={styles.wrapper_items}>
                                 <label className={styles.label_style}>Risposta Corretta: </label>
-                                <input className={styles.textbox_style_RISPOSTE} type="text" value={rispCorretta_1Modifica} onChange={rispostaCorretta_1_ChangeHandler}></input>
+                                <input className={`${styles.textbox_style_RISPOSTE} ${!validCorrette ? styles.invalid : ""}`} type="text" value={rispCorretta_1Modifica} onChange={rispostaCorretta_1_ChangeHandler}></input>
 
                                 {totalAnswers_CORRECT > 1 &&
                                     <>
                                         <label className={styles.label_style}>Risposta Corretta: </label>
-                                        <input className={styles.textbox_style_RISPOSTE} type="text" value={rispCorretta_2Modifica} onChange={rispostaCorretta_2_ChangeHandler}></input>
+                                        <input className={`${styles.textbox_style_RISPOSTE} ${!validCorrette ? styles.invalid : ""}`} type="text" value={rispCorretta_2Modifica} onChange={rispostaCorretta_2_ChangeHandler}></input>
                                     </>
                                 }
 
                                 {totalAnswers_CORRECT > 2 &&
                                     <>
                                         <label className={styles.label_style}>Risposta Corretta: </label>
-                                        <input className={styles.textbox_style_RISPOSTE} type="text" value={rispCorretta_3Modifica} onChange={rispostaCorretta_3_ChangeHandler}></input>
+                                        <input className={`${styles.textbox_style_RISPOSTE} ${!validCorrette ? styles.invalid : ""}`} type="text" value={rispCorretta_3Modifica} onChange={rispostaCorretta_3_ChangeHandler}></input>
                                     </>
                                 }
 
                                 {totalAnswers_CORRECT > 3 &&
                                     <>
                                         <label className={styles.label_style}>Risposta Corretta: </label>
-                                        <input className={styles.textbox_style_RISPOSTE} type="text" value={rispCorretta_4Modifica} onChange={rispostaCorretta_4_ChangeHandler}></input>
+                                        <input className={`${styles.textbox_style_RISPOSTE} ${!validCorrette ? styles.invalid : ""}`} type="text" value={rispCorretta_4Modifica} onChange={rispostaCorretta_4_ChangeHandler}></input>
                                     </>
                                 }
+                                {!validCorrette && <div style={{width: "100%", color: "red", textAlign: "center"}}>Devi inserire almeno una risposta corretta</div>}
 
                                 <div className={styles.wrapper_flexible}>
-                                    <GenericAlternativeButton
-                                        onClick={aggiungiAlternativaCorretta}
-                                        buttonText={"Aggiungi corretta"}
-                                    >
-                                    </GenericAlternativeButton>
-                                    <GenericAlternativeButton
-                                        onClick={rimuoviAlternativaCorretta}
-                                        colore_rosso={true}
-                                        buttonText={"Rimuovi corretta"}
-                                    >
-                                    </GenericAlternativeButton>
+                                    {totalAnswers_CORRECT < 4 &&
+                                        <GenericAlternativeButton
+                                            onClick={aggiungiAlternativaCorretta}
+                                            buttonText={"Aggiungi corretta"}
+                                        >
+                                        </GenericAlternativeButton>
+                                    }
+                                    {totalAnswers_CORRECT > 1 &&
+                                        <GenericAlternativeButton
+                                            onClick={rimuoviAlternativaCorretta}
+                                            colore_rosso={true}
+                                            buttonText={"Rimuovi corretta"}
+                                        >
+                                        </GenericAlternativeButton>
+                                    }
                                 </div>
                                 
                             </div>
 
                             <div className={styles.wrapper_items}>
                                 <label className={styles.label_style}>Risposta Sbagliata 1: </label>
-                                <input className={styles.textbox_style_RISPOSTE} type="text" value={rispSbagliata_1Modifica} onChange={rispostaSbagliata_1_ChangeHandler}></input>
+                                <input className={`${styles.textbox_style_RISPOSTE} ${!validSbagliate ? styles.invalid : ""}`} type="text" value={rispSbagliata_1Modifica} onChange={rispostaSbagliata_1_ChangeHandler}></input>
 
                                 {totalAnswers_WRONG > 1 &&
                                     <>
                                         <label className={styles.label_style}>Risposta Sbagliata 2: </label>
-                                        <input className={styles.textbox_style_RISPOSTE} type="text" value={rispSbagliata_2Modifica} onChange={rispostaSbagliata_2_ChangeHandler}></input>
+                                        <input className={`${styles.textbox_style_RISPOSTE} ${!validSbagliate ? styles.invalid : ""}`} type="text" value={rispSbagliata_2Modifica} onChange={rispostaSbagliata_2_ChangeHandler}></input>
                                     </>
                                 }
 
                                 {totalAnswers_WRONG > 2 &&
                                     <>
                                         <label className={styles.label_style}>Risposta Sbagliata 3: </label>
-                                        <input className={styles.textbox_style_RISPOSTE} type="text" value={rispSbagliata_3Modifica} onChange={rispostaSbagliata_3_ChangeHandler}></input>
+                                        <input className={`${styles.textbox_style_RISPOSTE} ${!validSbagliate ? styles.invalid : ""}`} type="text" value={rispSbagliata_3Modifica} onChange={rispostaSbagliata_3_ChangeHandler}></input>
                                     </>
                                 }
 
                                 {totalAnswers_WRONG > 3 &&
                                     <>
                                         <label className={styles.label_style}>Risposta Sbagliata 4: </label>
-                                        <input className={styles.textbox_style_RISPOSTE} type="text" value={rispSbagliata_4Modifica} onChange={rispostaSbagliata_4_ChangeHandler}></input>
+                                        <input className={`${styles.textbox_style_RISPOSTE} ${!validSbagliate ? styles.invalid : ""}`} type="text" value={rispSbagliata_4Modifica} onChange={rispostaSbagliata_4_ChangeHandler}></input>
                                     </>
                                 }
+                                {!validSbagliate && <div style={{width: "100%", color: "red", textAlign: "center"}}>Devi inserire almeno una risposta sbagliata</div>}
 
                                 <div className={styles.wrapper_flexible}>
-                                    <GenericAlternativeButton
-                                        onClick={aggiungiAlternativaSbagliata}
-                                        buttonText={"Aggiungi sbagliata"}
-                                    >
-                                    </GenericAlternativeButton>
-                                    <GenericAlternativeButton
-                                        onClick={rimuoviAlternativaSbagliata}
-                                        colore_rosso={true}
-                                        buttonText={"Rimuovi sbagliata"}
-                                    >
-                                    </GenericAlternativeButton>
+                                    {totalAnswers_WRONG < 4 &&
+                                        <GenericAlternativeButton
+                                            onClick={aggiungiAlternativaSbagliata}
+                                            buttonText={"Aggiungi sbagliata"}
+                                        >
+                                        </GenericAlternativeButton>
+                                    }
+                                    {totalAnswers_WRONG > 1 &&
+                                        <GenericAlternativeButton
+                                            onClick={rimuoviAlternativaSbagliata}
+                                            colore_rosso={true}
+                                            buttonText={"Rimuovi sbagliata"}
+                                        >
+                                        </GenericAlternativeButton>
+                                    }
                                 </div>
                                 
                             </div>  

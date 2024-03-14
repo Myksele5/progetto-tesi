@@ -3,7 +3,7 @@
     border: 2px solid #163172;
     border-radius: 5px;
     background-color: white;
-    width: 1000px;
+    width: 95%;
     height: fit-content;
     transition: 0.5s;
 }
@@ -15,7 +15,7 @@
 
 .wrapper_generico{
     display: flex;
-    width: 1000px;
+    width: 100%;
     /* flex-direction: column; */
     justify-content: space-around;
     align-items: center;
@@ -26,7 +26,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 1100px;
+    width: 95%;
     max-height: 500px;
     min-height: 30px;
     height: fit-content;
@@ -74,6 +74,7 @@
 }
 
 .buttons_space{
+    width: 100%;
     display: flex;
     align-items: center;
     margin: 6px;
@@ -96,7 +97,7 @@
     text-align: center;
     overflow-x: hidden;
     text-overflow: ellipsis;
-    width: 65px;
+    width: 100%;
 }
 
 .wrong_answ{
@@ -110,7 +111,7 @@
     text-align: center;
     overflow-x: hidden;
     text-overflow: ellipsis;
-    width: 65px;
+    width: 100%;
 }
 
 .checkbox_style{
@@ -142,12 +143,12 @@
 }
 
 @media screen and (max-width: 1550px) {
-    .LIST_ITEM_STYLE{
+    /* .LIST_ITEM_STYLE{
         width: 950px;
-    }
+    } */
 
     .wrapper_lista_domande{
-        width: 1000px;
+        /* width: 1000px; */
         max-height: 400px;
     }
 
@@ -176,12 +177,12 @@
 }
 
 @media screen and (max-width: 1300px) {
-    .LIST_ITEM_STYLE{
+    /* .LIST_ITEM_STYLE{
         width: 750px;
-    }
+    } */
 
     .wrapper_lista_domande{
-        width: 800px;
+        /* width: 800px; */
         max-height: 360px;
     }
     
@@ -196,22 +197,22 @@
 }
 
 @media screen and (max-width: 1000px) {
-    .LIST_ITEM_STYLE{
+    /* .LIST_ITEM_STYLE{
         width: 720px;
-    }
+    } */
 
     .wrapper_lista_domande{
-        width: 800px;
+        /* width: 800px; */
         height: 560px;
     }
 
-    .correct_answ{
+    /* .correct_answ{
         width: 50px;
-    }
+    } */
 
-    .wrong_answ{
+    /* .wrong_answ{
         width: 50px;
-    }
+    } */
 }
 
 @media screen and (max-width: 850px) {
@@ -219,43 +220,44 @@
         flex-direction: column;
     }
 
-    .wrapper_generico{
-        width: 500px;
+    .buttons_space{
+        width: 99%;
+        margin: 4px;
     }
 
     .separa_corrette_sbagliate{
         flex-direction: column;
     }
 
-    .LIST_ITEM_STYLE{
+    /* .LIST_ITEM_STYLE{
         width: 500px;
-    }
+    } */
 
     .select_style{
         width: 180px;
     }
 
     .wrapper_lista_domande{
-        width: 600px;
+        /* width: 600px; */
         height: 560px;
     }
 
-    .correct_answ{
+    /* .correct_answ{
         width: 50px;
-    }
+    } */
 
-    .wrong_answ{
+    /* .wrong_answ{
         width: 50px;
-    }
+    } */
 }
 @media screen and (max-width: 750px) {
     .flex_list_container{
         flex-direction: column;
     }
 
-    .wrapper_generico{
+    /* .wrapper_generico{
         width: 350px;
-    }
+    } */
 
     .domande_disponibili{
         font-size: 12px;
@@ -265,26 +267,26 @@
         flex-direction: column;
     }
 
-    .LIST_ITEM_STYLE{
+    /* .LIST_ITEM_STYLE{
         width: 320px;
-    }
+    } */
 
     .select_style{
         width: 180px;
     }
 
     .wrapper_lista_domande{
-        width: 350px;
+        /* width: 350px; */
         height: 560px;
     }
 
-    .correct_answ{
+    /* .correct_answ{
         width: 50px;
-    }
+    } */
 
-    .wrong_answ{
+    /* .wrong_answ{
         width: 50px;
-    }
+    } */
 }
 
 @media screen and (max-width: 650px) {
@@ -300,9 +302,9 @@
         font-size: 14px;
     }
 
-    .wrapper_generico{
+    /* .wrapper_generico{
         width: 300px;
-    }
+    } */
 
     .domande_disponibili{
         font-size: 11px;
@@ -312,9 +314,9 @@
         flex-direction: column;
     }
 
-    .LIST_ITEM_STYLE{
+    /* .LIST_ITEM_STYLE{
         width: 240px;
-    }
+    } */
 
     .select_style{
         width: 140px;
@@ -322,15 +324,15 @@
     }
 
     .wrapper_lista_domande{
-        width: 290px;
+        /* width: 290px; */
         height: 560px;
     }
 
-    .correct_answ{
+    /* .correct_answ{
         width: 50px;
-    }
+    } */
 
-    .wrong_answ{
+    /* .wrong_answ{
         width: 50px;
-    }
+    } */
 }

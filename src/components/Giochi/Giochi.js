@@ -45,21 +45,21 @@ function Giochi(){
         setShowSearchBoxAndButton(false);
         setShowElencoGiochi(false);
         setShowAddNewQuestion(true);
-        var domandeDelGioco = [];
-        var oggettoDomandeIDGioco = game_ctx.listaGiochi[1].domandeID;
-        for(var i=0; i < game_ctx.domande.length; i++){
-            oggettoDomandeIDGioco.forEach((item) => {
-                if(item === game_ctx.domande[i].ID){
-                    // console.log(game_ctx.domande[i]);
-                    domandeDelGioco.push(game_ctx.domande[i]);
-                }
-            })
-        }
+        // var domandeDelGioco = [];
+        // var oggettoDomandeIDGioco = game_ctx.listaGiochi[1].domandeID;
+        // for(var i=0; i < game_ctx.domande.length; i++){
+        //     oggettoDomandeIDGioco.forEach((item) => {
+        //         if(item === game_ctx.domande[i].ID){
+        //             // console.log(game_ctx.domande[i]);
+        //             domandeDelGioco.push(game_ctx.domande[i]);
+        //         }
+        //     })
+        // }
 
-        console.log(domandeDelGioco);
+        // console.log(domandeDelGioco);
         
-        console.log(game_ctx.domande[0]);
-        console.log(oggettoDomandeIDGioco);
+        // console.log(game_ctx.domande[0]);
+        // console.log(oggettoDomandeIDGioco);
     }
 
     function closeFormCreateNewQuestion(){
