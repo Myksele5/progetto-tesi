@@ -355,7 +355,7 @@ function SchedaPaziente(props){
                                 <Col style={{textAlign: "center", fontWeight: "bold"}}>Svolto il</Col>
                             </div>
                         </div>
-                        {props.listaTest.map((test) => (
+                        {props.listaTest?.map((test) => (
                             <div className={styles.horizontal}>
                                 <div className={styles.wrap_lista_test}>
                                     <Col style={{textAlign: "center"}}>{test.tipoTest}</Col>

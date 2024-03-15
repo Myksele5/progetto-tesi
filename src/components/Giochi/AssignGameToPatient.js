@@ -6,6 +6,7 @@ import Card from "../UI/Card";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import GameContext from "../../context/game-context";
 import { getServerMgr } from "../../backend_conn/ServerMgr";
+import { ListGroup } from "react-bootstrap";
 
 function AssignGameToPatient(props){
     const patients_ctx = useContext(PatientContext);
@@ -44,22 +45,28 @@ function AssignGameToPatient(props){
         }
         
         return (
-            <div className={styles.wrapper_horizontal}>
-                <Card
-                    children={
-                        <div key={paziente.ID} className={styles.wrapper_content}>
-                            {/* <p className={styles.card_content}>{paziente.ID}</p> */}
-                            <p className={styles.card_content_FULLNAME}>{paziente.nome} {paziente.cognome}</p>
-                            {/* <p className={styles.card_content}></p> */}
-                            <p className={styles.card_content_DATA}>{paziente.dataNascita}</p>
-                        
-                        </div>
-                    }
-                    altroStile
-                ></Card>
-                <div className={styles.checkbox_assigned}>{checkboxInputChecked}</div>
+            <ListGroup.Item action className={styles.list_item}>
+                <div className={styles.wrapper_content}>
+                    <div className={styles.wrapper_flexible}>
+                        <p className={styles.card_content_FULLNAME}>{paziente.nome} {paziente.cognome}</p>
+                        <p className={styles.card_content_DATA}>{paziente.dataNascita}</p>
+                    </div>
+                    <div className={styles.checkbox_assigned}>{checkboxInputChecked}</div>
+                </div>
+            </ListGroup.Item>
+            // <div className={styles.wrapper_horizontal}>
+            //     <Card
+            //         children={
+            //             <div key={paziente.ID} className={styles.wrapper_content}>
+                            // <p className={styles.card_content_FULLNAME}>{paziente.nome} {paziente.cognome}</p>
+                            // <p className={styles.card_content_DATA}>{paziente.dataNascita}</p>
+            //             </div>
+            //         }
+            //         altroStile
+            //     ></Card>
+                // <div className={styles.checkbox_assigned}>{checkboxInputChecked}</div>
 
-            </div>
+            // </div>
         );
     }
 
@@ -90,8 +97,10 @@ function AssignGameToPatient(props){
             
             <h2 className={styles.title}>Assegna gioco a...</h2>
             
-            <div className={styles.wrapper_list}>
-                {patients_ctx.listaPazienti.map(verifyGameOnPatients)}
+            <div className={styles.scrollable_list}>
+                <ListGroup className={styles.list_group}>
+                    {patients_ctx.listaPazienti.map(verifyGameOnPatients)}
+                </ListGroup>
             </div>
 
             <div className={styles.wrap_buttons}>

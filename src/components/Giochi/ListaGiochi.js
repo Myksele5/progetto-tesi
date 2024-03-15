@@ -4,6 +4,7 @@ import GameContext from "../../context/game-context";
 import GameCard from "../UI/GameCard";
 import GenericButton from "../UI/GenericButton";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
+import { Badge } from "react-bootstrap";
 
 function ListaGiochi(props){
     const game_ctx = useContext(GameContext);
@@ -21,48 +22,65 @@ function ListaGiochi(props){
                 <GameCard
                     children={
                         <>
-                            <div>
-                                <h1 className={styles.game_title}>{lista.nomeGioco}</h1>
-                                <GenericAlternativeButton
+                            <div className={styles.horizontal}>
+                                <div>
+                                    <h1 className={styles.game_title}>{lista.nomeGioco}</h1>
+                                    <GenericButton
+                                        onClick={()=> {
+                                            props.iniziaGioco(lista.tipoGioco, lista.gameID, lista.livelloGioco)
+                                        }}
+                                        buttonText={"Gioca"}
+                                        is_disabled={lista.domandeID.length === 0 ? true : false}
+                                        small_button
+                                    ></GenericButton>
+                                    <h3 className={styles.game_subtitle}>Tipo gioco: <span className={styles.game_type}>{lista.tipoGioco}</span></h3>
+                                    <h3 className={styles.game_subtitle}>Difficoltà: <span className={styles.game_type}>{lista.livelloGioco}</span></h3>
+                                    {/* <h3 className={styles.game_subtitle}>CODICE DEL GIOCO: <span className={styles.game_type}>{lista.codiceGioco}</span></h3> */}
+                                </div>
+                                
+                                <div className={styles.buttons_wrap}>
+                                    <GenericAlternativeButton
                                     onClick={()=> {
-                                        props.iniziaGioco(lista.tipoGioco, lista.gameID, lista.livelloGioco)
+                                        props.mostraSchedaAssegnazione(lista.gameID);
+                                        game_ctx.prendiPazientiPerUnSingoloGioco(lista.gameID)
                                     }}
-                                    buttonText={"Gioca"}
-                                    bottone_piccolo
-                                ></GenericAlternativeButton>
-                                <h3 className={styles.game_subtitle}>Tipologia gioco: <span className={styles.game_type}>{lista.tipoGioco}</span></h3>
-                                <h3 className={styles.game_subtitle}>Livello difficoltà: <span className={styles.game_type}>{lista.livelloGioco}</span></h3>
-                                {/* <h3 className={styles.game_subtitle}>CODICE DEL GIOCO: <span className={styles.game_type}>{lista.codiceGioco}</span></h3> */}
+                                    // alternative_button={true}
+                                    buttonText='Assegna a...'>
+                                    </GenericAlternativeButton>
+
+                                    <GenericAlternativeButton
+                                    onClick={() => {
+                                        game_ctx.modificaGioco(lista)
+                                        props.mostraFormModificaGioco(lista);
+                                    }}
+                                    // alternative_button={true}
+                                    buttonText='Modifica gioco'>
+                                    </GenericAlternativeButton>
+
+                                    <GenericAlternativeButton
+                                    onClick={() => {
+                                        game_ctx.eliminaGioco(lista.gameID)
+                                    }}
+                                    // alternative_button={true}
+                                    colore_rosso={true}
+                                    buttonText='Elimina'>
+                                    </GenericAlternativeButton>
+                                </div>
                             </div>
+
+                            {lista.domandeID.length === 0 
+                            ? 
+                            <>
+                                <hr className={styles.horizontal_line}></hr>
+                                <div className={styles.warning_wrapper}>
+                                    <Badge bg="warning" text="dark">Attenzione!</Badge>
+                                    <div className={styles.warning_text}>Questo gioco è vuoto. Puoi modificarlo per aggiungere domande oppure eliminarlo</div>
+                                </div>
+                            </>
+                            : 
+                            <></>
+                            }
                             
-                            <div className={styles.buttons_wrap}>
-                                <GenericAlternativeButton
-                                onClick={()=> {
-                                    props.mostraSchedaAssegnazione(lista.gameID);
-                                    game_ctx.prendiPazientiPerUnSingoloGioco(lista.gameID)
-                                }}
-                                // alternative_button={true}
-                                buttonText='Assegna a...'>
-                                </GenericAlternativeButton>
-
-                                <GenericAlternativeButton
-                                onClick={() => {
-                                    game_ctx.modificaGioco(lista)
-                                    props.mostraFormModificaGioco(lista);
-                                }}
-                                // alternative_button={true}
-                                buttonText='Modifica gioco'>
-                                </GenericAlternativeButton>
-
-                                <GenericAlternativeButton
-                                onClick={() => {
-                                    game_ctx.eliminaGioco(lista.gameID)
-                                }}
-                                // alternative_button={true}
-                                colore_rosso={true}
-                                buttonText='Elimina'>
-                                </GenericAlternativeButton>
-                            </div>
                         </>
                     }>
                 </GameCard>

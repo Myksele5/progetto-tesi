@@ -184,7 +184,7 @@ function AddGioco(props){
                 <input className={`${styles.textbox_style} ${!validTitolo ? styles.invalid : ""}`} type="text" onChange={titoloGiocoChangeHandler}></input>
                 {!validTitolo && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un nome per il gioco</div>}
 
-                {!validNumeroDomande && <div style={{width: "100%", color: "red", textAlign: "center"}}>Devi selezionare almeno una domanda per il gioco</div>}
+                {!validNumeroDomande && <div style={{width: "100%", color: "red", textAlign: "center"}}>Devi selezionare almeno una domanda</div>}
                 
                 <ElencoDomande
                     domandeNuovoGioco={creaOggettoDomande}

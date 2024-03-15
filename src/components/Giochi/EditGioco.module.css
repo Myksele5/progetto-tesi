@@ -1,5 +1,5 @@
 .wrapper_impostazioni_gioco{
-    width: 1200px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -35,8 +35,8 @@
 }
 
 .textbox_style{
-    width: 300px;
-    height: 20px;
+    width: 40%;
+    height: 25px;
     font-size: 16px;
     border: 2px solid #1E56A0;
     border-radius: 5px;
@@ -44,8 +44,8 @@
     text-align: center;
 }
 .textbox_style_NOT_ALLOWED{
-    width: 300px;
-    height: 20px;
+    width: 40%;
+    height: 25px;
     font-size: 16px;
     border: 2px solid #1E56A0;
     border-radius: 5px;
@@ -61,59 +61,27 @@
 }
 
 @media screen and (max-width: 1550px) {
-    .wrapper_impostazioni_gioco{
-        width: 1040px;
-    }
-
     .label_style{
         font-size: 14px;
     }
 }
-
-@media screen and (max-width: 1300px) {
-    .wrapper_impostazioni_gioco{
-        width: 800px;
-    }
-
-    .select_style{
-        width: 220px;
-        height: 18px;
-        font-size: 12px;
-    }
-
-    .textbox_style{
-        width: 220px;
-        height: 16px;
-        font-size: 13px;
-    }
-}
 @media screen and (max-width: 850px) {
     .wrapper_impostazioni_gioco{
-        width: 700px;
+        /* width: 700px; */
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-    
-    .wrapper_generico{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+
+    .textbox_style, .textbox_style_NOT_ALLOWED, .select_style{
+        width: 70%;
     }
 }
 @media screen and (max-width: 750px) {
     .wrapper_impostazioni_gioco{
-        width: 340px;
+        /* width: 340px; */
         display: flex;
         flex-direction: column;
-        align-items: center;
-    }
-    
-    .wrapper_generico{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
         align-items: center;
     }
 }

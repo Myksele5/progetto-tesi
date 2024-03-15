@@ -24,6 +24,18 @@ function ElencoDomande(props){
 
     //------- CREA QUI L'ARRAY CHE CONTIENE LE DOMANDE DENTRO verifyIsChecked
     useEffect(() => {
+        if(!props.booleanForNotReset){
+            console.log("DOMANDE PRE")
+            console.log(llll)
+            llll.splice(0);
+            console.log("DOMANDE POST")
+            console.log(llll)
+            COUNT_DOMANDE = 0;
+            setNumeroDomandeSelezionate(COUNT_DOMANDE);
+            props.domandeNuovoGioco(llll);
+        }
+    }, [props.tipoGioco])
+    useEffect(() => {
         // setllll([...game_ctx.domandeDaModificare]);
         setNumeroDomandeSelezionate(game_ctx.domandeDaModificare.length);
         COUNT_DOMANDE = game_ctx.domandeDaModificare.length;
@@ -33,12 +45,6 @@ function ElencoDomande(props){
 
     }, [game_ctx.domandeDaModificare.length]);
 
-    useEffect(() => {
-        llll.splice(0);
-        COUNT_DOMANDE = 0;
-        setNumeroDomandeSelezionate(COUNT_DOMANDE);
-        props.domandeNuovoGioco(llll);
-    }, [props.tipoGioco])
 
     function categoryChangeHandler(event){
         // changingCategoryMakesQuestionsReset();
@@ -147,14 +153,14 @@ function ElencoDomande(props){
 
                     {props.tipoGioco === "QUIZ" &&
                         <div className={styles.flex_list_container}>
-                            <h4 className={styles.subtitle_style}>Domanda:</h4>
+                            <h5 className={styles.subtitle_style}>Domanda:</h5>
                             <p className={styles.question_style}>{singleQuestion.domanda}</p>
                         </div>
                     }
 
                     {props.tipoGioco === "QUIZ CON IMMAGINI" &&
                         <div className={styles.flex_list_container}>
-                            <h4 className={styles.subtitle_style}>Immagine:</h4>
+                            <h5 className={styles.subtitle_style}>Immagine:</h5>
                             <img className={styles.preview_image} src={websiteUrl.concat(singleQuestion.immagine)}></img>
                             <h4 className={styles.subtitle_style}>Domanda:</h4>
                             <p className={styles.question_style}>{singleQuestion.domanda}</p>
@@ -163,18 +169,18 @@ function ElencoDomande(props){
 
                     {props.tipoGioco === "COMPLETA LA PAROLA" &&
                         <div className={styles.flex_list_container}>
-                            <h4 className={styles.subtitle_style}>Parola da indovinare:</h4>
+                            <h5 className={styles.subtitle_style}>Parola da indovinare:</h5>
                             <p className={styles.question_style}>{singleQuestion.domanda}</p>
                         </div>
                     }
 
                     {(props.tipoGioco === "QUIZ" || props.tipoGioco === "QUIZ CON IMMAGINI") &&
                         <div className={styles.flex_list_container}>
-                            <h4 className={styles.subtitle_style}>Risposte:</h4>
+                            <h5 className={styles.subtitle_style}>Risposte:</h5>
 
                             <div className={styles.separa_corrette_sbagliate}>
                                 <span className={styles.buttons_space}>
-                                    <p className={styles.subtitle_style}>CORRETTA</p>
+                                    <p style={{marginBottom: "0"}}>CORRETTA</p>
                                     <p className={styles.correct_answ}>{singleQuestion.rispCorrettaN1}</p>
 
                                     {singleQuestion.rispCorrettaN2.trim().length > 0 &&
@@ -189,7 +195,7 @@ function ElencoDomande(props){
                                 </span>
                                 
                                 <span className={styles.buttons_space}>
-                                    <p className={styles.subtitle_style}>SBAGLIATE</p>
+                                    <p style={{marginBottom: "0"}}>SBAGLIATE</p>
                                     <p className={styles.wrong_answ}>{singleQuestion.rispSbagliataN1}</p>
                                     
                                     {singleQuestion.rispSbagliataN2.trim().length > 0 &&
@@ -208,7 +214,7 @@ function ElencoDomande(props){
                     }
 
                     <div className={styles.flex_list_container}>
-                        <h4 className={styles.subtitle_style}>Inserisci nel quiz:</h4>
+                        <h5 className={styles.subtitle_style}>Inserisci nel quiz:</h5>
                         {checkboxInputChecked}
                     </div>
 

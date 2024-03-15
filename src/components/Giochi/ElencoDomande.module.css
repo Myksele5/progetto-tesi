@@ -3,13 +3,14 @@
     border: 2px solid #163172;
     border-radius: 5px;
     background-color: white;
-    width: 95%;
+    width: 94%;
     height: fit-content;
     transition: 0.5s;
+    box-shadow: 2px 2px 2px 1px rgb(33, 33, 131);
 }
 .LIST_ITEM_STYLE:hover{
     background-color: #ececec;
-    cursor: pointer;
+    /* cursor: pointer; */
     box-shadow: 0 1px 10px 1px rgb(33, 33, 131);
 }
 
@@ -30,18 +31,22 @@
     max-height: 500px;
     min-height: 30px;
     height: fit-content;
-    border: 1px solid black;
-    background-color: #D6E4F0;
-    border: 1px solid #163172;
+    /* border: 1px solid black; */
+    /* background-color: #D6E4F0; */
+    /* border: 1px solid #163172; */
     padding: 0;
     margin: 3px;
     list-style-type: none;
 }
 
+.wrapper_lista_domande::-webkit-scrollbar{
+    width: 8px;
+}
+
 .flex_list_container{
     display: flex;
     align-items: center;
-    height: auto;
+    height: fit-content;
     border-bottom: 2px solid #163172;
     margin: 1px;
 }
@@ -71,24 +76,27 @@
     width: 100%;
     text-align: center;
     margin: 8px;
+    font-size: 18px;
 }
 
 .buttons_space{
     width: 100%;
     display: flex;
     align-items: center;
-    margin: 6px;
+    margin: 8px 0px;
+    /* margin: 6px; */
 }
 
 .subtitle_style{
-    margin: 0;
+    font-size: 18px;
+    margin: 8px;
     margin-left: 5px;
     margin-right: 10px;
 }
 
 .correct_answ{
-    font-size: 14px;
-    margin: 5px;
+    font-size: 13px;
+    margin: 0px 5px;
     padding: 2px 5px;
     border: 1px solid black;
     border-radius: 3px;
@@ -101,8 +109,8 @@
 }
 
 .wrong_answ{
-    font-size: 14px;
-    margin: 5px;
+    font-size: 13px;
+    margin: 0px 5px;
     padding: 2px 5px;
     border: 1px solid black;
     border-radius: 3px;
@@ -115,8 +123,10 @@
 }
 
 .checkbox_style{
-    margin-top: 5px;
-    transform: scale(1.3);
+    margin: 8px;
+    width: 22px;
+    height: 22px;
+    /* transform: scale(1.3); */
 }
 
 .select_style{
@@ -160,10 +170,10 @@
         font-size: 15px;
     }
 
-    .select_style{
+    /* .select_style{
         width: 250px;
         height: 25px;
-    }
+    } */
 
     .correct_answ{
         font-size: 13px;
@@ -187,8 +197,8 @@
     }
     
     .select_style{
-        width: 220px;
-        height: 18px;
+        /* width: 220px; */
+        /* height: 18px; */
         font-size: 12px;
     }
     .domande_disponibili{
@@ -233,9 +243,9 @@
         width: 500px;
     } */
 
-    .select_style{
+    /* .select_style{
         width: 180px;
-    }
+    } */
 
     .wrapper_lista_domande{
         /* width: 600px; */
@@ -271,9 +281,9 @@
         width: 320px;
     } */
 
-    .select_style{
+    /* .select_style{
         width: 180px;
-    }
+    } */
 
     .wrapper_lista_domande{
         /* width: 350px; */
@@ -319,7 +329,7 @@
     } */
 
     .select_style{
-        width: 140px;
+        /* width: 140px; */
         font-size: 11px;
     }
 

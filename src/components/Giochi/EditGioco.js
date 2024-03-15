@@ -30,7 +30,7 @@ function EditGioco(props){
         if(livelloGiocoModifica === "FACILE"){
             setSelectedEasy(true);
         }
-        if(livelloGiocoModifica === "NORMALE"){
+        if(livelloGiocoModifica === "MEDIA"){
             setSelectedNormal(true);
         }
         if(livelloGiocoModifica === "DIFFICILE"){
@@ -69,7 +69,7 @@ function EditGioco(props){
                 }
                 break;
 
-            case "NORMALE":
+            case "MEDIA":
                 if(!selectedNormal){
                     setSelectedEasy(false);
                     setSelectedNormal(true);
@@ -111,97 +111,91 @@ function EditGioco(props){
     }
 
     return(
-        <Card
-        animazione={true}
-        altroStile={true}
-        children={
-            <div className={styles.wrapper_impostazioni_gioco}>
-                <h2 className={styles.title_scheda}>Modifica il gioco</h2>
+        <div className={styles.wrapper_impostazioni_gioco}>
+            <h2 className={styles.title_scheda}>Modifica il gioco</h2>
 
-                <div className={styles.wrapper_generico}>
-                    <div className={styles.wrapper_items}>
-                        <label className={styles.label_style}>Tipologia Gioco:</label>
-                        <input className={styles.textbox_style_NOT_ALLOWED} type="text" value={tipoGiocoModifica} readOnly></input>
-                    </div>
+            {/* <div className={styles.wrapper_generico}> */}
+                {/* <div className={styles.wrapper_items}> */}
+                <label className={styles.label_style}>Tipologia Gioco:</label>
+                <input className={styles.textbox_style_NOT_ALLOWED} type="text" value={tipoGiocoModifica} readOnly></input>
+                {/* </div> */}
 
-                    <div className={styles.wrapper_items}>
-                        <label className={styles.label_style}>Difficoltà Gioco:</label>
-                            <div className={styles.group_bottoni}>
-                                <RadioButton
-                                onClick={() => {
-                                    selezioneDifficoltà("FACILE");
-                                    livelloGiocoChangeHandler("FACILE");
-                                }}
-                                isSelected={selectedEasy}
-                                buttonText={"FACILE"}>
-                                </RadioButton>
+                <div className={styles.wrapper_items}>
+                    <label className={styles.label_style}>Difficoltà Gioco:</label>
+                        <div className={styles.group_bottoni}>
+                            <RadioButton
+                            onClick={() => {
+                                selezioneDifficoltà("FACILE");
+                                livelloGiocoChangeHandler("FACILE");
+                            }}
+                            isSelected={selectedEasy}
+                            buttonText={"FACILE"}>
+                            </RadioButton>
 
-                                <RadioButton
-                                onClick={() => {
-                                    selezioneDifficoltà("NORMALE");
-                                    livelloGiocoChangeHandler("NORMALE");
-                                }}
-                                isSelected={selectedNormal}
-                                buttonText={"NORMALE"}>
-                                </RadioButton>
+                            <RadioButton
+                            onClick={() => {
+                                selezioneDifficoltà("MEDIA");
+                                livelloGiocoChangeHandler("MEDIA");
+                            }}
+                            isSelected={selectedNormal}
+                            buttonText={"MEDIA"}>
+                            </RadioButton>
 
-                                <RadioButton
-                                onClick={() => {
-                                    selezioneDifficoltà("DIFFICILE");
-                                    livelloGiocoChangeHandler("DIFFICILE")
-                                }}
-                                isSelected={selectedHard}
-                                buttonText={"DIFFICILE"}>
-                                </RadioButton>
-                        </div>
+                            <RadioButton
+                            onClick={() => {
+                                selezioneDifficoltà("DIFFICILE");
+                                livelloGiocoChangeHandler("DIFFICILE")
+                            }}
+                            isSelected={selectedHard}
+                            buttonText={"DIFFICILE"}>
+                            </RadioButton>
                     </div>
                 </div>
+            {/* </div> */}
 
-                <label className={styles.label_style}>Nome Gioco:</label>
-                <input className={styles.textbox_style} type="text" value={nomeGiocoModifica} onChange={nomeGiocoChangeHandler}></input>
-                {tipoGiocoModifica === "RIFLESSI" &&
-                    <>
-                        <label className={styles.label_style}>Numero di round da giocare:</label>
-                        <input className={styles.textbox_style} type="number" step={1} value={numeroRoundModifica} onChange={numeroRoundChangeHandler}></input>
-                    </>
-                }
+            <label className={styles.label_style}>Nome Gioco:</label>
+            <input className={styles.textbox_style} type="text" value={nomeGiocoModifica} onChange={nomeGiocoChangeHandler}></input>
+            {tipoGiocoModifica === "RIFLESSI" &&
+                <>
+                    <label className={styles.label_style}>Numero di round da giocare:</label>
+                    <input className={styles.textbox_style} type="number" step={1} value={numeroRoundModifica} onChange={numeroRoundChangeHandler}></input>
+                </>
+            }
 
-                {tipoGiocoModifica !== "RIFLESSI" && 
-                    <ElencoDomande
-                        domandeNuovoGioco={modificaOggettoDomande}
-                        tipoGioco={tipoGiocoModifica}
-                        categoria={props.categoria}
-                    >
-                    </ElencoDomande>
-                }
+            {tipoGiocoModifica !== "RIFLESSI" && 
+                <ElencoDomande
+                    booleanForNotReset={true}
+                    domandeNuovoGioco={modificaOggettoDomande}
+                    tipoGioco={tipoGiocoModifica}
+                    categoria={props.categoria}
+                >
+                </ElencoDomande>
+            }
 
-                        {/* () => {
-                            {tipoGiocoModifica !== "RIFLESSI" && game_ctx.salvaGiocoModificato(nomeGiocoModifica, livelloGiocoModifica, categoriaFiltro, domande_gioco_da_modificare, giocoID)}
-                            {tipoGiocoModifica === "RIFLESSI" && game_ctx.salvaGiocoModificato(nomeGiocoModifica, livelloGiocoModifica, "REFLEXES_GAME", numeroRoundModifica, giocoID)}
- 
-                            props.chiudiFormModifica();
-                        } */}
+                    {/* () => {
+                        {tipoGiocoModifica !== "RIFLESSI" && game_ctx.salvaGiocoModificato(nomeGiocoModifica, livelloGiocoModifica, categoriaFiltro, domande_gioco_da_modificare, giocoID)}
+                        {tipoGiocoModifica === "RIFLESSI" && game_ctx.salvaGiocoModificato(nomeGiocoModifica, livelloGiocoModifica, "REFLEXES_GAME", numeroRoundModifica, giocoID)}
 
-                <div className={styles.wrapper_generico}>
-                    <GenericButton
-                        onClick={salvaGiocoAggiornato}
-                        generic_button={true}
-                        buttonText={"Salva modifiche"}
-                    >
-                    </GenericButton>
+                        props.chiudiFormModifica();
+                    } */}
 
-                    <GenericButton
-                        onClick={props.chiudiFormModifica}
-                        generic_button={true}
-                        red_styling
-                        buttonText={"Chiudi scheda"}
-                    >
-                    </GenericButton>
-                </div>
+            <div className={styles.wrapper_generico}>
+                <GenericButton
+                    onClick={salvaGiocoAggiornato}
+                    generic_button={true}
+                    buttonText={"Salva modifiche"}
+                >
+                </GenericButton>
+
+                <GenericButton
+                    onClick={props.chiudiFormModifica}
+                    generic_button={true}
+                    red_styling
+                    buttonText={"Chiudi scheda"}
+                >
+                </GenericButton>
             </div>
-        }
-        >
-        </Card>
+        </div>
     );
 }
 
