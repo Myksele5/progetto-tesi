@@ -30,11 +30,16 @@
 
 @media screen and (max-width: 800px) {
     .item_gioco{
-        width: 500px;
+        width: 600px;
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 650px) {
+    .item_gioco{
+        width: 500px;
+    }
+}
+@media screen and (max-width: 550px) {
     .item_gioco{
         width: 400px;
     }

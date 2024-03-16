@@ -157,6 +157,7 @@ function Giochi(){
                 setGameObject(
                     <ExerciseGuessTheFace
                         giocoTerminato={endGame}
+                        giocoAnnullato={closeGameResults}
                         INDICEGIOCO={indice_gioco}
                         TIPOGIOCO={stringa_TIPOGIOCO}
                         LIVELLOGIOCO={stringa_LIVELLOGIOCO}
@@ -175,6 +176,7 @@ function Giochi(){
                 setGameObject(
                     <GuessTheWord
                         giocoTerminato={endGame}
+                        giocoAnnullato={closeGameResults}
                         INDICEGIOCO={indice_gioco}
                         TIPOGIOCO={stringa_TIPOGIOCO}
                         LIVELLOGIOCO={stringa_LIVELLOGIOCO}
@@ -223,6 +225,7 @@ function Giochi(){
 
     function closeGameResults(){
         risultati_utente_gioco = null;
+        setGameObject(null);
         setShowGameResults(false);
         setShowSearchBoxAndButton(true);
         setShowElencoGiochi(true);

@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import styles from "./AssignGameToPatient.module.css";
 import PatientContext from "../../context/patients-context";
 import GenericButton from "../UI/GenericButton";
+import SearchBox from "../UI/SearchBox";
 import Card from "../UI/Card";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import GameContext from "../../context/game-context";
@@ -13,14 +14,11 @@ function AssignGameToPatient(props){
     const game_ctx = useContext(GameContext);
 
     const [pazientiConGiocoAssegnato, setPazientiConGiocoAssegnato] = useState([]);
+    const [patientSearched, setPatientSearched] = useState("");
 
-    // useEffect(() => {
-    //     game_ctx.listaPazientiPerGioco.length > 0
-    //     ?
-    //     setPazientiConGiocoAssegnato(game_ctx.listaPazientiPerGioco)
-    //     :
-    //     setPazientiConGiocoAssegnato([]);
-    // }, [game_ctx.listaPazientiPerGioco])
+    function searchingPatientChangeHandler(event){
+        setPatientSearched(event.target.value);
+    }
 
     function verifyGameOnPatients(paziente){
         let checkboxInputChecked;
@@ -43,31 +41,20 @@ function AssignGameToPatient(props){
                 }
             }
         }
-        
-        return (
-            <ListGroup.Item action className={styles.list_item}>
-                <div className={styles.wrapper_content}>
-                    <div className={styles.wrapper_flexible}>
-                        <p className={styles.card_content_FULLNAME}>{paziente.nome} {paziente.cognome}</p>
-                        <p className={styles.card_content_DATA}>{paziente.dataNascita}</p>
-                    </div>
-                    <div className={styles.checkbox_assigned}>{checkboxInputChecked}</div>
-                </div>
-            </ListGroup.Item>
-            // <div className={styles.wrapper_horizontal}>
-            //     <Card
-            //         children={
-            //             <div key={paziente.ID} className={styles.wrapper_content}>
-                            // <p className={styles.card_content_FULLNAME}>{paziente.nome} {paziente.cognome}</p>
-                            // <p className={styles.card_content_DATA}>{paziente.dataNascita}</p>
-            //             </div>
-            //         }
-            //         altroStile
-            //     ></Card>
-                // <div className={styles.checkbox_assigned}>{checkboxInputChecked}</div>
 
-            // </div>
-        );
+        if(paziente.nome.toUpperCase().includes(patientSearched.toUpperCase()) || paziente.cognome.toUpperCase().includes(patientSearched.toUpperCase())){
+            return (
+                <ListGroup.Item action className={styles.list_item}>
+                    <div className={styles.wrapper_content}>
+                        <div className={styles.wrapper_flexible}>
+                            <p className={styles.card_content_FULLNAME}>{paziente.nome} {paziente.cognome}</p>
+                            <p className={styles.card_content_DATA}>{paziente.dataNascita}</p>
+                        </div>
+                        <div className={styles.checkbox_assigned}>{checkboxInputChecked}</div>
+                    </div>
+                </ListGroup.Item>
+            );
+        }
     }
 
     function assegnaGioco(event, pazID){
@@ -96,6 +83,10 @@ function AssignGameToPatient(props){
         <>
             
             <h2 className={styles.title}>Assegna gioco a...</h2>
+
+            <SearchBox
+                onChange={searchingPatientChangeHandler}
+            ></SearchBox>
             
             <div className={styles.scrollable_list}>
                 <ListGroup className={styles.list_group}>

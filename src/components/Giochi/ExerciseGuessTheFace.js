@@ -2,6 +2,7 @@ import styles from './ExerciseGuessTheFace.module.css';
 import GameButton from '../UI/GameButton';
 import GenericAlternativeButton from '../UI/GenericAlternativeButton';
 import { useContext, useEffect, useState } from 'react';
+import { Badge } from 'react-bootstrap';
 
 let counter_question_number = 0;
 let counter_correct_answers = 0;
@@ -491,23 +492,29 @@ function ExerciseGuessTheFace(props){
 
     return(
         <>
-            <hr className={styles.horizontal_line}></hr>
+            {/* <hr className={styles.horizontal_line}></hr>
             <h2 className={styles.explanation}>Seleziona la risposta che ritieni corretta</h2>
-            <hr className={styles.horizontal_line}></hr>
+            <hr className={styles.horizontal_line}></hr> */}
             
             {!gameStarted &&
                 <div className={styles.wrap_generico}>
-                    <h1 className={styles.pre_game}>Quando sei pronto, clicca sul bottone</h1>
+                    <h1 className={styles.pre_game}>Quando sei pronto, clicca su Inizia</h1>
                     <GenericAlternativeButton
                         onClick={iniziaGioco}
                         buttonText={"INIZIA"}
+                    >
+                    </GenericAlternativeButton>
+                    <GenericAlternativeButton
+                        onClick={props.giocoAnnullato}
+                        buttonText={"INDIETRO"}
+                        colore_rosso
                     >
                     </GenericAlternativeButton>
                 </div>
             }
             
             {gameStarted &&
-                <>
+                <div className={styles.wrapper_gioco}>
                     {tipoQuiz === "QUIZ CON IMMAGINI" && 
                         <>
                             <h3 className={styles.domanda}>{questions[counter_question_number].domanda}</h3>
@@ -516,17 +523,19 @@ function ExerciseGuessTheFace(props){
                     }
                     {tipoQuiz === "QUIZ" && <h1 className={styles.domanda}>{questions[counter_question_number].domanda}</h1>}
 
-                    {rispCorretteMultiple && <h3 className={styles.risp_corr_multiple}>!!!Questa domanda ha risposte corrette multiple!!!</h3>}
+                    {rispCorretteMultiple && 
+                        <Badge bg='warning' text='dark' style={{fontSize: "15px"}}>! Questa domanda ha più risposte corrette !</Badge>
+                    }
 
                     <div className={styles.wrapper_horizontal_flex}>
-                        <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>
+                        <p className={styles.risposte_corrette}>Indovinate: {counter_correct_answers}/{questions.length}</p>
                         {props.LIVELLOGIOCO !== "FACILE" && <p>TIMER: {timer}</p>}
                     </div>
                     
                     {hasAnswered && 
                         <GenericAlternativeButton
                             onClick={aggiornaLogica}
-                            buttonText={"PROSSIMA DOMANDA"}
+                            buttonText={"PROSSIMA"}
                         >
                         </GenericAlternativeButton>
                     }
@@ -625,7 +634,7 @@ function ExerciseGuessTheFace(props){
                             game_button={true}></GameButton>
                         }
                     </div>
-                </>
+                </div>
             }
         </>
     );

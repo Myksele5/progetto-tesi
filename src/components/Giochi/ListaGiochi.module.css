@@ -4,6 +4,15 @@
     align-items: center;
 }
 
+.wrap_title_play_button{
+    display: flex;
+    flex-direction: column;
+}
+
+.wrap_body_card{
+
+}
+
 .lista_giochi{
     display: flex;
     flex-direction: column;
@@ -77,6 +86,36 @@
 @media screen and (max-width: 700px) {
     .game_title{
         font-size: 17px;
+    }
+    
+    .game_subtitle{
+        font-size: 11px;
+    }
+}
+@media screen and (max-width: 500px) {
+    .horizontal{
+        flex-direction: column;
+    }
+
+    .wrap_title_play_button{
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .wrap_body_card{
+        width: 100%;
+    }
+
+    .buttons_wrap{
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 5px;
+    }
+
+    .game_title{
+        font-size: 15px;
     }
     
     .game_subtitle{

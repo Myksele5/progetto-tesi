@@ -19,10 +19,10 @@ function GuessTheWord(props){
     const [hasAnswered, setHasAnswered] = useState(false);
 
     const [timer, setTimer] = useState(undefined);
-
-    const game_ctx = useContext(GameContext);
+    
     const questions = props.domandeGioco;
-
+    const [parolaMostrata, setParolaMostrata] = useState(questions[counter_question_number].domanda);
+    
     var parolaDaIndovinare = questions[counter_question_number].domanda;
 
     useEffect(() => {
@@ -74,16 +74,18 @@ function GuessTheWord(props){
 
         for(var i=0; i < parolaDaIndovinare.length; i++){
             if(i === letteraRandomDaTogliere){
-                parolaDaMostrare.push(<input className={styles.prova_rettangoli_lettere} type="text" maxLength="1" onChange={letteraInseritaHandler}></input>)
+                parolaDaMostrare.push(<input autoFocus className={styles.prova_rettangoli_lettera_mancante} type="text" maxLength="1" onChange={letteraInseritaHandler}></input>)
+                parolaDaMostrare.push(parolaDaIndovinare[i].toLowerCase())
             }
             else{
                 parolaDaMostrare.push(<span className={styles.prova_rettangoli_lettere}>{parolaDaIndovinare[i].toUpperCase()}</span>);
+                parolaDaMostrare.push(parolaDaIndovinare[i].toUpperCase());
             }
             // console.log(parolaDaIndovinare[i]);
         }
-        for(var j=0; j < parolaDaMostrare.length; j++){
-            console.log(parolaDaMostrare[j].props.children);
-        }
+        // for(var j=0; j < parolaDaMostrare.length; j++){
+        //     console.log(parolaDaMostrare[j].props.children);
+        // }
 
         console.log(parolaDaIndovinare);
         setIndiceLetteraRimossa(letteraRandomDaTogliere);
@@ -153,9 +155,9 @@ function GuessTheWord(props){
 
     return(
         <>
-            <hr className={styles.horizontal_line}></hr>
+            {/* <hr className={styles.horizontal_line}></hr>
             <h2 className={styles.explanation}>Inserisci le lettere mancanti</h2>
-            <hr className={styles.horizontal_line}></hr>
+            <hr className={styles.horizontal_line}></hr> */}
 
             {!gameStarted &&
                 <div className={styles.wrap_generico}>
@@ -165,11 +167,17 @@ function GuessTheWord(props){
                         buttonText={"INIZIA"}
                     >
                     </GenericAlternativeButton>
+                    <GenericAlternativeButton
+                        onClick={props.giocoAnnullato}
+                        buttonText={"INDIETRO"}
+                        colore_rosso
+                    >
+                    </GenericAlternativeButton>
                 </div>
             }
 
             {gameStarted && 
-                <>
+                <div className={styles.wrapper_gioco}>
                     <h2 className={styles.domanda}>Completa la seguente parola:</h2>
                     <div className={styles.wrapper_horizontal_flex}>
                         {parolaDaMostrare}
@@ -202,7 +210,7 @@ function GuessTheWord(props){
                         
                     </div>
                     
-                </>
+                </div>
             }
         </>
     );

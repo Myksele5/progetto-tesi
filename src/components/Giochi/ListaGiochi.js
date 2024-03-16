@@ -23,16 +23,19 @@ function ListaGiochi(props){
                     children={
                         <>
                             <div className={styles.horizontal}>
-                                <div>
-                                    <h1 className={styles.game_title}>{lista.nomeGioco}</h1>
-                                    <GenericButton
-                                        onClick={()=> {
-                                            props.iniziaGioco(lista.tipoGioco, lista.gameID, lista.livelloGioco)
-                                        }}
-                                        buttonText={"Gioca"}
-                                        is_disabled={lista.domandeID.length === 0 ? true : false}
-                                        small_button
-                                    ></GenericButton>
+                                <div className={styles.wrap_body_card}>
+                                    <div className={styles.wrap_title_play_button}>
+                                        <h1 className={styles.game_title}>{lista.nomeGioco}</h1>
+                                        <GenericButton
+                                            onClick={()=> {
+                                                props.iniziaGioco(lista.tipoGioco, lista.gameID, lista.livelloGioco)
+                                            }}
+                                            buttonText={"Gioca"}
+                                            is_disabled={lista.domandeID.length === 0 ? true : false}
+                                            small_button
+                                        ></GenericButton>
+                                    </div>
+                                    
                                     <h3 className={styles.game_subtitle}>Tipo gioco: <span className={styles.game_type}>{lista.tipoGioco}</span></h3>
                                     <h3 className={styles.game_subtitle}>Difficoltà: <span className={styles.game_type}>{lista.livelloGioco}</span></h3>
                                     {/* <h3 className={styles.game_subtitle}>CODICE DEL GIOCO: <span className={styles.game_type}>{lista.codiceGioco}</span></h3> */}
@@ -54,7 +57,7 @@ function ListaGiochi(props){
                                         props.mostraFormModificaGioco(lista);
                                     }}
                                     // alternative_button={true}
-                                    buttonText='Modifica gioco'>
+                                    buttonText='Modifica'>
                                     </GenericAlternativeButton>
 
                                     <GenericAlternativeButton
