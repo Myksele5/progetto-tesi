@@ -287,6 +287,7 @@ function Giochi(){
                 sbagliataN2={singleQuestion.rispSbagliataN2}
                 sbagliataN3={singleQuestion.rispSbagliataN3}
                 sbagliataN4={singleQuestion.rispSbagliataN4}
+                suggerimento={singleQuestion.suggerimento}
                 chiudiFormModificaDomanda={closeFormEditQuestion}
             >
             </EditDomanda>

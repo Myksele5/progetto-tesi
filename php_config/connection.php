@@ -494,14 +494,15 @@
         $rispSbagliataN3 = $dataJson["rispSbagliataN3"];
         $rispSbagliataN4 = $dataJson["rispSbagliataN4"];
         $immagine = $dataJson["immagine"];
+        $suggerimento = $dataJson["suggerimento"];
         
         $insertNewQuestion = $i_conn->prepare(
             "INSERT INTO `gamesQuestions` (`doctor_UID`, `tipoGioco`, `categoria`, `domanda`, `rispCorrettaN1`, `rispCorrettaN2`, `rispCorrettaN3`, `rispCorrettaN4`,
-             `rispSbagliataN1`, `rispSbagliataN2`, `rispSbagliataN3`, `rispSbagliataN4`, `immagine`) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+             `rispSbagliataN1`, `rispSbagliataN2`, `rispSbagliataN3`, `rispSbagliataN4`, `immagine`, `suggerimento`) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
-        $insertNewQuestion->bind_param("issssssssssss", $doctor_UID, $tipoGioco, $categoria, $domanda, $rispCorrettaN1, $rispCorrettaN2, $rispCorrettaN3, $rispCorrettaN4,
-                                        $rispSbagliataN1, $rispSbagliataN2, $rispSbagliataN3, $rispSbagliataN4, $immagine);
+        $insertNewQuestion->bind_param("isssssssssssss", $doctor_UID, $tipoGioco, $categoria, $domanda, $rispCorrettaN1, $rispCorrettaN2, $rispCorrettaN3, $rispCorrettaN4,
+                                        $rispSbagliataN1, $rispSbagliataN2, $rispSbagliataN3, $rispSbagliataN4, $immagine, $suggerimento);
         $insertNewQuestion->execute();
         
         $insertNewQuestion->bind_result($result);
@@ -522,15 +523,16 @@
         $rispSbagliataN3 = $dataJson["rispSbagliataN3"];
         $rispSbagliataN4 = $dataJson["rispSbagliataN4"];
         $immagine = $dataJson["immagine"];
+        $suggerimento = $dataJson["suggerimento"];
         $ID = $dataJson["ID"];
         
         $updateQuestion = $i_conn->prepare(
             "UPDATE `gamesQuestions` SET `domanda` = ?, `rispCorrettaN1` = ?, `rispCorrettaN2` = ?, `rispCorrettaN3` = ?, `rispCorrettaN4` = ?,
-             `rispSbagliataN1` = ?, `rispSbagliataN2` = ?, `rispSbagliataN3` = ?, `rispSbagliataN4` = ?, `immagine` = ?
+             `rispSbagliataN1` = ?, `rispSbagliataN2` = ?, `rispSbagliataN3` = ?, `rispSbagliataN4` = ?, `immagine` = ?, `suggerimento` = ?
             WHERE `gamesQuestions`.`ID` = ?"
         );
-        $updateQuestion->bind_param("ssssssssssi", $domanda, $rispCorrettaN1, $rispCorrettaN2, $rispCorrettaN3, $rispCorrettaN4,
-                                        $rispSbagliataN1, $rispSbagliataN2, $rispSbagliataN3, $rispSbagliataN4, $immagine, $ID);
+        $updateQuestion->bind_param("sssssssssssi", $domanda, $rispCorrettaN1, $rispCorrettaN2, $rispCorrettaN3, $rispCorrettaN4,
+                                        $rispSbagliataN1, $rispSbagliataN2, $rispSbagliataN3, $rispSbagliataN4, $immagine, $suggerimento, $ID);
         $updateQuestion->execute();
         
         $updateQuestion->bind_result($result);

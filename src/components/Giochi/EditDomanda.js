@@ -23,6 +23,7 @@ function EditDomanda(props){
     const [validCategory, setValidCategory] = useState(true)
     const [domandaModifica, setDomandaModifica] = useState(props.domanda);
     const [validDomanda, setValidDomanda] = useState(true);
+    const [suggerimentoModifica, setSuggerimentoModifica] = useState(props.suggerimento)
     const [ID, setID] = useState(props.ID);
 
     const [rispCorretta_1Modifica, setRispCorretta_1Modifica] = useState(props.correttaN1);
@@ -71,9 +72,9 @@ function EditDomanda(props){
         if(flagUpload !== 1){
             uploadFile();
         }
-        else{
-            alert("Si è verificato un errore! Riprova tra qualche minuto");
-        }
+        // else{
+        //     alert("Si è verificato un errore! Riprova tra qualche minuto");
+        // }
     }
 
     useEffect(() => {
@@ -116,6 +117,10 @@ function EditDomanda(props){
 
     function domandaChangeHandler(event){
         setDomandaModifica(event.target.value);
+    }
+
+    function suggerimentoChangeHandler(event){
+        setSuggerimentoModifica(event.target.value)
     }
 
     function rispostaCorretta_1_ChangeHandler(event){
@@ -177,10 +182,11 @@ function EditDomanda(props){
     }
 
     function verificaInput(){
-        let valore_DOMANDA;
-        let valore_CATEGORIA;
-        let valore_CORRETTE;
-        let valore_SBAGLIATE;
+        let valore_DOMANDA = true;
+        let valore_CATEGORIA = true;
+        let valore_CORRETTE = true;
+        let valore_SBAGLIATE = true;
+        let valore_FILE = true;
 
         if(domandaModifica.trim().length === 0){
             setValidDomanda(false);
@@ -200,21 +206,40 @@ function EditDomanda(props){
             valore_CATEGORIA = true;
         }
 
-        if(rispCorretta_1Modifica.trim().length === 0 && rispCorretta_2Modifica.trim().length === 0 && rispCorretta_3Modifica.trim().length === 0 && rispCorretta_4Modifica.trim().length === 0){
-            setValidCorrette(false);
-            valore_CORRETTE = false;
+        if(tipoGiocoModifica === "QUIZ" || tipoGiocoModifica === "QUIZ CON IMMAGINI"){
+            if(rispCorretta_1Modifica.trim().length === 0 && rispCorretta_2Modifica.trim().length === 0 && rispCorretta_3Modifica.trim().length === 0 && rispCorretta_4Modifica.trim().length === 0){
+                setValidCorrette(false);
+                valore_CORRETTE = false;
+            }
+            else{
+                setValidCorrette(true);
+                valore_CORRETTE = true
+            }
+            if(rispSbagliata_1Modifica.trim().length === 0 && rispSbagliata_2Modifica.trim().length === 0 && rispSbagliata_3Modifica.trim().length === 0 && rispSbagliata_4Modifica.trim().length === 0){
+                setValidSbagliate(false);
+                valore_SBAGLIATE = false;
+            }
+            else{
+                setValidSbagliate(true)
+                valore_SBAGLIATE = true;
+            }
         }
-        else{
-            setValidCorrette(true);
-            valore_CORRETTE = true
-        }
-        if(rispSbagliata_1Modifica.trim().length === 0 && rispSbagliata_2Modifica.trim().length === 0 && rispSbagliata_3Modifica.trim().length === 0 && rispSbagliata_4Modifica.trim().length === 0){
-            setValidSbagliate(false);
-            valore_SBAGLIATE = false;
-        }
-        else{
-            setValidSbagliate(true)
+
+        // if(tipoGiocoModifica === "QUIZ CON IMMAGINI"){
+        //     if(myFile){
+        //         setValidImage(true)
+        //         valore_FILE = true
+        //     }
+        //     else{
+        //         setValidImage(false)
+        //         valore_FILE = false
+        //     }
+        // }
+
+        if(tipoGiocoModifica === "COMPLETA LA PAROLA"){
+            valore_CORRETTE = true;
             valore_SBAGLIATE = true;
+            valore_FILE = true;
         }
 
         if(!valore_DOMANDA || !valore_CATEGORIA || !valore_CORRETTE || !valore_SBAGLIATE){
@@ -222,6 +247,7 @@ function EditDomanda(props){
             console.log("CATEGORIA = " + valore_CATEGORIA)
             console.log("CORRETTE = " + valore_CORRETTE)
             console.log("SBAGLIATE = " + valore_SBAGLIATE)
+            console.log("FILE = " + valore_FILE)
             return false
         }
         else{
@@ -322,6 +348,7 @@ function EditDomanda(props){
                     domanda: domandaModifica.toUpperCase(),
                     rispCorrette: correct_answers,
                     rispSbagliate: wrong_answers,
+                    suggerimento: suggerimentoModifica,
                     ID: ID
                 }
             }
@@ -337,23 +364,6 @@ function EditDomanda(props){
     return(
         <>
             <h1 className={styles.title_scheda}>Modifica domanda</h1>
-
-            <div className={styles.wrapper_flexible}>
-                <GenericButton
-                    onClick={salvaDomanda}
-                    generic_button={true}
-                    buttonText={"Salva domanda"}
-                >
-                </GenericButton>
-
-                <GenericButton
-                    onClick={props.chiudiFormModificaDomanda}
-                    generic_button={true}
-                    red_styling
-                    buttonText={"Chiudi scheda"}
-                >
-                </GenericButton>
-            </div>
 
             <div className={styles.wrapper_impostazioni_gioco}>
                 {/* <div className={styles.wrapper_items}> */}
@@ -389,6 +399,8 @@ function EditDomanda(props){
                     <>
                         <label className={styles.label_style}>Parola da indovinare: </label>
                         <input className={`${styles.textbox_style} ${!validDomanda ? styles.invalid : ""}`} type="text" value={domandaModifica} onChange={domandaChangeHandler}></input>
+                        <label className={styles.label_style}>Inserisci suggerimento: </label>
+                        <input className={`${styles.textbox_style} ${!validDomanda ? styles.invalid : ""}`} type="text" value={suggerimentoModifica} onChange={suggerimentoChangeHandler}></input>
                     </>
                 }
                 {!validDomanda && <div style={{width: "100%", color: "red", textAlign: "center"}}>La domanda non può essere vuota</div>}
@@ -487,9 +499,28 @@ function EditDomanda(props){
                                 </div>
                                 
                             </div>  
+                            
                         </div>
+                        <hr className={styles.horizontal_line}></hr>
+                        
                     </>
                 }
+                <div className={styles.wrapper_flexible}>
+                    <GenericButton
+                        onClick={salvaDomanda}
+                        generic_button={true}
+                        buttonText={"Salva modifiche"}
+                    >
+                    </GenericButton>
+
+                    <GenericButton
+                        onClick={props.chiudiFormModificaDomanda}
+                        generic_button={true}
+                        red_styling
+                        buttonText={"Torna alla lista"}
+                    >
+                    </GenericButton>
+                </div>
             </div>
         </>
         

@@ -2,6 +2,7 @@ import styles from "./GuessTheWord.module.css";
 import { useContext, useEffect, useState } from "react";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import GameContext from "../../context/game-context";
+import { Badge } from "react-bootstrap";
 
 let counter_question_number = 0;
 let counter_correct_answers = 0;
@@ -21,7 +22,6 @@ function GuessTheWord(props){
     const [timer, setTimer] = useState(undefined);
     
     const questions = props.domandeGioco;
-    const [parolaMostrata, setParolaMostrata] = useState(questions[counter_question_number].domanda);
     
     var parolaDaIndovinare = questions[counter_question_number].domanda;
 
@@ -53,6 +53,7 @@ function GuessTheWord(props){
             setDisableButton(true);
             verificaRisposta();
         }
+        console.log(props.domandeGioco)
     }, [timer]);
 
     function iniziaGioco(){
@@ -74,18 +75,15 @@ function GuessTheWord(props){
 
         for(var i=0; i < parolaDaIndovinare.length; i++){
             if(i === letteraRandomDaTogliere){
-                parolaDaMostrare.push(<input autoFocus className={styles.prova_rettangoli_lettera_mancante} type="text" maxLength="1" onChange={letteraInseritaHandler}></input>)
-                parolaDaMostrare.push(parolaDaIndovinare[i].toLowerCase())
+                // parolaDaMostrare.push(<input autoFocus className={styles.prova_rettangoli_lettera_mancante} type="text" maxLength="1" onChange={letteraInseritaHandler}></input>)
+                parolaDaMostrare.push({lettera: "", indice: letteraRandomDaTogliere})
             }
             else{
-                parolaDaMostrare.push(<span className={styles.prova_rettangoli_lettere}>{parolaDaIndovinare[i].toUpperCase()}</span>);
-                parolaDaMostrare.push(parolaDaIndovinare[i].toUpperCase());
+                // parolaDaMostrare.push(<span className={styles.prova_rettangoli_lettere}>{parolaDaIndovinare[i].toUpperCase()}</span>);
+                parolaDaMostrare.push({lettera: parolaDaIndovinare[i].toUpperCase(), indice: -1});
             }
             // console.log(parolaDaIndovinare[i]);
         }
-        // for(var j=0; j < parolaDaMostrare.length; j++){
-        //     console.log(parolaDaMostrare[j].props.children);
-        // }
 
         console.log(parolaDaIndovinare);
         setIndiceLetteraRimossa(letteraRandomDaTogliere);
@@ -155,9 +153,6 @@ function GuessTheWord(props){
 
     return(
         <>
-            {/* <hr className={styles.horizontal_line}></hr>
-            <h2 className={styles.explanation}>Inserisci le lettere mancanti</h2>
-            <hr className={styles.horizontal_line}></hr> */}
 
             {!gameStarted &&
                 <div className={styles.wrap_generico}>
@@ -180,8 +175,15 @@ function GuessTheWord(props){
                 <div className={styles.wrapper_gioco}>
                     <h2 className={styles.domanda}>Completa la seguente parola:</h2>
                     <div className={styles.wrapper_horizontal_flex}>
-                        {parolaDaMostrare}
+                        {parolaDaMostrare.map((lettera) => (
+                            lettera.indice === -1
+                            ?
+                            <span className={styles.prova_rettangoli_lettere}>{lettera.lettera}</span>
+                            :
+                            <input autoFocus className={styles.prova_rettangoli_lettera_mancante} type="text" maxLength="1" value={letteraInseritaDaUtente} onChange={letteraInseritaHandler}></input>
+                        ))}
                     </div>
+                    <Badge bg="primary" className={styles.suggerimento_style}>Aiuto: {questions[counter_question_number].suggerimento}</Badge>
 
                     <div className={styles.wrapper_horizontal_flex}>
                         <p className={styles.risposte_corrette}>Risposte corrette: {counter_correct_answers}/{questions.length}</p>

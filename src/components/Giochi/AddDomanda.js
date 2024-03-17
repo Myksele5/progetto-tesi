@@ -27,6 +27,7 @@ function AddDomanda(props){
     const [validCategory, setValidCategory] = useState(true)
     const [domanda, setDomanda] = useState("");
     const [validDomanda, setValidDomanda] = useState(true);
+    const [suggerimento, setSuggerimento] = useState("");
 
     const [rispCorretta_1, setRispCorretta_1] = useState("");
     const [rispCorretta_2, setRispCorretta_2] = useState("");
@@ -107,6 +108,10 @@ function AddDomanda(props){
     function domandaChangeHandler(event){
         setDomanda(event.target.value);
         setValidDomanda(true)
+    }
+
+    function suggerimentoChangeHandler(event){
+        setSuggerimento(event.target.value);
     }
 
     function rispostaCorretta_1_ChangeHandler(event){
@@ -329,7 +334,8 @@ function AddDomanda(props){
                     categoria: categoryQuestion,
                     domanda: domanda.toUpperCase(),
                     rispCorrette: correct_answers,
-                    rispSbagliate: wrong_answers
+                    rispSbagliate: wrong_answers,
+                    suggerimento: suggerimento
                 }
             }
     
@@ -411,7 +417,7 @@ function AddDomanda(props){
                             onClick={props.chiudiFormNuovaDomanda}
                             generic_button={true}
                             red_styling
-                            buttonText={"Chiudi scheda"}
+                            buttonText={"Torna ai giochi"}
                         >
                         </GenericButton>
                     </div>
@@ -424,23 +430,6 @@ function AddDomanda(props){
             }
             {!showQuestionsList &&
                 <>
-                    <div className={styles.wrapper_generico}>
-                        <GenericButton
-                            onClick={() => {
-                                setShowQuestionsList(true);
-                            }}
-                            generic_button={true}
-                            buttonText={"Lista domande"}
-                        >
-                        </GenericButton>
-                        <GenericButton
-                            onClick={props.chiudiFormNuovaDomanda}
-                            generic_button={true}
-                            red_styling
-                            buttonText={"Chiudi scheda"}
-                        >
-                        </GenericButton>
-                    </div>
                     <div className={styles.wrapper_impostazioni_gioco}>
                         {/* <h1 className={styles.title_scheda}>Aggiungi nuova domanda</h1> */}
                         <label className={styles.label_style}>Tipo gioco</label>
@@ -494,6 +483,8 @@ function AddDomanda(props){
                             <>
                                 <label className={styles.label_style}>Inserisci parola da indovinare: </label>
                                 <input className={`${styles.textbox_style} ${!validDomanda ? styles.invalid : ""}`} type="text" onChange={domandaChangeHandler}></input>
+                                <label className={styles.label_style}>Inserisci suggerimento: </label>
+                                <input className={`${styles.textbox_style} ${!validDomanda ? styles.invalid : ""}`} type="text" onChange={suggerimentoChangeHandler}></input>
                             </>
                         }
                         {!validDomanda && <div style={{width: "100%", color: "red", textAlign: "center"}}>La domanda non può essere vuota</div>}
@@ -594,12 +585,31 @@ function AddDomanda(props){
                             </div>
                         }
                         <hr className={styles.horizontal_line}></hr>
-                        <GenericButton
-                            onClick={creaNuovaDomanda}
-                            generic_button={true}
-                            buttonText={"Salva domanda"}
-                        >
-                        </GenericButton>
+                        
+                        <div className={styles.wrapper_generico}>
+                            <GenericButton
+                                onClick={creaNuovaDomanda}
+                                generic_button={true}
+                                buttonText={"Salva domanda"}
+                            >
+                            </GenericButton>
+                            <GenericButton
+                                onClick={() => {
+                                    setShowQuestionsList(true);
+                                }}
+                                generic_button={true}
+                                red_styling
+                                buttonText={"Torna alla lista"}
+                            >
+                            </GenericButton>
+                            {/* <GenericButton
+                                onClick={props.chiudiFormNuovaDomanda}
+                                generic_button={true}
+                                red_styling
+                                buttonText={"Chiudi scheda"}
+                            >
+                            </GenericButton> */}
+                        </div>
                     </div>
                 </>
             }

@@ -156,7 +156,7 @@ export function GameContextProvider(props){
             nuova_domanda.doctor_UID, nuova_domanda.tipoGioco, nuova_domanda.categoria, nuova_domanda.domanda,
             nuova_domanda.rispCorrette.correct_answer_n1, nuova_domanda.rispCorrette.correct_answer_n2, nuova_domanda.rispCorrette.correct_answer_n3, nuova_domanda.rispCorrette.correct_answer_n4,
             nuova_domanda.rispSbagliate.wrong_answer_n1, nuova_domanda.rispSbagliate.wrong_answer_n2, nuova_domanda.rispSbagliate.wrong_answer_n3, nuova_domanda.rispSbagliate.wrong_answer_n4,
-            nuova_domanda.immagine
+            nuova_domanda.immagine, nuova_domanda.suggerimento
         )
         
         getAllGamesQuestions();
@@ -274,7 +274,7 @@ export function GameContextProvider(props){
         result = await getServerMgr().updateQuestion(
             domandaModificata.domanda, domandaModificata.rispCorrette.correct_answer_n1, domandaModificata.rispCorrette.correct_answer_n2, domandaModificata.rispCorrette.correct_answer_n3,
             domandaModificata.rispCorrette.correct_answer_n4, domandaModificata.rispSbagliate.wrong_answer_n1, domandaModificata.rispSbagliate.wrong_answer_n2, domandaModificata.rispSbagliate.wrong_answer_n3,
-            domandaModificata.rispSbagliate.wrong_answer_n4, domandaModificata.immagine, ID
+            domandaModificata.rispSbagliate.wrong_answer_n4, domandaModificata.immagine, domandaModificata.suggerimento, ID
         )
         getAllGamesQuestions();
     }

@@ -219,7 +219,7 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.addQuestion = async (doctor_UID, tipoGioco, categoria, domanda, rispCorrettaN1, rispCorrettaN2, rispCorrettaN3, rispCorrettaN4, rispSbagliataN1, rispSbagliataN2, rispSbagliataN3, rispSbagliataN4, immagine, cb) => {
+    serverMgr.addQuestion = async (doctor_UID, tipoGioco, categoria, domanda, rispCorrettaN1, rispCorrettaN2, rispCorrettaN3, rispCorrettaN4, rispSbagliataN1, rispSbagliataN2, rispSbagliataN3, rispSbagliataN4, immagine, suggerimento, cb) => {
         let result = await serverMgr.requestFetchData("addQuestion", {
             doctor_UID: doctor_UID,
             tipoGioco: tipoGioco,
@@ -233,7 +233,8 @@ function initServerMgr(cb) {
             rispSbagliataN2: rispSbagliataN2,
             rispSbagliataN3: rispSbagliataN3,
             rispSbagliataN4: rispSbagliataN4,
-            immagine: immagine
+            immagine: immagine,
+            suggerimento: suggerimento
         })
         if(cb) {
             // console.log("getInventory: " + result)
@@ -245,7 +246,7 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.updateQuestion = async (domanda, rispCorrettaN1, rispCorrettaN2, rispCorrettaN3, rispCorrettaN4, rispSbagliataN1, rispSbagliataN2, rispSbagliataN3, rispSbagliataN4, immagine, ID, cb) => {
+    serverMgr.updateQuestion = async (domanda, rispCorrettaN1, rispCorrettaN2, rispCorrettaN3, rispCorrettaN4, rispSbagliataN1, rispSbagliataN2, rispSbagliataN3, rispSbagliataN4, immagine, suggerimento, ID, cb) => {
         let result = await serverMgr.requestFetchData("updateQuestion", {
             domanda: domanda,
             rispCorrettaN1: rispCorrettaN1,
@@ -257,6 +258,7 @@ function initServerMgr(cb) {
             rispSbagliataN3: rispSbagliataN3,
             rispSbagliataN4: rispSbagliataN4,
             immagine: immagine,
+            suggerimento: suggerimento,
             ID: ID
         })
         if(cb) {

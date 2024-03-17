@@ -62,10 +62,16 @@ function ElencoDomandeModificabili(props){
                     }
 
                     {gameType === "COMPLETA LA PAROLA" &&
+                    <>
                         <div className={styles.flex_list_container}>
-                            <h4 className={styles.subtitle_style}>Parola da indovinare:</h4>
+                            <h4 className={styles.subtitle_style}>Parola:</h4>
                             <p className={styles.question_style}>{singleQuestion.domanda}</p>
                         </div>
+                        <div className={styles.flex_list_container}>
+                            <h4 className={styles.subtitle_style}>Aiuto:</h4>
+                            <p className={styles.question_style}>{singleQuestion.suggerimento}</p>
+                        </div>
+                    </>
                     }
                     
                     {(gameType === "QUIZ" || gameType === "QUIZ CON IMMAGINI") &&

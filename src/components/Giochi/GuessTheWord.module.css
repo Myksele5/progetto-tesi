@@ -32,6 +32,10 @@
     margin: 10px;
 }
 
+.suggerimento_style{
+    font-size: 15px;
+}
+
 .risposte_corrette{
     border: 2px solid #163172;
     font-size: 20px;
@@ -67,10 +71,11 @@
     text-transform: uppercase;
     width: 84px;
     height: 84px;
-    border: 2px solid #163172;
+    border-bottom: 2px solid #163172;
     margin: 5px;
-    margin-top: 50px;
+    margin-top: 20px;
     margin-bottom: 20px;
+    padding: 2px;
     font-size: 38px;
     font-weight: bold;
 }
@@ -82,9 +87,10 @@
     text-transform: uppercase;
     width: 84px;
     height: 84px;
-    border: 2px solid blue;
+    border: none;
+    border-bottom: 2px solid blue;
     margin: 5px;
-    margin-top: 50px;
+    margin-top: 20px;
     margin-bottom: 20px;
     font-size: 38px;
     font-weight: bold;
@@ -111,9 +117,10 @@
     .prova_rettangoli_lettere{
         width: 50px;
         height: 50px;
-        margin: 4px;
-        margin-top: 50px;
-        margin-bottom: 20px;
+    }
+    .prova_rettangoli_lettera_mancante{
+        width: 50px;
+        height: 50px;
     }
 }
 
@@ -126,12 +133,20 @@
         width: 40px;
         height: 40px;
     }
+    .prova_rettangoli_lettera_mancante{
+        width: 40px;
+        height: 40px;
+    }
 }
 
 @media screen and (max-width: 599px) {
     .domanda{
         font-size: 20px;
         margin: 20px;
+    }
+
+    .suggerimento_style{
+        font-size: 12px;
     }
 
     .risposte_corrette{
@@ -141,8 +156,41 @@
     }
 
     .prova_rettangoli_lettere{
-        width: 20px;
-        height: 20px;
+        width: 30px;
+        height: 30px;
+        font-size: 24px;
+    }
+    .prova_rettangoli_lettera_mancante{
+        width: 30px;
+        height: 30px;
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 499px) {
+    .domanda{
         font-size: 18px;
+        margin: 20px;
+    }
+
+    .suggerimento_style{
+        font-size: 11px;
+    }
+
+    .risposte_corrette{
+        font-size: 16px;
+        margin: 10px;
+        padding: 4px;
+    }
+
+    .prova_rettangoli_lettere{
+        width: 22px;
+        height: 22px;
+        font-size: 20px;
+    }
+    .prova_rettangoli_lettera_mancante{
+        width: 22px;
+        height: 22px;
+        font-size: 20px;
     }
 }
