@@ -4,6 +4,7 @@ import GenericButton from "../UI/GenericButton";
 import Card from "../UI/Card";
 import { getServerMgr } from "../../backend_conn/ServerMgr";
 import AuthContext from "../../context/auth-context";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm(props){
     const auth_ctx = useContext(AuthContext);
@@ -15,6 +16,20 @@ function LoginForm(props){
 
     const [validPassword, setValidPassword] = useState(true);
     const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(localStorage.getItem('UID') !== null){
+            auth_ctx.mantieniUtenteLoggato();
+            if(auth_ctx.tipoAccount === "Paziente"){
+                navigate(`/${auth_ctx.utenteLoggatoUID}/giochi`)
+            }
+            else{
+                navigate(`/${auth_ctx.utenteLoggatoUID}/pazienti`)
+            }
+        }
+    }, [])
 
     useEffect(() => {
         setValidEmail(true);
@@ -54,7 +69,13 @@ function LoginForm(props){
         if(result !== undefined && result !== null){
             console.log("PROVA", result[0]);
             auth_ctx.login(email, result[0].UID, result[0].titolo, result[0].nome, result[0].cognome)
-            
+            localStorage.setItem('UID', result[0].UID);
+            if(result[0].titolo === 3){
+                navigate(`/${result[0].UID}/giochi`);
+            }
+            else{
+                navigate(`/${result[0].UID}/pazienti`);
+            }
         }
         else{
             setValidEmail(false);

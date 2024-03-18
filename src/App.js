@@ -16,6 +16,7 @@ import { TestsContextProvider } from './context/tests-context';
 import Patologie from './components/Patologie/Patologie';
 import { PatologiesContextProvider } from './context/patologies-context';
 import { Nav } from 'react-bootstrap';
+import RoutingNew from './Routing';
 
 function App() {
   const [singletonHasLoaded, setSingletonHasLoaded] = useState(false);
@@ -77,7 +78,7 @@ function App() {
     return (
       <div className='App'>
   
-        {auth_ctx.utenteLoggato !== null && auth_ctx.logoutModal &&
+        {/* {auth_ctx.utenteLoggato !== null && auth_ctx.logoutModal &&
           <Modal
             testoModale={"Sei sicuro di voler effettuare il logout?"}
             CONFERMA = {() => {
@@ -89,41 +90,46 @@ function App() {
           >
           </Modal>
           
-        }
+        } */}
           
-        {auth_ctx.utenteLoggato === null && <Login></Login>}
+        {/* {auth_ctx.utenteLoggato === null && <Login></Login>} */}
 
         <PatientContextProvider>
         <GameContextProvider>
         <PatologiesContextProvider>
-          {auth_ctx.utenteLoggato !== null && 
+        <TestsContextProvider>
+
+          <RoutingNew>
+            {/* {auth_ctx.utenteLoggato !== null && 
+              
+              <MainMenu
+                showSchermata = {changeSchermata}>
+              </MainMenu>
             
-            <MainMenu
-              showSchermata = {changeSchermata}>
-            </MainMenu>
+            } */}
+          </RoutingNew>
           
-          }
-          
-          {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Pazienti' && <div className='wrap_schermata'><Pazienti/></div>}
-          {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Attività' &&
-           <TestsContextProvider>
+          {/* {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Pazienti' && <div className='wrap_schermata'><Pazienti/></div>} */}
+          {/* {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Attività' &&
+           
             <div className='wrap_schermata'>
               <Attività/>
             </div>
            </TestsContextProvider>
-          }
-          {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Giochi' && 
+          } */}
+          {/* {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Giochi' && 
             
             <div className='wrap_schermata'>
               <Giochi/>
             </div>
             
-          }
-          {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Patologie' && 
+          } */}
+          {/* {auth_ctx.utenteLoggato !== null && schermataMostrata === 'SCHERMATA_Patologie' && 
               <div className='wrap_schermata'>
                 <Patologie/>
               </div>
-          }
+          } */}
+        </TestsContextProvider>
         </PatologiesContextProvider>
         </GameContextProvider>
         </PatientContextProvider>

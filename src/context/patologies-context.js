@@ -134,7 +134,7 @@ export function PatologiesContextProvider(props){
     }
 
     useEffect(() => {
-        if(auth_ctx.utenteLoggato !== null){
+        if(auth_ctx.utenteLoggato !== null && auth_ctx.tipoAccount !== "Paziente"){
             console.log("CARICO LISTA PATOLOGIE E TERAPIE");
             creaOggettoUnicoPatologieTerapie();
         }

@@ -34,9 +34,11 @@ export function TestsContextProvider(props){
     const [formValutazione, setFormValutazione] = useState(false);
 
     useEffect(() => {
-        getTestsList();
-        // console.log(elencoTest)
-    }, []);
+        if(auth_ctx.utenteLoggato !== null){
+            console.log("Carico lista dei test...")
+            getTestsList();
+        }
+    }, [auth_ctx.utenteLoggato]);
 
     async function getTestsList(){
         let result = await getServerMgr().getTestResultList(auth_ctx.utenteLoggatoUID).catch((err) => {console.error(err)})

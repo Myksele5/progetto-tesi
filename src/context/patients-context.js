@@ -69,7 +69,7 @@ export function PatientContextProvider(props){
     }, [ordinamentoSelezionato])
 
     const prendiListaPazienti = async () => {
-        if(auth_ctx.utenteLoggato !== null){
+        if(auth_ctx.utenteLoggato !== null && auth_ctx.tipoAccount !== "Paziente"){
             console.log(auth_ctx.utenteLoggato)
             console.log(auth_ctx.utenteLoggatoUID)
             let result;

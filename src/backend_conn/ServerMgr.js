@@ -59,6 +59,19 @@ function initServerMgr(cb) {
             return result
         }
     }
+
+    serverMgr.keepUserLoggedIn = async (UID, cb) => {
+        let result = await serverMgr.requestFetchData("keepUserLoggedIn", {UID: UID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
     serverMgr.getAccount = async (email, cb) => {
         let result = await serverMgr.requestFetchData("getAccount", {email: email})
         if(cb) {

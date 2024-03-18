@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getServerMgr } from "../backend_conn/ServerMgr";
 // import Modal from "../components/UI/Modal";
 
 const AuthContext = React.createContext({
@@ -10,6 +11,7 @@ const AuthContext = React.createContext({
     onLogout: ()=>{},
     utenteLoggato: null,
     utenteLoggatoUID: null,
+    mantieniUtenteLoggato: ()=>{},
     tipoAccount: null,
     nomeUtenteLoggato: null,
     cognomeUtenteLoggato: null,
@@ -24,6 +26,12 @@ export function AuthContextProvider(props){
     const [nomeUtente, setNomeUtente] = useState('');
     const [cognomeUtente, setCognomeUtente] = useState('');
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+    useEffect(() => {
+      if(localStorage.getItem('UID') !== null){
+        keepUserLogged();
+      }
+    }, [])
 
     function setAccountLogged(email, UID, tipoAccount, nome, cognome){
       setUtenteLoggato(email);
@@ -43,6 +51,32 @@ export function AuthContextProvider(props){
         default:
           break;
       }
+    }
+
+    async function keepUserLogged(){
+      let result = await getServerMgr().keepUserLoggedIn(localStorage.getItem('UID'))
+      .catch((err) => {console.error(err)})
+
+      if(result){
+        setUtenteLoggatoUID(localStorage.getItem('UID'))
+        setUtenteLoggato(result[0].email);
+        setNomeUtente(result[0].nome)
+        setCognomeUtente(result[0].cognome)
+        switch(result[0].titolo){
+          case 1:
+            setTipoAccount("Dottore");
+            break;
+          case 2:
+            setTipoAccount("Dottoressa");
+            break;
+          case 3:
+            setTipoAccount("Paziente");
+            break;
+          default:
+            break;
+        }
+      }
+      console.log(result);
     }
 
     function userClickedLoggedout(){
@@ -72,6 +106,7 @@ export function AuthContextProvider(props){
           onLogout: userLoggedout,
           utenteLoggato: utenteLoggato,
           utenteLoggatoUID: utenteLoggatoUID,
+          mantieniUtenteLoggato: keepUserLogged,
           tipoAccount: tipoAccount,
           nomeUtenteLoggato: nomeUtente,
           cognomeUtenteLoggato: cognomeUtente,
