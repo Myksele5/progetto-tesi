@@ -16,7 +16,7 @@ function RoutingNew(){
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login></Login>}></Route>
-                <Route path="/QRCodeLogin" element={<QRCodeLogin></QRCodeLogin>}></Route>
+                <Route path="/QRCodeLogin/:UID" element={<QRCodeLogin></QRCodeLogin>}></Route>
                 <Route path="/pazienti/:userID" element={
                     <>
                         <MainMenu
