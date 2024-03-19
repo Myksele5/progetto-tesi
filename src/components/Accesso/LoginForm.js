@@ -23,10 +23,10 @@ function LoginForm(props){
         if(localStorage.getItem('UID') !== null){
             auth_ctx.mantieniUtenteLoggato();
             if(auth_ctx.tipoAccount === "Paziente"){
-                navigate(`/${auth_ctx.utenteLoggatoUID}/giochi`)
+                navigate(`/giochi/${auth_ctx.utenteLoggatoUID}`)
             }
             else{
-                navigate(`/${auth_ctx.utenteLoggatoUID}/pazienti`)
+                navigate(`/pazienti/${auth_ctx.utenteLoggatoUID}`)
             }
         }
     }, [])
@@ -71,10 +71,10 @@ function LoginForm(props){
             auth_ctx.login(email, result[0].UID, result[0].titolo, result[0].nome, result[0].cognome)
             localStorage.setItem('UID', result[0].UID);
             if(result[0].titolo === 3){
-                navigate(`/${result[0].UID}/giochi`);
+                navigate(`/giochi/${result[0].UID}`);
             }
             else{
-                navigate(`/${result[0].UID}/pazienti`);
+                navigate(`/pazienti/${result[0].UID}`);
             }
         }
         else{

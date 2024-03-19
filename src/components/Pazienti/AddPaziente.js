@@ -7,7 +7,7 @@ import PatientContext from "../../context/patients-context";
 import CardSmall from "../UI/CardSmall";
 import PatologiesContext from "../../context/patologies-context";
 import DeleteButton from "../UI/DeleteButton";
-import { Accordion, Collapse } from "react-bootstrap";
+import { Accordion, Collapse, Modal } from "react-bootstrap";
 
 function AddPaziente(props){
     const auth_ctx = useContext(AuthContext);
@@ -48,6 +48,8 @@ function AddPaziente(props){
 
     const [informazioniMediche, setInformazioniMediche] = useState([]);
 
+    const [modaleCreazioneAccount, setModaleCreazioneAccount] = useState(false);
+    const [credenzialiInserite, setCredenzialiInserite] = useState(false);
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPsw, setEnteredPsw] = useState('');
 
@@ -617,17 +619,45 @@ function AddPaziente(props){
             <div className={styles.wrapper_step1}>
                 <div className={styles.wrapper_vertical}>
                     {/* <section className={styles.section_style_FORM}> */}
-                        <h3 className={styles.title_form}>Credenziali per il paziente</h3>
-
-                        <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Email:</label>
-                        <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="email" value={enteredEmail} onChange={emailChangeHandler}></input>
-
-                        <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Password:</label>
-                        <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredPsw} onChange={pswChangeHandler}></input>
+                        <h3 className={styles.title_form}>Account per il paziente</h3>
+                        <h5>Se vuoi creare subito un account per il paziente, clicca sul pulsante 'Crea account' ed inserisci i dati richiesti.</h5>
+                        <div style={{width: "100%"}} className={styles.horizontal}>
+                            <GenericButton 
+                                onClick={() => {setModaleCreazioneAccount(true)}}
+                                generic_button={true}
+                                buttonText='Crea account'>
+                            </GenericButton>
+                        </div>
                         
-                        <p className={styles.paragraph_style}><b>Attenzione! </b>
-                            Queste credenziali serviranno al paziente per potersi collegare alla piattaforma e svolgere attività. Se inserite, verrà creato un profilo per il paziente
-                        </p>
+                        <h5>Altrimenti puoi salvare subito il paziente e creare un account successivamente andando sulla scheda del paziente</h5>
+
+                        <Modal centered show={modaleCreazioneAccount}>
+                            <Modal.Header style={{fontWeight: "bold"}}>Creazione account paziente</Modal.Header>
+                            <Modal.Body>
+                                <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Email:</label>
+                                <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="email" value={enteredEmail} onChange={emailChangeHandler}></input>
+
+                                <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Password:</label>
+                                <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredPsw} onChange={pswChangeHandler}></input>
+                                <p className={styles.paragraph_style}><b>Attenzione! </b>
+                                    Queste credenziali serviranno al paziente per potersi collegare alla piattaforma e svolgere attività. Se inserite, verrà creato un profilo per il paziente
+                                </p>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <GenericButton
+                                    onClick={() => {setModaleCreazioneAccount(false)}}
+                                    generic_button={true}
+                                    red_styling
+                                    buttonText='Annulla'>
+                                </GenericButton>
+                                <GenericButton 
+                                    onClick={formSubmitHandler} 
+                                    generic_button={true}
+                                    buttonText='Salva paziente'>
+                                </GenericButton>
+                            </Modal.Footer>
+                        </Modal>
+                        
                         <p className={styles.paragraph_style}></p>
 
                     {/* </section> */}
@@ -642,8 +672,13 @@ function AddPaziente(props){
                     <GenericButton 
                         onClick={formSubmitHandler} 
                         generic_button={true}
-                        buttonText='Salva paziente'>
+                        buttonText='Salva senza account'>
                     </GenericButton>
+                    {/* <GenericButton 
+                        onClick={formSubmitHandler} 
+                        generic_button={true}
+                        buttonText='Salva paziente'>
+                    </GenericButton> */}
                 </div>
                 
             </div>

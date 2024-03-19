@@ -92,7 +92,7 @@ function MainMenu(props){
                         </div>
                     </OverlayTrigger>
                     {auth_ctx.tipoAccount !== "Paziente" &&
-                        <Link style={{textDecoration: "none"}} to={`/${auth_ctx.utenteLoggatoUID}/pazienti`}>
+                        <Link style={{textDecoration: "none"}} to={`/pazienti/${auth_ctx.utenteLoggatoUID}`}>
                             <Nav.Item className={`${styles.menu_option} ${props.selected === "PAZIENTI" ? styles.menu_option_SELECTED : ''}`}>
                                 <img className={styles.image_option} src={patient} alt="pazienti"></img>
                                 <div className={styles.menu_text_option}>Pazienti</div>
@@ -100,7 +100,7 @@ function MainMenu(props){
                         </Link>
                     }
                     {auth_ctx.tipoAccount !== "Paziente" &&
-                        <Link style={{textDecoration: "none"}} to={`/${auth_ctx.utenteLoggatoUID}/patologie`}>
+                        <Link style={{textDecoration: "none"}} to={`/patologie/${auth_ctx.utenteLoggatoUID}`}>
                             <Nav.Item className={`${styles.menu_option} ${props.selected === "PATOLOGIE" ? styles.menu_option_SELECTED : ''}`}>
                                 <img className={styles.image_option} src={dialogue} alt="patologie"></img>
                                 <div className={styles.menu_text_option}>Patologie</div>
@@ -108,13 +108,13 @@ function MainMenu(props){
                         </Link>
                     }
                     
-                    <Link style={{textDecoration: "none"}} to={`/${auth_ctx.utenteLoggatoUID}/test`}>
+                    <Link style={{textDecoration: "none"}} to={`/test/${auth_ctx.utenteLoggatoUID}`}>
                         <Nav.Item className={`${styles.menu_option} ${props.selected === "TEST" ? styles.menu_option_SELECTED : ''}`}>
                             <img className={styles.image_option} src={activity} alt="tests"></img>
                             <div className={styles.menu_text_option}>Test</div>
                         </Nav.Item>
                     </Link>
-                    <Link style={{textDecoration: "none"}} to={`/${auth_ctx.utenteLoggatoUID}/giochi`}>
+                    <Link style={{textDecoration: "none"}} to={`/giochi/${auth_ctx.utenteLoggatoUID}`}>
                         <Nav.Item className={`${styles.menu_option} ${props.selected === "GIOCHI" ? styles.menu_option_SELECTED : ''}`}>
                             <img className={styles.image_option} src={game} alt="giochi"></img>
                             <div className={styles.menu_text_option}>Giochi</div>

@@ -131,7 +131,7 @@
 
 .tag_style{
     font-weight: bold;
-    width: fit-content;
+    width: 100%;
 }
 
 .tag_style.invalid{

@@ -25,6 +25,9 @@
     case "keepUserLoggedIn":
     	$query_result = keepUserLoggedIn($conn);
         break;
+    case "loginWithQR":
+    	$query_result = loginWithQR($conn);
+        break;
     case "getAccount":
     	$query_result = getAccount($conn);
         break;
@@ -277,6 +280,21 @@
         $UID = $dataJson["UID"];
     
     	$keepUserLoggedIn = $i_conn->prepare("SELECT accounts.email, accounts.titolo, accounts.nome, accounts.cognome FROM `accounts` WHERE accounts.UID = ?"); 
+      	$keepUserLoggedIn->bind_param("i", $UID);
+
+      	$keepUserLoggedIn->execute();
+        $result = $keepUserLoggedIn->get_result();
+        
+        return $result;
+    }
+
+    function loginWithQR($i_conn) {
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $UID = $dataJson["UID"];
+    
+    	$keepUserLoggedIn = $i_conn->prepare("SELECT accounts.email, accounts.password, accounts.titolo, accounts.nome, accounts.cognome FROM `accounts` WHERE accounts.UID = ?"); 
       	$keepUserLoggedIn->bind_param("i", $UID);
 
       	$keepUserLoggedIn->execute();

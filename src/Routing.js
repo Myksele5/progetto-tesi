@@ -8,6 +8,7 @@ import Attività from "./components/Attività/Attività";
 import Giochi from "./components/Giochi/Giochi";
 import Login from "./components/Accesso/Login";
 import MainMenu from "./components/UI/MainMenu";
+import QRCodeLogin from "./components/Accesso/QRCodeLogin";
 
 function RoutingNew(){
     
@@ -15,7 +16,8 @@ function RoutingNew(){
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login></Login>}></Route>
-                <Route path="/:userID/pazienti" element={
+                <Route path="/QRCodeLogin" element={<QRCodeLogin></QRCodeLogin>}></Route>
+                <Route path="/pazienti/:userID" element={
                     <>
                         <MainMenu
                             selected={"PAZIENTI"}
@@ -26,7 +28,7 @@ function RoutingNew(){
                     </>
                 }>
                 </Route>
-                <Route path="/:userID/patologie" element={
+                <Route path="/patologie/:userID" element={
                     <>
                         <MainMenu
                             selected={"PATOLOGIE"}
@@ -37,7 +39,7 @@ function RoutingNew(){
                     </>
                 }>
                 </Route>
-                <Route path="/:userID/test" element={
+                <Route path="/test/:userID" element={
                     <>
                         <MainMenu
                             selected={"TEST"}
@@ -48,7 +50,7 @@ function RoutingNew(){
                     </>
                 }>
                 </Route>
-                <Route path="/:userID/giochi" element={
+                <Route path="/giochi/:userID" element={
                     <>
                         <MainMenu
                             selected={"GIOCHI"}

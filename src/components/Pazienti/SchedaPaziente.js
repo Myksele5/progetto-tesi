@@ -6,6 +6,8 @@ import StatistichePaziente from './StatistichePaziente';
 import CardSmall from '../UI/CardSmall';
 import { Accordion, Col, Modal, ProgressBar, Tab, Tabs } from 'react-bootstrap';
 import { getServerMgr } from '../../backend_conn/ServerMgr';
+import QRCode from 'react-qr-code';
+// import QrReader from 'react-qr-scanner';
 
 function SchedaPaziente(props){
     let emailEsistente = null;
@@ -246,11 +248,15 @@ function SchedaPaziente(props){
                                 <Modal centered show={showCredentials}>
                                     <Modal.Header style={{fontWeight: "bold", fontSize: "18px"}}>Credenziali paziente</Modal.Header>
                                     <Modal.Body>
-                                        <label className={styles.tag_style}>Email:</label>
-                                        <div style={{textAlign: "start"}} className={styles.content_text_style}>{credentials[0].email}</div>
-                                        <label className={styles.tag_style}>Password:</label>
-                                        <div style={{textAlign: "start"}} className={styles.content_text_style}>{credentials[0].password}</div>
-                                        
+                                        <div style={{justifyContent:"space-between"}} className={styles.horizontal}>
+                                            <div className={styles.wrapper_vertical}>
+                                                <label className={styles.tag_style}>Email:</label>
+                                                <div style={{textAlign: "start"}} className={styles.content_text_style}>{credentials[0].email}</div>
+                                                <label className={styles.tag_style}>Password:</label>
+                                                <div style={{textAlign: "start"}} className={styles.content_text_style}>{credentials[0].password}</div>
+                                            </div>
+                                            <QRCode value={`https://myks.altervista.org/QRCodeLogin`} size={200}></QRCode>
+                                        </div>
                                     </Modal.Body>
                                     <Modal.Footer style={{justifyContent: "center"}}>
                                         <GenericButton
