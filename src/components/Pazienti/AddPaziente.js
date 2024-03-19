@@ -51,7 +51,10 @@ function AddPaziente(props){
     const [modaleCreazioneAccount, setModaleCreazioneAccount] = useState(false);
     const [credenzialiInserite, setCredenzialiInserite] = useState(false);
     const [enteredEmail, setEnteredEmail] = useState('');
+    const [validEmail, setValidEmail] = useState(true);
+    const [errorEmailMsg, setErrorEmailMsg] = useState("");
     const [enteredPsw, setEnteredPsw] = useState('');
+    const [validPsw, setValidPsw] = useState(true);
 
     useEffect(() => {
         setPatologiaSelezionata("--seleziona--");
@@ -313,16 +316,16 @@ function AddPaziente(props){
     const emailChangeHandler = (event) => {
         console.log(event.target.value);
         setEnteredEmail(event.target.value);
+        setValidEmail(true);
     }
 
     const pswChangeHandler = (event) => {
         console.log(event.target.value);
         setEnteredPsw(event.target.value);
+        setValidPsw(true);
     }
 
-    async function formSubmitHandler(event){
-        event.preventDefault();
-
+    async function formSubmitHandler(){
         const datiPaziente = {
             doct_UID: auth_ctx.utenteLoggatoUID,
             nome: enteredNome,
@@ -340,20 +343,22 @@ function AddPaziente(props){
         );
         console.log("pazienteID--> " + pazienteSalvatoID)
 
-        if(enteredEmail.includes('@') && enteredPsw.trim().length > 5 && pazienteSalvatoID){
+        if(validEmail && validPsw && pazienteSalvatoID && modaleCreazioneAccount){
             // setModaleCREAZIONEUTENTE(true);
             creaAccountPaziente(pazienteSalvatoID);
         }
-
-        patients_ctx.nuovoPazienteHandler();
         
-        setEnteredNome('');
+        if(!modaleCreazioneAccount){
+            patients_ctx.nuovoPazienteHandler();
+        }
+        
+        // setEnteredNome('');
         // setValidNome(true);
-        setEnteredCognome('');
+        // setEnteredCognome('');
         // setValidCognome(true);
-        setEnteredCittà('');
+        // setEnteredCittà('');
         // setValidCittà(true);
-        setEnteredData('');
+        // setEnteredData('');
         // setValidData(true);
     }
 
@@ -369,6 +374,8 @@ function AddPaziente(props){
             for(var i=0; i < result.length; i++){
                 if(result[i].email === enteredEmail){
                     emailEsistente = true;
+                    setValidEmail(false)
+                    setErrorEmailMsg("Email già associata ad un account!");
                     alert("Email già associata ad un account!");
                     break;
                 }
@@ -389,6 +396,8 @@ function AddPaziente(props){
                 .catch((err) => {
                     console.error(err);
                 });
+
+                patients_ctx.nuovoPazienteHandler();
             }
         }
         else{
@@ -404,6 +413,8 @@ function AddPaziente(props){
             .catch((err) => {
                 console.error(err);
             });
+
+            patients_ctx.nuovoPazienteHandler();
         }  
 
         return
@@ -412,6 +423,29 @@ function AddPaziente(props){
     function hideForm(event){
         event.preventDefault();
         props.hideFormNewPaziente();
+    }
+
+    function validateForm(bool_crea_account){
+        let validate_email = true;
+        let validate_password = true;
+
+        if(!bool_crea_account){
+            formSubmitHandler();
+        }
+        else{
+            if(!enteredEmail.includes('@')){
+                setValidEmail(false);
+                setErrorEmailMsg("Inserisci una email valida")
+                validate_email = false;
+            }
+            if(enteredPsw.trim().length <= 5){
+                setValidPsw(false);
+                validate_password = false;
+            }
+            if(validate_email && validate_password){
+                formSubmitHandler();
+            }
+        }
     }
 
     return(
@@ -634,11 +668,13 @@ function AddPaziente(props){
                         <Modal centered show={modaleCreazioneAccount}>
                             <Modal.Header style={{fontWeight: "bold"}}>Creazione account paziente</Modal.Header>
                             <Modal.Body>
-                                <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Email:</label>
-                                <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="email" value={enteredEmail} onChange={emailChangeHandler}></input>
+                                <label className={`${styles.label_style} ${!validEmail ? styles.invalid : ""}`}>Email:</label>
+                                <input className={`${styles.input_style} ${!validEmail ? styles.invalid : ""}`} type="email" value={enteredEmail} onChange={emailChangeHandler}></input>
+                                {!validEmail && <div style={{width: "100%", color: "red", textAlign: "center"}}>{errorEmailMsg}</div>}
 
-                                <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Password:</label>
-                                <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredPsw} onChange={pswChangeHandler}></input>
+                                <label className={`${styles.label_style} ${!validPsw ? styles.invalid : ""}`}>Password:</label>
+                                <input className={`${styles.input_style} ${!validPsw ? styles.invalid : ""}`} type="text" value={enteredPsw} onChange={pswChangeHandler}></input>
+                                {!validPsw && <div style={{width: "100%", color: "red", textAlign: "center"}}>La password deve contenere minimo 6 caratteri</div>}
                                 <p className={styles.paragraph_style}><b>Attenzione! </b>
                                     Queste credenziali serviranno al paziente per potersi collegare alla piattaforma e svolgere attività. Se inserite, verrà creato un profilo per il paziente
                                 </p>
@@ -651,7 +687,7 @@ function AddPaziente(props){
                                     buttonText='Annulla'>
                                 </GenericButton>
                                 <GenericButton 
-                                    onClick={formSubmitHandler} 
+                                    onClick={() => {validateForm(true)}} 
                                     generic_button={true}
                                     buttonText='Salva paziente'>
                                 </GenericButton>
@@ -670,7 +706,7 @@ function AddPaziente(props){
                         buttonText='Indietro'>
                     </GenericButton>
                     <GenericButton 
-                        onClick={formSubmitHandler} 
+                        onClick={() => {validateForm(false)}} 
                         generic_button={true}
                         buttonText='Salva senza account'>
                     </GenericButton>
