@@ -255,7 +255,7 @@ function SchedaPaziente(props){
                                                 <label className={styles.tag_style}>Password:</label>
                                                 <div style={{textAlign: "start"}} className={styles.content_text_style}>{credentials[0].password}</div>
                                             </div>
-                                            <QRCode value={`https://myks.altervista.org/QRCodeLogin`} size={200}></QRCode>
+                                            <QRCode value={`https://myks.altervista.org/QRCodeLogin/${credentials[0].UID}`} size={200}></QRCode>
                                         </div>
                                     </Modal.Body>
                                     <Modal.Footer style={{justifyContent: "center"}}>

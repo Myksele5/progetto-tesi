@@ -27,10 +27,10 @@ function QRCodeLogin(){
             auth_ctx.login(result[0].email, result[0].UID, result[0].titolo, result[0].nome, result[0].cognome)
             localStorage.setItem('UID', params.UID);
             if(result[0].titolo === 3){
-                navigate(`/${params.UID}/giochi`);
+                navigate(`/giochi/${params.UID}`);
             }
             else{
-                navigate(`/${params.UID}/pazienti`);
+                navigate(`/pazienti/${params.UID}`);
             }
         }
     }

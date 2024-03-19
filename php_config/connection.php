@@ -348,7 +348,7 @@
         
         $patientID = $dataJson["patientID"];
         
-        $getPatientCredentials = $i_conn->prepare("SELECT accounts.email, accounts.password FROM `accounts` WHERE accounts.patientID = ?");
+        $getPatientCredentials = $i_conn->prepare("SELECT accounts.UID, accounts.email, accounts.password FROM `accounts` WHERE accounts.patientID = ?");
         $getPatientCredentials->bind_param("i", $patientID);
         $getPatientCredentials->execute();
         $result = $getPatientCredentials->get_result();
