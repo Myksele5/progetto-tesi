@@ -40,6 +40,9 @@
     case "getPatientCredentials":
         $query_result = getPatientCredentials($conn);
         break;
+    case "getGamesListForPatientAccount":
+        $query_result = getGamesListForPatientAccount($conn);
+        break;
     case "getPatientsList":
         $query_result = getPatientsList($conn);
         break;
@@ -264,7 +267,7 @@
         $email = $dataJson["email"];
         $password = $dataJson["password"];
     
-    	$insertCommentQuery = $i_conn->prepare("SELECT accounts.UID, accounts.titolo, accounts.nome, accounts.cognome FROM `accounts` WHERE email = ? AND password = ?"); 
+    	$insertCommentQuery = $i_conn->prepare("SELECT accounts.UID, accounts.titolo, accounts.nome, accounts.cognome, accounts.patientID FROM `accounts` WHERE email = ? AND password = ?"); 
       	$insertCommentQuery->bind_param("ss", $email, $password);
 
       	$insertCommentQuery->execute();
@@ -279,7 +282,7 @@
         
         $UID = $dataJson["UID"];
     
-    	$keepUserLoggedIn = $i_conn->prepare("SELECT accounts.email, accounts.titolo, accounts.nome, accounts.cognome FROM `accounts` WHERE accounts.UID = ?"); 
+    	$keepUserLoggedIn = $i_conn->prepare("SELECT accounts.email, accounts.titolo, accounts.nome, accounts.cognome, accounts.patientID FROM `accounts` WHERE accounts.UID = ?"); 
       	$keepUserLoggedIn->bind_param("i", $UID);
 
       	$keepUserLoggedIn->execute();
@@ -352,6 +355,23 @@
         $getPatientCredentials->bind_param("i", $patientID);
         $getPatientCredentials->execute();
         $result = $getPatientCredentials->get_result();
+
+        return $result;
+    }
+
+    function getGamesListForPatientAccount($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $patientID = $dataJson["patientID"];
+        
+        $getGamesListForPatientAccount = $i_conn->prepare(
+            "SELECT * FROM `games` LEFT JOIN `bridgeToQuestionsGames` ON `games`.`gameID` = `bridgeToQuestionsGames`.`IDgame` 
+            JOIN `bridgeGamesPatients` ON `games`.`gameID` = `bridgeGamesPatients`.`game_ID` WHERE `bridgeGamesPatients`.`patient_ID` = ?"
+        );
+        $getGamesListForPatientAccount->bind_param("i", $patientID);
+        $getGamesListForPatientAccount->execute();
+        $result = $getGamesListForPatientAccount->get_result();
 
         return $result;
     }

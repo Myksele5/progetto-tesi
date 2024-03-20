@@ -130,6 +130,18 @@ function initServerMgr(cb) {
         }
     }
 
+    serverMgr.getGamesListForPatientAccount = async (patientID, cb) => {
+        let result = await serverMgr.requestFetchData("getGamesListForPatientAccount", {patientID: patientID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
+
     serverMgr.getPatientsList = async (UID, cb) => {
         let result = await serverMgr.requestFetchData("getPatientsList", {doct_UID: UID})
         if(cb) {

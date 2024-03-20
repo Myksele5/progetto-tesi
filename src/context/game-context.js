@@ -64,31 +64,75 @@ export function GameContextProvider(props){
             return arrayGiochi;
         }
 
-        resultQuestions = await getServerMgr().getQuestionsList(auth_ctx.utenteLoggatoUID)
-        .catch((err) => {
-            console.error(err)
-        });
+        if(auth_ctx.tipoAccount !== "Paziente"){
+            // console.log("CIAOOOO")
+        
+            resultQuestions = await getServerMgr().getQuestionsList(auth_ctx.utenteLoggatoUID)
+            .catch((err) => {
+                console.error(err)
+            });
 
-        if(resultQuestions !== null){
-            setElencoDomande(resultQuestions);
-            console.log(resultQuestions);
+            if(resultQuestions !== null){
+                setElencoDomande(resultQuestions);
+                console.log(resultQuestions);
+            }
+            else{
+                setElencoDomande([]);
+            }
+
+            resultGames = await getServerMgr().getGamesList(auth_ctx.utenteLoggatoUID)
+            .catch((err) => {
+                console.error(err)
+            });
+
+            if(resultGames){
+                let rispostaParsata = parseResult(resultGames);
+                setElencoGiochi(rispostaParsata);
+                console.log(rispostaParsata);
+            }
+            else{
+                setElencoGiochi([]);
+            }
         }
         else{
-            setElencoDomande([]);
-        }
+            let creatoreDomandaID = -1;
 
-        resultGames = await getServerMgr().getGamesList(auth_ctx.utenteLoggatoUID)
-        .catch((err) => {
-            console.error(err)
-        });
+            console.log("Devo caricare lista giochi del paziente")
+            console.log(auth_ctx.pazienteLoggatoID)
+            resultGames = await getServerMgr().getGamesListForPatientAccount(auth_ctx.pazienteLoggatoID)
+            .catch((err) => {
+                console.error(err)
+            });
 
-        if(resultGames){
-            let rispostaParsata = parseResult(resultGames);
-            setElencoGiochi(rispostaParsata);
-            console.log(rispostaParsata);
-        }
-        else{
-            setElencoGiochi([]);
+            if(resultGames){
+                console.log(resultGames[0].creatorID)
+                creatoreDomandaID = resultGames[0].creatorID;
+            }
+            else{
+                console.log("DIOOOOOOOOOOOOOOOOOOOOOOOO")
+            }
+
+            resultQuestions = await getServerMgr().getQuestionsList(creatoreDomandaID)
+            .catch((err) => {
+                console.error(err)
+            });
+
+            if(resultQuestions !== null){
+                setElencoDomande(resultQuestions);
+                console.log(resultQuestions);
+            }
+            else{
+                setElencoDomande([]);
+            }
+
+            if(resultGames){
+                let rispostaParsata = parseResult(resultGames);
+                setElencoGiochi(rispostaParsata);
+                console.log(rispostaParsata);
+            }
+            else{
+                setElencoGiochi([]);
+            }
         }
     }
 

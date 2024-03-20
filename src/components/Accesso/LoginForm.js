@@ -68,7 +68,7 @@ function LoginForm(props){
 
         if(result !== undefined && result !== null){
             console.log("PROVA", result[0]);
-            auth_ctx.login(email, result[0].UID, result[0].titolo, result[0].nome, result[0].cognome)
+            auth_ctx.login(email, result[0].UID, result[0].titolo, result[0].nome, result[0].cognome, result[0].patientID)
             localStorage.setItem('UID', result[0].UID);
             if(result[0].titolo === 3){
                 navigate(`/giochi/${result[0].UID}`);

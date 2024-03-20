@@ -25,6 +25,7 @@ function SchedaPaziente(props){
 
     const [enteredEmail, setEnteredEmail] = useState("");
     const [validEmail, setValidEmail] = useState(true)
+    const [errorEmailMsg, setErrorEmailMsg] = useState("");
     const [enteredPassword, setEnteredPassword] = useState("");
     const [validPassword, setValidPassword] = useState(true)
 
@@ -120,6 +121,8 @@ function SchedaPaziente(props){
                 for(var i=0; i < result.length; i++){
                     if(result[i].email === enteredEmail){
                         emailEsistente = true;
+                        setValidEmail(false)
+                        setErrorEmailMsg("Email già associata ad un account!");
                         alert("Email già associata ad un account!");
                         break;
                     }
@@ -168,6 +171,7 @@ function SchedaPaziente(props){
         else{
             if(!enteredEmail.includes('@')){
                 setValidEmail(false);
+                setErrorEmailMsg("Inserisci una email valida")
             }
             if(enteredPassword.trim().length < 6){
                 setValidPassword(false);
@@ -214,10 +218,13 @@ function SchedaPaziente(props){
                                     <Modal.Body>
                                         <label className={`${styles.tag_style} ${!validEmail ? styles.invalid : ''}`}>Email:</label>
                                         <input autoFocus value={enteredEmail} onChange={emailChangeHandler} className={`${styles.input_style} ${!validEmail ? styles.invalid : ''}`}></input>
-                                        {!validEmail && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una email valida</div>}
+                                        {!validEmail && <div style={{width: "100%", color: "red", textAlign: "center"}}>{errorEmailMsg}</div>}
                                         <label className={`${styles.tag_style} ${!validPassword ? styles.invalid : ''}`}>Password:</label>
                                         <input value={enteredPassword} onChange={passwordChangeHandler} className={`${styles.input_style} ${!validPassword ? styles.invalid : ''}`}></input>
                                         {!validPassword && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una password con almeno 6 caratteri</div>}
+                                        <p className={styles.paragraph_style}><b>Attenzione! </b>
+                                            Queste credenziali serviranno al paziente per potersi collegare alla piattaforma e svolgere attività. Se inserite, verrà creato un profilo per il paziente
+                                        </p>
                                         <div style={{marginTop: "10px"}} className={styles.horizontal}>
                                             <GenericButton
                                                 onClick={() => setCreateCredentials((prevBool) => (!prevBool))}

@@ -108,16 +108,19 @@ function MainMenu(props){
                         </Link>
                     }
                     
-                    <Link className={styles.menu_option} style={{textDecoration: "none"}} to={`/test/${auth_ctx.utenteLoggatoUID}`}>
-                        <Nav.Item className={`${styles.menu_option} ${props.selected === "TEST" ? styles.menu_option_SELECTED : ''}`}>
-                            <img className={styles.image_option} src={activity} alt="tests"></img>
-                            <div className={styles.menu_text_option}>Test</div>
-                        </Nav.Item>
-                    </Link>
+                    {auth_ctx.tipoAccount !== "Paziente" &&
+                        <Link className={styles.menu_option} style={{textDecoration: "none"}} to={`/test/${auth_ctx.utenteLoggatoUID}`}>
+                            <Nav.Item className={`${styles.menu_option} ${props.selected === "TEST" ? styles.menu_option_SELECTED : ''}`}>
+                                <img className={styles.image_option} src={activity} alt="tests"></img>
+                                <div className={styles.menu_text_option}>Test</div>
+                            </Nav.Item>
+                        </Link>
+                    }
                     <Link className={styles.menu_option} style={{textDecoration: "none"}} to={`/giochi/${auth_ctx.utenteLoggatoUID}`}>
                         <Nav.Item className={`${styles.menu_option} ${props.selected === "GIOCHI" ? styles.menu_option_SELECTED : ''}`}>
                             <img className={styles.image_option} src={game} alt="giochi"></img>
-                            <div className={styles.menu_text_option}>Giochi</div>
+                            {auth_ctx.tipoAccount !== "Paziente" && <div className={styles.menu_text_option}>Giochi</div>}
+                            {auth_ctx.tipoAccount === "Paziente" && <div className={styles.menu_text_option}>I Miei Giochi</div>}
                         </Nav.Item>
                     </Link>
                 </Nav>

@@ -304,6 +304,11 @@
         font-size: 16px;
     }
 
+    .paragraph_style{
+        font-size: 12px;
+        margin: 0;
+    }
+
     .container_flexible_GENERIC{
         flex-direction: column;
         width: 460px;

@@ -11,6 +11,7 @@ const AuthContext = React.createContext({
     onLogout: ()=>{},
     utenteLoggato: null,
     utenteLoggatoUID: null,
+    pazienteLoggatoID: null,
     mantieniUtenteLoggato: ()=>{},
     tipoAccount: null,
     nomeUtenteLoggato: null,
@@ -22,6 +23,7 @@ const AuthContext = React.createContext({
 export function AuthContextProvider(props){
     const [utenteLoggato, setUtenteLoggato] = useState(null);
     const [utenteLoggatoUID, setUtenteLoggatoUID] = useState(null);
+    const [pazienteLoggatoID, setPazienteLoggatoID] = useState(null);
     const [tipoAccount, setTipoAccount] = useState('');
     const [nomeUtente, setNomeUtente] = useState('');
     const [cognomeUtente, setCognomeUtente] = useState('');
@@ -33,11 +35,12 @@ export function AuthContextProvider(props){
       }
     }, [])
 
-    function setAccountLogged(email, UID, tipoAccount, nome, cognome){
+    function setAccountLogged(email, UID, tipoAccount, nome, cognome, pazienteID){
       setUtenteLoggato(email);
       setUtenteLoggatoUID(UID);
       setNomeUtente(nome);
       setCognomeUtente(cognome);
+      setPazienteLoggatoID(pazienteID)
       switch(tipoAccount){
         case 1:
           setTipoAccount("Dottore");
@@ -62,6 +65,7 @@ export function AuthContextProvider(props){
         setUtenteLoggato(result[0].email);
         setNomeUtente(result[0].nome)
         setCognomeUtente(result[0].cognome)
+        setPazienteLoggatoID(result[0].patientID)
         switch(result[0].titolo){
           case 1:
             setTipoAccount("Dottore");
@@ -106,6 +110,7 @@ export function AuthContextProvider(props){
           onLogout: userLoggedout,
           utenteLoggato: utenteLoggato,
           utenteLoggatoUID: utenteLoggatoUID,
+          pazienteLoggatoID: pazienteLoggatoID,
           mantieniUtenteLoggato: keepUserLogged,
           tipoAccount: tipoAccount,
           nomeUtenteLoggato: nomeUtente,

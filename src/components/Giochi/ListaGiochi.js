@@ -5,8 +5,10 @@ import GameCard from "../UI/GameCard";
 import GenericButton from "../UI/GenericButton";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 import { Badge } from "react-bootstrap";
+import AuthContext from "../../context/auth-context";
 
 function ListaGiochi(props){
+    const auth_ctx = useContext(AuthContext)
     const game_ctx = useContext(GameContext);
     var lista = game_ctx.listaGiochi;
 
@@ -42,32 +44,39 @@ function ListaGiochi(props){
                                 </div>
                                 
                                 <div className={styles.buttons_wrap}>
-                                    <GenericAlternativeButton
-                                    onClick={()=> {
-                                        props.mostraSchedaAssegnazione(lista.gameID);
-                                        game_ctx.prendiPazientiPerUnSingoloGioco(lista.gameID)
-                                    }}
-                                    // alternative_button={true}
-                                    buttonText='Assegna a...'>
-                                    </GenericAlternativeButton>
+                                    {auth_ctx.tipoAccount !== "Paziente" && 
+                                        <GenericAlternativeButton
+                                            onClick={()=> {
+                                                props.mostraSchedaAssegnazione(lista.gameID);
+                                                game_ctx.prendiPazientiPerUnSingoloGioco(lista.gameID)
+                                            }}
+                                            // alternative_button={true}
+                                            buttonText='Assegna a...'>
+                                        </GenericAlternativeButton>
+                                    }
 
-                                    <GenericAlternativeButton
-                                    onClick={() => {
-                                        game_ctx.modificaGioco(lista)
-                                        props.mostraFormModificaGioco(lista);
-                                    }}
-                                    // alternative_button={true}
-                                    buttonText='Modifica'>
-                                    </GenericAlternativeButton>
-
-                                    <GenericAlternativeButton
-                                    onClick={() => {
-                                        game_ctx.eliminaGioco(lista.gameID)
-                                    }}
-                                    // alternative_button={true}
-                                    colore_rosso={true}
-                                    buttonText='Elimina'>
-                                    </GenericAlternativeButton>
+                                    {auth_ctx.tipoAccount !== "Paziente" && 
+                                        <GenericAlternativeButton
+                                            onClick={() => {
+                                                game_ctx.modificaGioco(lista)
+                                                props.mostraFormModificaGioco(lista);
+                                            }}
+                                            // alternative_button={true}
+                                            buttonText='Modifica'>
+                                        </GenericAlternativeButton>
+                                    }
+                                    
+                                    {auth_ctx.tipoAccount !== "Paziente" && 
+                                        <GenericAlternativeButton
+                                            onClick={() => {
+                                                game_ctx.eliminaGioco(lista.gameID)
+                                            }}
+                                            // alternative_button={true}
+                                            colore_rosso={true}
+                                            buttonText='Elimina'>
+                                        </GenericAlternativeButton>
+                                    }
+                                    
                                 </div>
                             </div>
 
