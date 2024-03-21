@@ -48,8 +48,8 @@ function EditPaziente(props){
 
     const [informazioniMediche, setInformazioniMediche] = useState([]);
     const [giochiDelPaziente, setGiochiDelPaziente] = useState([]);
-    const [giochiTemporanei, setGiochiTemporanei] = useState([]);
     const [modaleListaGiochi, setModaleListaGiochi] = useState(false);
+    const [checkboxAllGamesAssigned, setCheckboxAllGamesAssigned] = useState(true);
 
     useEffect(() => {
         let arrayTemporaneo = [];
@@ -59,10 +59,12 @@ function EditPaziente(props){
             for(var i=0; i < props.giochiii?.length; i++){
                 if(gioco.gameID === props.giochiii[i].gameID){
                     assegnatoBool = true;
+                    setCheckboxAllGamesAssigned(true);
                     break;
                 }
                 else{
                     assegnatoBool = false;
+                    setCheckboxAllGamesAssigned(false);
                 }
             }
             arrayTemporaneo.push({...gioco, assegnato: assegnatoBool})
@@ -70,25 +72,23 @@ function EditPaziente(props){
         console.log(arrayTemporaneo)
         setListaGiochi(arrayTemporaneo);
     }, [])
-    // useEffect(() => {
-    //     let arrayTemporaneo = [];
-    //     let assegnatoBool = false;
-
-    //     listaGiochi.map((gioco) => {
-    //         for(var i=0; i < giochiDelPaziente.length; i++){
-    //             if(gioco.gameID === giochiDelPaziente[i].gameID){
-    //                 assegnatoBool = true;
-    //                 break;
-    //             }
-    //             else{
-    //                 assegnatoBool = false;
-    //             }
-    //         }
-    //         arrayTemporaneo.push({...gioco, assegnato: assegnatoBool})
-    //     })
-    //     console.log(arrayTemporaneo)
-    //     setListaGiochi(arrayTemporaneo);
-    // }, [giochiDelPaziente])
+    
+    useEffect(() => {
+        for(var i=0; i < listaGiochi.length; i++){
+            if(listaGiochi[i].assegnato){
+                setCheckboxAllGamesAssigned(true)
+                // console.log("SI")
+                // console.log(listaGiochi[i].assegnato)
+            }
+            else{
+                setCheckboxAllGamesAssigned(false);
+                // console.log("no")
+                // console.log(listaGiochi[i].assegnato)
+                break;
+            }
+        }
+        // console.log(checkboxAllGamesAssigned);
+    }, [listaGiochi])
 
     useEffect(() => {
         let arrayTemporaneo = [];
@@ -355,6 +355,17 @@ function EditPaziente(props){
         // })
         // console.log(arrayTemporaneo)
         // setGiochiDelPaziente(arrayTemporaneo)
+    }
+
+    const checkboxAssegnaTutti = (event) => {
+        if(event.target.checked){
+            setCheckboxAllGamesAssigned(true);
+            setListaGiochi(listaGiochi.map((giocoTemp) => ({...giocoTemp, assegnato: true})))
+        }
+        else{
+            setCheckboxAllGamesAssigned(false);
+            setListaGiochi(listaGiochi.map((giocoTemp) => ({...giocoTemp, assegnato: false})))
+        }
     }
 
     const eliminaGioco = (id) => {
@@ -662,7 +673,7 @@ function EditPaziente(props){
                                         <div style={{fontWeight: "bold"}} className={styles.modal_NOMEGIOCO}>Nome</div>
                                         <div style={{fontWeight: "bold"}} className={styles.modal_TIPOGIOCO}>Tipo</div>
                                         <div style={{fontWeight: "bold"}} className={styles.modal_LIVELLOGIOCO}>Difficoltà</div>
-                                        <input type="checkbox"></input>
+                                        <input type="checkbox" checked={checkboxAllGamesAssigned} onChange={(event) => {checkboxAssegnaTutti(event)}}></input>
                                     </div>
                                     {listaGiochi.map(verificaGiochiDelPaziente)}
                                 </Modal.Body>

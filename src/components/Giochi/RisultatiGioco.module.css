@@ -1,3 +1,16 @@
+.horizontal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card_wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .wrapper_risultati{
     display: flex;
     flex-direction: column;
@@ -7,25 +20,27 @@
 }
 
 .title_scheda{
-    /* width: 480px; */
+    color: #163172;
+    font-size: 28px;
     text-align: center;
     margin: 5px;
-    text-shadow: 1px 1px 3px black;
 }
 
 .numero_risposte{
     font-size: 18px;
-    color: rgb(233, 33, 131);
+    color: #1E56A0;
 }
 
 .paz_selezionato{
-    font-size: 22px;
+    color: #163172;
+    font-size: 20px;
     margin: 8px;
+    margin-left: 0;
 }
 
 /* CONTROLLA COME RISOLVERE ESTETICA MENU DROPDOWN */
 .select_box{
-    width: 400px;
+    width: 100%;
     height: 25px;
     border-radius: 5px;
     border: 2px solid #1E56A0;
@@ -39,6 +54,11 @@
     background-color: #D6E4F0;
 }
 
+@media screen and (max-width: 1200px) {
+    .card_wrapper{
+        height: calc(100vh - 100px);
+    }
+}
 
 @media screen and (max-width: 600px) {
     .title_scheda{

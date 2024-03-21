@@ -2,7 +2,7 @@ import styles from "./Giochi.module.css";
 import { useContext, useState } from "react";
 import GameContext from "../../context/game-context";
 import GenericButton from "../UI/GenericButton";
-import RisultatiGioco from "./RisultatiGioco";
+import RisultatiGioco, { RisultatiGiocoPazAccnt } from "./RisultatiGioco";
 import ListaGiochi from "./ListaGiochi";
 import AddGioco from "./AddGioco";
 import EditGioco from "./EditGioco";
@@ -36,6 +36,14 @@ function Giochi(){
     const [gameObject, setGameObject] = useState(null);
 
     const [tipoGiocoCercato, setTipoGiocoCercato] = useState("");
+
+    // stringa_TIPOGIOCO, stringa_CODICEGIOCO, stringa_LIVELLOGIOCO
+    // STATI PER FAR RIGIOCARE UN GIOCO
+    const [TIPOGIOCO, set_TIPOGIOCO] = useState("");
+    const [CODICEGIOCO, set_CODICEGIOCO] = useState("");
+    const [LIVELLOGIOCO, set_LIVELLOGIOCO] = useState("");
+    const [DOMANDEGIOCO, set_DOMANDEGIOCO] = useState([]);
+    const [INDICEGIOCO, set_INDICEGIOCO] = useState();
 
     function tipoGiocoChangeHandler(event){
         setTipoGiocoCercato(event.target.value);
@@ -128,6 +136,10 @@ function Giochi(){
     }
 
     function startGame(stringa_TIPOGIOCO, stringa_CODICEGIOCO, stringa_LIVELLOGIOCO){
+        set_TIPOGIOCO(stringa_TIPOGIOCO);
+        set_CODICEGIOCO(stringa_CODICEGIOCO);
+        set_LIVELLOGIOCO(stringa_LIVELLOGIOCO);
+
         var indice_gioco;
         for(var i = 0; i < game_ctx.listaGiochi.length; i++){
             if(stringa_CODICEGIOCO === game_ctx.listaGiochi[i].gameID){
@@ -150,6 +162,8 @@ function Giochi(){
             })
         }
         console.log(game_ctx.listaGiochi[indice_gioco]);
+        set_DOMANDEGIOCO(domandeDelGioco);
+        set_INDICEGIOCO(indice_gioco);
         
         switch(stringa_TIPOGIOCO){
             case 'QUIZ':
@@ -168,11 +182,6 @@ function Giochi(){
                 break;
 
             case 'COMPLETA LA PAROLA':
-                // const listaParole = JSON.parse(game_ctx.listaGiochi[indice_gioco].domande);
-                // console.log(listaParole);
-                // for(var i=0; i < listaParole.length; i++){
-                //     console.log(listaParole[i]);
-                // }
                 setGameObject(
                     <GuessTheWord
                         giocoTerminato={endGame}
@@ -187,7 +196,6 @@ function Giochi(){
                 break;
 
             case 'RIFLESSI':
-                // const n_rounds = JSON.parse(game_ctx.listaGiochi[indice_gioco].domande);
                 console.log(domandeDelGioco)
                 setGameObject(
                     <ExerciseReflexes
@@ -207,19 +215,85 @@ function Giochi(){
         setShowElencoGiochi(false);
     }
 
+    function restartGame(){
+        console.log(TIPOGIOCO)
+        console.log(CODICEGIOCO)
+        console.log(LIVELLOGIOCO)
+        console.log(INDICEGIOCO)
+
+        switch(TIPOGIOCO){
+            case 'QUIZ':
+            case 'QUIZ CON IMMAGINI':
+                setGameObject(
+                    <ExerciseGuessTheFace
+                        giocoTerminato={endGame}
+                        giocoAnnullato={closeGameResults}
+                        INDICEGIOCO={INDICEGIOCO}
+                        TIPOGIOCO={TIPOGIOCO}
+                        LIVELLOGIOCO={LIVELLOGIOCO}
+                        domandeGioco={DOMANDEGIOCO}
+                    >
+                    </ExerciseGuessTheFace>
+                );
+                break;
+
+            case 'COMPLETA LA PAROLA':
+                setGameObject(
+                    <GuessTheWord
+                        giocoTerminato={endGame}
+                        giocoAnnullato={closeGameResults}
+                        INDICEGIOCO={INDICEGIOCO}
+                        TIPOGIOCO={TIPOGIOCO}
+                        LIVELLOGIOCO={LIVELLOGIOCO}
+                        domandeGioco={DOMANDEGIOCO}
+                    >
+                    </GuessTheWord>
+                );
+                break;
+
+            // case 'RIFLESSI':
+            //     setGameObject(
+            //         <ExerciseReflexes
+            //             giocoTerminato={endGame}
+            //             INDICEGIOCO={indice_gioco}
+            //             TIPOGIOCO={stringa_TIPOGIOCO}
+            //             numeroRound={game_ctx.listaGiochi[indice_gioco].numeroRound}
+            //         >
+            //         </ExerciseReflexes>
+            //     );
+            //     break;
+
+            default:
+                setGameObject(null);
+        }
+        // closeGameResults();
+        setShowGameResults(false);
+    }
+
     function endGame(risposteUtente, domandeTotali){
         setGameObject(null);
-        risultati_utente_gioco =
-            <RisultatiGioco
-                numeroRisposteCorrette={risposteUtente}
-                numeroDomandeTotali={domandeTotali}
-                chiudiSchedaRisultati={closeGameResults}
-                assegnaRisultatiPaziente={(pazID) => {
-                    game_ctx.salvaRisultatiGiocoPaziente(pazID, giocoSvoltoID, domandeTotali, risposteUtente, (domandeTotali-risposteUtente))
-                    closeGameResults();
-                }}
-            >
-            </RisultatiGioco>
+        if(auth_ctx.tipoAccount !== "Paziente"){
+            risultati_utente_gioco =
+                <RisultatiGioco
+                    numeroRisposteCorrette={risposteUtente}
+                    numeroDomandeTotali={domandeTotali}
+                    chiudiSchedaRisultati={closeGameResults}
+                    assegnaRisultatiPaziente={(pazID) => {
+                        game_ctx.salvaRisultatiGiocoPaziente(pazID, giocoSvoltoID, domandeTotali, risposteUtente, (domandeTotali-risposteUtente))
+                        closeGameResults();
+                    }}
+                >
+                </RisultatiGioco>
+        }
+        else{
+            game_ctx.salvaRisultatiGiocoPaziente(auth_ctx.pazienteLoggatoID, giocoSvoltoID, domandeTotali, risposteUtente, (domandeTotali-risposteUtente))
+
+            risultati_utente_gioco = 
+                <RisultatiGiocoPazAccnt
+                    rigioca={restartGame}
+                    chiudiSchedaRisultati={closeGameResults}
+                ></RisultatiGiocoPazAccnt>
+        }
         setShowGameResults(true);
     }
 

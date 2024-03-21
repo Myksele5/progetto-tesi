@@ -1,12 +1,14 @@
 import styles from "./RisultatiGioco.module.css";
-import Card from "../UI/Card";
 import GenericButton from "../UI/GenericButton";
 import { useContext, useState } from "react";
 import PatientContext from "../../context/patients-context";
+import { Card } from "react-bootstrap";
+import AuthContext from "../../context/auth-context";
 
 var paziente_selezionato_ID;
 
 function RisultatiGioco(props){
+    const auth_ctx = useContext(AuthContext);
     const patients_ctx = useContext(PatientContext);
 
     var paziente_selezionato;
@@ -42,54 +44,88 @@ function RisultatiGioco(props){
     }
 
     return(
-        <Card
-            altroStile={true}
-            children={
-                <div className={styles.wrapper_risultati}>
-                    <h1 className={styles.title_scheda}>RISULTATI UTENTE</h1>
+        <div className={styles.card_wrapper}>
+            <Card>
+                <Card.Header>
+                    <h1 className={styles.title_scheda}>RISULTATI GIOCO</h1>
+                </Card.Header>
 
-                    <h3 className={styles.numero_risposte}>Risposte corrette: {props.numeroRisposteCorrette}/{props.numeroDomandeTotali}</h3>
+                <Card.Body>
+                    <h3 style={{color: "green"}} className={styles.numero_risposte}>Risposte corrette: {props.numeroRisposteCorrette}</h3>
+                    <h3 style={{color: "red"}} className={styles.numero_risposte}>Risposte sbagliate: {props.numeroDomandeTotali - props.numeroRisposteCorrette}</h3>
+                    <h3 className={styles.numero_risposte}>Totale: {props.numeroRisposteCorrette}/{props.numeroDomandeTotali}</h3>
+                    <h3 className={styles.numero_risposte}>Percentuale corrette: {`${((props.numeroRisposteCorrette/props.numeroDomandeTotali) * 100).toFixed(2)}%`}</h3>
 
-                    <GenericButton
-                    onClick={props.chiudiSchedaRisultati}
-                    generic_button={true}
-                    red_styling
-                    buttonText='Chiudi Scheda'>
-                    </GenericButton>
+                    <hr></hr>
 
-                    <GenericButton
-                    is_disabled={disabledSaveButton}
-                    onClick={passaIndiceAGiochiPuntoJS}
-                    generic_button={true}
-                    buttonText='Assegna risultati a...'>
-                    </GenericButton>
-                    
-                    <h2 className={styles.paz_selezionato}>PAZIENTE SELEZIONATO:</h2>
-                    {/* <h2 className={styles.paz_selezionato}>{paz}</h2> */}
-                    {/* <div className={styles.select_box}> */}
-                        <select className={styles.select_box} onChange={(event) => {
-                            // console.log(event.target.value);
-                            console.log(patients_ctx.listaPazienti.map(ogg => ogg.ID).indexOf(event.target.value));
-                            // indice = trovaIndice(event);
-                            paziente_selezionato = trovaPaziente(event);
-                            
-                            if(paziente_selezionato !== -1){
-                                setDisabledSaveButton(false);
-                                setPaz(paziente_selezionato);
-                            }
-                            else{
-                                setDisabledSaveButton(true);
-                            }
-                            }}>
-                            <option hidden>-- select an option --</option>
-                            {patients_ctx.listaPazienti.map(patients_ctx.arrayToLista)}
-                        </select>
-                    {/* </div> */}
-                    
-                    
-                </div>
-                }>
-        </Card>
+                    <h2 className={styles.paz_selezionato}>Assegna risultati ad un paziente:</h2>
+                    <select className={styles.select_box} onChange={(event) => {
+                        console.log(patients_ctx.listaPazienti.map(ogg => ogg.ID).indexOf(event.target.value));
+                        paziente_selezionato = trovaPaziente(event);
+                        
+                        if(paziente_selezionato !== -1){
+                            setDisabledSaveButton(false);
+                            setPaz(paziente_selezionato);
+                        }
+                        else{
+                            setDisabledSaveButton(true);
+                        }
+                        }}>
+                        <option hidden>-- seleziona paziente --</option>
+                        {patients_ctx.listaPazienti.map(patients_ctx.arrayToLista)}
+                    </select>
+                </Card.Body>
+
+                <Card.Footer>
+                    <div className={styles.horizontal}>
+                        <GenericButton
+                            onClick={props.chiudiSchedaRisultati}
+                            generic_button={true}
+                            red_styling
+                            buttonText='Chiudi'>
+                        </GenericButton>
+
+                        <GenericButton
+                            is_disabled={disabledSaveButton}
+                            onClick={passaIndiceAGiochiPuntoJS}
+                            generic_button={true}
+                            buttonText='Assegna risultati'>
+                        </GenericButton>
+                    </div>
+                </Card.Footer>
+            </Card>
+        </div>
+    );
+}
+
+export function RisultatiGiocoPazAccnt(props){
+    return(
+        <div className={styles.card_wrapper}>
+            <Card>
+                <Card.Header>
+                    <h1 className={styles.title_scheda}>GIOCO TERMINATO!</h1>
+                </Card.Header>
+
+                <Card.Body>
+                    <h3 style={{textAlign: "center"}} className={styles.numero_risposte}>Vuoi giocare di nuovo?</h3>
+                    <div className={styles.horizontal}>
+                        <GenericButton
+                            onClick={props.chiudiSchedaRisultati}
+                            generic_button={true}
+                            red_styling
+                            buttonText='Chiudi'>
+                        </GenericButton>
+
+                        <GenericButton
+                            // is_disabled={disabledSaveButton}
+                            onClick={props.rigioca}
+                            generic_button={true}
+                            buttonText='Gioca di nuovo'>
+                        </GenericButton>
+                    </div>
+                </Card.Body>
+            </Card>
+        </div>
     );
 }
 

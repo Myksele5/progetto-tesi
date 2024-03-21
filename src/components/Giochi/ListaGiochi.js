@@ -51,7 +51,7 @@ function ListaGiochi(props){
                                                 game_ctx.prendiPazientiPerUnSingoloGioco(lista.gameID)
                                             }}
                                             // alternative_button={true}
-                                            buttonText='Assegna a...'>
+                                            buttonText='Assegna gioco'>
                                         </GenericAlternativeButton>
                                     }
 
