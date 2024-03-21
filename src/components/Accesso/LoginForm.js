@@ -22,6 +22,7 @@ function LoginForm(props){
     useEffect(() => {
         if(localStorage.getItem('UID') !== null){
             auth_ctx.mantieniUtenteLoggato();
+            console.log(auth_ctx.tipoAccount);
             if(auth_ctx.tipoAccount === "Paziente"){
                 navigate(`/giochi/${auth_ctx.utenteLoggatoUID}`)
             }
