@@ -7,10 +7,14 @@ import AddPaziente from './AddPaziente';
 import { useContext, useEffect, useState } from 'react';
 import styles from './Pazienti.module.css';
 import PatientContext from "../../context/patients-context";
+import AuthContext from "../../context/auth-context";
+import { useNavigate } from "react-router-dom";
 
 function Pazienti(){
+    const auth_ctx = useContext(AuthContext);
     const patients_ctx = useContext(PatientContext);
-    // const [stringaDaCercare, setStringaDaCercare] = useState("");
+    
+    const navigate = useNavigate();
 
     let tabella = 
         <TabellaPazienti
@@ -20,7 +24,11 @@ function Pazienti(){
     useEffect(() => {
         console.log("Lista dei pazienti");
         console.log(patients_ctx.listaPazienti);
-    }, [])
+        console.log(auth_ctx.pazienteLoggatoID)
+        if(auth_ctx.tipoAccount === "Paziente"){
+            navigate(`/giochi/${auth_ctx.utenteLoggatoUID}`)
+        }
+    }, [auth_ctx.pazienteLoggatoID])
 
     function cercaInfoPaziente(event){
         patients_ctx.cercaPaziente(event.target.value);
