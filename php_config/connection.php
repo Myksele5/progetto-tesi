@@ -397,10 +397,8 @@
         $ID = $dataJson["ID"];
         
         $retrievePatientsList = $i_conn->prepare(
-            "SELECT elencoPatologie.patologiaID, elencoTerapie.terapiaID, bridge.dataInizio, bridge.dataFine, bridge.note, elencoTerapie.terapia, elencoPatologie.nomePatologia
-            FROM bridgePazientiPatologieTerapie AS bridge JOIN elencoTerapie ON bridge.terapia_ID = elencoTerapie.terapiaID 
-            JOIN elencoPatologie ON elencoTerapie.patolog_ID = elencoPatologie.patologiaID
-            WHERE paziente_ID = ?");
+            "SELECT elencoPatologie.patologiaID, elencoTerapie.terapiaID, elencoTerapie.dataInizio, elencoTerapie.dataFine, elencoTerapie.note, elencoTerapie.terapia, elencoPatologie.nomePatologia
+            FROM elencoPatologie JOIN elencoTerapie ON elencoTerapie.patolog_ID = elencoPatologie.patologiaID WHERE paziente_ID = ?");
         $retrievePatientsList->bind_param("i", $ID);
         
         $retrievePatientsList->execute();
@@ -444,14 +442,24 @@
         $patientID = $insertNewPatient->insert_id;
 
         foreach($informazioniMediche as $info){
-            // echo var_dump($info);
-            // echo $info['nomePatologia'];
-            $insertNewInfoMediche = $i_conn->prepare(
-                "INSERT INTO `bridgePazientiPatologieTerapie` (`paziente_ID`, `patologia_ID`, `terapia_ID`, `dataInizio`, `dataFine`, `note`) 
-                VALUES (?, ?, ?, ?, ?, ?)"
+        // $terapia = $dataJson["terapia"];
+        // $note = $dataJson["note"];
+        // $patologiaID = $dataJson["patologiaID"];
+        
+            $saveNewTherapy = $i_conn->prepare(
+                "INSERT INTO `elencoTerapie` (`terapia`, `note`, `patolog_ID`, `dataInizio`, `dataFine`, `paziente_ID`) VALUES (?, ?, ?, ?, ?, ?)"
             );
-            $insertNewInfoMediche->bind_param("iiisss", $patientID, $info['patologiaID'], $info['terapiaID'], $info['dataInizio'], $info['dataFine'], $info['note']);
-            $insertNewInfoMediche->execute();
+            $saveNewTherapy->bind_param("ssissi", $info['terapia'], $info['note'], $info['patologiaID'], $info['dataInizio'], $info['dataFine'], $patientID);
+            $saveNewTherapy->execute();
+
+            // $terapiaID = $saveNewTherapy->insert_id;
+
+            // $insertNewInfoMediche = $i_conn->prepare(
+            //     "INSERT INTO `bridgePazientiPatologieTerapie` (`paziente_ID`, `patologia_ID`, `terapia_ID`, `dataInizio`, `dataFine`) 
+            //     VALUES (?, ?, ?, ?, ?)"
+            // );
+            // $insertNewInfoMediche->bind_param("iiiss", $patientID, $info['patologiaID'], $terapiaID, $info['dataInizio'], $info['dataFine']);
+            // $insertNewInfoMediche->execute();
         }
         return $patientID;
     }
@@ -476,16 +484,16 @@
         $updatePatient->execute();
         // $updatePatient->bind_result($result);
 
-        $deletePatologiePatient = $i_conn->prepare("DELETE FROM `bridgePazientiPatologieTerapie` WHERE `bridgePazientiPatologieTerapie`.`paziente_ID` = ?");
+        $deletePatologiePatient = $i_conn->prepare("DELETE FROM `elencoTerapie` WHERE `elencoTerapie`.`paziente_ID` = ?");
         $deletePatologiePatient->bind_param("i", $ID);
         $deletePatologiePatient->execute();
 
         foreach($informazioniMediche as $info){
             $insertNewInfoMediche = $i_conn->prepare(
-                "INSERT INTO `bridgePazientiPatologieTerapie` (`paziente_ID`, `patologia_ID`, `terapia_ID`, `dataInizio`, `dataFine`, `note`) 
+                "INSERT INTO `elencoTerapie` (`terapia`, `note`, `patolog_ID`, `dataInizio`, `dataFine`, `paziente_ID`) 
                 VALUES (?, ?, ?, ?, ?, ?)"
             );
-            $insertNewInfoMediche->bind_param("iiisss", $ID, $info['patologiaID'], $info['terapiaID'], $info['dataInizio'], $info['dataFine'], $info['note']);
+            $insertNewInfoMediche->bind_param("ssissi", $info['terapia'], $info['note'], $info['patologiaID'], $info['dataInizio'], $info['dataFine'], $ID);
             $insertNewInfoMediche->execute();
         }
 
@@ -1165,7 +1173,19 @@
     }
 
     function getTherapies($i_conn) {
-    	$result = $i_conn->query("SELECT * FROM elencoTerapie;");
+        $data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+
+        $ID = $dataJson["ID"];
+
+    	$therapies = $i_conn->prepare(
+            "SELECT elencoTerapie.terapiaID, elencoTerapie.terapia, elencoTerapie.note, elencoTerapie.dataInizio, elencoTerapie.dataFine, elencoTerapie.patolog_ID, 
+            patients.nome, patients.cognome 
+            FROM elencoTerapie JOIN patients ON `elencoTerapie`.`paziente_ID` = `patients`.`ID` WHERE `patients`.`doct_UID` = ?"
+        );
+        $therapies->bind_param("i", $ID);
+        $therapies->execute();
+        $result = $therapies->get_result();
         return $result;
     }
 
@@ -1263,9 +1283,11 @@
         $terapiaID = $dataJson["terapiaID"];
         $terapia = $dataJson["terapia"];
         $note = $dataJson["note"];
+        $dataInizio = $dataJson["dataInizio"];
+        $dataFine = $dataJson["dataFine"];
         
-        $editTherapy = $i_conn->prepare("UPDATE `elencoTerapie` SET `terapia` = ?, `note` = ? WHERE `elencoTerapie`.`terapiaID` = ?");
-        $editTherapy->bind_param("ssi", $terapia, $note, $terapiaID);
+        $editTherapy = $i_conn->prepare("UPDATE `elencoTerapie` SET `terapia` = ?, `note` = ?, `dataInizio` = ?, `dataFine` = ? WHERE `elencoTerapie`.`terapiaID` = ?");
+        $editTherapy->bind_param("ssssi", $terapia, $note, $dataInizio, $dataFine, $terapiaID);
         $editTherapy->execute();
 
         return $result;

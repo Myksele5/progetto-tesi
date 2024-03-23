@@ -4,17 +4,20 @@ import GenericButton from "../UI/GenericButton";
 import PatologiesContext from "../../context/patologies-context";
 import DeleteButton from "../UI/DeleteButton";
 import EditButton from "../UI/EditButton";
-import { Card } from "react-bootstrap";
+import { Card, Modal } from "react-bootstrap";
 
 function ElencoTerapie(){
     const patologies_ctx = useContext(PatologiesContext);
 
     const [patologia, setPatologia] = useState(patologies_ctx.patologiaSelezionata);
 
+    const [modaleModificaTerapia, setModaleModificaTerapia] = useState(false);
     const [IDterapiaDaModificare, setIDterapiaDaModificare] = useState();
     const [terapiaDaModificare, setTerapiaDaModificare] = useState("");
     const [validTerapia, setValidTerapia] = useState(true);
     const [noteDaModificare, setNoteDaModificare] = useState("");
+    const [dataInizioDaModificare, setDataInizioDaModificare] = useState("");
+    const [dataFineDaModificare, setDataFineDaModificare] = useState("");
 
     const [formNuovaTerapia, setFormNuovaTerapia] = useState(false);
 
@@ -22,10 +25,13 @@ function ElencoTerapie(){
         setPatologia(patologies_ctx.patologiaSelezionata)
     }, [patologies_ctx.patologiaSelezionata])
 
-    function editTherapy(terapiaID, terapia, note){
+    function editTherapy(terapiaID, terapia, note, dataInizio, dataFine){
+        setModaleModificaTerapia(true);
         setIDterapiaDaModificare(terapiaID);
         setTerapiaDaModificare(terapia);
         setNoteDaModificare(note);
+        setDataInizioDaModificare(dataInizio);
+        setDataFineDaModificare(dataFine);
     }
 
     function terapiaChangeHandler(event){
@@ -36,25 +42,23 @@ function ElencoTerapie(){
         setNoteDaModificare(event.target.value);
     }
 
-    function salvaNuovaTerapia(){
-        if(terapiaDaModificare.length > 3){
-            patologies_ctx.addNewTherapy(patologia.patologiaID, terapiaDaModificare, noteDaModificare);
-
-            setTerapiaDaModificare("");
-            setNoteDaModificare("");
-            setFormNuovaTerapia(false)
-        }
-        else{
-            setValidTerapia(false);
-        }
+    function dataInizioChangeHandler(event){
+        console.log(event.target.value)
+        setDataInizioDaModificare(event.target.value)
+    }
+    function dataFineChangeHandler(event){
+        setDataFineDaModificare(event.target.value)
     }
 
     function salvaModifica(){
         if(terapiaDaModificare.length > 3){
-            patologies_ctx.editTherapy(IDterapiaDaModificare, terapiaDaModificare, noteDaModificare);
+            console.log(dataInizioDaModificare)
+            patologies_ctx.editTherapy(IDterapiaDaModificare, terapiaDaModificare, noteDaModificare, dataInizioDaModificare, dataFineDaModificare);
             setIDterapiaDaModificare();
             setTerapiaDaModificare("");
             setNoteDaModificare("");
+            setDataInizioDaModificare("");
+            setDataFineDaModificare("");
         }
         else{
             setValidTerapia(false);
@@ -65,6 +69,8 @@ function ElencoTerapie(){
         setIDterapiaDaModificare();
         setTerapiaDaModificare("");
         setNoteDaModificare("");
+        setDataInizioDaModificare("")
+        setDataFineDaModificare("")
     }
 
     function deleteTherapy(terapiaID){
@@ -79,7 +85,7 @@ function ElencoTerapie(){
             {/* <div key={patologia.patologiaID} className={styles.wrapper_vertical}> */}
                 {!formNuovaTerapia &&
                 <>
-                    <div className={styles.wrapper_horizontal}>
+                    <div style={{position: "sticky", top:"0", zIndex: "1000"}} className={styles.wrapper_horizontal}>
                         <GenericButton
                             onClick={patologies_ctx.hideTherapiesList}
                             buttonText={"Chiudi elenco"}
@@ -87,130 +93,50 @@ function ElencoTerapie(){
                             red_styling
                         >
                         </GenericButton>
-                        <GenericButton
-                            onClick={() => {
-                                setFormNuovaTerapia(true);
-                            }}
-                            generic_button
-                            buttonText={"Aggiungi Terapia"}
-                        >
-                        </GenericButton>
-                </div>
+                    </div>
 
                     <h3 className={styles.subtitle}>Terapie per: {patologia.nomePatologia}</h3>
                     <hr style={{width: "100%", border: "1px solid #163172"}}></hr>
                 </>
-                }
+                } 
 
-                {formNuovaTerapia && 
-                <>
-                    <h2 style={{textAlign: "center"}} className={styles.subtitle}>Nuova Terapia per {patologia.nomePatologia}</h2>
- 
-                            <>
-                                <div className={styles.wrapper_vertical}>
-                                    <label className={`${styles.wrap_content} ${!validTerapia ? styles.invalid : ""}`}>Inserisci terapia:</label>
-                                    <textarea value={terapiaDaModificare} onChange={terapiaChangeHandler} className={`${styles.input_style_MODIFICA_TERAPIA} ${!validTerapia ? styles.invalid : ""}`}></textarea>
-                                    {!validTerapia && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una terapia valida. {"(min. 4 caratteri)"}</div>}
-                                </div>
-                                {/* <hr style={{width: "100%", border: "1px solid #163172"}}></hr> */}
-                                <div className={styles.wrapper_vertical}>
-                                    <label style={{color: "#163172"}} className={styles.wrap_content}>Inserisci note:</label>
-                                    <textarea value={noteDaModificare} onChange={noteChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
-                                </div>
-                                <hr style={{width: "100%", border: "1px solid #163172"}}></hr>
-                                <div className={styles.wrapper_horizontal}>
-                                    <GenericButton
-                                        onClick={() => {
-                                            setFormNuovaTerapia(false)
-                                        }}
-                                        buttonText={"Annulla"}
-                                        red_styling
-                                        generic_button
-                                    ></GenericButton>
-                                    <GenericButton
-                                        onClick={salvaNuovaTerapia}
-                                        buttonText={"Salva terapia"}
-                                        generic_button
-                                    ></GenericButton>
-                                </div>
-                                
-                            </>
-
-                </>
-                }
-
-                {patologia.terapie.length > 0 && !formNuovaTerapia &&
+                {patologia.terapie?.length > 0 &&
                     // <div className={`${styles.wrapper_vertical} ${styles.scrollable_div}`}>  
                     <>
                         {patologia.terapie.map((therapy) => (
                             <div key={therapy.terapiaID} className={styles.wrapper_horizontal}>
                                 <Card className={styles.card_style}>
                                     <div className={styles.wrapper_vertical}>
-                                    {IDterapiaDaModificare !== therapy.terapiaID && 
-                                    <>
-                                        <label className={styles.wrap_content}>Terapia disponibile:</label>
+                                        <label className={styles.wrap_content}>Terapia:</label>
                                         <h3 className={styles.wrap_content_TERAPIA}>{therapy.terapia}</h3>
-                                    </>
-                                    }
-                                    {IDterapiaDaModificare === therapy.terapiaID &&
-                                    <>
-                                        <label className={`${styles.wrap_content} ${!validTerapia ? styles.invalid : ""}`}>Terapia consigliata:</label>
-                                        <textarea onChange={terapiaChangeHandler} className={`${styles.input_style_MODIFICA_TERAPIA} ${!validTerapia ? styles.invalid : ""}`} value={terapiaDaModificare}></textarea>
-                                        {!validTerapia && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una terapia valida. {"(min. 4 caratteri)"}</div>}
-                                    </>
-                                    }
                                     </div>
-                                    {/* <hr style={{width: "100%", border: "1px solid #163172"}}></hr> */}
                                     <div className={styles.wrapper_vertical}>
-                                    {IDterapiaDaModificare !== therapy.terapiaID && 
-                                    <>
                                         <label className={styles.wrap_content}>Note:</label>
                                         <h3 className={styles.wrap_content_TERAPIA}>{therapy.note}</h3>
-                                    </>
-                                    }
-                                    {IDterapiaDaModificare === therapy.terapiaID &&
-                                    <>
-                                        <label style={{color: "#163172"}} className={styles.wrap_content}>Note:</label>
-                                        <textarea onChange={noteChangeHandler} className={styles.input_style_MODIFICA_TERAPIA} value={noteDaModificare}></textarea>
-                                    </>
-                                    }
+                                        <label className={styles.wrap_content}>Data inizio terapia:</label>
+                                        <h3 className={styles.wrap_content_TERAPIA}>{therapy.dataInizio ? therapy.dataInizio : "N.D"}</h3>
+                                        <label className={styles.wrap_content}>Data fine terapia:</label>
+                                        <h3 className={styles.wrap_content_TERAPIA}>{therapy.dataFine ? therapy.dataFine : "N.D"}</h3>
+                                        <label className={styles.wrap_content}>Assegnata a:</label>
+                                        <h3 className={styles.wrap_content_TERAPIA}>{therapy.nomePaziente} {therapy.cognomePaziente}</h3>
                                     </div>
                                     <Card.Footer>
                                         <div className={styles.wrapper_horizontal}>
-                                            {IDterapiaDaModificare !== therapy.terapiaID &&
-                                            <>
-                                                <GenericButton
-                                                    onClick={() => {
-                                                        editTherapy(therapy.terapiaID, therapy.terapia, therapy.note)
-                                                    }}
-                                                    generic_button
-                                                    buttonText={"Modifica"}
-                                                ></GenericButton>
-                                                <GenericButton
-                                                    onClick={() => {
-                                                        deleteTherapy(therapy.terapiaID)
-                                                    }}
-                                                    generic_button
-                                                    red_styling
-                                                    buttonText={"Elimina"}
-                                                ></GenericButton>
-                                            </>
-                                            }
-                                            {IDterapiaDaModificare === therapy.terapiaID &&
-                                            <>
-                                                    <GenericButton
-                                                        onClick={salvaModifica}
-                                                        buttonText={"Salva modifiche"}
-                                                        generic_button
-                                                    ></GenericButton>
-                                                <GenericButton
-                                                    onClick={annullaModifica}
-                                                    buttonText={"Annulla"}
-                                                    red_styling
-                                                    generic_button
-                                                ></GenericButton>
-                                            </>
-                                            }
+                                            <GenericButton
+                                                onClick={() => {
+                                                    editTherapy(therapy.terapiaID, therapy.terapia, therapy.note, therapy.dataInizio, therapy.dataFine)
+                                                }}
+                                                generic_button
+                                                buttonText={"Modifica"}
+                                            ></GenericButton>
+                                            <GenericButton
+                                                onClick={() => {
+                                                    deleteTherapy(therapy.terapiaID)
+                                                }}
+                                                generic_button
+                                                red_styling
+                                                buttonText={"Elimina"}
+                                            ></GenericButton>
                                         </div>
                                     </Card.Footer>
                                 </Card>
@@ -219,7 +145,48 @@ function ElencoTerapie(){
                     </>
                     // </div>
                 }
-                {patologia.terapie.length === 0 && 
+                <Modal size="lg" centered show={modaleModificaTerapia} className={styles.label_style}>
+                    <Modal.Header className={styles.text_subtitle}>Modifica terapia</Modal.Header>
+                    <Modal.Body>
+                        <label className={`${styles.label_style} ${!validTerapia ? styles.invalid : ""}`}>Terapia:</label>
+                        <textarea value={terapiaDaModificare} onChange={terapiaChangeHandler} className={`${styles.input_style_MODIFICA_TERAPIA} ${!validTerapia ? styles.invalid : ""}`}></textarea>
+                        {!validTerapia && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una terapia valida. {"(min. 4 caratteri)"}</div>}
+
+                        <label className={styles.label_style}>Note:</label>
+                        <textarea value={noteDaModificare} onChange={noteChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
+
+                        <label className={styles.label_style}>Data inizio</label>
+                        <input value={dataInizioDaModificare} onChange={dataInizioChangeHandler} className={styles.input_style} type="date"></input>
+
+                        <label className={styles.label_style}>Data fine</label>
+                        <input value={dataFineDaModificare} onChange={dataFineChangeHandler} min={dataInizioDaModificare} className={styles.input_style} type="date"></input>
+                    </Modal.Body>
+                    <Modal.Footer style={{justifyContent: "center"}}>
+                        <GenericButton
+                            onClick={() => {
+                                if(terapiaDaModificare.length > 3){
+                                    setModaleModificaTerapia(false)
+                                    salvaModifica();
+                                }
+                                else{
+                                    setValidTerapia(false)
+                                }
+                            }}
+                            generic_button={true}
+                            // red_styling
+                            buttonText="Aggiorna"
+                        >
+                        </GenericButton>
+                        <GenericButton
+                            onClick={() => {setModaleModificaTerapia(false)}}
+                            generic_button={true}
+                            red_styling
+                            buttonText="Chiudi"
+                        >
+                        </GenericButton>
+                    </Modal.Footer>
+                </Modal>
+                {patologia.terapie?.length === 0 && 
                     <h4>Non ci sono terapie salvate per questa patologia</h4>
                 }
                 

@@ -14,6 +14,7 @@ import SearchBox from "../UI/SearchBox";
 function Patologie(){
     const patologies_ctx = useContext(PatologiesContext);
 
+    const [modaleAggiuntaPatologia, setModaleAggiuntaPatologia] = useState(false);
     const [IDperModificaNome, setIDperModificaNome] = useState(-1);
     const [nomeDaModificare, setNomeDaModificare] = useState("");
     const [patologiaVisualizzata, setPatologiaVisualizzata] = useState({});
@@ -41,6 +42,12 @@ function Patologie(){
 
     function nomePatologiaChangeHandler(event){
         setNomeDaModificare(event.target.value);
+    }
+
+    async function salvaNuovaPatologia(){
+        await getServerMgr().saveNewPatologyWithTherapies(nomeDaModificare)
+        patologies_ctx.createUniqueObject();
+        setModaleAggiuntaPatologia(false);
     }
 
     async function aggiornaNomePatologia(){
@@ -80,10 +87,7 @@ function Patologie(){
                     </select>
 
                     <GenericButton
-                        onClick={() => {
-                            setPatologiaVisualizzata([]);
-                            patologies_ctx.showFormAddPatology();
-                        }}
+                        onClick={() => {setModaleAggiuntaPatologia(true)}}
                         buttonText={"Aggiungi Patologia"}
                         generic_button={true}
                     >
@@ -95,12 +99,32 @@ function Patologie(){
                     </SearchBox>
                 </div>
             }
-            {patologies_ctx.visibleLista && <h1 className={styles.page_title}>Patologie</h1>}
+            {patologies_ctx.visibleLista && <h1 className={styles.page_title}>Elenco Patologie</h1>}
 
             <div className={styles.wrapper_generico}>
-                {patologies_ctx.visibleFormAddPatology &&
-                    <AddPatologia></AddPatologia>
-                }
+                {/* {patologies_ctx.visibleFormAddPatology && */}
+                    {/* <AddPatologia></AddPatologia> */}
+                    <Modal centered show={modaleAggiuntaPatologia}>
+                        <Modal.Header className={styles.label_style}>Nuova patologia</Modal.Header>
+                        <Modal.Body>
+                            <label className={styles.label_style}>Nome patologia:</label>
+                            <input value={nomeDaModificare} onChange={nomePatologiaChangeHandler} className={styles.input_style}></input>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <GenericButton
+                                onClick={salvaNuovaPatologia}
+                                generic_button
+                                buttonText={"Salva"}
+                            ></GenericButton>
+                            <GenericButton
+                                onClick={() => {setModaleAggiuntaPatologia(false)}}
+                                generic_button
+                                red_styling
+                                buttonText={"Annulla"}
+                            ></GenericButton>
+                        </Modal.Footer>
+                    </Modal>
+                {/* // } */}
 
                 {patologies_ctx.visibleTherapiesList && 
                     <ElencoTerapie
@@ -174,13 +198,13 @@ function Patologie(){
                                         >
                                         </GenericAlternativeButton>
                                         
-                                        <GenericAlternativeButton
+                                        {/* <GenericAlternativeButton
                                             onClick={() => {
                                                 eliminaPatologia(pat.patologiaID, pat.nomePatologia)
                                             }}
                                             buttonText={"Elimina"}
                                             colore_rosso
-                                        ></GenericAlternativeButton>
+                                        ></GenericAlternativeButton> */}
                                     </div>
                                 </div>
                                 

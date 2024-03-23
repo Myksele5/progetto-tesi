@@ -76,7 +76,7 @@ export function PatologiesContextProvider(props){
 
         let resultTerapie;
         //PRENDO TERAPIE
-        resultTerapie = await getServerMgr().getTherapies()
+        resultTerapie = await getServerMgr().getTherapies(auth_ctx.utenteLoggatoUID)
         .catch((err) => {
             console.error(err)
         });
@@ -94,12 +94,17 @@ export function PatologiesContextProvider(props){
 
         resultPatologie.map((pat) => {
             let terapie = [];
-            resultTerapie.map((terap) => {
-                if(pat.patologiaID === terap.patolog_ID){
+            resultTerapie?.map((terap) => {
+                if(Number(pat.patologiaID) === Number(terap.patolog_ID)){
+                    console.log("UGUALEEEEEEEE")
                     let oggetto = {
                         terapiaID: terap.terapiaID,
                         terapia: terap.terapia,
-                        note: terap.note
+                        note: terap.note,
+                        dataInizio: terap.dataInizio,
+                        dataFine: terap.dataFine,
+                        nomePaziente: terap.nome,
+                        cognomePaziente: terap.cognome
                     }
                     terapie.push(oggetto);
                 }
@@ -268,8 +273,8 @@ export function PatologiesContextProvider(props){
         creaOggettoUnicoPatologieTerapie();
     }
 
-    async function modificaTerapia(terapiaID, terapia, note){
-        await getServerMgr().editTherapy(terapiaID, terapia, note)
+    async function modificaTerapia(terapiaID, terapia, note, dataInizio, dataFine){
+        await getServerMgr().editTherapy(terapiaID, terapia, note, dataInizio, dataFine)
         .catch((err) => {console.error(err)})
 
         creaOggettoUnicoPatologieTerapie();

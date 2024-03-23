@@ -690,8 +690,8 @@ function initServerMgr(cb) {
             return result
         }
     }
-    serverMgr.getTherapies = async (cb) => {
-        let result = await serverMgr.requestFetchData("getTherapies")
+    serverMgr.getTherapies = async (ID, cb) => {
+        let result = await serverMgr.requestFetchData("getTherapies", {ID: ID})
         if(cb) {
             cb(result)
         }
@@ -748,8 +748,8 @@ function initServerMgr(cb) {
         }
     }
 
-    serverMgr.editTherapy = async (terapiaID, terapia, note, cb) => {
-        let result = await serverMgr.requestFetchData("editTherapy", {terapiaID: terapiaID, terapia: terapia, note: note})
+    serverMgr.editTherapy = async (terapiaID, terapia, note, dataInizio, dataFine, cb) => {
+        let result = await serverMgr.requestFetchData("editTherapy", {terapiaID: terapiaID, terapia: terapia, note: note, dataInizio: dataInizio, dataFine: dataFine})
         if(cb) {
             cb(result)
         }

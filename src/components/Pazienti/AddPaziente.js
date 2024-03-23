@@ -8,6 +8,7 @@ import CardSmall from "../UI/CardSmall";
 import PatologiesContext from "../../context/patologies-context";
 import DeleteButton from "../UI/DeleteButton";
 import { Accordion, Collapse, Modal } from "react-bootstrap";
+import EditButton from "../UI/EditButton";
 
 function AddPaziente(props){
     const auth_ctx = useContext(AuthContext);
@@ -39,6 +40,7 @@ function AddPaziente(props){
     const [terapiaSelezionata, setTerapiaSelezionata] = useState();
     const [showFormAddTherapy, setShowFormAddTherapy] = useState(false);
 
+    const [countTerapie, setCountTerapie] = useState(1);
     const [terapiaDaModificare, setTerapiaDaModificare] = useState("");
     const [validTerapia, setValidTerapia] = useState(true);
     const [noteDaModificare, setNoteDaModificare] = useState("")
@@ -47,6 +49,9 @@ function AddPaziente(props){
     const [dataFineTerapia, setDataFineTerapia] = useState("");
 
     const [informazioniMediche, setInformazioniMediche] = useState([]);
+    const [ID_modificaTerapia, setID_modificaTerapia] = useState();
+    const [modaleAggiungiTerapia, setModaleAggiungiTerapia] = useState(false);
+    const [modaleModificaTerapia, setModaleModificaTerapia] = useState(false);
 
     const [modaleCreazioneAccount, setModaleCreazioneAccount] = useState(false);
     const [credenzialiInserite, setCredenzialiInserite] = useState(false);
@@ -57,7 +62,7 @@ function AddPaziente(props){
     const [validPsw, setValidPsw] = useState(true);
 
     useEffect(() => {
-        setPatologiaSelezionata("--seleziona--");
+        setPatologiaSelezionata("");
         patologies_ctx.cambiaPatologiaSelezionataFormPaziente({})
         setDataInizioTerapia("");
         setDataFineTerapia("");
@@ -302,6 +307,17 @@ function AddPaziente(props){
         patologies_ctx.cambiaPatologiaSelezionataFormPaziente({})
     }
 
+    const modificaTerapia = (terapiaID) => {
+        informazioniMediche.map((terapia) => {
+            if(terapia.terapiaID === terapiaID){
+                terapia.terapia = terapiaDaModificare
+                terapia.note = noteDaModificare
+                terapia.dataInizio = dataInizioTerapia
+                terapia.dataFine = dataFineTerapia
+            }
+        })
+    }
+
     const eliminaOggettoMedico = (id) => {
         let arrayTemporaneo = [];
 
@@ -352,14 +368,6 @@ function AddPaziente(props){
             patients_ctx.nuovoPazienteHandler();
         }
         
-        // setEnteredNome('');
-        // setValidNome(true);
-        // setEnteredCognome('');
-        // setValidCognome(true);
-        // setEnteredCittà('');
-        // setValidCittà(true);
-        // setEnteredData('');
-        // setValidData(true);
     }
 
     async function creaAccountPaziente(pazienteID){
@@ -454,29 +462,27 @@ function AddPaziente(props){
             <div className={styles.wrapper_step1}>
                 <h1 className={styles.title_form}>Inserisci i dati del paziente</h1>
                 <div className={styles.wrapper_vertical}>
-                    {/* <section className={styles.section_style_FORM}> */}
 
-                        <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome:</label>
-                        <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNome} onChange={nomeChangeHandler}></input>
-                        {!validNome && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un nome valido</div>}
+                    <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome:</label>
+                    <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNome} onChange={nomeChangeHandler}></input>
+                    {!validNome && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un nome valido</div>}
 
-                        <label className={`${styles.label_style} ${!validCognome ? styles.invalid : ""}`}>Cognome:</label>
-                        <input className={`${styles.input_style} ${!validCognome ? styles.invalid : ""}`} type="text" value={enteredCognome} onChange={cognomeChangeHandler}></input>
-                        {!validCognome && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un cognome valido</div>}
+                    <label className={`${styles.label_style} ${!validCognome ? styles.invalid : ""}`}>Cognome:</label>
+                    <input className={`${styles.input_style} ${!validCognome ? styles.invalid : ""}`} type="text" value={enteredCognome} onChange={cognomeChangeHandler}></input>
+                    {!validCognome && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un cognome valido</div>}
 
-                        <label className={`${styles.label_style} ${!validCittà ? styles.invalid : ""}`}>Città di nascita:</label>
-                        <input className={`${styles.input_style} ${!validCittà ? styles.invalid : ""}`} type="text" value={enteredCittà} onChange={cittàChangeHandler}></input>
-                        {!validCittà && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una città esistente</div>}
+                    <label className={`${styles.label_style} ${!validCittà ? styles.invalid : ""}`}>Città di nascita:</label>
+                    <input className={`${styles.input_style} ${!validCittà ? styles.invalid : ""}`} type="text" value={enteredCittà} onChange={cittàChangeHandler}></input>
+                    {!validCittà && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una città esistente</div>}
 
-                        <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}>Data di nascita:</label>
-                        <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" min="01-01-1800" max="31-31-2400" value={enteredData} onChange={dataNascitaChangeHandler}></input>
-                        {!validData && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una data valida</div>}
+                    <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}>Data di nascita:</label>
+                    <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" min="01-01-1800" max="31-31-2400" value={enteredData} onChange={dataNascitaChangeHandler}></input>
+                    {!validData && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una data valida</div>}
 
-                        <label className={`${styles.label_style} ${!validCF ? styles.invalid : ""}`}>Codice Fiscale:</label>
-                        <input className={`${styles.input_style} ${!validCF ? styles.invalid : ""}`} type="text" value={enteredCF} onChange={CFChangeHandler}></input>
-                        {!validCF && <div style={{width: "100%", color: "red", textAlign: "center"}}>Il codice fiscale deve contenere 16 caratteri</div>}
+                    <label className={`${styles.label_style} ${!validCF ? styles.invalid : ""}`}>Codice Fiscale:</label>
+                    <input className={`${styles.input_style} ${!validCF ? styles.invalid : ""}`} type="text" value={enteredCF} onChange={CFChangeHandler}></input>
+                    {!validCF && <div style={{width: "100%", color: "red", textAlign: "center"}}>Il codice fiscale deve contenere 16 caratteri</div>}
 
-                    {/* </section> */}
                 </div>
                 <hr className={styles.horizontal_line}></hr>
                 <div className={styles.horizontal}>
@@ -533,12 +539,21 @@ function AddPaziente(props){
                                                 <h5 className={`${styles.sintesiMedica_content_NOTE}`}>{oggetto.note}</h5>
                                             </div>
                                             <div style={{width: "100%", marginTop: "10px"}} className={styles.horizontal}>
+                                                <EditButton
+                                                    onClick={() => {
+                                                        setModaleModificaTerapia(true)
+                                                        setTerapiaDaModificare(oggetto.terapia)
+                                                        setNoteDaModificare(oggetto.note)
+                                                        setDataInizioTerapia(oggetto.dataInizio)
+                                                        setDataFineTerapia(oggetto.dataFine)
+                                                        setID_modificaTerapia(oggetto.terapiaID)
+                                                    }}
+                                                ></EditButton>
                                                 <DeleteButton onClick={
                                                     () => eliminaOggettoMedico(oggetto.terapiaID)
                                                 }>
                                                 </DeleteButton>
                                             </div>
-                                            
                                         </div>
                                         
                                     </Accordion.Body>
@@ -547,86 +562,133 @@ function AddPaziente(props){
                         </Accordion>
                     </div>
                 }
-                <div className={styles.wrapper_vertical}>
-                    <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
-                        <h2 className={styles.text_subtitle}>Seleziona patologia:</h2>
 
-                    </div>
+                <Modal size="lg" centered show={modaleModificaTerapia}>
+                    <Modal.Header className={styles.text_subtitle}>Modifica terapia</Modal.Header>
+                    <Modal.Body>
+                        <label className={`${styles.label_style} ${!validTerapia ? styles.invalid : ""}`}>Terapia:</label>
+                        <textarea value={terapiaDaModificare} onChange={terapiaChangeHandler} className={`${styles.input_style_MODIFICA_TERAPIA} ${!validTerapia ? styles.invalid : ""}`}></textarea>
+                        {!validTerapia && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una terapia valida. {"(min. 4 caratteri)"}</div>}
 
-                    <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
-                        <select value={patologiaSelezionata} onChange={patologiaSelezionataChangeHandler} className={styles.select_style}>
-                            <option hidden>--seleziona--</option>
-                            {patologies_ctx.uniqueList.map((singlePat) => (
-                                <option className={styles.option_style} key={singlePat.patologiaID}>{singlePat.nomePatologia}</option>
-                            ))}
-                        </select>
-                    </div>
+                        <label className={styles.label_style}>Note:</label>
+                        <textarea value={noteDaModificare} onChange={noteChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
+
+                        <label className={styles.label_style}>Data inizio</label>
+                        <input value={dataInizioTerapia} onChange={dataInizioTerapiaChangeHandler} className={styles.input_style_SHORT} type="date"></input>
+
+                        <label className={styles.label_style}>Data fine</label>
+                        <input value={dataFineTerapia} onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
+                    </Modal.Body>
+                    <Modal.Footer style={{justifyContent: "center"}}>
+                        <GenericButton
+                            onClick={() => {
+                                if(terapiaDaModificare.length > 3){
+                                    setModaleModificaTerapia(false)
+                                    modificaTerapia(ID_modificaTerapia);
+                                }
+                                else{
+                                    setValidTerapia(false)
+                                }
+                            }}
+                            generic_button={true}
+                            // red_styling
+                            buttonText="Aggiorna"
+                        >
+                        </GenericButton>
+                        <GenericButton
+                            onClick={() => {setModaleModificaTerapia(false)}}
+                            generic_button={true}
+                            red_styling
+                            buttonText="Chiudi"
+                        >
+                        </GenericButton>
+                    </Modal.Footer>
+                </Modal>
                 
-                    {showFormAddTherapy &&
-                        <>
-                            <div className={styles.wrapper_vertical}>
-                                <label className={`${styles.label_style} ${!validTerapia ? styles.invalid : ""}`}>Inserisci terapia:</label>
+                <div className={styles.vertical}>
+                    <GenericButton
+                        onClick={() => {
+                            setModaleAggiungiTerapia(true)
+                        }}
+                        generic_button={true}
+                        // red_styling
+                        buttonText="Aggiungi terapia"
+                    >
+                    </GenericButton>
+
+                    <Modal size="lg" centered show={modaleAggiungiTerapia}>
+                        <Modal.Header className={styles.text_subtitle}>Nuova terapia</Modal.Header>
+                        <Modal.Body>
+                            <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                <h2 className={styles.text_subtitle}>Seleziona patologia:</h2>
+
+                            </div>
+
+                            <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                <select value={patologiaSelezionata} onChange={patologiaSelezionataChangeHandler} className={styles.select_style}>
+                                    <option hidden>--seleziona--</option>
+                                    {patologies_ctx.uniqueList.map((singlePat) => (
+                                        <option className={styles.option_style} key={singlePat.patologiaID}>{singlePat.nomePatologia}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            {patologiaSelezionata.length > 0 &&
+                            <>
+                                <label className={`${styles.label_style} ${!validTerapia ? styles.invalid : ""}`}>Terapia:</label>
                                 <textarea value={terapiaDaModificare} onChange={terapiaChangeHandler} className={`${styles.input_style_MODIFICA_TERAPIA} ${!validTerapia ? styles.invalid : ""}`}></textarea>
                                 {!validTerapia && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una terapia valida. {"(min. 4 caratteri)"}</div>}
-                            </div>
-                            {/* <hr style={{width: "100%", border: "1px solid #163172"}}></hr> */}
-                            <div className={styles.wrapper_vertical}>
+
                                 <label className={styles.label_style}>Note:</label>
                                 <textarea value={noteDaModificare} onChange={noteChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
-                            </div>
-                            {/* <hr style={{width: "100%", border: "1px solid #163172"}}></hr> */}
-                            <div style={{width: "100%"}} className={styles.horizontal}>
-                                <GenericButton
-                                    onClick={() => {
-                                        setShowFormAddTherapy(false)
-                                    }}
-                                    buttonText={"Annulla"}
-                                    red_styling
-                                    generic_button
-                                ></GenericButton>
-                                <GenericButton
-                                    onClick={() => {
-                                        salvaNuovaTerapia(patologies_ctx.patologiaSelezionataFormPaziente.patologiaID);
-                                    }}
-                                    buttonText={"Salva nuova terapia"}
-                                    generic_button
-                                ></GenericButton>
-                            </div>
-                        </>
-                    }
-                    {patologies_ctx.patologiaSelezionataFormPaziente.terapie?.length === 0 && !showFormAddTherapy && <h2>Non ci sono terapie salvate.</h2>}
-                    {patologies_ctx.patologiaSelezionataFormPaziente.terapie?.length > 0 && !showFormAddTherapy && 
-                        <>
-                            <div className={styles.buttons_wrapper}>
-                                <GenericButton
-                                    onClick={() => {
-                                        setPatologiaSelezionata("--seleziona--");
-                                        patologies_ctx.cambiaPatologiaSelezionataFormPaziente({})
-                                        setDataInizioTerapia("");
-                                        setDataFineTerapia("");
-                                    }}
-                                    buttonText={"Annulla"}
-                                    red_styling
-                                    generic_button
-                                ></GenericButton>
-                                <GenericButton
-                                    onClick={() => {
-                                        setShowFormAddTherapy(true)
-                                    }}
-                                    buttonText={"Nuova Terapia"}
-                                    generic_button
-                                ></GenericButton>
-                            </div>
-                            <h2 className={styles.text_subtitle}>Elenco terapie:</h2>
-                            <div className={styles.scrollable_wrapper_terapie}>
-                                {patologies_ctx.patologiaSelezionataFormPaziente.terapie?.map(verificaTerapiaGiàAssegnata)}
-                            </div>
-                        </>
-                    }
+
+                                <label className={styles.label_style}>Data inizio</label>
+                                <input value={dataInizioTerapia} onChange={dataInizioTerapiaChangeHandler} className={styles.input_style_SHORT} type="date"></input>
+
+                                <label className={styles.label_style}>Data fine</label>
+                                <input value={dataFineTerapia} onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
+                            </>
+                            }
+                        </Modal.Body>
+                        <Modal.Footer style={{justifyContent: "center"}}>
+                            <GenericButton
+                                onClick={() => {
+                                    if(terapiaDaModificare.length > 3){
+                                        setModaleAggiungiTerapia(false)
+                                        addInformazioniMediche(
+                                            {
+                                                patologiaID: patologies_ctx.patologiaSelezionataFormPaziente.patologiaID,
+                                                nomePatologia: patologies_ctx.patologiaSelezionataFormPaziente.nomePatologia,
+                                                terapiaID: countTerapie,
+                                                terapia: terapiaDaModificare,
+                                                note: noteDaModificare,
+                                                dataInizio: dataInizioTerapia,
+                                                dataFine: dataFineTerapia
+                                            }
+                                        )
+                                        setCountTerapie((countTerapie) => countTerapie + 1)
+                                    }
+                                    else{
+                                        setValidTerapia(false)
+                                    }
+                                    
+                                }}
+                                generic_button={true}
+                                // red_styling
+                                buttonText="Aggiungi"
+                            >
+                            </GenericButton>
+                            <GenericButton
+                                onClick={() => {setModaleAggiungiTerapia(false)}}
+                                generic_button={true}
+                                red_styling
+                                buttonText="Chiudi"
+                            >
+                            </GenericButton>
+                        </Modal.Footer>
+                    </Modal>
                     
                 </div>
                 
-                {!showFormAddTherapy && patologiaSelezionata === "--seleziona--" &&
                 <>
                     <hr className={styles.horizontal_line}></hr>
                     <div className={styles.horizontal}>
@@ -645,7 +707,7 @@ function AddPaziente(props){
                     </div>
                 </>
                     
-                }
+                {/* } */}
             </div>
             }
 
