@@ -31,14 +31,22 @@ function TabellaStoricoTest(){
                 </div>
                 {tests_ctx.listaTest?.map((test) => (
                     <>
-                        <div className={styles.wrapper_horizontal_content} onClick={() => {tests_ctx.prendiTestPaziente(test.ID, test.nome, test.cognome, test.tipoTest, test.punteggioTest, test.dataSvolgimento)}}>
-                            {/* <div className={styles.label_nome}>{test.ID}</div> */}
-                            <div className={styles.content_nome}>{test.nome}</div>
-                            <div className={styles.content_cognome}>{test.cognome}</div>
-                            <div className={styles.content_tipoTest}>{test.tipoTest}</div>
-                            <div className={styles.content_scoreTest}>{test.punteggioTest}</div>
-                            <div className={styles.content_data}>{test.dataSvolgimento}</div>
-                        </div>
+                        {(tests_ctx.stringSearched.length === 0 || 
+                            (test.nome.toUpperCase().includes(tests_ctx.stringSearched.toUpperCase()) ||
+                            test.cognome.toUpperCase().includes(tests_ctx.stringSearched.toUpperCase()) ||
+                            test.tipoTest.toUpperCase().includes(tests_ctx.stringSearched.toUpperCase()) ||
+                            test.punteggioTest.toString().includes(tests_ctx.stringSearched))
+                            ) && 
+                        
+                            <div className={styles.wrapper_horizontal_content} onClick={() => {tests_ctx.prendiTestPaziente(test.ID, test.nome, test.cognome, test.tipoTest, test.punteggioTest, test.dataSvolgimento)}}>
+                                {/* <div className={styles.label_nome}>{test.ID}</div> */}
+                                <div className={styles.content_nome}>{test.nome}</div>
+                                <div className={styles.content_cognome}>{test.cognome}</div>
+                                <div className={styles.content_tipoTest}>{test.tipoTest}</div>
+                                <div className={styles.content_scoreTest}>{test.punteggioTest}</div>
+                                <div className={styles.content_data}>{test.dataSvolgimento}</div>
+                            </div>
+                        }
                     </>
                     ))
                 }

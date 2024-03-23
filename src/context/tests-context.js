@@ -21,7 +21,10 @@ const TestsContext = React.createContext({
     showFormAddValutazione: ()=>{},
     hideFormAddValutazione: ()=>{},
     salvaRisultatoMMSE: ()=>{},
-    salvaRisultatoMoCA: ()=>{}
+    salvaRisultatoMoCA: ()=>{},
+    cercaTest: ()=>{},
+    stringSearched: null,
+    selectOrder:()=>{}
 })
 
 export function TestsContextProvider(props){
@@ -32,6 +35,9 @@ export function TestsContextProvider(props){
     const [mainPage, setMainPage] = useState(true);
     const [schedaTest, setSchedaTest] = useState(false);
     const [formValutazione, setFormValutazione] = useState(false);
+
+    const [ordinamentoSelezionato, setOrdinamentoSelezionato] = useState("");
+    const [stringaCercata, setStringaCercata] = useState("");
 
     useEffect(() => {
         if(auth_ctx.utenteLoggato !== null){
@@ -140,6 +146,158 @@ export function TestsContextProvider(props){
         patients_ctx.updateListaPazienti();
     }
 
+    function searchTest(stringaDaCercare){
+        console.log(stringaDaCercare)
+        setStringaCercata(stringaDaCercare);
+    }
+
+    function ordinamento(orderBy){
+        switch(orderBy){
+            case "NOME - Asc":
+                ordinaPerNome("ASC");
+                break;
+            case "NOME - Disc":
+                ordinaPerNome("DISC");
+                break;
+            case "COGNOME - Asc":
+                ordinaPerCognome("ASC");
+                break;
+            case "COGNOME - Disc":
+                ordinaPerCognome("DISC");
+                break;
+            case "TIPO TEST - Asc":
+                ordinaPerTipoTest("ASC");
+                break;
+            case "TIPO TEST - Disc":
+                ordinaPerTipoTest("DISC");
+                break;
+            case "PUNTEGGIO - Asc":
+                ordinaPerPunteggioTest("ASC");
+                break;
+            case "PUNTEGGIO - Disc":
+                ordinaPerPunteggioTest("DISC");
+                break;
+            default:
+                break;
+        }
+        setOrdinamentoSelezionato(orderBy);
+    }
+
+    function ordinaPerNome(verso){
+        if(verso === "ASC"){
+            setElencoTest(elencoTest.sort(comparazionePerNome_ASCENDENTE));
+        }
+        if(verso === "DISC"){
+            setElencoTest(elencoTest.sort(comparazionePerNome_DISCENDENTE));
+        }
+        // console.log(elencoPazienti);
+    }
+
+    function comparazionePerNome_ASCENDENTE(a, b){
+        if(a.nome.toUpperCase() < b.nome.toUpperCase()){
+            return -1;
+        }
+        if(a.nome.toUpperCase() > b.nome.toUpperCase()){
+            return 1;
+        }
+        return 0;
+    }
+    function comparazionePerNome_DISCENDENTE(a, b){
+        if(a.nome.toUpperCase() > b.nome.toUpperCase()){
+            return -1;
+        }
+        if(a.nome.toUpperCase() < b.nome.toUpperCase()){
+            return 1;
+        }
+        return 0;
+    }
+
+    function ordinaPerCognome(verso){
+        if(verso === "ASC"){
+            setElencoTest(elencoTest.sort(comparazionePerCognome_ASCENDENTE));
+        }
+        if(verso === "DISC"){
+            setElencoTest(elencoTest.sort(comparazionePerCognome_DISCENDENTE));
+        }
+        // console.log(elencoPazienti);
+    }
+
+    function comparazionePerCognome_ASCENDENTE(a, b){
+        if(a.cognome.toUpperCase() < b.cognome.toUpperCase()){
+            return -1;
+        }
+        if(a.cognome.toUpperCase() > b.cognome.toUpperCase()){
+            return 1;
+        }
+        return 0;
+    }
+    function comparazionePerCognome_DISCENDENTE(a, b){
+        if(a.cognome.toUpperCase() > b.cognome.toUpperCase()){
+            return -1;
+        }
+        if(a.cognome.toUpperCase() < b.cognome.toUpperCase()){
+            return 1;
+        }
+        return 0;
+    }
+
+    function ordinaPerTipoTest(verso){
+        if(verso === "ASC"){
+            setElencoTest(elencoTest.sort(comparazionePerTipoTest_ASCENDENTE));
+        }
+        if(verso === "DISC"){
+            setElencoTest(elencoTest.sort(comparazionePerTipoTest_DISCENDENTE));
+        }
+        // console.log(elencoPazienti);
+    }
+
+    function comparazionePerTipoTest_ASCENDENTE(a, b){
+        if(a.tipoTest.toUpperCase() < b.tipoTest.toUpperCase()){
+            return -1;
+        }
+        if(a.tipoTest.toUpperCase() > b.tipoTest.toUpperCase()){
+            return 1;
+        }
+        return 0;
+    }
+    function comparazionePerTipoTest_DISCENDENTE(a, b){
+        if(a.tipoTest.toUpperCase() > b.tipoTest.toUpperCase()){
+            return -1;
+        }
+        if(a.tipoTest.toUpperCase() < b.tipoTest.toUpperCase()){
+            return 1;
+        }
+        return 0;
+    }
+    function ordinaPerPunteggioTest(verso){
+        if(verso === "ASC"){
+            setElencoTest(elencoTest.sort(comparazionePerPunteggioTest_ASCENDENTE));
+        }
+        if(verso === "DISC"){
+            setElencoTest(elencoTest.sort(comparazionePerPunteggioTest_DISCENDENTE));
+        }
+        // console.log(elencoPazienti);
+    }
+
+    function comparazionePerPunteggioTest_ASCENDENTE(a, b){
+        if(a.punteggioTest < b.punteggioTest){
+            return -1;
+        }
+        if(a.punteggioTest > b.punteggioTest){
+            return 1;
+        }
+        return 0;
+    }
+    function comparazionePerPunteggioTest_DISCENDENTE(a, b){
+        if(a.punteggioTest > b.punteggioTest){
+            return -1;
+        }
+        if(a.punteggioTest < b.punteggioTest){
+            return 1;
+        }
+        return 0;
+    }
+
     return(
         <TestsContext.Provider
         value={{
@@ -156,7 +314,10 @@ export function TestsContextProvider(props){
             showFormAddValutazione: showFormAddValutazione,
             hideFormAddValutazione: hideFormAddValutazione,
             salvaRisultatoMMSE: salvaRisultatoTestMMSE,
-            salvaRisultatoMoCA: salvaRisultatoTestMoCA
+            salvaRisultatoMoCA: salvaRisultatoTestMoCA,
+            cercaTest: searchTest,
+            stringSearched: stringaCercata,
+            selectOrder: ordinamento,
         }}
         >
             {props.children}
