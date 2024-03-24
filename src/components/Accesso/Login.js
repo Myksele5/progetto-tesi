@@ -26,7 +26,6 @@ function Login(){
         <>
         {mostraForm === 'LOGIN' && 
         <>
-            <h2>New Branch</h2>
             <LoginForm
                 goToPswDiment = {showRecuperoPassword}
                 goToRegForm = {showRegistrationForm}

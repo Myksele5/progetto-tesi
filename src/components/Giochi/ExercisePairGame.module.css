@@ -1,0 +1,19 @@
+.horizontal{
+    width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+}
+
+.card_wrapper{
+    border: 2px solid red;
+    padding: 10px;
+    margin: 10px;
+}
+
+.card_image_style{
+    width: 80px;
+    height: 80px;
+}

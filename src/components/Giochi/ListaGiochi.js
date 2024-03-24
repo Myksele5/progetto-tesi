@@ -33,7 +33,7 @@ function ListaGiochi(props){
                                                 props.iniziaGioco(lista.tipoGioco, lista.gameID, lista.livelloGioco)
                                             }}
                                             buttonText={"Gioca"}
-                                            is_disabled={lista.domandeID.length === 0 ? true : false}
+                                            is_disabled={lista.domandeID.length === 0  && lista.tipoGioco !== "GIOCO DELLE COPPIE" ? true : false}
                                             small_button
                                         ></GenericButton>
                                     </div>
@@ -80,7 +80,7 @@ function ListaGiochi(props){
                                 </div>
                             </div>
 
-                            {lista.domandeID.length === 0 
+                            {lista.domandeID.length === 0 && lista.tipoGioco !== "GIOCO DELLE COPPIE"
                             ? 
                             <>
                                 <hr className={styles.horizontal_line}></hr>

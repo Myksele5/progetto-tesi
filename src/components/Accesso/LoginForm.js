@@ -92,10 +92,10 @@ function LoginForm(props){
                 <h1 className={styles.title}>Login</h1>
 
                 <label className={`${styles.label_box} ${!validEmail ? styles.invalid : ''}`}>Email</label>
-                <input className={`${styles.input_box} ${!validEmail ? styles.invalid : ''}`} type="email" placeholder="Inserisci la tua email" value={email} onChange={emailChangeHandler}></input>
+                <input className={`${styles.input_box} ${!validEmail ? styles.invalid : ''}`} type="email" placeholder="Inserisci email" value={email} onChange={emailChangeHandler}></input>
                 
                 <label className={`${styles.label_box} ${!validPassword ? styles.invalid : ''}`}>Password</label>
-                <input className={`${styles.input_box} ${!validPassword ? styles.invalid : ''}`}type="password" placeholder="Inserisci la tua password" value={password} onChange={passwordChangeHandler}></input>
+                <input className={`${styles.input_box} ${!validPassword ? styles.invalid : ''}`}type="password" placeholder="Inserisci password" value={password} onChange={passwordChangeHandler}></input>
                 
                 {erroreLogin && <h2 style={{fontSize: "18px" ,color: "red"}}>Credenziali non corrette</h2>}
 

@@ -110,7 +110,7 @@ function AddGioco(props){
             setValidTitolo(true)
             valore_TITOLO = true
         }
-        if(domandeSelected.length === 0){
+        if(domandeSelected.length === 0 && tipologiaGioco !== "GIOCO DELLE COPPIE"){
             setValidNumeroDomande(false)
             valore_DOMANDE = false;
         }
@@ -142,6 +142,7 @@ function AddGioco(props){
                 <option>QUIZ</option>
                 <option>QUIZ CON IMMAGINI</option>
                 <option>COMPLETA LA PAROLA</option>
+                <option>GIOCO DELLE COPPIE</option>
             </select>
             
             {tipologiaGioco !== "" &&
@@ -184,14 +185,16 @@ function AddGioco(props){
                 <input className={`${styles.textbox_style} ${!validTitolo ? styles.invalid : ""}`} type="text" onChange={titoloGiocoChangeHandler}></input>
                 {!validTitolo && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un nome per il gioco</div>}
 
-                {!validNumeroDomande && <div style={{width: "100%", color: "red", textAlign: "center"}}>Devi selezionare almeno una domanda</div>}
+                {!validNumeroDomande && tipologiaGioco !== "GIOCO DELLE COPPIE" && <div style={{width: "100%", color: "red", textAlign: "center"}}>Devi selezionare almeno una domanda</div>}
                 
-                <ElencoDomande
-                    domandeNuovoGioco={creaOggettoDomande}
-                    tipoGioco={tipologiaGioco}
-                    // listaDomandeDaModificare={domande_nuovo_gioco}
-                >
-                </ElencoDomande>
+                {tipologiaGioco !== "GIOCO DELLE COPPIE" && 
+                    <ElencoDomande
+                        domandeNuovoGioco={creaOggettoDomande}
+                        tipoGioco={tipologiaGioco}
+                        // listaDomandeDaModificare={domande_nuovo_gioco}
+                    >
+                    </ElencoDomande>
+                }
             </>
             }
 
@@ -201,7 +204,7 @@ function AddGioco(props){
                         onClick={salvaNuovoGioco}
                         generic_button={true}
                         buttonText={"Salva Gioco"}
-                        is_disabled={!validTitolo ? true : !validNumeroDomande ? true : false}
+                        is_disabled={!validTitolo ? true : !validNumeroDomande && tipologiaGioco !== "GIOCO DELLE COPPIE" ? true : false}
                     >
                     </GenericButton>
                 }

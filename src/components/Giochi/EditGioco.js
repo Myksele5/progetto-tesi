@@ -14,10 +14,12 @@ function EditGioco(props){
     const game_ctx = useContext(GameContext);
 
     const [nomeGiocoModifica, setNomeGiocoModifica] = useState(props.nomeGioco);
+    const [validTitolo, setValidTitolo] = useState(true)
     const [tipoGiocoModifica, setTipoGiocoModifica] = useState(props.tipoGioco);
     const [livelloGiocoModifica, setLivelloGiocoModifica] = useState(props.difficulty);
     const [numeroRoundModifica, setNumeroRoundModifica] =  useState(props.numeroRound);
     const [domandeSelected, setDomandeSelected] = useState(game_ctx.domandeDaModificare);
+    const [validNumeroDomande, setValidNumeroDomande] = useState(true);
 
     const [selectedEasy, setSelectedEasy] = useState(false);
     const [selectedNormal, setSelectedNormal] = useState(false);
@@ -25,6 +27,10 @@ function EditGioco(props){
 
     var giocoID = props.gameID;
     // var categoriaFiltro = props.categoria;
+
+    useEffect(() => {
+        domandeSelected.length === 0 ? setValidNumeroDomande(false) : setValidNumeroDomande(true)
+    }, [domandeSelected])
 
     function highlightDifficulty(livelloGiocoModifica){
         if(livelloGiocoModifica === "FACILE"){
@@ -92,6 +98,7 @@ function EditGioco(props){
 
     function modificaOggettoDomande(domandeSelezionate, categoriaGame){
         // domande_gioco_da_modificare = JSON.stringify(domandeSelezionate);
+        domandeSelected.length === 0 ? setValidNumeroDomande(false) : setValidNumeroDomande(true);
         setDomandeSelected(domandeSelezionate);
         categoriaGioco = categoriaGame;
 
@@ -100,14 +107,35 @@ function EditGioco(props){
     }
 
     async function salvaGiocoAggiornato(){
-    
-        await getServerMgr().updateGame(nomeGiocoModifica, livelloGiocoModifica, categoriaGioco, domandeSelected, numeroRoundModifica, giocoID)
-        .catch((err) => {
-            console.error(err)
-        });
+        let valore_TITOLO = true;
+        let valore_DOMANDE = true;
 
-        props.chiudiFormModifica();
-        game_ctx.prendiTuttiGiochiDomande();
+        if(nomeGiocoModifica.length === 0){
+            setValidTitolo(false);
+            valore_TITOLO = false
+        }
+        else{
+            setValidTitolo(true)
+            valore_TITOLO = true
+        }
+        if(domandeSelected.length === 0 && tipoGiocoModifica !== "GIOCO DELLE COPPIE"){
+            setValidNumeroDomande(false)
+            valore_DOMANDE = false;
+        }
+        else{
+            setValidNumeroDomande(true);
+            valore_DOMANDE = true
+        }
+
+        if(valore_TITOLO && valore_DOMANDE){
+            await getServerMgr().updateGame(nomeGiocoModifica, livelloGiocoModifica, categoriaGioco, domandeSelected, numeroRoundModifica, giocoID)
+            .catch((err) => {
+                console.error(err)
+            });
+
+            props.chiudiFormModifica();
+            game_ctx.prendiTuttiGiochiDomande();
+        }
     }
 
     return(
@@ -153,8 +181,9 @@ function EditGioco(props){
                 </div>
             {/* </div> */}
 
-            <label className={styles.label_style}>Nome Gioco:</label>
-            <input className={styles.textbox_style} type="text" value={nomeGiocoModifica} onChange={nomeGiocoChangeHandler}></input>
+            <label className={`${styles.label_style} ${!validTitolo ? styles.invalid : ""}`}>Nome Gioco:</label>
+            <input className={`${styles.textbox_style} ${!validTitolo ? styles.invalid : ""}`} type="text" value={nomeGiocoModifica} onChange={nomeGiocoChangeHandler}></input>
+            {!validTitolo && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un nome per il gioco</div>}
             {tipoGiocoModifica === "RIFLESSI" &&
                 <>
                     <label className={styles.label_style}>Numero di round da giocare:</label>
@@ -162,7 +191,9 @@ function EditGioco(props){
                 </>
             }
 
-            {tipoGiocoModifica !== "RIFLESSI" && 
+            {!validNumeroDomande && tipoGiocoModifica !== "GIOCO DELLE COPPIE" && <div style={{width: "100%", color: "red", textAlign: "center"}}>Devi selezionare almeno una domanda</div>}
+
+            {tipoGiocoModifica !== "GIOCO DELLE COPPIE" && 
                 <ElencoDomande
                     booleanForNotReset={true}
                     domandeNuovoGioco={modificaOggettoDomande}
@@ -171,13 +202,6 @@ function EditGioco(props){
                 >
                 </ElencoDomande>
             }
-
-                    {/* () => {
-                        {tipoGiocoModifica !== "RIFLESSI" && game_ctx.salvaGiocoModificato(nomeGiocoModifica, livelloGiocoModifica, categoriaFiltro, domande_gioco_da_modificare, giocoID)}
-                        {tipoGiocoModifica === "RIFLESSI" && game_ctx.salvaGiocoModificato(nomeGiocoModifica, livelloGiocoModifica, "REFLEXES_GAME", numeroRoundModifica, giocoID)}
-
-                        props.chiudiFormModifica();
-                    } */}
 
             <div className={styles.wrapper_generico}>
                 <GenericButton

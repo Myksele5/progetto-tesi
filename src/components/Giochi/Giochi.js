@@ -13,6 +13,7 @@ import GuessTheWord from "./GuessTheWord";
 import ExerciseReflexes from "./ExerciseReflexes";
 import AuthContext from "../../context/auth-context";
 import AssignGameToPatient from "./AssignGameToPatient";
+import ExercisePairGame from "./ExercisePairGame";
 
 let modifica_gioco;
 let modifica_domanda;
@@ -53,21 +54,6 @@ function Giochi(){
         setShowSearchBoxAndButton(false);
         setShowElencoGiochi(false);
         setShowAddNewQuestion(true);
-        // var domandeDelGioco = [];
-        // var oggettoDomandeIDGioco = game_ctx.listaGiochi[1].domandeID;
-        // for(var i=0; i < game_ctx.domande.length; i++){
-        //     oggettoDomandeIDGioco.forEach((item) => {
-        //         if(item === game_ctx.domande[i].ID){
-        //             // console.log(game_ctx.domande[i]);
-        //             domandeDelGioco.push(game_ctx.domande[i]);
-        //         }
-        //     })
-        // }
-
-        // console.log(domandeDelGioco);
-        
-        // console.log(game_ctx.domande[0]);
-        // console.log(oggettoDomandeIDGioco);
     }
 
     function closeFormCreateNewQuestion(){
@@ -195,16 +181,12 @@ function Giochi(){
                 );
                 break;
 
-            case 'RIFLESSI':
-                console.log(domandeDelGioco)
+            case 'GIOCO DELLE COPPIE':
                 setGameObject(
-                    <ExerciseReflexes
+                    <ExercisePairGame
                         giocoTerminato={endGame}
-                        INDICEGIOCO={indice_gioco}
-                        TIPOGIOCO={stringa_TIPOGIOCO}
-                        numeroRound={game_ctx.listaGiochi[indice_gioco].numeroRound}
-                    >
-                    </ExerciseReflexes>
+                        giocoAnnullato={closeGameResults}
+                    ></ExercisePairGame>
                 );
                 break;
 
@@ -251,17 +233,14 @@ function Giochi(){
                 );
                 break;
 
-            // case 'RIFLESSI':
-            //     setGameObject(
-            //         <ExerciseReflexes
-            //             giocoTerminato={endGame}
-            //             INDICEGIOCO={indice_gioco}
-            //             TIPOGIOCO={stringa_TIPOGIOCO}
-            //             numeroRound={game_ctx.listaGiochi[indice_gioco].numeroRound}
-            //         >
-            //         </ExerciseReflexes>
-            //     );
-            //     break;
+            case 'GIOCO DELLE COPPIE':
+                setGameObject(
+                    <ExercisePairGame
+                        giocoTerminato={endGame}
+                        giocoAnnullato={closeGameResults}
+                    ></ExercisePairGame>
+                );
+                break;
 
             default:
                 setGameObject(null);

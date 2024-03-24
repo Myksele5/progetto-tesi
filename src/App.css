@@ -1,5 +1,6 @@
 .App {
   background-color: #282c34;
+  background-image: linear-gradient(to top,#142e6d, #2661af);
   height: 100vh;
   width: 100vw;
   display: flex;
