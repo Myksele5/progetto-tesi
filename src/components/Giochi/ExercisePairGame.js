@@ -122,7 +122,7 @@ function ExercisePairGame(props){
                 setFirstCardSelected(cartaCliccata);
                 setArrayCarte(arrayCarte.map((carta) => (carta.id === cartaCliccata.id ? {...carta, girata: true} : carta)))
             }
-            if(firstCardSelected && !secondCardSelected && !cartaCliccata.bloccaPunti){
+            if(firstCardSelected && !secondCardSelected && !cartaCliccata.bloccaPunti && (firstCardSelected.id !== cartaCliccata.id)){
                 setSecondCardSelected(cartaCliccata);
                 setArrayCarte(arrayCarte.map((carta) => (carta.id === cartaCliccata.id ? {...carta, girata: true} : carta)))
             }
