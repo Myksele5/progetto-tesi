@@ -3,6 +3,8 @@ import styles from "./ExercisePairGame.module.css";
 import { useEffect, useState } from "react";
 import star from "../Images-Giochi/star.png";
 import fish from "../Images-Giochi/fish.png";
+import leaf from "../Images-Giochi/leaf.png";
+import heart from "../Images-Giochi/favorite.png";
 import questionMark from "../Images-Giochi/question-sign.png";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 
@@ -11,28 +13,52 @@ function ExercisePairGame(props){
     let interval;
 
     const [gameStarted, setGameStarted] = useState(false);
+    const [gameFinished, setGameFinished] = useState(false);
+    const [carteGirate, setCarteGirate] = useState(0);
     const [arrayCarte, setArrayCarte] = useState([]);
     const [firstCardSelected, setFirstCardSelected] = useState();
     const [secondCardSelected, setSecondCardSelected] = useState();
+
+    const [numeroCoppie, setNumeroCoppie] = useState(0);
     const [punteggio, setPunteggio] = useState(0);
+    const [errori, setErrori] = useState(0);
 
     const [timer, setTimer] = useState(undefined);
 
     useEffect(() => {
         let countCard = 1;
         let arrayIniziale = []
+        let numero;
+        if(props.LIVELLOGIOCO === "FACILE"){
+            numero = 4
+        }
+        if(props.LIVELLOGIOCO === "MEDIA"){
+            numero = 6
+        }
+        if(props.LIVELLOGIOCO === "DIFFICILE"){
+            numero = 8
+        }
 
         //CREA CARTE
-        for(var i=0; i < 4; i++){
+        for(var i=0; i < numero; i++){
             if(countCard <= 2){
                 arrayIniziale.push({carta: "stella", id: i, girata: true, bloccaPunti: false})
             }
-            if(countCard > 2){
+            if(countCard > 2 && countCard <= 4){
                 arrayIniziale.push({carta: "pesce", id: i, girata: true, bloccaPunti: false})
+            }
+            if(countCard > 4 && countCard <= 6){
+                arrayIniziale.push({carta: "foglia", id: i, girata: true, bloccaPunti: false})
+            }
+            if(countCard > 6){
+                arrayIniziale.push({carta: "cuore", id: i, girata: true, bloccaPunti: false})
             }
             console.log(i)
             countCard++;
         }
+
+        setNumeroCoppie(arrayIniziale.length/2);
+
         //MISCHIA CARTE
         for(let i = arrayIniziale.length-1; i >= 0; i--){
             const j = Math.floor(Math.random() * (i+1));
@@ -60,12 +86,23 @@ function ExercisePairGame(props){
                 }
             }
             else{
-                setArrayCarte(arrayCarte.map((carta) => ({...carta, girata: false})))
+                setArrayCarte(arrayCarte.map((carta) => (! carta.bloccaPunti ? {...carta, girata: false} : carta)))
+                if(errori < numeroCoppie){
+                    setErrori((errore) => errore + 1);
+                }
             }
             setFirstCardSelected();
             setSecondCardSelected();
         }
+        aggiornaLogica();
     }, [firstCardSelected, secondCardSelected])
+
+    useEffect(() => {
+        if(gameFinished){
+            setGameStarted(false);
+            props.giocoTerminato((punteggio - errori), numeroCoppie);
+        }
+    }, [gameFinished])
 
     function iniziaGioco(){
         setGameStarted(true);
@@ -92,6 +129,31 @@ function ExercisePairGame(props){
         }
     }
 
+    function aggiornaLogica(){
+        let contaCarteGirate = 0;
+
+        if(timer <=0){
+            for(let i=0; i < arrayCarte.length; i++){
+                if(arrayCarte[i].bloccaPunti === false){
+                    break
+                }
+                else{
+                    contaCarteGirate++;
+                    // setCarteGirate(contaCarteGirate);
+                }
+            }
+    
+            if(contaCarteGirate === arrayCarte.length){
+                setGameFinished(true)
+            }
+        }
+        // arrayCarte.map((carta) => (carta.girata === true ? giocoTerminato = true : giocoTerminato = false))
+
+        // if(giocoTerminato){
+        //     props.giocoTerminato()
+        // }
+    }
+
     return(
         <>
             {!gameStarted &&
@@ -111,26 +173,36 @@ function ExercisePairGame(props){
                 </div>
             }
             {gameStarted &&
-                <div className={styles.horizontal}>
+                <div className={styles.wrapper_gioco}>
                     {timer > 0 &&
                     <>
-                        <p>Memorizza le carte!</p>
-                        <p>TIMER: {timer}</p>
+                        <p className={styles.domanda}>Memorizza le carte!</p>
+                        <p className={styles.domanda}>{timer}</p>
                     </> 
                     }
-                    {arrayCarte.map((carta) => (
-                        <ReactCardFlip isFlipped={carta.girata}>
-                            <div style={carta.bloccaPunti ? {borderColor: "green"} : {}} className={styles.card_wrapper} onClick={() => {giraCarta(carta)}}>
-                                <img className={styles.card_image_style} src={questionMark}></img>
-                            </div>
+                    {timer <= 0 &&
+                    <>
+                        <p className={styles.domanda}>Trova le coppie</p>
+                    </> 
+                    }
+                    <div className={styles.wrapper_bottoni_risposte}>
+                        {arrayCarte.map((carta) => (
+                            <ReactCardFlip isFlipped={carta.girata}>
+                                <div style={carta.bloccaPunti ? {borderColor: "green"} : {}} className={styles.card_wrapper} onClick={() => {giraCarta(carta)}}>
+                                    <img className={styles.card_image_style} src={questionMark}></img>
+                                </div>
 
-                            <div style={carta.bloccaPunti ? {borderColor: "green"} : {}} className={styles.card_wrapper} onClick={() => {giraCarta(carta)}}>
-                                {carta.carta === "stella" && <img className={styles.card_image_style} src={star}></img>}
-                                {carta.carta === "pesce" && <img className={styles.card_image_style} src={fish}></img>}
-                            </div>
-                        </ReactCardFlip>
-                    ))}
+                                <div style={carta.bloccaPunti ? {borderColor: "green"} : {}} className={styles.card_wrapper} onClick={() => {giraCarta(carta)}}>
+                                    {carta.carta === "stella" && <img className={styles.card_image_style} src={star}></img>}
+                                    {carta.carta === "pesce" && <img className={styles.card_image_style} src={fish}></img>}
+                                    {carta.carta === "foglia" && <img className={styles.card_image_style} src={leaf}></img>}
+                                    {carta.carta === "cuore" && <img className={styles.card_image_style} src={heart}></img>}
+                                </div>
+                            </ReactCardFlip>
+                        ))}
+                    </div>
                     <div>Punteggio: {punteggio}</div>
+                    <div>Errori: {errori}</div>
                 </div>
             }
         </>

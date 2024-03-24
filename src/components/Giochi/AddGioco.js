@@ -179,6 +179,7 @@ function AddGioco(props){
                         </RadioButton>
                         
                     </div>
+                    {tipologiaGioco === "GIOCO DELLE COPPIE" && <div>Per questo gioco la difficoltà selezionata determina il numero di coppie da indovinare</div>}
                 </div>
 
                 <label className={`${styles.label_style} ${!validTitolo ? styles.invalid : ""}`}>Nome del gioco:</label>

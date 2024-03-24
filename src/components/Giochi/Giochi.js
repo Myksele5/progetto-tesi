@@ -21,6 +21,11 @@ let assegnazione_gioco;
 let risultati_utente_gioco;
 
 var giocoSvoltoID;
+let TIPOGIOCO;
+let CODICEGIOCO;
+let LIVELLOGIOCO;
+let DOMANDEGIOCO = [];
+let INDICEGIOCO = -1;
 
 function Giochi(){
     const auth_ctx = useContext(AuthContext);
@@ -40,11 +45,11 @@ function Giochi(){
 
     // stringa_TIPOGIOCO, stringa_CODICEGIOCO, stringa_LIVELLOGIOCO
     // STATI PER FAR RIGIOCARE UN GIOCO
-    const [TIPOGIOCO, set_TIPOGIOCO] = useState("");
-    const [CODICEGIOCO, set_CODICEGIOCO] = useState("");
-    const [LIVELLOGIOCO, set_LIVELLOGIOCO] = useState("");
-    const [DOMANDEGIOCO, set_DOMANDEGIOCO] = useState([]);
-    const [INDICEGIOCO, set_INDICEGIOCO] = useState();
+    // const [TIPOGIOCO, set_TIPOGIOCO] = useState("");
+    // const [CODICEGIOCO, set_CODICEGIOCO] = useState("");
+    // const [LIVELLOGIOCO, set_LIVELLOGIOCO] = useState("");
+    // const [DOMANDEGIOCO, set_DOMANDEGIOCO] = useState([]);
+    // const [INDICEGIOCO, set_INDICEGIOCO] = useState(-1);
 
     function tipoGiocoChangeHandler(event){
         setTipoGiocoCercato(event.target.value);
@@ -122,9 +127,12 @@ function Giochi(){
     }
 
     function startGame(stringa_TIPOGIOCO, stringa_CODICEGIOCO, stringa_LIVELLOGIOCO){
-        set_TIPOGIOCO(stringa_TIPOGIOCO);
-        set_CODICEGIOCO(stringa_CODICEGIOCO);
-        set_LIVELLOGIOCO(stringa_LIVELLOGIOCO);
+        // set_TIPOGIOCO(stringa_TIPOGIOCO);
+        TIPOGIOCO = stringa_TIPOGIOCO
+        // set_CODICEGIOCO(stringa_CODICEGIOCO);
+        CODICEGIOCO = stringa_CODICEGIOCO
+        // set_LIVELLOGIOCO(stringa_LIVELLOGIOCO);
+        LIVELLOGIOCO = stringa_LIVELLOGIOCO
 
         var indice_gioco;
         for(var i = 0; i < game_ctx.listaGiochi.length; i++){
@@ -134,6 +142,8 @@ function Giochi(){
                 break;
             }
         }
+        // set_INDICEGIOCO(indice_gioco);
+        INDICEGIOCO = indice_gioco
         console.log("CODICE DEL GIOCO SELEZIONATO----> " + stringa_CODICEGIOCO);
 
         var domandeDelGioco = [];
@@ -148,8 +158,8 @@ function Giochi(){
             })
         }
         console.log(game_ctx.listaGiochi[indice_gioco]);
-        set_DOMANDEGIOCO(domandeDelGioco);
-        set_INDICEGIOCO(indice_gioco);
+        // set_DOMANDEGIOCO(domandeDelGioco);
+        DOMANDEGIOCO = domandeDelGioco
         
         switch(stringa_TIPOGIOCO){
             case 'QUIZ':
@@ -186,12 +196,16 @@ function Giochi(){
                     <ExercisePairGame
                         giocoTerminato={endGame}
                         giocoAnnullato={closeGameResults}
+                        INDICEGIOCO={indice_gioco}
+                        TIPOGIOCO={stringa_TIPOGIOCO}
+                        LIVELLOGIOCO={stringa_LIVELLOGIOCO}
                     ></ExercisePairGame>
                 );
                 break;
 
             default:
                 setGameObject(null);
+                break;
         }
         setShowSearchBoxAndButton(false);
         setShowElencoGiochi(false);
@@ -238,12 +252,16 @@ function Giochi(){
                     <ExercisePairGame
                         giocoTerminato={endGame}
                         giocoAnnullato={closeGameResults}
+                        INDICEGIOCO={INDICEGIOCO}
+                        TIPOGIOCO={TIPOGIOCO}
+                        LIVELLOGIOCO={LIVELLOGIOCO}
                     ></ExercisePairGame>
                 );
                 break;
 
             default:
                 setGameObject(null);
+                break;
         }
         // closeGameResults();
         setShowGameResults(false);
@@ -385,7 +403,7 @@ function Giochi(){
                         <option>QUIZ</option>
                         <option>QUIZ CON IMMAGINI</option>
                         <option>COMPLETA LA PAROLA</option>
-                        <option>RIFLESSI</option>
+                        <option>GIOCO DELLE COPPIE</option>
                     </select>
                     <GenericButton
                         onClick={formCreateNewQuestion}
@@ -444,7 +462,7 @@ function Giochi(){
 
                 {showGameResults && risultati_utente_gioco}
 
-                {gameObject}
+                {INDICEGIOCO !== -1 && gameObject}
                 
             </div>
         </>
