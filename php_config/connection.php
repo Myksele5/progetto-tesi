@@ -249,7 +249,7 @@
     function getConnection() {
 		$servername = "localhost";
         $username = "cognicare";
-        $password = "X9Udcf7C4xFW";
+        $password = "HZPYMynHhQm5";
         $database = "my_cognicare";
         
         $o_conn = new mysqli($servername, $username, $password, $database);
