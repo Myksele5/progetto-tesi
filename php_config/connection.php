@@ -248,9 +248,9 @@
     
     function getConnection() {
 		$servername = "localhost";
-        $username = "myks";
+        $username = "cognicare";
         $password = "X9Udcf7C4xFW";
-        $database = "my_myks";
+        $database = "my_cognicare";
         
         $o_conn = new mysqli($servername, $username, $password, $database);
         if ($o_conn -> connect_errno) {
@@ -821,7 +821,7 @@
         $codeRecovery->bind_result($result);
 
         $subject = 'Reset Password';
-        $message = 'https://myks.altervista.org/psw_recovery?code='.$variabile;
+        $message = 'https://cognicare.altervista.org/psw_recovery?code='.$variabile;
         $headers = array(
             'From' => 'webmaster@example.com',
             'X-Mailer' => 'PHP/' . phpversion()
@@ -846,7 +846,7 @@
         $codeRecovery->bind_result($result);
 
         $subject = 'Reset Password';
-        $message = 'https://myks.altervista.org/psw_recovery?code='.$variabile;
+        $message = 'https://cognicare.altervista.org/psw_recovery?code='.$variabile;
         $headers = array(
             'From' => 'webmaster@example.com',
             'X-Mailer' => 'PHP/' . phpversion()
@@ -871,7 +871,7 @@
         $codeRecovery->bind_result($result);
 
         $subject = 'Reset Password';
-        $message = 'https://myks.altervista.org/psw_recovery?code='.$variabile;
+        $message = 'https://cognicare.altervista.org/psw_recovery?code='.$variabile;
         $headers = array(
             'From' => 'webmaster@example.com',
             'X-Mailer' => 'PHP/' . phpversion()

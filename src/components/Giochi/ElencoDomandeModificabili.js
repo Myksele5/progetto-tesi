@@ -15,7 +15,7 @@ function ElencoDomandeModificabili(props){
     var categorie = game_ctx.recuperaCategorieDomande(gameType);
     const [categoryFilter, setCategoryFilter] = useState("Tutte");
 
-    const websiteUrl = "https://myks.altervista.org/uploads/";
+    const websiteUrl = "https://cognicare.altervista.org/uploads/";
 
     function gameTypeChangeHandler(event){
         setCategoryFilter("Tutte")

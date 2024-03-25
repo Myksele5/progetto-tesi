@@ -264,7 +264,7 @@ function SchedaPaziente(props){
                                             </div>
                                             <div className={styles.wrapper_vertical}>
                                                 <label className={styles.tag_style}>QR Code:</label>
-                                                <QRCode value={`https://myks.altervista.org/QRCodeLogin/${credentials[0].UID}`} size={160}></QRCode>
+                                                <QRCode value={`https://cognicare.altervista.org/QRCodeLogin/${credentials[0].UID}`} size={160}></QRCode>
                                             </div>
                                         </div>
                                     </Modal.Body>

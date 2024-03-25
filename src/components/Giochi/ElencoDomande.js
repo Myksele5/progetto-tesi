@@ -20,7 +20,7 @@ function ElencoDomande(props){
 
     var categorie = game_ctx.recuperaCategorieDomande(props.tipoGioco);
 
-    const websiteUrl = "https://myks.altervista.org/uploads/";
+    const websiteUrl = "https://cognicare.altervista.org/uploads/";
 
     //------- CREA QUI L'ARRAY CHE CONTIENE LE DOMANDE DENTRO verifyIsChecked
     useEffect(() => {

@@ -31,7 +31,7 @@ function initServerMgr(cb) {
         })
 
         try{
-            const response = await fetch("https://myks.altervista.org/connection.php", {
+            const response = await fetch("https://cognicare.altervista.org/connection.php", {
                 method: "POST",
                 mode: "cors",
                 headers: {

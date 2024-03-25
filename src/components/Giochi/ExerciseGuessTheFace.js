@@ -52,7 +52,7 @@ function ExerciseGuessTheFace(props){
     const [timer, setTimer] = useState(undefined);
     const questions = props.domandeGioco;
 
-    const websiteUrl = "https://myks.altervista.org/uploads/";
+    const websiteUrl = "https://cognicare.altervista.org/uploads/";
 
     useEffect(() => {
         counter_question_number = 0;
