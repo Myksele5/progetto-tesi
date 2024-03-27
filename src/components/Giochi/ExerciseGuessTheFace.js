@@ -28,6 +28,7 @@ function ExerciseGuessTheFace(props){
 
     const [gameStarted, setGameStarted] = useState(false);
     const [hasAnswered, setHasAnswered] = useState(false);
+    const [messaggioRisposta, setMessaggioRisposta] = useState(null);
 
     const [rispCorretteMultiple, setRispCorretteMultiple] = useState(false);
     
@@ -157,6 +158,7 @@ function ExerciseGuessTheFace(props){
                 }
                 if(arrayRisposteCorrette.length === 0){
                     counter_correct_answers++;
+                    setMessaggioRisposta(true)
                     clearInterval(interval);
                     setDisableButton(true);
                     setHasAnswered(true);
@@ -172,6 +174,7 @@ function ExerciseGuessTheFace(props){
                     arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
                     setColoraRispostaCorretta_N8(false);
                 }
+                setMessaggioRisposta(false)
                 setColoraRispostaSbagliata_N1(true);
                 clearInterval(interval);
                 setDisableButton(true);
@@ -190,6 +193,7 @@ function ExerciseGuessTheFace(props){
                 }
                 if(arrayRisposteCorrette.length === 0){
                     counter_correct_answers++;
+                    setMessaggioRisposta(true)
                     clearInterval(interval);
                     setDisableButton(true);
                     setHasAnswered(true);
@@ -205,6 +209,7 @@ function ExerciseGuessTheFace(props){
                     arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
                     setColoraRispostaCorretta_N8(false);
                 }
+                setMessaggioRisposta(false)
                 setColoraRispostaSbagliata_N2(true);
                 clearInterval(interval);
                 setDisableButton(true);
@@ -222,6 +227,7 @@ function ExerciseGuessTheFace(props){
                 }
                 if(arrayRisposteCorrette.length === 0){
                     counter_correct_answers++;
+                    setMessaggioRisposta(true)
                     clearInterval(interval);
                     setDisableButton(true);
                     setHasAnswered(true);
@@ -237,6 +243,7 @@ function ExerciseGuessTheFace(props){
                     arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
                     setColoraRispostaCorretta_N8(false);
                 }
+                setMessaggioRisposta(false)
                 setColoraRispostaSbagliata_N3(true);
                 clearInterval(interval);
                 setDisableButton(true);
@@ -254,6 +261,7 @@ function ExerciseGuessTheFace(props){
                 }
                 if(arrayRisposteCorrette.length === 0){
                     counter_correct_answers++;
+                    setMessaggioRisposta(true)
                     clearInterval(interval);
                     setDisableButton(true);
                     setHasAnswered(true);
@@ -269,6 +277,7 @@ function ExerciseGuessTheFace(props){
                     arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
                     setColoraRispostaCorretta_N8(false);
                 }
+                setMessaggioRisposta(false)
                 setColoraRispostaSbagliata_N4(true);
                 clearInterval(interval);
                 setDisableButton(true);
@@ -285,6 +294,7 @@ function ExerciseGuessTheFace(props){
                 }
                 if(arrayRisposteCorrette.length === 0){
                     counter_correct_answers++;
+                    setMessaggioRisposta(true)
                     clearInterval(interval);
                     setDisableButton(true);
                     setHasAnswered(true);
@@ -300,6 +310,7 @@ function ExerciseGuessTheFace(props){
                     arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
                     setColoraRispostaCorretta_N8(false);
                 }
+                setMessaggioRisposta(false)
                 setColoraRispostaSbagliata_N5(true);
                 clearInterval(interval);
                 setDisableButton(true);
@@ -316,6 +327,7 @@ function ExerciseGuessTheFace(props){
                 }
                 if(arrayRisposteCorrette.length === 0){
                     counter_correct_answers++;
+                    setMessaggioRisposta(true)
                     clearInterval(interval);
                     setDisableButton(true);
                     setHasAnswered(true);
@@ -331,6 +343,7 @@ function ExerciseGuessTheFace(props){
                     arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
                     setColoraRispostaCorretta_N8(false);
                 }
+                setMessaggioRisposta(false)
                 setColoraRispostaSbagliata_N6(true);
                 clearInterval(interval);
                 setDisableButton(true);
@@ -347,6 +360,7 @@ function ExerciseGuessTheFace(props){
                 }
                 if(arrayRisposteCorrette.length === 0){
                     counter_correct_answers++;
+                    setMessaggioRisposta(true)
                     clearInterval(interval);
                     setDisableButton(true);
                     setHasAnswered(true);
@@ -362,6 +376,7 @@ function ExerciseGuessTheFace(props){
                     arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
                     setColoraRispostaCorretta_N8(false);
                 }
+                setMessaggioRisposta(false)
                 setColoraRispostaSbagliata_N7(true);
                 clearInterval(interval);
                 setDisableButton(true);
@@ -378,6 +393,7 @@ function ExerciseGuessTheFace(props){
                 }
                 if(arrayRisposteCorrette.length === 0){
                     counter_correct_answers++;
+                    setMessaggioRisposta(true)
                     clearInterval(interval);
                     setDisableButton(true);
                     setHasAnswered(true);
@@ -393,6 +409,7 @@ function ExerciseGuessTheFace(props){
                     arrayRisposteCorrette[x] === answer7 ? setColoraRispostaCorretta_N7(true) : arrayRisposteCorrette[x] === answer8 ? setColoraRispostaCorretta_N8(true) :
                     setColoraRispostaCorretta_N8(false);
                 }
+                setMessaggioRisposta(false)
                 setColoraRispostaSbagliata_N8(true);
                 clearInterval(interval);
                 setDisableButton(true);
@@ -517,11 +534,17 @@ function ExerciseGuessTheFace(props){
                 <div className={styles.wrapper_gioco}>
                     {tipoQuiz === "QUIZ CON IMMAGINI" && 
                         <>
-                            <h3 className={styles.domanda}>{questions[counter_question_number].domanda}</h3>
+                            <h1 className={styles.domanda}>Domanda N.{counter_question_number+1}</h1>
+                            <h1 className={styles.domanda}>{questions[counter_question_number].domanda}</h1>
                             <img className={styles.resize_image} src={websiteUrl.concat(questions[counter_question_number].immagine)} alt='Face'></img>
                         </>
                     }
-                    {tipoQuiz === "QUIZ" && <h1 className={styles.domanda}>{questions[counter_question_number].domanda}</h1>}
+                    {tipoQuiz === "QUIZ" && 
+                    <>
+                        <h1 className={styles.domanda}>Domanda N.{counter_question_number+1}</h1>
+                        <h1 className={styles.domanda}>{questions[counter_question_number].domanda}</h1>
+                    </>
+                    }
 
                     {rispCorretteMultiple && 
                         <Badge bg='warning' text='dark' style={{fontSize: "15px"}}>! Questa domanda ha più risposte corrette !</Badge>
@@ -533,11 +556,15 @@ function ExerciseGuessTheFace(props){
                     </div>
                     
                     {hasAnswered && 
-                        <GenericAlternativeButton
-                            onClick={aggiornaLogica}
-                            buttonText={"PROSSIMA"}
-                        >
-                        </GenericAlternativeButton>
+                        <>
+                            <GenericAlternativeButton
+                                onClick={aggiornaLogica}
+                                buttonText={"PROSSIMA"}
+                            >
+                            </GenericAlternativeButton>
+                            {messaggioRisposta && <p style={{color: "green"}} className={styles.messaggio_risposta}>😍 Complimenti! Hai indovinato</p>}
+                            {!messaggioRisposta && <p style={{color: "red"}}className={styles.messaggio_risposta}>😔 Peccato. Risposta sbagliata</p>}
+                        </>
                     }
                     
                     <div className={styles.wrapper_bottoni_risposte}>

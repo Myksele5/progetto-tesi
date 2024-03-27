@@ -82,6 +82,12 @@
     margin: 8px;
 }
 
+.messaggio_risposta{
+    font-size: 18px;
+    font-weight: bold;
+    margin: 5px;
+}
+
 @media screen and (max-width: 1700px) {
     .resize_image{
         width: 420px;
