@@ -5,6 +5,7 @@ import star from "../Images-Giochi/star.png";
 import fish from "../Images-Giochi/fish.png";
 import leaf from "../Images-Giochi/leaf.png";
 import heart from "../Images-Giochi/favorite.png";
+import cat from "../Images-Giochi/kitty.png"
 import questionMark from "../Images-Giochi/question-sign.png";
 import GenericAlternativeButton from "../UI/GenericAlternativeButton";
 
@@ -26,17 +27,24 @@ function ExercisePairGame(props){
     const [timer, setTimer] = useState(undefined);
 
     useEffect(() => {
+        console.log(props.numeroCoppie)
+    }, [])
+
+    useEffect(() => {
         let countCard = 1;
         let arrayIniziale = []
         let numero;
-        if(props.LIVELLOGIOCO === "FACILE"){
+        if(Number(props.numeroCoppie) === 2){
             numero = 4
         }
-        if(props.LIVELLOGIOCO === "MEDIA"){
+        if(Number(props.numeroCoppie) === 3){
             numero = 6
         }
-        if(props.LIVELLOGIOCO === "DIFFICILE"){
+        if(Number(props.numeroCoppie) === 4){
             numero = 8
+        }
+        if(Number(props.numeroCoppie)  === 5){
+            numero = 10
         }
 
         //CREA CARTE
@@ -50,8 +58,11 @@ function ExercisePairGame(props){
             if(countCard > 4 && countCard <= 6){
                 arrayIniziale.push({carta: "foglia", id: i, girata: true, bloccaPunti: false})
             }
-            if(countCard > 6){
+            if(countCard > 6 && countCard <= 8){
                 arrayIniziale.push({carta: "cuore", id: i, girata: true, bloccaPunti: false})
+            }
+            if(countCard > 8){
+                arrayIniziale.push({carta: "gatto", id: i, girata: true, bloccaPunti: false})
             }
             console.log(i)
             countCard++;
@@ -147,11 +158,6 @@ function ExercisePairGame(props){
                 setGameFinished(true)
             }
         }
-        // arrayCarte.map((carta) => (carta.girata === true ? giocoTerminato = true : giocoTerminato = false))
-
-        // if(giocoTerminato){
-        //     props.giocoTerminato()
-        // }
     }
 
     return(
@@ -197,6 +203,7 @@ function ExercisePairGame(props){
                                     {carta.carta === "pesce" && <img className={styles.card_image_style} src={fish}></img>}
                                     {carta.carta === "foglia" && <img className={styles.card_image_style} src={leaf}></img>}
                                     {carta.carta === "cuore" && <img className={styles.card_image_style} src={heart}></img>}
+                                    {carta.carta === "gatto" && <img className={styles.card_image_style} src={cat}></img>}
                                 </div>
                             </ReactCardFlip>
                         ))}

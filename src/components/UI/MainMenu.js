@@ -74,6 +74,7 @@ function MainMenu(props){
                     <OverlayTrigger rootClose rootCloseEvent="click" trigger="click" placement="bottom" overlay={
                         <Popover>
                             <Popover.Body style={{maxWidth: "250px"}}>
+                                {/* <p className={styles.utente_loggato_FULLNAME}>{auth_ctx.tipoAccount}</p> */}
                                 <p className={styles.utente_loggato_FULLNAME}>{auth_ctx.nomeUtenteLoggato} {auth_ctx.cognomeUtenteLoggato}</p>
                                 <p className={styles.utente_loggato}>{auth_ctx.utenteLoggato}</p>
                                 <button
@@ -99,14 +100,14 @@ function MainMenu(props){
                             </Nav.Item>
                         </Link>
                     }
-                    {auth_ctx.tipoAccount !== "Paziente" &&
-                        <Link className={styles.menu_option} style={{textDecoration: "none"}} to={`/patologie/${auth_ctx.utenteLoggatoUID}`}>
-                            <Nav.Item className={`${styles.menu_option} ${props.selected === "PATOLOGIE" ? styles.menu_option_SELECTED : ''}`}>
-                                <img className={styles.image_option} src={dialogue} alt="patologie"></img>
-                                <div className={styles.menu_text_option}>Patologie</div>
-                            </Nav.Item>
-                        </Link>
-                    }
+                    
+                    <Link className={styles.menu_option} style={{textDecoration: "none"}} to={`/patologie/${auth_ctx.utenteLoggatoUID}`}>
+                        <Nav.Item className={`${styles.menu_option} ${props.selected === "PATOLOGIE" ? styles.menu_option_SELECTED : ''}`}>
+                            <img className={styles.image_option} src={dialogue} alt="patologie"></img>
+                            {auth_ctx.tipoAccount !== "Paziente" && <div className={styles.menu_text_option}>Patologie</div>}
+                            {auth_ctx.tipoAccount === "Paziente" && <div className={styles.menu_text_option}>Le mie terapie</div>}
+                        </Nav.Item>
+                    </Link>
                     
                     {auth_ctx.tipoAccount !== "Paziente" &&
                         <Link className={styles.menu_option} style={{textDecoration: "none"}} to={`/test/${auth_ctx.utenteLoggatoUID}`}>

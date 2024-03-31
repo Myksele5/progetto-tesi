@@ -83,14 +83,14 @@ function Giochi(){
         // let numeroRound = JSON.parse(listaa.domande);
         // console.log(testjson);
 
-        if(listaa.tipoGioco === "RIFLESSI"){
+        if(listaa.tipoGioco === "GIOCO DELLE COPPIE"){
             modifica_gioco =
             <EditGioco
                 nomeGioco={listaa.nomeGioco}
                 tipoGioco={listaa.tipoGioco}
                 difficulty={listaa.livelloGioco}
                 categoria={listaa.categoriaGioco}
-                numeroRound={listaa.numeroRound}
+                numero={listaa.numero}
                 gameID={listaa.gameID}
                 chiudiFormModifica={closeFormEditGame}
             >
@@ -134,11 +134,14 @@ function Giochi(){
         // set_LIVELLOGIOCO(stringa_LIVELLOGIOCO);
         LIVELLOGIOCO = stringa_LIVELLOGIOCO
 
+        let coppie;
+
         var indice_gioco;
         for(var i = 0; i < game_ctx.listaGiochi.length; i++){
             if(stringa_CODICEGIOCO === game_ctx.listaGiochi[i].gameID){
                 indice_gioco = i;
                 giocoSvoltoID = game_ctx.listaGiochi[i].gameID;
+                coppie = game_ctx.listaGiochi[i].numero
                 break;
             }
         }
@@ -199,6 +202,7 @@ function Giochi(){
                         INDICEGIOCO={indice_gioco}
                         TIPOGIOCO={stringa_TIPOGIOCO}
                         LIVELLOGIOCO={stringa_LIVELLOGIOCO}
+                        numeroCoppie={coppie}
                     ></ExercisePairGame>
                 );
                 break;

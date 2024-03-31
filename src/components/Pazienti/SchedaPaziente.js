@@ -284,7 +284,7 @@ function SchedaPaziente(props){
                     </div>
                     <hr className={styles.horizontal_line}/>
                 </Tab>
-                <Tab eventKey={"SCHEDA_MEDICA"} title={"Terapie"}>
+                <Tab eventKey={"SCHEDA_MEDICA"} title={"Scheda Medica"}>
                 <>
                     {informazioniMediche.length === 0 && <h4 style={{textAlign: "center", marginTop: "20px"}}>Non ci sono informazioni mediche su questo paziente</h4>}
                     {informazioniMediche.length > 0 && 

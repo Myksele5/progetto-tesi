@@ -16,7 +16,7 @@ function AddGioco(props){
     const [titoloGioco, setTitoloGioco] = useState("");
     const [validTitolo, setValidTitolo] = useState(true)
     const [livelloGioco, setLivelloGioco] = useState("MEDIA");
-    const [numeroRound, setNumeroRound] = useState(null);
+    const [numeroCoppie, setNumeroCoppie] = useState(null);
     const [domandeSelected, setDomandeSelected] = useState([]);
     const [validNumeroDomande, setValidNumeroDomande] = useState(true);
 
@@ -29,7 +29,7 @@ function AddGioco(props){
 
     useEffect(() => {
         setDomandeSelected([]);
-        setNumeroRound(null);
+        // setNumeroRound(null);
     }, [tipologiaGioco])
 
     useEffect(() => {
@@ -81,9 +81,18 @@ function AddGioco(props){
         setLivelloGioco(stringa);
         console.log(livelloGioco);
     }
-    function numeroRoundChangeHandler(event){
-        setNumeroRound(event.target.value);
-        console.log(event.target.value);
+    function numeroCoppieChangeHandler(event){
+        console.log(Number(event.target.value));
+        if(event.target.value > 5){
+            setNumeroCoppie(5)
+            // console.log(Number(event.target.value) > 5);
+        }
+        else if(event.target.value < 2){
+            setNumeroCoppie(2);
+        }
+        else{
+            setNumeroCoppie(Number(event.target.value));
+        }
     }
 
     function creaOggettoDomande(domandeSelezionate, categoriaGame){
@@ -120,7 +129,7 @@ function AddGioco(props){
         }
 
         if(valore_TITOLO && valore_DOMANDE){
-            let resultID = await getServerMgr().addGame(auth_ctx.utenteLoggatoUID, titoloGioco, tipologiaGioco, livelloGioco, categoriaGioco, domandeSelected, numeroRound)
+            let resultID = await getServerMgr().addGame(auth_ctx.utenteLoggatoUID, titoloGioco, tipologiaGioco, livelloGioco, domandeSelected, numeroCoppie)
             .catch((err) => {
                 console.error(err)
             });
@@ -179,7 +188,6 @@ function AddGioco(props){
                         </RadioButton>
                         
                     </div>
-                    {tipologiaGioco === "GIOCO DELLE COPPIE" && <div>Per questo gioco la difficoltà selezionata determina il numero di coppie da indovinare</div>}
                 </div>
 
                 <label className={`${styles.label_style} ${!validTitolo ? styles.invalid : ""}`}>Nome del gioco:</label>
@@ -188,6 +196,13 @@ function AddGioco(props){
 
                 {!validNumeroDomande && tipologiaGioco !== "GIOCO DELLE COPPIE" && <div style={{width: "100%", color: "red", textAlign: "center"}}>Devi selezionare almeno una domanda</div>}
                 
+                {tipologiaGioco === "GIOCO DELLE COPPIE" && 
+                    <>
+                        <label className={`${styles.label_style} ${!validTitolo ? styles.invalid : ""}`}>Numero di coppie:</label>
+                        <input className={`${styles.textbox_style} ${!validTitolo ? styles.invalid : ""}`} value={numeroCoppie} type="number" min={2} max={5} onChange={numeroCoppieChangeHandler}></input>
+                    </>
+                }
+
                 {tipologiaGioco !== "GIOCO DELLE COPPIE" && 
                     <ElencoDomande
                         domandeNuovoGioco={creaOggettoDomande}

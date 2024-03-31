@@ -39,7 +39,7 @@
 }
 
 .wrapper_bottoni_risposte{
-    width: 600px;
+    width: 700px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -67,6 +67,24 @@
     .wrap_generico{
         height: calc(100vh - 100px);
     }
+
+    .card_image_style{
+        width: 70px;
+        height: 70px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .wrapper_bottoni_risposte{
+        width: 300px;
+        column-gap: 10px;
+        row-gap: 10px;
+    }
+
+    .card_image_style{
+        width: 60px;
+        height: 60px;
+    }
 }
 
 @media screen and (max-width: 599px) {
@@ -85,13 +103,13 @@
     }
 
     .wrapper_bottoni_risposte{
-        width: 300px;
-        column-gap: 10px;
-        row-gap: 10px;
+        width: 200px;
+        column-gap: 5px;
+        row-gap: 5px;
     }
 
     .card_image_style{
-        width: 58px;
-        height: 58px;
+        width: 40px;
+        height: 40px;
     }
 }

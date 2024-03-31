@@ -10,8 +10,11 @@ import AddPatologia from "./AddPatologia";
 import { getServerMgr } from "../../backend_conn/ServerMgr";
 import { Card, Modal } from "react-bootstrap";
 import SearchBox from "../UI/SearchBox";
+import AuthContext from "../../context/auth-context";
+import TerapiePaziente from "./TerapiePaziente";
 
 function Patologie(){
+    const auth_ctx = useContext(AuthContext);
     const patologies_ctx = useContext(PatologiesContext);
 
     const [modaleAggiuntaPatologia, setModaleAggiuntaPatologia] = useState(false);
@@ -76,7 +79,7 @@ function Patologie(){
         <>
             {patologies_ctx.showModale && patologies_ctx.modale}
 
-            {patologies_ctx.topBar && 
+            {patologies_ctx.topBar && auth_ctx.tipoAccount !== "Paziente" &&
                 <div className={styles.wrap_boxes}>
                     <select onChange={(event) => {
                         patologies_ctx.selectOrder(event.target.value)
@@ -99,7 +102,8 @@ function Patologie(){
                     </SearchBox>
                 </div>
             }
-            {patologies_ctx.visibleLista && <h1 className={styles.page_title}>Elenco Patologie</h1>}
+            {patologies_ctx.visibleLista && auth_ctx.tipoAccount !== "Paziente" && <h1 className={styles.page_title}>Elenco Patologie</h1>}
+            {auth_ctx.tipoAccount === "Paziente" && <h1 className={styles.page_title}>Le mie terapie</h1>}
 
             <div className={styles.wrapper_generico}>
                 {/* {patologies_ctx.visibleFormAddPatology && */}
@@ -132,7 +136,7 @@ function Patologie(){
                     ></ElencoTerapie>
                 }
 
-                {patologies_ctx.visibleLista &&
+                {patologies_ctx.visibleLista && auth_ctx.tipoAccount !== "Paziente" &&
                 <div className={styles.wrapper_vertical}>
                     {patologies_ctx.uniqueList.map((pat) => (
                         <>
@@ -216,6 +220,9 @@ function Patologie(){
                         
                     ))}
                 </div>
+                }
+                {auth_ctx.tipoAccount === "Paziente" &&
+                    <TerapiePaziente></TerapiePaziente>
                 }
             </div>
         </>

@@ -639,12 +639,12 @@
         $nomeGioco = $dataJson["nomeGioco"];
         $tipoGioco = $dataJson["tipoGioco"];
         $livelloGioco = $dataJson["livelloGioco"];
-        $categoriaGioco = $dataJson["categoriaGioco"];
+        // $categoriaGioco = $dataJson["categoriaGioco"];
         // $domande = $dataJson["domande"];
-        $numeroRound = $dataJson["numeroRound"];
+        $numero = $dataJson["numero"];
         
-        $insertNewGame = $i_conn->prepare("INSERT INTO `games` (`creatorID`, `nomeGioco`, `tipoGioco`, `livelloGioco`, `categoriaGioco`, `numeroRound`) VALUES (?, ?, ?, ?, ?, ?)");
-        $insertNewGame->bind_param("issssi", $creatorID, $nomeGioco, $tipoGioco, $livelloGioco, $categoriaGioco, $numeroRound);
+        $insertNewGame = $i_conn->prepare("INSERT INTO `games` (`creatorID`, `nomeGioco`, `tipoGioco`, `livelloGioco`, `numero`) VALUES (?, ?, ?, ?, ?)");
+        $insertNewGame->bind_param("isssi", $creatorID, $nomeGioco, $tipoGioco, $livelloGioco, $numero);
         $insertNewGame->execute();
         
         $result = $insertNewGame->insert_id;
@@ -661,11 +661,11 @@
         $livelloGioco = $dataJson["livelloGioco"];
         $categoriaGioco = $dataJson["categoriaGioco"];
         // $domande = $dataJson["domande"];
-        $numeroRound = $dataJson["numeroRound"]; 
+        $numero = $dataJson["numero"]; 
         $gameID = $dataJson["gameID"];
         
-        $updateGame = $i_conn->prepare("UPDATE `games` SET `nomeGioco` = ?, `livelloGioco` = ?, `categoriaGioco` = ?, `numeroRound` = ? WHERE `games`.`gameID` = ?");
-        $updateGame->bind_param("sssii", $nomeGioco, $livelloGioco, $categoriaGioco, $numeroRound, $gameID);
+        $updateGame = $i_conn->prepare("UPDATE `games` SET `nomeGioco` = ?, `livelloGioco` = ?, `numero` = ? WHERE `games`.`gameID` = ?");
+        $updateGame->bind_param("ssii", $nomeGioco, $livelloGioco, $numero, $gameID);
         $updateGame->execute();
         
         $updateGame->bind_result($result);

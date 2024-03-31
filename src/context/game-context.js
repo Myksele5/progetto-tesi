@@ -49,7 +49,7 @@ export function GameContextProvider(props){
         const parseResult = (resultsArray) => {
             let markersList = {}
             resultsArray.forEach((item) => {
-                let currentMarker = (({categoriaGioco, creatorID, gameID, livelloGioco, nomeGioco, tipoGioco, numeroRound}) => ({categoriaGioco, creatorID, gameID, livelloGioco, nomeGioco, tipoGioco,numeroRound, domandeID: []}))(item);
+                let currentMarker = (({categoriaGioco, creatorID, gameID, livelloGioco, nomeGioco, tipoGioco, numero}) => ({categoriaGioco, creatorID, gameID, livelloGioco, nomeGioco, tipoGioco,numero, domandeID: []}))(item);
                 markersList[item.gameID] ??= currentMarker
                 if(item.IDquestion !== null) {
                     markersList[item.gameID].domandeID.push(item.IDquestion)

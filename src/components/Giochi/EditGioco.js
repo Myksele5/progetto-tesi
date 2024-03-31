@@ -17,7 +17,8 @@ function EditGioco(props){
     const [validTitolo, setValidTitolo] = useState(true)
     const [tipoGiocoModifica, setTipoGiocoModifica] = useState(props.tipoGioco);
     const [livelloGiocoModifica, setLivelloGiocoModifica] = useState(props.difficulty);
-    const [numeroRoundModifica, setNumeroRoundModifica] =  useState(props.numeroRound);
+    // const [numeroRoundModifica, setNumeroRoundModifica] =  useState(props.numeroRound);
+    const [numeroCoppie, setNumeroCoppie] = useState(props.numero);
     const [domandeSelected, setDomandeSelected] = useState(game_ctx.domandeDaModificare);
     const [validNumeroDomande, setValidNumeroDomande] = useState(true);
 
@@ -60,10 +61,6 @@ function EditGioco(props){
         setLivelloGiocoModifica(stringa);
         // console.log(livelloGioco);
     }
-    function numeroRoundChangeHandler(event){
-        setNumeroRoundModifica(event.target.value);
-        console.log(event.target.value);
-    }
 
     function selezioneDifficoltà(stringaDifficoltà){
         switch (stringaDifficoltà){
@@ -93,6 +90,20 @@ function EditGioco(props){
 
             default:
                 break;
+        }
+    }
+
+    function numeroCoppieChangeHandler(event){
+        console.log(Number(event.target.value));
+        if(event.target.value > 5){
+            setNumeroCoppie(5)
+            // console.log(Number(event.target.value) > 5);
+        }
+        else if(event.target.value < 2){
+            setNumeroCoppie(2);
+        }
+        else{
+            setNumeroCoppie(Number(event.target.value));
         }
     }
 
@@ -128,7 +139,7 @@ function EditGioco(props){
         }
 
         if(valore_TITOLO && valore_DOMANDE){
-            await getServerMgr().updateGame(nomeGiocoModifica, livelloGiocoModifica, categoriaGioco, domandeSelected, numeroRoundModifica, giocoID)
+            await getServerMgr().updateGame(nomeGiocoModifica, livelloGiocoModifica, domandeSelected, numeroCoppie, giocoID)
             .catch((err) => {
                 console.error(err)
             });
@@ -184,14 +195,15 @@ function EditGioco(props){
             <label className={`${styles.label_style} ${!validTitolo ? styles.invalid : ""}`}>Nome Gioco:</label>
             <input className={`${styles.textbox_style} ${!validTitolo ? styles.invalid : ""}`} type="text" value={nomeGiocoModifica} onChange={nomeGiocoChangeHandler}></input>
             {!validTitolo && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un nome per il gioco</div>}
-            {tipoGiocoModifica === "RIFLESSI" &&
-                <>
-                    <label className={styles.label_style}>Numero di round da giocare:</label>
-                    <input className={styles.textbox_style} type="number" step={1} value={numeroRoundModifica} onChange={numeroRoundChangeHandler}></input>
-                </>
-            }
 
             {!validNumeroDomande && tipoGiocoModifica !== "GIOCO DELLE COPPIE" && <div style={{width: "100%", color: "red", textAlign: "center"}}>Devi selezionare almeno una domanda</div>}
+
+            {tipoGiocoModifica === "GIOCO DELLE COPPIE" && 
+                    <>
+                        <label className={`${styles.label_style} ${!validTitolo ? styles.invalid : ""}`}>Numero di coppie:</label>
+                        <input className={`${styles.textbox_style} ${!validTitolo ? styles.invalid : ""}`} value={numeroCoppie} type="number" min={2} max={5} onChange={numeroCoppieChangeHandler}></input>
+                    </>
+                }
 
             {tipoGiocoModifica !== "GIOCO DELLE COPPIE" && 
                 <ElencoDomande
