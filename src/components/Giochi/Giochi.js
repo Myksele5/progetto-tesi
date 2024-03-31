@@ -25,6 +25,7 @@ let TIPOGIOCO;
 let CODICEGIOCO;
 let LIVELLOGIOCO;
 let DOMANDEGIOCO = [];
+let NUMEROCOPPIE;
 let INDICEGIOCO = -1;
 
 function Giochi(){
@@ -147,6 +148,7 @@ function Giochi(){
         }
         // set_INDICEGIOCO(indice_gioco);
         INDICEGIOCO = indice_gioco
+        NUMEROCOPPIE = coppie
         console.log("CODICE DEL GIOCO SELEZIONATO----> " + stringa_CODICEGIOCO);
 
         var domandeDelGioco = [];
@@ -259,6 +261,7 @@ function Giochi(){
                         INDICEGIOCO={INDICEGIOCO}
                         TIPOGIOCO={TIPOGIOCO}
                         LIVELLOGIOCO={LIVELLOGIOCO}
+                        numeroCoppie={NUMEROCOPPIE}
                     ></ExercisePairGame>
                 );
                 break;
