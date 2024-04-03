@@ -24,6 +24,9 @@ function RegistrationForm(props){
     const [validPassword, setValidPassword] = useState(true);
     const [password, setPassword] = useState('');
 
+    const [validPasswordConferma, setValidPasswordConferma] = useState(true);
+    const [passwordConferma, setPasswordConferma] = useState('');
+
     const submitRegistration = async (event) =>{
         event.preventDefault();
         let result;
@@ -39,7 +42,7 @@ function RegistrationForm(props){
                 break;
         }
 
-        if(email.includes('@') && password.trim().length >= 6 && nome.trim().length > 1 && cognome.trim().length > 1){
+        if(email.includes('@') && password.trim().length >= 6 && nome.trim().length > 1 && cognome.trim().length > 1 && password === passwordConferma){
             console.log("MANDO DATI PER LOGIN");
 
             result = await getServerMgr().getAccount()
@@ -96,6 +99,9 @@ function RegistrationForm(props){
             if(cognome.trim().length <= 1){
                 setValidCognome(false);
             }
+            if(password !== passwordConferma){
+                setValidPasswordConferma(false);
+            }
         }
     }
 
@@ -104,8 +110,9 @@ function RegistrationForm(props){
         setValidPassword(true);
         setValidNome(true);
         setValidCognome(true);
+        setValidPasswordConferma(true);
         emailEsistente = null;
-    }, [nome,cognome,email,password,titolo]);
+    }, [nome,cognome,email,password,titolo, passwordConferma]);
 
     const goToLoginForm = () => {
         // console.log("VAI AL FORM PER LOGGARE");
@@ -138,6 +145,11 @@ function RegistrationForm(props){
         setValidPassword(true);
     }
 
+    const passwordConfermaChangeHandler = (event) =>{
+        setPasswordConferma(event.target.value);
+        setValidPasswordConferma(true);
+    }
+
     return(
         <Card
         children = {
@@ -155,8 +167,12 @@ function RegistrationForm(props){
                 {!validEmail && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una email valida</div>}
                 
                 <label className={`${styles.label_box} ${!validPassword ? styles.invalid : ''}`}>Password</label>
-                <input className={`${styles.input_box} ${!validPassword ? styles.invalid : ''}`}type="password" placeholder="Inserisci la tua password" value={password} onChange={passwordChangeHandler}></input>
+                <input className={`${styles.input_box} ${!validPassword ? styles.invalid : ''}`} type="password" placeholder="Inserisci la tua password" value={password} onChange={passwordChangeHandler}></input>
                 {!validPassword && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una password con almeno 6 caratteri</div>}
+
+                <label className={`${styles.label_box} ${!validPasswordConferma ? styles.invalid : ''}`}>Conferma Password</label>
+                <input className={`${styles.input_box} ${!validPasswordConferma ? styles.invalid : ''}`} type="password" placeholder="Conferma la password" value={passwordConferma} onChange={passwordConfermaChangeHandler}></input>
+                {!validPasswordConferma && <div style={{width: "100%", color: "red", textAlign: "center"}}>La password non corrisponde</div>}
 
                 <label className={`${styles.label_box} ${!validNome ? styles.invalid : ''}`}>Nome</label>
                 <input className={`${styles.input_box} ${!validNome ? styles.invalid : ''}`} type="text" placeholder="Inserisci nome" value={nome} onChange={nomeChangeHandler}></input>

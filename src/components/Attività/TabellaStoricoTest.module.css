@@ -1,3 +1,9 @@
+.horizontal{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .wrapper_horizontal{
     display: flex;
     flex-direction: column;
@@ -104,6 +110,11 @@
     /* max-width: 100px; */
 }
 
+.font_modale{
+    font-size: 20px;
+    font-weight: bold;
+}
+
 @media screen and (max-width: 1000px) {
     .wrapper_horizontal_labels{
         font-size: 18px;
@@ -133,6 +144,10 @@
     }
     .label_nome, .label_cognome, .label_tipoTest, .label_scoreTest, .label_data, .content_nome, .content_cognome, .content_tipoTest, .content_scoreTest, .content_data{
         width: 20%;
+    }
+
+    .font_modale{
+        font-size: 16px;
     }
 }
 

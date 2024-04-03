@@ -14,7 +14,13 @@ const TestsContext = React.createContext({
     hideMainPage: ()=>{},
     testPaziente: null,
     prendiTestPaziente:()=>{},
+    modificaTestPaziente:()=>{},
+    eliminaTestPaziente:()=>{},
     schedaSingoloTest: null,
+    editTestMMSE: null,
+    showEditTestMMSE:()=>{},
+    editTestMoCA: null,
+    showEditTestMoCA:()=>{},
     showSchedaTest:()=>{},
     hideSchedaTest:()=>{},
     formAddValutazione: null,
@@ -35,6 +41,9 @@ export function TestsContextProvider(props){
     const [mainPage, setMainPage] = useState(true);
     const [schedaTest, setSchedaTest] = useState(false);
     const [formValutazione, setFormValutazione] = useState(false);
+
+    const [showEditTestMMSE, setShowEditTestMMSE] = useState(false);
+    const [showEditTestMoCA, setShowEditTestMoCA] = useState(false);
 
     const [ordinamentoSelezionato, setOrdinamentoSelezionato] = useState("");
     const [stringaCercata, setStringaCercata] = useState("");
@@ -82,6 +91,33 @@ export function TestsContextProvider(props){
             dataSvolgimento={dataSvolgimento}
             risultatiTest={risultatiTest}
         ></SchedaSingoloTest>
+    }
+    async function editPatientTest(testID, tipoTest, nome, cognome){
+        let risultatiTest;
+
+        if(tipoTest === "MMSE"){
+            risultatiTest = await getServerMgr().getSingleTestMMSE(testID).catch((err) => {console.error(err)})
+        }
+
+        if(tipoTest === "MoCA"){
+            risultatiTest = await getServerMgr().getSingleTestMoCA(testID).catch((err) => {console.error(err)})
+        }
+
+        if(tipoTest === "MMSE"){
+            setShowEditTestMMSE(true)
+        }
+        if(tipoTest === "MoCA"){
+            setShowEditTestMoCA(true)
+        }
+        
+        console.log(risultatiTest)
+        hideMainPage();
+    }
+
+    async function deletePatientTest(testID){
+        await getServerMgr().deletePatientTest(testID)
+
+        getTestsList();
     }
 
     function showMainPage(){
@@ -307,7 +343,11 @@ export function TestsContextProvider(props){
             hideMainPage: hideMainPage,
             testPaziente: scheda_test_paziente,
             prendiTestPaziente: getPatientTest,
+            modificaTestPaziente: editPatientTest,
+            eliminaTestPaziente: deletePatientTest,
             schedaSingoloTest: schedaTest,
+            editTestMMSE: showEditTestMMSE,
+            editTestMoCA: showEditTestMoCA,
             showSchedaTest:showSchedaTest,
             hideSchedaTest:hideSchedaTest,
             formAddValutazione: formValutazione,

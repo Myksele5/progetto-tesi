@@ -136,6 +136,9 @@
     case "getSingleTestMoCA":
         $query_result = getSingleTestMoCA($conn);
         break;
+    case "deletePatientTest":
+        $query_result = deletePatientTest($conn);
+        break;
     case "updateTestResultList":
         $query_result = updateTestResultList($conn);
         break;
@@ -1016,6 +1019,22 @@
         $result = $getSingleTest->get_result();
         return $result;
     }
+    function deletePatientTest($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+
+        $testID = $dataJson["testID"];
+        
+        $deleteTest = $i_conn->prepare(
+            "DELETE FROM storicoTest WHERE ID = ?"
+        );
+
+        $deleteTest->bind_param("i", $testID);
+        $deleteTest->execute();
+        // $result = $getSingleTest->get_result();
+        return $result;
+    }
+
     function updateTestResultList($i_conn){
     	$data = file_get_contents("php://input");
         $dataJson = json_decode($data, true);

@@ -584,6 +584,17 @@ function initServerMgr(cb) {
             return result
         }
     }
+    serverMgr.deletePatientTest = async (testID, cb) => {
+        let result = await serverMgr.requestFetchData("deletePatientTest", {testID: testID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
     serverMgr.updateTestResultList = async (pazienteID, tipoTest, scoreTest, dataSvolgimento, arrayRisposte, doctorID, cb) => {
         let result = await serverMgr.requestFetchData("updateTestResultList", {pazienteID: pazienteID, tipoTest: tipoTest, scoreTest: scoreTest, dataSvolgimento: dataSvolgimento, arrayRisposte: arrayRisposte, doctorID: doctorID})
         if(cb) {

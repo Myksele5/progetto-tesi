@@ -52,6 +52,7 @@ function EditPaziente(props){
     const [ID_modificaTerapia, setID_modificaTerapia] = useState();
     const [modaleAggiungiTerapia, setModaleAggiungiTerapia] = useState(false);
     const [modaleModificaTerapia, setModaleModificaTerapia] = useState(false);
+    const [modaleEliminaTerapia, setModaleEliminaTerapia] = useState(false);
     const [giochiDelPaziente, setGiochiDelPaziente] = useState([]);
     const [modaleListaGiochi, setModaleListaGiochi] = useState(false);
     const [checkboxAllGamesAssigned, setCheckboxAllGamesAssigned] = useState(true);
@@ -545,7 +546,11 @@ function EditPaziente(props){
                                                                 }}
                                                             ></EditButton>
                                                             <DeleteButton onClick={
-                                                                () => eliminaOggettoMedico(oggetto.terapiaID)
+                                                                () => {
+                                                                    // eliminaOggettoMedico(oggetto.terapiaID)
+                                                                    setModaleEliminaTerapia(true)
+                                                                    setID_modificaTerapia(oggetto.terapiaID)
+                                                                }
                                                             }>
                                                             </DeleteButton>
                                                         </div>
@@ -559,6 +564,27 @@ function EditPaziente(props){
                                     </Accordion>
                                 </div>
                             }
+                            <Modal centered show={modaleEliminaTerapia}>
+                                <Modal.Header className={styles.text_subtitle}>Confermi di voler eliminare questa terapia?</Modal.Header>
+                                <Modal.Footer>
+                                    <GenericButton
+                                        onClick={() => {
+                                            eliminaOggettoMedico(ID_modificaTerapia)
+                                            setModaleEliminaTerapia(false)
+                                        }}
+                                        generic_button={true}
+                                        red_styling
+                                        buttonText="Elimina"
+                                    >
+                                    </GenericButton>
+                                    <GenericButton
+                                        onClick={() => {setModaleEliminaTerapia(false)}}
+                                        generic_button={true}
+                                        buttonText="Annulla"
+                                    >
+                                    </GenericButton>
+                                </Modal.Footer>
+                            </Modal>
                             <Modal size="lg" centered show={modaleModificaTerapia}>
                                 <Modal.Header className={styles.text_subtitle}>Modifica terapia</Modal.Header>
                                 <Modal.Body>
@@ -600,6 +626,7 @@ function EditPaziente(props){
                                     </GenericButton>
                                 </Modal.Footer>
                             </Modal>
+
 
                             <GenericButton
                                 onClick={() => {
@@ -763,7 +790,7 @@ function EditPaziente(props){
                 <GenericButton
                     onClick={formModifyHandler}
                     generic_button={true}
-                    buttonText="Conferma modifiche"
+                    buttonText="Salva modifiche"
                 >
                 </GenericButton>
                 <GenericButton

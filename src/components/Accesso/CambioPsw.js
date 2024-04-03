@@ -11,9 +11,9 @@ import { getServerMgr } from "../../backend_conn/ServerMgr";
 function CambioPsw(){
     const [singletonHasLoaded, setSingletonHasLoaded] = useState(false);
     const [validNewPassword, setValidNewPassword] = useState(true);
-    // const [validEmail, setValidEmail] = useState(true);
     const [newPassword, setNewPassword] = useState('');
-    // const [email, setEmail] = useState('');
+    const [validNewPasswordConferma, setValidNewPasswordConferma] = useState(true);
+    const [newPasswordConferma, setNewPasswordConferma] = useState('');
     const [PSWChanged, setPSWChanged] = useState(null);
     
     const location = useLocation();
@@ -44,13 +44,18 @@ function CambioPsw(){
 
     const passwordChangeHandler = (event) => {
         setNewPassword(event.target.value);
+        setValidNewPassword(true)
+    }
+    const passwordConfermaChangeHandler = (event) => {
+        setNewPasswordConferma(event.target.value);
+        setValidNewPasswordConferma(true)
     }
 
     const submitChangePassword = async (event) => {
         event.preventDefault();
 
         let result;
-        if(newPassword.trim().length > 5){
+        if(newPassword.trim().length > 5 && newPassword === newPasswordConferma){
             result = await getServerMgr().pswRecovery_reset(newPassword, query.get('code'))
             .then(console.log(result))
             .catch((err) => {
@@ -65,62 +70,13 @@ function CambioPsw(){
             }
         }
         else{
-            setValidNewPassword(false);
+            if(newPassword.trim().length <= 5){
+                setValidNewPassword(false);
+            }
+            if(newPassword !== newPasswordConferma){
+                setValidNewPasswordConferma(false);
+            }
         }
-
-        
-        // setValidNewPassword(true);
-
-        // auth_ctx.confirmPasswordReset(query.get('oobCode'), newPassword)
-        // .then(() => {
-        //     alert("Password cambiata con successo!");
-        //     setPSWChanged(true);
-        // })
-        // .catch((err) => {
-        //     console.error(err);
-        //     setValidNewPassword(false);
-        //     setPSWChanged(false);
-        // });
-        // // const auth = getAuth();
-
-        // const emailAccountReference = doc(db, `${email}`, `info`);
-        // const dati = await getDoc(emailAccountReference);
-        // const filtraDati = dati.get("password");
-        // console.log("Vecchia PSW--> " + filtraDati);
-
-        // await signInWithEmailAndPassword(auth, email, filtraDati)
-        // // .then(() => {
-        // //     console.log("RE Logged in");
-        // // })
-        // .catch((err) => {
-        //     console.error(err);
-        //     setValidEmail(false);
-        //     setValidNewPassword(false);
-        //     alert("Si è verificato un errore. Riprova tra qualche minuto.");
-        // });
-        
-        // if(newPassword.trim().length >= 6){
-        //     // const auth = getAuth();
-        //     console.log(auth);
-
-        //     await updatePassword(auth.currentUser, newPassword)
-        //     .catch((err) => {
-        //         console.error(err.message);
-        //     });
-            
-        //     await updateDoc(emailAccountReference, {password: newPassword})
-        //     // .then(() => {
-        //     //     console.log("DB aggiornato");
-        //     // })
-        //     .catch((err) => {
-        //         console.error(err);
-        //     });
-            
-        //     console.log("Nuova PSW--> " + newPassword);
-        // }
-        // else{
-        //     setValidNewPassword(false);
-        // }
         
     }
 
@@ -139,7 +95,11 @@ function CambioPsw(){
                             <input className={`${styles.input_box} ${!validNewPassword ? styles.invalid : ''}`} type="password" placeholder="Nuova password.." value={newPassword} onChange={passwordChangeHandler}></input>
     
                             {!validNewPassword && <h2 style={{color: "red"}}>Inserisci una password valida!</h2>}
-                            {/* {!validEmail && <h2 style={{color: "red"}}>Inserisci una email valida!</h2>} */}
+
+                            <label className={`${styles.label_box} ${!validNewPasswordConferma ? styles.invalid : ''}`}>Conferma nuova password</label>
+                            <input className={`${styles.input_box} ${!validNewPasswordConferma ? styles.invalid : ''}`} type="password" placeholder="Nuova password.." value={newPasswordConferma} onChange={passwordConfermaChangeHandler}></input>
+    
+                            {!validNewPasswordConferma && <h2 style={{color: "red"}}>La password non corrisponde!</h2>}
     
                             <GenericButton
                                 type = "submit"
