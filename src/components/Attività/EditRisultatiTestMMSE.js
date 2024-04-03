@@ -193,9 +193,167 @@ function EditRisultatiTestMMSE(props){
     ];
 
     useEffect(() => {
+        console.log(props.risultatiTest)
+        for(var i=0; i < props.risultatiTest.length; i++){
+            switch(i){
+                case 0:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_1_domanda_1(1)
+                    }
+                    break;
+                case 1:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_1_domanda_2(1)
+                    }
+                    break;
+                case 2:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_1_domanda_3(1)
+                    }
+                    break;
+                case 3:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_1_domanda_4(1)
+                    }
+                    break;
+                case 4:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_1_domanda_5(1)
+                    }
+                    break;
+                case 5:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_1_domanda_6(1)
+                    }
+                    break;
+                case 6:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_1_domanda_7(1)
+                    }
+                    break;
+                case 7:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_1_domanda_8(1)
+                    }
+                    break;
+                case 8:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_1_domanda_9(1)
+                    }
+                    break;
+                case 9:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_1_domanda_10(1)
+                    }
+                    break;
+                case 10:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_2_domanda_1(1)
+                    }
+                    break;
+                case 11:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_2_domanda_2(1)
+                    }
+                    break;
+                case 12:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_2_domanda_3(1)
+                    }
+                    break;
+                case 13:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_3_domanda_1(1)
+                    }
+                    break;
+                case 14:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_3_domanda_2(1)
+                    }
+                    break;
+                case 15:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_3_domanda_3(1)
+                    }
+                    break;
+                case 16:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_3_domanda_4(1)
+                    }
+                    break;
+                case 17:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_3_domanda_5(1)
+                    }
+                    break;
+                case 18:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_4_domanda_1(1)
+                    }
+                    break;
+                case 19:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_4_domanda_2(1)
+                    }
+                    break;
+                case 20:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_4_domanda_3(1)
+                    }
+                    break;
+                case 21:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_5_domanda_1(1)
+                    }
+                    break;
+                case 22:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_5_domanda_2(1)
+                    }
+                    break;
+                case 23:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_5_domanda_3(1)
+                    }
+                    break;
+                case 24:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_5_domanda_4(1)
+                    }
+                    break;
+                case 25:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_5_domanda_5(1)
+                    }
+                    break;
+                case 26:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_5_domanda_6(1)
+                    }
+                    break;
+                case 27:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_5_domanda_7(1)
+                    }
+                    break;
+                case 28:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_5_domanda_8(1)
+                    }
+                    break;
+                case 29:
+                    if(props.risultatiTest[i].risposta === 1){
+                        set_areaCog_6_domanda_1(1)
+                    }
+                    break;
+            }
+        }
+    }, [])
+
+    useEffect(() => {
         patients_ctx.listaPazienti.map((paz) => {
-            console.log(typeof paz.ID)
-            console.log(typeof paziente)
+            // console.log(typeof paz.ID)
+            // console.log(typeof paziente)
             if(paz.ID === Number(paziente)){
                 setInfoPaziente(paz);
                 
@@ -800,8 +958,8 @@ function EditRisultatiTestMMSE(props){
                 {showSintesiRisultati &&
                     <GenericButton
                         onClick={() => {
-                            tests_ctx.salvaRisultatoMMSE(punteggioTOT, paziente, arrayRiassuntivoRisposte, auth_ctx.utenteLoggatoUID)
-                            tests_ctx.hideFormAddValutazione()
+                            tests_ctx.aggiornaRisultatoTestMMSE(punteggioTOT, paziente, arrayRiassuntivoRisposte, auth_ctx.utenteLoggatoUID, props.testID)
+                            tests_ctx.hideFormEditValutazione()
                         }}
                         buttonText={"Salva risultati"}
                         generic_button

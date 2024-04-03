@@ -194,11 +194,11 @@ function RisultatiTestMMSE(props){
 
     useEffect(() => {
         patients_ctx.listaPazienti.map((paz) => {
-            console.log(typeof paz.ID)
-            console.log(typeof paziente)
+            // console.log(typeof paz.ID)
+            // console.log(typeof paziente)
             if(paz.ID === Number(paziente)){
                 setInfoPaziente(paz);
-                
+                console.log(paz)
             }
         })
     }, [])

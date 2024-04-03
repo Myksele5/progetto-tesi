@@ -4,8 +4,10 @@ import { getServerMgr } from "../backend_conn/ServerMgr";
 import PatientContext from "./patients-context";
 import SchedaSingoloTest from "../components/Attività/SchedaSingoloTest";
 import AuthContext from "./auth-context";
+import EditRisultatiTestMMSE from "../components/Attività/EditRisultatiTestMMSE";
 
 let scheda_test_paziente;
+let edit_scheda_test;
 
 const TestsContext = React.createContext({
     listaTest: null,
@@ -17,16 +19,16 @@ const TestsContext = React.createContext({
     modificaTestPaziente:()=>{},
     eliminaTestPaziente:()=>{},
     schedaSingoloTest: null,
-    editTestMMSE: null,
-    showEditTestMMSE:()=>{},
-    editTestMoCA: null,
-    showEditTestMoCA:()=>{},
+    schedaTestEdit: null,
+    editTest: null,
     showSchedaTest:()=>{},
     hideSchedaTest:()=>{},
     formAddValutazione: null,
     showFormAddValutazione: ()=>{},
     hideFormAddValutazione: ()=>{},
+    hideFormEditValutazione: ()=>{},
     salvaRisultatoMMSE: ()=>{},
+    aggiornaRisultatoTestMMSE: ()=>{},
     salvaRisultatoMoCA: ()=>{},
     cercaTest: ()=>{},
     stringSearched: null,
@@ -42,7 +44,7 @@ export function TestsContextProvider(props){
     const [schedaTest, setSchedaTest] = useState(false);
     const [formValutazione, setFormValutazione] = useState(false);
 
-    const [showEditTestMMSE, setShowEditTestMMSE] = useState(false);
+    const [showEditTest, setShowEditTest] = useState(false);
     const [showEditTestMoCA, setShowEditTestMoCA] = useState(false);
 
     const [ordinamentoSelezionato, setOrdinamentoSelezionato] = useState("");
@@ -81,6 +83,7 @@ export function TestsContextProvider(props){
 
         showSchedaTest();
 
+        //USA VARIABILE GLOBALE PER FARE MODIFICA TEST
         scheda_test_paziente = 
         <SchedaSingoloTest
             id={testID}
@@ -92,7 +95,7 @@ export function TestsContextProvider(props){
             risultatiTest={risultatiTest}
         ></SchedaSingoloTest>
     }
-    async function editPatientTest(testID, tipoTest, nome, cognome){
+    async function editPatientTest(testID, tipoTest, pazienteID){
         let risultatiTest;
 
         if(tipoTest === "MMSE"){
@@ -104,11 +107,17 @@ export function TestsContextProvider(props){
         }
 
         if(tipoTest === "MMSE"){
-            setShowEditTestMMSE(true)
+            setShowEditTest(true)
+            edit_scheda_test = 
+            <EditRisultatiTestMMSE
+                testID={testID}
+                paziente={pazienteID}
+                risultatiTest={risultatiTest}
+            ></EditRisultatiTestMMSE>
         }
-        if(tipoTest === "MoCA"){
-            setShowEditTestMoCA(true)
-        }
+        // if(tipoTest === "MoCA"){
+        //     setShowEditTestMoCA(true)
+        // }
         
         console.log(risultatiTest)
         hideMainPage();
@@ -144,6 +153,10 @@ export function TestsContextProvider(props){
         setFormValutazione(false);
         showMainPage();
     }
+    function hideFormEditValutazione(){
+        setShowEditTest(false);
+        showMainPage();
+    }
 
     async function salvaRisultatoTestMMSE(resultMMSE, pazienteID, arrayRisposte, doctorID){
         var dateee = new Date();
@@ -158,6 +171,25 @@ export function TestsContextProvider(props){
         .catch((err) => {console.error(err)})
 
         await getServerMgr().updateTestResultList(pazienteID, "MMSE", resultMMSE, dateString, arrayRisposte, doctorID)
+        .catch((err) => {console.error(err)})
+
+        getTestsList();
+        patients_ctx.updateListaPazienti();
+    }
+
+    async function aggiornaRisultatoTestMMSE(resultMMSE, pazienteID, arrayRisposte, doctorID, testID){
+        var dateee = new Date();
+        var day = dateee.toLocaleString('it-IT', {day: '2-digit'})
+        var month = dateee.toLocaleString('it-IT', {month: '2-digit'})
+        var year = dateee.getFullYear();
+        let dateString = `${year}-${month}-${day}`;
+
+        let result;
+
+        // result = await getServerMgr().saveResultMMSE(resultMMSE, pazienteID)
+        // .catch((err) => {console.error(err)})
+
+        await getServerMgr().realUpdateTestResultList(pazienteID, "MMSE", resultMMSE, dateString, arrayRisposte, doctorID, testID)
         .catch((err) => {console.error(err)})
 
         getTestsList();
@@ -346,14 +378,16 @@ export function TestsContextProvider(props){
             modificaTestPaziente: editPatientTest,
             eliminaTestPaziente: deletePatientTest,
             schedaSingoloTest: schedaTest,
-            editTestMMSE: showEditTestMMSE,
-            editTestMoCA: showEditTestMoCA,
+            editTest: showEditTest,
+            schedaTestEdit: edit_scheda_test,
             showSchedaTest:showSchedaTest,
             hideSchedaTest:hideSchedaTest,
             formAddValutazione: formValutazione,
             showFormAddValutazione: showFormAddValutazione,
             hideFormAddValutazione: hideFormAddValutazione,
+            hideFormEditValutazione: hideFormEditValutazione,
             salvaRisultatoMMSE: salvaRisultatoTestMMSE,
+            aggiornaRisultatoTestMMSE: aggiornaRisultatoTestMMSE,
             salvaRisultatoMoCA: salvaRisultatoTestMoCA,
             cercaTest: searchTest,
             stringSearched: stringaCercata,

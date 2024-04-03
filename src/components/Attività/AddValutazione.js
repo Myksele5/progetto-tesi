@@ -15,6 +15,7 @@ function AddValutazione(){
 
     function pazienteSelezionatoChangeHandler(event){
         setPazienteSelezionato(event.target.value)
+        console.log(event.target.value)
     }
     function tipoTestSelezionatoChangeHandler(event){
         setTipoTestSelezionato(event.target.value)

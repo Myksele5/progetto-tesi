@@ -142,6 +142,9 @@
     case "updateTestResultList":
         $query_result = updateTestResultList($conn);
         break;
+    case "realUpdateTestResultList":
+        $query_result = realUpdateTestResultList($conn);
+        break;
     case "saveResultMMSE":
         $query_result = saveResultMMSE($conn);
         break;
@@ -967,7 +970,7 @@
         $doctorID = $dataJson["doctorID"];
         
         $getTestResult = $i_conn->prepare(
-            "SELECT storicoTest.ID, storicoTest.tipoTest, storicoTest.punteggioTest, storicoTest.dataSvolgimento, patients.nome, patients.cognome 
+            "SELECT storicoTest.ID, storicoTest.tipoTest, storicoTest.punteggioTest, storicoTest.dataSvolgimento, storicoTest.pazienteID, patients.nome, patients.cognome 
             FROM `storicoTest` JOIN `patients` ON storicoTest.pazienteID = patients.ID WHERE storicoTest.doctorID = ?"
         );
         $getTestResult->bind_param("i", $doctorID);
@@ -1067,6 +1070,46 @@
                     "INSERT INTO `resultsTestMMSE` (`sessionID`, `domandaID`, `risposta`) VALUES (?, ?, ?)"
                 );
                 $insertRisposta->bind_param("iii", $lastInsertedID, $risposta['domanda'], $risposta['risposta']);
+                $insertRisposta->execute();
+            }
+        }
+
+        $saveTestResult->bind_result($result);
+        return $result;
+    }
+    function realUpdateTestResultList($i_conn){
+    	$data = file_get_contents("php://input");
+        $dataJson = json_decode($data, true);
+        
+        $pazienteID = $dataJson["pazienteID"];
+        $tipoTest = $dataJson["tipoTest"];
+        $scoreTest = $dataJson["scoreTest"];
+        $date = $dataJson["dataSvolgimento"];
+        $arrayRisposte = $dataJson["arrayRisposte"];
+        $doctorID = $dataJson["doctorID"];
+        $testID = $dataJson["testID"];
+        
+        $saveTestResult = $i_conn->prepare("UPDATE `storicoTest` SET `punteggioTest` = ? WHERE ID = ?");
+        $saveTestResult->bind_param("ii", $scoreTest, $testID);
+        
+        $saveTestResult->execute();
+        // $lastInsertedID = $saveTestResult->insert_id;
+
+        if($tipoTest == 'MoCA'){
+            // foreach($arrayRisposte as $risposta){
+            //     $insertRisposta = $i_conn->prepare(
+            //         "INSERT INTO `resultsTestMoCA` (`sessionID`, `domandaID`, `risposta`) VALUES (?, ?, ?)"
+            //     );
+            //     $insertRisposta->bind_param("iii", $lastInsertedID, $risposta['domanda'], $risposta['risposta']);
+            //     $insertRisposta->execute();
+            // }
+        }
+        else{
+            foreach($arrayRisposte as $risposta){
+                $insertRisposta = $i_conn->prepare(
+                    "UPDATE `resultsTestMMSE` SET `risposta` = ? WHERE domandaID = ? AND sessionID = ?"
+                );
+                $insertRisposta->bind_param("iii", $risposta['risposta'], $risposta['domanda'], $testID);
                 $insertRisposta->execute();
             }
         }

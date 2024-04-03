@@ -33,10 +33,6 @@ function TabellaStoricoTest(){
         }
     }
 
-    function modalConfirmEliminationTest(){
-        // tests_ctx.eliminaTestPaziente(test.ID)
-    }
-
     return(
         <>
             {!provaCaricamento && <h2>Non ci sono valutazioni salvate.</h2>}
@@ -77,7 +73,7 @@ function TabellaStoricoTest(){
                                         >
                                         </DetailsButton>
                                         <EditButton
-                                            onClick={() => tests_ctx.modificaTestPaziente(test.ID, test.tipoTest, test.nome, test.cognome)}
+                                            onClick={() => tests_ctx.modificaTestPaziente(test.ID, test.tipoTest, test.pazienteID)}
                                             generic_button={true}
                                         >
                                         </EditButton>

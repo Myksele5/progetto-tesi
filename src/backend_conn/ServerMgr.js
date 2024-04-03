@@ -606,6 +606,17 @@ function initServerMgr(cb) {
             return result
         }
     }
+    serverMgr.realUpdateTestResultList = async (pazienteID, tipoTest, scoreTest, dataSvolgimento, arrayRisposte, doctorID, testID, cb) => {
+        let result = await serverMgr.requestFetchData("realUpdateTestResultList", {pazienteID: pazienteID, tipoTest: tipoTest, scoreTest: scoreTest, dataSvolgimento: dataSvolgimento, arrayRisposte: arrayRisposte, doctorID: doctorID, testID: testID})
+        if(cb) {
+            // console.log("getInventory: " + result)
+            cb(result)
+        }
+        else {
+            // console.log("getInventory: " + result)
+            return result
+        }
+    }
     serverMgr.saveResultMMSE = async (resultMMSE, ID, cb) => {
         let result = await serverMgr.requestFetchData("saveResultMMSE", {resultMMSE: resultMMSE, ID: ID})
         if(cb) {

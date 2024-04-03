@@ -57,15 +57,15 @@ function Attività(){
                     </SearchBox>
                 </div>
             }
-            {!tests_ctx.formAddValutazione && !tests_ctx.schedaSingoloTest && !tests_ctx.editTestMMSE && !tests_ctx.editTestMoCA && <h1 className={styles.page_title}>Test</h1>}
+            {!tests_ctx.formAddValutazione && !tests_ctx.schedaSingoloTest && !tests_ctx.editTest && <h1 className={styles.page_title}>Test</h1>}
 
             <div className={styles.wrapper_page}>
                 {tests_ctx.formAddValutazione &&
                     <AddValutazione></AddValutazione>
                 }
 
-                {tests_ctx.editTestMMSE && 
-                    <EditRisultatiTestMMSE></EditRisultatiTestMMSE>
+                {tests_ctx.editTest && 
+                    tests_ctx.schedaTestEdit
                 }
 
                 {tests_ctx.mainPage &&
