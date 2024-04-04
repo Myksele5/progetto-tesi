@@ -354,6 +354,7 @@ function EditDomanda(props){
             }
     
             game_ctx.salvaDomandaModificata(modified_question, ID);
+            alert('Domanda modificata con successo!')
             props.chiudiFormModificaDomanda();
         }
         else{

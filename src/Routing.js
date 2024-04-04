@@ -9,6 +9,8 @@ import Giochi from "./components/Giochi/Giochi";
 import Login from "./components/Accesso/Login";
 import MainMenu from "./components/UI/MainMenu";
 import QRCodeLogin from "./components/Accesso/QRCodeLogin";
+import Domande from "./components/Giochi/Domande";
+import CreaDomanda from "./components/Giochi/CreaDomanda";
 
 function RoutingNew(){
     
@@ -57,6 +59,28 @@ function RoutingNew(){
                         ></MainMenu>
                         <div className="wrap_schermata">
                             <Giochi></Giochi>
+                        </div>
+                    </>
+                }>
+                </Route>
+                <Route path="/domande/:userID" element={
+                    <>
+                        <MainMenu
+                            selected={"DOMANDE"}
+                        ></MainMenu>
+                        <div className="wrap_schermata">
+                            <Domande></Domande>
+                        </div>
+                    </>
+                }>
+                </Route>
+                <Route path="/domande/creaDomanda/:userID" element={
+                    <>
+                        <MainMenu
+                            selected={"DOMANDE"}
+                        ></MainMenu>
+                        <div className="wrap_schermata">
+                            <CreaDomanda></CreaDomanda>
                         </div>
                     </>
                 }>

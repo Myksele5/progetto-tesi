@@ -2,8 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import GameContext from "../../context/game-context";
 import styles from "./ElencoDomande.module.css";
 import AuthContext from "../../context/auth-context";
+import GenericButton from "../UI/GenericButton";
+import { Link } from "react-router-dom";
 
 var COUNT_DOMANDE = 0;
+let domande_esistenti = 0;
 
 function ElencoDomande(props){
     const game_ctx = useContext(GameContext);
@@ -11,10 +14,6 @@ function ElencoDomande(props){
 
     const [questionsList, setQuestionsList] = useState(game_ctx.domande);
     const [categoryFilter, setCategoryFilter] = useState("Tutte");
-    // const [imagesQuizQuestions, setImagesQuizQuestions] = useState(game_ctx.domandeDeiQuizConImmagini);
-    const [imagesList, setImagesList] = useState([]);
-    // const [classicQuizQuestions, setClassicQuizQuestions] = useState(game_ctx.domandeDeiQuiz);
-    // const [guessTheWordQuestions, setGuessTheWordQuestions] = useState(game_ctx.elencoParole);
     const [llll, setllll] = useState([...game_ctx.domandeDaModificare]);
     const [numeroDomandeSelezionate, setNumeroDomandeSelezionate] = useState(0);
 
@@ -32,6 +31,7 @@ function ElencoDomande(props){
             console.log(llll)
             COUNT_DOMANDE = 0;
             setNumeroDomandeSelezionate(COUNT_DOMANDE);
+            domande_esistenti = 0;
             props.domandeNuovoGioco(llll);
         }
     }, [props.tipoGioco])
@@ -49,6 +49,7 @@ function ElencoDomande(props){
     function categoryChangeHandler(event){
         // changingCategoryMakesQuestionsReset();
         setCategoryFilter(event.target.value);
+        console.log(questionsList)
     }
 
     function changingCategoryMakesQuestionsReset(){
@@ -115,7 +116,11 @@ function ElencoDomande(props){
     function recuperaTutteLeDomande(singleQuestion){
         var checkboxInputChecked;
         
-        // console.log(game_ctx.domandeDaModificare === llll);
+        console.log(singleQuestion.tipoGioco === props.tipoGioco);
+        if(singleQuestion.tipoGioco === props.tipoGioco){
+            domande_esistenti += 1;
+            console.log("AOOOO")
+        }
 
         if(singleQuestion.tipoGioco === props.tipoGioco && (singleQuestion.categoria === categoryFilter || categoryFilter === "Tutte")){
             if(llll.length <= 0){
@@ -168,10 +173,16 @@ function ElencoDomande(props){
                     }
 
                     {props.tipoGioco === "COMPLETA LA PAROLA" &&
+                    <>
                         <div className={styles.flex_list_container}>
                             <h5 className={styles.subtitle_style}>Parola da indovinare:</h5>
                             <p className={styles.question_style}>{singleQuestion.domanda}</p>
                         </div>
+                        <div className={styles.flex_list_container}>
+                            <h4 className={styles.subtitle_style}>Aiuto:</h4>
+                            <p className={styles.question_style}>{singleQuestion.suggerimento}</p>
+                        </div>
+                    </>
                     }
 
                     {(props.tipoGioco === "QUIZ" || props.tipoGioco === "QUIZ CON IMMAGINI") &&
@@ -231,6 +242,13 @@ function ElencoDomande(props){
             <h5>Scegli le domande per il gioco:</h5>
             <div className={styles.wrapper_generico}>
                 <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
+
+                <Link to={`/domande/creaDomanda/${auth_ctx.utenteLoggatoUID}`} style={{textDecoration: "none"}}>
+                    <GenericButton
+                        buttonText={"Crea una domanda"}
+                        generic_button
+                    ></GenericButton>
+                </Link>
                 
                 <select className={styles.select_style} onChange={categoryChangeHandler}>
                     <option>{"Tutte"}</option>
@@ -240,6 +258,7 @@ function ElencoDomande(props){
             
             <ul className={styles.wrapper_lista_domande}>
                 {categoryFilter !== "" && questionsList.map(recuperaTutteLeDomande)}
+                {domande_esistenti === 0 && <p className={styles.crea_una_domanda}>Non ci sono domande salvate per questo gioco. Usa il pulsante qui sopra per creare una domanda</p>}
             </ul>
             
         </>

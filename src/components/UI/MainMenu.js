@@ -6,6 +6,7 @@ import patient from "../Images/disabled.png";
 import activity from "../Images/puzzle_piece.png";
 import game from "../Images/chess.png";
 import dialogue from "../Images/list.png";
+import questions from "../Images/questions.png";
 import GenericButton from "./GenericButton";
 import ReactDOM from 'react-dom';
 import { useContext, useState } from "react";
@@ -124,6 +125,14 @@ function MainMenu(props){
                             {auth_ctx.tipoAccount === "Paziente" && <div className={styles.menu_text_option}>I Miei Giochi</div>}
                         </Nav.Item>
                     </Link>
+                    {auth_ctx.tipoAccount !== "Paziente" &&
+                        <Link className={styles.menu_option} style={{textDecoration: "none"}} to={`/domande/${auth_ctx.utenteLoggatoUID}`}>
+                            <Nav.Item className={`${styles.menu_option} ${props.selected === "DOMANDE" ? styles.menu_option_SELECTED : ''}`}>
+                                <img className={styles.image_option} src={questions} alt="domande"></img>
+                                <div className={styles.menu_text_option}>Domande</div>
+                            </Nav.Item>
+                        </Link>
+                    }
                 </Nav>
             </Navbar>
             {auth_ctx.utenteLoggato !== null && auth_ctx.logoutModal &&

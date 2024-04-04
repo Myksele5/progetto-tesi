@@ -202,6 +202,8 @@ export function GameContextProvider(props){
             nuova_domanda.rispSbagliate.wrong_answer_n1, nuova_domanda.rispSbagliate.wrong_answer_n2, nuova_domanda.rispSbagliate.wrong_answer_n3, nuova_domanda.rispSbagliate.wrong_answer_n4,
             nuova_domanda.immagine, nuova_domanda.suggerimento
         )
+
+        alert("Nuova domanda salvata!")
         
         getAllGamesQuestions();
     }

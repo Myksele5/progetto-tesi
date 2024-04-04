@@ -412,12 +412,6 @@ function Giochi(){
                         <option>COMPLETA LA PAROLA</option>
                         <option>GIOCO DELLE COPPIE</option>
                     </select>
-                    <GenericButton
-                        onClick={formCreateNewQuestion}
-                        generic_button={true}
-                        buttonText={"Lista domande"}
-                    >
-                    </GenericButton>
         
                     <GenericButton
                         onClick={() => {
@@ -426,7 +420,14 @@ function Giochi(){
                             game_ctx.formCreaNuovoGioco();
                         }}
                         generic_button={true}
-                        buttonText={"Aggiungi Gioco"}
+                        buttonText={"Crea Gioco"}
+                    >
+                    </GenericButton>
+
+                    <GenericButton
+                        // onClick={formCreateNewQuestion}
+                        generic_button={true}
+                        buttonText={"Lista domande"}
                     >
                     </GenericButton>
                 </div>
