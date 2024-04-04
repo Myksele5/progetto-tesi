@@ -1096,13 +1096,13 @@
         // $lastInsertedID = $saveTestResult->insert_id;
 
         if($tipoTest == 'MoCA'){
-            // foreach($arrayRisposte as $risposta){
-            //     $insertRisposta = $i_conn->prepare(
-            //         "INSERT INTO `resultsTestMoCA` (`sessionID`, `domandaID`, `risposta`) VALUES (?, ?, ?)"
-            //     );
-            //     $insertRisposta->bind_param("iii", $lastInsertedID, $risposta['domanda'], $risposta['risposta']);
-            //     $insertRisposta->execute();
-            // }
+            foreach($arrayRisposte as $risposta){
+                $insertRisposta = $i_conn->prepare(
+                    "UPDATE `resultsTestMoCA` SET `risposta` = ? WHERE domandaID = ? AND sessionID = ?"
+                );
+                $insertRisposta->bind_param("iii", $risposta['risposta'], $risposta['domanda'], $testID);
+                $insertRisposta->execute();
+            }
         }
         else{
             foreach($arrayRisposte as $risposta){

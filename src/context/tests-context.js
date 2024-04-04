@@ -5,6 +5,7 @@ import PatientContext from "./patients-context";
 import SchedaSingoloTest from "../components/Attività/SchedaSingoloTest";
 import AuthContext from "./auth-context";
 import EditRisultatiTestMMSE from "../components/Attività/EditRisultatiTestMMSE";
+import EditRisultatiTestMOCA from "../components/Attività/EditRisultatiTestMOCA";
 
 let scheda_test_paziente;
 let edit_scheda_test;
@@ -30,6 +31,7 @@ const TestsContext = React.createContext({
     salvaRisultatoMMSE: ()=>{},
     aggiornaRisultatoTestMMSE: ()=>{},
     salvaRisultatoMoCA: ()=>{},
+    aggiornaRisultatoTestMoCA: ()=>{},
     cercaTest: ()=>{},
     stringSearched: null,
     selectOrder:()=>{}
@@ -115,9 +117,15 @@ export function TestsContextProvider(props){
                 risultatiTest={risultatiTest}
             ></EditRisultatiTestMMSE>
         }
-        // if(tipoTest === "MoCA"){
-        //     setShowEditTestMoCA(true)
-        // }
+        if(tipoTest === "MoCA"){
+            setShowEditTest(true)
+            edit_scheda_test = 
+            <EditRisultatiTestMOCA
+                testID={testID}
+                paziente={pazienteID}
+                risultatiTest={risultatiTest}
+            ></EditRisultatiTestMOCA>
+        }
         
         console.log(risultatiTest)
         hideMainPage();
@@ -184,11 +192,6 @@ export function TestsContextProvider(props){
         var year = dateee.getFullYear();
         let dateString = `${year}-${month}-${day}`;
 
-        let result;
-
-        // result = await getServerMgr().saveResultMMSE(resultMMSE, pazienteID)
-        // .catch((err) => {console.error(err)})
-
         await getServerMgr().realUpdateTestResultList(pazienteID, "MMSE", resultMMSE, dateString, arrayRisposte, doctorID, testID)
         .catch((err) => {console.error(err)})
 
@@ -208,6 +211,20 @@ export function TestsContextProvider(props){
         .catch((err) => {console.error(err)})
 
         await getServerMgr().updateTestResultList(pazienteID, "MoCA", resultMoCA, dateString, arrayRisposte, doctorID)
+        .catch((err) => {console.error(err)})
+
+        getTestsList();
+        patients_ctx.updateListaPazienti();
+    }
+
+    async function aggiornaRisultatoTestMoCA(resultMoCA, pazienteID, arrayRisposte, doctorID, testID){
+        var dateee = new Date();
+        var day = dateee.toLocaleString('it-IT', {day: '2-digit'})
+        var month = dateee.toLocaleString('it-IT', {month: '2-digit'})
+        var year = dateee.getFullYear();
+        let dateString = `${year}-${month}-${day}`;
+
+        await getServerMgr().realUpdateTestResultList(pazienteID, "MoCA", resultMoCA, dateString, arrayRisposte, doctorID, testID)
         .catch((err) => {console.error(err)})
 
         getTestsList();
@@ -389,6 +406,7 @@ export function TestsContextProvider(props){
             salvaRisultatoMMSE: salvaRisultatoTestMMSE,
             aggiornaRisultatoTestMMSE: aggiornaRisultatoTestMMSE,
             salvaRisultatoMoCA: salvaRisultatoTestMoCA,
+            aggiornaRisultatoTestMoCA: aggiornaRisultatoTestMoCA,
             cercaTest: searchTest,
             stringSearched: stringaCercata,
             selectOrder: ordinamento,

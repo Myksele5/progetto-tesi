@@ -19,6 +19,9 @@ function SchedaPaziente(props){
     const [listaTest, setListaTest] = useState([]);
     const [listaGiochi, setListaGiochi] = useState([]);
 
+    const [lastMMSE, setLastMMSE] = useState(null);
+    const [lastMoCA, setLastMoCA] = useState(null);
+
     const [showCredentials, setShowCredentials] = useState(false);
     const [createCredentials, setCreateCredentials] = useState(false);
     const [credentials, setCredentials] = useState([]);
@@ -29,6 +32,28 @@ function SchedaPaziente(props){
     const [enteredPassword, setEnteredPassword] = useState("");
     const [validPassword, setValidPassword] = useState(true)
 
+    useEffect(() => {
+        let dataUltimoMMSE = "";
+        let dataUltimoMoCA = "";
+
+        if(props.listaTest?.length > 0){
+            for(var i=0; i < props.listaTest.length; i++){
+                if(props.listaTest[i].tipoTest === "MMSE"){
+                    if(props.listaTest[i].dataSvolgimento > dataUltimoMMSE || dataUltimoMMSE.length === 0){
+                        console.log("WEWEWEWE")
+                        dataUltimoMMSE = props.listaTest[i].dataSvolgimento;
+                        setLastMMSE(props.listaTest[i].punteggioTest)
+                    }
+                }
+                if(props.listaTest[i].tipoTest === "MoCA"){
+                    if(props.listaTest[i].dataSvolgimento > dataUltimoMoCA || dataUltimoMoCA.length === 0){
+                        dataUltimoMoCA = props.listaTest[i].dataSvolgimento;
+                        setLastMoCA(props.listaTest[i].punteggioTest)
+                    }
+            }
+            }
+    }
+    }, [])
 
     useEffect(() => {
         // console.log(props.informazioniMediche)
@@ -329,35 +354,35 @@ function SchedaPaziente(props){
                 </Tab>
                 <Tab eventKey={"TEST"} title={"Test"}>
                     <div style={{margin: "15px"}}>
-                        {props.scoreMMSE !== null &&
+                        {lastMMSE !== null &&
                             <div className={styles.wrapper_vertical}>
                                 <h1 className={styles.mmse_moca_style}>PUNTEGGIO MMSE</h1>
-                                {/* <h2>{props.scoreMMSE}/30</h2> */}
+                                {/* <h2>{lastMMSE}/30</h2> */}
                                 <div style={{width: "50%"}}>
-                                    <ProgressBar variant={props.scoreMMSE >= 25 ? 'success' : props.scoreMMSE >= 18 ? 'warning' : 'danger'} 
-                                    now={props.scoreMMSE} min={0} max={30} label={`${props.scoreMMSE}/30`}
+                                    <ProgressBar variant={lastMMSE >= 25 ? 'success' : lastMMSE >= 18 ? 'warning' : 'danger'} 
+                                    now={lastMMSE} min={0} max={30} label={`${lastMMSE}/30`}
                                     ></ProgressBar>
                                 </div>
                             </div>
                         }
-                        {props.scoreMMSE === null &&
+                        {lastMMSE === null &&
                             <div className={styles.wrapper_vertical}>
                                 <h1 className={styles.mmse_moca_style}>Test MMMSE non effettuato</h1>
                             </div>
                         }
                         <hr className={styles.horizontal_line}/>
-                        {props.scoreMOCA !== null &&
+                        {lastMoCA !== null &&
                             <div className={styles.wrapper_vertical}>
                                 <h1 className={styles.mmse_moca_style}>PUNTEGGIO MOCA</h1>
-                                {/* <h2>{props.scoreMOCA}/30</h2> */}
+                                {/* <h2>{lastMoCA}/30</h2> */}
                                 <div style={{width: "50%"}}>
-                                    <ProgressBar variant={props.scoreMOCA >= 25 ? 'success' : props.scoreMOCA >= 18 ? 'warning' : 'danger'} 
-                                    now={props.scoreMOCA} min={0} max={30} label={`${props.scoreMOCA}/30`}
+                                    <ProgressBar variant={lastMoCA >= 25 ? 'success' : lastMoCA >= 18 ? 'warning' : 'danger'} 
+                                    now={lastMoCA} min={0} max={30} label={`${lastMoCA}/30`}
                                     ></ProgressBar>
                                 </div>
                             </div>
                         }
-                        {props.scoreMOCA === null &&
+                        {lastMoCA === null &&
                             <div className={styles.wrapper_vertical}>
                                 <h1 className={styles.mmse_moca_style}>Test MOCA non effettuato</h1>
                             </div>
