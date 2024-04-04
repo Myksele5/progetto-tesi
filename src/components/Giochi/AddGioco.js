@@ -136,6 +136,7 @@ function AddGioco(props){
 
             console.log(resultID)
 
+            alert("Nuovo gioco salvato!")
             props.chiudiFormNuovoGioco();
             game_ctx.prendiTuttiGiochiDomande();
         }

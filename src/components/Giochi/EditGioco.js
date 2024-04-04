@@ -144,6 +144,7 @@ function EditGioco(props){
                 console.error(err)
             });
 
+            alert("Gioco modificato con successo!")
             props.chiudiFormModifica();
             game_ctx.prendiTuttiGiochiDomande();
         }

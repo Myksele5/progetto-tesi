@@ -14,6 +14,7 @@ import ExerciseReflexes from "./ExerciseReflexes";
 import AuthContext from "../../context/auth-context";
 import AssignGameToPatient from "./AssignGameToPatient";
 import ExercisePairGame from "./ExercisePairGame";
+import SearchBox from "../UI/SearchBox";
 
 let modifica_gioco;
 let modifica_domanda;
@@ -400,6 +401,10 @@ function Giochi(){
         setShowAssignGameTo(false);
     }
 
+    function cercaGioco(event){
+        game_ctx.cercaGioco(event.target.value);
+    }
+
     return(
         <>
             {showSearchBoxAndButton && auth_ctx.tipoAccount !== "Paziente" &&
@@ -424,12 +429,15 @@ function Giochi(){
                     >
                     </GenericButton>
 
-                    <GenericButton
+                    {/* <GenericButton
                         // onClick={formCreateNewQuestion}
                         generic_button={true}
                         buttonText={"Lista domande"}
                     >
-                    </GenericButton>
+                    </GenericButton> */}
+                    <SearchBox
+                        onChange={cercaGioco}
+                    ></SearchBox>
                 </div>
             }
             {showElencoGiochi && <h1 className={styles.page_title}>Giochi</h1>}

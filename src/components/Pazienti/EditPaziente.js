@@ -30,6 +30,7 @@ function EditPaziente(props){
 
     const [validData, setValidData] = useState(true);
     const [dataModifica, setDataModifica] = useState(props.dataaa);
+    const [errorMinData, setErrorMinData] = useState(false)
 
     const [validCF, setValidCF] = useState(true);
     const [CFModifica, setCFModifica] = useState(props.cfff);
@@ -178,6 +179,7 @@ function EditPaziente(props){
         console.log(event.target.value);
         setDataModifica(event.target.value);
         setValidData(true);
+        setErrorMinData(false);
     }
     
     const CFChangeHandler = (event) => {
@@ -193,106 +195,6 @@ function EditPaziente(props){
         setShowFormAddTherapy(false);
     }
 
-    const verificaTerapiaGiàAssegnata = (terapia) => {
-        let footerItem;
-        console.log(informazioniMediche)
-        console.log(Number(terapia.terapiaID))
-
-        if(informazioniMediche.length > 0){
-            for(var i=0; i < informazioniMediche.length; i++){
-                if(Number(terapia.terapiaID) !== Number(informazioniMediche[i].terapiaID)){
-                    footerItem =
-                    <Collapse in={terapiaSelezionata === terapia.terapiaID}>
-                        <div>
-                            <div className={styles.wrapper_date}>
-                                <div className={styles.wrapper_vertical}>
-                                    <label className={styles.listaMedica_label_DATA}>Data inizio</label>
-                                    <input onChange={dataInizioTerapiaChangeHandler} className={styles.input_style_SHORT} type="date"></input>
-                                </div>
-                                <div className={styles.wrapper_vertical}>
-                                    <label className={styles.listaMedica_label_DATA}>Data fine</label>
-                                    <input onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
-                                </div>   
-                            </div>
-                            <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
-                                <GenericButton
-                                    onClick={(event) => {
-                                        event.preventDefault()
-                                        addInformazioniMediche(
-                                            {
-                                                patologiaID: patologies_ctx.patologiaSelezionataFormPaziente.patologiaID,
-                                                nomePatologia: patologies_ctx.patologiaSelezionataFormPaziente.nomePatologia,
-                                                terapiaID: terapia.terapiaID,
-                                                terapia: terapia.terapia,
-                                                note: terapia.note,
-                                                dataInizio: dataInizioTerapia,
-                                                dataFine: dataFineTerapia
-                                            }
-                                        )
-                                    }}
-                                    buttonText={"Aggiungi"}
-                                    generic_button
-                                ></GenericButton>
-                            </div>
-                        </div>
-                    </Collapse>
-                }
-                else{
-                    footerItem = <h2 className={styles.already_assigned}>Hai già assegnato questa terapia!</h2>
-                    break;
-                }
-            }
-        }
-        else{
-            footerItem =
-            <Collapse in={terapiaSelezionata === terapia.terapiaID}>
-                <div>
-                    <div className={styles.wrapper_date}>
-                        <div className={styles.wrapper_vertical}>
-                            <label className={styles.listaMedica_label_DATA}>Data inizio</label>
-                            <input onChange={dataInizioTerapiaChangeHandler} className={styles.input_style_SHORT} type="date"></input>
-                        </div>
-                        <div className={styles.wrapper_vertical}>
-                            <label className={styles.listaMedica_label_DATA}>Data fine</label>
-                            <input onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
-                        </div>   
-                    </div>
-                    <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
-                        <GenericButton
-                            onClick={(event) => {
-                                event.preventDefault()
-                                addInformazioniMediche(
-                                    {
-                                        patologiaID: patologies_ctx.patologiaSelezionataFormPaziente.patologiaID,
-                                        nomePatologia: patologies_ctx.patologiaSelezionataFormPaziente.nomePatologia,
-                                        terapiaID: terapia.terapiaID,
-                                        terapia: terapia.terapia,
-                                        note: terapia.note,
-                                        dataInizio: dataInizioTerapia,
-                                        dataFine: dataFineTerapia
-                                    }
-                                )
-                            }}
-                            buttonText={"Aggiungi"}
-                            generic_button
-                        ></GenericButton>
-                    </div>
-                </div>
-            </Collapse>
-        }
-        return (
-            <div className={styles.container_flexible_INFO} onClick={() => {selezionaTerapia(terapia.terapiaID)}} key={terapia.terapiaID}>
-                <label className={styles.listaMedica_label_TERAPIA}>TERAPIA:</label>
-                <h5 className={styles.listaMedica_content_TERAPIA}>{terapia.terapia}</h5>
-
-                <label className={styles.listaMedica_label_NOTE}>NOTE:</label>
-                <h5 className={styles.listaMedica_content_NOTE}>{terapia.note}</h5>
-
-                {footerItem}                            
-            </div>
-        );
-    }
-
     const selezionaTerapia = (id) => {
         console.log(id)
         setTerapiaSelezionata(id)
@@ -300,6 +202,7 @@ function EditPaziente(props){
 
     const dataInizioTerapiaChangeHandler = (event) => {
         setDataInizioTerapia(event.target.value);
+        setErrorMinData(false);
     }
     const dataFineTerapiaChangeHandler = (event) => {
         setDataFineTerapia(event.target.value);
@@ -311,19 +214,6 @@ function EditPaziente(props){
     }
     function noteChangeHandler(event){
         setNoteDaModificare(event.target.value);
-    }
-
-    function salvaNuovaTerapia(patologiaID){
-        if(terapiaDaModificare.length > 3){
-            patologies_ctx.addNewTherapy(patologiaID, terapiaDaModificare, noteDaModificare);
-
-            setTerapiaDaModificare("");
-            setNoteDaModificare("");
-            setShowFormAddTherapy(false)
-        }
-        else{
-            setValidTerapia(false)
-        }
     }
 
     const addInformazioniMediche = (oggettoMedico) => {
@@ -397,10 +287,16 @@ function EditPaziente(props){
 
         var dateee = new Date(dataModifica);
 
+        var day = dateee.toLocaleString('it-IT', {day: '2-digit'})
+        var month = dateee.toLocaleString('it-IT', {month: '2-digit'})
+        var year = dateee.getFullYear();
+
+        let dateString = `${year}-${month}-${day}`;
+
         if(nomeModifica.trim().length < 1 
         || cognomeModifica.trim().length < 1 
         || cittàModifica.trim().length < 1 
-        || isNaN(dateee)
+        || isNaN(dateee) || dateString < "1870-01-01"
         || CFModifica.trim().length < 16 || CFModifica.trim().length > 16){
             if(nomeModifica.trim().length < 1){
                 setValidNome(false);
@@ -424,6 +320,10 @@ function EditPaziente(props){
             if(isNaN(dateee)){
                 setValidData(false);
             }
+            else if(dateString < "1870-01-01"){
+                setValidData(false);
+                setErrorMinData(true);
+            }
             else{
                 setValidData(true);
             }
@@ -435,12 +335,6 @@ function EditPaziente(props){
             }
             return;
         }
-
-        var day = dateee.toLocaleString('it-IT', {day: '2-digit'})
-        var month = dateee.toLocaleString('it-IT', {month: '2-digit'})
-        var year = dateee.getFullYear();
-
-        let dateString = `${year}-${month}-${day}`;
 
         const datiPaziente = {
             nome: nomeModifica,
@@ -491,8 +385,9 @@ function EditPaziente(props){
                                 {!validCittà && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una città esistente</div>}
 
                                 <label className={`${styles.label_style} ${!validData ? styles.invalid : ""}`}>Data di nascita:</label>
-                                <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" value={dataModifica} onChange={dataNascitaChangeHandler}></input>
+                                <input className={`${styles.input_style} ${!validData ? styles.invalid : ""}`} type="date" min={"1870-01-01"} value={dataModifica} onChange={dataNascitaChangeHandler}></input>
                                 {!validData && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una data valida</div>}
+                                {errorMinData && <div style={{width: "100%", color: "red", textAlign: "center"}}>Non puoi inserire una data antecedente al 01-01-1870</div>}
 
                                 <label className={`${styles.label_style} ${!validCF ? styles.invalid : ""}`}>Codice Fiscale:</label>
                                 <input className={`${styles.input_style} ${!validCF ? styles.invalid : ""}`} type="text" value={CFModifica} onChange={CFChangeHandler}></input>
@@ -596,7 +491,8 @@ function EditPaziente(props){
                                     <textarea value={noteDaModificare} onChange={noteChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
 
                                     <label className={styles.label_style}>Data inizio</label>
-                                    <input value={dataInizioTerapia} onChange={dataInizioTerapiaChangeHandler} className={styles.input_style_SHORT} type="date"></input>
+                                    <input value={dataInizioTerapia} onChange={dataInizioTerapiaChangeHandler} min={"2010-01-01"} className={styles.input_style_SHORT} type="date"></input>
+                                    {errorMinData && <div style={{width: "100%", color: "red", textAlign: "center"}}>Non puoi inserire una data antecedente al 01-01-2010</div>}
 
                                     <label className={styles.label_style}>Data fine</label>
                                     <input value={dataFineTerapia} onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
@@ -604,12 +500,15 @@ function EditPaziente(props){
                                 <Modal.Footer style={{justifyContent: "center"}}>
                                     <GenericButton
                                         onClick={() => {
-                                            if(terapiaDaModificare.length > 3){
+                                            if(terapiaDaModificare.length > 3 && dataInizioTerapia >= "2010-01-01"){
                                                 setModaleModificaTerapia(false)
                                                 modificaTerapia(ID_modificaTerapia);
                                             }
-                                            else{
+                                            if(terapiaDaModificare.length <= 3){
                                                 setValidTerapia(false)
+                                            }
+                                            if(dataInizioTerapia < "2010-01-01"){
+                                                setErrorMinData(true)
                                             }
                                         }}
                                         generic_button={true}
@@ -664,7 +563,8 @@ function EditPaziente(props){
                                         <textarea value={noteDaModificare} onChange={noteChangeHandler} className={styles.input_style_MODIFICA_TERAPIA}></textarea>
 
                                         <label className={styles.label_style}>Data inizio</label>
-                                        <input value={dataInizioTerapia} onChange={dataInizioTerapiaChangeHandler} className={styles.input_style_SHORT} type="date"></input>
+                                        <input value={dataInizioTerapia} onChange={dataInizioTerapiaChangeHandler} min={"2010-01-01"} className={styles.input_style_SHORT} type="date"></input>
+                                        {errorMinData && <div style={{width: "100%", color: "red", textAlign: "center"}}>Non puoi inserire una data antecedente al 01-01-2010</div>}
 
                                         <label className={styles.label_style}>Data fine</label>
                                         <input value={dataFineTerapia} onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
@@ -674,7 +574,7 @@ function EditPaziente(props){
                                 <Modal.Footer style={{justifyContent: "center"}}>
                                     <GenericButton
                                         onClick={() => {
-                                            if(terapiaDaModificare.length > 3){
+                                            if(terapiaDaModificare.length > 3 && dataInizioTerapia >= "2010-01-01"){
                                                 setModaleAggiungiTerapia(false)
                                                 addInformazioniMediche(
                                                     {
@@ -689,8 +589,11 @@ function EditPaziente(props){
                                                 )
                                                 setCountTerapie((countTerapie) => countTerapie + 1)
                                             }
-                                            else{
+                                            if(terapiaDaModificare.length <= 3){
                                                 setValidTerapia(false)
+                                            }
+                                            if(dataInizioTerapia < "2010-01-01"){
+                                                setErrorMinData(true)
                                             }
                                             
                                         }}

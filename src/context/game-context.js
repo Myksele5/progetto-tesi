@@ -26,11 +26,15 @@ const GameContext = React.createContext({
     salvaDomandaModificata: ()=>{},
     prendiTuttiGiochiDomande:()=>{},
     listaPazientiPerGioco: null,
-    prendiPazientiPerUnSingoloGioco: ()=>{}
+    prendiPazientiPerUnSingoloGioco: ()=>{},
+    stringSearched: null,
+    cercaGioco:()=>{}
 });
 
 export function GameContextProvider(props){
     const patients_ctx = useContext(PatientContext);
+
+    const [stringaCercata, setStringaCercata] = useState("");
 
     const [elencoGiochi, setElencoGiochi] = useState([])
     const [elencoDomande, setElencoDomande] = useState([]);
@@ -284,6 +288,7 @@ export function GameContextProvider(props){
             console.error(err)
         });
 
+        alert("Gioco eliminato dalla lista.")
         getAllGamesQuestions();
     }
 
@@ -311,6 +316,8 @@ export function GameContextProvider(props){
             console.error(err)
         });
 
+        alert("Domanda eliminata.")
+
         getAllGamesQuestions();
     }
 
@@ -323,6 +330,10 @@ export function GameContextProvider(props){
             domandaModificata.rispSbagliate.wrong_answer_n4, domandaModificata.immagine, domandaModificata.suggerimento, ID
         )
         getAllGamesQuestions();
+    }
+
+    function searchGame(stringaDaCercare){
+        setStringaCercata(stringaDaCercare);
     }
 
     return(
@@ -345,7 +356,9 @@ export function GameContextProvider(props){
             salvaDomandaModificata: addModifiedQuestionToList,
             prendiTuttiGiochiDomande: getAllGamesQuestions,
             listaPazientiPerGioco: patientsListForSingleGame,
-            prendiPazientiPerUnSingoloGioco: getPatientsListForSingleGame
+            prendiPazientiPerUnSingoloGioco: getPatientsListForSingleGame,
+            stringSearched: stringaCercata,
+            cercaGioco: searchGame
         }}
         >
             {props.children}
