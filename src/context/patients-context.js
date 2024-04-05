@@ -314,8 +314,8 @@ export function PatientContextProvider(props){
                 datanascita = {pazientee.dataNascita}
                 codicefiscale = {pazientee.codiceFiscale}
                 informazioniMediche = {resultPatologie}
-                scoreMMSE = {pazientee.resultMMSE}
-                scoreMOCA = {pazientee.resultMOCA}
+                // scoreMMSE = {pazientee.resultMMSE}
+                // scoreMOCA = {pazientee.resultMOCA}
                 listaTest = {resultTest}
                 listaGiochi = {resultGiochi}
                 statsPaziente = {resultStatistiche}

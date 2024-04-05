@@ -169,6 +169,7 @@ function Giochi(){
         
         switch(stringa_TIPOGIOCO){
             case 'QUIZ':
+            case 'QUIZ CON SUONI':
             case 'QUIZ CON IMMAGINI':
                 setGameObject(
                     <ExerciseGuessTheFace
@@ -226,6 +227,7 @@ function Giochi(){
 
         switch(TIPOGIOCO){
             case 'QUIZ':
+            case 'QUIZ CON SUONI':
             case 'QUIZ CON IMMAGINI':
                 setGameObject(
                     <ExerciseGuessTheFace
@@ -443,6 +445,10 @@ function Giochi(){
             {showElencoGiochi && <h1 className={styles.page_title}>Giochi</h1>}
 
             <div className={styles.wrapper_generico}>
+                    {/* <audio controls={true} autoPlay={true}>
+                        <source type="audio/mp3" src="https://cognicare.altervista.org/uploads/meow.mp3"></source>
+                    </audio> */}
+
                 {showAddNewGame && 
                     <AddGioco
                         chiudiFormNuovoGioco={closeFormCreateNewGame}

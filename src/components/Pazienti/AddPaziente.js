@@ -35,6 +35,12 @@ function AddPaziente(props){
     const [validCF, setValidCF] = useState(true);
     const [enteredCF, setEnteredCF] = useState('');
 
+    const [validContattoEmail, setValidContattoEmail] = useState(true);
+    const [contattoEmail, setContattoEmail] = useState('');
+
+    const [validContattoCellulare, setValidContattoCellulare] = useState(true);
+    const [contattoCellulare, setContattoCellulare] = useState('');
+
     const [patologiaSelezionata, setPatologiaSelezionata] = useState("");
     const [patologiaSelezionataOggetto, setPatologiaSelezionataOggetto] = useState({});
 
@@ -86,7 +92,10 @@ function AddPaziente(props){
                     || enteredCognome.trim().length < 1 
                     || enteredCittà.trim().length < 1 
                     || isNaN(dateee) || dateString < "1870-01-01"
-                    || enteredCF.trim().length < 16 || enteredCF.trim().length > 16){
+                    || enteredCF.trim().length < 16 || enteredCF.trim().length > 16
+                    // || contattoCellulare.trim().length < 8
+                    // || !contattoEmail.includes('@')
+                    ){
                         if(enteredNome.trim().length < 1){
                             setValidNome(false);
                             // console.log(validNome);
@@ -121,6 +130,18 @@ function AddPaziente(props){
                         }
                         else{
                             setValidCF(true);
+                        }
+                        if(contattoCellulare.trim().length < 8){
+                            setValidContattoCellulare(false);
+                        }
+                        else{
+                            setValidContattoCellulare(true);
+                        }
+                        if(!contattoEmail.includes('@')){
+                            setValidContattoEmail(false);
+                        }
+                        else{
+                            setValidContattoEmail(true);
                         }
                 }
                 else{
@@ -174,6 +195,16 @@ function AddPaziente(props){
         console.log(event.target.value);
         setEnteredCF(event.target.value);
         setValidCF(true);
+    }
+    const contattoEmailChangeHandler = (event) => {
+        console.log(event.target.value);
+        setContattoEmail(event.target.value);
+        setValidContattoEmail(true);
+    }
+    const contattoCellulareChangeHandler = (event) => {
+        console.log(event.target.value);
+        setContattoCellulare(event.target.value);
+        setValidContattoCellulare(true);
     }
 
     const patologiaSelezionataChangeHandler = (event) => {
@@ -257,13 +288,15 @@ function AddPaziente(props){
             city: enteredCittà,
             codiceFiscale: enteredCF.toUpperCase(),
             dataNascita: enteredData,
+            contattoEmail: contattoEmail,
+            contattoCellulare: contattoCellulare,
             informazioniMediche: informazioniMediche
         };
 
         
         let pazienteSalvatoID;
         pazienteSalvatoID = await getServerMgr().addPaziente(
-            datiPaziente.doct_UID, datiPaziente.nome, datiPaziente.cognome, datiPaziente.city, datiPaziente.codiceFiscale, datiPaziente.dataNascita, datiPaziente.informazioniMediche
+            datiPaziente.doct_UID, datiPaziente.nome, datiPaziente.cognome, datiPaziente.city, datiPaziente.codiceFiscale, datiPaziente.dataNascita, datiPaziente.contattoEmail, datiPaziente.contattoCellulare, datiPaziente.informazioniMediche
         );
         console.log("pazienteID--> " + pazienteSalvatoID)
 
@@ -368,9 +401,9 @@ function AddPaziente(props){
         <div className={styles.center_form}>
             {stepAggiuntaPaziente === 1 && 
             <div className={styles.wrapper_step1}>
-                <h1 className={styles.title_form}>Inserisci i dati del paziente</h1>
+                <h1 className={styles.title_form}>Anagrafica</h1>
                 <div className={styles.wrapper_vertical}>
-
+                    
                     <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome:</label>
                     <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={enteredNome} onChange={nomeChangeHandler}></input>
                     {!validNome && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un nome valido</div>}
@@ -393,6 +426,18 @@ function AddPaziente(props){
                     {!validCF && <div style={{width: "100%", color: "red", textAlign: "center"}}>Il codice fiscale deve contenere 16 caratteri</div>}
 
                 </div>
+
+                <h1 style={{marginTop: "8px"}} className={styles.title_form}>Contatti</h1>
+                <div className={styles.wrapper_vertical}>
+                    <label style={{marginTop: "1px"}} className={`${styles.label_style} ${!validContattoEmail ? styles.invalid : ""}`}>Email:</label>
+                    <input className={`${styles.input_style} ${!validContattoEmail ? styles.invalid : ""}`} type="text" value={contattoEmail} onChange={contattoEmailChangeHandler}></input>
+                    {!validContattoEmail && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una email valida</div>}
+
+                    <label className={`${styles.label_style} ${!validContattoCellulare ? styles.invalid : ""}`}>Cellulare:</label>
+                    <input className={`${styles.input_style} ${!validContattoCellulare ? styles.invalid : ""}`} type="number" value={contattoCellulare} onChange={contattoCellulareChangeHandler}></input>
+                    {!validContattoCellulare && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un numero telefonico valido</div>}
+                </div>
+
                 <hr className={styles.horizontal_line}></hr>
                 <div className={styles.horizontal}>
                     <GenericButton

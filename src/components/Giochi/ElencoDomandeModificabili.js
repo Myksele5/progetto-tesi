@@ -60,6 +60,15 @@ function ElencoDomandeModificabili(props){
                             <p className={styles.question_style}>{singleQuestion.domanda}</p>
                         </div>
                     }
+                    {gameType === "QUIZ CON SUONI" && 
+                        <div className={styles.flex_list_container}>
+                            <h4 className={styles.subtitle_style}>Audio:</h4>
+                            {/* <p className={styles.question_style}>{singleQuestion.rispCorrettaN1}</p> */}
+                            <audio controls src={websiteUrl.concat(singleQuestion.immagine)}></audio>
+                            <h4 className={styles.subtitle_style}>Domanda:</h4>
+                            <p className={styles.question_style}>{singleQuestion.domanda}</p>
+                        </div>
+                    }
 
                     {gameType === "COMPLETA LA PAROLA" &&
                     <>
@@ -74,7 +83,7 @@ function ElencoDomandeModificabili(props){
                     </>
                     }
                     
-                    {(gameType === "QUIZ" || gameType === "QUIZ CON IMMAGINI") &&
+                    {(gameType === "QUIZ" || gameType === "QUIZ CON IMMAGINI" || gameType === "QUIZ CON SUONI") &&
                         <div className={styles.flex_list_container}>
                             <h4 className={styles.subtitle_style}>Risposte:</h4>
 
@@ -162,6 +171,7 @@ function ElencoDomandeModificabili(props){
                     <select className={styles.select_style} defaultValue={gameType} onChange={gameTypeChangeHandler}>
                         <option>QUIZ</option>
                         <option>QUIZ CON IMMAGINI</option>
+                        <option>QUIZ CON SUONI</option>
                         <option>COMPLETA LA PAROLA</option>
                         {/* <option>RIFLESSI</option> */}
                     </select>

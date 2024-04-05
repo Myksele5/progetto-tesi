@@ -43,7 +43,7 @@ function Domande(){
             >
             </EditDomanda>
         }
-        if(tipoGioco === "QUIZ CON IMMAGINI"){
+        if(tipoGioco === "QUIZ CON IMMAGINI" || tipoGioco === "QUIZ CON SUONI"){
             modifica_domanda =
             <EditDomanda
                 ID={ID}

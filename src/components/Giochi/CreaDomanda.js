@@ -46,10 +46,12 @@ function CreaDomanda(props){
     var categorie = game_ctx.recuperaCategorieDomande(gameType);
     
     const [imageFile, setImageFile] = useState(null);
+    const [validImage, setValidImage] = useState(true);
+    const [audioFile, setAudioFile] = useState(null);
+    const [validAudio, setValidAudio] = useState(true);
     const [myFile, setMyFile] = useState(null);
     const [msg, setMsg] = useState("");
     const [flagUpload, setFlagUpload] = useState(1);
-    const [validImage, setValidImage] = useState(true);
 
     function selectFile() {
         image = document.getElementById("mfile").click();
@@ -60,8 +62,15 @@ function CreaDomanda(props){
         setMyFile(e.target.files[0]);
         console.log(e.target.files[0].name);
         if(e.target.files.length > 0){
-            setImageFile(URL.createObjectURL(e.target.files[0]));
-            setValidImage(true)
+            if(gameType === "QUIZ CON IMMAGINI"){
+                setImageFile(URL.createObjectURL(e.target.files[0]));
+                setValidImage(true)
+            }
+            if(gameType === "QUIZ CON SUONI"){
+                setAudioFile(URL.createObjectURL(e.target.files[0]));
+                setValidAudio(true)
+            }
+            
         }
         // setImageFile(URL.createObjectURL(e.target.files[0]));
         setFlagUpload((prevState) => (prevState + 1))
@@ -299,7 +308,7 @@ function CreaDomanda(props){
                 }
             }
     
-            if(gameType === "QUIZ CON IMMAGINI"){
+            if(gameType === "QUIZ CON IMMAGINI" || gameType === "QUIZ CON SUONI"){
                 new_question = {
                     doctor_UID: auth_ctx.utenteLoggatoUID,
                     tipoGioco: gameType,
@@ -393,8 +402,8 @@ function CreaDomanda(props){
                 <select className={styles.select_style} onChange={gameTypeChangeHandler}>
                     <option>QUIZ</option>
                     <option>QUIZ CON IMMAGINI</option>
+                    <option>QUIZ CON SUONI</option>
                     <option>COMPLETA LA PAROLA</option>
-                    {/* <option>RIFLESSI</option> */}
                 </select>
 
                 <label className={styles.label_style}>Categoria domanda</label>
@@ -436,6 +445,17 @@ function CreaDomanda(props){
                     </>
                 }
 
+                {gameType === "QUIZ CON SUONI" &&
+                    <>
+                        <input type="file" name="mfile" id="mfile" onChange={setFile} style={{display: 'none'}}></input>
+                        <button onClick={selectFile}>{"Select file"}</button>
+                        <audio controls={true} className={`${!validAudio ? styles.invalid : ""}`} src={audioFile}></audio>
+                        {!validAudio && <div style={{width: "100%", color: "red", textAlign: "center"}}>Audio obbligatorio per questo gioco</div>}
+                        <label className={styles.label_style}>Inserisci domanda: </label>
+                        <input className={`${styles.textbox_style} ${!validDomanda ? styles.invalid : ""}`} type="text" onChange={domandaChangeHandler}></input>
+                    </>
+                }
+
                 {gameType === "COMPLETA LA PAROLA" &&
                     <>
                         <label className={styles.label_style}>Inserisci parola da indovinare: </label>
@@ -446,7 +466,7 @@ function CreaDomanda(props){
                 }
                 {!validDomanda && <div style={{width: "100%", color: "red", textAlign: "center"}}>La domanda non può essere vuota</div>}
                 
-                {(gameType === "QUIZ" || gameType === "QUIZ CON IMMAGINI") &&
+                {(gameType === "QUIZ" || gameType === "QUIZ CON IMMAGINI" || gameType === "QUIZ CON SUONI") &&
                     <div className={styles.wrapper_flexible}>
                         <div className={styles.wrapper_items}>
                             <label className={styles.label_style}>Risposta Corretta 1: </label>

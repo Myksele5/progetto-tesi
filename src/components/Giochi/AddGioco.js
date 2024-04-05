@@ -151,6 +151,7 @@ function AddGioco(props){
                 <option hidden>-- select an option --</option>
                 <option>QUIZ</option>
                 <option>QUIZ CON IMMAGINI</option>
+                <option>QUIZ CON SUONI</option>
                 <option>COMPLETA LA PAROLA</option>
                 <option>GIOCO DELLE COPPIE</option>
             </select>

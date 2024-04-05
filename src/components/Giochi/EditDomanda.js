@@ -39,6 +39,7 @@ function EditDomanda(props){
     const [validSbagliate, setValidSbagliate] = useState(true);
 
     const [imageFile, setImageFile] = useState(websiteUrl.concat(props.immagine));
+    const [audioFile, setAudioFile] = useState(websiteUrl.concat(props.immagine));
     const [myFile, setMyFile] = useState(null);
     const [msg, setMsg] = useState("");
     const [flagUpload, setFlagUpload] = useState(1);
@@ -56,7 +57,12 @@ function EditDomanda(props){
         setMyFile(e.target.files[0]);
         console.log(e.target.files[0].name);
         if(e.target.files.length > 0){
-            setImageFile(URL.createObjectURL(e.target.files[0]));
+            if(tipoGiocoModifica === "QUIZ CON IMMAGINI"){
+                setImageFile(URL.createObjectURL(e.target.files[0]));
+            }
+            if(tipoGiocoModifica === "QUIZ CON SUONI"){
+                setAudioFile(URL.createObjectURL(e.target.files[0]));
+            }
         }
         // setImageFile(URL.createObjectURL(e.target.files[0]));
         setFlagUpload((prevState) => (prevState + 1))
@@ -104,16 +110,6 @@ function EditDomanda(props){
         // counter_CORRETTE = props.count_corrette;
         // counter_SBAGLIATE = props.count_sbagliate;
     }, []);
-
-    function imageFileChangeHandler(event){
-        file = event.target.files[0];
-        setImageFile(URL.createObjectURL(file));
-        console.log(props.immagine);
-        console.log(file);
-        console.log(imageFile);
-        console.log(props.immagine === imageFile);
-        // console.log(file);
-    }
 
     function domandaChangeHandler(event){
         setDomandaModifica(event.target.value);
@@ -322,7 +318,7 @@ function EditDomanda(props){
                 }
             }
     
-            if(tipoGiocoModifica === "QUIZ CON IMMAGINI"){
+            if(tipoGiocoModifica === "QUIZ CON IMMAGINI" || tipoGiocoModifica === "QUIZ CON SUONI"){
                 var qualeImg;
     
                 if(!myFile){
@@ -396,6 +392,16 @@ function EditDomanda(props){
                     </>
                 }
 
+                {tipoGiocoModifica === "QUIZ CON SUONI" && 
+                    <>
+                        <input type="file" name="mfile" id="mfile" onChange={setFile} style={{display: 'none'}}></input>
+                        <button onClick={selectFile}>{"Select file"}</button>
+                        <audio controls={true} src={audioFile}></audio>
+                        <label className={styles.label_style}>Inserisci domanda: </label>
+                        <input className={`${styles.textbox_style} ${!validDomanda ? styles.invalid : ""}`} type="text" onChange={domandaChangeHandler}></input>
+                    </>
+                }
+
                 {tipoGiocoModifica === "COMPLETA LA PAROLA" && 
                     <>
                         <label className={styles.label_style}>Parola da indovinare: </label>
@@ -406,7 +412,7 @@ function EditDomanda(props){
                 }
                 {!validDomanda && <div style={{width: "100%", color: "red", textAlign: "center"}}>La domanda non può essere vuota</div>}
 
-                {(tipoGiocoModifica === "QUIZ" || tipoGiocoModifica === "QUIZ CON IMMAGINI") &&
+                {(tipoGiocoModifica === "QUIZ" || tipoGiocoModifica === "QUIZ CON IMMAGINI" || tipoGiocoModifica === "QUIZ CON SUONI") &&
                     <>
                         <div className={styles.wrapper_generico}>
                             <div className={styles.wrapper_items}>

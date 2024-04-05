@@ -539,6 +539,17 @@ function ExerciseGuessTheFace(props){
                             <img className={styles.resize_image} src={websiteUrl.concat(questions[counter_question_number].immagine)} alt='Face'></img>
                         </>
                     }
+
+                    {tipoQuiz === "QUIZ CON SUONI" && 
+                        <>
+                            <h1 className={styles.domanda}>Domanda N.{counter_question_number+1}</h1>
+                            <h1 className={styles.domanda}>{questions[counter_question_number].domanda}</h1>
+                            <audio controls={true} autoPlay={true} src={websiteUrl.concat(questions[counter_question_number].immagine)}></audio>
+                        </>
+                    }
+
+                    {/* <audio controls src={websiteUrl.concat("476488__diegoangelgaming__cat-6.mp3")}></audio> */}
+
                     {tipoQuiz === "QUIZ" && 
                     <>
                         <h1 className={styles.domanda}>Domanda N.{counter_question_number+1}</h1>
@@ -552,7 +563,7 @@ function ExerciseGuessTheFace(props){
 
                     <div className={styles.wrapper_horizontal_flex}>
                         <p className={styles.risposte_corrette}>Indovinate: {counter_correct_answers}/{questions.length}</p>
-                        {props.LIVELLOGIOCO !== "FACILE" && <p>TIMER: {timer}</p>}
+                        {/* {props.LIVELLOGIOCO !== "FACILE" && <p>TIMER: {timer}</p>} */}
                     </div>
                     
                     {hasAnswered && 

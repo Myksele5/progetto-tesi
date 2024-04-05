@@ -436,36 +436,26 @@
         $city = $dataJson["city"];
         $codiceFiscale = $dataJson["codiceFiscale"];
         $dataNascita = $dataJson["dataNascita"];
+        $contattoEmail = $dataJson["contattoEmail"];
+        $contattoCellulare = $dataJson["contattoCellulare"];
         $informazioniMediche = $dataJson["informazioniMediche"];
         
         $insertNewPatient = $i_conn->prepare(
-            "INSERT INTO `patients` (`doct_UID`, `nome`, `cognome`, `city`, `codiceFiscale`, `dataNascita`) 
-            VALUES (?, ?, ?, ?, ?, ?)"
+            "INSERT INTO `patients` (`doct_UID`, `nome`, `cognome`, `city`, `codiceFiscale`, `dataNascita`, `contattoEmail`, `contattoCellulare`) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
         );
-        $insertNewPatient->bind_param("isssss", $doct_UID, $nome, $cognome, $city, $codiceFiscale, $dataNascita);
+        $insertNewPatient->bind_param("isssssss", $doct_UID, $nome, $cognome, $city, $codiceFiscale, $dataNascita, $contattoEmail, $contattoCellulare);
         $insertNewPatient->execute();
 
         $patientID = $insertNewPatient->insert_id;
 
         foreach($informazioniMediche as $info){
-        // $terapia = $dataJson["terapia"];
-        // $note = $dataJson["note"];
-        // $patologiaID = $dataJson["patologiaID"];
-        
             $saveNewTherapy = $i_conn->prepare(
                 "INSERT INTO `elencoTerapie` (`terapia`, `note`, `patolog_ID`, `dataInizio`, `dataFine`, `paziente_ID`) VALUES (?, ?, ?, ?, ?, ?)"
             );
             $saveNewTherapy->bind_param("ssissi", $info['terapia'], $info['note'], $info['patologiaID'], $info['dataInizio'], $info['dataFine'], $patientID);
             $saveNewTherapy->execute();
 
-            // $terapiaID = $saveNewTherapy->insert_id;
-
-            // $insertNewInfoMediche = $i_conn->prepare(
-            //     "INSERT INTO `bridgePazientiPatologieTerapie` (`paziente_ID`, `patologia_ID`, `terapia_ID`, `dataInizio`, `dataFine`) 
-            //     VALUES (?, ?, ?, ?, ?)"
-            // );
-            // $insertNewInfoMediche->bind_param("iiiss", $patientID, $info['patologiaID'], $terapiaID, $info['dataInizio'], $info['dataFine']);
-            // $insertNewInfoMediche->execute();
         }
         return $patientID;
     }

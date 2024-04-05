@@ -171,6 +171,14 @@ function ElencoDomande(props){
                             <p className={styles.question_style}>{singleQuestion.domanda}</p>
                         </div>
                     }
+                    {props.tipoGioco === "QUIZ CON SUONI" &&
+                        <div className={styles.flex_list_container}>
+                            <h5 className={styles.subtitle_style}>Audio:</h5>
+                            <audio controls={true} src={websiteUrl.concat(singleQuestion.immagine)}></audio>
+                            <h4 className={styles.subtitle_style}>Domanda:</h4>
+                            <p className={styles.question_style}>{singleQuestion.domanda}</p>
+                        </div>
+                    }
 
                     {props.tipoGioco === "COMPLETA LA PAROLA" &&
                     <>
@@ -185,7 +193,7 @@ function ElencoDomande(props){
                     </>
                     }
 
-                    {(props.tipoGioco === "QUIZ" || props.tipoGioco === "QUIZ CON IMMAGINI") &&
+                    {(props.tipoGioco === "QUIZ" || props.tipoGioco === "QUIZ CON IMMAGINI" || props.tipoGioco === "QUIZ CON SUONI") &&
                         <div className={styles.flex_list_container}>
                             <h5 className={styles.subtitle_style}>Risposte:</h5>
 
