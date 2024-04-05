@@ -20,8 +20,8 @@ function Attività(){
 
     return(
         <>
-            {(tests_ctx.mainPage || tests_ctx.formAddValutazione) &&
-                <div className={styles.wrap_boxes}>
+            <div className={styles.wrap_boxes}>
+                {tests_ctx.mainPage &&
                     <select onChange={(event) => {
                         tests_ctx.selectOrder(event.target.value)
                     }} className={styles.select_style}>
@@ -35,28 +35,48 @@ function Attività(){
                         <option>PUNTEGGIO - Asc</option>
                         <option>PUNTEGGIO - Disc</option>
                     </select>
-                    {!tests_ctx.formAddValutazione &&
-                        <GenericButton
-                            onClick={tests_ctx.showFormAddValutazione}
-                            generic_button={true}
-                            buttonText={"Nuova valutazione"}
-                        >
-                        </GenericButton>
-                    }
-                    {tests_ctx.formAddValutazione &&
-                        <GenericButton
-                            onClick={tests_ctx.hideFormAddValutazione}
-                            buttonText={"Annulla valutazione"}
-                            red_styling
-                            generic_button
-                        ></GenericButton>
-                    }
+                }
+                {tests_ctx.mainPage &&
+                    <GenericButton
+                        onClick={tests_ctx.showFormAddValutazione}
+                        generic_button={true}
+                        buttonText={"Nuova valutazione"}
+                    >
+                    </GenericButton>
+                }
+                {tests_ctx.formAddValutazione && !tests_ctx.editTest &&
+                    <GenericButton
+                        onClick={tests_ctx.hideFormAddValutazione}
+                        buttonText={"Annulla valutazione"}
+                        red_styling
+                        generic_button
+                    ></GenericButton>
+                }
+                {tests_ctx.editTest &&
+                    <GenericButton
+                        onClick={tests_ctx.hideFormEditValutazione}
+                        buttonText={"Annulla modifica"}
+                        red_styling
+                        generic_button
+                    ></GenericButton>
+                }
+                {tests_ctx.schedaSingoloTest &&
+                    <GenericButton
+                        onClick={tests_ctx.hideSchedaTest}
+                        buttonText={"Indietro"}
+                        generic_button
+                        red_styling
+                    ></GenericButton>
+                }
+                {tests_ctx.mainPage &&
                     <SearchBox
                         onChange={cercaInfoTest}
                     >
                     </SearchBox>
-                </div>
-            }
+                }
+            </div>
+            
+            
             {!tests_ctx.formAddValutazione && !tests_ctx.schedaSingoloTest && !tests_ctx.editTest && <h1 className={styles.page_title}>Test</h1>}
 
             <div className={styles.wrapper_page}>
@@ -64,9 +84,7 @@ function Attività(){
                     <AddValutazione></AddValutazione>
                 }
 
-                {tests_ctx.editTest && 
-                    tests_ctx.schedaTestEdit
-                }
+                {tests_ctx.editTest && tests_ctx.schedaTestEdit}
 
                 {tests_ctx.mainPage &&
                     <TabellaStoricoTest></TabellaStoricoTest>

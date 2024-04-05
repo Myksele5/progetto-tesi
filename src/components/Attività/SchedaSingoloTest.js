@@ -10,14 +10,6 @@ function SchedaSingoloTest(props){
 
     return(
         <div style={{width:"80%"}} className={styles.wrapper_vertical}>
-            <div style={{position: "sticky", top: "0px"}}>
-                <GenericButton
-                    onClick={tests_ctx.hideSchedaTest}
-                    buttonText={"Indietro"}
-                    generic_button
-                    red_styling
-                ></GenericButton>
-            </div>
             
             <h3 className={styles.scheda_test_di}>Scheda Test di: {props.nome} {props.cognome}</h3>
             <div className={styles.wrapper_horizontal}>

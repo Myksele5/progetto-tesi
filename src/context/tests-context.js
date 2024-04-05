@@ -27,6 +27,7 @@ const TestsContext = React.createContext({
     formAddValutazione: null,
     showFormAddValutazione: ()=>{},
     hideFormAddValutazione: ()=>{},
+    showFormEditValutazione: ()=>{},
     hideFormEditValutazione: ()=>{},
     salvaRisultatoMMSE: ()=>{},
     aggiornaRisultatoTestMMSE: ()=>{},
@@ -160,6 +161,10 @@ export function TestsContextProvider(props){
     function hideFormAddValutazione(){
         setFormValutazione(false);
         showMainPage();
+    }
+    function showFormEditValutazione(){
+        setShowEditTest(true);
+        hideMainPage();
     }
     function hideFormEditValutazione(){
         setShowEditTest(false);
@@ -402,6 +407,7 @@ export function TestsContextProvider(props){
             formAddValutazione: formValutazione,
             showFormAddValutazione: showFormAddValutazione,
             hideFormAddValutazione: hideFormAddValutazione,
+            showFormEditValutazione: showFormEditValutazione,
             hideFormEditValutazione: hideFormEditValutazione,
             salvaRisultatoMMSE: salvaRisultatoTestMMSE,
             aggiornaRisultatoTestMMSE: aggiornaRisultatoTestMMSE,
