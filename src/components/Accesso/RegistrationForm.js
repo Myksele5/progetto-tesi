@@ -1,3 +1,4 @@
+import logo from "../Images/NEW_COGNICARE_LOGO.png";
 import GenericButton from "../UI/GenericButton";
 import styles from "./RegistrationForm.module.css";
 import Card from "../UI/Card";
@@ -154,6 +155,7 @@ function RegistrationForm(props){
         <Card
         children = {
             <form className={styles.center_elements} onSubmit={submitRegistration}>
+                <img className={styles.img_size} src={logo}></img>
                 <h1 className={styles.title}>Registrazione</h1>
 
                 <label className={styles.label_box}>Titolo</label>

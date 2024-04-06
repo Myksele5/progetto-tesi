@@ -417,9 +417,6 @@
 }
 
 @media screen and (max-height: 900px) {
-    .section_dati{
-        /* height: 500px; */
-    }
 
     .label_style{
         font-size: 15px;
@@ -430,9 +427,7 @@
     }
 }
 @media screen and (max-height: 800px) {
-    .section_dati{
-        /* height: 440px; */
-    }
+
     .text_dati_personali_title{
         font-size: 20px;
     }

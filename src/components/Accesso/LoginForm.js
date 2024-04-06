@@ -5,6 +5,7 @@ import Card from "../UI/Card";
 import { getServerMgr } from "../../backend_conn/ServerMgr";
 import AuthContext from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
+import logo from "../Images/NEW_COGNICARE_LOGO.png";
 
 function LoginForm(props){
     const auth_ctx = useContext(AuthContext);
@@ -89,6 +90,7 @@ function LoginForm(props){
         <Card
         children = {
             <form className={styles.center_elements} onSubmit={submitLogin}>
+                <img className={styles.img_size} src={logo}></img>
                 <h1 className={styles.title}>Login</h1>
 
                 <label className={`${styles.label_box} ${!validEmail ? styles.invalid : ''}`}>Email</label>

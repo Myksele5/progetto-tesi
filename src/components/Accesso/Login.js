@@ -3,9 +3,10 @@ import LoginForm from "./LoginForm";
 import RegistrationForm from "./RegistrationForm";
 import PswDimenticata from "./PswDimenticata";
 import CambioPsw from "./CambioPsw";
+import WelcomePage from "./WelcomePage";
 
 function Login(){
-    const [mostraForm, setMostraForm] = useState('LOGIN');
+    const [mostraForm, setMostraForm] = useState('WELCOME');
 
     function showRegistrationForm(){
         setMostraForm('REGISTRATION');
@@ -24,6 +25,11 @@ function Login(){
 
     return(
         <>
+        {mostraForm === 'WELCOME' && 
+            <WelcomePage
+                goToLogin={showLoginForm}
+            ></WelcomePage>
+        }
         {mostraForm === 'LOGIN' && 
         <>
             <LoginForm

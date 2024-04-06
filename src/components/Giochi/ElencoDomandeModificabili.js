@@ -4,6 +4,8 @@ import GameContext from "../../context/game-context";
 import GenericButton from "../UI/GenericButton";
 import AuthContext from "../../context/auth-context";
 
+let domande_esistenti = 0;
+
 function ElencoDomandeModificabili(props){
     const game_ctx = useContext(GameContext);
     const auth_ctx = useContext(AuthContext);
@@ -11,13 +13,20 @@ function ElencoDomandeModificabili(props){
     const [questionsList, setQuestionsList] = useState(game_ctx.domande);
     const [imagesList, setImagesList] = useState([]);
     const [gameType, setGameType] = useState("QUIZ");
+
+    const [domande_esistenti , set_domande_esistenti] = useState(false);
     
     var categorie = game_ctx.recuperaCategorieDomande(gameType);
     const [categoryFilter, setCategoryFilter] = useState("Tutte");
 
     const websiteUrl = "https://cognicare.altervista.org/uploads/";
 
+    useEffect(() => {
+        set_domande_esistenti(false)
+    }, [gameType])
+
     function gameTypeChangeHandler(event){
+        // domande_esistenti = 0;
         setCategoryFilter("Tutte")
         setGameType(event.target.value);
         categorie = game_ctx.recuperaCategorieDomande(event.target.value);
@@ -38,7 +47,11 @@ function ElencoDomandeModificabili(props){
 
     function recuperaTutteLeDomande(singleQuestion){
 
-        // console.log(Object.keys(singleQuestion.rispCorrette).length);
+        if(singleQuestion.tipoGioco === gameType && !domande_esistenti){
+            set_domande_esistenti(true)
+            console.log("AOOOO")
+            console.log(domande_esistenti)
+        }
         if(singleQuestion.tipoGioco === gameType && (singleQuestion.categoria === categoryFilter || categoryFilter === "Tutte")){
             // console.log(singleQuestion.categoria);
             return(
@@ -189,7 +202,7 @@ function ElencoDomandeModificabili(props){
 
             <hr style={{width: "100%"}}></hr>
 
-            {categoryFilter !== "" && game_ctx.domande?.length === 0 && <h2>Non hai ancora creato una domanda</h2>}
+            {!domande_esistenti && <h2 style={{textAlign: "center"}}>Non hai creato domande per questo tipo di gioco</h2>}
             
             {categoryFilter !== "" && game_ctx.domande?.length > 0 && 
                 <ul className={styles.wrapper_lista_domande}>

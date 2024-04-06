@@ -119,7 +119,7 @@ function ElencoDomande(props){
         console.log(singleQuestion.tipoGioco === props.tipoGioco);
         if(singleQuestion.tipoGioco === props.tipoGioco){
             domande_esistenti += 1;
-            console.log("AOOOO")
+            // console.log("AOOOO")
         }
 
         if(singleQuestion.tipoGioco === props.tipoGioco && (singleQuestion.categoria === categoryFilter || categoryFilter === "Tutte")){
@@ -247,7 +247,7 @@ function ElencoDomande(props){
 
     return (
         <>
-            <h5>Scegli le domande per il gioco:</h5>
+            <h5>Seleziona le domande per il gioco:</h5>
             <div className={styles.wrapper_generico}>
                 <h3 className={styles.domande_disponibili}>{"DOMANDE SELEZIONATE: " + numeroDomandeSelezionate}</h3>
 
