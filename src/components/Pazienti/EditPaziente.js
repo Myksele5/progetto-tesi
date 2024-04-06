@@ -55,6 +55,9 @@ function EditPaziente(props){
     const [dataInizioTerapia, setDataInizioTerapia] = useState("");
     const [dataFineTerapia, setDataFineTerapia] = useState("");
 
+    const [stringaPrescrittaDa, setStringaPrescrittaDa] = useState("");
+    const [validStringaPrescrittaDa, setValidStringaPrescrittaDa] = useState(true);
+
     const [informazioniMediche, setInformazioniMediche] = useState([]);
     const [ID_modificaTerapia, setID_modificaTerapia] = useState();
     const [modaleAggiungiTerapia, setModaleAggiungiTerapia] = useState(false);
@@ -233,6 +236,11 @@ function EditPaziente(props){
         setNoteDaModificare(event.target.value);
     }
 
+    function stringaPrescrittaDaChangeHandler(event){
+        setStringaPrescrittaDa(event.target.value);
+        setValidStringaPrescrittaDa(true);
+    }
+
     const addInformazioniMediche = (oggettoMedico) => {
         setInformazioniMediche((prevList) => ([...prevList, oggettoMedico]))
         patologies_ctx.cambiaPatologiaSelezionataFormPaziente({})
@@ -245,6 +253,7 @@ function EditPaziente(props){
                 terapia.note = noteDaModificare
                 terapia.dataInizio = dataInizioTerapia
                 terapia.dataFine = dataFineTerapia
+                terapia.prescrittaDa = stringaPrescrittaDa
             }
         })
     }
@@ -459,6 +468,10 @@ function EditPaziente(props){
                                                             <label className={`${styles.sintesiMedica_label_NOTE}`}>Note:</label>
                                                             <h5 className={`${styles.sintesiMedica_content_NOTE}`}>{oggetto.note}</h5>
                                                         </div>
+                                                        <div className={styles.wrapper_horizontal}>
+                                                            <label className={`${styles.sintesiMedica_label_NOTE}`}>Prescritta da:</label>
+                                                            <h5 className={`${styles.sintesiMedica_content_NOTE}`}>{oggetto.prescrittaDa}</h5>
+                                                        </div>
                                                         <div style={{width: "100%", marginTop: "10px"}} className={styles.horizontal}>
                                                             <EditButton
                                                                 onClick={() => {
@@ -468,6 +481,7 @@ function EditPaziente(props){
                                                                     setDataInizioTerapia(oggetto.dataInizio)
                                                                     setDataFineTerapia(oggetto.dataFine)
                                                                     setID_modificaTerapia(oggetto.terapiaID)
+                                                                    setStringaPrescrittaDa(oggetto.prescrittaDa)
                                                                 }}
                                                             ></EditButton>
                                                             <DeleteButton onClick={
@@ -526,6 +540,10 @@ function EditPaziente(props){
 
                                     <label className={styles.label_style}>Data fine</label>
                                     <input value={dataFineTerapia} onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
+                                    
+                                    <label className={`${styles.label_style} ${!validStringaPrescrittaDa ? styles.invalid : ""}`}>Prescritta da:</label>
+                                    <input value={stringaPrescrittaDa} onChange={stringaPrescrittaDaChangeHandler} className={`${styles.input_style} ${!validStringaPrescrittaDa ? styles.invalid : ""}`}></input>
+                                    {!validStringaPrescrittaDa && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci nome e cognome di chi ha prescritto questa terapia.</div>}
                                 </Modal.Body>
                                 <Modal.Footer style={{justifyContent: "center"}}>
                                     <GenericButton
@@ -598,13 +616,17 @@ function EditPaziente(props){
 
                                         <label className={styles.label_style}>Data fine</label>
                                         <input value={dataFineTerapia} onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
+
+                                        <label className={`${styles.label_style} ${!validStringaPrescrittaDa ? styles.invalid : ""}`}>Prescritta da:</label>
+                                        <input value={stringaPrescrittaDa} onChange={stringaPrescrittaDaChangeHandler} className={`${styles.input_style} ${!validStringaPrescrittaDa ? styles.invalid : ""}`}></input>
+                                        {!validStringaPrescrittaDa && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci nome e cognome di chi ha prescritto questa terapia.</div>}
                                     </>
                                     }
                                 </Modal.Body>
                                 <Modal.Footer style={{justifyContent: "center"}}>
                                     <GenericButton
                                         onClick={() => {
-                                            if(terapiaDaModificare.length > 3 && dataInizioTerapia >= "2010-01-01"){
+                                            if(terapiaDaModificare.length > 3 && dataInizioTerapia >= "2010-01-01" && stringaPrescrittaDa.length > 0){
                                                 setModaleAggiungiTerapia(false)
                                                 addInformazioniMediche(
                                                     {
@@ -614,7 +636,8 @@ function EditPaziente(props){
                                                         terapia: terapiaDaModificare,
                                                         note: noteDaModificare,
                                                         dataInizio: dataInizioTerapia,
-                                                        dataFine: dataFineTerapia
+                                                        dataFine: dataFineTerapia,
+                                                        prescrittaDa: stringaPrescrittaDa
                                                     }
                                                 )
                                                 setCountTerapie((countTerapie) => countTerapie + 1)
@@ -625,7 +648,9 @@ function EditPaziente(props){
                                             if(dataInizioTerapia < "2010-01-01"){
                                                 setErrorMinData(true)
                                             }
-                                            
+                                            if(stringaPrescrittaDa.length === 0){
+                                                setValidStringaPrescrittaDa(false)
+                                            }
                                         }}
                                         generic_button={true}
                                         // red_styling

@@ -134,18 +134,14 @@
 }
 
 .label_style{
-    /* display: inline-block; */
     width: 40%;
     min-width: 150px;
     font-size: 20px;
     font-weight: bold;
     text-align: end;
-    text-decoration: underline;
-    /* background-color: white; */
-    /* border: 2px solid #163172; */
+    /* text-decoration: underline; */
     border-radius: 14px;
     color: #163172;
-    /* box-shadow: 3px 3px 5px #163172; */
     padding: 4px;
     margin-top: 5px;
     margin-bottom: 10px;

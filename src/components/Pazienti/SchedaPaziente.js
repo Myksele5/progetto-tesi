@@ -362,6 +362,10 @@ function SchedaPaziente(props){
                                             <label className={`${styles.sintesiMedica_label_NOTE}`}>Note:</label>
                                             <p className={`${styles.sintesiMedica_content_NOTE}`}>{objInfo.note}</p>
                                         </div>
+                                        <div className={styles.wrapper_horizontal}>
+                                            <label className={`${styles.sintesiMedica_label_NOTE}`}>Prescritta da:</label>
+                                            <p className={`${styles.sintesiMedica_content_NOTE}`}>{objInfo.prescrittaDa}</p>
+                                        </div>
                                     </Accordion.Body>
                                 </Accordion.Item>
                                 ))

@@ -55,6 +55,9 @@ function AddPaziente(props){
     const [dataInizioTerapia, setDataInizioTerapia] = useState("");
     const [dataFineTerapia, setDataFineTerapia] = useState("");
 
+    const [stringaPrescrittaDa, setStringaPrescrittaDa] = useState("");
+    const [validStringaPrescrittaDa, setValidStringaPrescrittaDa] = useState(true);
+
     const [informazioniMediche, setInformazioniMediche] = useState([]);
     const [ID_modificaTerapia, setID_modificaTerapia] = useState();
     const [modaleAggiungiTerapia, setModaleAggiungiTerapia] = useState(false);
@@ -131,18 +134,18 @@ function AddPaziente(props){
                         else{
                             setValidCF(true);
                         }
-                        if(contattoCellulare.trim().length < 8){
-                            setValidContattoCellulare(false);
-                        }
-                        else{
-                            setValidContattoCellulare(true);
-                        }
-                        if(!contattoEmail.includes('@')){
-                            setValidContattoEmail(false);
-                        }
-                        else{
-                            setValidContattoEmail(true);
-                        }
+                        // if(contattoCellulare.trim().length < 8){
+                        //     setValidContattoCellulare(false);
+                        // }
+                        // else{
+                        //     setValidContattoCellulare(true);
+                        // }
+                        // if(!contattoEmail.includes('@')){
+                        //     setValidContattoEmail(false);
+                        // }
+                        // else{
+                        //     setValidContattoEmail(true);
+                        // }
                 }
                 else{
                     var day = dateee.toLocaleString('it-IT', {day: '2-digit'})
@@ -233,6 +236,11 @@ function AddPaziente(props){
     function noteChangeHandler(event){
         setNoteDaModificare(event.target.value);
     }
+    function stringaPrescrittaDaChangeHandler(event){
+        setStringaPrescrittaDa(event.target.value);
+        setValidStringaPrescrittaDa(true);
+    }
+    
     
     const addInformazioniMediche = (oggettoMedico) => {
         console.log(dataInizioTerapia)
@@ -253,6 +261,7 @@ function AddPaziente(props){
                 terapia.note = noteDaModificare
                 terapia.dataInizio = dataInizioTerapia
                 terapia.dataFine = dataFineTerapia
+                terapia.prescrittaDa = stringaPrescrittaDa
             }
         })
     }
@@ -429,11 +438,11 @@ function AddPaziente(props){
 
                 <h1 style={{marginTop: "8px"}} className={styles.title_form}>Contatti</h1>
                 <div className={styles.wrapper_vertical}>
-                    <label style={{marginTop: "1px"}} className={`${styles.label_style} ${!validContattoEmail ? styles.invalid : ""}`}>Email:</label>
+                    <label style={{marginTop: "1px"}} className={`${styles.label_style} ${!validContattoEmail ? styles.invalid : ""}`}>{"Email (facoltativa):"}</label>
                     <input className={`${styles.input_style} ${!validContattoEmail ? styles.invalid : ""}`} type="text" value={contattoEmail} onChange={contattoEmailChangeHandler}></input>
                     {!validContattoEmail && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una email valida</div>}
 
-                    <label className={`${styles.label_style} ${!validContattoCellulare ? styles.invalid : ""}`}>Cellulare:</label>
+                    <label className={`${styles.label_style} ${!validContattoCellulare ? styles.invalid : ""}`}>{"Cellulare (facoltativo):"}</label>
                     <input className={`${styles.input_style} ${!validContattoCellulare ? styles.invalid : ""}`} type="number" value={contattoCellulare} onChange={contattoCellulareChangeHandler}></input>
                     {!validContattoCellulare && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un numero telefonico valido</div>}
                 </div>
@@ -492,6 +501,10 @@ function AddPaziente(props){
                                                 <label className={`${styles.sintesiMedica_label_NOTE}`}>Note:</label>
                                                 <h5 className={`${styles.sintesiMedica_content_NOTE}`}>{oggetto.note}</h5>
                                             </div>
+                                            <div className={styles.wrapper_horizontal}>
+                                                <label className={`${styles.sintesiMedica_label_PATOLOGIA}`}>Prescritta da:</label>
+                                                <h5 className={`${styles.sintesiMedica_content_PATOLOGIA}`}>{oggetto.prescrittaDa}</h5>
+                                            </div>
                                             <div style={{width: "100%", marginTop: "10px"}} className={styles.horizontal}>
                                                 <EditButton
                                                     onClick={() => {
@@ -533,6 +546,10 @@ function AddPaziente(props){
 
                         <label className={styles.label_style}>Data fine</label>
                         <input value={dataFineTerapia} onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
+
+                        <label className={`${styles.label_style} ${!validStringaPrescrittaDa ? styles.invalid : ""}`}>Prescritta da:</label>
+                        <input value={stringaPrescrittaDa} onChange={stringaPrescrittaDaChangeHandler} className={`${styles.input_style} ${!validStringaPrescrittaDa ? styles.invalid : ""}`}></input>
+                        {!validStringaPrescrittaDa && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci nome e cognome di chi ha prescritto questa terapia.</div>}
                     </Modal.Body>
                     <Modal.Footer style={{justifyContent: "center"}}>
                         <GenericButton
@@ -605,6 +622,10 @@ function AddPaziente(props){
 
                                 <label className={styles.label_style}>Data fine</label>
                                 <input value={dataFineTerapia} onChange={dataFineTerapiaChangeHandler} min={dataInizioTerapia} className={styles.input_style_SHORT} type="date"></input>
+
+                                <label className={`${styles.label_style} ${!validStringaPrescrittaDa ? styles.invalid : ""}`}>Prescritta da:</label>
+                                <input value={stringaPrescrittaDa} onChange={stringaPrescrittaDaChangeHandler} className={`${styles.input_style} ${!validStringaPrescrittaDa ? styles.invalid : ""}`}></input>
+                                {!validStringaPrescrittaDa && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci nome e cognome di chi ha prescritto questa terapia.</div>}
                             </>
                             }
                         </Modal.Body>
@@ -612,7 +633,7 @@ function AddPaziente(props){
                             <GenericButton
                                 onClick={() => {
                                     console.log(dataInizioTerapia >= "2010-01-01")
-                                    if(terapiaDaModificare.length > 3 && dataInizioTerapia >= "2010-01-01"){
+                                    if(terapiaDaModificare.length > 3 && dataInizioTerapia >= "2010-01-01" && stringaPrescrittaDa.length > 0){
                                         setModaleAggiungiTerapia(false)
                                         addInformazioniMediche(
                                             {
@@ -622,7 +643,8 @@ function AddPaziente(props){
                                                 terapia: terapiaDaModificare,
                                                 note: noteDaModificare,
                                                 dataInizio: dataInizioTerapia,
-                                                dataFine: dataFineTerapia
+                                                dataFine: dataFineTerapia,
+                                                prescrittaDa: stringaPrescrittaDa
                                             }
                                         )
                                         setCountTerapie((countTerapie) => countTerapie + 1)
@@ -632,6 +654,9 @@ function AddPaziente(props){
                                     }
                                     if(dataInizioTerapia < "2010-01-01"){
                                         setErrorMinData(true)
+                                    }
+                                    if(stringaPrescrittaDa.length === 0){
+                                        setValidStringaPrescrittaDa(false)
                                     }
                                     
                                 }}

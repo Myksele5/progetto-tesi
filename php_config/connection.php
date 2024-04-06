@@ -403,7 +403,7 @@
         $ID = $dataJson["ID"];
         
         $retrievePatientsList = $i_conn->prepare(
-            "SELECT elencoPatologie.patologiaID, elencoTerapie.terapiaID, elencoTerapie.dataInizio, elencoTerapie.dataFine, elencoTerapie.note, elencoTerapie.terapia, elencoPatologie.nomePatologia
+            "SELECT elencoPatologie.patologiaID, elencoTerapie.terapiaID, elencoTerapie.dataInizio, elencoTerapie.dataFine, elencoTerapie.note, elencoTerapie.terapia, elencoTerapie.prescrittaDa, elencoPatologie.nomePatologia
             FROM elencoPatologie JOIN elencoTerapie ON elencoTerapie.patolog_ID = elencoPatologie.patologiaID WHERE paziente_ID = ?");
         $retrievePatientsList->bind_param("i", $ID);
         
@@ -451,9 +451,9 @@
 
         foreach($informazioniMediche as $info){
             $saveNewTherapy = $i_conn->prepare(
-                "INSERT INTO `elencoTerapie` (`terapia`, `note`, `patolog_ID`, `dataInizio`, `dataFine`, `paziente_ID`) VALUES (?, ?, ?, ?, ?, ?)"
+                "INSERT INTO `elencoTerapie` (`terapia`, `note`, `patolog_ID`, `dataInizio`, `dataFine`, `paziente_ID`, `prescrittaDa`) VALUES (?, ?, ?, ?, ?, ?, ?)"
             );
-            $saveNewTherapy->bind_param("ssissi", $info['terapia'], $info['note'], $info['patologiaID'], $info['dataInizio'], $info['dataFine'], $patientID);
+            $saveNewTherapy->bind_param("ssissis", $info['terapia'], $info['note'], $info['patologiaID'], $info['dataInizio'], $info['dataFine'], $patientID, $info['prescrittaDa']);
             $saveNewTherapy->execute();
 
         }
@@ -488,10 +488,10 @@
 
         foreach($informazioniMediche as $info){
             $insertNewInfoMediche = $i_conn->prepare(
-                "INSERT INTO `elencoTerapie` (`terapia`, `note`, `patolog_ID`, `dataInizio`, `dataFine`, `paziente_ID`) 
-                VALUES (?, ?, ?, ?, ?, ?)"
+                "INSERT INTO `elencoTerapie` (`terapia`, `note`, `patolog_ID`, `dataInizio`, `dataFine`, `paziente_ID`, `prescrittaDa`) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)"
             );
-            $insertNewInfoMediche->bind_param("ssissi", $info['terapia'], $info['note'], $info['patologiaID'], $info['dataInizio'], $info['dataFine'], $ID);
+            $insertNewInfoMediche->bind_param("ssissis", $info['terapia'], $info['note'], $info['patologiaID'], $info['dataInizio'], $info['dataFine'], $ID, $info['prescrittaDa']);
             $insertNewInfoMediche->execute();
         }
 
