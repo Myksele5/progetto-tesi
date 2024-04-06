@@ -211,35 +211,38 @@ function SchedaPaziente(props){
             <h1 className={styles.page_title}>Scheda paziente: {props.nome} {props.cognome}</h1>
             <Tabs variant='underline' fill id="controlled-tab-example" activeKey={sezioneScheda} onSelect={(key) => {selectShow(key)}}>
                 <Tab className={styles.tab_text} eventKey={"DATI_PERSONALI"} title={"Dati"}>
-                    <div className={styles.horizontal}>
+                    <div className={styles.horizontal_dati}>
                         <div className={styles.section_dati}>
-                            <div className={styles.wrapper_vertical}>
-                                <h3 className={styles.text_dati_personali_title}>ANAGRAFICA</h3>
+                            <h3 className={styles.text_dati_personali_title}>ANAGRAFICA</h3>
+                            <div className={styles.horizontal}>
                                 <label className={styles.label_style}>NOME COMPLETO:</label>
                                 <div className={styles.content_text_style}>{props.nome} {props.cognome}</div>
                             </div>
-                            <div className={styles.wrapper_vertical}>
+                            <div className={styles.horizontal}>
                                 <label className={styles.label_style}>CITTÀ DI NASCITA:</label>
                                 <div className={styles.content_text_style}>{props.città}</div>
                             </div>
-                            <div className={styles.wrapper_vertical}>
+                            <div className={styles.horizontal}>
                                 <label className={styles.label_style}>DATA DI NASCITA:</label>
                                 <div className={styles.content_text_style}>{props.datanascita}</div>
                             </div>
-                            <div className={styles.wrapper_vertical}>
+                            <div className={styles.horizontal}>
                                 <label className={styles.label_style}>CODICE FISCALE:</label>
                                 <div className={styles.content_text_style}>{props.codicefiscale}</div>
                             </div>
-                            <div className={styles.wrapper_vertical}>
-                                <label className={styles.label_style}>CREDENZIALI</label>
+                            <div className={styles.horizontal}>
+                                <label className={styles.label_style}>CREDENZIALI:</label>
                                 {credentials.length === 0 && 
                                 <>
-                                    <GenericButton
-                                        onClick={() => {setCreateCredentials((prevBool) => (!prevBool))}}
-                                        buttonText={"Crea credenziali"}
-                                        generic_button
-                                    >
-                                    </GenericButton>
+                                    <div className={styles.content_text_style}>
+                                        <GenericButton
+                                            onClick={() => {setCreateCredentials((prevBool) => (!prevBool))}}
+                                            buttonText={"Crea credenziali"}
+                                            generic_button
+                                        >
+                                        </GenericButton>
+                                    </div>
+                                    
                                     {createCredentials &&
                                         <Modal centered show={createCredentials}>
                                             <Modal.Header style={{fontWeight: "bold", fontSize: "18px"}}>Crea credenziali paziente</Modal.Header>
@@ -273,11 +276,13 @@ function SchedaPaziente(props){
                                 }
                                 {credentials.length > 0 && 
                                 <>
-                                    <GenericButton
-                                        onClick={() => {setShowCredentials((prevBool) => (!prevBool))}}
-                                        buttonText={!showCredentials ? "Visualizza" : "Nascondi"}
-                                        generic_button
-                                    ></GenericButton>
+                                    <div className={styles.content_text_style}>
+                                        <GenericButton
+                                            onClick={() => {setShowCredentials((prevBool) => (!prevBool))}}
+                                            buttonText={!showCredentials ? "Visualizza" : "Nascondi"}
+                                            generic_button
+                                        ></GenericButton>
+                                    </div>
                                     {showCredentials &&
                                     <>
                                         <Modal centered show={showCredentials}>
@@ -312,12 +317,12 @@ function SchedaPaziente(props){
                             </div>
                         </div>
                         <div className={styles.section_dati}>
-                            <div className={styles.wrapper_vertical}>
-                                <h3 className={styles.text_dati_personali_title}>CONTATTI</h3>
+                            <h3 className={styles.text_dati_personali_title}>CONTATTI</h3>
+                            <div className={styles.horizontal}>
                                 <label className={styles.label_style}>EMAIL:</label>
                                 <div className={styles.content_text_style}>{!props.contattoEmail ? "Non inserito" : props.contattoEmail}</div>
                             </div>
-                            <div className={styles.wrapper_vertical}>
+                            <div className={styles.horizontal}>
                                 <label className={styles.label_style}>CELLULARE:</label>
                                 <div className={styles.content_text_style}>{!props.contattoCellulare ? "Non inserito" : props.contattoCellulare}</div>
                             </div>
