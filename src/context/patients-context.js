@@ -140,6 +140,8 @@ export function PatientContextProvider(props){
                 cognomeee={pazienteee.cognome}
                 cittààà={pazienteee.city}
                 dataaa={pazienteee.dataNascita}
+                contattoEmail={pazienteee.contattoEmail}
+                contattoCellulare={pazienteee.contattoCellulare}
                 attivitààà={pazienteee.attività}
                 cfff={pazienteee.codiceFiscale}
                 patologiaaa_1={resultPatologie}
@@ -314,8 +316,8 @@ export function PatientContextProvider(props){
                 datanascita = {pazientee.dataNascita}
                 codicefiscale = {pazientee.codiceFiscale}
                 informazioniMediche = {resultPatologie}
-                // scoreMMSE = {pazientee.resultMMSE}
-                // scoreMOCA = {pazientee.resultMOCA}
+                contattoEmail = {pazientee.contattoEmail}
+                contattoCellulare = {pazientee.contattoCellulare}
                 listaTest = {resultTest}
                 listaGiochi = {resultGiochi}
                 statsPaziente = {resultStatistiche}

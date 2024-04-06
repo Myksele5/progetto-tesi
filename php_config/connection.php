@@ -469,14 +469,16 @@
         $city = $dataJson["city"];
         $codiceFiscale = $dataJson["codiceFiscale"];
         $dataNascita = $dataJson["dataNascita"];
+        $contattoEmail = $dataJson["contattoEmail"];
+        $contattoCellulare = $dataJson["contattoCellulare"];
         $informazioniMediche = $dataJson["informazioniMediche"];
         $listaGiochi = $dataJson["listaGiochi"];
         $ID = $dataJson["ID"];
         
         $updatePatient = $i_conn->prepare(
-            "UPDATE `patients` SET `nome` = ?, `cognome` = ?, `city` = ?, `codiceFiscale` = ?, `dataNascita` = ? WHERE `patients`.`ID` = ?"
+            "UPDATE `patients` SET `nome` = ?, `cognome` = ?, `city` = ?, `codiceFiscale` = ?, `dataNascita` = ?, `contattoEmail` = ?, `contattoCellulare` = ? WHERE `patients`.`ID` = ?"
         );
-        $updatePatient->bind_param("sssssi", $nome, $cognome, $city, $codiceFiscale, $dataNascita, $ID);
+        $updatePatient->bind_param("sssssssi", $nome, $cognome, $city, $codiceFiscale, $dataNascita, $contattoEmail, $contattoCellulare, $ID);
         $updatePatient->execute();
         // $updatePatient->bind_result($result);
 

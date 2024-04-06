@@ -208,104 +208,120 @@ function SchedaPaziente(props){
 
     return(
         <div style={{width: "100%"}}>
-            <h1 className={styles.page_title}>Scheda del paziente: {props.nome} {props.cognome}</h1>
+            <h1 className={styles.page_title}>Scheda paziente: {props.nome} {props.cognome}</h1>
             <Tabs variant='underline' fill id="controlled-tab-example" activeKey={sezioneScheda} onSelect={(key) => {selectShow(key)}}>
-                <Tab eventKey={"DATI_PERSONALI"} title={"Dati Personali"}>
-                    <div className={styles.wrapper_vertical}>
-                        <label className={styles.label_style}>NOME COMPLETO:</label>
-                        <div className={styles.content_text_style}>{props.nome} {props.cognome}</div>
-                    </div>
-                    <div className={styles.wrapper_vertical}>
-                        <label className={styles.label_style}>CITTÀ DI NASCITA:</label>
-                        <div className={styles.content_text_style}>{props.città}</div>
-                    </div>
-                    <div className={styles.wrapper_vertical}>
-                        <label className={styles.label_style}>DATA DI NASCITA:</label>
-                        <div className={styles.content_text_style}>{props.datanascita}</div>
-                    </div>
-                    <div className={styles.wrapper_vertical}>
-                        <label className={styles.label_style}>CODICE FISCALE:</label>
-                        <div className={styles.content_text_style}>{props.codicefiscale}</div>
-                    </div>
-                    <div className={styles.wrapper_vertical}>
-                        <label className={styles.label_style}>CREDENZIALI</label>
-                        {credentials.length === 0 && 
-                        <>
-                            <GenericButton
-                                onClick={() => {setCreateCredentials((prevBool) => (!prevBool))}}
-                                buttonText={"Crea credenziali"}
-                                generic_button
-                            >
-                            </GenericButton>
-                            {createCredentials &&
-                                <Modal centered show={createCredentials}>
-                                    <Modal.Header style={{fontWeight: "bold", fontSize: "18px"}}>Crea credenziali paziente</Modal.Header>
-                                    <Modal.Body>
-                                        <label className={`${styles.tag_style} ${!validEmail ? styles.invalid : ''}`}>Email:</label>
-                                        <input autoFocus value={enteredEmail} onChange={emailChangeHandler} className={`${styles.input_style} ${!validEmail ? styles.invalid : ''}`}></input>
-                                        {!validEmail && <div style={{width: "100%", color: "red", textAlign: "center"}}>{errorEmailMsg}</div>}
-                                        <label className={`${styles.tag_style} ${!validPassword ? styles.invalid : ''}`}>Password:</label>
-                                        <input value={enteredPassword} onChange={passwordChangeHandler} className={`${styles.input_style} ${!validPassword ? styles.invalid : ''}`}></input>
-                                        {!validPassword && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una password con almeno 6 caratteri</div>}
-                                        <p className={styles.paragraph_style}><b>Attenzione! </b>
-                                            Queste credenziali serviranno al paziente per potersi collegare alla piattaforma e svolgere attività. Se inserite, verrà creato un profilo per il paziente
-                                        </p>
-                                        <div style={{marginTop: "10px"}} className={styles.horizontal}>
-                                            <GenericButton
-                                                onClick={() => setCreateCredentials((prevBool) => (!prevBool))}
-                                                buttonText={"Chiudi"}
-                                                generic_button
-                                                red_styling
-                                            ></GenericButton>
-                                            <GenericButton
-                                                onClick={() => creaAccountPaziente()}
-                                                buttonText={"Crea account"}
-                                                generic_button
-                                            ></GenericButton>
-                                        </div>
-                                    </Modal.Body>
-                                </Modal>
-                            }
-                        </>
-                        }
-                        {credentials.length > 0 && 
-                        <>
-                            <GenericButton
-                                onClick={() => {setShowCredentials((prevBool) => (!prevBool))}}
-                                buttonText={!showCredentials ? "Visualizza" : "Nascondi"}
-                                generic_button
-                            ></GenericButton>
-                            {showCredentials &&
-                            <>
-                                <Modal centered show={showCredentials}>
-                                    <Modal.Header style={{fontWeight: "bold", fontSize: "18px"}}>Credenziali paziente</Modal.Header>
-                                    <Modal.Body>
-                                        <div style={{justifyContent:"space-between"}} className={styles.horizontal}>
-                                            <div className={styles.wrapper_vertical}>
-                                                <label className={styles.tag_style}>Email:</label>
-                                                <div style={{textAlign: "start"}} className={styles.content_text_style}>{credentials[0].email}</div>
-                                                <label className={styles.tag_style}>Password:</label>
-                                                <div style={{textAlign: "start"}} className={styles.content_text_style}>{credentials[0].password}</div>
-                                            </div>
-                                            <div className={styles.wrapper_vertical}>
-                                                <label className={styles.tag_style}>QR Code:</label>
-                                                <QRCode value={`https://cognicare.altervista.org/QRCodeLogin/${credentials[0].UID}`} size={160}></QRCode>
-                                            </div>
-                                        </div>
-                                    </Modal.Body>
-                                    <Modal.Footer style={{justifyContent: "center"}}>
-                                        <GenericButton
-                                            onClick={() => setShowCredentials((prevBool) => (!prevBool))}
-                                            buttonText={"Chiudi"}
-                                            generic_button
-                                            red_styling
-                                        ></GenericButton>
-                                    </Modal.Footer>
-                                </Modal>
-                            </>
-                            }
-                        </>
-                        }
+                <Tab className={styles.tab_text} eventKey={"DATI_PERSONALI"} title={"Dati"}>
+                    <div className={styles.horizontal}>
+                        <div className={styles.section_dati}>
+                            <div className={styles.wrapper_vertical}>
+                                <h3 className={styles.text_dati_personali_title}>ANAGRAFICA</h3>
+                                <label className={styles.label_style}>NOME COMPLETO:</label>
+                                <div className={styles.content_text_style}>{props.nome} {props.cognome}</div>
+                            </div>
+                            <div className={styles.wrapper_vertical}>
+                                <label className={styles.label_style}>CITTÀ DI NASCITA:</label>
+                                <div className={styles.content_text_style}>{props.città}</div>
+                            </div>
+                            <div className={styles.wrapper_vertical}>
+                                <label className={styles.label_style}>DATA DI NASCITA:</label>
+                                <div className={styles.content_text_style}>{props.datanascita}</div>
+                            </div>
+                            <div className={styles.wrapper_vertical}>
+                                <label className={styles.label_style}>CODICE FISCALE:</label>
+                                <div className={styles.content_text_style}>{props.codicefiscale}</div>
+                            </div>
+                            <div className={styles.wrapper_vertical}>
+                                <label className={styles.label_style}>CREDENZIALI</label>
+                                {credentials.length === 0 && 
+                                <>
+                                    <GenericButton
+                                        onClick={() => {setCreateCredentials((prevBool) => (!prevBool))}}
+                                        buttonText={"Crea credenziali"}
+                                        generic_button
+                                    >
+                                    </GenericButton>
+                                    {createCredentials &&
+                                        <Modal centered show={createCredentials}>
+                                            <Modal.Header style={{fontWeight: "bold", fontSize: "18px"}}>Crea credenziali paziente</Modal.Header>
+                                            <Modal.Body>
+                                                <label className={`${styles.tag_style} ${!validEmail ? styles.invalid : ''}`}>Email:</label>
+                                                <input autoFocus value={enteredEmail} onChange={emailChangeHandler} className={`${styles.input_style} ${!validEmail ? styles.invalid : ''}`}></input>
+                                                {!validEmail && <div style={{width: "100%", color: "red", textAlign: "center"}}>{errorEmailMsg}</div>}
+                                                <label className={`${styles.tag_style} ${!validPassword ? styles.invalid : ''}`}>Password:</label>
+                                                <input value={enteredPassword} onChange={passwordChangeHandler} className={`${styles.input_style} ${!validPassword ? styles.invalid : ''}`}></input>
+                                                {!validPassword && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una password con almeno 6 caratteri</div>}
+                                                <p className={styles.paragraph_style}><b>Attenzione! </b>
+                                                    Queste credenziali serviranno al paziente per potersi collegare alla piattaforma e svolgere attività. Se inserite, verrà creato un profilo per il paziente
+                                                </p>
+                                                <div style={{marginTop: "10px"}} className={styles.horizontal}>
+                                                    <GenericButton
+                                                        onClick={() => setCreateCredentials((prevBool) => (!prevBool))}
+                                                        buttonText={"Chiudi"}
+                                                        generic_button
+                                                        red_styling
+                                                    ></GenericButton>
+                                                    <GenericButton
+                                                        onClick={() => creaAccountPaziente()}
+                                                        buttonText={"Crea account"}
+                                                        generic_button
+                                                    ></GenericButton>
+                                                </div>
+                                            </Modal.Body>
+                                        </Modal>
+                                    }
+                                </>
+                                }
+                                {credentials.length > 0 && 
+                                <>
+                                    <GenericButton
+                                        onClick={() => {setShowCredentials((prevBool) => (!prevBool))}}
+                                        buttonText={!showCredentials ? "Visualizza" : "Nascondi"}
+                                        generic_button
+                                    ></GenericButton>
+                                    {showCredentials &&
+                                    <>
+                                        <Modal centered show={showCredentials}>
+                                            <Modal.Header style={{fontWeight: "bold", fontSize: "18px"}}>Credenziali paziente</Modal.Header>
+                                            <Modal.Body>
+                                                <div style={{justifyContent:"space-between"}} className={styles.horizontal}>
+                                                    <div className={styles.wrapper_vertical}>
+                                                        <label className={styles.tag_style}>Email:</label>
+                                                        <div style={{textAlign: "start"}} className={styles.content_text_style}>{credentials[0].email}</div>
+                                                        <label className={styles.tag_style}>Password:</label>
+                                                        <div style={{textAlign: "start"}} className={styles.content_text_style}>{credentials[0].password}</div>
+                                                    </div>
+                                                    <div className={styles.wrapper_vertical}>
+                                                        <label className={styles.tag_style}>QR Code:</label>
+                                                        <QRCode value={`https://cognicare.altervista.org/QRCodeLogin/${credentials[0].UID}`} size={160}></QRCode>
+                                                    </div>
+                                                </div>
+                                            </Modal.Body>
+                                            <Modal.Footer style={{justifyContent: "center"}}>
+                                                <GenericButton
+                                                    onClick={() => setShowCredentials((prevBool) => (!prevBool))}
+                                                    buttonText={"Chiudi"}
+                                                    generic_button
+                                                    red_styling
+                                                ></GenericButton>
+                                            </Modal.Footer>
+                                        </Modal>
+                                    </>
+                                    }
+                                </>
+                                }
+                            </div>
+                        </div>
+                        <div className={styles.section_dati}>
+                            <div className={styles.wrapper_vertical}>
+                                <h3 className={styles.text_dati_personali_title}>CONTATTI</h3>
+                                <label className={styles.label_style}>EMAIL:</label>
+                                <div className={styles.content_text_style}>{!props.contattoEmail ? "Non inserito" : props.contattoEmail}</div>
+                            </div>
+                            <div className={styles.wrapper_vertical}>
+                                <label className={styles.label_style}>CELLULARE:</label>
+                                <div className={styles.content_text_style}>{!props.contattoCellulare ? "Non inserito" : props.contattoCellulare}</div>
+                            </div>
+                        </div>
                     </div>
                     <hr className={styles.horizontal_line}/>
                 </Tab>

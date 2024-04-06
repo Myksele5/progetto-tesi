@@ -35,6 +35,12 @@ function EditPaziente(props){
     const [validCF, setValidCF] = useState(true);
     const [CFModifica, setCFModifica] = useState(props.cfff);
 
+    const [validContattoEmail, setValidContattoEmail] = useState(true);
+    const [contattoEmail, setContattoEmail] = useState(props.contattoEmail);
+
+    const [validContattoCellulare, setValidContattoCellulare] = useState(true);
+    const [contattoCellulare, setContattoCellulare] = useState(props.contattoCellulare);
+
     const [countTerapie, setCountTerapie] = useState(1);
     const [terapiaDaModificare, setTerapiaDaModificare] = useState("");
     const [validTerapia, setValidTerapia] = useState(true);
@@ -186,6 +192,17 @@ function EditPaziente(props){
         console.log(event.target.value);
         setCFModifica(event.target.value);
         setValidCF(true);
+    }
+
+    const contattoEmailChangeHandler = (event) => {
+        console.log(event.target.value);
+        setContattoEmail(event.target.value);
+        setValidContattoEmail(true);
+    }
+    const contattoCellulareChangeHandler = (event) => {
+        console.log(event.target.value);
+        setContattoCellulare(event.target.value);
+        setValidContattoCellulare(true);
     }
 
     const patologiaSelezionataChangeHandler = (event) => {
@@ -342,6 +359,8 @@ function EditPaziente(props){
             city: cittàModifica,
             codiceFiscale: CFModifica.toUpperCase(),
             dataNascita: dateString,
+            contattoEmail: contattoEmail,
+            contattoCellulare: contattoCellulare,
             informazioniMediche: informazioniMediche,
             listaGiochi: giochiDelPaziente,
             ID: props.iddd
@@ -349,11 +368,12 @@ function EditPaziente(props){
 
         let pazienteSalvatoID;
         pazienteSalvatoID = await getServerMgr().updatePaziente(
-            datiPaziente.nome, datiPaziente.cognome, datiPaziente.city, datiPaziente.codiceFiscale, datiPaziente.dataNascita, 
+            datiPaziente.nome, datiPaziente.cognome, datiPaziente.city, datiPaziente.codiceFiscale, datiPaziente.dataNascita, datiPaziente.contattoEmail, datiPaziente.contattoCellulare, 
             datiPaziente.informazioniMediche, datiPaziente.listaGiochi, datiPaziente.ID
         );
         // console.log("pazienteID--> " + pazienteSalvatoID)
         patients_ctx.modificaLista();
+        alert("Dati del paziente modificati con successo")
     }
 
     return(
@@ -371,6 +391,7 @@ function EditPaziente(props){
                 >
                     <Tab eventKey={"DATI_PERSONALI"} title={"Dati personali"}>
                         <div className={styles.vertical}>
+                            <h1 className={styles.subtext_form}>Anagrafica</h1>
                             <div className={styles.wrapper_DATI_PERSONALI}>
                                 <label className={`${styles.label_style} ${!validNome ? styles.invalid : ""}`}>Nome:</label>
                                 <input className={`${styles.input_style} ${!validNome ? styles.invalid : ""}`} type="text" value={nomeModifica} onChange={nomeChangeHandler}></input>
@@ -392,7 +413,16 @@ function EditPaziente(props){
                                 <label className={`${styles.label_style} ${!validCF ? styles.invalid : ""}`}>Codice Fiscale:</label>
                                 <input className={`${styles.input_style} ${!validCF ? styles.invalid : ""}`} type="text" value={CFModifica} onChange={CFChangeHandler}></input>
                                 {!validCF && <div style={{width: "100%", color: "red", textAlign: "center"}}>Il codice fiscale deve contenere 16 caratteri</div>}
+                            </div>
+                            <h1 style={{marginTop: "8px"}} className={styles.subtext_form}>Contatti</h1>
+                            <div className={styles.wrapper_DATI_PERSONALI}>
+                                <label style={{marginTop: "1px"}} className={`${styles.label_style} ${!validContattoEmail ? styles.invalid : ""}`}>Email:</label>
+                                <input className={`${styles.input_style} ${!validContattoEmail ? styles.invalid : ""}`} type="text" value={contattoEmail} onChange={contattoEmailChangeHandler}></input>
+                                {!validContattoEmail && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci una email valida</div>}
 
+                                <label className={`${styles.label_style} ${!validContattoCellulare ? styles.invalid : ""}`}>Cellulare:</label>
+                                <input className={`${styles.input_style} ${!validContattoCellulare ? styles.invalid : ""}`} type="number" value={contattoCellulare} onChange={contattoCellulareChangeHandler}></input>
+                                {!validContattoCellulare && <div style={{width: "100%", color: "red", textAlign: "center"}}>Inserisci un numero telefonico valido</div>}
                             </div>
                         </div>
                         
