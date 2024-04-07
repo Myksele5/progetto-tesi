@@ -215,7 +215,7 @@ function Giochi(){
                 setGameObject(null);
                 break;
         }
-        setShowSearchBoxAndButton(false);
+        // setShowSearchBoxAndButton(false);
         setShowElencoGiochi(false);
     }
 
@@ -310,6 +310,7 @@ function Giochi(){
         setShowGameResults(false);
         setShowSearchBoxAndButton(true);
         setShowElencoGiochi(true);
+        INDICEGIOCO = -1;
     }
 
     function formEditQuestion(tipoGioco, singleQuestion, ID){
@@ -411,35 +412,48 @@ function Giochi(){
         <>
             {showSearchBoxAndButton && auth_ctx.tipoAccount !== "Paziente" &&
                 <div className={styles.wrap_boxes}>
-                    <select className={styles.select_style} onChange={tipoGiocoChangeHandler}>
-                        <option hidden>Tipo Gioco</option>
-                        <option>TUTTI</option>
-                        <option>QUIZ</option>
-                        <option>QUIZ CON IMMAGINI</option>
-                        <option>COMPLETA LA PAROLA</option>
-                        <option>GIOCO DELLE COPPIE</option>
-                    </select>
+                    {INDICEGIOCO === -1 &&
+                        <select className={styles.select_style} onChange={tipoGiocoChangeHandler}>
+                            <option hidden>Tipo Gioco</option>
+                            <option>TUTTI</option>
+                            <option>QUIZ</option>
+                            <option>QUIZ CON IMMAGINI</option>
+                            <option>QUIZ CON SUONI</option>
+                            <option>COMPLETA LA PAROLA</option>
+                            <option>GIOCO DELLE COPPIE</option>
+                        </select>
+                    }
         
-                    <GenericButton
-                        onClick={() => {
-                            formCreateNewGame();
-                            //LA SEGUENTE FUNZIONE SERVE PER RESETTARE L'OGGETTO CHE SI OCCUPA DI MODIFICARE LE DOMANDE DI UN GIOCO
-                            game_ctx.formCreaNuovoGioco();
-                        }}
-                        generic_button={true}
-                        buttonText={"Crea Gioco"}
-                    >
-                    </GenericButton>
+                    {INDICEGIOCO === -1 &&
+                        <GenericButton
+                            onClick={() => {
+                                formCreateNewGame();
+                                //LA SEGUENTE FUNZIONE SERVE PER RESETTARE L'OGGETTO CHE SI OCCUPA DI MODIFICARE LE DOMANDE DI UN GIOCO
+                                game_ctx.formCreaNuovoGioco();
+                            }}
+                            generic_button={true}
+                            buttonText={"Crea Gioco"}
+                        >
+                        </GenericButton>
+                    }
 
-                    {/* <GenericButton
-                        // onClick={formCreateNewQuestion}
-                        generic_button={true}
-                        buttonText={"Lista domande"}
-                    >
-                    </GenericButton> */}
-                    <SearchBox
-                        onChange={cercaGioco}
-                    ></SearchBox>
+                    {INDICEGIOCO !== -1 &&
+                        <GenericButton
+                            onClick={() => {
+                                closeGameResults();
+                            }}
+                            generic_button={true}
+                            red_styling
+                            buttonText={"Esci dal gioco"}
+                        >
+                        </GenericButton>
+                    }
+                  
+                    {INDICEGIOCO === -1 &&
+                        <SearchBox
+                            onChange={cercaGioco}
+                        ></SearchBox>
+                    }
                 </div>
             }
             {showElencoGiochi && <h1 className={styles.page_title}>Giochi</h1>}
