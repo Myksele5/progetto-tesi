@@ -20,7 +20,7 @@ function TerapiePaziente(){
 
     return(
         <div className={styles.wrapper_terapia}>
-            {terapiePersonali.map((terapia) => (
+            {terapiePersonali?.map((terapia) => (
                 <Card border="primary" style={{margin: "10px"}}>
                     <Card.Header className={styles.title_terapia} border="primary">Terapia per {terapia.nomePatologia}</Card.Header>
                     <Card.Body>
